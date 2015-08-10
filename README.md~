@@ -20,7 +20,3 @@ At present the following export formats are supported:
 - HELIOS in the version 1.3.19 (http://www.gadrocsworkshop.com/helios/) (Only supports the DCS Module A-10C, Ka-50 and in a limited capacity the SU-25T and the Flaming Cliffs Aircraft)
 
 and other Software/Hardware that obtain your data via a UDP network connection and then process it into a Key=Value Format.
-
-###Wiki###
----
-[DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deuscth and English)
