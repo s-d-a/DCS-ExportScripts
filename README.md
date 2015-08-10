@@ -23,4 +23,4 @@ and other Software/Hardware that obtain your data via a UDP network connection a
 
 ###Wiki###
 ---
-[DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deuscth and English)
+[DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deutsch and English)
