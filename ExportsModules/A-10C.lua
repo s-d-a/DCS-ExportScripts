@@ -820,10 +820,13 @@ function ProcessGlassCockpitDCSConfigHighImportance(mainPanelDevice)
 		lDigitalClock = lDigitalClock:gsub("txt", "")
 		lDigitalClock = lDigitalClock:sub(1, 8)
 		if lDigitalClock:sub(7, 7) == "C" then
-			lDigitalClock = lDigitalClock:sub(1, 7)
+			lDigitalClock = lDigitalClock:sub(1, 6)..";  C"
+		elseif lDigitalClock:sub(7, 8) == "ET" then
+			lDigitalClock = lDigitalClock:sub(1, 6)..";ET"
+		else
+			lDigitalClock = ""
 		end
 		SendData(2014, string.format("%s", lDigitalClock))
-
 		
 		--local lCDU = list_indication(3)
 		--WriteToLog('CDU: '..dump(lCDU))
