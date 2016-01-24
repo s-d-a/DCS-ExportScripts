@@ -1,17 +1,17 @@
 -- A-10A Export
 -- Version 0.9.9 BETA
 
-gES_FoundFCModule = true
+ExportScript.FoundFCModule = true
 
 -- auxiliary function
-dofile(gES_ExportModulePath.."FC_AuxiliaryFuntions.lua")
+dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")
 
 -----------------------------------------
 -- FLAMING CLIFFS AIRCRAFT / A-10A    --
 -- FC aircraft don't support GetDevice --
 -----------------------------------------
 
-function ProcessGlassCockpitFCHighImportanceConfig()
+function ExportScript.ProcessIkarusFCHighImportanceConfig()
 
 	local myData						= LoGetSelfData()
 
@@ -384,7 +384,7 @@ function ProcessGlassCockpitFCHighImportanceConfig()
 	end
 end
 
-function ProcessHARDWAREConfigHighImportance(mainPanelDevice)
+function ExportScript.ProcessDACHighImportance(mainPanelDevice)
 	--[[
 	local lPayloadInfo = LoGetPayloadInfo()
 	WriteToLog('lPayloadInfo: '..dump(lPayloadInfo))
@@ -424,7 +424,7 @@ function ProcessHARDWAREConfigHighImportance(mainPanelDevice)
 	]]
 end
 
-function ProcessGlassCockpitFCLowImportanceConfig()
+function ExportScript.ProcessIkarusFCLowImportanceConfig()
 	local lEngineFuelInternal		= LoGetEngineInfo().fuel_internal						-- TANK1 (INT) (KG)
 	local lEngineFuelExternal		= LoGetEngineInfo().fuel_external						-- TANK2 (EXT) (KG)
 
@@ -489,7 +489,7 @@ function ProcessGlassCockpitFCLowImportanceConfig()
 		-- Fuel Indicator end
 
 		-- Weapon Panel
-		gES_PayloadInfo = LoGetPayloadInfo()
+		ExportScript.AF.PayloadInfo = LoGetPayloadInfo()
 		--[[
 		ShellsCounter
 		Station1
@@ -511,31 +511,31 @@ function ProcessGlassCockpitFCLowImportanceConfig()
 		1    2    3    4    5    6    7    8    9    10   11
 		1    3    5    7    9    11   10   8    6    4    2		-- Weapon Station ID
 		]]
-		gES_TmpWeaponPanelActive = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+		ExportScript.AF.TmpWeaponPanelActive = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 
 		for lIndex = 1, 11, 1 do
-			gES_TmpWeaponPanelActive[lIndex] = (gES_PayloadInfo.Stations[lIndex].count > 0 and 0.2 or 0.1)	-- get status, empty or load
+			ExportScript.AF.TmpWeaponPanelActive[lIndex] = (ExportScript.AF.PayloadInfo.Stations[lIndex].count > 0 and 0.2 or 0.1)	-- get status, empty or load
 		end
 
-		if gES_PayloadInfo.CurrentStation > 0 then
-			gES_TmpWeaponPanelActive[gES_PayloadInfo.CurrentStation] = 0.3        -- currrent value
+		if ExportScript.AF.PayloadInfo.CurrentStation > 0 then
+			ExportScript.AF.TmpWeaponPanelActive[ExportScript.AF.PayloadInfo.CurrentStation] = 0.3        -- currrent value
 							
-			table.foreach(gES_PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit_A10A)	-- corresponding station
+			table.foreach(ExportScript.AF.PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit_A10A)	-- corresponding station
 		end
 
 		SendData(26, string.format("%d;%0.1f;%0.1f;%0.1f;%0.1f;%0.1f;%0.1f;%0.1f;%0.1f;%0.1f;%0.1f;%0.1f",
-									gES_PayloadInfo.Cannon.shells,
-									gES_TmpWeaponPanelActive[1],
-									gES_TmpWeaponPanelActive[3],
-									gES_TmpWeaponPanelActive[5],
-									gES_TmpWeaponPanelActive[7],
-									gES_TmpWeaponPanelActive[9],
-									gES_TmpWeaponPanelActive[11],
-									gES_TmpWeaponPanelActive[10],
-									gES_TmpWeaponPanelActive[8],
-									gES_TmpWeaponPanelActive[6],
-									gES_TmpWeaponPanelActive[4],
-									gES_TmpWeaponPanelActive[2]))
+									ExportScript.AF.PayloadInfo.Cannon.shells,
+									ExportScript.AF.TmpWeaponPanelActive[1],
+									ExportScript.AF.TmpWeaponPanelActive[3],
+									ExportScript.AF.TmpWeaponPanelActive[5],
+									ExportScript.AF.TmpWeaponPanelActive[7],
+									ExportScript.AF.TmpWeaponPanelActive[9],
+									ExportScript.AF.TmpWeaponPanelActive[11],
+									ExportScript.AF.TmpWeaponPanelActive[10],
+									ExportScript.AF.TmpWeaponPanelActive[8],
+									ExportScript.AF.TmpWeaponPanelActive[6],
+									ExportScript.AF.TmpWeaponPanelActive[4],
+									ExportScript.AF.TmpWeaponPanelActive[2]))
 		-- Wepaon Panel end
 
 		-- UHF Gauges, no value
@@ -543,23 +543,23 @@ function ProcessGlassCockpitFCLowImportanceConfig()
 	end
 end
 
-function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
+function ExportScript.ProcessDACLowImportance(mainPanelDevice)
 -- where necessary, specify HardwareID, example SightingSystem(2)
-	SightingSystem()
-	FuelQuantityIndicator()
-	StatusLamp()
-	MechanicalDevicesIndicator()
-	FlareChaff()
-	WeaponStatusPanel()
-	RWRStatusPanel()
-	AOAIndicator()
+	ExportScript.AF.SightingSystem()
+	ExportScript.AF.FuelQuantityIndicator()
+	ExportScript.AF.StatusLamp()
+	ExportScript.AF.MechanicalDevicesIndicator()
+	ExportScript.AF.FlareChaff()
+	ExportScript.AF.WeaponStatusPanel()
+	ExportScript.AF.RWRStatusPanel()
+	ExportScript.AF.AOAIndicator()
 end
 
 -----------------------------
 --     Custom functions    --
 -----------------------------
 
-function SightingSystem(hardware)
+function ExportScript.AF.SightingSystem(hardware)
 	local lHardware = hardware or 1
 	local lSightingSystemInfo = LoGetSightingSystemInfo()
 	if lSightingSystemInfo == nil then
@@ -609,7 +609,7 @@ function SightingSystem(hardware)
 	--SendDataHW("604", lSightingSystemInfo.radar_on          == true and 1 or 0, lHardware )
 end
 
-function FuelQuantityIndicator(hardware)
+function ExportScript.AF.FuelQuantityIndicator(hardware)
 -- Fuel quantity shows the fuel remaining in all tanks
 	local lHardware = hardware or 1
 	local lEngineInfo = LoGetEngineInfo()
@@ -659,7 +659,7 @@ function FuelQuantityIndicator(hardware)
 	]]
 end
 
-function StatusLamp(hardware)
+function ExportScript.AF.StatusLamp(hardware)
 	local lHardware = hardware or 1
 	local lMCPState = LoGetMCPState() -- Warning Lights
 	if lMCPState == nil then
@@ -734,7 +734,7 @@ function StatusLamp(hardware)
 	end
 end
 
-function FlareChaff(hardware)
+function ExportScript.AF.FlareChaff(hardware)
 	local lHardware = hardware or 1
 	local lSnares = LoGetSnares() -- Flare and Chaff
 	if lSnares == nil then
@@ -749,7 +749,7 @@ function FlareChaff(hardware)
 	SendDataHW("801", lSnares.flare, lHardware )
 end
 
-function MechanicalDevicesIndicator(hardware)
+function ExportScript.AF.MechanicalDevicesIndicator(hardware)
 -- The mechanical devices indicator shows the position of the landing gear, flaps, leading edge flaps and airbrake
 	local lHardware = hardware or 1
 	local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
@@ -855,7 +855,7 @@ function MechanicalDevicesIndicator(hardware)
 	SendDataHW("533", ((lMechInfo.flaps.value > 0.93 and lGetTrueAirSpeed > 340) and 1 or 0), lHardware ) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
 end
 
-function RWRStatusPanel(hardware)
+function ExportScript.AF.RWRStatusPanel(hardware)
 -- RWR Status Panel only
 	local lHardware = hardware or 1
 	local lTWSInfo = LoGetTWSInfo()
@@ -920,7 +920,7 @@ function RWRStatusPanel(hardware)
 	SendDataHW("444", (lScanTmp and 1 or 0), lHardware )
 end
 
-function AOAIndicator(hardware)
+function ExportScript.AF.AOAIndicator(hardware)
 -- AOA Indicator only
 	local lHardware = hardware or 1
 	local lAoA = LoGetAngleOfAttack()
@@ -946,14 +946,14 @@ function AOAIndicator(hardware)
 	end
 end
 
-function WeaponStatusPanel(hardware)
+function ExportScript.AF.WeaponStatusPanel(hardware)
 -- The weapon status panel, quantity and readiness of the currently selected weapon and the remaining gun ammunition are indicated.
 	local lHardware = hardware or 1
-	gES_PayloadInfo = LoGetPayloadInfo()
-	if gES_PayloadInfo == nil then
+	ExportScript.AF.PayloadInfo = LoGetPayloadInfo()
+	if ExportScript.AF.PayloadInfo == nil then
 		return
 	end
-	--WriteToLog('gES_PayloadInfo: '..dump(gES_PayloadInfo))
+	--WriteToLog('ExportScript.AF.PayloadInfo: '..dump(ExportScript.AF.PayloadInfo))
 	--[[ exsample
     [Stations] = {
         [1] = {
@@ -1177,44 +1177,44 @@ function WeaponStatusPanel(hardware)
 	]]
 	-- Payload Info
 	-- weapon stations (panel) 1 (left) - 11 (right) reserved
-	SendDataHW("100", gES_PayloadInfo.Cannon.shells, lHardware ) -- count cannon shells
-	SendDataHW("101", (gES_PayloadInfo.Stations[1].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 1)
-	SendDataHW("102", (gES_PayloadInfo.Stations[3].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 2)
-	SendDataHW("103", (gES_PayloadInfo.Stations[5].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 3)
-	SendDataHW("104", (gES_PayloadInfo.Stations[7].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 4)
-	SendDataHW("105", (gES_PayloadInfo.Stations[9].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 5)
-	SendDataHW("106", (gES_PayloadInfo.Stations[11].count > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 6, center station)
-	SendDataHW("107", (gES_PayloadInfo.Stations[10].count > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 7)
-	SendDataHW("108", (gES_PayloadInfo.Stations[8].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 8)
-	SendDataHW("109", (gES_PayloadInfo.Stations[6].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 9)
-	SendDataHW("110", (gES_PayloadInfo.Stations[4].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 10)
-	SendDataHW("111", (gES_PayloadInfo.Stations[2].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 11)
+	SendDataHW("100", ExportScript.AF.PayloadInfo.Cannon.shells, lHardware ) -- count cannon shells
+	SendDataHW("101", (ExportScript.AF.PayloadInfo.Stations[1].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 1)
+	SendDataHW("102", (ExportScript.AF.PayloadInfo.Stations[3].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 2)
+	SendDataHW("103", (ExportScript.AF.PayloadInfo.Stations[5].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 3)
+	SendDataHW("104", (ExportScript.AF.PayloadInfo.Stations[7].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 4)
+	SendDataHW("105", (ExportScript.AF.PayloadInfo.Stations[9].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 5)
+	SendDataHW("106", (ExportScript.AF.PayloadInfo.Stations[11].count > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 6, center station)
+	SendDataHW("107", (ExportScript.AF.PayloadInfo.Stations[10].count > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 7)
+	SendDataHW("108", (ExportScript.AF.PayloadInfo.Stations[8].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 8)
+	SendDataHW("109", (ExportScript.AF.PayloadInfo.Stations[6].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 9)
+	SendDataHW("110", (ExportScript.AF.PayloadInfo.Stations[4].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 10)
+	SendDataHW("111", (ExportScript.AF.PayloadInfo.Stations[2].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 11)
 	-- weapon stations (panel) 1 (left) - 11 (right) empty
-	SendDataHW("121", (gES_PayloadInfo.Stations[1].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 1)
-	SendDataHW("122", (gES_PayloadInfo.Stations[3].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 2)
-	SendDataHW("123", (gES_PayloadInfo.Stations[5].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 3)
-	SendDataHW("124", (gES_PayloadInfo.Stations[7].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 4)
-	SendDataHW("125", (gES_PayloadInfo.Stations[9].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 5)
-	SendDataHW("126", (gES_PayloadInfo.Stations[11].count == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 6, center station)
-	SendDataHW("127", (gES_PayloadInfo.Stations[10].count == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 7)
-	SendDataHW("128", (gES_PayloadInfo.Stations[8].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 8)
-	SendDataHW("129", (gES_PayloadInfo.Stations[6].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 9)
-	SendDataHW("130", (gES_PayloadInfo.Stations[4].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 10)
-	SendDataHW("131", (gES_PayloadInfo.Stations[2].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 11)	
-	--SendDataHW("CurrentStation", gES_PayloadInfo.CurrentStation, lHardware ) 
+	SendDataHW("121", (ExportScript.AF.PayloadInfo.Stations[1].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 1)
+	SendDataHW("122", (ExportScript.AF.PayloadInfo.Stations[3].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 2)
+	SendDataHW("123", (ExportScript.AF.PayloadInfo.Stations[5].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 3)
+	SendDataHW("124", (ExportScript.AF.PayloadInfo.Stations[7].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 4)
+	SendDataHW("125", (ExportScript.AF.PayloadInfo.Stations[9].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 5)
+	SendDataHW("126", (ExportScript.AF.PayloadInfo.Stations[11].count == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 6, center station)
+	SendDataHW("127", (ExportScript.AF.PayloadInfo.Stations[10].count == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 7)
+	SendDataHW("128", (ExportScript.AF.PayloadInfo.Stations[8].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 8)
+	SendDataHW("129", (ExportScript.AF.PayloadInfo.Stations[6].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 9)
+	SendDataHW("130", (ExportScript.AF.PayloadInfo.Stations[4].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 10)
+	SendDataHW("131", (ExportScript.AF.PayloadInfo.Stations[2].count  == 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 11)	
+	--SendDataHW("CurrentStation", ExportScript.AF.PayloadInfo.CurrentStation, lHardware ) 
 	-- air-to-air missils panel 1 and 11, air combat modus, CurrentStation = 1, panel 1 and 11 on
 	-- wenn die Waffenstationen gleichmässig belegt sind, hat bei Auswahl CurrentStation immer den Wert der linken Station
 	-- bei ungleichmäßiger Belegung, hat CurrentStation immer den Wert der jeweiligen Station
-	-- Waffenbezeichnung als UUID, gES_PayloadInfo.Stations[X].CLSID 
+	-- Waffenbezeichnung als UUID, ExportScript.AF.PayloadInfo.Stations[X].CLSID 
 	
 	-- defination
-	if gES_CurrentStationTmp == nil then
-		gES_CurrentStationTmp = -1
+	if ExportScript.AF.CurrentStationTmp == nil then
+		ExportScript.AF.CurrentStationTmp = -1
 	end
 	
-	if gES_PayloadInfo.CurrentStation  > 0 and
-	   gES_CurrentStationTmp ~= gES_PayloadInfo.CurrentStation then
-		gES_CurrentStationTmp = gES_PayloadInfo.CurrentStation
+	if ExportScript.AF.PayloadInfo.CurrentStation  > 0 and
+	   ExportScript.AF.CurrentStationTmp ~= ExportScript.AF.PayloadInfo.CurrentStation then
+		ExportScript.AF.CurrentStationTmp = ExportScript.AF.PayloadInfo.CurrentStation
 		
 		gTmpStationToPanel = {}
 		gTmpStationToPanel[1] =  {Panel =  1, StationID = 101, CurrentID = 201, CurrentID2 = 221, HardwareID = lHardware }	-- left
@@ -1232,30 +1232,30 @@ function WeaponStatusPanel(hardware)
 		WeaponStatusPanel_Reset(201, 211, lHardware)
 		WeaponStatusPanel_Reset(221, 231, lHardware)
 		
-		SendDataHW(gTmpStationToPanel[gES_PayloadInfo.CurrentStation].CurrentID, 1, lHardware) -- eigentliche Auswahl
-		--WriteToLog('aktiv: '..gTmpStationToPanel[gES_PayloadInfo.CurrentStation].CurrentID)
-		if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].container then
-			if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].count > 1 then
-				SendDataHW(gTmpStationToPanel[gES_PayloadInfo.CurrentStation].CurrentID2, 1, lHardware) -- eigentliche Auswahl
-				--WriteToLog('aktiv2: '..gTmpStationToPanel[gES_PayloadInfo.CurrentStation].CurrentID2)
+		SendDataHW(gTmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation].CurrentID, 1, lHardware) -- eigentliche Auswahl
+		--WriteToLog('aktiv: '..gTmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation].CurrentID)
+		if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].container then
+			if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].count > 1 then
+				SendDataHW(gTmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation].CurrentID2, 1, lHardware) -- eigentliche Auswahl
+				--WriteToLog('aktiv2: '..gTmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation].CurrentID2)
 			end
 		end
-		table.foreach(gES_PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStation) -- zugehörige Stationen
-	elseif gES_PayloadInfo.CurrentStation  == 0 and gES_CurrentStationTmp > 0 then
+		table.foreach(ExportScript.AF.PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStation) -- zugehörige Stationen
+	elseif ExportScript.AF.PayloadInfo.CurrentStation  == 0 and ExportScript.AF.CurrentStationTmp > 0 then
 		WeaponStatusPanel_Reset(201, 211, lHardware)
 		WeaponStatusPanel_Reset(221, 231, lHardware)
-		gES_CurrentStationTmp = -1
+		ExportScript.AF.CurrentStationTmp = -1
 	end
 end
 
 -- Helper functions
 
 function WeaponStatusPanel_selectCurrentPayloadStation(_index)
-	if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].CLSID == gES_PayloadInfo.Stations[_index].CLSID and gES_PayloadInfo.CurrentStation ~= _index then
+	if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].CLSID == ExportScript.AF.PayloadInfo.Stations[_index].CLSID and ExportScript.AF.PayloadInfo.CurrentStation ~= _index then
 		SendDataHW(gTmpStationToPanel[_index].CurrentID, 1, gTmpStationToPanel[_index].HardwareID)
 		--WriteToLog('aktiv3: '..gTmpStationToPanel[_index].CurrentID)
-		if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].container then
-			if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].count > 1 then
+		if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].container then
+			if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].count > 1 then
 				SendDataHW(gTmpStationToPanel[_index].CurrentID2, 1, gTmpStationToPanel[_index].HardwareID)
 				--WriteToLog('aktiv3: '..gTmpStationToPanel[_index].CurrentID2)
 			end
@@ -1271,7 +1271,7 @@ function WeaponStatusPanel_Reset(lMinId, lMaxID, lHardware)
 end
 
 function WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit_A10A(_index)
-	if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].CLSID == gES_PayloadInfo.Stations[_index].CLSID and gES_PayloadInfo.CurrentStation ~= _index then
-		gES_TmpWeaponPanelActive[_index] = 0.3
+	if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].CLSID == ExportScript.AF.PayloadInfo.Stations[_index].CLSID and ExportScript.AF.PayloadInfo.CurrentStation ~= _index then
+		ExportScript.AF.TmpWeaponPanelActive[_index] = 0.3
 	end
 end

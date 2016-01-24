@@ -1,12 +1,20 @@
 -- MiG-15Bis
--- Version 0.9.9 BETA
+-- Version 1.0.0 BETA
 
-gES_FoundDCSModule = true
+ExportScript.FoundDCSModule = true
 
-gES_GlassCockpitConfigEveryFrameArguments = 
+ExportScript.ConfigEveryFrameArguments = 
 {
--- arguments for export every frame
--- based of "mainpanel_init.lua"
+	--[[
+	every frames arguments
+	based of "mainpanel_init.lua"
+	Example (http://www.lua.org/manual/5.1/manual.html#pdf-string.format)
+	[DeviceID] = "Format"
+	  [4] = "%.4f",  <- floating-point number with 4 digits after point
+	 [19] = "%0.1f", <- floating-point number with 1 digit after point
+	[129] = "%1d",   <- decimal number
+	  [5] = "%.f",   <- floating point number rounded to a decimal number
+	]]
 	[225] = "%.4f",		-- Canopy
 	[223] = "%.4f",		-- LeftCanopyLever
 	[222] = "%.4f",		-- RightCanopyLever
@@ -84,34 +92,34 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[245] = "%.4f",		-- ASP_3N_Range
 	-- Lamps
 	-- electric system
-	[57] = "%.4f",		-- lamp_GeneratorOff {-1.0, 1.0}{-1.0, 1.0}
-	[58] = "%.4f",		-- lamp_Ignition {-1.0, 1.0}{-1.0, 1.0}
+	[57] = "%.f",		-- lamp_GeneratorOff {-1.0, 1.0}{-1.0, 1.0}
+	[58] = "%.f",		-- lamp_Ignition {-1.0, 1.0}{-1.0, 1.0}
 	-- power plant
-	[119] = "%.4f",		-- lamp_IsolatingValve {-1.0, 1.0}{-1.0, 1.0}
+	[119] = "%.f",		-- lamp_IsolatingValve {-1.0, 1.0}{-1.0, 1.0}
 	-- gear system
-	[75] = "%.4f",		-- lamp_LeftGearExt {-1.0, 1.0}{-1.0, 1.0}
-	[74] = "%.4f",		-- lamp_LeftGearRet {-1.0, 1.0}{-1.0, 1.0}
-	[79] = "%.4f",		-- lamp_RightGearExt {-1.0, 1.0}{-1.0, 1.0}
-	[78] = "%.4f",		-- lamp_RightGearRet {-1.0, 1.0}{-1.0, 1.0}
-	[77] = "%.4f",		-- lamp_NoseGearExt {-1.0, 1.0}{-1.0, 1.0}
-	[76] = "%.4f",		-- lamp_NoseGearRet {-1.0, 1.0}{-1.0, 1.0}
-	[53] = "%.4f",		-- lamp_ExtendGears {-1.0, 1.0}{-1.0, 1.0}
+	[75] = "%.f",		-- lamp_LeftGearExt {-1.0, 1.0}{-1.0, 1.0}
+	[74] = "%.f",		-- lamp_LeftGearRet {-1.0, 1.0}{-1.0, 1.0}
+	[79] = "%.f",		-- lamp_RightGearExt {-1.0, 1.0}{-1.0, 1.0}
+	[78] = "%.f",		-- lamp_RightGearRet {-1.0, 1.0}{-1.0, 1.0}
+	[77] = "%.f",		-- lamp_NoseGearExt {-1.0, 1.0}{-1.0, 1.0}
+	[76] = "%.f",		-- lamp_NoseGearRet {-1.0, 1.0}{-1.0, 1.0}
+	[53] = "%.f",		-- lamp_ExtendGears {-1.0, 1.0}{-1.0, 1.0}
 	-- fuel system
-	[56] = "%.4f",		-- lamp_Remain300 {-1.0, 1.0}{-1.0, 1.0}
-	[50] = "%.4f",		-- lamp_AftEmpty {-1.0, 1.0}{-1.0, 1.0}
-	[52] = "%.4f",		-- lamp_DropTanks {-1.0, 1.0}{-1.0, 1.0}
-	[51] = "%.4f",		-- lamp_BoostPressure {-1.0, 1.0}{-1.0, 1.0}
+	[56] = "%.f",		-- lamp_Remain300 {-1.0, 1.0}{-1.0, 1.0}
+	[50] = "%.f",		-- lamp_AftEmpty {-1.0, 1.0}{-1.0, 1.0}
+	[52] = "%.f",		-- lamp_DropTanks {-1.0, 1.0}{-1.0, 1.0}
+	[51] = "%.f",		-- lamp_BoostPressure {-1.0, 1.0}{-1.0, 1.0}
 	-- control system
-	[113] = "%.4f",		-- lamp_TrimmerNeutral {-1.0, 1.0}{-1.0, 1.0}
-	[59] = "%.4f",		-- lamp_FlapsExt {-1.0, 1.0}{-1.0, 1.0}
-	[124] = "%.4f",		-- lamp_AirBrakeExt {-1.0, 1.0}{-1.0, 1.0}
+	[113] = "%.f",		-- lamp_TrimmerNeutral {-1.0, 1.0}{-1.0, 1.0}
+	[59] = "%.f",		-- lamp_FlapsExt {-1.0, 1.0}{-1.0, 1.0}
+	[124] = "%.f",		-- lamp_AirBrakeExt {-1.0, 1.0}{-1.0, 1.0}
 	-- fire extinguisher system
-	[135] = "%.4f",		-- lamp_FireDetected {-1.0, 1.0}{-1.0, 1.0}
+	[135] = "%.f",		-- lamp_FireDetected {-1.0, 1.0}{-1.0, 1.0}
 	-- ARC-5
-	[183] = "%.4f",		-- lamp_ARC_5 {-1.0, 1.0}{-1.0, 1.0}
-	[218] = "%.4f",		-- light_ARC_5_scale {-1.0, 1.0}{-1.0, 1.0}
+	[183] = "%.f",		-- lamp_ARC_5 {-1.0, 1.0}{-1.0, 1.0}
+	[218] = "%.f",		-- light_ARC_5_scale {-1.0, 1.0}{-1.0, 1.0}
 	-- MRP-48P
-	[54] = "%.4f",		-- lamp_Marker {-1.0, 1.0}{-1.0, 1.0}
+	[54] = "%.f",		-- lamp_Marker {-1.0, 1.0}{-1.0, 1.0}
 	-- Light System
 	[226] = "%.4f",		-- light_LeftUV {-1.0, 1.0}{-1.0, 1.0}
 	[215] = "%.4f",		-- light_CenterUV {-1.0, 1.0}{-1.0, 1.0}
@@ -119,9 +127,9 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[217] = "%.4f",		-- light_Panels {-1.0, 1.0}{-1.0, 1.0}
 	[216] = "%.4f",		-- light_AuxLeftPanel {-1.0, 1.0}{-1.0, 1.0}
 	-- Gun Camera
-	[55] = "%.4f"		-- lamp_GunCamera {-1.0, 1.0}{-1.0, 1.0}
+	[55] = "%.f"		-- lamp_GunCamera {-1.0, 1.0}{-1.0, 1.0}
 }
-gES_GlassCockpitConfigArguments = 
+ExportScript.ConfigArguments = 
 {
 	--[[
 	arguments for export in low tick interval
@@ -271,132 +279,31 @@ gES_GlassCockpitConfigArguments =
 -- done every export event --
 -----------------------------
 
--- Pointed to by ProcessGlassCockpitDCSHighImportance
-function ProcessGlassCockpitDCSConfigHighImportance(mainPanelDevice)
-	if gES_GlassCockpitType == 1 then
-		-- HELIOS Version 1.3
-	elseif gES_GlassCockpitType == 2 then
-		-- HawgTouch version 1.6
-
-		-- ADI
-		-- AGK_47B_roll;AGK_47B_pitch;AGK_47B_failure_flag;AGK_47B_sideslip;
-		-- AGK_47B_turn;AGK_47B_horizon
-		SendData(2001, string.format("%.4f;%.4f;%.4f;%.4f;%.4f;%.1f", 
-										mainPanelDevice:get_argument_value(6), 
-										mainPanelDevice:get_argument_value(7), 
-										mainPanelDevice:get_argument_value(11),
-										mainPanelDevice:get_argument_value(8),
-										mainPanelDevice:get_argument_value(9),
-										mainPanelDevice:get_argument_value(10)))
-		-- Altimeter
-		-- Altimeter_km;Altimeter_m;Altimeter_Pressure
-		SendData(2002, string.format("%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(28), 
-										mainPanelDevice:get_argument_value(29), 
-										mainPanelDevice:get_argument_value(31)))
-		-- Airspeed
-		-- IAS;TAS
-		SendData(2003, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(4), 
-										mainPanelDevice:get_argument_value(5)))
-		-- Brake
-		-- LeftBrakePressure;RightBrakePressure
-		SendData(2004, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(121), 
-										mainPanelDevice:get_argument_value(122)))
-		-- Cockpit
-		-- CockpitAltitude;PressureDifference;
-		SendData(2005, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(39), 
-										mainPanelDevice:get_argument_value(40)))
-		-- FuelFlow
-		-- OilTemperature;OilPressure;EngineFuelPressure;
-		SendData(2006, string.format("%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(45), 
-										mainPanelDevice:get_argument_value(44), 
-										mainPanelDevice:get_argument_value(43)))
-		-- Gear
-		-- lamp_LeftGearExt;lamp_LeftGearRet;lamp_RightGearExt;lamp_RightGearRet;lamp_NoseGearExt; 
-		-- lamp_NoseGearRet;lamp_ExtendGears					
-		SendData(2007, string.format("%.4f;%.4f;%.4f;%.4f;%.4f;%.4f;%.3f", 
-										mainPanelDevice:get_argument_value(75), 
-										mainPanelDevice:get_argument_value(74), 
-										mainPanelDevice:get_argument_value(79),
-										mainPanelDevice:get_argument_value(78),
-										mainPanelDevice:get_argument_value(77),
-										mainPanelDevice:get_argument_value(76),
-										mainPanelDevice:get_argument_value(53)))
-		-- GyroCompass
-		-- HeadingScale;Heading
-		SendData(2008, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(32), 
-										mainPanelDevice:get_argument_value(33)))
-		-- VoltAmpMeter
-		-- VoltAmperMeter; lamps_lightness;
-		SendData(2009, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(83), 
-										mainPanelDevice:get_argument_value(244)))
-		-- Clock
-		-- CLOCK_currtime_hours;CLOCK_currtime_minutes;CLOCK_flight_time_meter_status;
-		-- CLOCK_flight_hours; CLOCK_flight_minutes;CLOCK_seconds_meter_time_minutes;
-		-- CLOCK_seconds_meter_time_seconds								
-		SendData(2010, string.format("%.4f;%.4f;%.4f;%.4f;%.4f;%.4f;%.3f", 
-										mainPanelDevice:get_argument_value(15), 
-										mainPanelDevice:get_argument_value(16), 
-										mainPanelDevice:get_argument_value(22),
-										mainPanelDevice:get_argument_value(18),
-										mainPanelDevice:get_argument_value(19),
-										mainPanelDevice:get_argument_value(20),
-										mainPanelDevice:get_argument_value(17)))
-		-- Compass
-		-- heading, pitch, bank
-		SendData(2011, string.format("%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(33), 
-										mainPanelDevice:get_argument_value(7), 
-										mainPanelDevice:get_argument_value(6)))
-	end
+-- Pointed to by ProcessIkarusDCSHighImportance
+function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	]]
 end
 
-function ProcessHARDWAREConfigHighImportance(mainPanelDevice)
---	SendDataHW("",  mainPanelDevice:get_argument_value())	-- 
-	-- Lamps	
-	-- electric system
-	SendDataHW("57",  mainPanelDevice:get_argument_value(57))		-- lamp_GeneratorOff
-	SendDataHW("58",  mainPanelDevice:get_argument_value(58))		-- lamp_Ignition
-	-- power plant
-	SendDataHW("119",  mainPanelDevice:get_argument_value(119))		-- lamp_IsolatingValve
-	-- gear system
-	SendDataHW("75",  mainPanelDevice:get_argument_value(75))		-- lamp_LeftGearExt
-	SendDataHW("74",  mainPanelDevice:get_argument_value(74))		-- lamp_LeftGearRet
-	SendDataHW("79",  mainPanelDevice:get_argument_value(79))		-- lamp_RightGearExt
-	SendDataHW("78",  mainPanelDevice:get_argument_value(78))		-- lamp_RightGearRet
-	SendDataHW("77",  mainPanelDevice:get_argument_value(77))		-- lamp_NoseGearExt
-	SendDataHW("76",  mainPanelDevice:get_argument_value(76))		-- lamp_NoseGearRet
-	SendDataHW("53",  mainPanelDevice:get_argument_value(53))		-- lamp_ExtendGears
-	-- fuel system	
-	SendDataHW("56",  mainPanelDevice:get_argument_value(56))		-- lamp_Remain300
-	SendDataHW("50",  mainPanelDevice:get_argument_value(50))		-- lamp_AftEmpty
-	SendDataHW("52",  mainPanelDevice:get_argument_value(52))		-- lamp_DropTanks
-	SendDataHW("51",  mainPanelDevice:get_argument_value(51))		-- lamp_BoostPressure
-	-- control system	
-	SendDataHW("113",  mainPanelDevice:get_argument_value(113))		-- lamp_TrimmerNeutral
-	SendDataHW("59",  mainPanelDevice:get_argument_value(59))		-- lamp_FlapsExt
-	SendDataHW("124",  mainPanelDevice:get_argument_value(124))		-- lamp_AirBrakeExt
-	-- fire extinguisher system	
-	SendDataHW("135",  mainPanelDevice:get_argument_value(135))		-- lamp_FireDetected
-	-- ARC-5
-	SendDataHW("183",  mainPanelDevice:get_argument_value(183))		-- lamp_ARC_5
-	SendDataHW("218",  mainPanelDevice:get_argument_value(218))		-- light_ARC_5_scale
-	-- MRP-48P
-	SendDataHW("54",  mainPanelDevice:get_argument_value(54))		-- lamp_Marker
-	-- Light System	
-	SendDataHW("226",  mainPanelDevice:get_argument_value(226))		-- light_LeftUV
-	SendDataHW("215",  mainPanelDevice:get_argument_value(215))		-- light_CenterUV
-	SendDataHW("227",  mainPanelDevice:get_argument_value(227))		-- light_RightUV
-	SendDataHW("217",  mainPanelDevice:get_argument_value(217))		-- light_Panels
-	SendDataHW("216",  mainPanelDevice:get_argument_value(216))		-- light_AuxLeftPanel
-	-- Gun Camera	
-	SendDataHW("55",  mainPanelDevice:get_argument_value(55))		-- lamp_GunCamera	
+function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to DAC
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local UHF_RADIO = GetDevice(54)
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	]]
 end
 
 -----------------------------------------------------
@@ -404,46 +311,51 @@ end
 -- done every gExportLowTickInterval export events --
 -----------------------------------------------------
 
--- Pointed to by ProcessGlassCockpitDCSConfigLowImportance
-function ProcessGlassCockpitDCSConfigLowImportance(mainPanelDevice)
-	if gES_GlassCockpitType == 1 then
-		-- HELIOS Version 1.3
-	elseif gES_GlassCockpitType == 2 then
-		-- HawgTouch version 1.6
-	end
+-- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
+function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+	--[[
+	export in low tick interval to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	]]
 end
 
-function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
+
+function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	--[[
 	every frame export to hardware
 	Example from A-10C
 	Get Radio Frequencies
 	get data from device
 	local UHF_RADIO = GetDevice(54)
-	SendDataHW("ExportID", "Format")
-	SendDataHW("ExportID", "Format", HardwareConfigID)
-	SendDataHW("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	SendDataHW("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
 	]]
 
 	--=====================================================================================
 	--[[
-	WriteToLog('list_cockpit_params(): '..dump(list_cockpit_params()))
-	WriteToLog('CMSP: '..dump(list_indication(7)))
+	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
 	local ltmp1 = 0
 	for ltmp2 = 0, 13, 1 do
 		ltmp1 = list_indication(ltmp2)
-		WriteToLog(ltmp2..': '..dump(ltmp1))
-		--WriteToLog(ltmp2..' (metatable): '..dump(getmetatable(ltmp1)))
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 	]]
 --[[
 	local ltmp1 = 0
 	for ltmp2 = 1, 73, 1 do
 		ltmp1 = GetDevice(ltmp2)
-		WriteToLog(ltmp2..': '..dump(ltmp1))
-		WriteToLog(ltmp2..' (metatable): '..dump(getmetatable(ltmp1)))
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 ]]
 end
@@ -452,5 +364,5 @@ end
 --     Custom functions    --
 -----------------------------
 
-function genericRadio(key, value, hardware)
+function ExportScript.genericRadio(key, value, hardware)
 end

@@ -1,10 +1,20 @@
 -- F-86 Export 
--- Version 0.9.9 BETA
+-- Version 1.0.0 BETA
 
-gES_FoundDCSModule = true
+ExportScript.FoundDCSModule = true
 
-gES_GlassCockpitConfigEveryFrameArguments = 
+ExportScript.ConfigEveryFrameArguments = 
 {
+	--[[
+	every frames arguments
+	based of "mainpanel_init.lua"
+	Example (http://www.lua.org/manual/5.1/manual.html#pdf-string.format)
+	[DeviceID] = "Format"
+	  [4] = "%.4f",  <- floating-point number with 4 digits after point
+	 [19] = "%0.1f", <- floating-point number with 1 digit after point
+	[129] = "%1d",   <- decimal number
+	  [5] = "%.f",   <- floating point number rounded to a decimal number
+	]]
 	-- Mechanic clock
 	[19] = "%.4f",		-- CLOCK_currtime_hours {0.0, 12.0} = {0.0, 1.0}
 	[18] = "%.4f",		-- CLOCK_currtime_minutes {0.0, 60.0} = {0.0, 1.0}
@@ -74,36 +84,41 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[814] = "%.4f",		-- ARN6_Scale {1.0, 0.0}
 	[830] = "%.4f",		-- ARN6_FreqScale {0.0, 1.0}
 	-- light system
-	[182] = "%.4f",		-- IlluminationLights {0.0, 1.0}
-	[825] = "%.4f",		-- StandByCompassLight {0.0, 1.0}
-	[180] = "%.4f",		-- PrimaryInstLights {0.0, 1.0}
-	[185] = "%.4f",		-- AuxiliaryInstrumentLights {0.0, 1.0}
+	[182] = "%.f",		-- IlluminationLights {0.0, 1.0}
+	[825] = "%.f",		-- StandByCompassLight {0.0, 1.0}
+	[180] = "%.f",		-- PrimaryInstLights {0.0, 1.0}
+	[185] = "%.f",		-- AuxiliaryInstrumentLights {0.0, 1.0}
+	--
 	[603] = "%.4f",		-- LABS_roll_needle {-1.0, 1.0}
 	[604] = "%.4f",		-- LABS_pitch_needle {-1.0, 1.0}
 	-- LAMPS
 	-- electric system
-	[617] = "%.1f",		-- lamp_ELEC_GenOff {-1.0, 1.0}
-	[610] = "%.1f",		-- lamp_ELEC_MainInstInverterOffSelectAlt {-1.0, 1.0}
-	[611] = "%.1f",		-- lamp_ELEC_BothInstInvertersOff {-1.0, 1.0}
-	[612] = "%.1f",		-- lamp_ELEC_MainRadarInverterOff {-1.0, 1.0}
+	[617] = "%.f",		-- lamp_ELEC_GenOff {-1.0, 1.0}
+	[610] = "%.f",		-- lamp_ELEC_MainInstInverterOffSelectAlt {-1.0, 1.0}
+	[611] = "%.f",		-- lamp_ELEC_BothInstInvertersOff {-1.0, 1.0}
+	[612] = "%.f",		-- lamp_ELEC_MainRadarInverterOff {-1.0, 1.0}
 	-- hydraulic system
-	[614] = "%.1f",		-- lamp_HYDRO_AltFltContSysOper {-1.0, 1.0}
-	[39] = "%.1f",		-- lamp_HYDRO_LeftGear {-1.0, 1.0}
-	[41] = "%.1f",		-- lamp_HYDRO_RightGear {-1.0, 1.0}
-	[40] = "%.1f",		-- lamp_HYDRO_NoseGear {-1.0, 1.0}
+	[614] = "%.f",		-- lamp_HYDRO_AltFltContSysOper {-1.0, 1.0}
+	[39] = "%.f",		-- lamp_HYDRO_LeftGear {-1.0, 1.0}
+	[41] = "%.f",		-- lamp_HYDRO_RightGear {-1.0, 1.0}
+	[40] = "%.f",		-- lamp_HYDRO_NoseGear {-1.0, 1.0}
 	-- fuel system
-	[625] = "%.1f",		-- lamp_FUEL_OutbdTanksEmpty {-1.0, 1.0}
+	[625] = "%.f",		-- lamp_FUEL_OutbdTanksEmpty {-1.0, 1.0}
 	-- fire detection system
-	[615] = "%.1f",		-- lamp_FIRE_DETECTION_FwdFireWarning {-1.0, 1.0}
-	[616] = "%.1f",		-- lamp_FIRE_DETECTION_AftFireWarning {-1.0, 1.0}
+	[615] = "%.f",		-- lamp_FIRE_DETECTION_FwdFireWarning {-1.0, 1.0}
+	[616] = "%.f",		-- lamp_FIRE_DETECTION_AftFireWarning {-1.0, 1.0}
 	-- control system
-	[613] = "%.1f",		-- lamp_CONTROL_TakeOffPosInd {-1.0, 1.0}
+	[613] = "%.f",		-- lamp_CONTROL_TakeOffPosInd {-1.0, 1.0}
 	-- air system
-	[614] = "%.1f"		-- lamp_WindshieldAntiIceOverheatWarning {-1.0, 1.0}
+	[614] = "%.f"		-- lamp_WindshieldAntiIceOverheatWarning {-1.0, 1.0}
 }
 
-gES_GlassCockpitConfigArguments = 
+ExportScript.ConfigArguments = 
 {
+	--[[
+	arguments for export in low tick interval
+	based on "clickabledata.lua"
+	]]
 	-- cockpit mechanics
 	[718] = "%.1f",     -- Canopy Switch, OPEN/OFF/CLOSE {-1.0, 1.0}
 	[818] = "%.1f",     -- Emergency Jettison Handle, IN/OUT {0.0, 1.0}
@@ -280,109 +295,31 @@ gES_GlassCockpitConfigArguments =
 -- done every export event --
 -----------------------------
 
--- Pointed to by ProcessGlassCockpitDCSHighImportance
-function ProcessGlassCockpitDCSConfigHighImportance(mainPanelDevice)
-	if gES_GlassCockpitType == 1 then
-		-- HELIOS Version 1.3
-	elseif gES_GlassCockpitType == 2 then
-		-- HawgTouch version 1.6
-		
-		-- ACC
-		-- Accelerometer; AccelerometerMin; AccelerometerMax;
-		SendData(2001, string.format("%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(6), 
-										mainPanelDevice:get_argument_value(1003), 
-										mainPanelDevice:get_argument_value(1002)))
-		-- ADI
-		-- AttitudeIndicatorPitch; AttitudeIndicatorBank; AttitudeIndicatorPitchSphere; AttitudeIndicatorBankNeedle; AttitudeIndicatorOffFlag
-		SendData(2002, string.format("%.4f;%.4f;%.4f;%.4f;%.1f", 
-										mainPanelDevice:get_argument_value(605), 
-										mainPanelDevice:get_argument_value(606), 
-										mainPanelDevice:get_argument_value(81),
-										mainPanelDevice:get_argument_value(1005),
-										mainPanelDevice:get_argument_value(713)))
-		-- Altimeter
-		-- Altimeter10000; Altimeter1000; Altimeter100; AltimeterHG
-		SendData(2003, string.format("%0.4f;%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(707), 
-										mainPanelDevice:get_argument_value(523), 
-										mainPanelDevice:get_argument_value(524),
-										mainPanelDevice:get_argument_value(700)))
-		-- Airspeed
-		-- Airspeed; AirspeedDrum; AirspeedM1
-		SendData(2004, string.format("%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(178), 
-										mainPanelDevice:get_argument_value(709), 
-										mainPanelDevice:get_argument_value(8)))
-		-- RMI
-		-- ARN6_Bearing; ARN6_Scale
-		SendData(2008, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(600), 
-										mainPanelDevice:get_argument_value(814)))
-		-- Clock
-		-- CLOCK_currtime_hours; CLOCK_currtime_minutes; CLOCK_currtime_seconds; CLOCK_seconds_meter_time_minutes; CLOCK_seconds_meter_time_seconds
-		-- CLOCK_currtime_hours; CLOCK_currtime_minutes; <= Beta
-		SendData(2005, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(19), 
-										mainPanelDevice:get_argument_value(18)))
-		-- GyroCompass
-		-- GyroCompassNeedle; GyroCompassScale
-		SendData(2006, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(711), 
-										mainPanelDevice:get_argument_value(712)))
-		-- Labs
-		-- LABS_roll_needle; LABS_pitch_needle
-		SendData(2007, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(603), 
-										mainPanelDevice:get_argument_value(604)))
-		-- RMI
-		-- ARN6_Bearing; ARN6_Scale
-		SendData(2008, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(600), 
-										mainPanelDevice:get_argument_value(814)))
-		-- Gear
-		-- Left; Right; Front
-		SendData(2010, string.format("%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(39), 
-										mainPanelDevice:get_argument_value(41), 
-										mainPanelDevice:get_argument_value(40)))		
-	end
+-- Pointed to by ProcessIkarusDCSHighImportance
+function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	]]
 end
 
-function ProcessHARDWAREConfigHighImportance(mainPanelDevice)
--- Hier kommen alle Daten rein die ueber die Hardware in schneller folge ausgeben werden soll
--- In der Regel sind das die Statusanzeigen
-
--- SendDataHW(), ist die Funktion zur Ausgabe der Werte an die Hardware
--- "178" ist die ID des Wertes die in der entsprechenden XML Datei festgelegt wird, sollte der DCS ID entsprechen
--- mainPanelDevice:get_argument_value() ist eine Funktion die die Werte der �bergeben DCS ID aus dem Spiel ausliest
--- 178 ist die DCS ID von dem man die Werte haben will
--- Description
-
-	-- light system
-	SendDataHW("182",  mainPanelDevice:get_argument_value(182))		-- IlluminationLights {0.0, 1.0}
-	SendDataHW("825",  mainPanelDevice:get_argument_value(825))		-- StandByCompassLight {0.0, 1.0}
-	SendDataHW("180",  mainPanelDevice:get_argument_value(180))		-- PrimaryInstLights {0.0, 1.0}
-	SendDataHW("185",  mainPanelDevice:get_argument_value(185))		-- AuxiliaryInstrumentLights {0.0, 1.0}
-	-- LAMPS
-	-- electric system
-	SendDataHW("617",  mainPanelDevice:get_argument_value(617))		-- lamp_ELEC_GenOff {-1.0, 1.0}
-	SendDataHW("610",  mainPanelDevice:get_argument_value(610))		-- lamp_ELEC_MainInstInverterOffSelectAlt {-1.0, 1.0}
-	SendDataHW("611",  mainPanelDevice:get_argument_value(611))		-- lamp_ELEC_BothInstInvertersOff {-1.0, 1.0}
-	SendDataHW("612",  mainPanelDevice:get_argument_value(612))		-- lamp_ELEC_MainRadarInverterOff {-1.0, 1.0}
-	-- hydraulic system
-	SendDataHW("614",  mainPanelDevice:get_argument_value(614))		-- lamp_HYDRO_AltFltContSysOper {-1.0, 1.0}
-	SendDataHW("39",  mainPanelDevice:get_argument_value(39))		-- lamp_HYDRO_LeftGear {-1.0, 1.0}
-	SendDataHW("41",  mainPanelDevice:get_argument_value(41))		-- lamp_HYDRO_RightGear {-1.0, 1.0}
-	SendDataHW("40",  mainPanelDevice:get_argument_value(40))		-- lamp_HYDRO_NoseGear {-1.0, 1.0}
-	-- fuel system
-	SendDataHW("625",  mainPanelDevice:get_argument_value(625))		-- lamp_FUEL_OutbdTanksEmpty {-1.0, 1.0}
-	-- fire detection system
-	SendDataHW("615",  mainPanelDevice:get_argument_value(615))		-- lamp_FIRE_DETECTION_FwdFireWarning {-1.0, 1.0}
-	SendDataHW("616",  mainPanelDevice:get_argument_value(616))		-- lamp_FIRE_DETECTION_AftFireWarning {-1.0, 1.0}
-	-- control system
-	SendDataHW("613",  mainPanelDevice:get_argument_value(613))		-- lamp_CONTROL_TakeOffPosInd {-1.0, 1.0}
-
+function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to DAC
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local UHF_RADIO = GetDevice(54)
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	]]
 end
 
 -----------------------------------------------------
@@ -390,46 +327,50 @@ end
 -- done every gExportLowTickInterval export events --
 -----------------------------------------------------
 
--- Pointed to by ProcessGlassCockpitDCSConfigLowImportance
-function ProcessGlassCockpitDCSConfigLowImportance(mainPanelDevice)
-	if gES_GlassCockpitType == 1 then
-		-- HELIOS Version 1.3
-	elseif gES_GlassCockpitType == 2 then
-		-- HawgTouch version 1.6
-	end
+-- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
+function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+	--[[
+	export in low tick interval to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	]]
 end
 
-function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
+function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	--[[
-	every frame export to hardware
+	export in low tick interval to DAC
 	Example from A-10C
 	Get Radio Frequencies
 	get data from device
 	local UHF_RADIO = GetDevice(54)
-	SendDataHW("ExportID", "Format")
-	SendDataHW("ExportID", "Format", HardwareConfigID)
-	SendDataHW("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	SendDataHW("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
 	]]
 
 	--=====================================================================================
 	--[[
-	WriteToLog('list_cockpit_params(): '..dump(list_cockpit_params()))
-	WriteToLog('CMSP: '..dump(list_indication(7)))
+	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
 	local ltmp1 = 0
 	for ltmp2 = 0, 13, 1 do
 		ltmp1 = list_indication(ltmp2)
-		WriteToLog(ltmp2..': '..dump(ltmp1))
-		--WriteToLog(ltmp2..' (metatable): '..dump(getmetatable(ltmp1)))
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 	]]
 --[[
 	local ltmp1 = 0
 	for ltmp2 = 1, 73, 1 do
 		ltmp1 = GetDevice(ltmp2)
-		WriteToLog(ltmp2..': '..dump(ltmp1))
-		WriteToLog(ltmp2..' (metatable): '..dump(getmetatable(ltmp1)))
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 ]]
 end
@@ -438,6 +379,6 @@ end
 --     Custom functions    --
 -----------------------------
 
-function genericRadio(key, value, hardware)
+function ExportScript.genericRadio(key, value, hardware)
 end
 

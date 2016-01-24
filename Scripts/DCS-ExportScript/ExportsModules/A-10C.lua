@@ -1,15 +1,30 @@
 -- A-10C Export
--- Version 0.9.9 BETA
+-- Version 1.0.0 BETA
 
-gES_FoundDCSModule = true
+ExportScript.FoundDCSModule = true
 
-gES_GlassCockpitConfigEveryFrameArguments = 
-{ 
+ExportScript.ConfigEveryFrameArguments = 
+{
+	--[[
+	every frames arguments
+	based of "mainpanel_init.lua"
+	Example (http://www.lua.org/manual/5.1/manual.html#pdf-string.format)
+	[DeviceID] = "Format"
+	  [4] = "%.4f",  <- floating-point number with 4 digits after point
+	 [19] = "%0.1f", <- floating-point number with 1 digit after point
+	[129] = "%1d",   <- decimal number
+	  [5] = "%.f",   <- floating point number rounded to a decimal number
+	]]
+	-- AOA Gauges
 	[4] = "%.4f",		-- AOA
+	[55] = "%0.1f",		-- AOA Power Flag
+	-- VVI
 	[12] = "%.4f",		-- Variometer (VVI) {-1.0, -0.5, -0.29, 0.29, 0.5, 1.0} {-6000, -2000, -1000, 1000, 2000, 6000}
+	-- APU
 	[13] = "%.4f",		-- APU RPM
 	[14] = "%.4f",		-- APU Temperature
 	[15] = "%.4f",		-- Accelerometer_main
+	-- ADI
 	[17] = "%.4f",		-- ADI Pitch
 	[18] = "%.4f",		-- ADI Bank
 	[19] = "%0.1f",		-- ADI Course Warning Flag
@@ -20,6 +35,11 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[25] = "%0.1f",		-- ADI Attitude Warning Flag
 	[26] = "%0.1f",		-- ADI Glide-Slope Warning Flag
 	[27] = "%.4f",		-- ADI Glide-Slope Indicator
+	-- HSI
+	[28] = "%0.4f",		-- HSI_range_counter_1000
+	[29] = "%0.4f",		-- HSI_range_counter_100
+	[30] = "%0.4f",		-- HSI_range_counter_10
+	[31] = "%0.4f",		-- HSI_range_counter_1
 	[32] = "%0.1f",		-- HSI Range Flag
 	[33] = "%.4f",		-- HSI Bearing #1
 	[34] = "%.4f",		-- HSI Heading
@@ -29,13 +49,25 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[41] = "%.4f",		-- HSI Deviation
 	[46] = "%0.1f",		-- HSI Bearing Flag
 	[47] = "%.4f",		-- HSI Course Arrow
+	-- Airspeed
 	[48] = "%.4f",		-- Airspeed Needle
 	[49] = "%.4f",		-- Airspeed Dial
-	[55] = "%0.1f",		-- AOA Power Flag
+	-- Altimeter
+	[51] = "%.4f",		-- Altimeter_100_footPtr
+	[52] = "%.4f",		-- Altimeter_10000_footCount
+	[53] = "%.4f",		-- Altimeter_1000_footCount
+	[54] = "%.4f",		-- Altimeter_100_footCount
+	[59] = "%.4f",		-- pressure_setting_0
+	[58] = "%.4f",		-- pressure_setting_1
+	[57] = "%.4f",		-- pressure_setting_2
+	[56] = "%.4f",		-- pressure_setting_3
+	[61] = "%.1f",		-- AAU34_PNEU_flag
+	-- Stby Attitude Indicator
 	[63] = "%.4f",		-- Standby Attitude Indicator pitch
 	[64] = "%.4f",		-- Standby Attitude Indicator bank
 	[65] = "%0.1f",		-- Standby Attitude Indicator warning flag
 	[715] = "%.4f",		-- Standby Attitude Indicator manual pitch adjustment
+	-- Engine Gauges
 	[70] = "%.4f",		-- Left Engine Temperature
 	[73] = "%.4f",		-- Right Engine Temperature
 	[76] = "%.4f",		-- EngineLeftFanSpeed
@@ -46,6 +78,7 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[83] = "%.4f",		-- Right Engine Oil Pressure
 	[84] = "%.4f",		-- EngineLeftFuelFlow
 	[85] = "%.4f",		-- EngineRightFuelFlow
+	-- Fuel Gauges
 	[88] = "%.4f",		-- Fuel Indicator, FuelQuantityLeft
 	[89] = "%.4f",		-- Fuel Indicator, FuelQuantityRight
 	[90] = "%.4f",		-- FuelQuantityCounterTenthOfThous
@@ -53,99 +86,99 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[92] = "%.4f",		-- FuelQuantityCounterHundreds
 	[129] = "%1d",		-- PTR-LCP-EAC (EAC On/Off)
 	-- Misc lamps
-	[178] = "%0.1f",	-- L_AILERON_EMER_DISENGAGE
-	[179] = "%0.1f",	-- R_AILERON_EMER_DISENGAGE
-	[181] = "%0.1f",	-- L_ELEVATOR_EMER_DISENGAGE
-	[182] = "%0.1f",	-- R_ELEVATOR_EMER_DISENGAGE
-	--STABILITY AUGMENTATION SYSTEM PANEL
+	[178] = "%.f",		-- L_AILERON_EMER_DISENGAGE
+	[179] = "%.f",		-- R_AILERON_EMER_DISENGAGE
+	[181] = "%.f",		-- L_ELEVATOR_EMER_DISENGAGE
+	[182] = "%.f",		-- R_ELEVATOR_EMER_DISENGAGE
+	-- STABILITY AUGMENTATION SYSTEM PANEL
 	[185] = "%1d",		-- PTR-SASP-YAW-SASENGAGE-L (Yaw SAS Engage left)
 	[186] = "%1d",		-- PTR-SASP-YAW-SASENGAGE-R (Yaw SAS Engage right)
 	[187] = "%1d",		-- PTR-SASP-PITCH-SASENGAGE-L (Pitch SAS Engage left)
 	[188] = "%1d",		-- PTR-SASP-PITCH-SASENGAGE-R (Pitch SAS Engage right)
 	-- Misc lamps
-	[191] = "%0.1f",	-- TAKE_OFF_TRIM
-	[215] = "%0.1f",	-- L_ENG_FIRE
-	[216] = "%0.1f",	-- APU_FIRE
-	[217] = "%0.1f",	-- R_ENG_FIRE
-	[260] = "%0.1f",	-- TACAN_test_light {0.0, 1.0}
+	[191] = "%.f",		-- TAKE_OFF_TRIM
+	[215] = "%.f",		-- L_ENG_FIRE
+	[216] = "%.f",		-- APU_FIRE
+	[217] = "%.f",		-- R_ENG_FIRE
+	[260] = "%.f",		-- TACAN_test_light {0.0, 1.0}
 	--
 	[269] = "%.4f",		-- HARS_sync {-1.0, 1.0}
 	[274] = "%.4f",		-- OxygenVolume {0.0, 1.0}
 	[281] = "%.4f",		-- CabinPressAlt {0.0, 1.0}
-	--Light System Control Panel
+	-- Light System Control Panel
 	[289] = "%1d",		-- PTR-LGHTCP-ANTICOLLISION (Anticollision Lights)
 	-- CMSC lamps
-	[372] = "%0.1f",	-- CMSC_MissileLaunchIndicator {0.0, 1.0}
-	[373] = "%0.1f",	-- CMSC_PriorityStatusIndicator {0.0, 1.0}
-	[374] = "%0.1f",	-- CMSC_UnknownStatusIndicator {0.0, 1.0}
-	-- Master Warning Lamp UFCP
-	[404] = "%0.1f",	-- MASTER_WARNING_STUB MASTER WARNING
-	-- Caution Panel LAMPS
-	[480] = "%0.1f",	-- ENG_START_CYCLE
-	[481] = "%0.1f",	-- L_HYD_PRESS
-	[482] = "%0.1f",	-- R_HYD_PRESS
-	[483] = "%0.1f",	-- GUN_UNSAFE
-	[484] = "%0.1f",	-- ANTISKID
-	[485] = "%0.1f",	-- L_HYD_RES
-	[486] = "%0.1f",	-- R_HYD_RES
-	[487] = "%0.1f",	-- OXY_LOW
-	[488] = "%0.1f",	-- ELEV_DISENG
-	[489] = "%0.1f",	-- VOID1
-	[490] = "%0.1f",	-- SEAT_NOT_ARMED
-	[491] = "%0.1f",	-- BLEED_AIR_LEAK
-	[492] = "%0.1f",	-- AIL_DISENG
-	[493] = "%0.1f",	-- L_AIL_TAB
-	[494] = "%0.1f",	-- R_AIL_TAB
-	[495] = "%0.1f",	-- SERVICE_AIR_HOT
-	[496] = "%0.1f",	-- PITCH_SAS
-	[497] = "%0.1f",	-- L_ENG_HOT
-	[498] = "%0.1f",	-- R_ENG_HOT
-	[499] = "%0.1f",	-- WINDSHIELD_HOT
-	[500] = "%0.1f",	-- YAW_SAS
-	[501] = "%0.1f",	-- L_ENG_OIL_PRESS
-	[502] = "%0.1f",	-- R_ENG_OIL_PRESS
-	[503] = "%0.1f",	-- CICU
-	[504] = "%0.1f",	-- GCAS
-	[505] = "%0.1f",	-- L_MAIN_PUMP
-	[506] = "%0.1f",	-- R_MAIN_PUMP
-	[507] = "%0.1f",	-- VOID2
-	[508] = "%0.1f",	-- LASTE
-	[509] = "%0.1f",	-- L_WING_PUMP
-	[510] = "%0.1f",	-- R_WING_PUMP
-	[511] = "%0.1f",	-- HARS
-	[512] = "%0.1f",	-- IFF_MODE_4
-	[513] = "%0.1f",	-- L_MAIN_FUEL_LOW
-	[514] = "%0.1f",	-- R_MAIN_FUEL_LOW
-	[515] = "%0.1f",	-- L_R_TKS_UNEQUAL
-	[516] = "%0.1f",	-- EAC
-	[517] = "%0.1f",	-- L_FUEL_PRESS
-	[518] = "%0.1f",	-- R_FUEL_PRESS
-	[519] = "%0.1f",	-- NAV
-	[520] = "%0.1f",	-- STALL_SYS
-	[521] = "%0.1f",	-- L_CONV
-	[522] = "%0.1f",	-- R_CONV
-	[523] = "%0.1f",	-- CADC
-	[524] = "%0.1f",	-- APU_GEN
-	[525] = "%0.1f",	-- L_GEN
-	[526] = "%0.1f",	-- R_GEN
-	[527] = "%0.1f",	-- INST_INV
+	[372] = "%.f",			-- CMSC_MissileLaunchIndicator {0.0, 1.0}
+	[373] = "%.f",			-- CMSC_PriorityStatusIndicator {0.0, 1.0}
+	[374] = "%.f",			-- CMSC_UnknownStatusIndicator {0.0, 1.0}
+		-- Master Warning Lamp UFCP
+	[404] = "%.f",			-- MASTER_WARNING_STUB MASTER WARNING
+		-- Caution Panel LAMPS
+	[480] = "%.f",		-- ENG_START_CYCLE
+	[481] = "%.f",		-- L_HYD_PRESS
+	[482] = "%.f",		-- R_HYD_PRESS
+	[483] = "%.f",		-- GUN_UNSAFE
+	[484] = "%.f",		-- ANTISKID
+	[485] = "%.f",		-- L_HYD_RES
+	[486] = "%.f",		-- R_HYD_RES
+	[487] = "%.f",		-- OXY_LOW
+	[488] = "%.f",		-- ELEV_DISENG
+	[489] = "%.f",		-- VOID1
+	[490] = "%.f",		-- SEAT_NOT_ARMED
+	[491] = "%.f",		-- BLEED_AIR_LEAK
+	[492] = "%.f",		-- AIL_DISENG
+	[493] = "%.f",		-- L_AIL_TAB
+	[494] = "%.f",		-- R_AIL_TAB
+	[495] = "%.f",		-- SERVICE_AIR_HOT
+	[496] = "%.f",		-- PITCH_SAS
+	[497] = "%.f",		-- L_ENG_HOT
+	[498] = "%.f",		-- R_ENG_HOT
+	[499] = "%.f",		-- WINDSHIELD_HOT
+	[500] = "%.f",		-- YAW_SAS
+	[501] = "%.f",		-- L_ENG_OIL_PRESS
+	[502] = "%.f",		-- R_ENG_OIL_PRESS
+	[503] = "%.f",		-- CICU
+	[504] = "%.f",		-- GCAS
+	[505] = "%.f",		-- L_MAIN_PUMP
+	[506] = "%.f",		-- R_MAIN_PUMP
+	[507] = "%.f",		-- VOID2
+	[508] = "%.f",		-- LASTE
+	[509] = "%.f",		-- L_WING_PUMP
+	[510] = "%.f",		-- R_WING_PUMP
+	[511] = "%.f",		-- HARS
+	[512] = "%.f",		-- IFF_MODE_4
+	[513] = "%.f",		-- L_MAIN_FUEL_LOW
+	[514] = "%.f",		-- R_MAIN_FUEL_LOW
+	[515] = "%.f",		-- L_R_TKS_UNEQUAL
+	[516] = "%.f",		-- EAC
+	[517] = "%.f",		-- L_FUEL_PRESS
+	[518] = "%.f",		-- R_FUEL_PRESS
+	[519] = "%.f",		-- NAV
+	[520] = "%.f",		-- STALL_SYS
+	[521] = "%.f",		-- L_CONV
+	[522] = "%.f",		-- R_CONV
+	[523] = "%.f",		-- CADC
+	[524] = "%.f",		-- APU_GEN
+	[525] = "%.f",		-- L_GEN
+	[526] = "%.f",		-- R_GEN
+	[527] = "%.f",		-- INST_INV
 	-- Angle of attack indicator
 	[540] = "%0.1f",	-- AOA_INDEXER_HIGH
-	[541] = "%0.1f",	-- AOA_INDEXER_NORM
+	[541] = "%0.4f",	-- AOA_INDEXER_NORM
 	[542] = "%0.1f",	-- AOA_INDEXER_LOW
 	-- Misc Data
 	[600] = "%0.1f",	-- BreathFlow {0.0, 1.0}
 	[604] = "%.4f",		-- OxygenPress {0.0, 0.5, 1.0}
 	-- NMSP Panel lamps
-	[606] = "%0.1f",	-- HARS
-	[608] = "%0.1f",	-- EGI
-	[610] = "%0.1f",	-- TISL
-	[612] = "%0.1f",	-- STRPT
-	[614] = "%0.1f",	-- ANCHR
-	[616] = "%0.1f",	-- TCN
-	[618] = "%0.1f",	-- ILS
-	[619] = "%0.1f",	-- UHF
-	[620] = "%0.1f",	-- FM
+	[606] = "%.f",		-- HARS
+	[608] = "%.f",		-- EGI
+	[610] = "%.f",		-- TISL
+	[612] = "%.f",		-- STRPT
+	[614] = "%.f",		-- ANCHR
+	[616] = "%.f",		-- TCN
+	[618] = "%.f",		-- ILS
+	[619] = "%.f",		-- UHF
+	[620] = "%.f",		-- FM
 	-- Hydraulic Pressure
 	[647] = "%.4f",		-- HydraulicPressureLeft {0.0,1.0}
 	[648] = "%.4f",		-- HydraulicPressureRight {0.0,1.0}
@@ -154,21 +187,21 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	-- CPT MECH
 	[654] = "%1d",		-- PTR-ANTI-SKID (Anti Skid)
 	-- Landing Gear Lamps
-	[659] = "%0.1f",	-- GEAR_N_SAFE
-	[660] = "%0.1f",	-- GEAR_L_SAFE
-	[661] = "%0.1f",	-- GEAR_R_SAFE
+	[659] = "%.f",	-- GEAR_N_SAFE
+	[660] = "%.f",	-- GEAR_L_SAFE
+	[661] = "%.f",	-- GEAR_R_SAFE
 	-- Misc lamps
-	[662] = "%0.1f",	-- GUN_READY
-	[663] = "%0.1f",	-- NOSEWHEEL_STEERING
-	[664] = "%0.1f",	-- MARKER_BEACON
-	[665] = "%0.1f",	-- CANOPY_UNLOCKED
-	[730] = "%0.1f",	-- AIR_REFUEL_READY
-	[731] = "%0.1f",	-- AIR_REFUEL_LATCHED
-	[732] = "%0.1f",	-- AIR_REFUEL_DISCONNECT
-	[737] = "%0.1f",	-- HANDLE_GEAR_WARNING
+	[662] = "%.f",		-- GUN_READY
+	[663] = "%.f",		-- NOSEWHEEL_STEERING
+	[664] = "%.f",		-- MARKER_BEACON
+	[665] = "%.f",		-- CANOPY_UNLOCKED
+	[730] = "%.f",		-- AIR_REFUEL_READY
+	[731] = "%.f",		-- AIR_REFUEL_LATCHED
+	[732] = "%.f",		-- AIR_REFUEL_DISCONNECT
+	[737] = "%.f",		-- HANDLE_GEAR_WARNING
 	-- IFF Panel lamps
-	[798] = "%0.1f",	-- IFF_reply_lamp {0, 1}
-	[799] = "%0.1f",	-- IFF_test_lamp {0, 1}
+	[798] = "%.f",		-- IFF_reply_lamp {0, 1}
+	[799] = "%.f",		-- IFF_test_lamp {0, 1}
 	--
 	[902] = "%.4f",		-- Accelerometer_min
 	[903] = "%.4f",		-- Accelerometer_max
@@ -177,12 +210,16 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[720] = "%.4f",		-- pitch
 	[721] = "%.4f",		-- bank
 }
-gES_GlassCockpitConfigArguments = 
+ExportScript.ConfigArguments = 
 {
+	--[[
+	arguments for export in low tick interval
+	based on "clickabledata.lua"
+	]]
 	[22] = "%.3f",     -- AAP ??
 	-- Emergency Jettison Button
 	[101] = "%.1f",    -- PTR-EXT-STORES-JETT (mergency Jettison External Stores)
-	--Fire Extinguishers Panel
+	-- Fire Extinguishers Panel
 	[102] = "%1d",     -- PTR-FIRE-LENG-PULL (Left Engine Fire T-Handle)
 	[103] = "%1d",     -- PTR-FIRE-APU-PULL (APU Fire T-Handle)
 	[104] = "%1d",     -- PTR-FIRE-RENG-PULL (Right Engine Fire T-Handle)
@@ -255,7 +292,7 @@ gES_GlassCockpitConfigArguments =
 	[173] = "%.1f",    -- PTR-ANARC164-STATUS (Status)
 	[734] = "%1d",     -- PTR-ANARC164-COVER
 	[735] = "%.1f",    -- PTR-ANARC164-LOAD (Load button)
-	--Emergency Flight Control Panel
+	-- Emergency Flight Control Panel
 	[174] = "%1d",     -- PTR-EFCP-SPDBK-EMER-RETR (Speed Brake Emergency Retract)
 	[175] = "%1d",     -- Speed Brake Emergency Retract (Pitch/Roll Trim Norm/Emergency Override)
 	[176] = "%0.1f",   -- PTR-EFCP-TRIM (Trim Emergency ...)
@@ -263,20 +300,20 @@ gES_GlassCockpitConfigArguments =
 	[180] = "%1d",     -- PTR-EFCP-ELEVATOR-EMER-DISENGAGE (Elevator Emergency Disengage)
 	[183] = "%1d",     -- PTR-EFCP-FLAP-EMER-RETR (Flaps Emergency Retract)
 	[184] = "%1d",     -- PTR-EFCP-MRFCS (Manual Reversion Flight Control System (MRFCS))
-	--STABILITY AUGMENTATION SYSTEM PANEL
+	-- STABILITY AUGMENTATION SYSTEM PANEL
 	[189] = "%1d",     -- PTR-SASP-MONITOR-TEST (Monitor Test Left/Right)
 	[190] = "%.1f",    -- PTR-SASP-TO-TRIM (Set Takeoff Trim)
 	[192] = "%.3f",    -- PTR-SASP-YAW-TRIM (Yaw Trim)
-	--Light System Control Panel
+	-- Light System Control Panel
 	[193] = "%.3f",    -- PTR-ALCP-RSIL (Refuel Status Indexer Lights)
 	[194] = "%0.1f",   -- PTR-ALCP-NVIS-LTS (Nightvision Lights)
 	[195] = "%.3f",    -- PTR-ALCP-WPNSTA (Weapon Station Lights. No function)
 	[196] = "%1d",     -- PTR-ALCP-HARSSAS (HARS-SAS Override/NORM)
 	-- ALCP
 	[197] = "%.1f",    -- "PTR-ALCP-SIGLIGHTS-LAMP-TEST (Test Cockpit Indication Lights)
-	--Light System Control Panel
+	-- Light System Control Panel
 	[198] = "%.1f",    -- PTR-ALCP-FDBAL-TEST (Fire Detect Bleed Air Test)
-	--IFF
+	-- IFF
 	[199] = "%0.1f",   -- PTR-IFFCP-CODE (Code)
 	[200] = "%0.1f",   -- PTR-IFFCP-MASTER (Master)
 	[201] = "%1d",     -- PTR-IFFCP-OUT-AUDIO-LIGHT (Audio/light)
@@ -293,7 +330,7 @@ gES_GlassCockpitConfigArguments =
 	[212] = "%0.2f",   -- PTR-IFFCP-MODE3A-WHEEL2 (MODE3A-WHEEL2)
 	[213] = "%0.2f",   -- PTR-IFFCP-MODE3A-WHEEL3 (MODE3A-WHEEL3)
 	[214] = "%0.2f",   -- PTR-IFFCP-MODE3A-WHEEL4 (MODE3A-WHEEL4)
-	--Inercom Panel
+	-- Inercom Panel
 	[221] = "%.3f",    -- PTR-INTERCOM-INT (INT Switch)
 	[222] = "%1d",     -- PTR-INTERCOM-INT (INT Switch)
 	[223] = "%.3f",    -- PTR-INTERCOM-FM (FM Switch)
@@ -314,27 +351,30 @@ gES_GlassCockpitConfigArguments =
 	[238] = "%.3f",    -- PTR-INTERCOM-VOL (Intercom volume)
 	[239] = "%0.1f",   -- PTR-INTERCOM-MODE (Selector switch)
 	[240] = "%.1f",    -- PTR-INTERCOM-CALL (Call button)
-	--Electrical Power Panel
+	-- Electrical Power Panel
 	[241] = "%1d",     -- PTR-EPP-APU-GEN-PWR (APU Generator On/Off)
 	[242] = "%1d",     -- PTR-EPP-INVERTER (Inverter Switch)
 	[243] = "%1d",     -- PTR-EPP-EMER-FLOOD (Emergency Flood Light)
 	[244] = "%1d",     -- PTR-EPP-AC-GEN-PWR-L (Left AC Generator Power)
 	[245] = "%1d",     -- PTR-EPP-AC-GEN-PWR-R (Right AC Generator Power)
 	[246] = "%1d",     -- PTR-EPP-BATTERY-PWR (Battery Power)
-	--ILS
+	-- ILS
 	[247] = "%1d",     -- PTR-ILSCP-PWR (ILS Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value)
 	[248] = "%0.1f",   -- PTR-ILSCP-PWR (ILS Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value)
 	[249] = "%.3f",    -- PTR-ILSCP-VOL (ILS Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click and hold while moving mouse to adjust volumeILS Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click and hold while moving mouse to adjust)
 	[250] = "%0.1f",   -- PTR-ILSCP-VOL (ILS Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click and hold while moving mouse to adjust volumeILS Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click and hold while moving mouse to adjust)
 	[251] = "%0.1f",   -- ILS_window_wheel_MHz
 	[252] = "%0.1f",   -- ILS_window_wheel_KHz
-	--TACAN
+	-- TACAN
 	[258] = "%0.2f",   -- PTR-TACAN-CHANNEL-SELECTOR-2 (Channel Selector (Ones) / X/Y Mode. Right mouse click to select X/Y. Rotate mouse wheel to make channel selection)
 	[259] = "%.1f",    -- PTR-TACAN-TEST (Test TACAN Signal on HSI)
 	[261] = "%.3f",    -- PTR-TACAN-VOL (Signal Volume)
 	[262] = "%0.1f",   -- PTR-TACAN-MODE (Mode Dial)
 	[266] = "%1d",     -- XYwheel
-	--HARS
+	[263] = "%.1f",    -- TACAN_digit_pos.hundreds
+	[264] = "%.1f",    -- TACAN_digit_pos.tens
+	[265] = "%.1f",    -- TACAN_digit_pos.ones
+	-- HARS
 	[267] = "%.1f",    -- PTR-HARS-CP-PUSH-TO-SYNC (HARS Push-To-Sync)
 	[268] = "%.3f",    -- PTR-HARS-CP-PUSH-TO-SYNC (HARS Push-To-Sync)
 	[270] = "%1d",     -- PTR-HARS-CP-SLAVE (HARS SLAVE-DG mode)
@@ -342,7 +382,7 @@ gES_GlassCockpitConfigArguments =
 	[272] = "%1d",     -- PTR-HARS-CP-MAG-VAR (HARS MAG VAR)
 	[273] = "%1d",     -- PTR-HARS-CP-N-S (HARS N/S toggle switch)
 	[711] = "%.1f",    -- PTR-HARS-FAST-ERECT (HARS Fast Erect)
-	--Environment Control Panel
+	-- Environment Control Panel
 	[275] = "%.1f",    -- PTR-ENVCP-OXY-TEST (Oxygen Indicator Test)
 	[276] = "%1d",     -- PTR-ENVCP-WINDSHIELD-DEFOG (Windshield Defog/Deice)
 	[277] = "%.3f",    -- PTR-ENVCP-CANOPY-DEFOG (Canopy Defog)
@@ -352,7 +392,7 @@ gES_GlassCockpitConfigArguments =
 	[282] = "%1d",     -- PTR-ENVCP-TEMP-PRESS (Temperature/Pressure Control)
 	[283] = "%1d",     -- PTR-ENVCP-MAIN-AIR-SUPPLY (Main Air Supply)
 	[284] = "%.3f",    -- PTR-ENVCP-FLOW-LEVEL (Flow Level Control)
-	--Light System Control Panel
+	-- Light System Control Panel
 	[287] = "%1d",     -- PTR-LGHTCP-POSITION (Position Lights, FLASH/OFF/STEADY)
 	[288] = "%.3f",    -- PTR-LGHTCP-FORMATION (Formation Lights)
 	[290] = "%.3f",    -- PTR-LGHTCP-ENG-INST (Engine Instruments Lights)
@@ -548,7 +588,7 @@ gES_GlassCockpitConfigArguments =
 	[531] = "%.1f",    -- PNT-BTN-UFC-FWD
 	[532] = "%.1f",    -- PNT-BTN-UFC-MID
 	[533] = "%.1f",    -- PNT-BTN-UFC-AFT
-	--Oxygen System Control Panel
+	-- Oxygen System Control Panel
 	[601] = "%1d",     -- PTR-OXYGENCP-EMERGENCY (Oxygen Flow Emergency/Normal/Test Mask)
 	[602] = "%1d",     -- PTR-OXYGENCP-OXYGEN-DILUTER (Oxygen Normal/100%)
 	[603] = "%1d",     -- PTR-OXYGENCP-SUPPLY (Oxygen Supply On/Off)
@@ -561,7 +601,7 @@ gES_GlassCockpitConfigArguments =
 	[615] = "%.1f",    -- PTR-NMSP-TCN (TCN Mode)
 	[617] = "%.1f",    -- PTR-NMSP-ILS (ILS Mode)
 	[621] = "%1d",     -- PTR-NMSP-ABLE-STOW (ABLE-STOW ADI Localizer Bar)
-	--TISL Control Panel
+	-- TISL Control Panel
 	[622] = "%0.1f",   -- PTR-TISLCP-MODE (TISL Mode)
 	[623] = "%1d",     -- PTR-TISLCP-SLANT-RNG (Slant range)
 	[624] = "%.3f",    -- PTR-TISLCP-ALT-ABV-TGT-WH1 (Altitude above target tens of thousands of feet)
@@ -576,15 +616,15 @@ gES_GlassCockpitConfigArguments =
 	[642] = "%0.2f",   -- PTR-TISLCP-CODE-WH4 (TISL Code wheel 4)
 	[644] = "%1d",     -- PTR-TISLCP-TISL-AUX (TISL AUX)
 	-- Fuel System Control Panel
-	--Fuel Quantity Indicator and Selector
+	-- Fuel Quantity Indicator and Selector
 	[645] = "%0.1f",   -- PTR-FQIS-SELECT (Fuel display selector)
 	[646] = "%.1f",    -- PTR-FQIS-TEST (Fuel Gauge Test)
 	-- CPT MECH
 	[651] = "%.1f",    -- PTR-DOWNLOCK-OVERRIDE (Downlock Override)
 	[716] = "%1d",     -- PNT-LNDGEAR (Landing Gear Lever)
-	--Light System Control Panel
+	-- Light System Control Panel
 	[655] = "%0.1f",   -- PTR-LIGHTS-LAND (Land Taxi Lights)
-	--STALL
+	-- STALL
 	[704] = "%.3f",    -- PTR-STALLWCP-STALL (Stall Volume)
 	[705] = "%.3f",    -- PTR-STALLWCP-PEAK (Peak Volume)
 	-- Canopy
@@ -611,326 +651,17 @@ gES_GlassCockpitConfigArguments =
 -- done every export event --
 -----------------------------
 
--- Pointed to by ProcessGlassCockpitDCSHighImportance, if the player aircraft is an A-10
-function ProcessGlassCockpitDCSConfigHighImportance(mainPanelDevice)
-	if gES_GlassCockpitType == 1 then
-		-- HELIOS Version 1.3
-		-- Send Altimeter Values	
-		SendData(2051, string.format("%0.4f;%0.4f;%0.5f", 
-										mainPanelDevice:get_argument_value(52), 
-										mainPanelDevice:get_argument_value(53), 
-										mainPanelDevice:get_argument_value(51)))
-		-- Barometric Pressure Setting
-		SendData(2059, string.format("%0.2f;%0.2f;%0.2f;%0.3f", 
-										mainPanelDevice:get_argument_value(56), 
-										mainPanelDevice:get_argument_value(57), 
-										mainPanelDevice:get_argument_value(58), 
-										mainPanelDevice:get_argument_value(59)))		
-		-- Calcuate HSI Value
-		SendData(2029, string.format("%0.2f;%0.2f;%0.4f", 
-										mainPanelDevice:get_argument_value(29), 
-										mainPanelDevice:get_argument_value(30), 
-										mainPanelDevice:get_argument_value(31)))
-		-- Calculate Total Fuel
-		SendData(2090, string.format("%0.2f;%0.2f;%0.5f", 
-										mainPanelDevice:get_argument_value(90), 
-										mainPanelDevice:get_argument_value(91), 
-										mainPanelDevice:get_argument_value(92)))
-
-	elseif gES_GlassCockpitType == 2 then
-		-- HawgTouch version 1.6
-
-		-- FuelGauge
-		-- [90] = "%.4f",		-- FuelQuantityCounterTenthOfThous
-		-- [91] = "%.4f",		-- FuelQuantityCounterThousands
-		-- [92] = "%.4f",		-- FuelQuantityCounterHundreds
-		-- [88] = "%.4f",		-- Fuel Indicator, FuelQuantityLeft
-		-- [89] = "%.4f",		-- Fuel Indicator, FuelQuantityRight
-		SendData(2000, string.format("%0.2f;%0.2f;%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(90), 
-										mainPanelDevice:get_argument_value(91), 
-										mainPanelDevice:get_argument_value(92),
-										mainPanelDevice:get_argument_value(88),
-										mainPanelDevice:get_argument_value(89)))
-
-		-- HSI
-		--[[
-		[34] = "%.4f",		-- HSI Heading
-		[33] = "%.4f",		-- HSI Bearing #1
-		[35] = "%.4f",		-- HSI Bearing #2
-		[36] = "%.4f",		-- HSI Heading Marker
-		[47] = "%.4f",		-- HSI Course Arrow
-		[41] = "%.4f",		-- HSI Deviation
-		[29] = "%.2f",		-- HSI range_counter_100
-		[30] = "%.2f",		-- HSI range_counter_10
-		[31] = "%.2f",		-- HSI range_counter_1
-		[42] = "%0.1f",		-- HSI Bearing to_from_1
-		[43] = "%0.1f",		-- HSI Bearing to_from_2
-		[46] = "%0.1f",		-- HSI Bearing Flag
-		[40] = "%0.1f",		-- HSI Power Flag
-		[32] = "%0.1f",		-- HSI Range Flag
-		]]
-		SendData(2001, string.format("%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.2f;%0.2f;%0.2f;%0.1f;%0.1f;%0.1f;%0.1f;%0.1f", 
-										mainPanelDevice:get_argument_value(34), 
-										mainPanelDevice:get_argument_value(33), 
-										mainPanelDevice:get_argument_value(35),
-										mainPanelDevice:get_argument_value(36),
-										mainPanelDevice:get_argument_value(47),
-										mainPanelDevice:get_argument_value(41),
-										mainPanelDevice:get_argument_value(29),
-										mainPanelDevice:get_argument_value(30),
-										mainPanelDevice:get_argument_value(31),
-										mainPanelDevice:get_argument_value(42),
-										mainPanelDevice:get_argument_value(43),
-										mainPanelDevice:get_argument_value(46),
-										mainPanelDevice:get_argument_value(40),
-										mainPanelDevice:get_argument_value(32)))
-		-- Altimeter
-		-- [51] = "%.4f",		-- Altimeter_100_footPtr
-		-- [52] = "%.4f",		-- Altimeter_10000_footCount
-		-- [53] = "%.4f",		-- Altimeter_1000_footCount
-		-- [54] = "%.4f",		-- Altimeter_100_footCount
-		-- [59] = "%.4f",		-- pressure_setting_0
-		-- [58] = "%.4f",		-- pressure_setting_1
-		-- [57] = "%.4f",		-- pressure_setting_2
-		-- [56] = "%.4f",		-- pressure_setting_3
-		SendData(2002, string.format("%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(51), 
-										mainPanelDevice:get_argument_value(52), 
-										mainPanelDevice:get_argument_value(53),
-										mainPanelDevice:get_argument_value(54),
-										mainPanelDevice:get_argument_value(59),
-										mainPanelDevice:get_argument_value(58),
-										mainPanelDevice:get_argument_value(57),
-										mainPanelDevice:get_argument_value(56)))
-		-- ADI
-		--[[
-		[17] = "%.4f",		-- ADI Pitch
-		[18] = "%.4f",		-- ADI Bank
-		[24] = "%.4f",		-- ADI Slip Ball
-		[20] = "%.4f",		-- ADI Bank Steering Bar
-		[21] = "%.4f",		-- ADI Pitch Steering Bar
-		[23] = "%.4f",		-- ADI Turn Needle
-		[27] = "%.4f",		-- ADI Glide-Slope Indicator
-		[26] = "%0.1f",		-- ADI Glide-Slope Warning Flag
-		[25] = "%0.1f",		-- ADI Attitude Warning Flag
-		[19] = "%0.1f",		-- ADI Course Warning Flag
-		]]
-		SendData(2003, string.format("%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.1f;%0.1f;%0.1f", 
-										mainPanelDevice:get_argument_value(17), 
-										mainPanelDevice:get_argument_value(18), 
-										mainPanelDevice:get_argument_value(24), 
-										mainPanelDevice:get_argument_value(20),
-										mainPanelDevice:get_argument_value(21), 
-										mainPanelDevice:get_argument_value(23), 
-										mainPanelDevice:get_argument_value(27),
-										mainPanelDevice:get_argument_value(26), 
-										mainPanelDevice:get_argument_value(25), 
-										mainPanelDevice:get_argument_value(19)))
-	
-		-- Airspeed
-		local lAltimeter = math.round(mainPanelDevice:get_argument_value(52) * 10000, 1) + math.round(mainPanelDevice:get_argument_value(53) * 1000, 1) + math.round(mainPanelDevice:get_argument_value(54) * 100, 1)
-		lAltimeter		 = lAltimeter * 10
-		-- [48] = "%.4f",		-- AirspeedNeedle	{0.0, 0.053, 0.146, 0.234, 0.322, 0.412, 0.517, 0.620, 0.719, 0.811, 0.906, 1.0} {  0,    50,   100,   150,   200,   250,   300,   350,   400,   450,   500, 550}
-		-- [49] = "%.4f",		-- AirspeedDial		{0.0, 1.0} {0.0, 100.0}
-		-- Barometric Altimeter in Feeds for calculate max Air Speed
-		SendData(2004, string.format("%0.4f;%0.4f;%d", 
-										mainPanelDevice:get_argument_value(48), 
-										mainPanelDevice:get_argument_value(49),
-										lAltimeter))
-		-- Standby AID
-		-- [63] = "%.4f",		-- Standby Attitude Indicator pitch	{-1.0, 1.0}
-		-- [64] = "%.4f",		-- Standby Attitude Indicator bank	{-1.0, 1.0}
-		-- [65] = "%0.1f",		-- Standby Attitude Indicator warning flag	{0.0, 1.0}
-		SendData(2005, string.format("%0.4f;%0.4f;%d", 
-										mainPanelDevice:get_argument_value(63), 
-										mainPanelDevice:get_argument_value(64), 
-										mainPanelDevice:get_argument_value(65)))
-		-- AOA
-		-- [4]  = "%.4f",		-- AOA {0.0, 1.0} {0.0, 30.0}
-		-- [55] = "%0.1f",		-- AOA Power Flag {0.0, 1.0}
-		SendData(2006, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(4), 
-										mainPanelDevice:get_argument_value(55)))
-		-- Flap Indicator
-		-- [653] = "%.4f",		-- FlapPositionIndicator {0,20} {0,2/3,1}
-		
-		-- Hydraulic Pressure
-		-- [647] = "%.4f",		-- HydraulicPressureLeft {0.0,1.0}
-		-- [648] = "%.4f",		-- HydraulicPressureRight {0.0,1.0}
-		-- Variometer VVI
-		-- [12] = "%.4f",		-- Variometer {-1.0, -0.5, -0.29, 0.29, 0.5, 1.0} {-6000, -2000, -1000, 1000, 2000, 6000}
-		-- Engine Monitoring Instruments (EMI)
-		-- [76] = "%.4f",		-- EngineLeftFanSpeed
-		-- [77] = "%.4f",		-- EngineRightFanSpeed
-		-- [82] = "%.4f",		-- Left Engine Oil Pressure
-		-- [83] = "%.4f",		-- Right Engine Oil Pressure
-		-- [84] = "%.4f",		-- EngineLeftFuelFlow
-		-- [85] = "%.4f",		-- EngineRightFuelFlow
-		-- [13] = "%.4f",		-- APU RPM
-		-- [14] = "%.4f",		-- APU Temperature
-
-		-- [70] = "%.4f",		-- Left Engine Temperature (big needle) {0.005, 0.095, 0.183, 0.275, 0.365, 0.463, 0.560, 0.657, 0.759, 0.855, 0.995} {  100,   200,   300,   400,   500,   600,   700,   800,   900,  1000,  1100}
-		-- [71] = "%.4f",		-- EngineLeftTemperatureUnits (small needle)
-		SendData(2008, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(70), 
-										mainPanelDevice:get_argument_value(71)))
-		-- [73] = "%.4f",		-- Right Engine Temperature (big needle) {0.005, 0.095, 0.183, 0.275, 0.365, 0.463, 0.560, 0.657, 0.759, 0.855, 0.995} {  100,   200,   300,   400,   500,   600,   700,   800,   900,  1000,  1100}
-		-- [74] = "%.4f",		-- EngineRightTemperatureUnits (small needle)
-		SendData(2009, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(73), 
-										mainPanelDevice:get_argument_value(74)))
-		
-		-- [78] = "%.4f",		-- EngineLeftCoreSpeedTenth (big needle)
-		-- [79] = "%.4f",		-- EngineLeftCoreSpeedUnits (small needle)
-		SendData(2010, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(78), 
-										mainPanelDevice:get_argument_value(79)))
-		-- [80] = "%.4f",		-- EngineRightCoreSpeedTenth (big needle)
-		-- [81] = "%.4f",		-- EngineRightCoreSpeedUnits (small needle)
-		SendData(2011, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(80), 
-										mainPanelDevice:get_argument_value(81)))
-		-- Accelerometer (G-meter)
-		-- [15] = "%.4f",		-- Accelerometer_main {0.0, 1.0} {-5.0, 10.0}
-		-- [902] = "%.4f",		-- Accelerometer_min {0.0, 1.0} {-5.0, 10.0}
-		-- [903] = "%.4f",		-- Accelerometer_max {0.0, 1.0} {-5.0, 10.0}
-		SendData(2012, string.format("%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(15), 
-										mainPanelDevice:get_argument_value(902), 
-										mainPanelDevice:get_argument_value(903)))
-		-- Standby Compass
-		-- [6] = "%.4f",		-- heading
-		-- [720] = "%.4f",		-- pitch
-		-- [721] = "%.4f",		-- bank
-		SendData(2013, string.format("%0.4f;%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(6), 
-										mainPanelDevice:get_argument_value(720), 
-										mainPanelDevice:get_argument_value(721)))
-		-- Digital Clock
-		-------------------------------------------------
-		local lDigitalClock = list_indication(4)
-		lDigitalClock = lDigitalClock:gsub("-----------------------------------------", "")
-		lDigitalClock = lDigitalClock:gsub("txtHours", "")
-		lDigitalClock = lDigitalClock:gsub("txtColon", "")
-		lDigitalClock = lDigitalClock:gsub(":", "")
-		lDigitalClock = lDigitalClock:gsub("txtMinutes", "")
-		lDigitalClock = lDigitalClock:gsub("txtSeconds", "")
-		lDigitalClock = lDigitalClock:gsub("%c", "")
-		lDigitalClock = lDigitalClock:gsub("txt", "")
-		lDigitalClock = lDigitalClock:sub(1, 8)
-		if lDigitalClock:sub(7, 7) == "C" then
-			lDigitalClock = lDigitalClock:sub(1, 6)..";  C"
-		elseif lDigitalClock:sub(7, 8) == "ET" then
-			lDigitalClock = lDigitalClock:sub(1, 6)..";ET"
-		else
-			lDigitalClock = ""
-		end
-		SendData(2014, string.format("%s", lDigitalClock))
-		
-		--local lCDU = list_indication(3)
-		--WriteToLog('CDU: '..dump(lCDU))
-	end
-end
-
-function ProcessHARDWAREConfigHighImportance(mainPanelDevice)
-
-	-- Misc lamps
-	SendDataHW("178",  mainPanelDevice:get_argument_value(178))	-- L_AILERON_EMER_DISENGAGE
-	SendDataHW("179",  mainPanelDevice:get_argument_value(179))	-- R_AILERON_EMER_DISENGAGE
-	SendDataHW("181",  mainPanelDevice:get_argument_value(181))	-- L_ELEVATOR_EMER_DISENGAGE
-	SendDataHW("182",  mainPanelDevice:get_argument_value(182))	-- R_ELEVATOR_EMER_DISENGAGE
-	SendDataHW("191",  mainPanelDevice:get_argument_value(191))	-- TAKE_OFF_TRIM
-	SendDataHW("215",  mainPanelDevice:get_argument_value(215))	-- L_ENG_FIRE
-	SendDataHW("216",  mainPanelDevice:get_argument_value(216))	-- APU_FIRE
-	SendDataHW("217",  mainPanelDevice:get_argument_value(217))	-- R_ENG_FIRE
-	SendDataHW("260",  mainPanelDevice:get_argument_value(260))	-- TACAN_test_light {0.0, 1.0}
-	-- CMSC lamps
-	SendDataHW("372",  mainPanelDevice:get_argument_value(372))	-- CMSC_MissileLaunchIndicator {0.0, 1.0}
-	SendDataHW("373",  mainPanelDevice:get_argument_value(373))	-- CMSC_PriorityStatusIndicator {0.0, 1.0}
-	SendDataHW("374",  mainPanelDevice:get_argument_value(374))	-- CMSC_UnknownStatusIndicator {0.0, 1.0}
-	-- Master Warning Lamp UFCP
-	SendDataHW("404",  mainPanelDevice:get_argument_value(404))	-- MASTER_WARNING_STUB MASTER WARNING
-	-- Caution Panel LAMPS
-	SendDataHW("480",  mainPanelDevice:get_argument_value(480))	-- ENG_START_CYCLE
-	SendDataHW("481",  mainPanelDevice:get_argument_value(481))	-- L_HYD_PRESS
-	SendDataHW("482",  mainPanelDevice:get_argument_value(482))	-- R_HYD_PRESS
-	SendDataHW("483",  mainPanelDevice:get_argument_value(483))	-- GUN_UNSAFE
-	SendDataHW("484",  mainPanelDevice:get_argument_value(484))	-- ANTISKID
-	SendDataHW("485",  mainPanelDevice:get_argument_value(485))	-- L_HYD_RES
-	SendDataHW("486",  mainPanelDevice:get_argument_value(486))	-- R_HYD_RES
-	SendDataHW("487",  mainPanelDevice:get_argument_value(487))	-- OXY_LOW
-	SendDataHW("488",  mainPanelDevice:get_argument_value(488))	-- ELEV_DISENG
-	SendDataHW("489",  mainPanelDevice:get_argument_value(489))	-- VOID1
-	SendDataHW("490",  mainPanelDevice:get_argument_value(490))	-- SEAT_NOT_ARMED
-	SendDataHW("491",  mainPanelDevice:get_argument_value(491))	-- BLEED_AIR_LEAK
-	SendDataHW("492",  mainPanelDevice:get_argument_value(492))	-- AIL_DISENG
-	SendDataHW("493",  mainPanelDevice:get_argument_value(493))	-- L_AIL_TAB
-	SendDataHW("494",  mainPanelDevice:get_argument_value(494))	-- R_AIL_TAB
-	SendDataHW("495",  mainPanelDevice:get_argument_value(495))	-- SERVICE_AIR_HOT
-	SendDataHW("496",  mainPanelDevice:get_argument_value(496))	-- PITCH_SAS
-	SendDataHW("497",  mainPanelDevice:get_argument_value(497))	-- L_ENG_HOT
-	SendDataHW("498",  mainPanelDevice:get_argument_value(498))	-- R_ENG_HOT
-	SendDataHW("499",  mainPanelDevice:get_argument_value(499))	-- WINDSHIELD_HOT
-	SendDataHW("500",  mainPanelDevice:get_argument_value(500))	-- YAW_SAS
-	SendDataHW("501",  mainPanelDevice:get_argument_value(501))	-- L_ENG_OIL_PRESS
-	SendDataHW("502",  mainPanelDevice:get_argument_value(502))	-- R_ENG_OIL_PRESS
-	SendDataHW("503",  mainPanelDevice:get_argument_value(503))	-- CICU
-	SendDataHW("504",  mainPanelDevice:get_argument_value(504))	-- GCAS
-	SendDataHW("505",  mainPanelDevice:get_argument_value(505))	-- L_MAIN_PUMP
-	SendDataHW("506",  mainPanelDevice:get_argument_value(506))	-- R_MAIN_PUMP
-	SendDataHW("507",  mainPanelDevice:get_argument_value(507))	-- VOID2
-	SendDataHW("508",  mainPanelDevice:get_argument_value(508))	-- LASTE
-	SendDataHW("509",  mainPanelDevice:get_argument_value(509))	-- L_WING_PUMP
-	SendDataHW("510",  mainPanelDevice:get_argument_value(510))	-- R_WING_PUMP
-	SendDataHW("511",  mainPanelDevice:get_argument_value(511))	-- HARS
-	SendDataHW("512",  mainPanelDevice:get_argument_value(512))	-- IFF_MODE_4
-	SendDataHW("513",  mainPanelDevice:get_argument_value(513))	-- L_MAIN_FUEL_LOW
-	SendDataHW("514",  mainPanelDevice:get_argument_value(514))	-- R_MAIN_FUEL_LOW
-	SendDataHW("515",  mainPanelDevice:get_argument_value(515))	-- L_R_TKS_UNEQUAL
-	SendDataHW("516",  mainPanelDevice:get_argument_value(516))	-- EAC
-	SendDataHW("517",  mainPanelDevice:get_argument_value(517))	-- L_FUEL_PRESS
-	SendDataHW("518",  mainPanelDevice:get_argument_value(518))	-- R_FUEL_PRESS
-	SendDataHW("519",  mainPanelDevice:get_argument_value(519))	-- NAV
-	SendDataHW("520",  mainPanelDevice:get_argument_value(520))	-- STALL_SYS
-	SendDataHW("521",  mainPanelDevice:get_argument_value(521))	-- L_CONV
-	SendDataHW("522",  mainPanelDevice:get_argument_value(522))	-- R_CONV
-	SendDataHW("523",  mainPanelDevice:get_argument_value(523))	-- CADC
-	SendDataHW("524",  mainPanelDevice:get_argument_value(524))	-- APU_GEN
-	SendDataHW("525",  mainPanelDevice:get_argument_value(525))	-- L_GEN
-	SendDataHW("526",  mainPanelDevice:get_argument_value(526))	-- R_GEN
-	SendDataHW("527",  mainPanelDevice:get_argument_value(527))	-- INST_INV
-	-- Angle of attack indicator
-	SendDataHW("540",  mainPanelDevice:get_argument_value(540))	-- AOA_INDEXER_HIGH
-	SendDataHW("541",  mainPanelDevice:get_argument_value(541))	-- AOA_INDEXER_NORM
-	SendDataHW("542",  mainPanelDevice:get_argument_value(542))	-- AOA_INDEXER_LOW
-	-- NMSP Panel lamps
-	SendDataHW("606",  mainPanelDevice:get_argument_value(606))	-- HARS
-	SendDataHW("608",  mainPanelDevice:get_argument_value(608))	-- EGI
-	SendDataHW("610",  mainPanelDevice:get_argument_value(610))	-- TISL
-	SendDataHW("612",  mainPanelDevice:get_argument_value(612))	-- STRPT
-	SendDataHW("614",  mainPanelDevice:get_argument_value(614))	-- ANCHR
-	SendDataHW("616",  mainPanelDevice:get_argument_value(616))	-- TCN
-	SendDataHW("618",  mainPanelDevice:get_argument_value(618))	-- ILS
-	SendDataHW("619",  mainPanelDevice:get_argument_value(619))	-- UHF
-	SendDataHW("620",  mainPanelDevice:get_argument_value(620))	-- FM
-	-- Landing Gear
-	SendDataHW("659",  mainPanelDevice:get_argument_value(659))	-- GEAR_N_SAFE
-	SendDataHW("660",  mainPanelDevice:get_argument_value(660))	-- GEAR_L_SAFE
-	SendDataHW("661",  mainPanelDevice:get_argument_value(661))	-- GEAR_R_SAFE
-	-- Misc lamps
-	SendDataHW("662",  mainPanelDevice:get_argument_value(662))	-- GUN_READY
-	SendDataHW("663",  mainPanelDevice:get_argument_value(663))	-- NOSEWHEEL_STEERING
-	SendDataHW("664",  mainPanelDevice:get_argument_value(664))	-- MARKER_BEACON
-	SendDataHW("665",  mainPanelDevice:get_argument_value(665))	-- CANOPY_UNLOCKED
-	SendDataHW("730",  mainPanelDevice:get_argument_value(730))	-- AIR_REFUEL_READY
-	SendDataHW("731",  mainPanelDevice:get_argument_value(731))	-- AIR_REFUEL_LATCHED
-	SendDataHW("732",  mainPanelDevice:get_argument_value(732))	-- AIR_REFUEL_DISCONNECT
-	SendDataHW("737",  mainPanelDevice:get_argument_value(737))	-- HANDLE_GEAR_WARNING
-	-- IFF Panel lamps
-	SendDataHW("798",  mainPanelDevice:get_argument_value(798))	-- IFF_reply_lamp {0, 1}
-	SendDataHW("799",  mainPanelDevice:get_argument_value(799))	-- IFF_test_lamp {0, 1}
-	
+-- Pointed to by ProcessIkarusDCSHighImportance
+function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	]]
 	-- Digital Clock
 	-------------------------------------------------
 	local lDigitalClock = list_indication(4)
@@ -941,7 +672,44 @@ function ProcessHARDWAREConfigHighImportance(mainPanelDevice)
 	lDigitalClock = lDigitalClock:gsub("txtMinutes", "")
 	lDigitalClock = lDigitalClock:gsub("txtSeconds", "")
 	lDigitalClock = lDigitalClock:gsub("%c", "")
-	SendDataHW("2010", string.format("%s", lDigitalClock:sub(1, 6)))  -- with : lDigitalClock:sub(1, 7)
+	lDigitalClock = lDigitalClock:gsub("txt", "")
+	lDigitalClock = lDigitalClock:sub(1, 8)
+	if lDigitalClock:sub(7, 7) == "C" then
+		lDigitalClock = lDigitalClock:sub(1, 6)..";  C"
+	elseif lDigitalClock:sub(7, 8) == "ET" then
+		lDigitalClock = lDigitalClock:sub(1, 6)..";ET"
+	else
+		lDigitalClock = ""
+	end
+	ExportScript.Tools.SendData(2001, string.format("%s", lDigitalClock))
+
+	--local lCDU = list_indication(3)
+	--ExportScript.Tools.WriteToLog('CDU: '..ExportScript.Tools.dump(lCDU))
+end
+
+function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to DAC
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local UHF_RADIO = GetDevice(54)
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	]]
+	-- Digital Clock
+	-------------------------------------------------
+	local lDigitalClock = list_indication(4)
+	lDigitalClock = lDigitalClock:gsub("-----------------------------------------", "")
+	lDigitalClock = lDigitalClock:gsub("txtHours", "")
+	lDigitalClock = lDigitalClock:gsub("txtColon", "")
+	lDigitalClock = lDigitalClock:gsub(":", "")
+	lDigitalClock = lDigitalClock:gsub("txtMinutes", "")
+	lDigitalClock = lDigitalClock:gsub("txtSeconds", "")
+	lDigitalClock = lDigitalClock:gsub("%c", "")
+	ExportScript.Tools.SendDataDAC("2010", string.format("%s", lDigitalClock:sub(1, 6)))  -- with : lDigitalClock:sub(1, 7)
 end
 
 -----------------------------------------------------
@@ -949,160 +717,102 @@ end
 -- done every gExportLowTickInterval export events --
 -----------------------------------------------------
 
--- Pointed to by ProcessGlassCockpitDCSConfigLowImportance, if the player aircraft is an A-10
-function ProcessGlassCockpitDCSConfigLowImportance(mainPanelDevice)
-	if gES_GlassCockpitType == 1 then
-		-- HELIOS Version 1.3
-		-- Get Radio Frequencies
-		local lUHFRadio = GetDevice(54)
-		SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000))
+-- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
+function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+	--[[
+	export in low tick interval to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	]]
+	--AN/ARC-164 UHF
+	---------------------------------------------------
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData(2002, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
 
-		-- TACAN Channel
-		SendData(2263, string.format("%0.2f;%0.2f;%0.2f", mainPanelDevice:get_argument_value(263), 
-														  mainPanelDevice:get_argument_value(264), 
-														  mainPanelDevice:get_argument_value(265)))
-	elseif gES_GlassCockpitType == 2 then
-		-- HawgTouch version 1.6
-		-- TACAN Channel
-		SendData(2015, string.format("%0.1f;%0.1f;%0.1f;%0.1f", mainPanelDevice:get_argument_value(263), 
-																mainPanelDevice:get_argument_value(264), 
-																mainPanelDevice:get_argument_value(265), 
-																mainPanelDevice:get_argument_value(266)))
-		-- ILS
-		SendData(2016, string.format("%0.1f;%0.1f;%0.1f;%0.1f;%0.1f", mainPanelDevice:get_argument_value(251), 
-																	  mainPanelDevice:get_argument_value(252), 
-																	  mainPanelDevice:get_argument_value(253), 
-																	  mainPanelDevice:get_argument_value(254), 
-																	  mainPanelDevice:get_argument_value(255)))
-		-- UHF Radio (AN/ARC-164 UHF)
-		local lUHFRadio = GetDevice(54)
-		--WriteToLog('lUHFRadio: '..dump(string.format("%7.3f", lUHFRadio:get_frequency()/1000000)))
-		SendData(2017, string.format("%7.3f", lUHFRadio:get_frequency()/1000000))
-		-- AM Radio (AN/ARC-186(V) VHF AM)
-		local lAMRadio = GetDevice(55)
-		--WriteToLog('lAMRadio: '..dump(string.format("%7.3f", lAMRadio:get_frequency()/1000000)))
-		SendData(2018, string.format("%7.3f", lAMRadio:get_frequency()/1000000))
-		-- FM Radio (AN/ARC-186(V) VHF FM)
-		local lFMRadio = GetDevice(56)
-		--WriteToLog('lFMRadio: '..dump(string.format("%7.3f", lFMRadio:get_frequency()/1000000)))
-		SendData(2019, string.format("%7.3f", lFMRadio:get_frequency()/1000000))
-		-- Landing Gear Lamps
-		-- [659] = "%0.1f",	-- GEAR_N_SAFE
-		-- [660] = "%0.1f",	-- GEAR_L_SAFE
-		-- [661] = "%0.1f",	-- GEAR_R_SAFE
-		SendData(2007, string.format("%0.1f;%0.1f;%0.1f", 
-										mainPanelDevice:get_argument_value(659), 
-										mainPanelDevice:get_argument_value(660), 
-										mainPanelDevice:get_argument_value(661)))
-		-- CMSC 2020
-		-------------------------------------------------
-		--[372]	-- CMSC_MissileLaunchIndicator {0.0, 1.0} -- bottom middle, red light
-		--[373]	-- CMSC_PriorityStatusIndicator {0.0, 1.0} -- ower PRI button, green light
-		--[374]	-- CMSC_UnknownStatusIndicator {0.0, 1.0} -- over UNK button, ...
-		local lCMSC = list_indication(8)
-		lCMSC = lCMSC:gsub("-----------------------------------------", "")
-		lCMSC = lCMSC:gsub("txt_CHAFF_FLARE", "")
-		lCMSC = lCMSC:gsub("txt_JMR", "")
-		lCMSC = lCMSC:gsub("txt_MWS", "")
-		lCMSC = lCMSC:gsub("%c%c(%C)", "%1")
-		lCMSC = lCMSC.."\n"
+	-- AN/ARC-186(V) VHF AM
+	---------------------------------------------------
+	local lVHF_AM_RADIO = GetDevice(55)
+	ExportScript.Tools.SendData(2003, string.format("%.3f", lVHF_AM_RADIO:get_frequency()/1000000))
 
-		local lCMSCTable = {}
-		lCMSCTable = string.split(lCMSC, "%c")
+	-- AN/ARC-186(V) VHF FM
+	-------------------------------------------------
+	local lVHF_FM_RADIO = GetDevice(56)
+	ExportScript.Tools.SendData(2004, string.format("%.3f", lVHF_FM_RADIO:get_frequency()/1000000))
 
-		if lCMSCTable[2] ~= nil then
-			SendData(2020, string.format("%s;%s;%s;%.1f;%.1f;%.1f", 
-										lCMSCTable[1],		-- txt_CHAFF_FLARE
-										lCMSCTable[2],		-- txt_JMR
-										lCMSCTable[3],		-- txt_MWS
-										mainPanelDevice:get_argument_value(372),	-- CMSC_MissileLaunchIndicator {0.0, 1.0}
-										mainPanelDevice:get_argument_value(373),	-- CMSC_PriorityStatusIndicator {0.0, 1.0}
-										mainPanelDevice:get_argument_value(374)))	-- CMSC_UnknownStatusIndicator {0.0, 1.0}
-		else
-			SendData(2020, string.format(";;;%.1f;%.1f;%.1f",
-										mainPanelDevice:get_argument_value(372),	-- CMSC_MissileLaunchIndicator {0.0, 1.0}
-										mainPanelDevice:get_argument_value(373),	-- CMSC_PriorityStatusIndicator {0.0, 1.0}
-										mainPanelDevice:get_argument_value(374)))	-- CMSC_UnknownStatusIndicator {0.0, 1.0}
-		end
-	   
-		-- ILS Channel 2021
-		-------------------------------------------------
-		local lILSFrequencyMHz = {[0]="108",[0.1]="109",[0.2]="110",[0.3]="111"}
-		local lILSFrequencyKHz = {[0]="10",[0.1]="15",[0.2]="30",[0.3]="35",[0.4]="50",[0.5]="55",[0.6]="70",[0.7]="75",[0.8]="90",[0.9]="95"}
+	-- CMSC 2020 (Text only)
+	-------------------------------------------------
+	local lCMSC = list_indication(8)
+	lCMSC = lCMSC:gsub("-----------------------------------------", "")
+	lCMSC = lCMSC:gsub("txt_CHAFF_FLARE", "")
+	lCMSC = lCMSC:gsub("txt_JMR", "")
+	lCMSC = lCMSC:gsub("txt_MWS", "")
+	lCMSC = lCMSC:gsub("%c%c(%C)", "%1")
+	lCMSC = lCMSC.."\n"
 
-		SendData(2021, string.format("%.2f", 
-									lILSFrequencyMHz[math.round(mainPanelDevice:get_argument_value(251), 1)].."."..lILSFrequencyKHz[math.round(mainPanelDevice:get_argument_value(252), 1)]))
-	
-		-- AN/ARC-186(V) VHF AM and Preset Channel
-		---------------------------------------------------
-		local lVHF_AM_RADIO = GetDevice(55)
-		SendData(2022, string.format("%.3f", lVHF_AM_RADIO:get_frequency()/1000000))
+	local lCMSCTable = {}
+	lCMSCTable = ExportScript.Tools.split(lCMSC, "%c")
 
-		--local lVHF_AM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
-		--SendDataHW("2003", lVHF_AM_RADIO_PRESET[math.round(mainPanelDevice:get_argument_value(137), 2)])
-
-		-- AN/ARC-186(V) VHF FM and Preset Channel
-		-------------------------------------------------
-		local lVHF_FM_RADIO = GetDevice(56)
-		SendData(2023, string.format("%.3f", lVHF_FM_RADIO:get_frequency()/1000000))
-
-		-- Preset is buggy
-		--local lVHF_FM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
-		--SendDataHW("2005", lVHF_FM_RADIO_PRESET[math.round(mainPanelDevice:get_argument_value(151), 2, "ceil")])
-
-		-- TACAN Channel
-		-------------------------------------------------
-		SendData(2024, (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..math.round(mainPanelDevice:get_argument_value(264) * 10, 0)..math.round(mainPanelDevice:get_argument_value(265) * 10, 0))
-	
+	if lCMSCTable[2] ~= nil then
+		ExportScript.Tools.SendData(2005, string.format("%s", lCMSCTable[1]))	-- txt_CHAFF_FLARE
+		ExportScript.Tools.SendData(2006, string.format("%s", lCMSCTable[2]))	-- txt_JMR
+		ExportScript.Tools.SendData(2007, string.format("%s", lCMSCTable[3]))	-- txt_MWS
+	else
+		ExportScript.Tools.SendData(2005, "")	-- txt_CHAFF_FLARE
+		ExportScript.Tools.SendData(2006, "")	-- txt_JMR
+		ExportScript.Tools.SendData(2007, "")	-- txt_MWS
 	end
 end
 
-function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
+function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	--[[
-	not every frame export to hardware
+	export in low tick interval to DAC
 	Example from A-10C
 	Get Radio Frequencies
 	get data from device
 	local UHF_RADIO = GetDevice(54)
-	SendDataHW("ExportID", "Format")
-	SendDataHW("ExportID", "Format", HardwareConfigID)
-	SendDataHW("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	SendDataHW("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
 	]]
 
 	-- AN/ARC-164 UHF and UHF Preset Channel
 	---------------------------------------------------
 	local lUHF_RADIO = GetDevice(54)
 	if lUHF_RADIO:is_on() then
-		SendDataHW("2000", string.format("%.3f", lUHF_RADIO:get_frequency()/1000000))
+		ExportScript.Tools.SendDataDAC("2000", string.format("%.3f", lUHF_RADIO:get_frequency()/1000000))
 		
 		local lPresetChannel = list_indication(10)
 		lPresetChannel = lPresetChannel:gsub("-----------------------------------------", "")
 		lPresetChannel = lPresetChannel:gsub("txtPresetChannel", "")
 		lPresetChannel = lPresetChannel:gsub("%c", "")
 	
-		SendDataHW("2001", string.format("%s", lPresetChannel))
+		ExportScript.Tools.SendDataDAC("2001", string.format("%s", lPresetChannel))
 	else
-		SendDataHW("2000", "-")
-		SendDataHW("2001", "-")
+		ExportScript.Tools.SendDataDAC("2000", "-")
+		ExportScript.Tools.SendDataDAC("2001", "-")
 	end
 
 	-- AN/ARC-186(V) VHF AM and Preset Channel
 	---------------------------------------------------
 	local lVHF_AM_RADIO = GetDevice(55)
-	SendDataHW("2002", string.format("%.3f", lVHF_AM_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2002", string.format("%.3f", lVHF_AM_RADIO:get_frequency()/1000000))
 
 	local lVHF_AM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
-	SendDataHW("2003", lVHF_AM_RADIO_PRESET[math.round(mainPanelDevice:get_argument_value(137), 2)])
+	ExportScript.Tools.SendDataDAC("2003", lVHF_AM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(137), 2)])
 
 	-- AN/ARC-186(V) VHF FM and Preset Channel
 	-------------------------------------------------
 	local lVHF_FM_RADIO = GetDevice(56)
-	SendDataHW("2004", string.format("%.3f", lVHF_FM_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2004", string.format("%.3f", lVHF_FM_RADIO:get_frequency()/1000000))
 
 	-- Preset is buggy
 	local lVHF_FM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
-	SendDataHW("2005", lVHF_FM_RADIO_PRESET[math.round(mainPanelDevice:get_argument_value(151), 2, "ceil")])
+	ExportScript.Tools.SendDataDAC("2005", lVHF_FM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(151), 2, "ceil")])
 
     --  Pressure setting 
 	--------------------------------------------------------
@@ -1111,7 +821,7 @@ function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
 	local pressure_setting_1 = mainPanelDevice:get_argument_value(58) * 100				-- {0.0, 10.0} {0.0, 1.0}
 	local pressure_setting_0 = mainPanelDevice:get_argument_value(59) * 10 				-- {0.0, 10.0} {0.0, 1.0}
 	local pressure_setting = ((pressure_setting_3 + pressure_setting_2 + pressure_setting_1 + pressure_setting_0) / 100) 		
-	SendDataHW("2006", string.format("%5.2f", pressure_setting))
+	ExportScript.Tools.SendDataDAC("2006", string.format("%5.2f", pressure_setting))
 
 	-- Calculate Total Fuel
 	--------------------------------------------------------
@@ -1120,25 +830,25 @@ function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
 	local lFuelQuantityCounterHundreds = mainPanelDevice:get_argument_value(92) * 100					-- {0.0, 10.0} {0.0, 1.0}
 	-- orginal
 	local lFuelQuantityCounter = ((lFuelQuantityCounterTenthOfThous + lFuelQuantityCounterThousands + lFuelQuantityCounterHundreds) / 10) 		
-	SendDataHW("2007", string.format("%0.0f", lFuelQuantityCounter).."00")
+	ExportScript.Tools.SendDataDAC("2007", string.format("%0.0f", lFuelQuantityCounter).."00")
 	-- exact
 	--local lFuelQuantityCounter = ((lFuelQuantityCounterTenthOfThous + lFuelQuantityCounterThousands + lFuelQuantityCounterHundreds)) 		
-	--SendDataHW("2007", string.format("%1d", lFuelQuantityCounter).."0")
+	--ExportScript.Tools.SendDataDAC("2007", string.format("%1d", lFuelQuantityCounter).."0")
 
 	-- TACAN Channel
 	-------------------------------------------------
-	SendDataHW("2008", (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..math.round(mainPanelDevice:get_argument_value(264) * 10, 0)..math.round(mainPanelDevice:get_argument_value(265) * 10, 0))
+	ExportScript.Tools.SendDataDAC("2008", (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0))
 
 	-- ILS Channel
 	-------------------------------------------------
 	local lILSFrequencyMHz = {[0]="108",[0.1]="109",[0.2]="110",[0.3]="111"}
 	local lILSFrequencyKHz = {[0]="10",[0.1]="15",[0.2]="30",[0.3]="35",[0.4]="50",[0.5]="55",[0.6]="70",[0.7]="75",[0.8]="90",[0.9]="95"}
 
-	SendDataHW("2009", lILSFrequencyMHz[math.round(mainPanelDevice:get_argument_value(251), 1)].."."..lILSFrequencyKHz[math.round(mainPanelDevice:get_argument_value(252), 1)])
+	ExportScript.Tools.SendDataDAC("2009", lILSFrequencyMHz[ExportScript.Tools.round(mainPanelDevice:get_argument_value(251), 1)].."."..lILSFrequencyKHz[ExportScript.Tools.round(mainPanelDevice:get_argument_value(252), 1)])
 
 	-- generic Radio display and frequency rotarys
 	-------------------------------------------------
-	genericRadio(nil, nil, gES_genericRadioHardwareID)
+	ExportScript.genericRadio(nil, nil, ExportScript.Config.genericRadioHardwareID)
 
 	-- NOT FOR ARCAZE
 	-------------------------------------------------
@@ -1156,10 +866,10 @@ function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
 	lCMPS = lCMPS.."\n"
 
 	local lCMPSTable = {}
-	lCMPSTable = string.split(lCMPS, "%c")
+	lCMPSTable = ExportScript.Tools.split(lCMPS, "%c")
 
 	lCMPS = lCMPSTable[1].."\n"..table.concat(lCMPSTable, " ", 2)
-	SendDataHW("2011", lCMPS)
+	ExportScript.Tools.SendDataDAC("2011", lCMPS)
 	
 	
 	-- CMSC
@@ -1173,99 +883,122 @@ function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
 	lCMSC = lCMSC.."\n"
 
 	local lCMSCTable = {}
-	lCMSCTable = string.split(lCMSC, "%c")
+	lCMSCTable = ExportScript.Tools.split(lCMSC, "%c")
 
     if lCMSCTable[2] ~= nil then
-		SendDataHW("2012", lCMSCTable[1]) -- txt_CHAFF_FLARE
-		SendDataHW("2013", lCMSCTable[2]) -- txt_JMR
-		SendDataHW("2014", lCMSCTable[3]) -- txt_MWS
+		ExportScript.Tools.SendDataDAC("2012", lCMSCTable[1]) -- txt_CHAFF_FLARE
+		ExportScript.Tools.SendDataDAC("2013", lCMSCTable[2]) -- txt_JMR
+		ExportScript.Tools.SendDataDAC("2014", lCMSCTable[3]) -- txt_MWS
 	else
-		SendDataHW("2012", "") -- txt_CHAFF_FLARE
-		SendDataHW("2013", "") -- txt_JMR
-		SendDataHW("2014", "") -- txt_MWS
+		ExportScript.Tools.SendDataDAC("2012", "") -- txt_CHAFF_FLARE
+		ExportScript.Tools.SendDataDAC("2013", "") -- txt_JMR
+		ExportScript.Tools.SendDataDAC("2014", "") -- txt_MWS
 	end
 	]]
 	
 	--=====================================================================================
 	--[[
-	WriteToLog('list_cockpit_params(): '..dump(list_cockpit_params()))
-	WriteToLog('CMSP: '..dump(list_indication(7)))
+	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
 	local ltmp1 = 0
 	for ltmp2 = 0, 13, 1 do
 		ltmp1 = list_indication(ltmp2)
-		WriteToLog(ltmp2..': '..dump(ltmp1))
-		--WriteToLog(ltmp2..' (metatable): '..dump(getmetatable(ltmp1)))
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 	]]
 --[[
 	-- LITENING_INTERFACE
 	local lLITENING_INTERFACE = GetDevice(11)
-	WriteToLog('lLITENING_INTERFACE:get_station '..dump(lLITENING_INTERFACE:get_station()))
-	--WriteToLog('lLITENING_INTERFACE:add_masked_region '..dump(lLITENING_INTERFACE:add_masked_region())) -- test the parameters
-	--WriteToLog('lLITENING_INTERFACE:set_laser_designation_code '..dump(lLITENING_INTERFACE:set_laser_designation_code())) -- test the parameters
-	--WriteToLog('lLITENING_INTERFACE:set_laser_spot_search_code '..dump(lLITENING_INTERFACE:set_laser_spot_search_code())) -- test the parameters
+	ExportScript.Tools.WriteToLog('lLITENING_INTERFACE:get_station '..ExportScript.Tools.dump(lLITENING_INTERFACE:get_station()))
+	--ExportScript.Tools.WriteToLog('lLITENING_INTERFACE:add_masked_region '..ExportScript.Tools.dump(lLITENING_INTERFACE:add_masked_region())) -- test the parameters
+	--ExportScript.Tools.WriteToLog('lLITENING_INTERFACE:set_laser_designation_code '..ExportScript.Tools.dump(lLITENING_INTERFACE:set_laser_designation_code())) -- test the parameters
+	--ExportScript.Tools.WriteToLog('lLITENING_INTERFACE:set_laser_spot_search_code '..ExportScript.Tools.dump(lLITENING_INTERFACE:set_laser_spot_search_code())) -- test the parameters
 	
 	-- ADI
 	local lADI = GetDevice(47)
-	WriteToLog('lADI:get_sideslip '..dump(lADI:get_sideslip()))
-	WriteToLog('lADI:get_bank '..dump(lADI:get_bank()))
-	WriteToLog('lADI:get_pitch '..dump(lADI:get_pitch()))
+	ExportScript.Tools.WriteToLog('lADI:get_sideslip '..ExportScript.Tools.dump(lADI:get_sideslip()))
+	ExportScript.Tools.WriteToLog('lADI:get_bank '..ExportScript.Tools.dump(lADI:get_bank()))
+	ExportScript.Tools.WriteToLog('lADI:get_pitch '..ExportScript.Tools.dump(lADI:get_pitch()))
 
 	-- SAI
 	local lSAI = GetDevice(48)
-	WriteToLog('lSAI:get_sideslip '..dump(lSAI:get_sideslip()))
-	WriteToLog('lSAI:get_bank '..dump(lSAI:get_bank()))
-	WriteToLog('lSAI:get_pitch '..dump(lSAI:get_pitch()))
+	ExportScript.Tools.WriteToLog('lSAI:get_sideslip '..ExportScript.Tools.dump(lSAI:get_sideslip()))
+	ExportScript.Tools.WriteToLog('lSAI:get_bank '..ExportScript.Tools.dump(lSAI:get_bank()))
+	ExportScript.Tools.WriteToLog('lSAI:get_pitch '..ExportScript.Tools.dump(lSAI:get_pitch()))
 	
 	-- UHF_RADIO
 	local lUHF_RADIO = GetDevice(54)
-	WriteToLog('lUHF_RADIO:is_on '..dump(lUHF_RADIO:is_on()))
-	WriteToLog('lUHF_RADIO:get_frequency '..dump(lUHF_RADIO:get_frequency()))
-	--WriteToLog('lUHF_RADIO:set_frequency '..dump(lUHF_RADIO:set_frequency())) -- test the parameters
-	--WriteToLog('lUHF_RADIO:set_modulation '..dump(lUHF_RADIO:set_modulation())) -- test the parameters
-	--WriteToLog('lUHF_RADIO:set_channel '..dump(lUHF_RADIO:set_channel())) -- test the parameters
+	ExportScript.Tools.WriteToLog('lUHF_RADIO:is_on '..ExportScript.Tools.dump(lUHF_RADIO:is_on()))
+	ExportScript.Tools.WriteToLog('lUHF_RADIO:get_frequency '..ExportScript.Tools.dump(lUHF_RADIO:get_frequency()))
+	--ExportScript.Tools.WriteToLog('lUHF_RADIO:set_frequency '..ExportScript.Tools.dump(lUHF_RADIO:set_frequency())) -- test the parameters
+	--ExportScript.Tools.WriteToLog('lUHF_RADIO:set_modulation '..ExportScript.Tools.dump(lUHF_RADIO:set_modulation())) -- test the parameters
+	--ExportScript.Tools.WriteToLog('lUHF_RADIO:set_channel '..ExportScript.Tools.dump(lUHF_RADIO:set_channel())) -- test the parameters
 	
 	-- VHF_AM_RADIO
 	local lVHF_AM_RADIO = GetDevice(55)
-	WriteToLog('lVHF_AM_RADIO:is_on '..dump(lVHF_AM_RADIO:is_on()))
-	WriteToLog('lVHF_AM_RADIO:get_frequency '..dump(lVHF_AM_RADIO:get_frequency()))
-	--WriteToLog('lVHF_AM_RADIO:set_frequency '..dump(lVHF_AM_RADIO:set_frequency())) -- test the parameters
-	--WriteToLog('lVHF_AM_RADIO:set_modulation '..dump(lVHF_AM_RADIO:set_modulation())) -- test the parameters
-	--WriteToLog('lVHF_AM_RADIO:set_channel '..dump(lVHF_AM_RADIO:set_channel())) -- test the parameters
+	ExportScript.Tools.WriteToLog('lVHF_AM_RADIO:is_on '..ExportScript.Tools.dump(lVHF_AM_RADIO:is_on()))
+	ExportScript.Tools.WriteToLog('lVHF_AM_RADIO:get_frequency '..ExportScript.Tools.dump(lVHF_AM_RADIO:get_frequency()))
+	--ExportScript.Tools.WriteToLog('lVHF_AM_RADIO:set_frequency '..ExportScript.Tools.dump(lVHF_AM_RADIO:set_frequency())) -- test the parameters
+	--ExportScript.Tools.WriteToLog('lVHF_AM_RADIO:set_modulation '..ExportScript.Tools.dump(lVHF_AM_RADIO:set_modulation())) -- test the parameters
+	--ExportScript.Tools.WriteToLog('lVHF_AM_RADIO:set_channel '..ExportScript.Tools.dump(lVHF_AM_RADIO:set_channel())) -- test the parameters
 	
 	-- VHF_FM_RADIO
 	local lVHF_FM_RADIO = GetDevice(56)
-	WriteToLog('lVHF_FM_RADIO:is_on '..dump(lVHF_FM_RADIO:is_on()))
-	WriteToLog('lVHF_FM_RADIO:get_frequency '..dump(lVHF_FM_RADIO:get_frequency()))
-	--WriteToLog('lVHF_FM_RADIO:set_frequency '..dump(lVHF_FM_RADIO:set_frequency())) -- test the parameters
-	--WriteToLog('lVHF_FM_RADIO:set_modulation '..dump(lVHF_FM_RADIO:set_modulation())) -- test the parameters
-	--WriteToLog('lVHF_FM_RADIO:set_channel '..dump(lVHF_FM_RADIO:set_channel())) -- test the parameters
+	ExportScript.Tools.WriteToLog('lVHF_FM_RADIO:is_on '..ExportScript.Tools.dump(lVHF_FM_RADIO:is_on()))
+	ExportScript.Tools.WriteToLog('lVHF_FM_RADIO:get_frequency '..ExportScript.Tools.dump(lVHF_FM_RADIO:get_frequency()))
+	--ExportScript.Tools.WriteToLog('lVHF_FM_RADIO:set_frequency '..ExportScript.Tools.dump(lVHF_FM_RADIO:set_frequency())) -- test the parameters
+	--ExportScript.Tools.WriteToLog('lVHF_FM_RADIO:set_modulation '..ExportScript.Tools.dump(lVHF_FM_RADIO:set_modulation())) -- test the parameters
+	--ExportScript.Tools.WriteToLog('lVHF_FM_RADIO:set_channel '..ExportScript.Tools.dump(lVHF_FM_RADIO:set_channel())) -- test the parameters
 	
 	-- INTERCOM
 	local lINTERCOM = GetDevice(58)
-	WriteToLog('lINTERCOM:is_communicator_available '..dump(lINTERCOM:is_communicator_available()))
-	WriteToLog('lINTERCOM:get_noise_level '..dump(lINTERCOM:get_noise_level()))
-	WriteToLog('lINTERCOM:get_signal_level '..dump(lINTERCOM:get_signal_level()))
-	--WriteToLog('lINTERCOM:set_communicator '..dump(lINTERCOM:set_communicator())) -- test the parameters
-	--WriteToLog('lINTERCOM:set_voip_mode '..dump(lINTERCOM:set_voip_mode())) -- test the parameters
+	ExportScript.Tools.WriteToLog('lINTERCOM:is_communicator_available '..ExportScript.Tools.dump(lINTERCOM:is_communicator_available()))
+	ExportScript.Tools.WriteToLog('lINTERCOM:get_noise_level '..ExportScript.Tools.dump(lINTERCOM:get_noise_level()))
+	ExportScript.Tools.WriteToLog('lINTERCOM:get_signal_level '..ExportScript.Tools.dump(lINTERCOM:get_signal_level()))
+	--ExportScript.Tools.WriteToLog('lINTERCOM:set_communicator '..ExportScript.Tools.dump(lINTERCOM:set_communicator())) -- test the parameters
+	--ExportScript.Tools.WriteToLog('lINTERCOM:set_voip_mode '..ExportScript.Tools.dump(lINTERCOM:set_voip_mode())) -- test the parameters
 ]]
 --[[
 	local ltmp1 = 0
 	for ltmp2 = 1, 73, 1 do
 		ltmp1 = GetDevice(ltmp2)
-		WriteToLog(ltmp2..': '..dump(ltmp1))
-		WriteToLog(ltmp2..' (metatable): '..dump(getmetatable(ltmp1)))
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 ]]
 
+--getIndicatorData(3)
+
+end
+
+nextCDUIndicatorTime = 0
+function getIndicatorData(indicator_number)
+	local pairData = ""
+	local curTime = LoGetModelTime()
+	if curTime >= nextCDUIndicatorTime then
+		nextCDUIndicatorTime = curTime + .15
+		local indicator = list_indication(indicator_number)
+		if indicator ~= "" then
+			for brace in indicator:gmatch("%b{}") do
+				local lines = string.gsub(string.gsub(brace,"[{}]",""),"---+","")
+				for data in lines:gmatch("[%w_]+\n[^\n]+") do
+					pairData = pairData..string.gsub(data, "\n", "<==>")..'\n'
+				end
+			end
+			--sendCduData(pairData, cduAppHost, cduAppPort)
+			ExportScript.Tools.WriteToLog('indicator: '..ExportScript.Tools.dump(indicator))
+			ExportScript.Tools.WriteToLog('pairData: '..ExportScript.Tools.dump(pairData))
+		end
+	end
 end
 
 -----------------------------
 --     Custom functions    --
 -----------------------------
 
-function genericRadio(key, value, hardware)
+function ExportScript.genericRadio(key, value, hardware)
 	local lHardware = hardware or 1
 	-- Werte werden per Encoder im Bereich von 0.0 bis 2.0 in 0.1 Schritten uebergeben
 	-- im jeweiligen Abschnitt muessen die Eingangsdaten auf den Zulaessigen Bereich eingeschraengt werden
@@ -1273,30 +1006,30 @@ function genericRadio(key, value, hardware)
 	local lMainPanelDevice = GetDevice(0)
 	local lMaxRadios = 3
 	
-	if gES_genericRadio == nil then
-		gES_genericRadio = 0
+	if ExportScript.AF.genericRadio == nil then
+		ExportScript.AF.genericRadio = 0
 	end
-	if gES_genericRadioFrequency1 == nil then
-		gES_genericRadioFrequency1 = 0.0
+	if ExportScript.AF.genericRadioFrequency1 == nil then
+		ExportScript.AF.genericRadioFrequency1 = 0.0
 	end
-	if gES_genericRadioFrequency2 == nil then
-		gES_genericRadioFrequency2 = 0.0
+	if ExportScript.AF.genericRadioFrequency2 == nil then
+		ExportScript.AF.genericRadioFrequency2 = 0.0
 	end
-	if gES_genericRadioPresetChannel == nil then
-		gES_genericRadioPresetChannel = 0.0
+	if ExportScript.AF.genericRadioPresetChannel == nil then
+		ExportScript.AF.genericRadioPresetChannel = 0.0
 	end
-	if gES_genericRadioPower == nil then
-		gES_genericRadioPower = {}
+	if ExportScript.AF.genericRadioPower == nil then
+		ExportScript.AF.genericRadioPower = {}
 	end
-	if gES_genericRadioPresetManual == nil then
-		gES_genericRadioPresetManual = {}
+	if ExportScript.AF.genericRadioPresetManual == nil then
+		ExportScript.AF.genericRadioPresetManual = {}
 	end
-	if gES_genericRadioSquelch == nil then
-		gES_genericRadioSquelch = {}
+	if ExportScript.AF.genericRadioSquelch == nil then
+		ExportScript.AF.genericRadioSquelch = {}
 	end
 
 	if key == "3001" then
-		gES_genericRadio = tonumber(value)
+		ExportScript.AF.genericRadio = tonumber(value)
 	end
 	if key == "3002" then
 		lRotaryFrequency_1 = tonumber(value)
@@ -1323,30 +1056,30 @@ function genericRadio(key, value, hardware)
 		lPower = tonumber(value)
 	end
 
-	if gES_genericRadio > lMaxRadios then
-		WriteToLog("Radio Nr. "..gES_genericRadio.." not defined.")
+	if ExportScript.AF.genericRadio > lMaxRadios then
+		ExportScript.Tools.WriteToLog("Radio Nr. "..ExportScript.AF.genericRadio.." not defined.")
 		return
 	end
 
-	if gES_genericRadio == 1 then
+	if ExportScript.AF.genericRadio == 1 then
 		-- AN/ARC-164 UHF ###.###
 		---------------------------------------------------
 		local lDeviceID = 54
 		local lUHF_RADIO = GetDevice(lDeviceID)
 
 		-- check status of the radio
-		if gES_genericRadioPower[gES_genericRadio] == nil then
+		if ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == nil then
 			if lUHF_RADIO:is_on() then
-				gES_genericRadioPower[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
 			else
-				gES_genericRadioPower[gES_genericRadio] = 0.0
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0.0
 			end
 		end
-		if gES_genericRadioPresetManual[gES_genericRadio] == nil then
-			gES_genericRadioPresetManual[gES_genericRadio] = ((math.round(lMainPanelDevice:get_argument_value(167), 1) == 0) and 0 or 1)
+		if ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == nil then
+			ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(167), 1) == 0) and 0 or 1)
 		end
-		if gES_genericRadioSquelch[gES_genericRadio] == nil then
-			gES_genericRadioSquelch[gES_genericRadio] = ((math.round(lMainPanelDevice:get_argument_value(170), 1) == 0) and 1 or 0)
+		if ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == nil then
+			ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(170), 1) == 0) and 1 or 0)
 		end
 
 		if lUHF_RADIO:is_on() then
@@ -1355,15 +1088,15 @@ function genericRadio(key, value, hardware)
 			lPresetChannel = lPresetChannel:gsub("txtPresetChannel", "")
 			lPresetChannel = lPresetChannel:gsub("%c", "")
 
-			local lUHF_RADIO_FREQUENCY = math.round(lUHF_RADIO:get_frequency()/1000000 , 3, "floor")
+			local lUHF_RADIO_FREQUENCY = ExportScript.Tools.round(lUHF_RADIO:get_frequency()/1000000 , 3, "floor")
 
-			SendDataHW("3000", string.format("%s%.3f", lPresetChannel, lUHF_RADIO_FREQUENCY), lHardware)
-			SendDataHW("3001", string.format("%s", lPresetChannel), lHardware)
-			SendDataHW("3002", string.format("%.3f", lUHF_RADIO_FREQUENCY), lHardware)
+			ExportScript.Tools.SendDataDAC("3000", string.format("%s%.3f", lPresetChannel, lUHF_RADIO_FREQUENCY), lHardware)
+			ExportScript.Tools.SendDataDAC("3001", string.format("%s", lPresetChannel), lHardware)
+			ExportScript.Tools.SendDataDAC("3002", string.format("%.3f", lUHF_RADIO_FREQUENCY), lHardware)
 
 			if lRotaryFrequency_1 ~= nil and (lRotaryFrequency_1 >= 0.0 and lRotaryFrequency_1 <= 2.0) then
 
-				local lFrequency = StrSplit(lUHF_RADIO_FREQUENCY, "%.")  -- %. um den Punkt als Punkt zu suchen
+				local lFrequency = ExportScript.Tools.StrSplit(lUHF_RADIO_FREQUENCY, "%.")  -- %. um den Punkt als Punkt zu suchen
 
 				if type(lFrequency) == "table" and lFrequency[1] ~= nil then
 					lFrequency[1] = tonumber(lFrequency[1])
@@ -1374,18 +1107,18 @@ function genericRadio(key, value, hardware)
 						local ltmp = string.format("%.0f", lFrequency[2] / 25)
 						lFrequency[2] = ltmp * 25
 					end
-					if lRotaryFrequency_1 < gES_genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
+					if lRotaryFrequency_1 < ExportScript.AF.genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
 						lFrequency[1] = lFrequency[1] - 1
 						if lFrequency[1] == 219 then
 							lFrequency[1] = 314
 						end
-						gES_genericRadioFrequency1 = lRotaryFrequency_1
+						ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
 					else
 						lFrequency[1] = lFrequency[1] + 1
 						if lFrequency[1] == 315 then
 							lFrequency[1] = 220
 						end
-						gES_genericRadioFrequency1 = lRotaryFrequency_1
+						ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
 					end
 
 					lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
@@ -1395,13 +1128,13 @@ function genericRadio(key, value, hardware)
 									 Frequency = ltempFrequency * 1000000}
 
 				else
-					WriteToLog("1. generic A-10C UHF Radio, don't split frequency: "..lFrequency)
+					ExportScript.Tools.WriteToLog("1. generic A-10C UHF Radio, don't split frequency: "..lFrequency)
 				end
 			end
 
 			if lRotaryFrequency_2 ~= nil and (lRotaryFrequency_2 >= 0.0 and lRotaryFrequency_2 <= 2.0) then
 
-				local lFrequency = StrSplit(lUHF_RADIO_FREQUENCY, "%.")
+				local lFrequency = ExportScript.Tools.StrSplit(lUHF_RADIO_FREQUENCY, "%.")
 
 				if type(lFrequency) == "table" and lFrequency[1] ~= nil then
 					lFrequency[1] = tonumber(lFrequency[1])
@@ -1412,18 +1145,18 @@ function genericRadio(key, value, hardware)
 						local ltmp = string.format("%.0f", lFrequency[2] / 25)
 						lFrequency[2] = ltmp * 25
 					end
-					if lRotaryFrequency_2 < gES_genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
+					if lRotaryFrequency_2 < ExportScript.AF.genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
 						lFrequency[2] = lFrequency[2] - 25
 						if lFrequency[2] == -25 then
 							lFrequency[2] = 975
 						end
-						gES_genericRadioFrequency2 = lRotaryFrequency_2
+						ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
 					else
 						lFrequency[2] = lFrequency[2] + 25
 						if lFrequency[2] == 1000 then
 							lFrequency[2] = 0
 						end
-						gES_genericRadioFrequency2 = lRotaryFrequency_2
+						ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
 					end
 
 					lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
@@ -1433,7 +1166,7 @@ function genericRadio(key, value, hardware)
 									 Frequency = ltempFrequency * 1000000}
 
 				else
-					WriteToLog("2. generic A-10C UHF Radio, don't split frequency: "..lFrequency)
+					ExportScript.Tools.WriteToLog("2. generic A-10C UHF Radio, don't split frequency: "..lFrequency)
 				end
 			end
 			if lPreset ~= nil and (lPreset >= 0.0 and lPreset <= 1.9) then
@@ -1445,9 +1178,9 @@ function genericRadio(key, value, hardware)
 			end
 
 		else
-			SendDataHW("3000", "-", lHardware)
-			SendDataHW("3001", "-", lHardware)
-			SendDataHW("3002", "-", lHardware)
+			ExportScript.Tools.SendDataDAC("3000", "-", lHardware)
+			ExportScript.Tools.SendDataDAC("3001", "-", lHardware)
+			ExportScript.Tools.SendDataDAC("3002", "-", lHardware)
 		end
 		
 		if lVolume ~= nil and (lVolume >= 0.0 and lVolume <= 2.0) then
@@ -1462,81 +1195,81 @@ function genericRadio(key, value, hardware)
 							Value    = lLoad}
 		end
 		if lSquelch ~= nil and (lSquelch == 0.0 or lSquelch <= 1.0) then
-			if lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 1.0 then
+			if lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 1.0 then
 				-- Squelch off
 				lSquelch = 1.0
-				gES_genericRadioSquelch[gES_genericRadio] = 0
-			elseif lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 0 then
+				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 0
+			elseif lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 0 then
 				-- Squelch on
 				lSquelch = 0.0
-				gES_genericRadioSquelch[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 1.0
 			end
 			lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3010,
 							Value    = lSquelch}
 		end
 		if lManualPreset ~= nil and (lManualPreset == 0.0 or lManualPreset <= 1.0) then
-			if lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 1.0 then
+			if lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 1.0 then
 				-- Manual
 				lManualPreset = 0.0
-				gES_genericRadioPresetManual[gES_genericRadio] = 0
-			elseif lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 0 then
+				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 0
+			elseif lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 0 then
 				-- Preset
 				lManualPreset = 0.1
-				gES_genericRadioPresetManual[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 1.0
 			end
 			lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3007,
 							Value    = lManualPreset}
 		end
 		if lPower ~= nil and (lPower == 0.0 or lPower <= 1.0) then
-			if lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 1.0 then
+			if lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 1.0 then
 				-- Power off
 				lPower = 0.0
-				gES_genericRadioPower[gES_genericRadio] = 0
-			elseif lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 0 then
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0
+			elseif lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 0 then
 				--Power on
 				lPower = 0.1
-				gES_genericRadioPower[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
 			end
 			lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3008,
 							Value    = lPower}
 		end
 
-	elseif gES_genericRadio == 2 then
+	elseif ExportScript.AF.genericRadio == 2 then
 		-- AN/ARC-186(V) VHF AM ###.###
 		---------------------------------------------------
 		local lDeviceID = 55
 		local lVHF_AM_RADIO = GetDevice(lDeviceID)
 
 		-- check status of the radio
-		if gES_genericRadioPower[gES_genericRadio] == nil then
+		if ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == nil then
 			if lVHF_AM_RADIO:is_on() then
-				gES_genericRadioPower[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
 			else
-				gES_genericRadioPower[gES_genericRadio] = 0.0
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0.0
 			end
 		end
-		if gES_genericRadioPresetManual[gES_genericRadio] == nil then
-			gES_genericRadioPresetManual[gES_genericRadio] = ((math.round(lMainPanelDevice:get_argument_value(135), 1) == 0.1) and 1 or 0)
+		if ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == nil then
+			ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(135), 1) == 0.1) and 1 or 0)
 		end
-		if gES_genericRadioSquelch[gES_genericRadio] == nil then
-			gES_genericRadioSquelch[gES_genericRadio] = ((math.round(lMainPanelDevice:get_argument_value(134), 1) == 1.0) and 0 or 1)
+		if ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == nil then
+			ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(134), 1) == 1.0) and 0 or 1)
 		end
 
 		local lVHF_AM_RADIO_PRESET = {[0.0]="01",[0.01]="02",[0.02]="03",[0.03]="04",[0.04]="05",[0.05]="06",[0.06]="07",[0.07]="08",[0.08]="09",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="01"}
-		local lVHF_AM_RADIO_FREQUENCY = math.round(lVHF_AM_RADIO:get_frequency()/1000000 , 3, "floor")
+		local lVHF_AM_RADIO_FREQUENCY = ExportScript.Tools.round(lVHF_AM_RADIO:get_frequency()/1000000 , 3, "floor")
 		
-		local lPresetChannel = math.round(lMainPanelDevice:get_argument_value(137), 2)
+		local lPresetChannel = ExportScript.Tools.round(lMainPanelDevice:get_argument_value(137), 2)
 		
-		SendDataHW("3000", string.format("%s%.3f", lVHF_AM_RADIO_PRESET[lPresetChannel], lVHF_AM_RADIO_FREQUENCY), lHardware)
-		SendDataHW("3001", string.format("%s", lVHF_AM_RADIO_PRESET[lPresetChannel]), lHardware)
-		SendDataHW("3002", string.format("%.3f", lVHF_AM_RADIO_FREQUENCY), lHardware)
+		ExportScript.Tools.SendDataDAC("3000", string.format("%s%.3f", lVHF_AM_RADIO_PRESET[lPresetChannel], lVHF_AM_RADIO_FREQUENCY), lHardware)
+		ExportScript.Tools.SendDataDAC("3001", string.format("%s", lVHF_AM_RADIO_PRESET[lPresetChannel]), lHardware)
+		ExportScript.Tools.SendDataDAC("3002", string.format("%.3f", lVHF_AM_RADIO_FREQUENCY), lHardware)
 		
 		if lRotaryFrequency_1 ~= nil and (lRotaryFrequency_1 >= 0.0 and lRotaryFrequency_1 <= 2.0) then
 
-			local lFrequency = StrSplit(lVHF_AM_RADIO_FREQUENCY, "%.")
+			local lFrequency = ExportScript.Tools.StrSplit(lVHF_AM_RADIO_FREQUENCY, "%.")
 
 			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
 				lFrequency[1] = tonumber(lFrequency[1])
@@ -1547,18 +1280,18 @@ function genericRadio(key, value, hardware)
 					local ltmp = string.format("%.0f", lFrequency[2] / 25)
 					lFrequency[2] = ltmp * 25
 				end
-				if lRotaryFrequency_1 < gES_genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
+				if lRotaryFrequency_1 < ExportScript.AF.genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
 					lFrequency[1] = lFrequency[1] - 1
 					if lFrequency[1] == 29 then
 						lFrequency[1] = 159
 					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
+					ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
 				else
 					lFrequency[1] = lFrequency[1] + 1
 					if lFrequency[1] == 160 then
 						lFrequency[1] = 30
 					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
+					ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
 				end
 				
 				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
@@ -1568,13 +1301,13 @@ function genericRadio(key, value, hardware)
 				                 Frequency = ltempFrequency * 1000000}
 
 			else
-				WriteToLog("1. generic A-10C VHF AM Radio, don't split frequency: "..lFrequency)
+				ExportScript.Tools.WriteToLog("1. generic A-10C VHF AM Radio, don't split frequency: "..lFrequency)
 			end
 		end
 
 		if lRotaryFrequency_2 ~= nil and (lRotaryFrequency_2 >= 0.0 and lRotaryFrequency_2 <= 2.0) then
 
-			local lFrequency = StrSplit(lVHF_AM_RADIO_FREQUENCY, "%.")
+			local lFrequency = ExportScript.Tools.StrSplit(lVHF_AM_RADIO_FREQUENCY, "%.")
 
 			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
 				lFrequency[1] = tonumber(lFrequency[1])
@@ -1585,18 +1318,18 @@ function genericRadio(key, value, hardware)
 					local ltmp = string.format("%.0f", lFrequency[2] / 25)
 					lFrequency[2] = ltmp * 25
 				end
-				if lRotaryFrequency_2 < gES_genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
+				if lRotaryFrequency_2 < ExportScript.AF.genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
 					lFrequency[2] = lFrequency[2] - 25
 					if lFrequency[2] == -25 then
 						lFrequency[2] = 975
 					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
+					ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
 				else
 					lFrequency[2] = lFrequency[2] + 25
 					if lFrequency[2] == 1000 then
 						lFrequency[2] = 0
 					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
+					ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
 				end
 				
 				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
@@ -1606,7 +1339,7 @@ function genericRadio(key, value, hardware)
 				                 Frequency = ltempFrequency * 1000000}
 
 			else
-				WriteToLog("2. generic A-10C VHF AM Radio, don't split frequency: "..lFrequency)
+				ExportScript.Tools.WriteToLog("2. generic A-10C VHF AM Radio, don't split frequency: "..lFrequency)
 			end
 		end
 		if lVolume ~= nil and (lVolume >= 0.0 and lVolume <= 2.0) then
@@ -1617,16 +1350,16 @@ function genericRadio(key, value, hardware)
 		end
 		if lPreset ~= nil and (lPreset >= 0.0 and lPreset <= 2.0) then
 			-- Preset 0.0 to 0.20 in 0.01 steps
-			if lPreset < gES_genericRadioPresetChannel or lPreset == 0.0 or lPreset == 2.0 then
+			if lPreset < ExportScript.AF.genericRadioPresetChannel or lPreset == 0.0 or lPreset == 2.0 then
 				lClickAction = {DeviceID = lDeviceID,
 								ButtonID = 3001,
 								Value    = 0.01}
-				gES_genericRadioPresetChannel = lPreset
+				ExportScript.AF.genericRadioPresetChannel = lPreset
 			else
 				lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3002,
 							Value    = -0.01}
-				gES_genericRadioPresetChannel = lPreset
+				ExportScript.AF.genericRadioPresetChannel = lPreset
 			end
 		end
 		if lLoad ~= nil and (lLoad == 0.0 or lLoad <= 1.0) then
@@ -1635,70 +1368,70 @@ function genericRadio(key, value, hardware)
 							Value    = lLoad}
 		end
 		if lSquelch ~= nil and (lSquelch == 0.0 or lSquelch <= 1.0) then
-			if lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 1.0 then
+			if lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 1.0 then
 				-- Squelch off
 				lSquelch = -1.0
-				gES_genericRadioSquelch[gES_genericRadio] = 0
-			elseif lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 0 then
+				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 0
+			elseif lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 0 then
 				-- Squelch on
 				lSquelch = 0.0
-				gES_genericRadioSquelch[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 1.0
 			end
 			lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3008,
 							Value    = lSquelch}
 		end
 		if lManualPreset ~= nil and (lManualPreset == 0.0 or lManualPreset <= 1.0) then
-			if lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 1.0 then
+			if lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 1.0 then
 				-- Manual on
 				lManualPreset = 0.2
-				gES_genericRadioPresetManual[gES_genericRadio] = 0
-			elseif lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 0 then
+				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 0
+			elseif lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 0 then
 				-- Preset on
 				lManualPreset = 0.3
-				gES_genericRadioPresetManual[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 1.0
 			end
 			lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3004,
 							Value    = lManualPreset}
 		end
 		if lPower ~= nil and (lPower == 0.0 or lPower <= 1.0) then
-			if lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 1.0 then
+			if lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 1.0 then
 				-- Power off
 				lPower = 0.0
-				gES_genericRadioPower[gES_genericRadio] = 0
-			elseif lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 0 then
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0
+			elseif lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 0 then
 				-- Power on
 				lPower = 0.1
-				gES_genericRadioPower[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
 			end
 			lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3003,
 							Value    = lPower}
 		end
 
-	elseif gES_genericRadio == 3 then
+	elseif ExportScript.AF.genericRadio == 3 then
 		-- AN/ARC-186(V) VHF FM ##.###
 		-------------------------------------------------
 		local lDeviceID = 56
 		local lVHF_FM_RADIO = GetDevice(lDeviceID)
 
 		-- check status of the radio
-		if gES_genericRadioPower[gES_genericRadio] == nil then
+		if ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == nil then
 			if lVHF_FM_RADIO:is_on() then
-				gES_genericRadioPower[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
 			else
-				gES_genericRadioPower[gES_genericRadio] = 0.0
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0.0
 			end
 		end
-		if gES_genericRadioPresetManual[gES_genericRadio] == nil then
-			gES_genericRadioPresetManual[gES_genericRadio] = ((math.round(lMainPanelDevice:get_argument_value(149), 1) == 0.1) and 1 or 0)
+		if ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == nil then
+			ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(149), 1) == 0.1) and 1 or 0)
 		end
-		if gES_genericRadioSquelch[gES_genericRadio] == nil then
-			gES_genericRadioSquelch[gES_genericRadio] = ((math.round(lMainPanelDevice:get_argument_value(148), 1) == 1.0) and 0 or 1)
+		if ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == nil then
+			ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(148), 1) == 1.0) and 0 or 1)
 		end
 
-		local lVHF_FM_RADIO_Frequency = math.round(lVHF_FM_RADIO:get_frequency()/1000000 , 3, "floor")
+		local lVHF_FM_RADIO_Frequency = ExportScript.Tools.round(lVHF_FM_RADIO:get_frequency()/1000000 , 3, "floor")
 		if lVHF_FM_RADIO_Frequency > 99.999 then
 			lVHF_FM_RADIO_Frequency = string.format("%.3f", lVHF_FM_RADIO_Frequency)
 		else
@@ -1707,15 +1440,15 @@ function genericRadio(key, value, hardware)
 		-- Preset is buggy
 		local lVHF_FM_RADIO_PRESET = {[0.0]="01",[0.01]="02",[0.02]="03",[0.03]="04",[0.04]="05",[0.05]="06",[0.06]="07",[0.07]="08",[0.08]="09",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="01"}
 
-		local lPresetChannel = math.round(lMainPanelDevice:get_argument_value(151), 2, "ceil")
+		local lPresetChannel = ExportScript.Tools.round(lMainPanelDevice:get_argument_value(151), 2, "ceil")
 
-		SendDataHW("3000", string.format("%s%s", lVHF_FM_RADIO_PRESET[lPresetChannel], lVHF_FM_RADIO_Frequency), lHardware)
-		SendDataHW("3001", string.format("%s", lVHF_FM_RADIO_PRESET[lPresetChannel]), lHardware)
-		SendDataHW("3002", string.format("%s", lVHF_FM_RADIO_Frequency), lHardware)
+		ExportScript.Tools.SendDataDAC("3000", string.format("%s%s", lVHF_FM_RADIO_PRESET[lPresetChannel], lVHF_FM_RADIO_Frequency), lHardware)
+		ExportScript.Tools.SendDataDAC("3001", string.format("%s", lVHF_FM_RADIO_PRESET[lPresetChannel]), lHardware)
+		ExportScript.Tools.SendDataDAC("3002", string.format("%s", lVHF_FM_RADIO_Frequency), lHardware)
 
 		if lRotaryFrequency_1 ~= nil and (lRotaryFrequency_1 >= 0.0 and lRotaryFrequency_1 <= 2.0) then
 
-			local lFrequency = StrSplit(lVHF_FM_RADIO_Frequency, "%.")
+			local lFrequency = ExportScript.Tools.StrSplit(lVHF_FM_RADIO_Frequency, "%.")
 
 			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
 				lFrequency[1] = tonumber(lFrequency[1])
@@ -1726,18 +1459,18 @@ function genericRadio(key, value, hardware)
 					local ltmp = string.format("%.0f", lFrequency[2] / 25)
 					lFrequency[2] = ltmp * 25
 				end
-				if lRotaryFrequency_1 < gES_genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
+				if lRotaryFrequency_1 < ExportScript.AF.genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
 					lFrequency[1] = lFrequency[1] - 1
 					if lFrequency[1] == 29 then
 						lFrequency[1] = 76
 					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
+					ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
 				else
 					lFrequency[1] = lFrequency[1] + 1
 					if lFrequency[1] == 77 then
 						lFrequency[1] = 30
 					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
+					ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
 				end
 				
 				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
@@ -1747,13 +1480,13 @@ function genericRadio(key, value, hardware)
 				                 Frequency = ltempFrequency * 1000000}
 
 			else
-				WriteToLog("1. generic A-10C VHF FM Radio, don't split frequency: "..lFrequency)
+				ExportScript.Tools.WriteToLog("1. generic A-10C VHF FM Radio, don't split frequency: "..lFrequency)
 			end
 		end
 
 		if lRotaryFrequency_2 ~= nil and (lRotaryFrequency_2 >= 0.0 and lRotaryFrequency_2 <= 2.0) then
 
-			local lFrequency = StrSplit(lVHF_FM_RADIO_Frequency, "%.")
+			local lFrequency = ExportScript.Tools.StrSplit(lVHF_FM_RADIO_Frequency, "%.")
 
 			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
 				lFrequency[1] = tonumber(lFrequency[1])
@@ -1764,18 +1497,18 @@ function genericRadio(key, value, hardware)
 					local ltmp = string.format("%.0f", lFrequency[2] / 25)
 					lFrequency[2] = ltmp * 25
 				end
-				if lRotaryFrequency_2 < gES_genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
+				if lRotaryFrequency_2 < ExportScript.AF.genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
 					lFrequency[2] = lFrequency[2] - 25
 					if lFrequency[2] == -25 then
 						lFrequency[2] = 975
 					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
+					ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
 				else
 					lFrequency[2] = lFrequency[2] + 25
 					if lFrequency[2] == 1000 then
 						lFrequency[2] = 0
 					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
+					ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
 				end
 				
 				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
@@ -1785,7 +1518,7 @@ function genericRadio(key, value, hardware)
 				                 Frequency = ltempFrequency * 1000000}
 
 			else
-				WriteToLog("2. generic A-10C VHF FM Radio, don't split frequency: "..lFrequency)
+				ExportScript.Tools.WriteToLog("2. generic A-10C VHF FM Radio, don't split frequency: "..lFrequency)
 			end
 		end
 		if lVolume ~= nil and (lVolume >= 0.0 and lVolume <= 2.0) then
@@ -1796,16 +1529,16 @@ function genericRadio(key, value, hardware)
 		end
 		if lPreset ~= nil and (lPreset >= 0.0 and lPreset <= 2.0) then
 			-- Preset 0.0 to 0.20 in 0.01 steps
-			if lPreset < gES_genericRadioPresetChannel or lPreset == 0.0 or lPreset == 2.0 then
+			if lPreset < ExportScript.AF.genericRadioPresetChannel or lPreset == 0.0 or lPreset == 2.0 then
 				lClickAction = {DeviceID = lDeviceID,
 								ButtonID = 3001,
 								Value    = 0.01}
-				gES_genericRadioPresetChannel = lPreset
+				ExportScript.AF.genericRadioPresetChannel = lPreset
 			else
 				lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3002,
 							Value    = -0.01}
-				gES_genericRadioPresetChannel = lPreset
+				ExportScript.AF.genericRadioPresetChannel = lPreset
 			end
 		end
 		if lLoad ~= nil and (lLoad == 0.0 or lLoad <= 1.0) then
@@ -1814,42 +1547,42 @@ function genericRadio(key, value, hardware)
 							Value    = lLoad}
 		end
 		if lSquelch ~= nil and (lSquelch == 0.0 or lSquelch <= 1.0) then
-			if lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 1.0 then
+			if lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 1.0 then
 				-- Squelch off
 				lSquelch = -1.0
-				gES_genericRadioSquelch[gES_genericRadio] = 0
-			elseif lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 0 then
+				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 0
+			elseif lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 0 then
 				-- Squelch on
 				lSquelch = 0.0
-				gES_genericRadioSquelch[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 1.0
 			end
 			lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3008,
 							Value    = lSquelch}
 		end
 		if lManualPreset ~= nil and (lManualPreset == 0.0 or lManualPreset <= 1.0) then
-			if lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 1.0 then
+			if lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 1.0 then
 				-- Manual on
 				lManualPreset = 0.2
-				gES_genericRadioPresetManual[gES_genericRadio] = 0
-			elseif lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 0 then
+				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 0
+			elseif lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 0 then
 				-- Preset on
 				lManualPreset = 0.3
-				gES_genericRadioPresetManual[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 1.0
 			end
 			lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3004,
 							Value    = lManualPreset}
 		end
 		if lPower ~= nil and (lPower == 0.0 or lPower <= 1.0) then
-			if lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 1.0 then
+			if lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 1.0 then
 				-- Power off
 				lPower = 0.0
-				gES_genericRadioPower[gES_genericRadio] = 0
-			elseif lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 0 then
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0
+			elseif lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 0 then
 				-- Power on
 				lPower = 0.1
-				gES_genericRadioPower[gES_genericRadio] = 1.0
+				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
 			end
 			lClickAction = {DeviceID = lDeviceID,
 							ButtonID = 3003,
@@ -1857,32 +1590,32 @@ function genericRadio(key, value, hardware)
 		end
 
 	else
-		SendDataHW("3000", "-", lHardware)
-		SendDataHW("3001", "-", lHardware)
-		SendDataHW("3002", "-", lHardware)
-		SendDataHW("3010", 0, lHardware)
-		SendDataHW("3011", 0, lHardware)
-		SendDataHW("3012", 0, lHardware)
+		ExportScript.Tools.SendDataDAC("3000", "-", lHardware)
+		ExportScript.Tools.SendDataDAC("3001", "-", lHardware)
+		ExportScript.Tools.SendDataDAC("3002", "-", lHardware)
+		ExportScript.Tools.SendDataDAC("3010", 0, lHardware)
+		ExportScript.Tools.SendDataDAC("3011", 0, lHardware)
+		ExportScript.Tools.SendDataDAC("3012", 0, lHardware)
 		return
 	end
 
-	SendDataHW("3010", gES_genericRadioPower[gES_genericRadio], lHardware)
-	SendDataHW("3011", gES_genericRadioPresetManual[gES_genericRadio], lHardware)
-	SendDataHW("3012", gES_genericRadioSquelch[gES_genericRadio], lHardware)
+	ExportScript.Tools.SendDataDAC("3010", ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio], lHardware)
+	ExportScript.Tools.SendDataDAC("3011", ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio], lHardware)
+	ExportScript.Tools.SendDataDAC("3012", ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio], lHardware)
 
 	if lClickAction ~= nil then
 		lDevice = GetDevice(lClickAction.DeviceID)
 		if type(lDevice) == "table" then
-			--WriteToLog("GetDevice("..lClickAction.DeviceID.."):performClickableAction("..lClickAction.ButtonID..", "..lClickAction.Value..") ")
+			--ExportScript.Tools.WriteToLog("GetDevice("..lClickAction.DeviceID.."):performClickableAction("..lClickAction.ButtonID..", "..lClickAction.Value..") ")
 			lDevice:performClickableAction(lClickAction.ButtonID, lClickAction.Value)
 		end
 	elseif lSetFrequency ~= nil then
 		lDevice = GetDevice(lSetFrequency.DeviceID)
 		if type(lDevice) == "table" and lDevice:is_on() then
-			--WriteToLog("GetDevice("..lSetFrequency.DeviceID.."):set_frequency("..lSetFrequency.Frequency..") ")
+			--ExportScript.Tools.WriteToLog("GetDevice("..lSetFrequency.DeviceID.."):set_frequency("..lSetFrequency.Frequency..") ")
 			lDevice:set_frequency(lSetFrequency.Frequency)
 		else
-			WriteToLog("GetDevice("..lSetFrequency.DeviceID..") is no table or Radio is not on")
+			ExportScript.Tools.WriteToLog("GetDevice("..lSetFrequency.DeviceID..") is no table or Radio is not on")
 		end
 	end
 end

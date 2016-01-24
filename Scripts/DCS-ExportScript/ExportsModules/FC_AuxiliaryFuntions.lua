@@ -2,234 +2,269 @@
 -- Version 0.9.9
 
 -- Weapon Panel for Su-25A and Su-25T
-function FC_WeaponPanel_SU25(exportid)
-	local lExportID = exportid or 14
+function ExportScript.AF.WeaponPanel_SU25(FunctionTyp)
+	local lFunctionTyp = FunctionTyp or "Ikarus"
 
-	-- defination
-	gES_PayloadInfo = LoGetPayloadInfo()
-	if gES_PayloadInfo ~= nil then
-		if gES_CurrentStationTmp == nil then
-			gES_CurrentStationTmp = -1
-		end
-		if gES_CannonContainer == nil then	-- Find Cannon-Containers, aka SPPU_22
-			gES_CannonContainer = {}
-			gES_CannonContainer.counter = 0
-			table.foreach(gES_PayloadInfo.Stations, WeaponStatusPanel_FindCannonContainer)
-		end
-		if gES_TmpWeaponPanelActive == nil then
-			gES_TmpWeaponPanelActive = {[201] = 0, [202] = 0, [203] = 0, [204] = 0, [205] = 0, [206] = 0, [207] = 0, [208] = 0, [209] = 0, [210] = 0}
-		end
+	if ExportScript.AF.TmpWeaponPanelPresend == nil then
+		ExportScript.AF.TmpWeaponPanelPresend = {[101] = 0, [102] = 0, [103] = 0, [104] = 0, [105] = 0, [106] = 0, [107] = 0, [108] = 0, [109] = 0, [110] = 0}
+	end	
 
-		if gES_PayloadInfo.CurrentStation  > 0 and
-			gES_CurrentStationTmp ~= gES_PayloadInfo.CurrentStation then
-			gES_CurrentStationTmp  = gES_PayloadInfo.CurrentStation
+	if ExportScript.AF.TmpWeaponPanelActive == nil then
+		ExportScript.AF.TmpWeaponPanelActive = {[201] = 0, [202] = 0, [203] = 0, [204] = 0, [205] = 0, [206] = 0, [207] = 0, [208] = 0, [209] = 0, [210] = 0}
+	end
 
-			gES_TmpStationToPanel = {}
-			gES_TmpStationToPanel[1] =  {Panel =  1, StationID = 101, CurrentID = 201 }	-- left
-			gES_TmpStationToPanel[2] =  {Panel = 10, StationID = 110, CurrentID = 210 }	-- right
-			gES_TmpStationToPanel[3] =  {Panel =  2, StationID = 102, CurrentID = 202 }
-			gES_TmpStationToPanel[4] =  {Panel =  9, StationID = 109, CurrentID = 209 }
-			gES_TmpStationToPanel[5] =  {Panel =  3, StationID = 103, CurrentID = 203 }
-			gES_TmpStationToPanel[6] =  {Panel =  8, StationID = 108, CurrentID = 208 }
-			gES_TmpStationToPanel[7] =  {Panel =  4, StationID = 104, CurrentID = 204 }
-			gES_TmpStationToPanel[8] =  {Panel =  7, StationID = 107, CurrentID = 207 }
-			gES_TmpStationToPanel[9] =  {Panel =  5, StationID = 105, CurrentID = 205 }
-			gES_TmpStationToPanel[10] = {Panel =  6, StationID = 106, CurrentID = 206 }
+	if ExportScript.AF.TmpWeaponPanel == nil then
+		ExportScript.AF.TmpWeaponPanel = {[231] = 0, [232] = 0, [233] = 0, [234] = 0, [235] = 0}
+	end
 
-			-- gES_TmpWeaponPanelActive reset
-			for i = 201, 210, 1 do
-				gES_TmpWeaponPanelActive[i] = 0
+	if(ExportScript.AF.EventNumberOLD < ExportScript.AF.EventNumber) then
+		ExportScript.AF.EventNumberOLD = ExportScript.AF.EventNumber
+		
+		-- defination
+		ExportScript.AF.PayloadInfo = LoGetPayloadInfo()
+		if ExportScript.AF.PayloadInfo ~= nil then
+			if ExportScript.AF.CurrentStationTmp == nil then
+				ExportScript.AF.CurrentStationTmp = -1
+			end
+			if ExportScript.AF.CannonContainer == nil then	-- Find Cannon-Containers, aka SPPU_22
+				ExportScript.AF.CannonContainer = {}
+				ExportScript.AF.CannonContainer.counter = 0
+				table.foreach(ExportScript.AF.PayloadInfo.Stations, WeaponStatusPanel_FindCannonContainer)
 			end
 
-			if gES_TmpStationToPanel[gES_PayloadInfo.CurrentStation] ~= nil then
-				gES_TmpWeaponPanelActive[gES_TmpStationToPanel[gES_PayloadInfo.CurrentStation].CurrentID] = 1        -- currrent value
+			if ExportScript.AF.PayloadInfo.CurrentStation  > 0 and
+				ExportScript.AF.CurrentStationTmp ~= ExportScript.AF.PayloadInfo.CurrentStation then
+				ExportScript.AF.CurrentStationTmp  = ExportScript.AF.PayloadInfo.CurrentStation
 
-				table.foreach(gES_PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit)   -- corresponding station
-			end
+				ExportScript.AF.TmpStationToPanel = {}
+				ExportScript.AF.TmpStationToPanel[1] =  {Panel =  1, StationID = 101, CurrentID = 201 }	-- left
+				ExportScript.AF.TmpStationToPanel[2] =  {Panel = 10, StationID = 110, CurrentID = 210 }	-- right
+				ExportScript.AF.TmpStationToPanel[3] =  {Panel =  2, StationID = 102, CurrentID = 202 }
+				ExportScript.AF.TmpStationToPanel[4] =  {Panel =  9, StationID = 109, CurrentID = 209 }
+				ExportScript.AF.TmpStationToPanel[5] =  {Panel =  3, StationID = 103, CurrentID = 203 }
+				ExportScript.AF.TmpStationToPanel[6] =  {Panel =  8, StationID = 108, CurrentID = 208 }
+				ExportScript.AF.TmpStationToPanel[7] =  {Panel =  4, StationID = 104, CurrentID = 204 }
+				ExportScript.AF.TmpStationToPanel[8] =  {Panel =  7, StationID = 107, CurrentID = 207 }
+				ExportScript.AF.TmpStationToPanel[9] =  {Panel =  5, StationID = 105, CurrentID = 205 }
+				ExportScript.AF.TmpStationToPanel[10] = {Panel =  6, StationID = 106, CurrentID = 206 }
 
-		end
-
-		local lMainGun = 1.0	-- Full max 250 Rounds "F"
-		local lReserve = 1.0
-		if gES_PayloadInfo.Cannon.shells == 0 then
-			lMainGun = 0.0	-- transversely striped
-			lReserve = 0.0	-- transversely striped
-		elseif gES_PayloadInfo.Cannon.shells < 65 then
-			lMainGun = 0.1	-- "E"
-		elseif gES_PayloadInfo.Cannon.shells < 125 then
-			lMainGun = 0.3	-- "1/2" -- "3/4"
-		elseif gES_PayloadInfo.Cannon.shells < 187 then
-			lMainGun = 0.6	-- "1/4"
-		end
-
-		local lWeaponType = 0.0	-- transversely striped
-		if gES_PayloadInfo.CurrentStation > 0 then
-			if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level1 == 4 then
-				if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level2 == 4 then -- Weapon type Missle
-					lWeaponType = 0.1	-- MSL
-				elseif gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level2 == 7 then -- Weapon type NURS with Container
-					if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level3 == 33 then -- Weapon type Rocket
-						lWeaponType = 0.2	-- RCT
-					end
-				elseif gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level2 == 5 then -- Weapon type Bomb
-					lWeaponType = 0.3	-- BB
+				-- ExportScript.AF.TmpWeaponPanelActive reset
+				for i = 201, 210, 1 do
+					ExportScript.AF.TmpWeaponPanelActive[i] = 0
 				end
-			end
-		end
 
-		local lOuterCannon = 0.0	-- transversely striped
-		local lInnerCannon = 0.0	-- transversely striped
-		if gES_CannonContainer.counter > 0 then
-			for i = 7, 10, 1 do
-				if gES_CannonContainer[i] == "{E92CBFE5-C153-11d8-9897-000476191836}" then	-- SPPU_22 with 260 rounds
-					if i == 7 or i == 8 then
-						lOuterCannon = 1.0						-- Full max 260 Rounds "F"
-						if gES_PayloadInfo.Stations[i].count == 0 then
-							lOuterCannon = 0.0					-- transversely striped
-							gES_CannonContainer[i] = "empty"	-- do not check
-						elseif gES_PayloadInfo.Stations[i].count < 65 then
-							lOuterCannon = 0.1					-- "E"
-						elseif gES_PayloadInfo.Stations[i].count < 130 then
-							lOuterCannon = 0.3					-- "3/4"  -- "1/2"
-						elseif gES_PayloadInfo.Stations[i].count < 195 then
-							lOuterCannon = 0.6					-- "1/4"
+				if ExportScript.AF.TmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation] ~= nil then
+					ExportScript.AF.TmpWeaponPanelActive[ExportScript.AF.TmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation].CurrentID] = 1        -- currrent value
+
+					table.foreach(ExportScript.AF.PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit)   -- corresponding station
+				end
+
+			end
+
+			local lMainGun = 1.0	-- Full max 250 Rounds "F"
+			local lReserve = 1.0
+			if ExportScript.AF.PayloadInfo.Cannon.shells == 0 then
+				lMainGun = 0.0	-- transversely striped
+				lReserve = 0.0	-- transversely striped
+			elseif ExportScript.AF.PayloadInfo.Cannon.shells < 65 then
+				lMainGun = 0.1	-- "E"
+			elseif ExportScript.AF.PayloadInfo.Cannon.shells < 125 then
+				lMainGun = 0.3	-- "1/2" -- "3/4"
+			elseif ExportScript.AF.PayloadInfo.Cannon.shells < 187 then
+				lMainGun = 0.6	-- "1/4"
+			end
+
+			local lWeaponType = 0.0	-- transversely striped
+			if ExportScript.AF.PayloadInfo.CurrentStation > 0 then
+				if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level1 == 4 then
+					if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level2 == 4 then -- Weapon type Missle
+						lWeaponType = 0.1	-- MSL
+					elseif ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level2 == 7 then -- Weapon type NURS with Container
+						if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level3 == 33 then -- Weapon type Rocket
+							lWeaponType = 0.2	-- RCT
 						end
-					else
-						lInnerCannon = 1.0						-- Full max 260 Rounds "F"
-						if gES_PayloadInfo.Stations[i].count == 0 then
-							lInnerCannon = 0.0					-- transversely striped
-							gES_CannonContainer[i] = "empty"	-- do not check
-						elseif gES_PayloadInfo.Stations[i].count < 65 then
-							lInnerCannon = 0.1					-- "E"
-						elseif gES_PayloadInfo.Stations[i].count < 130 then
-							lInnerCannon = 0.3					-- "3/4"  -- "1/2"
-						elseif gES_PayloadInfo.Stations[i].count < 195 then
-							lInnerCannon = 0.6					-- "1/4"
-						end
+					elseif ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level2 == 5 then -- Weapon type Bomb
+						lWeaponType = 0.3	-- BB
 					end
 				end
 			end
+
+			local lOuterCannon = 0.0	-- transversely striped
+			local lInnerCannon = 0.0	-- transversely striped
+			if ExportScript.AF.CannonContainer.counter > 0 then
+				for i = 7, 10, 1 do
+					if ExportScript.AF.CannonContainer[i] == "{E92CBFE5-C153-11d8-9897-000476191836}" then	-- SPPU_22 with 260 rounds
+						if i == 7 or i == 8 then
+							lOuterCannon = 1.0						-- Full max 260 Rounds "F"
+							if ExportScript.AF.PayloadInfo.Stations[i].count == 0 then
+								lOuterCannon = 0.0					-- transversely striped
+								ExportScript.AF.CannonContainer[i] = "empty"	-- do not check
+							elseif ExportScript.AF.PayloadInfo.Stations[i].count < 65 then
+								lOuterCannon = 0.1					-- "E"
+							elseif ExportScript.AF.PayloadInfo.Stations[i].count < 130 then
+								lOuterCannon = 0.3					-- "3/4"  -- "1/2"
+							elseif ExportScript.AF.PayloadInfo.Stations[i].count < 195 then
+								lOuterCannon = 0.6					-- "1/4"
+							end
+						else
+							lInnerCannon = 1.0						-- Full max 260 Rounds "F"
+							if ExportScript.AF.PayloadInfo.Stations[i].count == 0 then
+								lInnerCannon = 0.0					-- transversely striped
+								ExportScript.AF.CannonContainer[i] = "empty"	-- do not check
+							elseif ExportScript.AF.PayloadInfo.Stations[i].count < 65 then
+								lInnerCannon = 0.1					-- "E"
+							elseif ExportScript.AF.PayloadInfo.Stations[i].count < 130 then
+								lInnerCannon = 0.3					-- "3/4"  -- "1/2"
+							elseif ExportScript.AF.PayloadInfo.Stations[i].count < 195 then
+								lInnerCannon = 0.6					-- "1/4"
+							end
+						end
+					end
+				end
+			end
+
+			--[[
+			Weapon Panel
+									 |
+			---------------------------------------------------
+			|    |    |    |    |    |    |    |    |    |    |
+			1    2    3    4    5    C    6    7    8    9    10
+			]]
+			-- Payload Info
+			-- weapon stations (panel) 1 (left) - 10 (right), no lamp for center station
+
+			-- WeaponPresend1 {0, 1}
+			-- WeaponPresend2 {0, 1}
+			-- WeaponPresend3 {0, 1}
+			-- WeaponPresend4 {0, 1}
+			-- WeaponPresend5 {0, 1}
+			-- WeaponPresend6 {0, 1}
+			-- WeaponPresend7 {0, 1}
+			-- WeaponPresend8 {0, 1}
+			-- WeaponPresend9 {0, 1}
+			-- WeaponPresend10 {0, 1}
+			-- WeaponActive1 {0, 1}
+			-- WeaponActive2 {0, 1}
+			-- WeaponActive3 {0, 1}
+			-- WeaponActive4 {0, 1}
+			-- WeaponActive5 {0, 1}
+			-- WeaponActive6 {0, 1}
+			-- WeaponActive7 {0, 1}
+			-- WeaponActive8 {0, 1}
+			-- WeaponActive9 {0, 1}
+			-- WeaponActive10 {0, 1}
+			-- MainCannon {transversely striped = 0.0, 1/4 = 01, 1/2 = 03, 3/4 = 0.6, Full = 1.0}
+			-- WeaponType {transversely striped = 0.0, Missle = 0.1, Rocket = 0.2, Bomb = 0.3}
+			-- OuterCannon {transversely striped = 0.0, 1/4 = 01, 1/2 = 03, 3/4 = 0.6, Full = 1.0}
+			-- InnerCannon {transversely striped = 0.0, 1/4 = 01, 1/2 = 03, 3/4 = 0.6, Full = 1.0}
+			-- ReserveWeapon {transversely striped = 0.0, Gun = 1.0}
+
+			ExportScript.AF.TmpWeaponPanelPresend[101] = (ExportScript.AF.PayloadInfo.Stations[1].count  > 0 and 1 or 0)    -- weapon presend panel 1
+			ExportScript.AF.TmpWeaponPanelPresend[102] = (ExportScript.AF.PayloadInfo.Stations[3].count  > 0 and 1 or 0)    -- weapon presend panel 2
+			ExportScript.AF.TmpWeaponPanelPresend[103] = (ExportScript.AF.PayloadInfo.Stations[5].count  > 0 and 1 or 0)    -- weapon presend panel 3
+			ExportScript.AF.TmpWeaponPanelPresend[104] = (ExportScript.AF.PayloadInfo.Stations[7].count  > 0 and 1 or 0)    -- weapon presend panel 4
+			ExportScript.AF.TmpWeaponPanelPresend[105] = (ExportScript.AF.PayloadInfo.Stations[9].count  > 0 and 1 or 0)    -- weapon presend panel 5
+			ExportScript.AF.TmpWeaponPanelPresend[106] = (ExportScript.AF.PayloadInfo.Stations[10].count > 0 and 1 or 0)    -- weapon presend panel 6
+			ExportScript.AF.TmpWeaponPanelPresend[107] = (ExportScript.AF.PayloadInfo.Stations[8].count  > 0 and 1 or 0)    -- weapon presend panel 7
+			ExportScript.AF.TmpWeaponPanelPresend[108] = (ExportScript.AF.PayloadInfo.Stations[6].count  > 0 and 1 or 0)    -- weapon presend panel 8
+			ExportScript.AF.TmpWeaponPanelPresend[109] = (ExportScript.AF.PayloadInfo.Stations[4].count  > 0 and 1 or 0)    -- weapon presend panel 9
+			ExportScript.AF.TmpWeaponPanelPresend[110] = (ExportScript.AF.PayloadInfo.Stations[2].count  > 0 and 1 or 0)    -- weapon presend panel 10
+			--ExportScript.AF.TmpWeaponPanelActive[201]                          -- weapon active panel 1
+			--ExportScript.AF.TmpWeaponPanelActive[202]                          -- weapon active panel 2
+			--ExportScript.AF.TmpWeaponPanelActive[203]                          -- weapon active panel 3
+			--ExportScript.AF.TmpWeaponPanelActive[204]                          -- weapon active panel 4
+			--ExportScript.AF.TmpWeaponPanelActive[205]                          -- weapon active panel 5
+			--ExportScript.AF.TmpWeaponPanelActive[206]                          -- weapon active panel 6
+			--ExportScript.AF.TmpWeaponPanelActive[207]                          -- weapon active panel 7
+			--ExportScript.AF.TmpWeaponPanelActive[208]                          -- weapon active panel 8
+			--ExportScript.AF.TmpWeaponPanelActive[209]                          -- weapon active panel 9
+			--ExportScript.AF.TmpWeaponPanelActive[210]                          -- weapon active panel 10
+			ExportScript.AF.TmpWeaponPanel = {}
+			ExportScript.AF.TmpWeaponPanel[231] = lMainGun		-- main cannon shells
+			ExportScript.AF.TmpWeaponPanel[232] = lWeaponType	-- current weapon type
+			ExportScript.AF.TmpWeaponPanel[233] = lOuterCannon	-- outer cannon shells
+			ExportScript.AF.TmpWeaponPanel[234] = lInnerCannon	-- inner cannon shells
+			ExportScript.AF.TmpWeaponPanel[235] = lReserve		-- reserve weapon
 		end
-
-		--[[
-		Weapon Panel
-								 |
-		---------------------------------------------------
-		|    |    |    |    |    |    |    |    |    |    |
-		1    2    3    4    5    C    6    7    8    9    10
-		]]
-		-- Payload Info
-		-- weapon stations (panel) 1 (left) - 10 (right), no lamp for center station
-
-		-- MainCannon {transversely striped = 0.0, 1/4 = 01, 1/2 = 03, 3/4 = 0.6, Full = 1.0}
-		-- WeaponPresend1 {0, 1}
-		-- WeaponPresend2 {0, 1}
-		-- WeaponPresend3 {0, 1}
-		-- WeaponPresend4 {0, 1}
-		-- WeaponPresend5 {0, 1}
-		-- WeaponPresend6 {0, 1}
-		-- WeaponPresend7 {0, 1}
-		-- WeaponPresend8 {0, 1}
-		-- WeaponPresend9 {0, 1}
-		-- WeaponPresend10 {0, 1}
-		-- WeaponActive1 {0, 1}
-		-- WeaponActive2 {0, 1}
-		-- WeaponActive3 {0, 1}
-		-- WeaponActive4 {0, 1}
-		-- WeaponActive5 {0, 1}
-		-- WeaponActive6 {0, 1}
-		-- WeaponActive7 {0, 1}
-		-- WeaponActive8 {0, 1}
-		-- WeaponActive9 {0, 1}
-		-- WeaponActive10 {0, 1}
-		-- WeaponType {transversely striped = 0.0, Missle = 0.1, Rocket = 0.2, Bomb = 0.3}
-		-- OuterCannon {transversely striped = 0.0, 1/4 = 01, 1/2 = 03, 3/4 = 0.6, Full = 1.0}
-		-- InnerCannon {transversely striped = 0.0, 1/4 = 01, 1/2 = 03, 3/4 = 0.6, Full = 1.0}
-		-- ReserveWeapon {transversely striped = 0.0, Gun = 1.0}
-		SendData(lExportID, string.format("%.1f;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%.1f;%.1f;%.1f;%.1f", 
-										lMainGun,      											-- main cannon shells
-										(gES_PayloadInfo.Stations[1].count  > 0 and 1 or 0),    -- weapon presend panel 1
-										(gES_PayloadInfo.Stations[3].count  > 0 and 1 or 0),    -- weapon presend panel 2
-										(gES_PayloadInfo.Stations[5].count  > 0 and 1 or 0),    -- weapon presend panel 3
-										(gES_PayloadInfo.Stations[7].count  > 0 and 1 or 0),    -- weapon presend panel 4
-										(gES_PayloadInfo.Stations[9].count  > 0 and 1 or 0),    -- weapon presend panel 5
-										(gES_PayloadInfo.Stations[10].count > 0 and 1 or 0),    -- weapon presend panel 6
-										(gES_PayloadInfo.Stations[8].count  > 0 and 1 or 0),    -- weapon presend panel 7
-										(gES_PayloadInfo.Stations[6].count  > 0 and 1 or 0),    -- weapon presend panel 8
-										(gES_PayloadInfo.Stations[4].count  > 0 and 1 or 0),    -- weapon presend panel 9
-										(gES_PayloadInfo.Stations[2].count  > 0 and 1 or 0),    -- weapon presend panel 10
-										gES_TmpWeaponPanelActive[201],                          -- weapon active panel 1
-										gES_TmpWeaponPanelActive[202],                          -- weapon active panel 2
-										gES_TmpWeaponPanelActive[203],                          -- weapon active panel 3
-										gES_TmpWeaponPanelActive[204],                          -- weapon active panel 4
-										gES_TmpWeaponPanelActive[205],                          -- weapon active panel 5
-										gES_TmpWeaponPanelActive[206],                          -- weapon active panel 6
-										gES_TmpWeaponPanelActive[207],                          -- weapon active panel 7
-										gES_TmpWeaponPanelActive[208],                          -- weapon active panel 8
-										gES_TmpWeaponPanelActive[209],                          -- weapon active panel 9
-										gES_TmpWeaponPanelActive[210],                          -- weapon active panel 10
-										lWeaponType,											   -- current weapon type
-										lOuterCannon,										   -- outer cannon shells
-										lInnerCannon,										   -- inner cannon shells
-										lReserve))											   -- reserve weapon
-
+	end
+	
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+ExportScript.Tools.WriteToLog("WeaponPanel_SU25: "..ExportScript.Tools.dump(ExportScript.AF.TmpWeaponPanelPresend))
+		for key, value in pairs(ExportScript.AF.TmpWeaponPanelPresend) do
+			ExportScript.Tools.SendData(key, value)
+		end
+		for key, value in pairs(ExportScript.AF.TmpWeaponPanelActive) do
+			ExportScript.Tools.SendData(key, value)
+		end
+		for key, value in pairs(ExportScript.AF.TmpWeaponPanel) do
+			ExportScript.Tools.SendData(key, value)
+		end
+	end
+	
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		for key, value in pairs(ExportScript.AF.TmpWeaponPanelPresend) do
+			ExportScript.Tools.SendData(key, value)
+		end
+		for key, value in pairs(ExportScript.AF.TmpWeaponPanelActive) do
+			ExportScript.Tools.SendData(key, value)
+		end
 	end
 end
 
 -- Weapon Panel for Su-27 and Su-33
-function FC_WeaponPanel_SU2733(exportid)
+function ExportScript.AF.FC_WeaponPanel_SU2733(exportid)
 	local lExportID = exportid or 13
 
 	-- defination
-	gES_PayloadInfo = LoGetPayloadInfo()
-	if gES_PayloadInfo ~= nil then
-		if gES_CurrentStationTmp == nil then
-			gES_CurrentStationTmp = -1
+	ExportScript.AF.PayloadInfo = LoGetPayloadInfo()
+	if ExportScript.AF.PayloadInfo ~= nil then
+		if ExportScript.AF.CurrentStationTmp == nil then
+			ExportScript.AF.CurrentStationTmp = -1
 		end
 
-		if gES_TmpWeaponPanelActive == nil then
-			gES_TmpWeaponPanelActive = {[201] = 0, [202] = 0, [203] = 0, [204] = 0, [205] = 0, [206] = 0, [207] = 0, [208] = 0, [209] = 0, [210] = 0}
+		if ExportScript.AF.TmpWeaponPanelActive == nil then
+			ExportScript.AF.TmpWeaponPanelActive = {[201] = 0, [202] = 0, [203] = 0, [204] = 0, [205] = 0, [206] = 0, [207] = 0, [208] = 0, [209] = 0, [210] = 0}
 		end
 
-		if gES_PayloadInfo.CurrentStation  > 0 and
-			gES_CurrentStationTmp ~= gES_PayloadInfo.CurrentStation then
-			gES_CurrentStationTmp  = gES_PayloadInfo.CurrentStation
+		if ExportScript.AF.PayloadInfo.CurrentStation  > 0 and
+			ExportScript.AF.CurrentStationTmp ~= ExportScript.AF.PayloadInfo.CurrentStation then
+			ExportScript.AF.CurrentStationTmp  = ExportScript.AF.PayloadInfo.CurrentStation
 
-			gES_TmpStationToPanel = {}
-			gES_TmpStationToPanel[1] =  {Panel =  1, StationID = 101, CurrentID = 201 }	-- left
-			gES_TmpStationToPanel[2] =  {Panel = 10, StationID = 110, CurrentID = 210 }	-- right
-			gES_TmpStationToPanel[3] =  {Panel =  2, StationID = 102, CurrentID = 202 }
-			gES_TmpStationToPanel[4] =  {Panel =  9, StationID = 109, CurrentID = 209 }
-			gES_TmpStationToPanel[5] =  {Panel =  3, StationID = 103, CurrentID = 203 }
-			gES_TmpStationToPanel[6] =  {Panel =  8, StationID = 108, CurrentID = 208 }
-			gES_TmpStationToPanel[7] =  {Panel =  4, StationID = 104, CurrentID = 204 }
-			gES_TmpStationToPanel[8] =  {Panel =  7, StationID = 107, CurrentID = 207 }
-			gES_TmpStationToPanel[9] =  {Panel =  5, StationID = 105, CurrentID = 205 }
-			gES_TmpStationToPanel[10] = {Panel =  6, StationID = 106, CurrentID = 206 }
+			ExportScript.AF.TmpStationToPanel = {}
+			ExportScript.AF.TmpStationToPanel[1] =  {Panel =  1, StationID = 101, CurrentID = 201 }	-- left
+			ExportScript.AF.TmpStationToPanel[2] =  {Panel = 10, StationID = 110, CurrentID = 210 }	-- right
+			ExportScript.AF.TmpStationToPanel[3] =  {Panel =  2, StationID = 102, CurrentID = 202 }
+			ExportScript.AF.TmpStationToPanel[4] =  {Panel =  9, StationID = 109, CurrentID = 209 }
+			ExportScript.AF.TmpStationToPanel[5] =  {Panel =  3, StationID = 103, CurrentID = 203 }
+			ExportScript.AF.TmpStationToPanel[6] =  {Panel =  8, StationID = 108, CurrentID = 208 }
+			ExportScript.AF.TmpStationToPanel[7] =  {Panel =  4, StationID = 104, CurrentID = 204 }
+			ExportScript.AF.TmpStationToPanel[8] =  {Panel =  7, StationID = 107, CurrentID = 207 }
+			ExportScript.AF.TmpStationToPanel[9] =  {Panel =  5, StationID = 105, CurrentID = 205 }
+			ExportScript.AF.TmpStationToPanel[10] = {Panel =  6, StationID = 106, CurrentID = 206 }
 
-			-- gES_TmpWeaponPanelActive reset
+			-- ExportScript.AF.TmpWeaponPanelActive reset
 			for i = 201, 210, 1 do
-				gES_TmpWeaponPanelActive[i] = 0
+				ExportScript.AF.TmpWeaponPanelActive[i] = 0
 			end
 
-			if gES_TmpStationToPanel[gES_PayloadInfo.CurrentStation] ~= nil then
-				gES_TmpWeaponPanelActive[gES_TmpStationToPanel[gES_PayloadInfo.CurrentStation].CurrentID] = 1        -- currrent value
+			if ExportScript.AF.TmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation] ~= nil then
+				ExportScript.AF.TmpWeaponPanelActive[ExportScript.AF.TmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation].CurrentID] = 1        -- currrent value
 
-				table.foreach(gES_PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit)   -- corresponding station
+				table.foreach(ExportScript.AF.PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit)   -- corresponding station
 			end
 
 		end
 
 		local lWeaponType = 0.0	-- transversely striped
-		if gES_PayloadInfo.CurrentStation > 0 then
-			if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level1 == 4 then
-				if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level2 == 4 then -- Weapon type Missle
+		if ExportScript.AF.PayloadInfo.CurrentStation > 0 then
+			if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level1 == 4 then
+				if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level2 == 4 then -- Weapon type Missle
 					lWeaponType = 0.1	-- MSL
-				elseif gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level2 == 7 then -- Weapon type NURS with Container
-					if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level3 == 33 then -- Weapon type Rocket
+				elseif ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level2 == 7 then -- Weapon type NURS with Container
+					if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level3 == 33 then -- Weapon type Rocket
 						lWeaponType = 0.2	-- RCT
 					end
-				elseif gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].weapon.level2 == 5 then -- Weapon type Bomb
+				elseif ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].weapon.level2 == 5 then -- Weapon type Bomb
 					lWeaponType = 0.3	-- BB
 				end
 			end
@@ -266,32 +301,32 @@ function FC_WeaponPanel_SU2733(exportid)
 		-- WeaponActive9 {0, 1}
 		-- WeaponActive10 {0, 1}
 		SendData(lExportID, string.format("%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d;%d", 
-										(gES_PayloadInfo.Stations[1].count  > 0 and 1 or 0),    -- weapon presend panel 1
-										(gES_PayloadInfo.Stations[3].count  > 0 and 1 or 0),    -- weapon presend panel 2
-										(gES_PayloadInfo.Stations[5].count  > 0 and 1 or 0),    -- weapon presend panel 3
-										(gES_PayloadInfo.Stations[7].count  > 0 and 1 or 0),    -- weapon presend panel 4
-										(gES_PayloadInfo.Stations[9].count  > 0 and 1 or 0),    -- weapon presend panel 5
-										(gES_PayloadInfo.Stations[10].count > 0 and 1 or 0),    -- weapon presend panel 6
-										(gES_PayloadInfo.Stations[8].count  > 0 and 1 or 0),    -- weapon presend panel 7
-										(gES_PayloadInfo.Stations[6].count  > 0 and 1 or 0),    -- weapon presend panel 8
-										(gES_PayloadInfo.Stations[4].count  > 0 and 1 or 0),    -- weapon presend panel 9
-										(gES_PayloadInfo.Stations[2].count  > 0 and 1 or 0),    -- weapon presend panel 10
-										gES_TmpWeaponPanelActive[201],                          -- weapon active panel 1
-										gES_TmpWeaponPanelActive[202],                          -- weapon active panel 2
-										gES_TmpWeaponPanelActive[203],                          -- weapon active panel 3
-										gES_TmpWeaponPanelActive[204],                          -- weapon active panel 4
-										gES_TmpWeaponPanelActive[205],                          -- weapon active panel 5
-										gES_TmpWeaponPanelActive[206],                          -- weapon active panel 6
-										gES_TmpWeaponPanelActive[207],                          -- weapon active panel 7
-										gES_TmpWeaponPanelActive[208],                          -- weapon active panel 8
-										gES_TmpWeaponPanelActive[209],                          -- weapon active panel 9
-										gES_TmpWeaponPanelActive[210]))                         -- weapon active panel 10
+										(ExportScript.AF.PayloadInfo.Stations[1].count  > 0 and 1 or 0),    -- weapon presend panel 1
+										(ExportScript.AF.PayloadInfo.Stations[3].count  > 0 and 1 or 0),    -- weapon presend panel 2
+										(ExportScript.AF.PayloadInfo.Stations[5].count  > 0 and 1 or 0),    -- weapon presend panel 3
+										(ExportScript.AF.PayloadInfo.Stations[7].count  > 0 and 1 or 0),    -- weapon presend panel 4
+										(ExportScript.AF.PayloadInfo.Stations[9].count  > 0 and 1 or 0),    -- weapon presend panel 5
+										(ExportScript.AF.PayloadInfo.Stations[10].count > 0 and 1 or 0),    -- weapon presend panel 6
+										(ExportScript.AF.PayloadInfo.Stations[8].count  > 0 and 1 or 0),    -- weapon presend panel 7
+										(ExportScript.AF.PayloadInfo.Stations[6].count  > 0 and 1 or 0),    -- weapon presend panel 8
+										(ExportScript.AF.PayloadInfo.Stations[4].count  > 0 and 1 or 0),    -- weapon presend panel 9
+										(ExportScript.AF.PayloadInfo.Stations[2].count  > 0 and 1 or 0),    -- weapon presend panel 10
+										ExportScript.AF.TmpWeaponPanelActive[201],                          -- weapon active panel 1
+										ExportScript.AF.TmpWeaponPanelActive[202],                          -- weapon active panel 2
+										ExportScript.AF.TmpWeaponPanelActive[203],                          -- weapon active panel 3
+										ExportScript.AF.TmpWeaponPanelActive[204],                          -- weapon active panel 4
+										ExportScript.AF.TmpWeaponPanelActive[205],                          -- weapon active panel 5
+										ExportScript.AF.TmpWeaponPanelActive[206],                          -- weapon active panel 6
+										ExportScript.AF.TmpWeaponPanelActive[207],                          -- weapon active panel 7
+										ExportScript.AF.TmpWeaponPanelActive[208],                          -- weapon active panel 8
+										ExportScript.AF.TmpWeaponPanelActive[209],                          -- weapon active panel 9
+										ExportScript.AF.TmpWeaponPanelActive[210]))                         -- weapon active panel 10
 
 	end
 end
 
 -- radar warner SPO-15 for all russian planes
-function FC_RadarWarning_SPO15(exportid)
+function ExportScript.AF.FC_RadarWarning_SPO15(exportid)
 	local lExportID = exportid or 14
 
 	local lTWSInfo = LoGetTWSInfo() -- SPO15 Information
@@ -328,7 +363,7 @@ function FC_RadarWarning_SPO15(exportid)
 			local lSecondaryType = {AIR = 0, LRR = 0, MRR = 0, SRR = 0, EWR = 0, AWACS = 0}
 			local lPriorityTmp, lPrimaryThreatTmp = 0,0
 			local lHemisphere = 0
-			gES_SPO15_FoundErmitter = true
+			ExportScript.AF.SPO15_FoundErmitter = true
 
 			-- sucht den Primär Sender raus
 			for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
@@ -340,7 +375,7 @@ function FC_RadarWarning_SPO15(exportid)
 
 			for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
 
-				local lAzimut = math.round(lTWSInfo.Emitters[EmitterIndex].Azimuth * 90, 1)
+				local lAzimut = ExportScript.Tools.round(lTWSInfo.Emitters[EmitterIndex].Azimuth * 90, 1)
 
 				if EmitterIndex == lPrimaryThreatTmp then
 					-- primary threat
@@ -366,7 +401,7 @@ function FC_RadarWarning_SPO15(exportid)
 					lPrimaryDirection2 = ((lAzimut >= 170.0 and lPrimaryDirection1 < 1.0 ) and 1.0 or lPrimaryDirection2) -- right back side
 
 					-- power of the threat
-					lErmitterPower = math.round(lTWSInfo.Emitters[EmitterIndex].Power * 0.15, 2) + 0.01
+					lErmitterPower = ExportScript.Tools.round(lTWSInfo.Emitters[EmitterIndex].Power * 0.15, 2) + 0.01
 
 					-- type of the threat
 					local lPrimaryTypeTmp = FC_FindRadarTypeForSPO15(lTWSInfo, lPrimaryThreatTmp)
@@ -470,7 +505,7 @@ function FC_RadarWarning_SPO15(exportid)
 end
 
 -- HSI for SU25T, SU-27, SU-33, MIG-29
-function FC_Russian_HSI(distancetoway, exportid)
+function ExportScript.AF.FC_Russian_HSI(distancetoway, exportid)
 	local lDistanceToWay	= distancetoway or 999
 	local lExportID			= exportid or 5
 
@@ -512,25 +547,25 @@ function FC_Russian_HSI(distancetoway, exportid)
 	[121] = "%0.1f", 		-- HSI_course_unavailable_flag{0.0, 1.0}
 	]]
 	local lAltCounter = {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
-	lDistanceToWay = math.round(lDistanceToWay / 1000, 1)
+	lDistanceToWay = ExportScript.Tools.round(lDistanceToWay / 1000, 1)
 	local lDistanceToWayTmp = string.format("%03d", lDistanceToWay)
 	local lRangeCounter1 = 0
 	local lRangeCounter2 = 0
 	local lRangeCounter3 = 0
 	if lDistanceToWay > 100 then
-		lRangeCounter1 = math.round((lDistanceToWay / 100), 0, "floor") * 0.11
-		lRangeCounter1 = lRangeCounter1 - math.round(lRangeCounter1, 0, "floor")
+		lRangeCounter1 = ExportScript.Tools.round((lDistanceToWay / 100), 0, "floor") * 0.11
+		lRangeCounter1 = lRangeCounter1 - ExportScript.Tools.round(lRangeCounter1, 0, "floor")
 	end
 	if lDistanceToWay > 10 then
 		if lDistanceToWay > 100 then
-			lRangeCounter2 = (math.round((lDistanceToWay - (math.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
+			lRangeCounter2 = (ExportScript.Tools.round((lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
 		else
 			lRangeCounter2 = (lDistanceToWay / 10) * 0.11
-			lRangeCounter2 = lRangeCounter2 - math.round(lRangeCounter2, 0, "floor")
+			lRangeCounter2 = lRangeCounter2 - ExportScript.Tools.round(lRangeCounter2, 0, "floor")
 		end
 	end
 	if lDistanceToWay > 10 then
-		lRangeCounter3 = (lDistanceToWay - (math.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
+		lRangeCounter3 = (lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
 	else
 		lRangeCounter3 = lDistanceToWay * 0.11
 	end
@@ -568,7 +603,7 @@ function FC_Russian_HSI(distancetoway, exportid)
 end
 
 -- HSI for SU25A
-function FC_Russian_HSI_old(exportid)
+function ExportScript.AF.FC_Russian_HSI_old(exportid)
 	local lDistanceToWay	= distancetoway or 999
 	local lExportID			= exportid or 5
 
@@ -610,30 +645,30 @@ function FC_Russian_HSI_old(exportid)
 end
 
 -- HSI-Distance for SU25A
-function FC_Russian_HSI_Distance_old(distancetoway, exportid)
+function ExportScript.AF.FC_Russian_HSI_Distance_old(distancetoway, exportid)
 	local lDistanceToWay	= distancetoway or 999
 	local lExportID			= exportid or 21
 	
 	local lAltCounter = {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
-	lDistanceToWay = math.round(lDistanceToWay / 1000, 1)
+	lDistanceToWay = ExportScript.Tools.round(lDistanceToWay / 1000, 1)
 	local lDistanceToWayTmp = string.format("%03d", lDistanceToWay)
 	local lRangeCounter1 = 0
 	local lRangeCounter2 = 0
 	local lRangeCounter3 = 0
 	if lDistanceToWay > 100 then
-		lRangeCounter1 = math.round((lDistanceToWay / 100), 0, "floor") * 0.11
-		lRangeCounter1 = lRangeCounter1 - math.round(lRangeCounter1, 0, "floor")
+		lRangeCounter1 = ExportScript.Tools.round((lDistanceToWay / 100), 0, "floor") * 0.11
+		lRangeCounter1 = lRangeCounter1 - ExportScript.Tools.round(lRangeCounter1, 0, "floor")
 	end
 	if lDistanceToWay > 10 then
 		if lDistanceToWay > 100 then
-			lRangeCounter2 = (math.round((lDistanceToWay - (math.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
+			lRangeCounter2 = (ExportScript.Tools.round((lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
 		else
 			lRangeCounter2 = (lDistanceToWay / 10) * 0.11
-			lRangeCounter2 = lRangeCounter2 - math.round(lRangeCounter2, 0, "floor")
+			lRangeCounter2 = lRangeCounter2 - ExportScript.Tools.round(lRangeCounter2, 0, "floor")
 		end
 	end
 	if lDistanceToWay > 10 then
-		lRangeCounter3 = (lDistanceToWay - (math.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
+		lRangeCounter3 = (lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
 	else
 		lRangeCounter3 = lDistanceToWay * 0.11
 	end
@@ -645,7 +680,7 @@ function FC_Russian_HSI_Distance_old(distancetoway, exportid)
 end
 
 -- ADI for SU-25, SU25T, SU-27, MIG-29A and MIG-29S
-function FC_Russian_ADI_Old(exportid)
+function ExportScript.AF.FC_Russian_ADI_Old(exportid)
 	local lExportID					= exportid or 4
 	
 	local lDefaultNull				= 0.0
@@ -687,7 +722,7 @@ function FC_Russian_ADI_Old(exportid)
 end
 
 -- ADI for SU-33
-function FC_Russian_ADI_New(exportid)
+function ExportScript.AF.FC_Russian_ADI_New(exportid)
 	local lExportID					= exportid or 4
 	
 	local lDefaultNull				= 0.0
@@ -729,7 +764,7 @@ function FC_Russian_ADI_New(exportid)
 end
 									   
 -- Radar Altimeter for SU-25A, SU25-T, SU-27, SU-33
-function FC_Russian_RadarAltimeter_1500m(warningflag, exportid)
+function ExportScript.AF.FC_Russian_RadarAltimeter_1500m(warningflag, exportid)
 	local lWarning_Flag    	= warningflag or 100
 	local lExportID			= exportid or 7
 
@@ -753,7 +788,7 @@ function FC_Russian_RadarAltimeter_1500m(warningflag, exportid)
 end
 
 -- Radar Altimeter for MiG-29A, MiG-29S
-function FC_Russian_RadarAltimeter_1000m(warningflag, exportid)
+function ExportScript.AF.FC_Russian_RadarAltimeter_1000m(warningflag, exportid)
 	local lWarning_Flag    	= warningflag or 100
 	local lExportID			= exportid or 7
 
@@ -777,7 +812,7 @@ function FC_Russian_RadarAltimeter_1000m(warningflag, exportid)
 end
 
 -- Barometric Altimeter for 
-function FC_Russian_BarometricAltimeter(exportid)
+function ExportScript.AF.FC_Russian_BarometricAltimeter(exportid)
 	local lExportID					= exportid or 8
 
 	local lScaleValue				= 1000
@@ -790,7 +825,7 @@ function FC_Russian_BarometricAltimeter(exportid)
 	lBasicAtmospherePressure		= string.format("%03d", lBasicAtmospherePressure)
 	
 	lAltBar = lAltBar / lScaleValue
-	lAltBar = lAltBar - math.round(lAltBar, 0, "floor")
+	lAltBar = lAltBar - ExportScript.Tools.round(lAltBar, 0, "floor")
 
 	-- AltBar {0.0,1.0}
 	-- AltBar_1000 {0.0,1.0}
@@ -812,7 +847,7 @@ function FC_Russian_BarometricAltimeter(exportid)
 end
 
 -- Barometric Altimeter for 
-function FC_Russian_BarometricAltimeter(exportid)
+function ExportScript.AF.FC_Russian_BarometricAltimeter(exportid)
 	local lExportID					= exportid or 8
 
 	local lScaleValue				= 1000
@@ -825,7 +860,7 @@ function FC_Russian_BarometricAltimeter(exportid)
 	lBasicAtmospherePressure		= string.format("%03d", lBasicAtmospherePressure)
 	
 	lAltBar = lAltBar / lScaleValue
-	lAltBar = lAltBar - math.round(lAltBar, 0, "floor")
+	lAltBar = lAltBar - ExportScript.Tools.round(lAltBar, 0, "floor")
 
 	-- AltBar {0.0,1.0}
 	-- AltBar_1000 {0.0,1.0}
@@ -847,7 +882,7 @@ function FC_Russian_BarometricAltimeter(exportid)
 end
 
 -- Barometric Altimeter for SU-25A, SU25-T
-function FC_Russian_BarometricAltimeter_late(exportid)
+function ExportScript.AF.FC_Russian_BarometricAltimeter_late(exportid)
 	local lExportID					= exportid or 8
 
 	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
@@ -864,7 +899,7 @@ function FC_Russian_BarometricAltimeter_late(exportid)
 	end
 	if lAltBar > 1000 then
 		lAltBar_meter_needle		= lAltBar / 1000
-		lAltBar_meter_needle		= lAltBar_meter_needle - math.round(lAltBar_meter_needle, 0, "floor")
+		lAltBar_meter_needle		= lAltBar_meter_needle - ExportScript.Tools.round(lAltBar_meter_needle, 0, "floor")
 	else
 		lAltBar_meter_needle		= lAltBar / 1000
 	end
@@ -882,7 +917,7 @@ function FC_Russian_BarometricAltimeter_late(exportid)
 end
 
 -- Barometric Altimeter for SU-27, SU-33
-function FC_Russian_BarometricAltimeter_20000(exportid)
+function ExportScript.AF.FC_Russian_BarometricAltimeter_20000(exportid)
 	local lExportID					= exportid or 8
 
 	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
@@ -899,7 +934,7 @@ function FC_Russian_BarometricAltimeter_20000(exportid)
 	end
 	if lAltBar > 1000 then
 		lAltBar_meter_needle		= lAltBar / 1000
-		lAltBar_meter_needle		= lAltBar_meter_needle - math.round(lAltBar_meter_needle, 0, "floor")
+		lAltBar_meter_needle		= lAltBar_meter_needle - ExportScript.Tools.round(lAltBar_meter_needle, 0, "floor")
 	else
 		lAltBar_meter_needle		= lAltBar / 1000
 	end
@@ -915,7 +950,7 @@ function FC_Russian_BarometricAltimeter_20000(exportid)
 end
 
 -- Barometric Altimeter for MiG-29A, MiG-29S
-function FC_Russian_BarometricAltimeter_30000(exportid)
+function ExportScript.AF.FC_Russian_BarometricAltimeter_30000(exportid)
 	local lExportID					= exportid or 8
 
 	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
@@ -932,7 +967,7 @@ function FC_Russian_BarometricAltimeter_30000(exportid)
 	end
 	if lAltBar > 1000 then
 		lAltBar_meter_needle		= lAltBar / 1000
-		lAltBar_meter_needle		= lAltBar_meter_needle - math.round(lAltBar_meter_needle, 0, "floor")
+		lAltBar_meter_needle		= lAltBar_meter_needle - ExportScript.Tools.round(lAltBar_meter_needle, 0, "floor")
 	else
 		lAltBar_meter_needle		= lAltBar / 1000
 	end
@@ -948,7 +983,7 @@ function FC_Russian_BarometricAltimeter_30000(exportid)
 end
 
 -- Air Speed Indicator for SU-25A, SU-25T
-function FC_Russian_AirSpeed_1100hkm(exportid)
+function ExportScript.AF.FC_Russian_AirSpeed_1100hkm(exportid)
 	local lExportID			= exportid or 1
 
     local lIAS				= LoGetIndicatedAirSpeed() * 3.6  -- INDICATED AIRSPEED (Meter/Second to Km/h)
@@ -1000,7 +1035,7 @@ function FC_Russian_AirSpeed_1100hkm(exportid)
 end
 
 -- Air Speed Indicator for SU-27, SU-33
-function FC_Russian_AirSpeed_1600hkm(exportid)
+function ExportScript.AF.FC_Russian_AirSpeed_1600hkm(exportid)
 	local lExportID			= exportid or 1
 
     local lScaleValueIAS	= 1600
@@ -1164,7 +1199,7 @@ function FC_Russian_AirSpeed_1600hkm(exportid)
 end
 
 -- Air Speed Indicator for MiG-29A, MiG-29S
-function FC_Russian_AirSpeed_1000hkm(exportid)
+function ExportScript.AF.FC_Russian_AirSpeed_1000hkm(exportid)
 	local lExportID			= exportid or 1
 
     local lIAS				= LoGetIndicatedAirSpeed() * 3.6	-- INDICATED AIRSPEED (Meter/Second to Km/h)
@@ -1212,7 +1247,7 @@ function FC_Russian_AirSpeed_1000hkm(exportid)
 end
 
 -- Vertical Velocity Indicator (Old Style) for SU-25, SU25T, SU-27, MIG-29A and MIG-29S
-function FC_Russian_VVI_Old(exportid)
+function ExportScript.AF.FC_Russian_VVI_Old(exportid)
 	local lExportID					= exportid or 6
 
 	local lVVI						= LoGetVerticalVelocity()		-- VERTICAL SPEED (Meter/Second)
@@ -1250,7 +1285,7 @@ function FC_Russian_VVI_Old(exportid)
 end
 
 -- VVI for SU-33
-function FC_Russian_VVI_New(exportid)
+function ExportScript.AF.FC_Russian_VVI_New(exportid)
 	local lExportID					= exportid or 6
 
 	local lVVI						= LoGetVerticalVelocity()		-- VERTICAL SPEED (Meter/Second)
@@ -1290,7 +1325,7 @@ function FC_Russian_VVI_New(exportid)
 end
 
 -- Airintake for SU-27 and SU-33
-function FC_Russian_AirIntake(exportid)
+function ExportScript.AF.FC_Russian_AirIntake(exportid)
 	local lExportID	= exportid or 21
 
 	local lAirI		= LoGetMechInfo().airintake.value
@@ -1299,7 +1334,7 @@ function FC_Russian_AirIntake(exportid)
 end
 
 -- AOA Indicator and Accelerometer (AOA, GLoad) for SU-25, SU25T
-function FC_Russian_AOA_Su25(exportid)
+function ExportScript.AF.FC_Russian_AOA_Su25(exportid)
 	local lExportID					= exportid or 3
 
 	local lAoA						= LoGetAngleOfAttack()			-- ANGLE OF ATTACK AoA (Radian)
@@ -1380,7 +1415,7 @@ function FC_Russian_AOA_Su25(exportid)
 end
 
 -- AOA Indicator and Accelerometer (AOA, GLoad) for SU-27, SU33
-function FC_Russian_AOA_Su2733(exportid)
+function ExportScript.AF.FC_Russian_AOA_Su2733(exportid)
 	local lExportID					= exportid or 3
 
 	local lAoA						= LoGetAngleOfAttack()			-- ANGLE OF ATTACK AoA (Radian)
@@ -1460,7 +1495,7 @@ function FC_Russian_AOA_Su2733(exportid)
 end
 
 -- AOA Indicator and Accelerometer (AOA, GLoad) for MiG-29A, MiG-29S
-function FC_Russian_AOA_MiG29(exportid)
+function ExportScript.AF.FC_Russian_AOA_MiG29(exportid)
 	local lExportID					= exportid or 3
 
 	local lAoA						= LoGetAngleOfAttack()			-- ANGLE OF ATTACK AoA (Radian)
@@ -1540,7 +1575,7 @@ function FC_Russian_AOA_MiG29(exportid)
 end
 
 -- Russian Clock ACS-1 for KA-50, SU-25A, MIG-29A , MIG-29S
-function FC_Russian_Clock_ACS1(exportid)
+function ExportScript.AF.FC_Russian_Clock_ACS1(exportid)
 	local lExportID				= exportid or 12
 
 	local lDefaultOne			= 1.0
@@ -1548,15 +1583,15 @@ function FC_Russian_Clock_ACS1(exportid)
 
     local lCurrentClock			= LoGetMissionStartTime() + LoGetModelTime()  -- in seconds
 	local lCurrentHours			= lCurrentClock / 43200 -- (3600 * 12)
-	lCurrentHours				= lCurrentHours - math.round(lCurrentHours, 0, "floor")
+	lCurrentHours				= lCurrentHours - ExportScript.Tools.round(lCurrentHours, 0, "floor")
 	local lCurrentMinutes		= lCurrentClock / 3600  -- (60 * 60)
-	lCurrentMinutes				= lCurrentMinutes - math.round(lCurrentMinutes, 0, "floor")
+	lCurrentMinutes				= lCurrentMinutes - ExportScript.Tools.round(lCurrentMinutes, 0, "floor")
 	local lCurrentSeconds		= lCurrentClock / 60
-	lCurrentSeconds				= lCurrentSeconds - math.round(lCurrentSeconds, 0, "floor")
+	lCurrentSeconds				= lCurrentSeconds - ExportScript.Tools.round(lCurrentSeconds, 0, "floor")
 	local lFlightTimeHours		= LoGetModelTime() / 43200
-	lFlightTimeHours			= lFlightTimeHours - math.round(lFlightTimeHours, 0, "floor")
+	lFlightTimeHours			= lFlightTimeHours - ExportScript.Tools.round(lFlightTimeHours, 0, "floor")
 	local lFlightTimeMinutes	= LoGetModelTime() / 3600
-	lFlightTimeMinutes			= lFlightTimeMinutes - math.round(lFlightTimeMinutes, 0, "floor")
+	lFlightTimeMinutes			= lFlightTimeMinutes - ExportScript.Tools.round(lFlightTimeMinutes, 0, "floor")
 	-- currtime_hours {0.0,1.0}
 	-- currtime_minutes {0.0,1.0}
 	-- currtime_seconds {0.0,1.0}
@@ -1577,7 +1612,7 @@ function FC_Russian_Clock_ACS1(exportid)
 end
 
 -- Russian Clock (latest Model) for SU-25T, SU-27, SU-33
-function FC_Russian_Clock_late(exportid)
+function ExportScript.AF.FC_Russian_Clock_late(exportid)
 	local lExportID				= exportid or 12
 
 	local lDefaultOne			= 1.0
@@ -1585,15 +1620,15 @@ function FC_Russian_Clock_late(exportid)
 
     local lCurrentClock			= LoGetMissionStartTime() + LoGetModelTime()  -- in seconds
 	local lCurrentHours			= lCurrentClock / 43200 -- (3600 * 12)
-	lCurrentHours				= lCurrentHours - math.round(lCurrentHours, 0, "floor")
+	lCurrentHours				= lCurrentHours - ExportScript.Tools.round(lCurrentHours, 0, "floor")
 	local lCurrentMinutes		= lCurrentClock / 3600  -- (60 * 60)
-	lCurrentMinutes				= lCurrentMinutes - math.round(lCurrentMinutes, 0, "floor")
+	lCurrentMinutes				= lCurrentMinutes - ExportScript.Tools.round(lCurrentMinutes, 0, "floor")
 	local lCurrentSeconds		= lCurrentClock / 60
-	lCurrentSeconds				= lCurrentSeconds - math.round(lCurrentSeconds, 0, "floor")
+	lCurrentSeconds				= lCurrentSeconds - ExportScript.Tools.round(lCurrentSeconds, 0, "floor")
 	local lFlightTimeHours		= LoGetModelTime() / 43200
-	lFlightTimeHours			= lFlightTimeHours - math.round(lFlightTimeHours, 0, "floor")
+	lFlightTimeHours			= lFlightTimeHours - ExportScript.Tools.round(lFlightTimeHours, 0, "floor")
 	local lFlightTimeMinutes	= LoGetModelTime() / 3600
-	lFlightTimeMinutes			= lFlightTimeMinutes - math.round(lFlightTimeMinutes, 0, "floor")
+	lFlightTimeMinutes			= lFlightTimeMinutes - ExportScript.Tools.round(lFlightTimeMinutes, 0, "floor")
 	-- currtime_hours {0.0,1.0}
 	-- currtime_minutes {0.0,1.0}
 	-- currtime_seconds {0.0,1.0}
@@ -1612,7 +1647,7 @@ function FC_Russian_Clock_late(exportid)
 end
 
 -- Russian Enging RPM (Tachometer) for SU-25A+T, SU-27, SU-33, MIG-29
-function FC_Russian_EngineRPM(exportid)
+function ExportScript.AF.FC_Russian_EngineRPM(exportid)
 	local lExportID			= exportid or 9
 
     local lScaleValue       = 110
@@ -1629,7 +1664,7 @@ function FC_Russian_EngineRPM(exportid)
 end
 
 -- Russian Exthaus Gas Temperature 1.000GradC for SU-25A, SU25T, MIG-29
-function FC_Russian_EGT_1000gc(egttemp, exportid)
+function ExportScript.AF.FC_Russian_EGT_1000gc(egttemp, exportid)
     local lEGTtemp  	= egttemp  or 1
 	local lExportID		= exportid or 10
 
@@ -1659,7 +1694,7 @@ function FC_Russian_EGT_1000gc(egttemp, exportid)
 end
 
 -- Russian Mechanical Device Indicator for SU-25A+T
-function FC_Russian_MDI_SU25(exportid)
+function ExportScript.AF.FC_Russian_MDI_SU25(exportid)
 	local lExportID	= exportid or 2
 
     local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
@@ -1693,7 +1728,7 @@ function FC_Russian_MDI_SU25(exportid)
 end
 
 -- Russian System Test EKRAN
-function FC_EKRAN(exportid)
+function ExportScript.AF.FC_EKRAN(exportid)
 	local lExportID	= exportid or 16
 
 	local lMCPState = LoGetMCPState() -- Warning Lights
@@ -1801,7 +1836,7 @@ function FC_EKRAN(exportid)
 end
 
 -- ADI for A-10A, F-15C
-function FC_US_ADI(exportid)
+function ExportScript.AF.FC_US_ADI(exportid)
 	local lExportID	= exportid or 20
 
 	local lDefaultNull				= 0.0
@@ -1844,7 +1879,7 @@ function FC_US_ADI(exportid)
 end
 
 -- Standby ADI for A-10A, F-15C
-function FC_US_stbyADI(exportid)
+function ExportScript.AF.FC_US_stbyADI(exportid)
 	local lExportID	= exportid or 21
 
 	local lDefaultNull				= 0.0
@@ -1865,7 +1900,7 @@ function FC_US_stbyADI(exportid)
 end
 
 -- HSI for A-10A, F-15C
-function FC_US_HSI(distancetoway, exportid)
+function ExportScript.AF.FC_US_HSI(distancetoway, exportid)
 	local lDistanceToWay	= distancetoway or 999
 	local lExportID			= exportid or 22
 	
@@ -1904,24 +1939,24 @@ function FC_US_HSI(distancetoway, exportid)
 		[32] = "%0.1f",		-- HSI Range Flag
 	]]
 	lDistanceToWay = lDistanceToWay * 0.00062136994937697 -- meter to miles
-	--lDistanceToWay = math.round(lDistanceToWay / 1000, 1)
+	--lDistanceToWay = ExportScript.Tools.round(lDistanceToWay / 1000, 1)
 	local lRangeCounter1 = 0
 	local lRangeCounter2 = 0
 	local lRangeCounter3 = 0
 	if lDistanceToWay > 100 then
-		lRangeCounter1 = math.round((lDistanceToWay / 100), 0, "floor") * 0.11
-		lRangeCounter1 = lRangeCounter1 - math.round(lRangeCounter1, 0, "floor")
+		lRangeCounter1 = ExportScript.Tools.round((lDistanceToWay / 100), 0, "floor") * 0.11
+		lRangeCounter1 = lRangeCounter1 - ExportScript.Tools.round(lRangeCounter1, 0, "floor")
 	end
 	if lDistanceToWay > 10 then
 		if lDistanceToWay > 100 then
-			lRangeCounter2 = (math.round((lDistanceToWay - (math.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
+			lRangeCounter2 = (ExportScript.Tools.round((lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
 		else
 			lRangeCounter2 = (lDistanceToWay / 10) * 0.11
-			lRangeCounter2 = lRangeCounter2 - math.round(lRangeCounter2, 0, "floor")
+			lRangeCounter2 = lRangeCounter2 - ExportScript.Tools.round(lRangeCounter2, 0, "floor")
 		end
 	end
 	if lDistanceToWay > 10 then
-		lRangeCounter3 = (lDistanceToWay - (math.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
+		lRangeCounter3 = (lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
 	else
 		lRangeCounter3 = lDistanceToWay * 0.11
 	end
@@ -1961,7 +1996,7 @@ function FC_US_HSI(distancetoway, exportid)
 end
 
 -- VVI for A-10A, F-15C
-function FC_US_VVI(exportid)
+function ExportScript.AF.FC_US_VVI(exportid)
 	local lExportID					= exportid or 15
 	local lVVITmp					= LoGetVerticalVelocity() * 196.8504		-- VERTICAL SPEED (Meter/Second to Foots/Minute)
 	--  {-1.0, -0.5, -0.29, 0.29, 0.5, 1.0} 
@@ -2023,7 +2058,7 @@ function FC_US_VVI(exportid)
 end
 
 -- AOA Indicator (AOA) for A-10A, F-15C
-function FC_US_AOA(exportid)
+function ExportScript.AF.FC_US_AOA(exportid)
 	local lExportID			= exportid or 16
 	local lRadToDCSsignd	= math.pi
 	local lAoA				= LoGetAngleOfAttack()						-- ANGLE OF ATTACK AoA (Radian)
@@ -2045,7 +2080,7 @@ function FC_US_AOA(exportid)
 end
 
 -- Accelerometer (GLoad) for A-10A, F-15C
-function FC_US_GLOAD(exportid)
+function ExportScript.AF.FC_US_GLOAD(exportid)
 	local lExportID					= exportid or 17
 
 	local lAccelerationUnits		= LoGetAccelerationUnits().y							-- G-LOAD
@@ -2056,7 +2091,7 @@ function FC_US_GLOAD(exportid)
 end
 
 -- US Clock for A-10A, F-15C
-function FC_US_Clock(exportid)
+function ExportScript.AF.FC_US_Clock(exportid)
 	local lExportID				= exportid or 18
 
 	local lDefaultOne			= 1.0
@@ -2064,11 +2099,11 @@ function FC_US_Clock(exportid)
 
     local lCurrentClock			= LoGetMissionStartTime() + LoGetModelTime()  -- in seconds
 	local lCurrentHours			= lCurrentClock / 43200 -- (3600 * 12)
-	lCurrentHours				= lCurrentHours - math.round(lCurrentHours, 0, "floor")
+	lCurrentHours				= lCurrentHours - ExportScript.Tools.round(lCurrentHours, 0, "floor")
 	local lCurrentMinutes		= lCurrentClock / 3600  -- (60 * 60)
-	lCurrentMinutes				= lCurrentMinutes - math.round(lCurrentMinutes, 0, "floor")
+	lCurrentMinutes				= lCurrentMinutes - ExportScript.Tools.round(lCurrentMinutes, 0, "floor")
 	local lCurrentSeconds		= lCurrentClock / 60
-	lCurrentSeconds				= lCurrentSeconds - math.round(lCurrentSeconds, 0, "floor")
+	lCurrentSeconds				= lCurrentSeconds - ExportScript.Tools.round(lCurrentSeconds, 0, "floor")
 	-- currtime_hours {0.0,1.0}
 	-- currtime_minutes {0.0,1.0}
 	-- currtime_seconds {0.0,1.0}
@@ -2079,7 +2114,7 @@ function FC_US_Clock(exportid)
 end
 
 -- US Standby Compass for A-10A, F-15C
-function FC_US_Compass(exportid)
+function ExportScript.AF.FC_US_Compass(exportid)
 	local lExportID		= exportid or 19
 	
 	local lDefaultNull	= 0.0
@@ -2110,7 +2145,7 @@ function FC_US_Compass(exportid)
 end
 
 -- US F-15C Exaust Gas Temperature
-function FC_F15C_ExaustGasTemp(value, exportid)
+function ExportScript.AF.FC_F15C_ExaustGasTemp(value, exportid)
 	local lValue		= value			or 1
 	local lExportID		= exportid		or 1
 	local lValueTmp		= lValue
@@ -2123,7 +2158,7 @@ function FC_F15C_ExaustGasTemp(value, exportid)
 	lValueTmp2			= string.format("%02d", lValueTmp2)
 
 	if lValueTmp > 100 then
-		lCounter3 		= (lValueTmp - (math.round(lValueTmp / 100, 0, "floor") * 100)) * 0.01
+		lCounter3 		= (lValueTmp - (ExportScript.Tools.round(lValueTmp / 100, 0, "floor") * 100)) * 0.01
 	else
 		lCounter3 		= lValueTmp * 0.01
 	end
@@ -2157,7 +2192,7 @@ function FC_F15C_ExaustGasTemp(value, exportid)
 end
 
 -- A-10A Exaust Gas Temperature
-function FC_A10A_ExaustGasTemp(value, exportid)
+function ExportScript.AF.FC_A10A_ExaustGasTemp(value, exportid)
 	local lValue		= value		  or 1
 	local lExportID		= exportid	  or 1
 	local lValueTmp		= lValue
@@ -2187,7 +2222,7 @@ end
 -- for example:
 -- A-10A RPM Engine
 -- Su-27/33 Exthaus Gas Temperature 1.200GradC
-function FC_TwoNeedlesGauge(value, mainscala, secondscale, exportid)
+function ExportScript.AF.FC_TwoNeedlesGauge(value, mainscala, secondscale, exportid)
 	local lValue		= value		  or 1
 	local lMainScala	= mainscala	  or 100
 	local lSecondScale	= secondscale or 10
@@ -2197,7 +2232,7 @@ function FC_TwoNeedlesGauge(value, mainscala, secondscale, exportid)
 	lValue = lValue / lMainScala
 	lValue = (lValue > 1.0 and 1.0 or lValue)	-- the result is limited to 1.0
 
-	--lValueTmp = lValueTmp - (math.round((lValueTmp / lSecondScale), 0, "floor") * lSecondScale)
+	--lValueTmp = lValueTmp - (ExportScript.Tools.round((lValueTmp / lSecondScale), 0, "floor") * lSecondScale)
 	--lValueTmp = lValueTmp / lSecondScale
 	--lValueTmp = (lValueTmp > 1.0 and 1.0 or lValueTmp)      -- the result is limited to 1.0
 	local lv1, lValueTmp = math.modf(lValueTmp / lSecondScale)
@@ -2210,7 +2245,7 @@ end
 -- A-10A RPM FAN, RPM APU, Exaust Gas Temperature APU, Fuel Flow, Oil Pressure, Hydraulic Pressure
 -- F-15C Oil Pressure, Hydraulic Pressure, Engine Exhaust Nozzle Position Indicator
 -- Su-25A/T, Russian Hydraulic Pressure Gauges
-function FC_OneNeedleGauge(value, scala, exportid)
+function ExportScript.AF.FC_OneNeedleGauge(value, scala, exportid)
 	local lValue	= value		or 1
 	local lScala	= scala		or 100
 	local lExportID	= exportid	or 1
@@ -2224,7 +2259,7 @@ end
 -- Gauges with 1 needle and 2 digits display
 -- for example:
 -- 
-function FC_OneNeedleGauge2Digits(value, scala, fixdigits, exportid)
+function ExportScript.AF.FC_OneNeedleGauge2Digits(value, scala, fixdigits, exportid)
 	local lValue		= value			or 1
 	local lScala		= scala			or 100
 	local lExportID		= exportid		or 1
@@ -2243,14 +2278,14 @@ function FC_OneNeedleGauge2Digits(value, scala, fixdigits, exportid)
 	--[[
 	if lValueTmp > 10 then
 		if lValueTmp > 100 then
-			lCounter1 = (math.round((lValueTmp - (math.round(lValueTmp / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.1
+			lCounter1 = (ExportScript.Tools.round((lValueTmp - (ExportScript.Tools.round(lValueTmp / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.1
 		else
 			lCounter1 = (lValueTmp / 10) * 0.1
-			lCounter1 = lCounter2 - math.round(lCounter2, 0, "floor")
+			lCounter1 = lCounter2 - ExportScript.Tools.round(lCounter2, 0, "floor")
 		end
 	end]]
 	if lValueTmp > 10 then
-		lCounter2 = (lValueTmp - (math.round(lValueTmp / 10, 0, "floor") * 10)) * 0.1
+		lCounter2 = (lValueTmp - (ExportScript.Tools.round(lValueTmp / 10, 0, "floor") * 10)) * 0.1
 	else
 		lCounter2 = lValueTmp * 0.1
 	end
@@ -2268,7 +2303,7 @@ end
 -- Gauges with 1 needle and 3 digits display
 -- for example:
 -- F-15C RPM, Fuel Flow
-function FC_OneNeedleGauge3Digits_alt(value, scala, fixdigits, exportid)
+function ExportScript.AF.FC_OneNeedleGauge3Digits_alt(value, scala, fixdigits, exportid)
 	local lValue		= value			or 1
 	local lScala		= scala			or 100
 	local lExportID		= exportid		or 1
@@ -2288,7 +2323,7 @@ function FC_OneNeedleGauge3Digits_alt(value, scala, fixdigits, exportid)
 	lValueTmp2			= string.format("%03d", lValueTmp2)
 
 	if lValueTmp > 1000 then
-		lCounter3 = (lValueTmp - (math.round(lValueTmp / 1000, 0, "floor") * 1000)) * math.pow(0.1, lFixDigits + 1) --0.1
+		lCounter3 = (lValueTmp - (ExportScript.Tools.round(lValueTmp / 1000, 0, "floor") * 1000)) * math.pow(0.1, lFixDigits + 1) --0.1
 	else
 		lCounter3 = lValueTmp * math.pow(0.1, lFixDigits + 1) --0.1
 	end
@@ -2306,7 +2341,7 @@ end
 -- Gauges with 1 needle and 3 digits display
 -- for example:
 -- F-15C RPM, Fuel Flow
-function FC_OneNeedleGauge3Digits(value, scala, fixdigits, exportid)
+function ExportScript.AF.FC_OneNeedleGauge3Digits(value, scala, fixdigits, exportid)
 	local lValue		= value			or 1
 	local lScala		= scala			or 100
 	local lExportID		= exportid		or 1
@@ -2340,7 +2375,7 @@ end
 -- Gauges with 1 needle and 4 digits display
 -- for example:
 -- 
-function FC_OneNeedleGauge4Digits(value, scala, fixdigits, exportid)
+function ExportScript.AF.FC_OneNeedleGauge4Digits(value, scala, fixdigits, exportid)
 	local lValue		= value			or 1
 	local lScala		= scala			or 100
 	local lExportID		= exportid		or 1
@@ -2361,27 +2396,27 @@ function FC_OneNeedleGauge4Digits(value, scala, fixdigits, exportid)
 	lValueTmp2			= string.format("%04d", lValueTmp2)
 	--[[
 	if lValueTmp > 10000 then
-		lCounter1 = math.round((lValueTmp / 1000), 0, "floor") * 0.1
-		lCounter1 = lCounter1 - math.round(lCounter1, 0, "floor")
+		lCounter1 = ExportScript.Tools.round((lValueTmp / 1000), 0, "floor") * 0.1
+		lCounter1 = lCounter1 - ExportScript.Tools.round(lCounter1, 0, "floor")
 	end
 	if lValueTmp > 1000 then
 		if lValueTmp > 100 then
-			lCounter2 = (math.round((lValueTmp - (math.round(lValueTmp / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.1
+			lCounter2 = (ExportScript.Tools.round((lValueTmp - (ExportScript.Tools.round(lValueTmp / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.1
 		else
 			lCounter2 = (lValueTmp / 10) * 0.1
-			lCounter2 = lCounter2 - math.round(lCounter2, 0, "floor")
+			lCounter2 = lCounter2 - ExportScript.Tools.round(lCounter2, 0, "floor")
 		end
 	end
 	if lValueTmp > 100 then
 		if lValueTmp > 10 then
-			lCounter3 = (math.round((lValueTmp - (math.round(lValueTmp / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.1
+			lCounter3 = (ExportScript.Tools.round((lValueTmp - (ExportScript.Tools.round(lValueTmp / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.1
 		else
 			lCounter3 = (lValueTmp / 10) * 0.1
-			lCounter3 = lCounter3 - math.round(lCounter3, 0, "floor")
+			lCounter3 = lCounter3 - ExportScript.Tools.round(lCounter3, 0, "floor")
 		end
 	end]]
 	if lValueTmp > 10 then
-		lCounter4 = (lValueTmp - (math.round(lValueTmp / 10, 0, "floor") * 10)) * 0.1
+		lCounter4 = (lValueTmp - (ExportScript.Tools.round(lValueTmp / 10, 0, "floor") * 10)) * 0.1
 	else
 		lCounter4 = lValueTmp * 0.1
 	end
@@ -2401,7 +2436,7 @@ end
 
 -- Auxiliary Functions for Hardware export
 
-function SPO15RWR(hardware)
+function ExportScript.AF.SPO15RWR(FunctionTyp)
 -- The RWR display indicates any threat radars illuminating ("painting") the aircraft. 
 -- Information is presented as symbols representing the type and direction to the threat. 
 -- Six illuminated symbols at the bottom of the display notify the pilot of the threat radar type. 
@@ -2424,7 +2459,7 @@ emitter_table =
         SignalType =, -- string with vlues: "scan" ,"lock", "missile_radio_guided","track_while_scan";
 }]]
 
-	local lHardware = hardware or 1
+	local lFunctionTyp = FunctionTyp or "Ikarus"
 	local lTWSInfo = LoGetTWSInfo() -- SPO15 Information
 	if lTWSInfo == nil then
 		return
@@ -2461,114 +2496,136 @@ emitter_table =
     }
     [Mode] = number: "0"
 	]]
-
-	local lPriorityTmp		= 0
-	local lPrimaryThreatTmp	= 0
-	local lActiveLamp		= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} -- 10 x for direction
-	if(#lTWSInfo.Emitters > 0) then
-	
-		gES_SPO15_FoundErmitter = true
-	
-		for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
-			if(lTWSInfo.Emitters[EmitterIndex].Priority > lPriorityTmp) then
-				lPriorityTmp      = lTWSInfo.Emitters[EmitterIndex].Priority
-				lPrimaryThreatTmp = EmitterIndex
-			end
+ExportScript.Tools.WriteToLog("SPO15RWR: "..ExportScript.AF.EventNumberOLD.." < "..ExportScript.AF.EventNumber)
+	if(ExportScript.AF.EventNumberOLD < ExportScript.AF.EventNumber) then
+		ExportScript.AF.EventNumberOLD = ExportScript.AF.EventNumber
+		local lPriorityTmp		= 0
+		local lPrimaryThreatTmp	= 0
+		local lActiveLamp		= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} -- 10 x for direction
+		if ExportScript.AF.SPO15RWRData == nil then
+			ExportScript.AF.SPO15RWRData = {}
 		end
-	
-		for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
-
-			local lAzimut = math.round(lTWSInfo.Emitters[EmitterIndex].Azimuth * 90, 1)
-			
-			if EmitterIndex == lPrimaryThreatTmp then
-				-- primary threat
-				-- direction to the threat
-				SendDataHW("401", (lAzimut <= -170.0 and 1 or 0), lHardware ) -- left back side
-				SendDataHW("402", ((lAzimut <= -90.0  and lAzimut >= -170.0 ) and 1 or 0), lHardware ) -- left 90 degree
-				SendDataHW("403", ((lAzimut <= -55.0  and lAzimut >= -125.0 ) and 1 or 0), lHardware ) -- left 50 degree
-				SendDataHW("404", ((lAzimut <= -30.0  and lAzimut >= -70.0  ) and 1 or 0), lHardware ) -- left 30 degree
-				SendDataHW("405", ((lAzimut <=  5.0   and lAzimut >= -40.0  ) and 1 or 0), lHardware ) -- left 10 degree
-				SendDataHW("406", ((lAzimut >= -5.0   and lAzimut <=  40.0  ) and 1 or 0), lHardware ) -- right 10 degree
-				SendDataHW("407", ((lAzimut >=  30.0  and lAzimut <=  70.0  ) and 1 or 0), lHardware ) -- right 30 degree
-				SendDataHW("408", ((lAzimut >=  55.0  and lAzimut <= 125.0  ) and 1 or 0), lHardware ) -- right 50 degree
-				SendDataHW("409", ((lAzimut >=  90.0  and lAzimut <= 170.0  ) and 1 or 0), lHardware ) -- right 90 degree
-				SendDataHW("410", (lAzimut >= 170.0 and 1 or 0), lHardware ) -- right back side
-				
-				-- power of the threat
-				local lPower = math.round(lTWSInfo.Emitters[EmitterIndex].Power * 15, 0, "ceil") + 1
-				--WriteToLog("lPower: "..lPower)
-				SendDataHW("411", (lPower <= 1  and 0 or 1), lHardware ) -- 1. power lamp
-				SendDataHW("412", (lPower <= 2  and 0 or 1), lHardware ) -- 2. power lamp
-				SendDataHW("413", (lPower <= 3  and 0 or 1), lHardware ) -- 3. power lamp
-				SendDataHW("414", (lPower <= 4  and 0 or 1), lHardware ) -- 4. power lamp
-				SendDataHW("415", (lPower <= 5  and 0 or 1), lHardware ) -- 5. power lamp
-				SendDataHW("416", (lPower <= 6  and 0 or 1), lHardware ) -- 6. power lamp
-				SendDataHW("417", (lPower <= 7  and 0 or 1), lHardware ) -- 7. power lamp
-				SendDataHW("418", (lPower <= 8  and 0 or 1), lHardware ) -- 8. power lamp
-				SendDataHW("419", (lPower <= 9  and 0 or 1), lHardware ) -- 9. power lamp
-				SendDataHW("420", (lPower <= 10 and 0 or 1), lHardware ) -- 10. power lamp
-				SendDataHW("421", (lPower <= 11 and 0 or 1), lHardware ) -- 11. power lamp
-				SendDataHW("422", (lPower <= 12 and 0 or 1), lHardware ) -- 12. power lamp
-				SendDataHW("423", (lPower <= 13 and 0 or 1), lHardware ) -- 13. power lamp
-				SendDataHW("424", (lPower <= 14 and 0 or 1), lHardware ) -- 14. power lamp
-				SendDataHW("425", (lPower <= 15 and 0 or 1), lHardware ) -- 15. power lamp
-				
-				-- type of the threat
-				local lPrimaryTypeTmp = FC_FindRadarTypeForSPO15(lTWSInfo, lPrimaryThreatTmp)
-				SendDataHW("430", (lPrimaryTypeTmp.AIR == 1 and 1 or 0), lHardware )	-- primary Air or Weapon
-				SendDataHW("431", (lPrimaryTypeTmp.LRR == 1 and 1 or 0), lHardware )	-- long range radar
-				SendDataHW("432", (lPrimaryTypeTmp.MRR == 1 and 1 or 0), lHardware )	-- mid range radar
-				SendDataHW("433", (lPrimaryTypeTmp.SRR == 1 and 1 or 0), lHardware )	-- short range radar
-				SendDataHW("434", (lPrimaryTypeTmp.EWR == 1 and 1 or 0), lHardware )	-- EWR
-				SendDataHW("435", (lPrimaryTypeTmp.AWACS == 1 and 1 or 0), lHardware )	-- AWACS
-				
-				-- look or missil on air
-				if lPrimaryTypeTmp.Lock == 0.1 then
-					SendDataHW("440", 0, lHardware )
-					SendDataHW("441", 1, lHardware ) -- blinking lights on
-				elseif lPrimaryTypeTmp.Lock == 0.2 then
-					SendDataHW("440", 1, lHardware )
-					SendDataHW("441", 0, lHardware ) -- blinking lights off
-				end
-				-- hemisphere
-				SendDataHW("442", lPrimaryTypeTmp.TopHemisphere, lHardware )	-- top hemisphere
-				SendDataHW("443", lPrimaryTypeTmp.BottomHemisphere, lHardware )	-- bottom hemisphere
-				
-				lPrimaryTypeTmp = nil
-
-			end
-
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp,  1, "451", lAzimut <= -170.0, lHardware ) -- left back side
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp,  2, "452", (lAzimut <= -90.0  and lAzimut >= -170.0 ), lHardware ) -- left 90 degree
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp,  3, "453", (lAzimut <= -55.0  and lAzimut >= -125.0 ), lHardware ) -- left 50 degree
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp,  4, "454", (lAzimut <= -30.0  and lAzimut >= -70.0  ), lHardware ) -- left 30 degree
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp,  5, "455", (lAzimut <=  5.0   and lAzimut >= -40.0  ), lHardware ) -- left 10 degree
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp,  6, "456", (lAzimut >= -5.0   and lAzimut <=  40.0  ), lHardware ) -- right 10 degree
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp,  7, "457", (lAzimut >=  30.0  and lAzimut <=  70.0  ), lHardware ) -- right 30 degree
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp,  8, "458", (lAzimut >=  55.0  and lAzimut <= 125.0  ), lHardware ) -- right 50 degree
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp,  9, "459", (lAzimut >=  90.0  and lAzimut <= 170.0  ), lHardware ) -- right 90 degree
-			lActiveLamp = SPO15RWR_SendDataHW(lActiveLamp, 10, "460", lAzimut >= 170.0, lHardware ) -- right back side
-
-		end
-
-		-- type of the secondary threat
-		local lSecondaryTypeTmp = FC_FindRadarTypeForSPO15(lTWSInfo)
-		SendDataHW("470", (lSecondaryTypeTmp.AIR == 1 and 1 or 0), lHardware )	-- primary Air or Weapon
-		SendDataHW("471", (lSecondaryTypeTmp.LRR == 1 and 1 or 0), lHardware )	-- long range radar
-		SendDataHW("472", (lSecondaryTypeTmp.MRR == 1 and 1 or 0), lHardware )	-- mid range radar
-		SendDataHW("473", (lSecondaryTypeTmp.SRR == 1 and 1 or 0), lHardware )	-- short range radar
-		SendDataHW("474", (lSecondaryTypeTmp.EWR == 1 and 1 or 0), lHardware )	-- EWR
-		SendDataHW("475", (lSecondaryTypeTmp.AWACS == 1 and 1 or 0), lHardware )	-- AWACS
-		lSecondaryTypeTmp = nil
+ExportScript.Tools.WriteToLog("1")
+		if(#lTWSInfo.Emitters > 0) then
+ExportScript.Tools.WriteToLog("2")
+			ExportScript.AF.SPO15_FoundErmitter = true
 		
-	else
-		lPriorityTmp      = 0
-		lPrimaryThreatTmp = 0
+			for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
+				if(lTWSInfo.Emitters[EmitterIndex].Priority > lPriorityTmp) then
+					lPriorityTmp      = lTWSInfo.Emitters[EmitterIndex].Priority
+					lPrimaryThreatTmp = EmitterIndex
+				end
+			end
+		
+			for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
+ExportScript.Tools.WriteToLog("3")
+				local lAzimut = ExportScript.Tools.round(lTWSInfo.Emitters[EmitterIndex].Azimuth * 90, 1)
+				
+				if EmitterIndex == lPrimaryThreatTmp then
+ExportScript.Tools.WriteToLog("3.1")
+					-- primary threat
+					-- direction to the threat
+					ExportScript.AF.SPO15RWRData[401] = (lAzimut <= -170.0 and 1 or 0) -- left back side
+					ExportScript.AF.SPO15RWRData[402] = ((lAzimut <= -90.0  and lAzimut >= -170.0 ) and 1 or 0) -- left 90 degree
+					ExportScript.AF.SPO15RWRData[403] = ((lAzimut <= -55.0  and lAzimut >= -125.0 ) and 1 or 0) -- left 50 degree
+					ExportScript.AF.SPO15RWRData[404] = ((lAzimut <= -30.0  and lAzimut >= -70.0  ) and 1 or 0) -- left 30 degree
+					ExportScript.AF.SPO15RWRData[405] = ((lAzimut <=  5.0   and lAzimut >= -40.0  ) and 1 or 0) -- left 10 degree
+					ExportScript.AF.SPO15RWRData[406] = ((lAzimut >= -5.0   and lAzimut <=  40.0  ) and 1 or 0) -- right 10 degree
+					ExportScript.AF.SPO15RWRData[407] = ((lAzimut >=  30.0  and lAzimut <=  70.0  ) and 1 or 0) -- right 30 degree
+					ExportScript.AF.SPO15RWRData[408] = ((lAzimut >=  55.0  and lAzimut <= 125.0  ) and 1 or 0) -- right 50 degree
+					ExportScript.AF.SPO15RWRData[409] = ((lAzimut >=  90.0  and lAzimut <= 170.0  ) and 1 or 0) -- right 90 degree
+					ExportScript.AF.SPO15RWRData[410] = (lAzimut >= 170.0 and 1 or 0) -- right back side
+					
+					-- power of the threat
+					local lPower = ExportScript.Tools.round(lTWSInfo.Emitters[EmitterIndex].Power * 15, 0, "ceil") + 1
+					--WriteToLog("lPower: "..lPower)
+					ExportScript.AF.SPO15RWRData[411] = (lPower <= 1  and 0 or 1) -- 1. power lamp
+					ExportScript.AF.SPO15RWRData[412] = (lPower <= 2  and 0 or 1) -- 2. power lamp
+					ExportScript.AF.SPO15RWRData[413] = (lPower <= 3  and 0 or 1) -- 3. power lamp
+					ExportScript.AF.SPO15RWRData[414] = (lPower <= 4  and 0 or 1) -- 4. power lamp
+					ExportScript.AF.SPO15RWRData[415] = (lPower <= 5  and 0 or 1) -- 5. power lamp
+					ExportScript.AF.SPO15RWRData[416] = (lPower <= 6  and 0 or 1) -- 6. power lamp
+					ExportScript.AF.SPO15RWRData[417] = (lPower <= 7  and 0 or 1) -- 7. power lamp
+					ExportScript.AF.SPO15RWRData[418] = (lPower <= 8  and 0 or 1) -- 8. power lamp
+					ExportScript.AF.SPO15RWRData[419] = (lPower <= 9  and 0 or 1) -- 9. power lamp
+					ExportScript.AF.SPO15RWRData[420] = (lPower <= 10 and 0 or 1) -- 10. power lamp
+					ExportScript.AF.SPO15RWRData[421] = (lPower <= 11 and 0 or 1) -- 11. power lamp
+					ExportScript.AF.SPO15RWRData[422] = (lPower <= 12 and 0 or 1) -- 12. power lamp
+					ExportScript.AF.SPO15RWRData[423] = (lPower <= 13 and 0 or 1) -- 13. power lamp
+					ExportScript.AF.SPO15RWRData[424] = (lPower <= 14 and 0 or 1) -- 14. power lamp
+					ExportScript.AF.SPO15RWRData[425] = (lPower <= 15 and 0 or 1) -- 15. power lamp
+					
+					-- type of the threat
+					local lPrimaryTypeTmp = ExportScript.AF.FindRadarTypeForSPO15(lTWSInfo, lPrimaryThreatTmp)
+					ExportScript.AF.SPO15RWRData[430] = (lPrimaryTypeTmp.AIR == 1 and 1 or 0)	-- primary Air or Weapon
+					ExportScript.AF.SPO15RWRData[431] = (lPrimaryTypeTmp.LRR == 1 and 1 or 0)	-- long range radar
+					ExportScript.AF.SPO15RWRData[432] = (lPrimaryTypeTmp.MRR == 1 and 1 or 0)	-- mid range radar
+					ExportScript.AF.SPO15RWRData[433] = (lPrimaryTypeTmp.SRR == 1 and 1 or 0)	-- short range radar
+					ExportScript.AF.SPO15RWRData[434] = (lPrimaryTypeTmp.EWR == 1 and 1 or 0)	-- EWR
+					ExportScript.AF.SPO15RWRData[435] = (lPrimaryTypeTmp.AWACS == 1 and 1 or 0)	-- AWACS
+					
+					-- look or missil on air
+					if lPrimaryTypeTmp.Lock == 0.1 then
+						ExportScript.AF.SPO15RWRData[440] = 0
+						ExportScript.AF.SPO15RWRData[441] = 1 -- blinking lights on
+					elseif lPrimaryTypeTmp.Lock == 0.2 then
+						ExportScript.AF.SPO15RWRData[440] = 1
+						ExportScript.AF.SPO15RWRData[441] = 0 -- blinking lights off
+					end
+					-- hemisphere
+					ExportScript.AF.SPO15RWRData[442] = lPrimaryTypeTmp.TopHemisphere	-- top hemisphere
+					ExportScript.AF.SPO15RWRData[443] = lPrimaryTypeTmp.BottomHemisphere	-- bottom hemisphere
+					
+					lPrimaryTypeTmp = nil
 
-		if gES_SPO15_FoundErmitter ~= nil and gES_SPO15_FoundErmitter then
-			SPO15RWR_Reset(401, 480, lHardware)
+				end
+ExportScript.Tools.WriteToLog("3.2")
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  1, 451, lAzimut <= -170.0) -- left back side
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  2, 452, (lAzimut <= -90.0  and lAzimut >= -170.0 )) -- left 90 degree
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  3, 453, (lAzimut <= -55.0  and lAzimut >= -125.0 )) -- left 50 degree
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  4, 454, (lAzimut <= -30.0  and lAzimut >= -70.0  )) -- left 30 degree
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  5, 455, (lAzimut <=  5.0   and lAzimut >= -40.0  )) -- left 10 degree
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  6, 456, (lAzimut >= -5.0   and lAzimut <=  40.0  )) -- right 10 degree
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  7, 457, (lAzimut >=  30.0  and lAzimut <=  70.0  )) -- right 30 degree
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  8, 458, (lAzimut >=  55.0  and lAzimut <= 125.0  )) -- right 50 degree
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  9, 459, (lAzimut >=  90.0  and lAzimut <= 170.0  )) -- right 90 degree
+				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp, 10, 460, lAzimut >= 170.0) -- right back side
+
+			end
+
+			-- type of the secondary threat
+			local lSecondaryTypeTmp = ExportScript.AF.FindRadarTypeForSPO15(lTWSInfo)
+			ExportScript.AF.SPO15RWRData[470] = (lSecondaryTypeTmp.AIR == 1 and 1 or 0)	-- primary Air or Weapon
+			ExportScript.AF.SPO15RWRData[471] = (lSecondaryTypeTmp.LRR == 1 and 1 or 0)	-- long range radar
+			ExportScript.AF.SPO15RWRData[472] = (lSecondaryTypeTmp.MRR == 1 and 1 or 0)	-- mid range radar
+			ExportScript.AF.SPO15RWRData[473] = (lSecondaryTypeTmp.SRR == 1 and 1 or 0)	-- short range radar
+			ExportScript.AF.SPO15RWRData[474] = (lSecondaryTypeTmp.EWR == 1 and 1 or 0)	-- EWR
+			ExportScript.AF.SPO15RWRData[475] = (lSecondaryTypeTmp.AWACS == 1 and 1 or 0)	-- AWACS
+			lSecondaryTypeTmp = nil
+			
+		else
+			lPriorityTmp      = 0
+			lPrimaryThreatTmp = 0
+ExportScript.Tools.WriteToLog("4")
+			if ExportScript.AF.SPO15_FoundErmitter == nil or ExportScript.AF.SPO15_FoundErmitter then
+				ExportScript.AF.SPO15RWR_Reset(401, 480)
+			end
 		end
 	end
+	
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+ExportScript.Tools.WriteToLog("SPO15RWRData: "..ExportScript.Tools.dump(ExportScript.AF.SPO15RWRData))
+		for key, value in pairs(ExportScript.AF.SPO15RWRData) do
+			ExportScript.Tools.SendData(key, value)
+		end
+	end
+	
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		for key, value in pairs(ExportScript.AF.SPO15RWRData) do
+			ExportScript.Tools.SendDataDAC(key, value)
+		end
+	end
+	
 	--[[
 level: 2, 16, 101, 39
 lNameByType: string: "hawk sr"
@@ -2586,7 +2643,7 @@ end
 
 -- Auxiliary Functions
 
-function FC_FindRadarTypeForSPO15(lTWSInfo, PrimaryThreat)
+function ExportScript.AF.FindRadarTypeForSPO15(lTWSInfo, PrimaryThreat)
 	local lPrimaryThreat	= PrimaryThreat or 0
     local lReturn 			= {AIR = 0, LRR = 0, MRR = 0, SRR = 0, EWR = 0, AWACS = 0, Lock = 0, TopHemisphere = 0, BottomHemisphere = 0}
 
@@ -2595,9 +2652,9 @@ function FC_FindRadarTypeForSPO15(lTWSInfo, PrimaryThreat)
 			EmitterIndex = lPrimaryThreat
 		end
 		local lType = lTWSInfo.Emitters[EmitterIndex].Type
-		--WriteToLog('level: '..lType.level1..', '..lType.level2..', '..lType.level3..', '..lType.level4)
+		--ExportScript.Tools.WriteToLog('level: '..lType.level1..', '..lType.level2..', '..lType.level3..', '..lType.level4)
 		local lNameByType = LoGetNameByType(lType.level1, lType.level2, lType.level3, lType.level4) -- world database classification of emitter, args 4 (number : level1,level2,level3,level4), result string
-		--WriteToLog('lNameByType: '..dump(lNameByType))
+		--ExportScript.Tools.WriteToLog('lNameByType: '..ExportScript.Tools.dump(lNameByType))
 
         -- threat type
 		if (lType.level1 == 1 or lType.level1 == 4) and 
@@ -2693,13 +2750,13 @@ function FC_FindRadarTypeForSPO15(lTWSInfo, PrimaryThreat)
 			end
 
 			local lSelfData		= LoGetSelfData()
-			local lSelfDataAlt	= math.round(lSelfData.LatLongAlt.Alt, 0)
+			local lSelfDataAlt	= ExportScript.Tools.round(lSelfData.LatLongAlt.Alt, 0)
 
 			if lErmitterObjectAlt and lSelfDataAlt then
-			--WriteToLog('lErmitterObjectAlt: '..lErmitterObjectAlt..', lSelfDataAlt: '..lSelfDataAlt)
-				if lErmitterObjectAlt > (lSelfDataAlt + 200) then
+			--ExportScript.Tools.WriteToLog('lErmitterObjectAlt: '..lErmitterObjectAlt..', lSelfDataAlt: '..lSelfDataAlt)
+				if lErmitterObjectAlt > (lSelfDataAlt + 400) then
 					lReturn.TopHemisphere    = 1 -- top hemisphere
-				elseif lErmitterObjectAlt < (lSelfDataAlt - 200) then
+				elseif lErmitterObjectAlt < (lSelfDataAlt - 400) then
 					lReturn.BottomHemisphere = 1 -- bottom hemisphere
 				else 
 					lReturn.TopHemisphere    = 1 -- top hemisphere
@@ -2716,26 +2773,26 @@ function FC_FindRadarTypeForSPO15(lTWSInfo, PrimaryThreat)
    return lReturn
 end
 
-function WeaponStatusPanel_selectCurrentPayloadStation(_index)
-	if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].CLSID == gES_PayloadInfo.Stations[_index].CLSID and gES_PayloadInfo.CurrentStation ~= _index then
-		SendDataHW(gES_TmpStationToPanel[_index].CurrentID, 1, gES_TmpStationToPanel[_index].HardwareID)
+function ExportScript.AF.WeaponStatusPanel_selectCurrentPayloadStation(_index)
+	if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].CLSID == ExportScript.AF.PayloadInfo.Stations[_index].CLSID and ExportScript.AF.PayloadInfo.CurrentStation ~= _index then
+		SendDataHW(ExportScript.AF.TmpStationToPanel[_index].CurrentID, 1, ExportScript.AF.TmpStationToPanel[_index].HardwareID)
 	end
 end
 
-function SPO15RWR_Reset(lMinId, lMaxID, lHardware)
---WriteToLog('SPO15RWR_Reset')
+function ExportScript.AF.SPO15RWR_Reset(lMinId, lMaxID)
+ExportScript.Tools.WriteToLog('SPO15RWR_Reset')
 	for lCounter = lMinId, lMaxID, 1 do
-		SendDataHW(lCounter, 0, lHardware)
+		ExportScript.AF.SPO15RWRData[lCounter] = 0
 	end
 
-	gES_SPO15_FoundErmitter = false
+	ExportScript.AF.SPO15_FoundErmitter = false
 end
 
-function SPO15RWR_SendDataHW(lActiveLamp, lLamp, lKey, lValue, lHardware)
---WriteToLog('SPO15RWR_SendDataHW: '..dump(lActiveLamp)..', '..dump(lLamp)..', '..dump(lKey)..', '..dump(lValue))
+function ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp, lLamp, lKey, lValue)
+--ExportScript.Tools.WriteToLog('SPO15RWR_SendDataHW: '..ExportScript.Tools.dump(lActiveLamp)..', '..ExportScript.Tools.dump(lLamp)..', '..ExportScript.Tools.dump(lKey)..', '..ExportScript.Tools.dump(lValue))
 	if lActiveLamp[lLamp] == 0 then
 		if lValue then
-			SendDataHW(lKey, 1, lHardware )
+			ExportScript.AF.SPO15RWRData[lKey] = 1
 			lActiveLamp[lLamp] = 1
 		end
 	end
@@ -2743,23 +2800,23 @@ function SPO15RWR_SendDataHW(lActiveLamp, lLamp, lKey, lValue, lHardware)
 	return lActiveLamp
 end
 
-function WeaponStatusPanel_Reset(lMinId, lMaxID, lHardware)
---WriteToLog('WeaponStatusPanel_Reset')
+function ExportScript.AF.WeaponStatusPanel_Reset(lMinId, lMaxID, lHardware)
+--ExportScript.Tools.WriteToLog('WeaponStatusPanel_Reset')
 	for lCounter = lMinId, lMaxID, 1 do
 		SendDataHW(lCounter, 0, lHardware)
 	end
 end
 
-function WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit(_index)
-	if gES_PayloadInfo.Stations[gES_PayloadInfo.CurrentStation].CLSID == gES_PayloadInfo.Stations[_index].CLSID and gES_PayloadInfo.CurrentStation ~= _index then
-		gES_TmpWeaponPanelActive[gES_TmpStationToPanel[_index].CurrentID] = 1
+function ExportScript.AF.WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit(_index)
+	if ExportScript.AF.PayloadInfo.Stations[ExportScript.AF.PayloadInfo.CurrentStation].CLSID == ExportScript.AF.PayloadInfo.Stations[_index].CLSID and ExportScript.AF.PayloadInfo.CurrentStation ~= _index then
+		ExportScript.AF.TmpWeaponPanelActive[ExportScript.AF.TmpStationToPanel[_index].CurrentID] = 1
 	end
 end
 
-function WeaponStatusPanel_FindCannonContainer(_index)
-	if gES_PayloadInfo.Stations[_index].weapon.level1 == 4 and 			-- weapon
-	   gES_PayloadInfo.Stations[_index].weapon.level2 == 6 then			-- Shell
-		gES_CannonContainer[_index] = gES_PayloadInfo.Stations[_index].CLSID
-		gES_CannonContainer.counter = gES_CannonContainer.counter + 1
+function ExportScript.AF.WeaponStatusPanel_FindCannonContainer(_index)
+	if ExportScript.AF.PayloadInfo.Stations[_index].weapon.level1 == 4 and 			-- weapon
+	   ExportScript.AF.PayloadInfo.Stations[_index].weapon.level2 == 6 then			-- Shell
+		ExportScript.AF.CannonContainer[_index] = ExportScript.AF.PayloadInfo.Stations[_index].CLSID
+		ExportScript.AF.CannonContainer.counter = ExportScript.AF.CannonContainer.counter + 1
 	end
 end

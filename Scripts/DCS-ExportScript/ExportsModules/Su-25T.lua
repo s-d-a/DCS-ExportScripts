@@ -1,19 +1,19 @@
 -- Su-25T Export
--- Version 0.9.9 BETA
+-- Version 1.0.0 BETA
 
-gES_FoundFCModule = true
+ExportScript.FoundFCModule = true
 
 -- auxiliary function
-dofile(gES_ExportModulePath.."FC_AuxiliaryFuntions.lua")
+dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")
 
 -----------------------------------------
 -- FLAMING CLIFFS AIRCRAFT / Su-25T    --
 -- FC aircraft don't support GetDevice --
 -----------------------------------------
 
-function ProcessGlassCockpitFCHighImportanceConfig()
-
-	local myData						= LoGetSelfData()
+function ExportScript.ProcessIkarusFCHighImportanceConfig()
+	local lFunctionTyp = "Ikarus"	-- function type for shared function
+	local myData	= nil --					= LoGetSelfData()
 
 	if (myData) then
 		local lLatitude					= myData.LatLongAlt.Lat									-- LATITUDE
@@ -140,15 +140,20 @@ function ProcessGlassCockpitFCHighImportanceConfig()
 			FC_Russian_Clock_late(12)
 		end
 	else
-		WriteToLog("Unknown FC Error, no LoGetSelfData.")
+		--WriteToLog("Unknown FC Error, no LoGetSelfData.")
 	end
 	
 end
 
-function ProcessHARDWAREConfigHighImportance()
+function ExportScript.ProcessDACConfigHighImportance()
+	local lFunctionTyp = "DAC"	-- function type for shared function
 end
 
-function ProcessGlassCockpitFCLowImportanceConfig()
+function ExportScript.ProcessIkarusFCLowImportanceConfig()
+	local lFunctionTyp = "Ikarus"	-- function type for shared function
+
+	ExportScript.AF.SPO15RWR(lFunctionTyp)
+	ExportScript.AF.WeaponPanel_SU25(lFunctionTyp)
 
     if gES_GlassCockpitType == 1 then
 		-- HELIOS Version 1.3
@@ -299,14 +304,14 @@ function ProcessGlassCockpitFCLowImportanceConfig()
 		--WriteToLog('lNameByType: '..dump(lNameByType))
 end
 
-function ProcessHARDWAREConfigLowImportance()
--- where necessary, specify HardwareID, example WeaponStatusPanel(2)
-	WeaponStatusPanel()
-	MechanicalDevicesIndicator()
-	StatusLamp()
-	FuelQuantityIndicator()
-	SightingSystem()
-	SPO15RWR()
+function ExportScript.ProcessDACConfigLowImportance()
+	local lFunctionTyp = "DAC"	-- function type for shared function
+--	WeaponStatusPanel()
+--	MechanicalDevicesIndicator()
+--	StatusLamp()
+--	FuelQuantityIndicator()
+--	SightingSystem()
+--	SPO15RWR()
 end
 
 -----------------------------

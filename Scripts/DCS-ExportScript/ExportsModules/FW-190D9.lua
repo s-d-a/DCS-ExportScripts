@@ -1,10 +1,20 @@
 -- FW-190D9 Dora
--- Version 0.9.9
+-- Version 1.0.0
 
-gES_FoundDCSModule = true
+ExportScript.FoundDCSModule = true
 
-gES_GlassCockpitConfigEveryFrameArguments = 
+ExportScript.ConfigEveryFrameArguments = 
 {
+	--[[
+	every frames arguments
+	based of "mainpanel_init.lua"
+	Example (http://www.lua.org/manual/5.1/manual.html#pdf-string.format)
+	[DeviceID] = "Format"
+	  [4] = "%.4f",  <- floating-point number with 4 digits after point
+	 [19] = "%0.1f", <- floating-point number with 1 digit after point
+	[129] = "%1d",   <- decimal number
+	  [5] = "%.f",   <- floating point number rounded to a decimal number
+	]]
 	-- Flight Instruments
 	[36] = "%.4f",		-- AirspeedNeedle {0,   100,   150,   200,   250,   300,   350,	  400,   500,   600,   700,  750,   800,  850, 900} = {0.0, 0.038, 0.088, 0.150, 0.216, 0.278, 0.333, 0.395, 0.530, 0.660, 0.777,0.836, 0.892, 0.938, 0.988}
 	[42] = "%.4f",		-- Variometer {-30, -20,   -10,    -5,    5, 	10, 	20,   30} = {-1, -0.770, -0.558, -0.338,0.338,0.558, 0.770, 1.0}
@@ -24,7 +34,7 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[41] = "%.4f",		-- Slipball {-1.0, 1.0}
 	--oxygen pressure indicator
 	[112] = "%.4f",		-- Oxygen_Pressure {0.0, 250.0} = {0.0, 1.0}
-	[113] = "%.4f",		-- Oxygen_Flow_Blinker {0.0, 1.0}
+	--[113] = "%.4f",		-- Oxygen_Flow_Blinker {0.0, 1.0}
 	--Remote compass
 	[45] = "%.4f",		-- CompassHeading {0.0, 1.0}
 	[44] = "%.4f",		-- CommandedCourse {0.0, 1.0}
@@ -53,30 +63,34 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[58] = "%.4f",		-- Ammo_Counter_3 {0.0, 500.0} = {0.0, 1.0}
 	[61] = "%.4f",		-- Ammo_Counter_4 {0.0, 500.0} = {0.0, 1.0}
 	-- Gun_Fire
-	[50] = "%.4f",		-- Gun_Fire_1 {0.0, 1.0}
-	[164] = "%.4f",		-- Gun_Fire_2 {0.0, 1.0}
-	[165] = "%.4f",		-- Gun_Fire_3 {0.0, 1.0}
-	[166] = "%.4f",		-- Gun_Fire_4 {0.0, 1.0}
+	--[50] = "%.4f",		-- Gun_Fire_1 {0.0, 1.0}
+	--[164] = "%.4f",		-- Gun_Fire_2 {0.0, 1.0}
+	--[165] = "%.4f",		-- Gun_Fire_3 {0.0, 1.0}
+	--[166] = "%.4f",		-- Gun_Fire_4 {0.0, 1.0}
 	--Target System
 	[133] = "%.4f",		-- 	TargetDist {0.0, 10.0, 100.0, 300.0, 600.0, 700.0, 800.0, 1000.0} = {0.0, 0.0, 0.323, 0.568, 0.709, 0.813, 0.917, 1.0}
 	--Bomb Lamps
-	[196] = "%1d",		-- BombLamp_1 {0.0, 1.0}
-	[197] = "%1d",		-- BombLamp_2 {0.0, 1.0}
-	[198] = "%1d",		-- BombLamp_3 {0.0, 1.0}
-	[199] = "%1d",		-- BombLamp_4 {0.0, 1.0}
-	[137] = "%1d",		-- RocketEmCvr {0.0, 1.0}
+	[196] = "%.f",		-- BombLamp_1 {0.0, 1.0}
+	[197] = "%.f",		-- BombLamp_2 {0.0, 1.0}
+	[198] = "%.f",		-- BombLamp_3 {0.0, 1.0}
+	[199] = "%.f",		-- BombLamp_4 {0.0, 1.0}
+	[137] = "%.f",		-- RocketEmCvr {0.0, 1.0}
 	--Gear Lamps
-	[68] = "%1d",		-- L_GEAR_UP {0.0, 1.0}
-	[69] = "%1d",		-- L_GEAR_DOWN {0.0, 1.0}
-	[70] = "%1d",		-- R_GEAR_UP {0.0, 1.0}
-	[71] = "%1d",		-- R_GEAR_DOWN {0.0, 1.0}
+	[68] = "%.f",		-- L_GEAR_UP {0.0, 1.0}
+	[69] = "%.f",		-- L_GEAR_DOWN {0.0, 1.0}
+	[70] = "%.f",		-- R_GEAR_UP {0.0, 1.0}
+	[71] = "%.f",		-- R_GEAR_DOWN {0.0, 1.0}
 	--Flaps Lamps
-	[72] = "%1d",		-- FLAPS_UP {0.0, 1.0}
-	[73] = "%1d",		-- FLAPS_START {0.0, 1.0}
+	[72] = "%.f",		-- FLAPS_UP {0.0, 1.0}
+	[73] = "%.f",		-- FLAPS_START {0.0, 1.0}
 	[74] = "%1d"		-- FLAPS_DOWN {0.0, 1.0}
 }
-gES_GlassCockpitConfigArguments = 
+ExportScript.ConfigArguments = 
 {
+	--[[
+	arguments for export in low tick interval
+	based on "clickabledata.lua"
+	]]
 	[159] = "%.2f",     -- Radiator Flaps Control (axis) 1.0 in 0.4 steps
 	[160] = "%1d",     -- Cold Start/Wind Screen Washer {0, 1}
 	--Engine Control Panel
@@ -184,88 +198,46 @@ gES_GlassCockpitConfigArguments =
 -- done every export event --
 -----------------------------
 
--- Pointed to by ProcessGlassCockpitDCSHighImportance
-function ProcessGlassCockpitDCSConfigHighImportance(mainPanelDevice)
-	if gES_GlassCockpitType == 1 then
-		-- HELIOS Version 1.3
-	elseif gES_GlassCockpitType == 2 then
-		-- HawgTouch Version 1.6
-		-- Altimeter_km, Altimeter_m, Altimeter_Pressure
-		SendData("2000", string.format("%0.3f;%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(35), 
-						mainPanelDevice:get_argument_value(32), 
-						mainPanelDevice:get_argument_value(33)))
-
-		-- LwAtt  -  AHorizon_Bank, AHorizon_Pitch, TurnNeedle, Slipball
-		SendData("2001", string.format("%0.3f;%0.3f;%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(38), 
-						mainPanelDevice:get_argument_value(37), 
-						mainPanelDevice:get_argument_value(40), 
-						mainPanelDevice:get_argument_value(41)))
-
-		-- LwHead  - CompassHeading, CommandedCourse liefert nur 0.000
-		SendData("2002", string.format("%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(45), 
-						mainPanelDevice:get_argument_value(44)))
-
-		-- LwClock - CLOCK_currtime_hours, CLOCK_currtime_minutes, CLOCK_currtime_seconds, CLOCK_chrono_minutes
-		SendData("2003", string.format("%0.3f;%0.3f;%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(21), 
-						mainPanelDevice:get_argument_value(22), 
-						mainPanelDevice:get_argument_value(23), 
-						mainPanelDevice:get_argument_value(27)))
-
-		-- LwDblP - Oil_Pressure; Fuel_Pressure;
-		SendData("2004", string.format("%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(95), 
-						mainPanelDevice:get_argument_value(94)))
-
-		-- now not ID
-		-- LwAFN2 - AFN2_Horizontal_Needle, AFN2_Vertical_Needle, AFN2_Signal_Lamp
-		--SendData("2005", string.format("%0.3f;%0.3f;%0.3f", 
-		--				mainPanelDevice:get_argument_value(), 
-		--				mainPanelDevice:get_argument_value(), 
-		--				mainPanelDevice:get_argument_value()))
-
-		-- Gear - L_GEAR_UP, L_GEAR_DOWN, R_GEAR_UP, R_GEAR_DOWN, FLAPS_UP, FLAPS_START, FLAPS_DOWN
-		SendData("2007", string.format("%0.3f;%0.3f;%0.3f;%0.3f;%0.3f;%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(68), 
-						mainPanelDevice:get_argument_value(69), 
-						mainPanelDevice:get_argument_value(70), 
-						mainPanelDevice:get_argument_value(71), 
-						mainPanelDevice:get_argument_value(72), 
-						mainPanelDevice:get_argument_value(73), 
-						mainPanelDevice:get_argument_value(74)))
-		-- Ammo counter 1
-		SendData("2008", string.format("%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(52), 
-						mainPanelDevice:get_argument_value(50)))
-		-- Ammo counter 2
-		SendData("2009", string.format("%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(55), 
-						mainPanelDevice:get_argument_value(164)))
-		-- Ammo counter 3
-		SendData("2010", string.format("%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(58), 
-						mainPanelDevice:get_argument_value(165)))
-		-- Ammo counter 4
-		SendData("2011", string.format("%0.3f;%0.3f", 
-						mainPanelDevice:get_argument_value(61), 
-						mainPanelDevice:get_argument_value(166)))
-	end
+-- Pointed to by ProcessIkarusDCSHighImportance
+function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	]]
+	--[50] = "%.4f",		-- Gun_Fire_1 {0.0, 1.0}
+	--[164] = "%.4f",		-- Gun_Fire_2 {0.0, 1.0}
+	--[165] = "%.4f",		-- Gun_Fire_3 {0.0, 1.0}
+	--[166] = "%.4f",		-- Gun_Fire_4 {0.0, 1.0}
+	--[113] = "%.4f",		-- Oxygen_Flow_Blinker {0.0, 1.0}
+	ExportScript.Tools.SendData(50, string.format("%.4f", mainPanelDevice:get_argument_value(50)))			-- Gun_Fire_1 {0.0, 1.0}
+	ExportScript.Tools.SendData(164, string.format("%.4f", mainPanelDevice:get_argument_value(164)))		-- Gun_Fire_2 {0.0, 1.0}
+	ExportScript.Tools.SendData(165, string.format("%.4f", mainPanelDevice:get_argument_value(165)))		-- Gun_Fire_3 {0.0, 1.0}
+	ExportScript.Tools.SendData(166, string.format("%.4f", mainPanelDevice:get_argument_value(166)))		-- Gun_Fire_4 {0.0, 1.0}
+	ExportScript.Tools.SendData(113, string.format("%.4f", mainPanelDevice:get_argument_value(113)))		-- Oxygen_Flow_Blinker {0.0, 1.0}
 end
 
-function ProcessHARDWAREConfigHighImportance(mainPanelDevice)
--- Hier kommen alle Daten rein die ueber die Hardware in schneller folge ausgeben werden soll
--- In der Regel sind das die Statusanzeigen
-
--- SendDataHW(), ist die Funktion zur Ausgabe der Werte an die Hardware
--- "178" ist die ID des Wertes die in der entsprechenden XML Datei festgelegt wird, sollte der DCS ID entsprechen
--- mainPanelDevice:get_argument_value() ist eine Funktion die die Werte der �bergeben DCS ID aus dem Spiel ausliest
--- 178 ist die DCS ID von dem man die Werte haben will
--- Description
---	SendDataHW("178",  mainPanelDevice:get_argument_value(178))	-- L_AILERON_EMER_DISENGAGE
---	SendDataHW("",  mainPanelDevice:get_argument_value())	-- 
+function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to DAC
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local UHF_RADIO = GetDevice(54)
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	]]
+	ExportScript.Tools.SendData(50,  mainPanelDevice:get_argument_value(50)  > 0.3 and 1 or 0)		-- Gun_Fire_1 {0.0, 1.0}
+	ExportScript.Tools.SendData(164, mainPanelDevice:get_argument_value(164) > 0.3 and 1 or 0)		-- Gun_Fire_2 {0.0, 1.0}
+	ExportScript.Tools.SendData(165, mainPanelDevice:get_argument_value(165) > 0.3 and 1 or 0)		-- Gun_Fire_3 {0.0, 1.0}
+	ExportScript.Tools.SendData(166, mainPanelDevice:get_argument_value(166) > 0.3 and 1 or 0)		-- Gun_Fire_4 {0.0, 1.0}
+	ExportScript.Tools.SendData(113, mainPanelDevice:get_argument_value(113) > 0.3 and 1 or 0)		-- Oxygen_Flow_Blinker {0.0, 1.0}
 end
 
 -----------------------------------------------------
@@ -273,41 +245,50 @@ end
 -- done every gExportLowTickInterval export events --
 -----------------------------------------------------
 
--- Pointed to by ProcessGlassCockpitDCSConfigLowImportance
-function ProcessGlassCockpitDCSConfigLowImportance(mainPanelDevice)
+-- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
+function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+	--[[
+	export in low tick interval to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	]]
 end
 
-function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
+function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	--[[
-	every frame export to hardware
+	export in low tick interval to DAC
 	Example from A-10C
 	Get Radio Frequencies
 	get data from device
 	local UHF_RADIO = GetDevice(54)
-	SendDataHW("ExportID", "Format")
-	SendDataHW("ExportID", "Format", HardwareConfigID)
-	SendDataHW("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	SendDataHW("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
 	]]
 
 	--=====================================================================================
 	--[[
-	WriteToLog('list_cockpit_params(): '..dump(list_cockpit_params()))
-	WriteToLog('CMSP: '..dump(list_indication(7)))
+	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
 	local ltmp1 = 0
 	for ltmp2 = 0, 13, 1 do
 		ltmp1 = list_indication(ltmp2)
-		WriteToLog(ltmp2..': '..dump(ltmp1))
-		--WriteToLog(ltmp2..' (metatable): '..dump(getmetatable(ltmp1)))
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 	]]
 --[[
 	local ltmp1 = 0
 	for ltmp2 = 1, 73, 1 do
 		ltmp1 = GetDevice(ltmp2)
-		WriteToLog(ltmp2..': '..dump(ltmp1))
-		WriteToLog(ltmp2..' (metatable): '..dump(getmetatable(ltmp1)))
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 ]]
 end
@@ -316,5 +297,5 @@ end
 --     Custom functions    --
 -----------------------------
 
-function genericRadio(key, value, hardware)
+function ExportScript.genericRadio(key, value, hardware)
 end
