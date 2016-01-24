@@ -35,10 +35,10 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	----[208] = "",		-- rotor_brake_handle {0.0, 1.0}
 	-- Left main panel
 	---------------------------------------------------------------
-	[16] = "%.2f",		-- Variometer_L {-1.0, -0.71, -0.43, -0.23, -0.09, -0.05, 0, 0.05, 0.09, 0.23, 0.43, 0.71, 1.0}
-	[95] = "%.2f",		-- Variometer_R {-1.0, -0.71, -0.43, -0.23, -0.09, -0.05, 0, 0.05, 0.09, 0.23, 0.43, 0.71, 1.0}
-	[24] = "%.3f",		-- IAS_L {0.0, 0.001, 0.028, 0.165, 0.277, 0.393, 1.0}
-	[790] = "%.3f",		-- IAS_R {0.0, 0.001, 0.028, 0.165, 0.277, 0.393, 1.0}
+	[16] = "%.2f",		-- Variometer_L {-30, -20, -10, -5, -2, -1, 0, 1, 2, 5, 10, 20, 30} {-1.0, -0.71, -0.43, -0.23, -0.09, -0.05, 0, 0.05, 0.09, 0.23, 0.43, 0.71, 1.0}
+	[95] = "%.2f",		-- Variometer_R {-30, -20, -10, -5, -2, -1, 0, 1, 2, 5, 10, 20, 30} {-1.0, -0.71, -0.43, -0.23, -0.09, -0.05, 0, 0.05, 0.09, 0.23, 0.43, 0.71, 1.0}
+	[24] = "%.3f",		-- IAS_L {-10.0, 0.0, 13.889, 27.78, 41.67, 55.56, 69.44, 83.33, 111.1, 125.0, 129.2} {0.0, 0.001, 0.028, 0.165, 0.277, 0.393, 1.0}
+	[790] = "%.3f",		-- IAS_R {-10.0, 0.0, 13.889, 27.78, 41.67, 55.56, 69.44, 83.33, 111.1, 125.0, 129.2} {0.0, 0.001, 0.028, 0.165, 0.277, 0.393, 1.0}
 	-- AGB-3k
 	---------------------------------------------------------------
 	[13] = "%.4f",		-- AGB_3K_Left_roll {-1.0, 1.0}
@@ -71,11 +71,13 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[20] = "%.4f",		-- VD_10K_L_10 {0.0, 1.0}
 	[833] = "%.4f",		-- VD_10K_L_100_Ind {0.0, 1.0}
 	[832] = "%.4f",		-- VD_10K_L_10_Ind {0.0, 1.0}
+	[916] = "%.4f",		-- VD_10K_L_Shutter {0.822, 0.75}
 	[21] = "%.4f",		-- VD_10K_L_PRESS {0.0, 1.0}
 	-----
 	[98] = "%.4f",		-- VD_10K_R_100 {0.0, 1.0}
 	[99] = "%.4f",		-- VD_10K_R_10 {0.0, 1.0}
 	[835] = "%.4f",		-- VD_10K_R_100_Ind {0.0, 1.0}
+	[917] = "%.4f",		-- VD_10K_R_Shutter {0.822, 0.75}
 	[834] = "%.4f",		-- VD_10K_R_10_Ind {0.0, 1.0}
 	[100] = "%.4f",		-- VD_10K_R_PRESS {0.0, 1.0}
 	-- Rotor RPM
@@ -84,25 +86,25 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[787] = "%.4f",		-- RotorRPM_Oper {0.0, 1.0}
 	-- Rotor Pitch
 	---------------------------------------------------------------
-	[36] = "%.2f",		-- RotorPitch {0.0, 0.07, 0.14, 0.21, 0.29, 0.35, 0.43, 0.5, 0.57, 0.64, 0.71, 0.79, 0.86, 0.93, 1.0}
+	[36] = "%.2f",		-- RotorPitch {1.0, 2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0, 9.0,  10.0, 11.0, 12.0, 13.0, 14.0, 15.0} {0.0, 0.07, 0.14, 0.21, 0.29, 0.35, 0.43, 0.5, 0.57, 0.64, 0.71, 0.79, 0.86, 0.93, 1.0}
 	-- Radar altimeter A-036
 	---------------------------------------------------------------
-	[34] = "%.3f",		-- A_036_RALT {0.0, 0.475, 0.625, 1.0}
-	[31] = "%.3f",		-- A_036_DangerRALT_index {0.0, 0.475, 0.625, 1.0}
+	[34] = "%.3f",		-- A_036_RALT {0, 100, 300, 800} {0.0, 0.475, 0.625, 1.0}
+	[31] = "%.3f",		-- A_036_DangerRALT_index {0, 100, 300, 800} {0.0, 0.475, 0.625, 1.0}
 	[30] = "%.1f",		-- A_036_DangerRALT_lamp {0.0, 1.0}
 	[33] = "%.1f",		-- A_036_warning_flag {0.0, 1.0}
 	-- Engines RPM
 	---------------------------------------------------------------
-	[40] = "%.4f",		-- LeftEngineRPM {0.0, 1.0}
-	[41] = "%.4f",		-- RightEngineRPM {0.0, 1.0}
-	[788] = "%.4f",		-- LeftEngineRPM_Oper {0.0, 1.0}
-	[789] = "%.4f",		-- RightEngineRPM_Oper {0.0, 1.0}
+	[40] = "%.4f",		-- LeftEngineRPM {0.0, 110.0} {0.0, 1.0}
+	[41] = "%.4f",		-- RightEngineRPM {0.0, 110.0} {0.0, 1.0}
+	[788] = "%.4f",		-- LeftEngineRPM_Oper {0.0, 110.0} {0.0, 1.0}
+	[789] = "%.4f",		-- RightEngineRPM_Oper {0.0, 110.0} {0.0, 1.0}
 	-- Engines temperature
 	---------------------------------------------------------------
-	[43] = "%.4f",		-- LeftEngineTemperatureHund {0.0, 1.0}
-	[44] = "%.4f",		-- LeftEngineTemperatureTenth {0.0, 1.0}
-	[45] = "%.4f",		-- RightEngineTemperatureHund {0.0, 1.0}
-	[46] = "%.4f",		-- RightEngineTemperatureTenth {0.0, 1.0}
+	[43] = "%.4f",		-- LeftEngineTemperatureHund {0.0, 1200.0} {0.0, 1.0}
+	[44] = "%.4f",		-- LeftEngineTemperatureTenth {0.0, 100.0} {0.0, 1.0}
+	[45] = "%.4f",		-- RightEngineTemperatureHund {0.0, 1200.0} {0.0, 1.0}
+	[46] = "%.4f",		-- RightEngineTemperatureTenth {0.0, 100.0} {0.0, 1.0}
 	-- Engines mode indicator
 	---------------------------------------------------------------
 	[39] = "%.4f",		-- EnginesMode {0.0, 1.0}
@@ -150,9 +152,9 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	-- Oil
 	---------------------------------------------------------------
 	[111] = "%.4f",		-- oils_p_main_reductor {0.0, 1.0}
-	[114] = "%.2f",		-- oils_t_main_reductor {-0.25, 0.75}
-	[113] = "%.2f",		-- oils_temp_tail_reductor {-0.25, 0.75}
-	[112] = "%.2f",		-- oils_temp_intermediate_reductor {-0.25, 0.75}
+	[114] = "%.2f",		-- oils_t_main_reductor {0.0, 1.0} {-0.25, 0.75}
+	[113] = "%.2f",		-- oils_temp_tail_reductor {0.0, 1.0} {-0.25, 0.75}
+	[112] = "%.2f",		-- oils_temp_intermediate_reductor {0.0, 1.0} {-0.25, 0.75}
 	[115] = "%.4f",		-- oils_p_left_engine {0.0, 1.0}
 	[116] = "%.2f",		-- oils_t_left_engine {-0.25, 0.75}
 	[117] = "%.4f",		-- oils_p_right_engine {0.0, 1.0}
@@ -184,11 +186,11 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[55] = "%.4f",		-- CLOCK_seconds_meter_time_seconds {0.0, 1.0}
 	-- Fuel tanks
 	---------------------------------------------------------------
-	[62] = "%.3f",		-- FuelScaleUpper {0.0,	0.131,	0.244,	0.414,	0.647,	0.705,	0.9,	1.0}
-	[62] = "%.3f",		-- FuelScaleLower {0.0,	0.165,	0.283,	0.393,  0.618, 1.0}
+	[62] = "%.3f",		-- FuelScaleUpper {0.0,	200.0,	400.0,	800.0,	1600.0,	2000.0,	2400.0, 2800.0} {0.0, 0.131, 0.244, 0.414, 0.647, 0.705, 0.9, 1.0}
+	[62] = "%.3f",		-- FuelScaleLower {0.0,	200.0, 300.0,	400.0,	600.0, 1200.0, 2240.0} {0.0, 0.165, 0.283, 0.393, 0.618, 1.0}
 	-- Air system gauges
 	---------------------------------------------------------------
-	[320] = "%.2f",		-- air_system_pressure {0.0, 0.23, 0.48, 1.0}
+	[320] = "%.2f",		-- air_system_pressure {0.0, 25.0, 50.0, 100.0} {0.0, 0.23, 0.48, 1.0}
 	[321] = "%.4f",		-- air_system_brake_pressure {0.0, 1.0}
 	-- SPUU-52
 	---------------------------------------------------------------
@@ -196,7 +198,7 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[786] = "%.1f",		-- SPUU52_lamp {0.0, 1.0}
 	-- PU-26 LAMP
 	---------------------------------------------------------------
-	[827] = "%.1f",		-- PU_26_GA_Lamp {0.0, 0.5}
+	[827] = "%.1f",		-- PU_26_GA_Lamp {0.0, 1.0} {0.0, 0.5}
 	-- ARC-UD
 	---------------------------------------------------------------
 	[458] = "%.1f",		-- ARC_UD_Narrow_Lamp {0.0, 0.9}
@@ -218,12 +220,12 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[584] = "%.4f",		-- AMMO_CNT3_2 {0.0, 1.0}
 	-- Radio R-828
 	---------------------------------------------------------------
-	[740] = "%.2f",		-- R828_ASU {0.0, 0.95}
-	[736] = "%.3f",		-- R828_channel {0.0, 0.101, 0.199, 0.302, 0.400, 0.502, 0.601, 0.697, 0.801, 0.898}
+	[740] = "%.2f",		-- R828_ASU {0.0, 1.0} {0.0, 0.95}
+	[736] = "%.3f",		-- R828_channel {0, 1, 2, 3, 4, 5, 6, 7, 8, 9} {0.0, 0.101, 0.199, 0.302, 0.400, 0.502, 0.601, 0.697, 0.801, 0.898}
 	-- Damage
 	---------------------------------------------------------------
-	--[215] = "%0.1f",		-- Blister_LEFT {0.0, 0.8}
-	--[216] = "%0.1f",		-- Blister_RIGHT {0.0, 0.8}
+	--[215] = "%0.1f",		-- Blister_LEFT {0.0, 1.0} {0.0, 0.8}
+	--[216] = "%0.1f",		-- Blister_RIGHT {0.0, 1.0} {0.0, 0.8}
 	----
 	--[878] = "%.1f",		-- WindShiels_Up {0.0, 1.0}
 	--[879] = "%.1f",		-- WindShiels_Down {0.0, 1.0}
@@ -248,25 +250,28 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[848] = "%.1f",		-- Jadro_Ctl_Lamp {0.0, 1.0}
 	[850] = "%.1f",		-- Jadro_Breakdown_Lamp {0.0, 1.0}
 	----
-	[904] = "%.4f",		-- RAM_Temp {-1.0, 0.0, 1.0}
+	[904] = "%.4f",		-- RAM_Temp {-50.0, 0.0, 70.0} {-1.0, 0.0, 1.0}
 	----
-	[907] = "%.4f",		-- G_Meter {-1.0, 0.343, 1.0}
-	[908] = "%.4f",		-- G_Meter_Max {0.343, 1.0}
-	[909] = "%.4f",		-- G_Meter_Min {-1.0, 0.343}
+	[907] = "%.4f",		-- G_Meter {-1.0, 1.0, 3.0} {-1.0, 0.343, 1.0}
+	[908] = "%.4f",		-- G_Meter_Max {1.0, 3.0} {0.343, 1.0}
+	[909] = "%.4f",		-- G_Meter_Min {-1.0, 1.0} {-1.0, 0.343}
 	----
 	[903] = "%1d",		-- filter_handle {0,1}
+	----
+	[63] = "%.4f",		-- SalonTemperature {-70.0, -60.0, -30.0, -20.0, -10.0, 0.0, 10.0, 20.0, 30.0, 60.0, 70.0} {-0.7, -0.593, -0.296, -0.227, -0.125, 0.003, 0.132, 0.233, 0.302, 0.603, 0.693}
 	-- electric system gauges
 	---------------------------------------------------------------
-	[526] = "%.4f",		-- DC_voltage {0.0, 30.0}
-	[532] = "%.2f",		-- AC_voltage {0.0, 0.14,  0.31,  0.56,  1.0}
-	[527] = "%.4f",		-- DC_battery_I_current {0.0, 1.0}
-	[528] = "%.4f",		-- DC_battery_II_current {0.0, 1.0}
-	[529] = "%.4f",		-- DC_VU_I_current {0.0, 1.0}
-	[530] = "%.4f",		-- DC_VU_II_current {0.0, 1.0}
-	[531] = "%.4f",		-- DC_VU_III_current {0.0, 1.0}
-	[533] = "%.2f",		-- AC_generator_I_current {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
-	[534] = "%.2f",		-- AC_generator_II_current {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
-	[371] = "%.2f",		-- AntiIce_ampermeter {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
+	[526] = "%.4f",		-- DC_voltage {0.0, 30.0} {0.0, 1.0}
+	[532] = "%.2f",		-- AC_voltage {0.0, 100.0, 150.0, 200.0, 250.0} {0.0, 0.14, 0.31, 0.56, 1.0}
+	[493] = "%.4f",		-- DC_APU_current {0.0, 400.0} {0.0, 1.0}
+	[527] = "%.4f",		-- DC_battery_I_current {0.0, 400.0} {0.0, 1.0}
+	[528] = "%.4f",		-- DC_battery_II_current {0.0, 400.0} {0.0, 1.0}
+	[529] = "%.4f",		-- DC_VU_I_current {0.0, 400.0} {0.0, 1.0}
+	[530] = "%.4f",		-- DC_VU_II_current {0.0, 400.0} {0.0, 1.0}
+	[531] = "%.4f",		-- DC_VU_III_current {0.0, 400.0} {0.0, 1.0}
+	[533] = "%.2f",		-- AC_generator_I_current {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
+	[534] = "%.2f",		-- AC_generator_II_current {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
+	[371] = "%.2f",		-- AntiIce_ampermeter {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
 	-- LAMPS
 	---------------------------------------------------------------
 	[781] = "%.1f",		-- lamp_AP_heading_on
@@ -277,6 +282,7 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[316] = "%.1f",		-- lamp_ENGINE_RT_LEFT_ON
 	[317] = "%.1f",		-- lamp_ENGINE_RT_RIGHT_ON
 	[318] = "%.1f",		-- lamp_SARPP_ON
+	[325] = "%.1f",		-- lamp_Descent_Siren
 	[326] = "%.1f",		-- lamp_LOCK_OPEN
 	[327] = "%.1f",		-- lamp_DOORS_OPEN
 	[340] = "%.1f",		-- lamp_TURN_ON_RI_65
@@ -385,6 +391,14 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[778] = "%.1f",		-- lamp_Caution_Weap
 	--[] = "%.1f",		-- lamp_LeftSignal
 	--[] = "%.1f",		-- lamp_RightSignal
+	[586] = "%.1f",		-- lamp_Caution_Weap1
+	[587] = "%.1f",		-- lamp_Caution_Weap2
+	[588] = "%.1f",		-- lamp_Caution_Weap3
+	[306] = "%.1f",		-- lamp_Record_P503B
+	[302] = "%.1f",		-- lamp_IFF_KD
+	[303] = "%.1f",		-- lamp_IFF_KP
+	[912] = "%.1f",		-- lamp_IFF_TurnOnReserve
+	[87] = "%.1f",		-- lamp_IFF_Failure
 	-- Lights system
 	---------------------------------------------------------------
 	[880] = "%.1f",		-- RedLightLhGr1 {1.0, 0.0}
@@ -393,7 +407,12 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[898] = "%.1f",		-- RedLightRhGr2 {1.0, 0.0}
 	[899] = "%.1f",		-- RedLightChGr1 {1.0, 0.0}
 	[901] = "%.1f",		-- RedLightChGr2 {1.0, 0.0}
-	[902] = "%.1f"		-- RedLight5V5 {1.0, 0.0}
+	[922] = "%.1f",		-- RedLightChGr12 {1.0, 0.0}
+	[902] = "%.1f",		-- RedLight5V5 {1.0, 0.0}
+	[900] = "%.1f",		-- PlafondBrightness {1.0, 0.0}
+	[547] = "%.1f",		-- LeftPlafond {1.0, 0.0}
+	[665] = "%.1f",		-- RightPlafond {1.0, 0.0}
+	[920] = "%.1f"		-- RecorderP503B_PanelLightness {1.0, 0.0}
 }
 gES_GlassCockpitConfigArguments = 
 {
@@ -426,6 +445,11 @@ gES_GlassCockpitConfigArguments =
 	[148] = "%1d",		--PTR-APP-TMB-CIRC (Standby Rectifier)
 	[149] = "%1d",		--PTR-APP-TMB-TRNS (36V Transformer)
 
+	[498] = "%.4f",		--PTR-RSPE-LVR-V (Standby Generator Voltage Adjustment Rheostat)
+	[536] = "%.4f",		--PTR-EEP-LVR-ADJV1 (Generator 1 Voltage Adjustment Rheostat)
+	[537] = "%.4f",		--PTR-EEP-LVR-ADJV2 (Generator 2 Voltage Adjustment Rheostat)
+	[522] = "%.4f",		--PTR-RSPE-TMB-WRMAKK (Battery Heating Switch, ON/OFF)
+
 	[590] = "%1d",		--PTR-LAZS-TMB-BV-ZSBR (BW ESBR)
 	[591] = "%1d",		--PTR-LAZS-TMB-BV-EXP (Explode)
 	[592] = "%1d",		--PTR-LAZS-TMB-BV-DIR (Control)
@@ -455,6 +479,9 @@ gES_GlassCockpitConfigArguments =
 	[613] = "%1d",		--PTR-RAZS-TMB-START-ENGON (CB Engine start)
 	[614] = "%1d",		--PTR-RAZS-TMB-START-ENGIGN (CB Engine ignition)
 	[615] = "%1d",		--PTR-RAZS-TMB-RPM (CB RPM CONTROL)
+	[616] = "%1d",		--PTR-NONAME (CB NONAME)
+	[617] = "%1d",		--PTR-SW-LOCKER-BASE (CB Lock Opening Control Main)
+	[618] = "%1d",		--PTR-SW-LOCKER-RES (CB Lock Opening Control Reserve)
 	[619] = "%1d",		--PTR-RAZS-TMB-TURN (CB TURN INDICATOR)
 
 	[629] = "%1d",		--PTR-RAZS-TMB-TSCOCK-ON (CB Bypass)
@@ -475,7 +502,9 @@ gES_GlassCockpitConfigArguments =
 	[652] = "%1d",		--PTR-RAZS-TMB-WNGLGT (WING LIGHTS)
 	[653] = "%1d",		--PTR-RAZS-TMB-LAMPTEST (CHECK LAMPS/FLASHER)
 	--[654] = "%1d",		-- PTR-RAZS-TMB-DIRMAIN (LOCK MAIN) 
-	--[655] = "%1d",		-- PTR-RAZS-TMB-DIRDUB (LOCK SPARE) 
+	--[655] = "%1d",		-- PTR-RAZS-TMB-DIRDUB (LOCK SPARE)
+	[918] = "%1d",		--PTR-SW-LIGHT-PRF4-LEFT (CB PRF-4 Light Left)
+	[919] = "%1d",		--PTR-SW-LIGHT-PRF4-RIGHT (CB PRF-4 Light Right)
 
 	[620] = "%1d",		--PTR-RAZS-TMB-APMAIN (CB Autopilot MAIN)
 	[621] = "%1d",		--PTR-RAZS-TMB-APFRICT (CB Autopilot Frict)
@@ -523,13 +552,14 @@ gES_GlassCockpitConfigArguments =
 	[440] = "%1d",		--PTR-CPE-TMB-PUMPTNK-R (Right fuel tank pump)
 	[427] = "%1d",		--PTR-CPE-TMB-PUMP-L (Left Engine Shutoff Valve)
 	[429] = "%1d",		--PTR-CPE-TMB-PUMP-R (Right Engine Shutoff Valve)
-	[426] = "%1d",		--PTR-CPE-CVR-PUMP-L (Left Engine Shutoff Valve)
-	[428] = "%1d",		--PTR-CPE-CVR-PUMP-R (Right Engine Shutoff Valve)
+	[426] = "%1d",		--PTR-CPE-CVR-PUMP-L (Left Engine Shutoff Valve Cover)
+	[428] = "%1d",		--PTR-CPE-CVR-PUMP-R (Right Engine Shutoff Valve Cover)
 	[431] = "%1d",		--PTR-CPE-TMB-PUMP-RING (Crossfeed)
 	[430] = "%1d",		--PTR-CPE-CVR-PUMP-RING (Crossfeed Cover)
 
 	[433] = "%1d",		--PTR-CPE-TMB-PUMP-PASS (Bypass)
-	[432] = "%1d",		--PTR-CPE-CVR-PUMP-PASS (Bypass)
+	[432] = "%1d",		--PTR-CPE-CVR-PUMP-PASS (Bypass Cover)
+	[437] = "%.1f",		--PTR-CPE-TMB-PUMP-CONTR (Refueling Control Switch)
 	-------------------------------------------------------------
 	-- ENGINE INTERFACE
 	[412] = "%1d",		--PTR-CPE-TMB-TURBOSTART-ST (APU start mode)
@@ -540,7 +570,7 @@ gES_GlassCockpitConfigArguments =
 	[421] = "%1d",		--PTR-CPE-BTN-ENGSTART-OFF (Engine start OFF)
 	[422] = "%1d",		--PTR-CPE-TMB-ENGSTART-LFTRGT (Select engine)
 	[423] = "%1d",		--PTR-CPE-TMB-ENGSTART-ROLL (Engine start mode)
-	--[425] = "%1d",		-- PTR-CPE-BTN-ENGSTART-TEST (Engine ignition check)
+	[425] = "%1d",		-- PTR-CPE-BTN-ENGSTART-TEST (Engine ignition check)
 
 	[204] = "%1d",		--PTR-ENGSTOP-ARM-L (Left engine stop)
 	[206] = "%1d",		--PTR-ENGSTOP-ARM-R (Right engine stop)
@@ -551,6 +581,13 @@ gES_GlassCockpitConfigArguments =
 	[312] = "%1d",		--PTR-LSPE-BTN-CONTR-AIR (Temperature Sensor Test Hot)
 	[313] = "%1d",		--PTR-LSPE-BTN-CONTR-RTL (Temperature Regulator Test Left)
 	[314] = "%1d",		--PTR-LSPE-BTN-CONTR-RTR (Temperature Regulator Test Right)
+
+	[202] = "%1d",		--PTR-STKSGR-TMB-RPM-LEFT
+	[867] = "%1d",		--PTR-STKSGR-TMB-RPM-RIGHT
+	--[0] = "%.4f",		--PTR-STKSEC-ARM-L (Left Engine Throttle)
+	--[0] = "%.4f",		--PTR-STKSEC-ARM-R (Right Engine Throttle)
+	--[0] = "%.4f",		--PKT-TROTTLE_L (Left Collective / Throttle)
+	--[0] = "%.4f",		--PKT-TROTTLE_R (Right Collective / Throttle)
 
 	[167] = "%1d",		--PTR-APP-TMB-ERD-L (EEC Left)
 	[173] = "%1d",		--PTR-APP-TMB-ERD-R (EEC Right)
@@ -584,6 +621,9 @@ gES_GlassCockpitConfigArguments =
 	[136] = "%.4f",		--PTR-APP-LVR-DIR (Autopilot Heading Adjustment)
 	[140] = "%.4f",		--PTR-APP-LVR-K (Autopilot Roll Adjustment)
 	[142] = "%.4f",		--PTR-APP-LVR-T (Autopilot Pitch Adjustment)
+
+	[183] = "%1d",		--PTR-AUTOPILOT-OFF-L (Autopilot Off Left Button)
+	[226] = "%1d",		--PTR-AUTOPILOT-OFF-R (Autopilot Off Right Button)
 	-------------------------------------------------------------
 	-- RADAR ALTIMETER
 	[32] = "%1d",		--PTR-ALTR-LVR-TEST (Radio altimeter test)
@@ -608,7 +648,7 @@ gES_GlassCockpitConfigArguments =
 	[61] = "%.1f",		--PTR-FUEL-LVR-MODE (Fuel meter switch)
 	-------------------------------------------------------------
 	-- WEAPON SYS
-	[866] = "%1d",		--PTR-SAFE-WEAPON (Weapon Safe-Armed)
+	[921] = "%1d",		--PTR-SAFE-WEAPON (Weapon Safe-Armed)
 	[707] = "%1d",		--PTR-ADDPBV-TMB-EMRGEXP (Emergency Explode)
 	[706] = "%1d",		--PTR-ADDPBV-CVR-EMRGEXP (Emergency Explode Cover)
 
@@ -647,6 +687,9 @@ gES_GlassCockpitConfigArguments =
 
 	[350] = "%.4f",		--PTR-LPE-TMB-PYRO-L (PYROCARTRIDGE Left)
 	[351] = "%.4f",		--PTR-LPE-TMB-PYRO-R (PYROCARTRIDGE Right)
+
+	[573] = "%1d",		--PTR-LAZS-TMB-MAINOFF (Mine Arms Main Switch)
+	[905] = "%1d",		--PTR-RSPE-TMB-PKT (PKT Selector Switch)
 	-------------------------------------------------------------
 	-- SYS CONTROLLER
 	[523] = "%1d",		--PTR-RSPE-TMB-WINK (FLASHER)
@@ -746,6 +789,9 @@ gES_GlassCockpitConfigArguments =
 	[492] = "%.4f",		--PTR-RSPE-LVR-REDGRP2 (Rh RedLights Brightness Rst gr.2) {0.0, 1.0}
 	[894] = "%.4f",		--PTR-RSPE-LVR-REDGRP003 (Central RedLights Brightness Rst gr.1) {0.0, 1.0}
 	[895] = "%.4f",		--PTR-RSPE-LVR-REDGRP004 (Central RedLights Brightness Rst gr.2) {0.0, 1.0}
+	[914] = "%.4f",		--PTR-RSPE-LVR-REDGRP005 (5.5V Lights Brightness Rheostat)
+	[511] = "%1d",		--PTR-RSPE-TMB-DUTY (Cargo Cabin Duty Lights Switc)
+	[512] = "%1d",		--PTR-RSPE-TMB-ALL (Cargo Cabin Common Lights Switch)
 	-------------------------------------------------
 	-- RADIO EQUIPMENT
 	-- SPU-7
@@ -826,12 +872,12 @@ gES_GlassCockpitConfigArguments =
 	[674] = "%1d",		--PTR-RPE-BTN-ANTR (ARC-UD, Ant. Right)
 
 	[455] = "%.4f",		--PTR-RPE-LVR-ARKVOL (ARC-UD, Volume)
+	[481] = "%1d",		--PTR-RES-TMB-BLOCK (ARC-UD, Lock Switch)
 	-------------------------------------------------------------
 	-- PKV Sight
 	[589] =  "%.4f",		--PTR-LAZS-LVR-AIMLGT (Sight Brightness)
 
 	[855] = "%.4f",		--PTR-PKV-ROTARY (Sight Limb)
-	--[0] = "%1d",		-- PTR-PKV-DOUBLE (Sight Double)
 
 	[856] = "%.4f",		--PTR-PKV-DOUBLE (Sight Double) {1.0,-1.0}
 
@@ -844,6 +890,8 @@ gES_GlassCockpitConfigArguments =
 	[59] = "%1d",		--PTR-WATCH-LVR-R (Mech clock right lever)
 	[60] = "%1d",		--PTR-WATCH-LVR-R (Mech clock right lever)
 
+	[521] = "%1d",		--PTR-RSPE-TMB-WRMWTCH (Clock Heating Switch)
+        --------------------------------------------------------------------------------
 	[839] = "%.1f",		--PTR-STAT-PRESS (Static Pressure System Mode (LEFT/COMMON/RIGHT))
 	--------------------------------------------------------------------------------
 	-- UV-26 CMD Control Panel
@@ -865,6 +913,9 @@ gES_GlassCockpitConfigArguments =
 	[881] = "%1d",		--PTR-WHEELBRK-ARM (Wheel Brakes) 
 
 	[910] = "%1d",		--PTR-RSPE-TMB-WINK002 (Acceleration Reset) 
+
+	[334] = "%1d",		--PTR-LES-TMB-VENT (Left Fan Switch)
+	[488] = "%1d",		--PTR-RES-TMB-VENT (Right Fan Switch)
 	------------------------------------------------
 	-- ARC-9
 	[469] = "%1d",		--PTR-RPE-TMB-NEARFAR (ARC-9, Main/Backup Dialer) 
@@ -878,7 +929,45 @@ gES_GlassCockpitConfigArguments =
 	[450] = "%.2f",		--PTR-RPE-LVR-FRQRES (ARC-9, Backup 10kHz rotary)
 	[451] = "%.4f",		--PTR-RPE-LVR-FRQADJMAIN (ARC-9, Main Frequency Tune)
 	[678] = "%.2f",		--PTR-RPE-LVR-FRQMAIN-SEC (ARC-9, Main 100kHz rotary)
-	[452] = "%.2f"		--PTR-RPE-LVR-FRQMAIN (ARC-9, Main 10kHz rotary)
+	[452] = "%.2f",		--PTR-RPE-LVR-FRQMAIN (ARC-9, Main 10kHz rotary)
+	------------------------------------------------
+	-- External Cargo Equipment
+	[199] = "%1d",		--PTR-STKSG-CVR-TACTJET (Tactical Cargo Release Button Cover)
+	[200] = "%1d",		--PTR-STKSG-BTN-TACTJET (Tactical Cargo Release Button - Push to release)
+	[197] = "%1d",		--PTR-STKSG-CVR-EMRGJET (Emergency Cargo Release Button Cover)
+	[198] = "%1d",		--PTR-STKSG-BTN-EMRGJET (Emergency Cargo Release Button - Push to release)
+	[324] = "%1d",		--PTR-LSPE-TMB-BRK-OUT (External Cargo Automatic Dropping)
+	------------------------------------------------
+	-- Signal Flares
+	[282] = "%1d",		--PTR-LSPE-TMB-ALRMRKT1 (Signal Flares Cassette 1 Power Switch)
+	[283] = "%1d",		--PTR-LSPE-TMB-ALRMRKT2 (Signal Flares Cassette 2 Power Switch)
+	[284] = "%1d",		--PTR-LSPE-BTN-RCKT11 (Signal Flares Cassette 1 Launch Red Button)
+	[285] = "%1d",		--PTR-LSPE-BTN-RCKT12 (Signal Flares Cassette 1 Launch Green Button)
+	[286] = "%1d",		--PTR-LSPE-BTN-RCKT13 (Signal Flares Cassette 1 Launch Yellow Button)
+	[287] = "%1d",		--PTR-LSPE-BTN-RCKT14 (Signal Flares Cassette 1 Launch White Button)
+	[288] = "%1d",		--PTR-LSPE-BTN-RCKT21 (Signal Flares Cassette 2 Launch Red Button)
+	[289] = "%1d",		--PTR-LSPE-BTN-RCKT22 (Signal Flares Cassette 2 Launch Green Button)
+	[290] = "%1d",		--PTR-LSPE-BTN-RCKT23 (Signal Flares Cassette 2 Launch Yellow Button)
+	[291] = "%1d",		--PTR-LSPE-BTN-RCKT24 (Signal Flares Cassette 2 Launch White Button)
+	------------------------------------------------
+	-- SARPP
+	[315] = "%1d",		--PTR-LSPE-TMB-CONTR-AUTMAN (SARPP-12 Mode Switch,)
+	------------------------------------------------
+	-- Recorder P-503B
+	[305] = "%1d",		--PTR-LSPE-TMB-REC (Recorder P-503B Power Switch)
+	[308] = "%.4f",		--PTR-LSPE-LVR-LGTSEL (Recorder P-503B Backlight Brightness Knob)
+	------------------------------------------------
+	-- IFF
+	[304] = "%1d",		--"PTR-LSPE-LVR-MODE (IFF Transponder Mode Selector Switch)
+	[301] = "%1d",		--PTR-LSPE-TMB-RADIO-WRK (IFF Transponder Device Selector Switch)
+	[300] = "%1d",		--PTR-LSPE-TMB-RADIO-MODE12 (IFF Transponder Device Mode Switch)
+	[296] = "%1d",		--PTR-LSPE-CVR-EMRG-ERASE (IFF Transponder Erase Button Cover)
+	[297] = "%1d",		--PTR-LSPE-BTN-EMRG-ERASE (IFF Transponder Erase Button)
+	[298] = "%1d",		--PTR-LSPE-CVR-EMRG-MAYDAY (IFF Transponder Disaster Switch Cover)
+	[299] = "%1d",		--PTR-LSPE-TMB-EMRG-MAYDAY (IFF Transponder Disaster Switch)
+	------------------------------------------------
+	-- jump descent siren
+	[323] = "%1d",		--PTR-LSPE-TMB-AIR-SIREN (Alarm Bell Button)
 }
 
 -----------------------------

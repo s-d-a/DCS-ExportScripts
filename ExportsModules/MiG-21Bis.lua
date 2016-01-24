@@ -594,14 +594,14 @@ function ProcessGlassCockpitDCSConfigHighImportance(mainPanelDevice)
 		-- HSI
 		-- heading; requiredHeading; bearingNeedle; warningFlagG; warningFlagK; glide; side;
 		-- 111; 68; 590; 588; 587; glide; side;
-		SendData(2001, string.format("%0.4f;%0.4f;%0.4f;%0.1f;%0.1f", 
+		SendData(2001, string.format("%0.4f;%0.4f;%0.4f;%0.1f;%0.1f;%0.4f;%0.4f", 
 										mainPanelDevice:get_argument_value(111), 
 										mainPanelDevice:get_argument_value(68), 
-										mainPanelDevice:get_argument_value(590),
-										mainPanelDevice:get_argument_value(588),
-										mainPanelDevice:get_argument_value(587)))
-										-- mainPanelDevice:get_argument_value(???),
-										-- mainPanelDevice:get_argument_value(???)))
+										((mainPanelDevice:get_argument_value(36) + 0.25) - mainPanelDevice:get_argument_value(111)), --Needle is wrong
+										mainPanelDevice:get_argument_value(588), -- RSBN_NPP_glisada_blinker
+										mainPanelDevice:get_argument_value(587), -- RSBN_NPP_kurs_blinker
+										mainPanelDevice:get_argument_value(589), -- RSBN_NPP_glisada_needle
+										mainPanelDevice:get_argument_value(590))) -- RSBN_NPP_kurs_needle
 		-- Altimeter
 		-- altituteMeter; altituteKM; baroPressure
 		-- 104; 112; 655;
@@ -610,11 +610,19 @@ function ProcessGlassCockpitDCSConfigHighImportance(mainPanelDevice)
 										mainPanelDevice:get_argument_value(112), 
 										mainPanelDevice:get_argument_value(655)))
 		-- ADI
-		-- bank; pitch; steeringWarningFlag attitudeWarningFlag; desiredBank; desirePitch; 
-		-- airSpeedDeviation; trackDeviation;heightDeviation;sideslip;
-		SendData(2003, string.format("%0.4f;%0.4f", 
-										mainPanelDevice:get_argument_value(108), 
-										mainPanelDevice:get_argument_value(109)))
+		-- bank;pitch;sideslip;RSBN_KPP_tangaz_blinker(Flag_L);RSBN_KPP_kren_blinker(Flag_R);
+        -- desiredBank;desirePitch;airSpeedDeviation;trackDeviation;heightDeviation;
+		SendData(2003, string.format("%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f", 
+										mainPanelDevice:get_argument_value(108), -- bank
+										mainPanelDevice:get_argument_value(109), -- pitch
+										mainPanelDevice:get_argument_value(31),  -- sideslip
+										mainPanelDevice:get_argument_value(568), -- RSBN_KPP_tangaz_blinker(Flag_L)
+										mainPanelDevice:get_argument_value(567), -- RSBN_KPP_kren_blinker(Flag_R)
+										(mainPanelDevice:get_argument_value(565) * 3), -- RSBN_KPP_kurs_director
+										(mainPanelDevice:get_argument_value(566) * 3), -- RSBN_KPP_glisada_director (maybe multiply by 3)
+										0, -- ?
+										mainPanelDevice:get_argument_value(590), -- RSBN_NPP_kurs_needle
+										mainPanelDevice:get_argument_value(589))) -- RSBN_NPP_glisada_needle
 		-- HydraulicPressure 
 		-- PRIMARY_GIDRO_Pressure_needle, SECONDARY_GIDRO_Pressure_needle
 		-- 126; 125;

@@ -17,10 +17,10 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[8] = "%.4f",	-- Altimeter_FinePtr {0.0, 1000.0} = {0.0, 1.0}
 	[9] = "%.4f",	-- Altimeter_CoarsePtr {0.0, 13000.0} = {0.0, 1.0}
 	[10] = "%.4f",	-- Altimeter_Pressure {712.56, 780.07} = {0.0, 1.0}
-	--[11] = "%.4f",	-- Pressure_Setter_Pinion {0.0, 1440.0} = {0.0, 1.0}
+	[11] = "%.4f",	-- Pressure_Setter_Pinion {0.0, 1440.0} = {0.0, 1.0}
 	-- AN5730 remote compass
 	[13] = "%.4f",	-- CompassHeading {0.0, 1.0}
-	--[12] = "%.4f",	-- CommandedCourse {0.0, 1.0}
+	[12] = "%.4f",	-- CommandedCourse {0.0, 1.0}
 	-- AFN2 blind landing system
 	[14] = "%.4f",	-- AFN2_Horizontal_Needle {-1.0, 1.0}
 	[15] = "%.4f",	-- AFN2_Vertical_Needle {0.0, 1.0}
@@ -50,14 +50,16 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[43] = "%.4f",	-- MG131_1_Klappanker {0.0, 60.0} = {0.0, 1.0}
 	[44] = "%1d",	-- LeftWing_MG151_Control_Lamp {0.0, 1.0}
 	[45] = "%1d",	-- RightWing_MG151_Control_Lamp {0.0, 1.0}
+	--REVI_16B_Gunsight
+	[46] = "%4.f",	-- BodyState {0.0, 0.15,0.25, 1.0} = {0.0, 0.15,0.25, 1.0}
+	[47] = "%4.f",	-- SmokedScreen {0.0, 1.0}
+	[48] = "%4.f",	-- SightBrightness {0.0, 1.0}
 	-- Landing Gear Light
 	[56] = "%1d",	-- LandingGearRedLight {0.0, 1.0}
 	[57] = "%1d",	-- LandingGearGreenLightLeft {0.0, 1.0}
 	[58] = "%1d",	-- LandingGearGreenLightRight {0.0, 1.0}
-	-- Pitot_Heat_Lamp
-	[135] = "%1d"	-- Pitot_Heat_Lamp {0.0, 29.0} = {0.0, 1.0}
 	-- Fuel_Reserve_Lamp
-	--???[135] = "%1d"	-- Fuel_Reserve_Lamp
+	[135] = "%1d"	-- Fuel_Reserve_Lamp {0.0, 29.0} = {0.0, 1.0}
 }
 gES_GlassCockpitConfigArguments = 
 {
@@ -198,6 +200,8 @@ gES_GlassCockpitConfigArguments =
 	[97] = "%.1d",	-- Tail Wheel Lock {0, 1}
 	-- Cockpit Open/Close Control
 	[136] = "%.1d",	-- Canopy (Open/Close) {0, 1}
+	[137] = "%.1d",	-- Canopy (Open/Close) H {0, 1}
+	[138] = "%.1d",	-- Canopy (Open/Close) S {0, 1}
 	-- Cockpit Jettison Pull Handle
 	[83] = "%.1d",	-- Jettison Canopy {0, 1}
 	-- Trim Wheel
@@ -208,14 +212,13 @@ gES_GlassCockpitConfigArguments =
 	[144] = "%.1d",	-- Retract Flaps {0, 1}
 	-- Notwurf / Ordinance Dump
 	[92] = "%.1d",	-- Ordinance Emergency Release
+	--[98] = "$.1d",	-- Cockpit Left Vent {0, 1}
 	-- Right Wall Controls
 	-- RH Cockpit Vent
-	--[99] = "%.1d",	-- Cockpit Vent {0, 1}
+	--[99] = "%.1d",	-- Cockpit Right Vent {0, 1}
 	-- Flare Gun Trigger
 	[72] = "%.1d",	-- Fire Flare Gun
 	-- Engine Controls & Quadrant
-	-- Ground Crew Signal -- TODO remove
-	[145] = "%.1d",	-- Signal Starter Crew {0, 1}
 	-- Propellor Control Rocker
 	[85] = "%.1f",	-- Decrease RPM {1.0, -1.0}
 	-- Radio Transmit Button

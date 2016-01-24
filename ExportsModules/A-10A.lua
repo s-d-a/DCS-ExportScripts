@@ -306,7 +306,7 @@ function ProcessGlassCockpitFCHighImportanceConfig()
 			-- AOA
 			--FC_US_AOA(16)
 			--WriteToLog('lAoA 1: '..dump(lAoA))
-			local lAoATmp = 0.7728 * math.deg(lAoA) + 12.22
+			--local lAoATmp = 0.7728 * math.deg(lAoA) + 12.22
 			--WriteToLog('lAoA 2: '..dump(lAoATmp))
 			--[[
 			y_min = 0.0								-- minimaler Ausgabewert
@@ -322,8 +322,44 @@ function ProcessGlassCockpitFCHighImportanceConfig()
 
 			y = 0.4200000000000000000000000000001	-- Ergebnis (m * x + n)
 			]]
-			lAoATmp = 0.03333333333333333333333333333333 * lAoATmp + 0.0000000000000000000000000000001
-			SendData(16, string.format("%.4f;%d", lAoATmp, 0) )
+			--lAoATmp = 0.03333333333333333333333333333333 * lAoATmp + 0.0000000000000000000000000000001
+			--SendData(16, string.format("%.4f;%d", lAoATmp, 0) )
+			
+			if lAoA > -2.7 then	-- positive AOA
+				--[[
+				y_min = 0.333							-- minimaler Ausgabewert
+				y_max = 1.0								-- maximaler Ausgabewert
+				x_min = -2.7							-- minimaler Eingangswert
+				x_max = 23.0							-- maximaler Eingangswert 
+				x = 10.6								-- aktueller Eingangswert 
+
+				d_y = 0.667								-- Delta Ausgabewerte (y_max - y_min)
+				d_x = 27.7								-- Delta Eingangswerte (x_max - x_min)
+				m = 0.02407942238267148014440433212996	-- Steigung der linearen Funktion (d_y / d_x)
+				n = 0,44617328519855595667870036101083	-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+				
+				y = 0.615808	-- Ergebnis (m * x + n)
+				]]
+				lAoA = 0.02407942238267148014440433212996 * lAoA + 0.44617328519855595667870036101083
+				SendData(16, string.format("%.4f;%d", lAoA, 0) )
+			else
+				--[[
+				y_min = 0.0								-- minimaler Ausgabewert
+				y_max = 0.333							-- maximaler Ausgabewert
+				x_min = -2.7								-- minimaler Eingangswert
+				x_max = -15.3							-- maximaler Eingangswert 
+				x = -3.6								-- aktueller Eingangswert 
+
+				d_y = 0.333								-- Delta Ausgabewerte (y_max - y_min)
+				d_x = -12.6								-- Delta Eingangswerte (x_max - x_min)
+				m = -0.02642857142857142857142857142857	-- Steigung der linearen Funktion (d_y / d_x)
+				n = -0.07135714285714285714285714285714	-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+				
+				y = 0.0238								-- Ergebnis 0.333 - (m * x + n)
+				]]
+				lAoA = 0.333 - (-0.02642857142857142857142857142857 * lAoA + -0.07135714285714285714285714285714)
+				SendData(16, string.format("%.4f;%d", lAoA, 0) )
+			end
 
 			-- G-LOAD
 			FC_US_GLOAD(17)

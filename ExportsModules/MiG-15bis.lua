@@ -7,34 +7,33 @@ gES_GlassCockpitConfigEveryFrameArguments =
 {
 -- arguments for export every frame
 -- based of "mainpanel_init.lua"
-
 	[225] = "%.4f",		-- Canopy
 	[223] = "%.4f",		-- LeftCanopyLever
 	[222] = "%.4f",		-- RightCanopyLever
 	[224] = "%.4f",		-- AftCanopyLever
-	[14] = "%.4f",		-- Variometer
-	[28] = "%.4f",		-- Altimeter_km
-	[29] = "%.4f",		-- Altimeter_m
-	[31] = "%.4f",		-- Altimeter_Pressure
-	[15] = "%.4f",		-- CLOCK_currtime_hours
-	[16] = "%.4f",		-- CLOCK_currtime_minutes
-	[22] = "%.4f",		-- CLOCK_flight_time_meter_status
-	[18] = "%.4f",		-- CLOCK_flight_hours
-	[19] = "%.4f",		-- CLOCK_flight_minutes
-	[20] = "%.4f",		-- CLOCK_seconds_meter_time_minutes
-	[17] = "%.4f",		-- CLOCK_seconds_meter_time_seconds
-	[4] = "%.4f",		-- IAS
-	[5] = "%.4f",		-- TAS
-	[27] = "%.4f",		-- MACH
-	[6] = "%.4f",		-- AGK_47B_roll
-	[7] = "%.4f",		-- AGK_47B_pitch
-	[11] = "%.4f",		-- AGK_47B_failure_flag
-	[8] = "%.4f",		-- AGK_47B_sideslip
-	[9] = "%.4f",		-- AGK_47B_turn
-	[10] = "%.4f",		-- AGK_47B_horizon
-	[35] = "%.4f",		-- PRV_46_RAlt
-	[32] = "%.4f",		-- PDK-45 HeadingScale
-	[33] = "%.4f",		-- PDK-45 Heading
+	[14] = "%.4f",		-- Variometer {-75.0,-60.0,-45.0,-30.0,-15.0,-10.0,-5.0,0.0,5.0,10.0,15.0,30.0,45.0,60.0,75.0} {0.0,0.075,0.151,0.24,0.352,0.401,0.448,0.5,0.553,0.6,0.649,0.76,0.848,0.925,1.0}
+	[28] = "%.4f",		-- Altimeter_km {0.0, 10.0}{0.0, 1.0}
+	[29] = "%.4f",		-- Altimeter_m {0.0, 1000.0}{0.0, 1.0}
+	[31] = "%.4f",		-- Altimeter_Pressure {670, 790}{0.0, 1.0}
+	[15] = "%.4f",		-- CLOCK_currtime_hours {0.0, 12.0}{0.0, 1.0}
+	[16] = "%.4f",		-- CLOCK_currtime_minutes {0.0, 60.0}{0.0, 1.0}
+	[22] = "%.4f",		-- CLOCK_flight_time_meter_status {0.0, 0.2}{0.5, 0.0}
+	[18] = "%.4f",		-- CLOCK_flight_hours {0.0, 12.0}{0.0, 1.0}
+	[19] = "%.4f",		-- CLOCK_flight_minutes {0.0, 60.0}{0.0, 1.0}
+	[20] = "%.4f",		-- CLOCK_seconds_meter_time_minutes {0.0, 60.0}{0.0, 1.0}
+	[17] = "%.4f",		-- CLOCK_seconds_meter_time_seconds {0.0, 60.0}{0.0, 1.0}
+	[4] = "%.4f",		-- IAS {100.0, 1100.0}{0.0,   1.0}
+	[5] = "%.4f",		-- TAS {100.0, 1100.0}{0.0,   1.0}
+	[27] = "%.4f",		-- MACH {0.0,0.3,0.95}{0.12,0.215,1.0}
+	[6] = "%.4f",		-- AGK_47B_roll {-1.0, 1.0}
+	[7] = "%.4f",		-- AGK_47B_pitch {1.0, -1.0}
+	[11] = "%.4f",		-- AGK_47B_failure_flag {0.0, 1.0}
+	[8] = "%.4f",		-- AGK_47B_sideslip {-1.0, 1.0}
+	[9] = "%.4f",		-- AGK_47B_turn {-1.0, 1.0}
+	[10] = "%.4f",		-- AGK_47B_horizon {-1.0, 1.0}
+	[35] = "%.4f",		-- PRV_46_RAlt {-10.0, 0.0, 1200.0}{-1.0, 0.0, 1.0}
+	[32] = "%.4f",		-- PDK-45 HeadingScale {0.0, 1.0}
+	[33] = "%.4f",		-- PDK-45 Heading {0.0, 1.0}
 	-- Weapon System
 	[95] = "%.4f",		-- N37D_Ready_Lamp
 	[93] = "%.4f",		-- NR23_TOP_Ready_Lamp
@@ -42,85 +41,85 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[100] = "%.4f",		-- Tactical_Rel_Lamp
 	[98] = "%.4f",		-- LEFT_BOMB_Lamp
 	[99] = "%.4f",		-- RIGHT_BOMB_Lamp
-	-- electric system	
-	[83] = "%.4f",		-- VoltAmperMeter
-	[244] = "%.4f",		-- lamps_lightness
-	-- hydraulic system	
-	[168] = "%.4f",		-- HydraulicPressureMain
-	[139] = "%.4f",		-- HydraulicPressureGain
-	[169] = "%.4f",		-- HydraulicPressureAirFlaps
-	[165] = "%.4f",		-- HydraulicPressureAirGears
-	[172] = "%.4f",		-- HydraulicPressureMainAir
+	-- electric system
+	[83] = "%.4f",		-- VoltAmperMeter {-1.0, 0.0, 3.0}{-1.0, 0.0, 1.0}
+	[244] = "%.4f",		-- lamps_lightness 
+	-- hydraulic system
+	[168] = "%.4f",		-- HydraulicPressureMain {0.0, 250.0}{0.0, 1.0}
+	[139] = "%.4f",		-- HydraulicPressureGain {0.0, 150.0}{0.0, 1.0}
+	[169] = "%.4f",		-- HydraulicPressureAirFlaps {0.0, 80.0}{0.0, 1.0}
+	[165] = "%.4f",		-- HydraulicPressureAirGears {0.0, 80.0}{0.0, 1.0}
+	[172] = "%.4f",		-- HydraulicPressureMainAir {0.0, 250.0}{0.0, 1.0}
 	-- gear system
-	[121] = "%.4f",		-- LeftBrakePressure
-	[122] = "%.4f",		-- RightBrakePressure
+	[121] = "%.4f",		-- LeftBrakePressure {0.0, 12.0}{0.0, 1.0}
+	[122] = "%.4f",		-- RightBrakePressure {0.0, 12.0}{0.0, 1.0}
 	-- fuel system
-	[47] = "%.4f",		-- FuelQuantity
+	[47] = "%.4f",		-- FuelQuantity {-100.0,0.0,100.0,200.0,300.0,400.0,500.0,600.0,700.0,800.0,1050.0}{0.0,0.047,0.136,0.22,0.38,0.52,0.631,0.755,0.869,0.921,1.0}
 	-- air system
 	[188] = "%.4f",		-- CanopyAirValveIndication
-	[39] = "%.4f",		-- CockpitAltitude
-	[40] = "%.4f",		-- PressureDifference
+	[39] = "%.4f",		-- CockpitAltitude {0.0,8000.0} {0.008,1.0}
+	[40] = "%.4f",		-- PressureDifference {-0.04,0.0,0.6} {0.0,0.243,1.0}
 	-- oxygen system
-	[48] = "%.4f",		-- OxygenPressure
+	[48] = "%.4f",		-- OxygenPressure {0.0,250.0} {0.0,1.0}
 	[60] = "%.4f",		-- FlowBlinker
-	[49] = "%.4f",		-- FlowPressure
+	[49] = "%.4f",		-- FlowPressure {0.0,150.0,170.0} {0.0,0.9,1.0}
 	-- Engine
-	[42] = "%.4f",		-- EngineTachometer
-	[41] = "%.4f",		-- EngineTemperature
-	[45] = "%.4f",		-- OilTemperature
-	[44] = "%.4f",		-- OilPressure
-	[43] = "%.4f",		-- EngineFuelPressure
-	[46] = "%.4f",		-- FuelPressure
-	-- radio compass	
-	[238] = "%.4f",		-- ARC5_Band
+	[42] = "%.4f",		-- EngineTachometer {0.0,15000.0} {0.0,1.0}
+	[41] = "%.4f",		-- EngineTemperature {300.0,900.0} {0.0,1.0}
+	[45] = "%.4f",		-- OilTemperature {-50.0,150.0} {0.0,1.0}
+	[44] = "%.4f",		-- OilPressure {0.0, 10.0} {0.0,1.0}
+	[43] = "%.4f",		-- EngineFuelPressure {0.0,100.0} {0.0,1.0}
+	[46] = "%.4f",		-- FuelPressure {0.0,10.0} {0.0,1.0}
+	-- radio compass
+	[238] = "%.4f",		-- ARC5_Band {0.0, 2.0} {0.0, 0.4}
 	[176] = "%.4f",		-- ARC5_TuningMeter
-	[175] = "%.4f",		-- ARC5_Tuning
+	[175] = "%.4f",		-- ARC5_Tuning {0.0, 0.2} {0.0, 1.0}
 	[38] = "%.4f",		-- ARC5_Bearing
-	[239] = "%.4f",		-- ARC5_FreqScale
-	-- Radio RSI-6K	
+	[239] = "%.4f",		-- ARC5_FreqScale {0.0,0.5,1.0,1.5,2.0,2.5,3.0} {0.0,0.0695,0.14,0.2865,0.43,0.7155,1.0}
+	-- Radio RSI-6K
 	[235] = "%.4f",		-- RadioAntennaPower
-	[128] = "%.4f",		-- RadioReceiverKnob
-	[127] = "%.4f",		-- RadioReceiverInd
-	[144] = "%.4f",		-- RadioReceiverGauge
+	[128] = "%.4f",		-- RadioReceiverKnob {0.0, 0.2}{0.0, 1.0}
+	[127] = "%.4f",		-- RadioReceiverInd {0.0, 1.0}{0.036, 0.961}
+	[144] = "%.4f",		-- RadioReceiverGauge {0.0, 1.0}{0.026, 0.957}
 	[245] = "%.4f",		-- ASP_3N_Range
-	-- Lamps	
+	-- Lamps
 	-- electric system
-	[57] = "%.4f",		-- lamp_GeneratorOff
-	[58] = "%.4f",		-- lamp_Ignition
+	[57] = "%.4f",		-- lamp_GeneratorOff {-1.0, 1.0}{-1.0, 1.0}
+	[58] = "%.4f",		-- lamp_Ignition {-1.0, 1.0}{-1.0, 1.0}
 	-- power plant
-	[119] = "%.4f",		-- lamp_IsolatingValve
+	[119] = "%.4f",		-- lamp_IsolatingValve {-1.0, 1.0}{-1.0, 1.0}
 	-- gear system
-	[75] = "%.4f",		-- lamp_LeftGearExt
-	[74] = "%.4f",		-- lamp_LeftGearRet
-	[79] = "%.4f",		-- lamp_RightGearExt
-	[78] = "%.4f",		-- lamp_RightGearRet
-	[77] = "%.4f",		-- lamp_NoseGearExt
-	[76] = "%.4f",		-- lamp_NoseGearRet
-	[53] = "%.4f",		-- lamp_ExtendGears
-	-- fuel system	
-	[56] = "%.4f",		-- lamp_Remain300
-	[50] = "%.4f",		-- lamp_AftEmpty
-	[52] = "%.4f",		-- lamp_DropTanks
-	[51] = "%.4f",		-- lamp_BoostPressure
-	-- control system	
-	[113] = "%.4f",		-- lamp_TrimmerNeutral
-	[59] = "%.4f",		-- lamp_FlapsExt
-	[124] = "%.4f",		-- lamp_AirBrakeExt
-	-- fire extinguisher system	
-	[135] = "%.4f",		-- lamp_FireDetected
+	[75] = "%.4f",		-- lamp_LeftGearExt {-1.0, 1.0}{-1.0, 1.0}
+	[74] = "%.4f",		-- lamp_LeftGearRet {-1.0, 1.0}{-1.0, 1.0}
+	[79] = "%.4f",		-- lamp_RightGearExt {-1.0, 1.0}{-1.0, 1.0}
+	[78] = "%.4f",		-- lamp_RightGearRet {-1.0, 1.0}{-1.0, 1.0}
+	[77] = "%.4f",		-- lamp_NoseGearExt {-1.0, 1.0}{-1.0, 1.0}
+	[76] = "%.4f",		-- lamp_NoseGearRet {-1.0, 1.0}{-1.0, 1.0}
+	[53] = "%.4f",		-- lamp_ExtendGears {-1.0, 1.0}{-1.0, 1.0}
+	-- fuel system
+	[56] = "%.4f",		-- lamp_Remain300 {-1.0, 1.0}{-1.0, 1.0}
+	[50] = "%.4f",		-- lamp_AftEmpty {-1.0, 1.0}{-1.0, 1.0}
+	[52] = "%.4f",		-- lamp_DropTanks {-1.0, 1.0}{-1.0, 1.0}
+	[51] = "%.4f",		-- lamp_BoostPressure {-1.0, 1.0}{-1.0, 1.0}
+	-- control system
+	[113] = "%.4f",		-- lamp_TrimmerNeutral {-1.0, 1.0}{-1.0, 1.0}
+	[59] = "%.4f",		-- lamp_FlapsExt {-1.0, 1.0}{-1.0, 1.0}
+	[124] = "%.4f",		-- lamp_AirBrakeExt {-1.0, 1.0}{-1.0, 1.0}
+	-- fire extinguisher system
+	[135] = "%.4f",		-- lamp_FireDetected {-1.0, 1.0}{-1.0, 1.0}
 	-- ARC-5
-	[183] = "%.4f",		-- lamp_ARC_5
-	[218] = "%.4f",		-- light_ARC_5_scale
+	[183] = "%.4f",		-- lamp_ARC_5 {-1.0, 1.0}{-1.0, 1.0}
+	[218] = "%.4f",		-- light_ARC_5_scale {-1.0, 1.0}{-1.0, 1.0}
 	-- MRP-48P
-	[54] = "%.4f",		-- lamp_Marker
-	-- Light System	
-	[226] = "%.4f",		-- light_LeftUV
-	[215] = "%.4f",		-- light_CenterUV
-	[227] = "%.4f",		-- light_RightUV
-	[217] = "%.4f",		-- light_Panels
-	[216] = "%.4f",		-- light_AuxLeftPanel
-	-- Gun Camera	
-	[55] = "%.4f"		-- lamp_GunCamera	
+	[54] = "%.4f",		-- lamp_Marker {-1.0, 1.0}{-1.0, 1.0}
+	-- Light System
+	[226] = "%.4f",		-- light_LeftUV {-1.0, 1.0}{-1.0, 1.0}
+	[215] = "%.4f",		-- light_CenterUV {-1.0, 1.0}{-1.0, 1.0}
+	[227] = "%.4f",		-- light_RightUV {-1.0, 1.0}{-1.0, 1.0}
+	[217] = "%.4f",		-- light_Panels {-1.0, 1.0}{-1.0, 1.0}
+	[216] = "%.4f",		-- light_AuxLeftPanel {-1.0, 1.0}{-1.0, 1.0}
+	-- Gun Camera
+	[55] = "%.4f"		-- lamp_GunCamera {-1.0, 1.0}{-1.0, 1.0}
 }
 gES_GlassCockpitConfigArguments = 
 {
@@ -131,6 +130,7 @@ gES_GlassCockpitConfigArguments =
 
 	-- Cockpit mechanics
 	[221] = "%.4f",    -- Emergency Canopy Jettison - Pull to jettison
+	[223] = "%.4f",    -- Left Canopy Lever, OPEN/CLOSE
 	[222] = "%.4f",    -- Right Canopy Lever, OPEN/CLOSE
 	[224] = "%.4f",    -- Aft Canopy Lever, OPEN/CLOSE
 	-- Control system
@@ -223,8 +223,10 @@ gES_GlassCockpitConfigArguments =
 	[34] = "%.4f",    -- Heading Knob
 	[61] = "%.4f",    -- Fast Slave Button
 	-- CLOCK
-	[23] = "%.4f",    -- AChS-1 Cockpit Chronograph Left Knob
-	[25] = "%.4f",    -- AChS-1 Cockpit Chronograph Right Knob
+	[23] = "%.4f",    -- AChS-1 Cockpit Chronograph Left Knob (button)
+	[24] = "%.4f",    -- AChS-1 Cockpit Chronograph Left Knob (rotary)
+	[25] = "%.4f",    -- AChS-1 Cockpit Chronograph Right Knob (button)
+	[26] = "%.4f",    -- AChS-1 Cockpit Chronograph Right Knob (rotary)
 	-- Weapon System
 	[92] = "%.4f",    -- N-37D Cannon Reload Button
 	[90] = "%.4f",    -- NR-23 (Top) Cannon Reload Button
@@ -235,17 +237,17 @@ gES_GlassCockpitConfigArguments =
 	--ASP-3N Gunsight
 	[101] = "%.4f",    -- ASP-3N Gunsight Mode, GYRO/FIXED
 	[106] = "%.4f",    -- ASP-3N Gunsight Fixed Reticle Mask Lever
-	[103] = "%.4f",    -- ASP-3N Gunsight Fixed Reticle Mask Lever
-	[102] = "%.4f",    -- ASP-3N Gunsight Brightness Knob
-	[201] = "%.4f",    -- ASP-3N Gunsight Target Distance
+	[103] = "%.4f",    -- ASP-3N Gunsight Fixed Reticle Mask Lever (rotary)
+	[102] = "%.4f",    -- ASP-3N Gunsight Brightness Knob (rotary)
+	[201] = "%.4f",    -- ASP-3N Gunsight Target Distance (rotary)
 	[105] = "%.4f",    -- ASP-3N Gunsight Color Filter, ON/OFF
 	-- ARC-5 radio compass
-	[180] = "%.4f",    -- ARC-5 Audio Volume Control
+	[180] = "%.4f",    -- ARC-5 Audio Volume Control (rotary)
 	[177] = "%.4f",    -- ARC-5 Frequency Band Switch
 	[174] = "%.4f",    -- ARC-5 Function Selector Switch, OFF/COMP/ANT./LOOP
 	[178] = "%.4f",    -- ARC-5 LOOP L-R Switch
-	[175] = "%.4f",    -- ARC-5 Tuning Crank
-	[181] = "%.4f",    -- ARC-5 Scale Light Control
+	--[] = "%.4f",    -- ARC-5 Tuning Crank (rotary)
+	[181] = "%.4f",    -- ARC-5 Scale Light Control (rotary)
 	[173] = "%.4f",    -- ARC-5 TLG-TLF Switch
 	[182] = "%.4f",    -- ARC-5 Take Control Button
 	[123] = "%.4f",    -- ARC-5 Near/Far NDB Switch
@@ -253,12 +255,12 @@ gES_GlassCockpitConfigArguments =
 	[147] = "%.4f",    -- ARC-5 NDB 2 Switch
 	[148] = "%.4f",    -- ARC-5 NDB 3 Switch
 	-- RSI-6K radio
-	[126] = "%.4f",    -- RSI-6K Audio Volume Control
-	[232] = "%.4f",    -- RSI-6K Wave Control
-	[230] = "%.4f",    -- RSI-6K Antenna Control
+	[126] = "%.4f",    -- RSI-6K Audio Volume Control (rotary)
+	[232] = "%.4f",    -- RSI-6K Wave Control (rotary)
+	[230] = "%.4f",    -- RSI-6K Antenna Control (rotary)
 	[231] = "%.4f",    -- RSI-6K Wave Lock
 	[233] = "%.4f",    -- RSI-6K Antenna Lock
-	[128] = "%.4f",    -- RSI-6K Receiver Tuning
+	[128] = "%.4f",    -- RSI-6K Receiver Tuning (rotary)
 	[140] = "%.4f",    -- RSI-6K Receive/ARC
 	[240] = "%.4f",    -- RSI-6K Forced Mode, ON/OFF
 	[202] = "%.4f",    -- Microphone Button

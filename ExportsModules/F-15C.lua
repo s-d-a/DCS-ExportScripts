@@ -307,7 +307,7 @@ function ProcessGlassCockpitFCHighImportanceConfig()
 			-- AOA
 			--FC_US_AOA(16)
 			--WriteToLog('lAoA 1: '..dump(lAoA))
-			local lAoATmp = math.deg(lAoA) + 10
+			--local lAoATmp = math.deg(lAoA) + 10
 			--WriteToLog('lAoA 2: '..dump(lAoATmp))
 			--[[
 			y_min = 0.0								-- minimaler Ausgabewert
@@ -323,9 +323,46 @@ function ProcessGlassCockpitFCHighImportanceConfig()
 			
 			y = 0.2800000000000000000000000000001	-- Ergebnis (m * x + n)
 			]]
-			lAoATmp = 0.02222222222222222222222222222222 * lAoATmp + 0.0000000000000000000000000000001
-			SendData(16, string.format("%.4f;%d", lAoATmp, 0) )
+			--lAoATmp = 0.02222222222222222222222222222222 * lAoATmp + 0.0000000000000000000000000000001
+			--SendData(16, string.format("%.4f;%d", lAoATmp, 0) )
 			
+			WriteToLog('lAoA: '..dump(lAoA))
+			if lAoA > 0.0 then	-- positive AOA
+				--[[
+				y_min = 0.22							-- minimaler Ausgabewert
+				y_max = 1.0								-- maximaler Ausgabewert
+				x_min = 0.0								-- minimaler Eingangswert
+				x_max = 35.0							-- maximaler Eingangswert 
+				x = 12.6								-- aktueller Eingangswert 
+
+				d_y = 0.78								-- Delta Ausgabewerte (y_max - y_min)
+				d_x = 35.0								-- Delta Eingangswerte (x_max - x_min)
+				m = 0.02228571428571428571428571428571	-- Steigung der linearen Funktion (d_y / d_x)
+				n = 0.22								-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+				
+				y = 0.50079999999999999999999999999995	-- Ergebnis (m * x + n)
+				]]
+				lAoA = 0.02228571428571428571428571428571 * lAoA + 0.22
+				SendData(16, string.format("%.4f;%d", lAoA, 0) )
+			else
+				--[[
+				y_min = 0.0								-- minimaler Ausgabewert
+				y_max = 0.22							-- maximaler Ausgabewert
+				x_min = 0.0								-- minimaler Eingangswert
+				x_max = -10.0							-- maximaler Eingangswert 
+				x = -2.6								-- aktueller Eingangswert 
+
+				d_y = 0.22								-- Delta Ausgabewerte (y_max - y_min)
+				d_x = -10.0								-- Delta Eingangswerte (x_max - x_min)
+				m = -0.022								-- Steigung der linearen Funktion (d_y / d_x)
+				n = 0.0									-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+				
+				y = 0.1628								-- Ergebnis 0.22 - (m * x + n)
+				]]
+				lAoA = 0.22 - (-0.022 * lAoA)
+				SendData(16, string.format("%.4f;%d", lAoA, 0) )
+			end
+
 			-- G-LOAD
 			FC_US_GLOAD(17)
 			
@@ -545,6 +582,8 @@ function ProcessGlassCockpitFCLowImportanceConfig()
 									lEngineFuelTotal,
 									lFuelNeedle))
 		-- Fuel Indicator end
+		
+		FC_US_RWR(28)
 	end
 end
 
@@ -752,9 +791,151 @@ function FlareChaff(hardware)
 	
 	--[chaff] = number: "30"
     --[flare] = number: "30"
+
+	if gES_maxChaff == nil then
+		gES_maxChaff = lSnares.chaff
+		gES_tmpChaff = gES_maxChaff
+	end
+	if gES_maxFlare == nil then
+		gES_maxFlare = lSnares.flare
+		gES_tmpFlare = gES_maxFlare
+	end
+	if gES_timerChaff == nil then
+		gES_timerChaff = 0
+		gES_timerChaffCounter = 3
+	end
+	if gES_timerFlare == nil then
+		gES_timerFlare = 0
+		gES_timerFlareCounter = 3
+	end
+	local lblinkChaff = 0
+	local lblinkFlare = 0
+	local ltmp = 0
+
+	if gES_tmpChaff == 0 then
+		lblinkChaff = 1
+	end
+
+	if lSnares.chaff < gES_tmpChaff then
+	WriteToLog('Chaff: '..dump(lSnares.chaff)..', gES_tmpChaff:'..dump(gES_tmpChaff))
+		gES_tmpChaff = lSnares.chaff
+		--gES_timerChaff = os.time()
+		gES_timerChaff = os.clock()
+		WriteToLog('Chaff ausgeworfen, Zeit: '..dump(gES_timerChaff))
+		gES_timerChaffCounter = 3
+	end
+
+	if lblinkChaff == 0 and gES_timerChaff > 0.0 and gES_timerChaffCounter > 0 then
+		--local ldiffTimer = os.difftime (os.time(), gES_timerChaff)
+		local ldiffTimer = os.clock() - gES_timerChaff
+		ltmp, ldiffTimer = math.modf(ldiffTimer)
+	WriteToLog('Zeit: '..gES_timerChaff..', Counter: '..gES_timerChaffCounter)
+	WriteToLog('Zeit Diff: '..ldiffTimer)
+		if gES_timerChaffCounter == 1 and ldiffTimer > 0.9 then
+		WriteToLog('0')
+			lblinkChaff = 0
+			gES_timerChaffCounter = 3
+			gES_timerChaff = 0.0
+		elseif gES_timerChaffCounter == 1 and ldiffTimer > 0.8 then
+		WriteToLog('1')
+			lblinkChaff = 1
+			--gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 2 and ldiffTimer > 0.6 then
+		WriteToLog('2')
+			lblinkChaff = 0
+			gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 2 and ldiffTimer > 0.4 then
+		WriteToLog('3')
+			lblinkChaff = 1
+			--gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 3 and ldiffTimer > 0.2 then
+		WriteToLog('4')
+			lblinkChaff = 0
+			gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 3 and ldiffTimer > 0.0 then
+		WriteToLog('5')
+			lblinkChaff = 1
+			--gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif ldiffTimer > 0.95 then
+		WriteToLog('else')
+			lblinkChaff = 0
+			gES_timerChaffCounter = 3
+			gES_timerChaff = 0.0
+		end
+		
+		--[[
+		if gES_timerChaffCounter == 3 and ldiffTimer < 0.5 then
+		WriteToLog('0')
+			lblinkChaff = 1
+			--gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 3 and ldiffTimer < 1.0 then
+		WriteToLog('1')
+			lblinkChaff = 0
+			gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 2 and ldiffTimer < 1.5 then
+		WriteToLog('2')
+			lblinkChaff = 1
+			--gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 2 and ldiffTimer < 2.0 then
+		WriteToLog('3')
+			lblinkChaff = 0
+			gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 1 and ldiffTimer < 2.5 then
+		WriteToLog('4')
+			lblinkChaff = 1
+			--gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 1 and ldiffTimer < 3.0 then
+		WriteToLog('5')
+			lblinkChaff = 0
+			gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 0 or ldiffTimer > 3.0 then
+		WriteToLog('else')
+			lblinkChaff = 0
+			gES_timerChaffCounter = 3
+			gES_timerChaff = 0
+		end]]
+	--[[
+		if gES_timerChaffCounter == 1 and ldiffTimer == 5 then
+		WriteToLog('0')
+			lblinkChaff = 0
+			gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 1 and ldiffTimer == 4 then
+		WriteToLog('1')
+			lblinkChaff = 1
+			--gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 2 and ldiffTimer == 3 then
+		WriteToLog('2')
+			lblinkChaff = 0
+			gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 2 and ldiffTimer == 2 then
+		WriteToLog('3')
+			lblinkChaff = 1
+			--gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 3 and ldiffTimer == 1 then
+		WriteToLog('4')
+			lblinkChaff = 0
+			gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 3 and ldiffTimer == 0 then
+		WriteToLog('5')
+			lblinkChaff = 1
+			--gES_timerChaffCounter = gES_timerChaffCounter - 1
+		elseif gES_timerChaffCounter == 0 or ldiffTimer > 5 then
+		WriteToLog('else')
+			lblinkChaff = 0
+			gES_timerChaffCounter = 3
+			gES_timerChaff = 0
+		end]]
+	end
 	
-	SendDataHW("800", lSnares.chaff, lHardware )
-	SendDataHW("801", lSnares.flare, lHardware )
+	--WriteToLog('lblinkChaff: '..lblinkChaff)
+
+	SendDataHW("800", lSnares.chaff, lHardware ) -- display chaff
+	SendDataHW("801", lSnares.flare, lHardware ) -- display flare
+	SendDataHW("802", lblinkChaff, lHardware ) -- blink chaff active/aktive empty chaff
+	SendDataHW("803", lblinkFlare, lHardware ) -- blink flare active/aktive empty flare
+	SendDataHW("804", gES_tmpChaff < 20 and 1 or 0, lHardware ) -- minimum chaff lamp
+	SendDataHW("805", gES_tmpFlare < 10 and 1 or 0, lHardware ) -- minimum flare lamp
+	
 end
 
 function MechanicalDevicesIndicator(hardware)
@@ -762,7 +943,7 @@ function MechanicalDevicesIndicator(hardware)
 	local lHardware = hardware or 1
 	local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
 	if lMechInfo == nil then
-		WriteToLog('lMechInfo nil')
+		--WriteToLog('lMechInfo nil')
 		return
 	end
 	--[[

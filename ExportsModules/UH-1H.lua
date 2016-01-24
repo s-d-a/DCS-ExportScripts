@@ -25,103 +25,103 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	--[190] = "%.4f",		-- stick_pitch_sec
 	--[207] = "%.4f",		-- collective_position_operator
 	-- Gauges Pilot
-	[117] = "%0.4f",		-- AIRSPEED_Nose
-	[118] = "%0.4f",		-- AIRSPEED_Roof
+	[117] = "%0.4f",		-- AIRSPEED_Nose {0.0, 20.0, 30.0, 40.0, 50.0, 60.0, 80.0, 120.0, 150.0} {0.0, 0.075, 0.19, 0.32, 0.395, 0.44, 0.55, 0.825, 1.0}
+	[118] = "%0.4f",		-- AIRSPEED_Roof {0.0, 20.0, 30.0, 40.0, 50.0, 60.0, 80.0, 120.0, 150.0} {0.0, 0.075, 0.19, 0.32, 0.395, 0.44, 0.55, 0.825, 1.0}
 	-- Course Indicator ID-1347
-	[151] = "%.4f",		-- VerticalBar
-	[152] = "%.4f",		-- HorisontalBar
+	[151] = "%.4f",		-- VerticalBar {-1.0, 1.0} {-0.7, 0.7}
+	[152] = "%.4f",		-- HorisontalBar {-1.0, 1.0} {-0.7, 0.7}
 	[153] = "%.4f",		-- ToMarker
 	[154] = "%.4f",		-- FromMarker
 	[156] = "%.4f",		-- RotCourseCard
 	[157] = "%.1f",		-- VerticalOFF
 	[158] = "%.1f",		-- HorisontalOFF
 	-- ADF_ARN83
-	[45] = "%0.2f",		-- ADF_ARN83_Frequency
+	[45] = "%0.2f",		-- ADF_ARN83_Frequency {0.0, 1.0} {0.0, 0.55}
 	[40] = "%.4f",		-- ARN83_SignalLevel
 	-- GMC
 	[159] = "%.4f",		-- GMC_CoursePointer1
 	[160] = "%.4f",		-- GMC_CoursePointer2
 	[162] = "%.4f",		-- GMC_HeadingMarker
 	[165] = "%.4f",		-- GMC_Heading
-	[166] = "%.4f",		-- GMC_Annunciator
+	[166] = "%.4f",		-- GMC_Annunciator {-1.0, 1.0} {0.0, 1.0}
 	[167] = "%.2f",		-- GMC_PowerFail
 	-- Copilot RMI
 	[266] = "%.4f",		-- RMI_CoursePointer1
 	[267] = "%.4f",		-- RMI_CoursePointer2
 	[269] = "%.4f",		-- RMI_Heading
 	-- Altimeter Indicator AAU-32/A (operator)
-	[168] = "%.4f",		-- Pointer
-	[169] = "%.4f",		-- Alt1AAU_10000_footCount
-	[170] = "%.4f",		-- Alt1AAU_1000_footCount
-	[171] = "%.4f",		-- Alt1AAU_100_footCount
-	[174] = "%.2f",		-- AAU_32_Drum_Counter
-	[175] = "%.2f",		-- AAU_32_Drum_Counter
-	[176] = "%.2f",		-- AAU_32_Drum_Counter
+	[168] = "%.4f",		-- Pointer {0.0, 1000.0} {0.0, 1.0}
+	[169] = "%.4f",		-- Alt1AAU_10000_footCount {0.0, 10.0} {0.0, 1.0}
+	[170] = "%.4f",		-- Alt1AAU_1000_footCount {0.0, 10.0} {0.0, 1.0}
+	[171] = "%.4f",		-- Alt1AAU_100_footCount {0.0, 10.0} {0.0, 1.0}
+	[174] = "%.2f",		-- AAU_32_Drum_Counter {-2.0, 1.0} {0.0, 0.3}
+	[175] = "%.2f",		-- AAU_32_Drum_Counter {0.0, 10.0} {0.0, 1.0}
+	[176] = "%.2f",		-- AAU_32_Drum_Counter {0.0, 10.0} {0.0, 1.0}
 	[177] = "%.1f",		-- CodeOff_flag
 	-- Altimeter Indicator AAU-7/A (pilot) (AAU-31/A)
-	[178] = "%.4f",		-- Alt_10000_AAU_7A
-	[179] = "%.4f",		-- Alt_1000_AAU_7A
-	[180] = "%.4f",		-- Alt_100_AAU_7A
-	[182] = "%.4f",		-- Press_AAU_7A
+	[178] = "%.4f",		-- Alt_10000_AAU_7A {0.0, 100000.0} {0.0, 1.0}
+	[179] = "%.4f",		-- Alt_1000_AAU_7A {0.0, 10000.0} {0.0, 1.0}
+	[180] = "%.4f",		-- Alt_100_AAU_7A {0.0, 1000.0} {0.0, 1.0}
+	[182] = "%.4f",		-- Press_AAU_7A {28.1, 31.0} {0.0, 1.0}
 	-- Gauges
-	[113] = "%.4f",		-- EngOilPress
-	[114] = "%.4f",		-- EngOilTemp
-	[115] = "%.4f",		-- TransmOilPress
-	[116] = "%.4f",		-- TransmOilTemp
-	[117] = "%.4f",		-- AIRSPEED_Nose
-	[118] = "%.4f",		-- AIRSPEED_Roof
-	[121] = "%.4f",		-- ExhaustTemp
-	[122] = "%.4f",		-- EngineTach
-	[123] = "%.4f",		-- RotorTach
-	[119] = "%.4f",		-- GasProducerTach
-	[120] = "%.4f",		-- GasProducerTach_U
-	[124] = "%.4f",		-- TorquePress
-	[149] = "%.4f",		-- VoltageDC
-	[150] = "%.4f",		-- VoltageAC
-	[436] = "%.4f",		-- LoadmeterMainGen
-	[125] = "%.4f",		-- LoadmeterSTBYGen
-	[126] = "%.4f",		-- FuelPress
-	[239] = "%.4f",		-- FuelQuantity
+	[113] = "%.4f",		-- EngOilPress {-3.0, 0.0, 100.0} {0.0, 0.029, 1.0}
+	[114] = "%.4f",		-- EngOilTemp {-70.0, -50.0, 0.0, 100.0, 150.0} {0.0, 0.13, 0.38, 0.71, 1.0}
+	[115] = "%.4f",		-- TransmOilPress {-3.0, 0.0, 100.0} {0.0, 0.029, 1.0}
+	[116] = "%.4f",		-- TransmOilTemp {-70.0, -50.0, 0.0, 100.0, 150.0} {0.0, 0.13, 0.38, 0.71, 1.0}
+	--[117] = "%.4f",		-- AIRSPEED_Nose
+	--[118] = "%.4f",		-- AIRSPEED_Roof
+	[121] = "%.4f",		-- ExhaustTemp {0.0, 1000.0} {0.0, 1.0}
+	[122] = "%.4f",		-- EngineTach {0.0, 7200.0} {0.0, 1.0}
+	[123] = "%.4f",		-- RotorTach {0.0, 360.0} {0.0, 1.0}
+	[119] = "%.4f",		-- GasProducerTach {0.0, 101.5} {0.0, 1.0}
+	[120] = "%.4f",		-- GasProducerTach_U {0.0, 10.0} {0.0, 1.0}
+	[124] = "%.4f",		-- TorquePress {-3.0, 0.0, 100.0} {0.0, 0.029, 1.0}
+	[149] = "%.4f",		-- VoltageDC {0.0, 30.0} {0.0, 1.0}
+	[150] = "%.4f",		-- VoltageAC {0.0, 150.0} {0.0, 1.0}
+	[436] = "%.4f",		-- LoadmeterMainGen {-1.5, 0.0, 12.5} {0.0, 0.156, 1.0}
+	[125] = "%.4f",		-- LoadmeterSTBYGen {-1.5, 0.0, 12.5} {0.0, 0.09, 1.0}
+	[126] = "%.4f",		-- FuelPress {-2.0, 0.0, 50.0} {0.0, 0.015, 1.0}
+	[239] = "%.4f",		-- FuelQuantity {0.0, 1580.0} {0.0, 1.0}
 	-- Mechanic clock
-	[127] = "%.4f",		-- CLOCK_hours
-	[128] = "%.4f",		-- CLOCK_minutes
-	[129] = "%.4f",		-- CLOCK_seconds
+	[127] = "%.4f",		-- CLOCK_hours {0.0, 12.0} {0.0, 1.0}
+	[128] = "%.4f",		-- CLOCK_minutes {0.0, 60.0} {0.0, 1.0}
+	[129] = "%.4f",		-- CLOCK_seconds {0.0, 60.0} {0.0, 1.0}
 	-- 
-	[132] = "%.4f",		-- TurnPtr
-	[133] = "%.4f",		-- SideSlip
-	[134] = "%.2f",		-- VertVelocPilot
-	[251] = "%.2f",		-- VertVelocCopilot
+	[132] = "%.4f",		-- TurnPtr {-1.0, 1.0}
+	[133] = "%.4f",		-- SideSlip {-1.0, 1.0}
+	[134] = "%.2f",		-- VertVelocPilot {-4000.0, -3000.0, -1500.0, -1000.0, 1000.0, 1500.0, 3000.0, 4000.0} {-1.0, -0.81,  -0.54, -0.36, 0.36, 0.54, 0.81, 1.0}
+	[251] = "%.2f",		-- VertVelocCopilot {-4000.0, -3000.0, -1500.0, -1000.0, 1000.0, 1500.0, 3000.0, 4000.0} {-1.0, -0.81,  -0.54, -0.36, 0.36, 0.54, 0.81, 1.0}
 	-- ADI - pilot
-	[142] = "%.4f",		-- Attitude_Roll
-	[143] = "%.4f",		-- Attitude_Pitch
+	[142] = "%.4f",		-- Attitude_Roll {1.0, -1.0}
+	[143] = "%.4f",		-- Attitude_Pitch {1.0, -1.0}
 	[148] = "%.1f",		-- Attitude_Off_flag
 	-- ADI - operator
-	[135] = "%.4f",		-- Attitude_Roll_left
-	[136] = "%.4f",		-- Attitude_Pitch_left
-	[141] = "%.1f",		-- Attitude_Off_flag_left
-	[138] = "%.4f",		-- Attitude_PitchShift
+	[135] = "%.4f",		-- Attitude_Roll_left {1.0, -1.0}
+	[136] = "%.4f",		-- Attitude_Pitch_left {1.0, -1.0}
+	[141] = "%.1f",		-- Attitude_Off_flag_left  {0.0, 1.0} {1.0, 0.0}
+	[138] = "%.4f",		-- Attitude_PitchShift {0.0, 1.0} {-1.0, 1.0}
 	-- operator
 	--[149] = "%.4f",		-- DCVoltmeter
 	--[150] = "%.4f",		-- ACVoltmeter
 	-- UHF_ARC51
-	[10] = "%.4f",		-- UHF_ARC51_Freq1
-	[11] = "%.4f",		-- UHF_ARC51_Freq2
-	[12] = "%.4f",		-- UHF_ARC51_Freq3
-	[13] = "%.4f",		-- UHF_ARC51_Freq4
-	[14] = "%.4f",		-- UHF_ARC51_Freq5
+	[10] = "%.4f",		-- UHF_ARC51_Freq1 {2.0, 3.0} {0.0, 1.0}
+	[11] = "%.4f",		-- UHF_ARC51_Freq2 {0.0, 10.0} {0.0, 1.0}
+	[12] = "%.4f",		-- UHF_ARC51_Freq3 {0.0, 10.0} {0.0, 1.0}
+	[13] = "%.4f",		-- UHF_ARC51_Freq4 {0.0, 10.0} {0.0, 1.0}
+	[14] = "%.4f",		-- UHF_ARC51_Freq5 {0.0, 10.0} {0.0, 1.0}
 	-- NAV_ARN82
-	[46] = "%.4f",		-- NAV_ARN82_Freq1
-	[47] = "%.4f",		-- NAV_ARN82_Freq2
-	[48] = "%.4f",		-- NAV_ARN82_Freq3
-	[49] = "%.4f",		-- NAV_ARN82_Freq4
-	[50] = "%.4f",		-- NAV_ARN82_Freq5
+	[46] = "%.4f",		-- NAV_ARN82_Freq1 {0.0, 10.0} {0.0, 1.0}
+	[47] = "%.4f",		-- NAV_ARN82_Freq2 {0.0, 10.0} {0.0, 1.0}
+	[48] = "%.4f",		-- NAV_ARN82_Freq3 {0.0, 10.0} {0.0, 1.0}
+	[49] = "%.4f",		-- NAV_ARN82_Freq4 {0.0, 10.0} {0.0, 1.0}
+	[50] = "%.4f",		-- NAV_ARN82_Freq5 {0.0, 10.0} {0.0, 1.0}
 	-- VHF_ARC134
-	[1] = "%.4f",		-- VHF_ARC134_Freq1
-	[2] = "%.4f",		-- VHF_ARC134_Freq2
-	[3] = "%.4f",		-- VHF_ARC134_Freq3
-	[4] = "%.4f",		-- VHF_ARC134_Freq4
+	[1] = "%.4f",		-- VHF_ARC134_Freq1 {0.0, 10.0} {0.0, 1.0}
+	[2] = "%.4f",		-- VHF_ARC134_Freq2 {0.0, 10.0} {0.0, 1.0}
+	[3] = "%.4f",		-- VHF_ARC134_Freq3 {0.0, 10.0} {0.0, 1.0}
+	[4] = "%.4f",		-- VHF_ARC134_Freq4 {0.0, 10.0} {0.0, 1.0}
 	-- 
-	[56] = "%.1f",		-- Marker_Beacon_Lamp
+	[56] = "%.1f",		-- Marker_Beacon_Lamp {0.0, 1.0} {0.0, 0.9}
 	-- Panel_Shake
 	--[264] = "%.1f",		-- Panel_Shake_Z
 	--[265] = "%.1f",		-- Panel_Shake_Y
@@ -158,23 +158,25 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	-- 
 	[437] = "%.3f",		-- RamTemp
 	-- Radar Altimeter
-	[443] = "%.4f",		-- RALT_Needle
+	[443] = "%.4f",		-- RALT_Needle {0.0, 0.98} {0.0, 0.98}
 	[467] = "%.1f",		-- RALT_Off_Flag
 	[447] = "%.1f",		-- RALT_LO_Lamp
 	[465] = "%.1f",		-- RALT_HI_Lamp
-	[444] = "%.4f",		-- RALT_LO_Index
-	[466] = "%.4f",		-- RALT_HI_Index
-	[468] = "%0.1f",		-- RALT_Digit_1
-	[469] = "%0.1f",		-- RALT_Digit_2
-	[470] = "%0.1f",		-- RALT_Digit_3
-	[471] = "%0.1f",		-- RALT_Digit_4
+	[444] = "%.4f",		-- RALT_LO_Index {-0.02, -0.01, -0.0001,0.0, 0.744} {0.97,  0.99, 1.0, 0.0, 0.744}
+	[466] = "%.4f",		-- RALT_HI_Index {0.0, 0.744} {0.0, 0.744}
+	[468] = "%0.1f",		-- RALT_Digit_1 {0.0, 10.0} {0.0, 1.0}
+	[469] = "%0.1f",		-- RALT_Digit_2 {0.0, 10.0} {0.0, 1.0}
+	[470] = "%0.1f",		-- RALT_Digit_3 {0.0, 10.0} {0.0, 1.0}
+	[471] = "%0.1f",		-- RALT_Digit_4 {0.0, 10.0} {0.0, 1.0}
 	-- FLARE CHAFF
-	[460] = "%1d",		-- FLARE_Digit_1
-	[461] = "%1d",		-- FLARE_Digit_2
-	[462] = "%1d",		-- CHAFF_Digit_1
-	[463] = "%1d",		-- CHAFF_Digit_2
+	[460] = "%1d",		-- FLARE_Digit_1 {0.0, 10.0} {0.0, 1.0}
+	[461] = "%1d",		-- FLARE_Digit_2 {0.0, 10.0} {0.0, 1.0}
+	[462] = "%1d",		-- CHAFF_Digit_1 {0.0, 10.0} {0.0, 1.0}
+	[463] = "%1d",		-- CHAFF_Digit_2 {0.0, 10.0} {0.0, 1.0}
 	-- XM130 Chaff Flare
 	[458] = "%.1f",		-- lamp_XM130_ARMED
+	-- SIGHTS_FOR_CIVIL
+	[473] = "$.1f",		-- SIGHTS_FOR_CIVIL
 	-- Main Panel Lights
 	[277] = "%.1f",		-- lamp_MASTER
 	[276] = "%.1f",		-- lamp_LOW_RPM
@@ -207,16 +209,16 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[76] = "%.1f",		-- lamp_IFF_REPLY
 	[77] = "%.1f",		-- lamp_IFF_TEST
 	-- Electic Gauges
-	[526] = "%.4f",		-- DC_voltage
-	[532] = "%.2f",		-- AC_voltage
-	[527] = "%.4f",		-- DC_battery_I_current
-	[528] = "%.4f",		-- DC_battery_II_current
-	[529] = "%.4f",		-- DC_VU_I_current
-	[530] = "%.4f",		-- DC_VU_II_current
-	[531] = "%.4f",		-- DC_VU_III_current
-	[533] = "%.2f",		-- AC_generator_I_current
-	[534] = "%.2f",		-- AC_generator_II_current
-	[371] = "%.2f"		-- AntiIce_ampermeter
+	[526] = "%.4f",		-- DC_voltage {0.0, 30.0} {0.0, 1.0}
+	[532] = "%.2f",		-- AC_voltage {0.0, 100.0, 150.0, 200.0, 250.0} {0.0, 0.14,  0.31,  0.56,  1.0}
+	[527] = "%.4f",		-- DC_battery_I_current {0.0, 400.0} {0.0, 1.0}
+	[528] = "%.4f",		-- DC_battery_II_current {0.0, 400.0} {0.0, 1.0}
+	[529] = "%.4f",		-- DC_VU_I_current {0.0, 400.0} {0.0, 1.0}
+	[530] = "%.4f",		-- DC_VU_II_current {0.0, 400.0} {0.0, 1.0}
+	[531] = "%.4f",		-- DC_VU_III_current {0.0, 400.0} {0.0, 1.0}
+	[533] = "%.2f",		-- AC_generator_I_current {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
+	[534] = "%.2f",		-- AC_generator_II_current {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
+	[371] = "%.2f"		-- AntiIce_ampermeter {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
 }
 gES_GlassCockpitConfigArguments = 
 {
@@ -323,7 +325,7 @@ gES_GlassCockpitConfigArguments =
 	[81] = "%1d",		-- Main Fuel
 	[240] = "%1d",		-- Test Fuel Gauge
 	--Transponder APX-72
-	[78] = "%.1f",		-- Code
+	[58] = "%.1f",		-- Code
 	[59] = "%.1f",		-- Master
 	[60] = "%1d",		-- Audio/light
 	
@@ -379,6 +381,7 @@ gES_GlassCockpitConfigArguments =
 	-- Pilot's altimeter
 	[181] = "%.4f",		-- Pressure Adjustment, Axis
 	-- VHF ARC-134
+	[6] = "%1d",		-- Comm Test Button
 	[7] = "%1d",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Button
 	[5] = "%.4f",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Axis
 	[8] = "%1d",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume, Button
@@ -488,7 +491,7 @@ gES_GlassCockpitConfigArguments =
 	[449] = "%1d",		-- Radar Altimeter Power
 	[445] = "%.4f",		-- Turn On. Low Set.
 	[446] = "%1d",		-- Test / Hight Set. Left mouse click to Test. Rotate mouse wheel to set Hight, Button
-	[465] = "%1d",		-- Test / Hight Set. Left mouse click to Test. Rotate mouse wheel to set Hight, Axis
+	[464] = "%1d",		-- Test / Hight Set. Left mouse click to Test. Rotate mouse wheel to set Hight, Axis
 	-- Doors
 	[419] = "%1d",		-- Open Left Doors
 	[421] = "%1d"		-- Open Right Doors
@@ -938,6 +941,23 @@ function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
 	end
 	
 	SendDataHW("2007", string.format("%s", lADF_ARN83))
+	
+	-- Radar Altimeter - AN/APN-209
+	-- [468] = "%0.1f",		-- RALT_Digit_1
+	-- {0.0, 1.0} 0.0=0, 0.1=1, 0.2=2,..., 0.9=9, 1.0=' '
+	-- [469] = "%0.1f",		-- RALT_Digit_2
+	-- {0.0, 1.0} 0.0=0, 0.1=1, 0.2=2,..., 0.9=9, 1.0=' '
+	-- [470] = "%0.1f",		-- RALT_Digit_3
+	-- {0.0, 1.0} 0.0=0, 0.1=1, 0.2=2,..., 0.9=9, 1.0=' '
+	-- [471] = "%0.1f",		-- RALT_Digit_4
+	-- {0.0, 1.0} 0.0=0, 0.1=1, 0.2=2,..., 0.9=9, 1.0=' '
+	local lAN_APN_209_PRESET = {[0.0]="0",[0.1]="1",[0.2]="2",[0.3]="3",[0.4]="4",[0.5]="5",[0.6]="6",[0.7]="7",[0.8]="8",[0.9]="9",[1.0]=" "}
+	local lAN_APN_209 = ""
+	lAN_APN_209 = lAN_APN_209_PRESET[math.round(mainPanelDevice:get_argument_value(468), 2)]
+	lAN_APN_209 = lAN_APN_209 .. lAN_APN_209_PRESET[math.round(mainPanelDevice:get_argument_value(469), 2)]
+	lAN_APN_209 = lAN_APN_209 .. lAN_APN_209_PRESET[math.round(mainPanelDevice:get_argument_value(470), 2)]
+	lAN_APN_209 = lAN_APN_209 .. lAN_APN_209_PRESET[math.round(mainPanelDevice:get_argument_value(471), 2)]
+	SendDataHW("2008", string.format("%s", lAN_APN_209))
 
 	-- generic Radio display and frequency rotarys
 	-------------------------------------------------

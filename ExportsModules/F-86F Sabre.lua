@@ -97,7 +97,9 @@ gES_GlassCockpitConfigEveryFrameArguments =
 	[615] = "%.1f",		-- lamp_FIRE_DETECTION_FwdFireWarning {-1.0, 1.0}
 	[616] = "%.1f",		-- lamp_FIRE_DETECTION_AftFireWarning {-1.0, 1.0}
 	-- control system
-	[613] = "%.1f"		-- lamp_CONTROL_TakeOffPosInd {-1.0, 1.0}
+	[613] = "%.1f",		-- lamp_CONTROL_TakeOffPosInd {-1.0, 1.0}
+	-- air system
+	[614] = "%.1f"		-- lamp_WindshieldAntiIceOverheatWarning {-1.0, 1.0}
 }
 
 gES_GlassCockpitConfigArguments = 
@@ -173,7 +175,7 @@ gES_GlassCockpitConfigArguments =
 	[703] = "%1d",     -- Oxygen Regulator Diluter Lever, NORMAL OXYGEN/100% OXYGEN {1, -1}
 	[704] = "%.4f",     -- Oxygen Regulator Supply Lever (rotary) {0.0 to 1.0} in -0.5 steps 
 	-- Fire Detection Interface
-	[635] = "%1d",     -- Engine Fire Detector System Test Button {1,- 1}
+	[635] = "%1d",     -- Engine Fire Warning Light Test Button {1,- 1}
 	[685] = "%1d",     -- Forward Engine Compartment Fire-warning Light (Push to test) {1}
 	[686] = "%1d",     -- Aft Engine Compartment Fire-warning Light (Push to test) {1}
 	-- Air Interface
@@ -185,6 +187,7 @@ gES_GlassCockpitConfigArguments =
 	[737] = "%.1f",     -- Cockpit Air Temperature Control Switch, AUTO/OFF/HOT/COLD {-1.0, 1.0}
 	[645] = "%.1f",     -- Engine Anti-Ice & Screen Switch, EXTEND/RET./ANTI-ICE {-1.0, 1.0}
 	[741] = "%1d",     -- Air Outlet Selector Lever, FLOOR/BOTH/DEFROST {-1, 1}
+	[691] = "%1d",     -- Windshield Anti-Ice Overheat Warning Light
 	-- Light Interface
 	[654] = "%1d",     -- Compass Light Switch, ON/OFF {2, -2}
 	[813] = "%.1f",     -- Instrument Panel Primary Light Rheostat (rotary) {0.0, 1.0} in 0.5 steps
@@ -200,7 +203,7 @@ gES_GlassCockpitConfigArguments =
 	[733] = "%.1f",     -- Emergency (In-air) Ignition Switch, ON/OFF {1.0, 1.0}
 	-- Control Interface
 	[649] = "%.1f",     -- Lateral Alternate Trim Switch, NORMAL/OFF/LEFT/RIGHT {-0.1, 0.1}
-	[648] = "%.1f",     -- Rudder Trim Switch, LEFT/OFF/RIGHT {-1.0, 1.0}
+	[648] = "%.1f",     -- Rudder Trim Switch, LEFT/OFF/RIGHT {1.0, -1.0}
 	--[738] = "%1d",     -- Longitudinal Alternate Trim Switch Cover {1, -1}
 	[739] = "%.1f",     -- Longitudinal Alternate Trim Switch, NORMAL GRIP CONT/OFF/NOSE UP/NOSE DOWN {-0.1, 0.0, 0.1}
 	[683] = "%1d",     -- Take-off (Trim) Position Indicator Light (Push to test) {1}
@@ -212,7 +215,7 @@ gES_GlassCockpitConfigArguments =
 	-- radio compass ARN-6
 	[802] = "%.4f",     -- AN/ARN-6 Audio Volume Control (rotary) {0.1, 0.9} in 0.5 steps
 	[803] = "%.1f",     -- AN/ARN-6 Frequency Band Switch {0.0, 0.1, 0.2, 0.3}
-	[667] = "%.1f",     -- AN/ARN-6 Function Selector Switch, OFF/COMP/ANT./LOOP/CONT. {0.0, 0.1, 0.2, 0.3}
+	[667] = "%.1f",     -- AN/ARN-6 Function Selector Switch, OFF/COMP/ANT./LOOP/CONT. {0.0, 0.1, 0.2, 0.3, 0.4}
 	[666] = "%.1f",     -- AN/ARN-6 LOOP L-R Switch {-1.0, 0.0, 1.0}
 	--[null] = "%.4f",     -- AN/ARN-6 Tuning Crank {0.0, 1.0} in 0.01 steps
 	[657] = "%.1f",     -- AN/ARN-6 Scale Light Switch, HI/OFF/LO {-0.1, 0.0, 0.1}
@@ -227,11 +230,11 @@ gES_GlassCockpitConfigArguments =
 	--[null] = "%.4f",     -- Altimeter reference pressure adjusting knob (rotary) {0.0, 1.0} in 0.1 steps
 	-- gyromag compass
 	--[null] = "%.4f",     -- Compass Correction (rotary) {0.0, 1.0} in 0.05 steps
-	[598] = "%.1f",     -- Directional Indicator Fast Slaving Switch {0.0, 1.0}
+	[598] = "%.1f",     -- Directional Indicator Fast Slaving Button {0.0, 1.0}
 	-- attitude indicator
 	[714] = "%.1f",     -- Pull to Cage Knob {0.0, 1.0}
 	-- accelerometer
-	[1004] = "%.1f",     -- Accelerometer Reset Knob {0.0, 1.0}
+	[1004] = "%.1f",     -- Accelerometer Reset Button {0.0, 1.0}
 	-- CLOCK
 	--[null] = "%1d",     -- Set Clock Knob
 	[831] = "%1d",     -- Elapsed Time Mechanism Button {0, 1}
@@ -244,7 +247,7 @@ gES_GlassCockpitConfigArguments =
 	[642] = "%1d",     -- A-4 Sight Filament Selector Switch, SECONDARY/PRIMARY {2, -2}
 	[721] = "%.1f",     -- Variable Sight Selector Unit - Sight Function Selector Lever, ROCKET/GUN/BOMB {0.0, 0.1, 0.2}
 	[720] = "%1d",     -- Variable Sight Selector Unit - Target Speed Switch, HI/LO {1, -1}
-	[722] = "%.4f",     -- Variable Sight Selector Unit - Rocket Depression Angle Selector (rotary) {0.0, 1.0} in 0.6 steps
+	[722] = "%.4f",     -- Variable Sight Selector Unit - Rocket Depression Angle Selector (rotary) {0.0, 1.0} in 0.1 steps
 	[727] = "%.4f",     -- Bomb-Target Wind Control Knob (rotary) {0.0, 1.0} in 0.6 steps
 	-- weapon system
 	[639] = "",     -- Demolition Bomb Release Selector Switch, AUTO RELEASE/MANUAL RELEASE {2,-2}

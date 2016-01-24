@@ -88,7 +88,7 @@ gES_GlassCockpitConfigArguments =
 	--Fuel system
 	[90] = "%.1f",     -- Fuel Tank Selector Valve (CLOSE/FORWARD/AFT/BOTH) {0.0, 0.1, 0.2, 0.3}
 	[99] = "%.1f",     -- Fuel Gauge Selector (FORWARD/NONE/AFT) {0.0, 0.5, 1.0}
-	--[161] = "%1d",     -- "MW-B4 Selector (Not Functional)
+	[161] = "%1d",     -- MW-B4 Selector (Not Functional)
 	[162] = "%1d",     -- Primer Pump {0, 1}
 	--electric system
 	[79] = "%1d",     -- Electric Kill-switch

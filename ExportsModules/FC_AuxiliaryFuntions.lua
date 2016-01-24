@@ -1276,12 +1276,14 @@ function FC_Russian_VVI_New(exportid)
 		else
 			lVVI = 0.016875 * lVVI + -0.0125
 		end
+		lVVI = (lVVI > 1.0 and 1.0 or lVVI)
 	else
 		if lVVI <= 0.0 and lVVI < -20.0 then
 			lVVI = 0.01625 * lVVI
 		else
 			lVVI = 0.016875 * lVVI + -0.0125
 		end
+		lVVI = (lVVI < -1.0 and -1.0 or lVVI)
 	end
 
 	SendData(lExportID, string.format("%.4f", lVVI))
@@ -1306,36 +1308,36 @@ function FC_Russian_AOA_Su25(exportid)
 	-- AOA Indicator and Accelerometer (AOA, GLoad)
 	if lAoA > 0.0 then	-- positive AOA
 		--[[
-		y_min = 0.0					-- minimaler Ausgabewert
-		y_max = 1.0					-- maximaler Ausgabewert
-		x_min = 0.0					-- minimaler Eingangswert
-		x_max = 0.67224794626236	-- maximaler Eingangswert
-		x = 0.336					-- aktueller Eingangswert
+		y_min = 0.0		-- minimaler Ausgabewert
+		y_max = 1.0		-- maximaler Ausgabewert
+		x_min = 0.0		-- minimaler Eingangswert
+		x_max = 40.0	-- maximaler Eingangswert
+		x = 1.4			-- aktueller Eingangswert
 
-		d_y = 1.0								-- Delta Ausgabewerte (y_max - y_min)
-		d_x = 0.67224794626236					-- Delta Eingangswerte (x_max - x_min)
-		m = 1.4875463815991002393091135769939	-- Steigung der linearen Funktion (d_y / d_x)
-		n = 0.0									-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+		d_y = 1.0		-- Delta Ausgabewerte (y_max - y_min)
+		d_x = 40.0		-- Delta Eingangswerte (x_max - x_min)
+		m = 0.025		-- Steigung der linearen Funktion (d_y / d_x)
+		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
 		
-		y = 0.727								-- Ergebnis (m * x + n)
+		y = 0.035		-- Ergebnis (m * x + n)
 		]]
-		lAoA = 1.4875463815991002393091135769939 * lAoA
+		lAoA = 0.025 * lAoA
 	else
 		--[[
-		y_min = 0.0					-- minimaler Ausgabewert
-		y_max = -0.28				-- maximaler Ausgabewert
-		x_min = 0.0					-- minimaler Eingangswert
-		x_max = -0.17499999701977	-- maximaler Eingangswert
-		x = -0.1					-- aktueller Eingangswert
+		y_min = 0.0		-- minimaler Ausgabewert
+		y_max = -0.28	-- maximaler Ausgabewert
+		x_min = 0.0		-- minimaler Eingangswert
+		x_max = -10.0	-- maximaler Eingangswert
+		x = -3.2		-- aktueller Eingangswert
 
-		d_y = -0.28								-- Delta Ausgabewerte (y_max - y_min)
-		d_x = -0.17499999701977					-- Delta Eingangswerte (x_max - x_min)
-		m = 1.6000000272478176068843626660856	-- Steigung der linearen Funktion (d_y / d_x)
-		n = 0.0									-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+		d_y = -0.28		-- Delta Ausgabewerte (y_max - y_min)
+		d_x = -10.0		-- Delta Eingangswerte (x_max - x_min)
+		m = 0.028		-- Steigung der linearen Funktion (d_y / d_x)
+		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
 		
-		y = -0.16000000272478176068843626660856	-- Ergebnis (m * x + n)
-		]]
-		lAoA = 1.6000000272478176068843626660856 * lAoA
+		y = -0.0896		-- Ergebnis (m * x + n)
+		]] --0.14
+		lAoA = 0.028 * lAoA
 	end
 
 	if lAccelerationUnits > 0.0 then	-- positive AOA
@@ -1389,33 +1391,33 @@ function FC_Russian_AOA_Su2733(exportid)
 		y_min = 0.0		-- minimaler Ausgabewert
 		y_max = 1.0		-- maximaler Ausgabewert
 		x_min = 0.0		-- minimaler Eingangswert
-		x_max = 0.68	-- maximaler Eingangswert
-		x = 0.4			-- aktueller Eingangswert
+		x_max = 40.0	-- maximaler Eingangswert
+		x = 1.4			-- aktueller Eingangswert
 
-		d_y = 1.0								-- Delta Ausgabewerte (y_max - y_min)
-		d_x = 0.68								-- Delta Eingangswerte (x_max - x_min)
-		m = 1,4705882352941176470588235294118	-- Steigung der linearen Funktion (d_y / d_x)
-		n = 0.0									-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+		d_y = 1.0		-- Delta Ausgabewerte (y_max - y_min)
+		d_x = 40.0		-- Delta Eingangswerte (x_max - x_min)
+		m = 0.025		-- Steigung der linearen Funktion (d_y / d_x)
+		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
 		
-		y = 0,58823529411764705882352941176471	-- Ergebnis (m * x + n)
+		y = 0.035		-- Ergebnis (m * x + n)
 		]]
-		lAoA = 1.4705882352941176470588235294118 * lAoA
+		lAoA = 0.025 * lAoA
 	else
 		--[[
 		y_min = 0.0		-- minimaler Ausgabewert
 		y_max = -0.28	-- maximaler Ausgabewert
 		x_min = 0.0		-- minimaler Eingangswert
-		x_max = -0.2	-- maximaler Eingangswert
-		x = -0.1		-- aktueller Eingangswert
+		x_max = -10.0	-- maximaler Eingangswert
+		x = -3.2		-- aktueller Eingangswert
 
 		d_y = -0.28		-- Delta Ausgabewerte (y_max - y_min)
-		d_x = -0.2		-- Delta Eingangswerte (x_max - x_min)
-		m = 1.4			-- Steigung der linearen Funktion (d_y / d_x)
+		d_x = -10.0		-- Delta Eingangswerte (x_max - x_min)
+		m = 0.028		-- Steigung der linearen Funktion (d_y / d_x)
 		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
 		
-		y = -0.14		-- Ergebnis (m * x + n)
-		]]
-		lAoA = 1.6000000272478176068843626660856 * lAoA
+		y = -0.0896		-- Ergebnis (m * x + n)
+		]] --0.14
+		lAoA = 0.028 * lAoA
 	end
 
 	if lAccelerationUnits > 0.0 then	-- positive AOA
@@ -1467,35 +1469,35 @@ function FC_Russian_AOA_MiG29(exportid)
 	if lAoA > 0.0 then	-- positive AOA
 		--[[
 		y_min = 0.0		-- minimaler Ausgabewert
-		y_max = 1.0		-- maximaler Ausgabewert
+		y_max = 0.7812	-- maximaler Ausgabewert
 		x_min = 0.0		-- minimaler Eingangswert
-		x_max = 0.68	-- maximaler Eingangswert
-		x = 0.4			-- aktueller Eingangswert
+		x_max = 30.0	-- maximaler Eingangswert
+		x = 5.4			-- aktueller Eingangswert
 
-		d_y = 1.0								-- Delta Ausgabewerte (y_max - y_min)
-		d_x = 0.68								-- Delta Eingangswerte (x_max - x_min)
-		m = 1,4705882352941176470588235294118	-- Steigung der linearen Funktion (d_y / d_x)
-		n = 0.0									-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+		d_y = 0.7812	-- Delta Ausgabewerte (y_max - y_min)
+		d_x = 30.0		-- Delta Eingangswerte (x_max - x_min)
+		m = 0.02604		-- Steigung der linearen Funktion (d_y / d_x)
+		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
 		
-		y = 0,58823529411764705882352941176471	-- Ergebnis (m * x + n)
+		y = 0.1406		-- Ergebnis (m * x + n)
 		]]
-		lAoA = 1.4705882352941176470588235294118 * lAoA
+		lAoA = 0.03333333333333333333333333333333 * lAoA
 	else
 		--[[
 		y_min = 0.0		-- minimaler Ausgabewert
 		y_max = -0.28	-- maximaler Ausgabewert
 		x_min = 0.0		-- minimaler Eingangswert
-		x_max = -0.2	-- maximaler Eingangswert
-		x = -0.1		-- aktueller Eingangswert
+		x_max = -5.5	-- maximaler Eingangswert
+		x = -2.1		-- aktueller Eingangswert
 
 		d_y = -0.28		-- Delta Ausgabewerte (y_max - y_min)
-		d_x = -0.2		-- Delta Eingangswerte (x_max - x_min)
-		m = 1.4			-- Steigung der linearen Funktion (d_y / d_x)
-		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+		d_x = -5.5		-- Delta Eingangswerte (x_max - x_min)
+		m = 0,05090909090909090909090909090909	-- Steigung der linearen Funktion (d_y / d_x)
+		n = 0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
 		
-		y = -0.14		-- Ergebnis (m * x + n)
+		y = -0.10691	-- Ergebnis (m * x + n)
 		]]
-		lAoA = 1.6000000272478176068843626660856 * lAoA
+		lAoA = 0.05090909090909090909090909090909 * lAoA
 	end
 
 	if lAccelerationUnits > 0.0 then	-- positive AOA

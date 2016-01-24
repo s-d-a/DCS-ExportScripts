@@ -38,7 +38,7 @@ gES_HARDWARE[1].Separator = ":"
 gES_HARDWAREListner       = true          -- false for not use
 gES_HARDWAREListnerPort   = 26027         -- Listener Port for D.A.C.
 
-gES_ExportInterval        = 0.1
+gES_ExportInterval        = 0.05
 gES_ExportLowTickInterval = 1
 gES_ExportModulePath      = lfs.writedir().."ExportsModules\\"
 gES_LogPath               = lfs.writedir().."Logs\\Export.log"

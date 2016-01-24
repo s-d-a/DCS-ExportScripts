@@ -1258,6 +1258,7 @@ function ProcessHARDWAREConfigLowImportance(mainPanelDevice)
 		WriteToLog(ltmp2..' (metatable): '..dump(getmetatable(ltmp1)))
 	end
 ]]
+
 end
 
 -----------------------------
