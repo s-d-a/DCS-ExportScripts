@@ -735,12 +735,14 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	lEKRAN = lEKRAN:gsub("\n", "") -- oder %c
 	
 	
-	local to1, to2, from1, from2, lEKRANframe, lEKRANtxtqueue, lEKRANtxt1, lEKRANtxt2 = nil, nil, nil, nil, "", "", "", ""
+	local to1, to2, from1, from2, lEKRANframe, lEKRANtxtqueue, lEKRANtxt1, lEKRANtxt2, lEkranSendString = nil, nil, nil, nil, "", "", "", "", ""
 	to1, to2 = lEKRAN:find("txt_queue")
 	if (to1 == nil) then
 		from1, from2 = 1,5 -- lEKRAN:find("frame")
 		to1, to2 = lEKRAN:find("txt_1")
-		lEKRANframe = lEKRAN:sub(from2+1, to1-1)
+		if (to1 ~= nil) then
+			lEKRANframe = lEKRAN:sub(from2+1, to1-1)
+		end
 	else
 		from1, from2 = 1,5 -- lEKRAN:find("frame")
 		--to1, to2 = lEKRAN:find("txt_queue")
@@ -748,14 +750,20 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
 		from1, from2 = lEKRAN:find("txt_queue")
 		to1, to2 = lEKRAN:find("txt_1")
-		lEKRANtxtqueue = lEKRAN:sub(from2+1, to1-1)
+		if (to1 ~= nil and from2 ~= nil) then
+			lEKRANtxtqueue = lEKRAN:sub(from2+1, to1-1)
+		end
 	end
 	from1, from2 = lEKRAN:find("txt_1")
 	to1, to2 = lEKRAN:find("txt_2")
-	lEKRANtxt1  = lEKRAN:sub(from2+1, to1-1)
+	if (to1 ~= nil and from2 ~= nil) then
+		lEKRANtxtqueue = lEKRAN:sub(from2+1, to1-1)
+	end
 	from1, from2 = lEKRAN:find("txt_2")
 	--to1, to2 = lEKRAN:find("txt_2")
-	lEKRANtxt2  = lEKRAN:sub(from2+1, -1)
+	if (from2 ~= nil) then
+		lEKRANtxt2  = lEKRAN:sub(from2+1, -1)
+	end
 	
 	--ExportScript.Tools.WriteToLog('lEKRANframe: '..ExportScript.Tools.dump(lEKRANframe))
 	--ExportScript.Tools.WriteToLog('lEKRANtxtqueue: '..ExportScript.Tools.dump(lEKRANtxtqueue))
