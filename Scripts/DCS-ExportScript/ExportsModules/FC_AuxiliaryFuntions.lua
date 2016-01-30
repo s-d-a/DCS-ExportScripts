@@ -1,5 +1,5 @@
 -- Flaming Cliffs Auxiliary Functons
--- Version 0.9.9
+-- Version 1.0.0
 
 -- Weapon Panel for Su-25A and Su-25T
 function ExportScript.AF.WeaponPanel_SU25(FunctionTyp)
@@ -17,9 +17,7 @@ function ExportScript.AF.WeaponPanel_SU25(FunctionTyp)
 		ExportScript.AF.TmpWeaponPanel = {[231] = 0, [232] = 0, [233] = 0, [234] = 0, [235] = 0}
 	end
 
-	if(ExportScript.AF.EventNumberOLD < ExportScript.AF.EventNumber) then
-		ExportScript.AF.EventNumberOLD = ExportScript.AF.EventNumber
-		
+--	if(ExportScript.AF.EventNumberOLD < ExportScript.AF.EventNumber) then
 		-- defination
 		ExportScript.AF.PayloadInfo = LoGetPayloadInfo()
 		if ExportScript.AF.PayloadInfo ~= nil then
@@ -29,7 +27,7 @@ function ExportScript.AF.WeaponPanel_SU25(FunctionTyp)
 			if ExportScript.AF.CannonContainer == nil then	-- Find Cannon-Containers, aka SPPU_22
 				ExportScript.AF.CannonContainer = {}
 				ExportScript.AF.CannonContainer.counter = 0
-				table.foreach(ExportScript.AF.PayloadInfo.Stations, WeaponStatusPanel_FindCannonContainer)
+				table.foreach(ExportScript.AF.PayloadInfo.Stations, ExportScript.AF.WeaponStatusPanel_FindCannonContainer)
 			end
 
 			if ExportScript.AF.PayloadInfo.CurrentStation  > 0 and
@@ -56,7 +54,7 @@ function ExportScript.AF.WeaponPanel_SU25(FunctionTyp)
 				if ExportScript.AF.TmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation] ~= nil then
 					ExportScript.AF.TmpWeaponPanelActive[ExportScript.AF.TmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation].CurrentID] = 1        -- currrent value
 
-					table.foreach(ExportScript.AF.PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit)   -- corresponding station
+					table.foreach(ExportScript.AF.PayloadInfo.Stations, ExportScript.AF.WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit)   -- corresponding station
 				end
 
 			end
@@ -159,6 +157,8 @@ function ExportScript.AF.WeaponPanel_SU25(FunctionTyp)
 			-- InnerCannon {transversely striped = 0.0, 1/4 = 01, 1/2 = 03, 3/4 = 0.6, Full = 1.0}
 			-- ReserveWeapon {transversely striped = 0.0, Gun = 1.0}
 
+			ExportScript.AF.TmpWeaponPanel = {}
+			ExportScript.AF.TmpWeaponPanel[231] = lMainGun		-- main cannon shells
 			ExportScript.AF.TmpWeaponPanelPresend[101] = (ExportScript.AF.PayloadInfo.Stations[1].count  > 0 and 1 or 0)    -- weapon presend panel 1
 			ExportScript.AF.TmpWeaponPanelPresend[102] = (ExportScript.AF.PayloadInfo.Stations[3].count  > 0 and 1 or 0)    -- weapon presend panel 2
 			ExportScript.AF.TmpWeaponPanelPresend[103] = (ExportScript.AF.PayloadInfo.Stations[5].count  > 0 and 1 or 0)    -- weapon presend panel 3
@@ -179,17 +179,14 @@ function ExportScript.AF.WeaponPanel_SU25(FunctionTyp)
 			--ExportScript.AF.TmpWeaponPanelActive[208]                          -- weapon active panel 8
 			--ExportScript.AF.TmpWeaponPanelActive[209]                          -- weapon active panel 9
 			--ExportScript.AF.TmpWeaponPanelActive[210]                          -- weapon active panel 10
-			ExportScript.AF.TmpWeaponPanel = {}
-			ExportScript.AF.TmpWeaponPanel[231] = lMainGun		-- main cannon shells
 			ExportScript.AF.TmpWeaponPanel[232] = lWeaponType	-- current weapon type
 			ExportScript.AF.TmpWeaponPanel[233] = lOuterCannon	-- outer cannon shells
 			ExportScript.AF.TmpWeaponPanel[234] = lInnerCannon	-- inner cannon shells
 			ExportScript.AF.TmpWeaponPanel[235] = lReserve		-- reserve weapon
 		end
-	end
+	--end
 	
 	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
-ExportScript.Tools.WriteToLog("WeaponPanel_SU25: "..ExportScript.Tools.dump(ExportScript.AF.TmpWeaponPanelPresend))
 		for key, value in pairs(ExportScript.AF.TmpWeaponPanelPresend) do
 			ExportScript.Tools.SendData(key, value)
 		end
@@ -203,10 +200,10 @@ ExportScript.Tools.WriteToLog("WeaponPanel_SU25: "..ExportScript.Tools.dump(Expo
 	
 	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
 		for key, value in pairs(ExportScript.AF.TmpWeaponPanelPresend) do
-			ExportScript.Tools.SendData(key, value)
+			ExportScript.Tools.SendDataDAC(key, value)
 		end
 		for key, value in pairs(ExportScript.AF.TmpWeaponPanelActive) do
-			ExportScript.Tools.SendData(key, value)
+			ExportScript.Tools.SendDataDAC(key, value)
 		end
 	end
 end
@@ -250,7 +247,7 @@ function ExportScript.AF.FC_WeaponPanel_SU2733(exportid)
 			if ExportScript.AF.TmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation] ~= nil then
 				ExportScript.AF.TmpWeaponPanelActive[ExportScript.AF.TmpStationToPanel[ExportScript.AF.PayloadInfo.CurrentStation].CurrentID] = 1        -- currrent value
 
-				table.foreach(ExportScript.AF.PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit)   -- corresponding station
+				table.foreach(ExportScript.AF.PayloadInfo.Stations, ExportScript.AF.WeaponStatusPanel_selectCurrentPayloadStationGlassCockpit)   -- corresponding station
 			end
 
 		end
@@ -505,9 +502,8 @@ function ExportScript.AF.FC_RadarWarning_SPO15(exportid)
 end
 
 -- HSI for SU25T, SU-27, SU-33, MIG-29
-function ExportScript.AF.FC_Russian_HSI(distancetoway, exportid)
+function ExportScript.AF.FC_Russian_HSI(distancetoway)
 	local lDistanceToWay	= distancetoway or 999
-	local lExportID			= exportid or 5
 
 	local lDefaultOne		= 1.0
 	local lDefaultNull		= 0.0
@@ -585,7 +581,7 @@ function ExportScript.AF.FC_Russian_HSI(distancetoway, exportid)
 	-- HSI_lateral_deviation{-1.0, 1.0}
 	-- HSI_range_unavailable_flag{0.0, 1.0}
 	-- HSI_course_unavailable_flag{0.0, 1.0}
-	SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.4f;%.1f;%.1f;%.1f;%.3f;%.3f;%.3f;%.4f;%.4f;%.1f;%.1f",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.4f;%.1f;%.1f;%.1f;%.3f;%.3f;%.3f;%.4f;%.4f;%.1f;%.1f",
 									lHeading, -- compass card
 									(lHeading + (lHSI_Curse / lRadToDCSunsignd)) - 1, -- doppel pfeil
 									lHeading, -- gelbes dreieck
@@ -599,13 +595,26 @@ function ExportScript.AF.FC_Russian_HSI(distancetoway, exportid)
 									lGlide,
 									lSide,
 									lDefaultNull,	-- ???
-									lDefaultNull))	-- deaktiviert die Course Anzeige
+									lDefaultNull))	-- deaktiviert die Course Anzeige]]
+
+    ExportScript.Tools.SendData(11, string.format("%.4f", lHeading))                                                    -- compass card
+    ExportScript.Tools.SendData(12, string.format("%.4f", ((lHeading + (lHSI_Curse / lRadToDCSunsignd)) - 1)))          -- double arrow
+    ExportScript.Tools.SendData(13, string.format("%.4f", lHeading))                                                    -- yellow triangle
+    ExportScript.Tools.SendData(14, string.format("%.4f", (0 - (lHeading + (lHSI_ADF / lRadToDCSunsignd)))))            -- yellow arrow
+    ExportScript.Tools.SendData(15, lDefaultNull)                                                                       -- KC Flag
+    ExportScript.Tools.SendData(16, lDefaultOne)                                                                        -- K Flag
+    ExportScript.Tools.SendData(17, lDefaultOne)                                                                        -- L Flag
+    ExportScript.Tools.SendData(18, string.format("%.4f", lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 1, 1))]))
+    ExportScript.Tools.SendData(19, string.format("%.4f", lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 2, 2))]))
+    ExportScript.Tools.SendData(20, string.format("%.4f", lRangeCounter3))
+    ExportScript.Tools.SendData(21, string.format("%.4f", lGlide))
+    ExportScript.Tools.SendData(22, string.format("%.4f", lSide))
+    ExportScript.Tools.SendData(23, lDefaultNull)
+    ExportScript.Tools.SendData(24, lDefaultNull)
 end
 
 -- HSI for SU25A
-function ExportScript.AF.FC_Russian_HSI_old(exportid)
-	local lDistanceToWay	= distancetoway or 999
-	local lExportID			= exportid or 5
+function ExportScript.AF.FC_Russian_HSI_old()
 
 	local lDefaultOne		= 1.0
 	local lDefaultNull		= 0.0
@@ -634,20 +643,27 @@ function ExportScript.AF.FC_Russian_HSI_old(exportid)
 	-- ILS needle horizontal{-1.0, 1.0}
 	-- ILS needle vertical{-1.0, 1.0}
 	
-	SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.1f;%.1f;%.4f;%.4f",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.1f;%.1f;%.4f;%.4f",
 									lHeading, -- compass card
 									(lHeading + (lHSI_Curse / lRadToDCSunsignd)), -- - 1, -- white needle
 									0 - (lHeading + (lHSI_ADF / lRadToDCSunsignd)),  -- yellow needle
 									lDefaultOne,	-- T Flag
 									lDefaultOne,	-- K Flag
 									lGlide,
-									lSide))
+									lSide))))]]
+
+    ExportScript.Tools.SendData(11, string.format("%.4f", lHeading))                                          -- compass card
+    ExportScript.Tools.SendData(12, string.format("%.4f", (lHeading + (lHSI_Curse / lRadToDCSunsignd))))      -- white needle
+    ExportScript.Tools.SendData(13, string.format("%.4f", (0 - (lHeading + (lHSI_ADF / lRadToDCSunsignd)))))  -- yellow needle
+    ExportScript.Tools.SendData(16, lDefaultOne)                                                              -- T Flag
+    ExportScript.Tools.SendData(17, lDefaultOne)                                                              -- K Flag
+    ExportScript.Tools.SendData(21, string.format("%.4f", lGlide))
+    ExportScript.Tools.SendData(22, string.format("%.4f", lSide))
 end
 
 -- HSI-Distance for SU25A
-function ExportScript.AF.FC_Russian_HSI_Distance_old(distancetoway, exportid)
+function ExportScript.AF.FC_Russian_HSI_Distance_old(distancetoway)
 	local lDistanceToWay	= distancetoway or 999
-	local lExportID			= exportid or 21
 	
 	local lAltCounter = {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
 	lDistanceToWay = ExportScript.Tools.round(lDistanceToWay / 1000, 1)
@@ -673,15 +689,18 @@ function ExportScript.AF.FC_Russian_HSI_Distance_old(distancetoway, exportid)
 		lRangeCounter3 = lDistanceToWay * 0.11
 	end
 	
-	SendData(lExportID, string.format("%.3f;%.3f;%.3f",
+	--[[SendData(lExportID, string.format("%.3f;%.3f;%.3f",
 									lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 1, 1))],
 									lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 2, 2))],
-									lRangeCounter3))	-- deaktiviert die Course Anzeige
+									lRangeCounter3))	-- deaktiviert die Course Anzeige]]
+
+    ExportScript.Tools.SendData(18, string.format("%.4f", lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 1, 1))]))
+    ExportScript.Tools.SendData(19, string.format("%.4f", lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 2, 2))]))
+    ExportScript.Tools.SendData(20, string.format("%.4f", lRangeCounter3))
 end
 
 -- ADI for SU-25, SU25T, SU-27, MIG-29A and MIG-29S
-function ExportScript.AF.FC_Russian_ADI_Old(exportid)
-	local lExportID					= exportid or 4
+function ExportScript.AF.FC_Russian_ADI_Old()
 	
 	local lDefaultNull				= 0.0
 	local lRadToDCSsignd			= math.pi
@@ -706,9 +725,10 @@ function ExportScript.AF.FC_Russian_ADI_Old(exportid)
 	lNavInfoPitch = lNavInfoPitch / lRadToDCSsignd
 	lNavInfoRoll  = lNavInfoRoll / lRadToDCSsignd
 	lPitch        = lPitch / (lRadToDCSsignd / 2)
-	--lPitch        = (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch))	-- pitch muss negiert werden
-	lBank         = lBank / (lRadToDCSsignd / 2)
-	SendData(lExportID, string.format("%.4f;%.4f;%.1f;%.1f;%.4f;%.4f;%.4f;%.4f;%.4f;%.4f", 
+	lPitch        = (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch))	-- pitch muss negiert werden
+	--lBank         = lBank / (lRadToDCSsignd / 2)
+	lBank         = lBank / lRadToDCSsignd
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.1f;%.1f;%.4f;%.4f;%.4f;%.4f;%.4f;%.4f", 
 	                                   lBank,
 	                                   lPitch,
 	                                   lDefaultNull,
@@ -718,12 +738,21 @@ function ExportScript.AF.FC_Russian_ADI_Old(exportid)
 	                                   lDefaultNull,
 	                                   lDefaultNull,
 	                                   lDefaultNull,
-	                                   lSlipBallPosition))
+	                                   lSlipBallPosition))]]
+    ExportScript.Tools.SendData(1, string.format("%.4f", lBank))
+    ExportScript.Tools.SendData(2, string.format("%.4f", lPitch))
+    ExportScript.Tools.SendData(3, lDefaultNull)
+    ExportScript.Tools.SendData(4, lDefaultNull)
+    ExportScript.Tools.SendData(5, string.format("%.4f", lNavInfoRoll))
+    ExportScript.Tools.SendData(6, string.format("%.4f", lNavInfoPitch))
+    ExportScript.Tools.SendData(7, lDefaultNull)
+    ExportScript.Tools.SendData(8, lDefaultNull)
+    ExportScript.Tools.SendData(9, lDefaultNull)
+    ExportScript.Tools.SendData(10, string.format("%.4f", lSlipBallPosition))
 end
 
 -- ADI for SU-33
-function ExportScript.AF.FC_Russian_ADI_New(exportid)
-	local lExportID					= exportid or 4
+function ExportScript.AF.FC_Russian_ADI_New()
 	
 	local lDefaultNull				= 0.0
 	local lRadToDCSsignd			= math.pi
@@ -750,7 +779,7 @@ function ExportScript.AF.FC_Russian_ADI_New(exportid)
 	lPitch        = lPitch / (lRadToDCSsignd / 2)
 	lPitch        = (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch))	-- pitch muss negiert werden
 	lBank         = lBank / lRadToDCSsignd --(lRadToDCSsignd / 2)
-	SendData(lExportID, string.format("%.4f;%.4f;%.1f;%.1f;%.4f;%.4f;%.4f;%.4f;%.4f;%.4f", 
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.1f;%.1f;%.4f;%.4f;%.4f;%.4f;%.4f;%.4f", 
 	                                   lBank,
 	                                   lPitch,
 	                                   lDefaultNull,
@@ -760,13 +789,23 @@ function ExportScript.AF.FC_Russian_ADI_New(exportid)
 	                                   lDefaultNull,
 	                                   lDefaultNull,
 	                                   lDefaultNull,
-	                                   lSlipBallPosition))
+	                                   lSlipBallPosition))]]
+
+    ExportScript.Tools.SendData(1, string.format("%.4f", lBank))
+    ExportScript.Tools.SendData(2, string.format("%.4f", lPitch))
+    ExportScript.Tools.SendData(3, lDefaultNull)
+    ExportScript.Tools.SendData(4, lDefaultNull)
+    ExportScript.Tools.SendData(5, string.format("%.4f", lNavInfoRoll))
+    ExportScript.Tools.SendData(6, string.format("%.4f", lNavInfoPitch))
+    ExportScript.Tools.SendData(7, lDefaultNull)
+    ExportScript.Tools.SendData(8, lDefaultNull)
+    ExportScript.Tools.SendData(9, lDefaultNull)
+    ExportScript.Tools.SendData(10, string.format("%.4f", lSlipBallPosition))
 end
 									   
 -- Radar Altimeter for SU-25A, SU25-T, SU-27, SU-33
-function ExportScript.AF.FC_Russian_RadarAltimeter_1500m(warningflag, exportid)
+function ExportScript.AF.FC_Russian_RadarAltimeter_1500m(warningflag)
 	local lWarning_Flag    	= warningflag or 100
-	local lExportID			= exportid or 7
 
 	local lScaleValue		= 1500
 	local lAltRad			= LoGetAltitudeAboveGroundLevel()			-- ALTITUDE GROUND LEVEL (Meter)
@@ -780,17 +819,21 @@ function ExportScript.AF.FC_Russian_RadarAltimeter_1500m(warningflag, exportid)
 	-- DangerRALT {0.0,1.0}
 	-- Warning_Flag {0, 1}
 	-- DangerRALT_Lamp {0, 1}
-	SendData(lExportID, string.format("%.4f;%.4f;%d;%d",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%d;%d",
 									lAltRad,
 									lDangerRALT,
 									lWarning_Flag,
-									lDangerRALT_Lamp))
+									lDangerRALT_Lamp)))]]
+
+    ExportScript.Tools.SendData(25, string.format("%.4f", lAltRad))
+    ExportScript.Tools.SendData(26, string.format("%.4f", lDangerRALT))
+    ExportScript.Tools.SendData(27, lWarning_Flag)
+    ExportScript.Tools.SendData(28, lDangerRALT_Lamp)
 end
 
 -- Radar Altimeter for MiG-29A, MiG-29S
-function ExportScript.AF.FC_Russian_RadarAltimeter_1000m(warningflag, exportid)
+function ExportScript.AF.FC_Russian_RadarAltimeter_1000m(warningflag)
 	local lWarning_Flag    	= warningflag or 100
-	local lExportID			= exportid or 7
 
 	local lScaleValue		= 1000
 	local lAltRad			= LoGetAltitudeAboveGroundLevel()			-- ALTITUDE GROUND LEVEL (Meter)
@@ -804,11 +847,16 @@ function ExportScript.AF.FC_Russian_RadarAltimeter_1000m(warningflag, exportid)
 	-- DangerRALT {0.0,1.0}
 	-- Warning_Flag {0, 1}
 	-- DangerRALT_Lamp {0, 1}
-	SendData(lExportID, string.format("%.4f;%.4f;%d;%d",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%d;%d",
 									lAltRad,
 									lDangerRALT,
 									lWarning_Flag,
-									lDangerRALT_Lamp))
+									lDangerRALT_Lamp)))]]
+
+    ExportScript.Tools.SendData(25, string.format("%.4f", lAltRad))
+    ExportScript.Tools.SendData(26, string.format("%.4f", lDangerRALT))
+    ExportScript.Tools.SendData(27, lWarning_Flag)
+    ExportScript.Tools.SendData(28, lDangerRALT_Lamp)
 end
 
 -- Barometric Altimeter for 
@@ -882,8 +930,7 @@ function ExportScript.AF.FC_Russian_BarometricAltimeter(exportid)
 end
 
 -- Barometric Altimeter for SU-25A, SU25-T
-function ExportScript.AF.FC_Russian_BarometricAltimeter_late(exportid)
-	local lExportID					= exportid or 8
+function ExportScript.AF.FC_Russian_BarometricAltimeter_late()
 
 	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
 	local lAltBar					= LoGetAltitudeAboveSeaLevel()		-- ALTITUDE SEA LEVEL (Meter)
@@ -909,16 +956,20 @@ function ExportScript.AF.FC_Russian_BarometricAltimeter_late(exportid)
 	-- AltBar_meter_needle {0.0,1.0}
 	-- BasicAtmospherePressure {600.0, 800.0}
 	-- AltBar_kilometer {0.0, 99.9}
-	SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.4f",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.4f",
 									lAltBar_kilometer_needle,
 									lAltBar_meter_needle,
 									lBasicAtmospherePressure,
-									lAltBar))
+									lAltBar))]]
+
+    ExportScript.Tools.SendData(30, string.format("%.4f", lAltBar_kilometer_needle))
+    ExportScript.Tools.SendData(31, string.format("%.4f", lAltBar_meter_needle))
+    ExportScript.Tools.SendData(32, string.format("%.4f", lBasicAtmospherePressure))
+    ExportScript.Tools.SendData(33, string.format("%.4f", lAltBar))
 end
 
 -- Barometric Altimeter for SU-27, SU-33
-function ExportScript.AF.FC_Russian_BarometricAltimeter_20000(exportid)
-	local lExportID					= exportid or 8
+function ExportScript.AF.FC_Russian_BarometricAltimeter_20000()
 
 	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
 	local lAltBar					= LoGetAltitudeAboveSeaLevel()		-- ALTITUDE SEA LEVEL (Meter)
@@ -943,15 +994,18 @@ function ExportScript.AF.FC_Russian_BarometricAltimeter_20000(exportid)
 	-- AltBar_kilometer_needle {0.0,1.0}
 	-- AltBar_meter_needle {0.0,1.0}
 	-- BasicAtmospherePressure {0.0, 1.0}={600.0, 800.0}
-	SendData(lExportID, string.format("%.4f;%.4f;%.4f",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.4f",
 									lAltBar_kilometer_needle,
 									lAltBar_meter_needle,
-									lBasicAtmospherePressure))
+									lBasicAtmospherePressure))]]
+
+    ExportScript.Tools.SendData(30, string.format("%.4f", lAltBar_kilometer_needle))
+    ExportScript.Tools.SendData(31, string.format("%.4f", lAltBar_meter_needle))
+    ExportScript.Tools.SendData(32, string.format("%.4f", lBasicAtmospherePressure))
 end
 
 -- Barometric Altimeter for MiG-29A, MiG-29S
-function ExportScript.AF.FC_Russian_BarometricAltimeter_30000(exportid)
-	local lExportID					= exportid or 8
+function ExportScript.AF.FC_Russian_BarometricAltimeter_30000()
 
 	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
 	local lAltBar					= LoGetAltitudeAboveSeaLevel()		-- ALTITUDE SEA LEVEL (Meter)
@@ -976,15 +1030,18 @@ function ExportScript.AF.FC_Russian_BarometricAltimeter_30000(exportid)
 	-- AltBar_kilometer_needle {0.0,1.0}
 	-- AltBar_meter_needle {0.0,1.0}
 	-- BasicAtmospherePressure {0.0, 1.0}={600.0, 800.0}
-	SendData(lExportID, string.format("%.4f;%.4f;%.4f",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.4f",
 									lBasicAtmospherePressure,
 									lAltBar_meter_needle,
-									lAltBar_kilometer_needle))
+									lAltBar_kilometer_needle))]]
+
+    ExportScript.Tools.SendData(30, string.format("%.4f", lAltBar_kilometer_needle))
+    ExportScript.Tools.SendData(31, string.format("%.4f", lAltBar_meter_needle))
+    ExportScript.Tools.SendData(32, string.format("%.4f", lBasicAtmospherePressure))
 end
 
 -- Air Speed Indicator for SU-25A, SU-25T
-function ExportScript.AF.FC_Russian_AirSpeed_1100hkm(exportid)
-	local lExportID			= exportid or 1
+function ExportScript.AF.FC_Russian_AirSpeed_1100hkm()
 
     local lIAS				= LoGetIndicatedAirSpeed() * 3.6  -- INDICATED AIRSPEED (Meter/Second to Km/h)
     local lTAS				= LoGetTrueAirSpeed()      * 3.6  -- TRUE AIRSPEED (Meter/Second to Km/h)
@@ -1031,12 +1088,14 @@ function ExportScript.AF.FC_Russian_AirSpeed_1100hkm(exportid)
 
 	-- IAS {0.0,1.0}
 	-- TAS {0.0,1.0}
-	SendData(lExportID, string.format("%.4f;%.4f", lIAS, lTAS))
+	--[[SendData(lExportID, string.format("%.4f;%.4f", lIAS, lTAS))]]
+	
+    ExportScript.Tools.SendData(35, string.format("%.4f", lIAS))
+    ExportScript.Tools.SendData(36, string.format("%.4f", lTAS))
 end
 
 -- Air Speed Indicator for SU-27, SU-33
-function ExportScript.AF.FC_Russian_AirSpeed_1600hkm(exportid)
-	local lExportID			= exportid or 1
+function ExportScript.AF.FC_Russian_AirSpeed_1600hkm()
 
     local lScaleValueIAS	= 1600
     local lScaleValueMach	= 3.5
@@ -1195,12 +1254,14 @@ function ExportScript.AF.FC_Russian_AirSpeed_1600hkm(exportid)
 
 	-- IAS {0.0,1.0}
 	-- MACH {0.0,1.0}
-	SendData(lExportID, string.format("%.4f;%.4f", lIAStmp, lMACHtmp))
+	--[[SendData(lExportID, string.format("%.4f;%.4f", lIAStmp, lMACHtmp))]]
+
+    ExportScript.Tools.SendData(35, string.format("%.4f", lIAStmp))
+    ExportScript.Tools.SendData(36, string.format("%.4f", lMACHtmp))
 end
 
 -- Air Speed Indicator for MiG-29A, MiG-29S
-function ExportScript.AF.FC_Russian_AirSpeed_1000hkm(exportid)
-	local lExportID			= exportid or 1
+function ExportScript.AF.FC_Russian_AirSpeed_1000hkm()
 
     local lIAS				= LoGetIndicatedAirSpeed() * 3.6	-- INDICATED AIRSPEED (Meter/Second to Km/h)
 	local lThousand         = 0.0
@@ -1243,12 +1304,14 @@ function ExportScript.AF.FC_Russian_AirSpeed_1000hkm(exportid)
 
 	-- IAS {0.0,1.0}
 	-- Thousand {0.0,1.0}
-	SendData(lExportID, string.format("%.4f;%.4f", lIAS, lThousand))
+	--[[SendData(lExportID, string.format("%.4f;%.4f", lIAS, lThousand))]]
+
+    ExportScript.Tools.SendData(35, string.format("%.4f", lIAS))
+    ExportScript.Tools.SendData(36, string.format("%.4f", lThousand))
 end
 
 -- Vertical Velocity Indicator (Old Style) for SU-25, SU25T, SU-27, MIG-29A and MIG-29S
-function ExportScript.AF.FC_Russian_VVI_Old(exportid)
-	local lExportID					= exportid or 6
+function ExportScript.AF.FC_Russian_VVI_Old()
 
 	local lVVI						= LoGetVerticalVelocity()		-- VERTICAL SPEED (Meter/Second)
 	local lPitch, lBank, lYaw		= LoGetADIPitchBankYaw()		-- PITCH, BANK, YAW (Radian)
@@ -1278,15 +1341,18 @@ function ExportScript.AF.FC_Russian_VVI_Old(exportid)
 	-- lVVI {-1.0, 0.0, 1.0} {0.0=0, 0.05=10, 0.10=20, 0.24=50, 0.49=100, 0.74=150, 1.0=200}
 	-- lBank {-1.0, 0.0,1.0}
 	-- lSlipBallPosition {0.0,1.0}
-	SendData(lExportID, string.format("%.4f;%.4f;%.4f",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.4f",
 									lVVI,
 									lBank,
-									lSlipBallPosition))
+									lSlipBallPosition))]]
+
+    ExportScript.Tools.SendData(40, string.format("%.4f", lVVI))
+    ExportScript.Tools.SendData(41, string.format("%.4f", lBank))
+    ExportScript.Tools.SendData(42, string.format("%.4f", lSlipBallPosition))
 end
 
 -- VVI for SU-33
-function ExportScript.AF.FC_Russian_VVI_New(exportid)
-	local lExportID					= exportid or 6
+function ExportScript.AF.FC_Russian_VVI_New()
 
 	local lVVI						= LoGetVerticalVelocity()		-- VERTICAL SPEED (Meter/Second)
 
@@ -1321,21 +1387,24 @@ function ExportScript.AF.FC_Russian_VVI_New(exportid)
 		lVVI = (lVVI < -1.0 and -1.0 or lVVI)
 	end
 
-	SendData(lExportID, string.format("%.4f", lVVI))
+	--[[SendData(lExportID, string.format("%.4f", lVVI))]]
+
+    ExportScript.Tools.SendData(40, string.format("%.4f", lVVI))
 end
 
 -- Airintake for SU-27 and SU-33
-function ExportScript.AF.FC_Russian_AirIntake(exportid)
-	local lExportID	= exportid or 21
+function ExportScript.AF.FC_Russian_AirIntake()
 
 	local lAirI		= LoGetMechInfo().airintake.value
 
-	SendData(lExportID, string.format("%.4f;%.4f", lAirI, lAirI))
+	--[[SendData(lExportID, string.format("%.4f;%.4f", lAirI, lAirI))]]
+
+    ExportScript.Tools.SendData(45, string.format("%.4f", lAirI))
+    ExportScript.Tools.SendData(46, string.format("%.4f", lAirI))
 end
 
 -- AOA Indicator and Accelerometer (AOA, GLoad) for SU-25, SU25T
-function ExportScript.AF.FC_Russian_AOA_Su25(exportid)
-	local lExportID					= exportid or 3
+function ExportScript.AF.FC_Russian_AOA_Su25()
 
 	local lAoA						= LoGetAngleOfAttack()			-- ANGLE OF ATTACK AoA (Radian)
 	local lAccelerationUnits		= LoGetAccelerationUnits().y	-- G-LOAD
@@ -1409,14 +1478,16 @@ function ExportScript.AF.FC_Russian_AOA_Su25(exportid)
 		lAccelerationUnits = 0.18360983599491558834620754850374 * lAccelerationUnits + 2.559143240842e-33
 	end
 
-	SendData(lExportID, string.format("%.4f;%.4f", 
+	--[[SendData(lExportID, string.format("%.4f;%.4f", 
 								lAoA,
-								lAccelerationUnits) )
+								lAccelerationUnits) )]]
+
+    ExportScript.Tools.SendData(50, string.format("%.4f", lAoA))
+    ExportScript.Tools.SendData(51, string.format("%.4f", lAccelerationUnits))
 end
 
 -- AOA Indicator and Accelerometer (AOA, GLoad) for SU-27, SU33
-function ExportScript.AF.FC_Russian_AOA_Su2733(exportid)
-	local lExportID					= exportid or 3
+function ExportScript.AF.FC_Russian_AOA_Su2733()
 
 	local lAoA						= LoGetAngleOfAttack()			-- ANGLE OF ATTACK AoA (Radian)
 	local lAccelerationUnits		= LoGetAccelerationUnits().y	-- G-LOAD
@@ -1489,14 +1560,16 @@ function ExportScript.AF.FC_Russian_AOA_Su2733(exportid)
 		lAccelerationUnits = 0.09672619047619047619047619047619 * lAccelerationUnits
 	end
 
-	SendData(lExportID, string.format("%.4f;%.4f", 
+	--[[SendData(lExportID, string.format("%.4f;%.4f", 
 								lAoA,
-								lAccelerationUnits) )
+								lAccelerationUnits) )]]
+
+    ExportScript.Tools.SendData(50, string.format("%.4f", lAoA))
+    ExportScript.Tools.SendData(51, string.format("%.4f", lAccelerationUnits))
 end
 
 -- AOA Indicator and Accelerometer (AOA, GLoad) for MiG-29A, MiG-29S
-function ExportScript.AF.FC_Russian_AOA_MiG29(exportid)
-	local lExportID					= exportid or 3
+function ExportScript.AF.FC_Russian_AOA_MiG29()
 
 	local lAoA						= LoGetAngleOfAttack()			-- ANGLE OF ATTACK AoA (Radian)
 	local lAccelerationUnits		= LoGetAccelerationUnits().y	-- G-LOAD
@@ -1569,14 +1642,16 @@ function ExportScript.AF.FC_Russian_AOA_MiG29(exportid)
 		lAccelerationUnits = 0.09672619047619047619047619047619 * lAccelerationUnits
 	end
 
-	SendData(lExportID, string.format("%.4f;%.4f", 
+	--[[SendData(lExportID, string.format("%.4f;%.4f", 
 								lAoA,
-								lAccelerationUnits) )
+								lAccelerationUnits) )]]
+
+    ExportScript.Tools.SendData(50, string.format("%.4f", lAoA))
+    ExportScript.Tools.SendData(51, string.format("%.4f", lAccelerationUnits))
 end
 
 -- Russian Clock ACS-1 for KA-50, SU-25A, MIG-29A , MIG-29S
-function ExportScript.AF.FC_Russian_Clock_ACS1(exportid)
-	local lExportID				= exportid or 12
+function ExportScript.AF.FC_Russian_Clock_ACS1()
 
 	local lDefaultOne			= 1.0
 	local lDefaultNull			= 0.0
@@ -1600,7 +1675,7 @@ function ExportScript.AF.FC_Russian_Clock_ACS1(exportid)
 	-- flight_minutes {0.0,1.0}
 	-- seconds_meter_time_minutes {0.0,1.0}
 	-- seconds_meter_time_seconds {0.0,1.0}
-	SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.1f;%.4f;%.4f;%.4f;%.4f",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.1f;%.4f;%.4f;%.4f;%.4f",
 									lCurrentHours,
 									lCurrentMinutes,
 									lCurrentSeconds,
@@ -1608,12 +1683,20 @@ function ExportScript.AF.FC_Russian_Clock_ACS1(exportid)
 									lFlightTimeHours,
 									lFlightTimeMinutes,
 									lDefaultNull,
-									lDefaultNull))
+									lDefaultNull))]]
+
+    ExportScript.Tools.SendData(55, string.format("%.4f", lCurrentHours))
+    ExportScript.Tools.SendData(56, string.format("%.4f", lCurrentMinutes))
+    ExportScript.Tools.SendData(57, string.format("%.4f", lCurrentSeconds))
+    ExportScript.Tools.SendData(58, lDefaultNull)   -- red/white flag
+    ExportScript.Tools.SendData(59, string.format("%.4f", lFlightTimeHours))
+    ExportScript.Tools.SendData(60, string.format("%.4f", lFlightTimeMinutes))
+    ExportScript.Tools.SendData(61, lDefaultNull)
+    ExportScript.Tools.SendData(62, lDefaultNull)
 end
 
 -- Russian Clock (latest Model) for SU-25T, SU-27, SU-33
-function ExportScript.AF.FC_Russian_Clock_late(exportid)
-	local lExportID				= exportid or 12
+function ExportScript.AF.FC_Russian_Clock_late()
 
 	local lDefaultOne			= 1.0
 	local lDefaultNull			= 0.0
@@ -1636,19 +1719,26 @@ function ExportScript.AF.FC_Russian_Clock_late(exportid)
 	-- flight_hours {0.0,1.0}
 	-- flight_minutes {0.0,1.0}
 	-- seconds_meter_time_seconds {0.0,1.0}
-	SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.1f;%.4f;%.4f;%.4f",
+	--[[SendData(lExportID, string.format("%.4f;%.4f;%.4f;%.1f;%.4f;%.4f;%.4f",
 									lCurrentHours,
 									lCurrentMinutes,
 									lCurrentSeconds,
 									lDefaultNull,	-- red/white flag
 									lFlightTimeHours,
 									lFlightTimeMinutes,
-									lCurrentSeconds))
+									lCurrentSeconds))]]
+
+    ExportScript.Tools.SendData(55, string.format("%.4f", lCurrentHours))
+    ExportScript.Tools.SendData(56, string.format("%.4f", lCurrentMinutes))
+    ExportScript.Tools.SendData(57, string.format("%.4f", lCurrentSeconds))
+    ExportScript.Tools.SendData(58, lDefaultNull)   -- red/white flag
+    ExportScript.Tools.SendData(59, string.format("%.4f", lFlightTimeHours))
+    ExportScript.Tools.SendData(60, string.format("%.4f", lFlightTimeMinutes))
+    ExportScript.Tools.SendData(61, string.format("%.4f", lCurrentSeconds))
 end
 
 -- Russian Enging RPM (Tachometer) for SU-25A+T, SU-27, SU-33, MIG-29
-function ExportScript.AF.FC_Russian_EngineRPM(exportid)
-	local lExportID			= exportid or 9
+function ExportScript.AF.FC_Russian_EngineRPM()
 
     local lScaleValue       = 110
     local lEngineRPMleft    = LoGetEngineInfo().RPM.left    -- ENG1 RPM %
@@ -1660,13 +1750,16 @@ function ExportScript.AF.FC_Russian_EngineRPM(exportid)
 	lEngineRPMright = (lEngineRPMright > 1.0 and 1.0 or lEngineRPMright)   -- the result is limited to 1.0
 	-- EngineRPMleft {0.0,1.0}
 	-- EngineRPMright {0.0,1.0}
-	SendData(lExportID, string.format("%.4f;%.4f", lEngineRPMleft, lEngineRPMright))
+	--[[SendData(lExportID, string.format("%.4f;%.4f", lEngineRPMleft, lEngineRPMright))]]
+
+    ExportScript.Tools.SendData(65, string.format("%.4f", lEngineRPMleft))
+    ExportScript.Tools.SendData(66, string.format("%.4f", lEngineRPMright))
 end
 
 -- Russian Exthaus Gas Temperature 1.000GradC for SU-25A, SU25T, MIG-29
 function ExportScript.AF.FC_Russian_EGT_1000gc(egttemp, exportid)
     local lEGTtemp  	= egttemp  or 1
-	local lExportID		= exportid or 10
+	local lExportID		= exportid or 70
 
 	--[[
 	y_min = 0.0		0.068	-- minimaler Ausgabewert
@@ -1690,12 +1783,12 @@ function ExportScript.AF.FC_Russian_EGT_1000gc(egttemp, exportid)
 	end	
 
 	-- ExthausGasTemperature {0.0,1.0}
-	SendData(lExportID, string.format("%.4f", lEGTtemp))
+	ExportScript.Tools.SendData(lExportID, string.format("%.4f", lEGTtemp))
 end
 
 -- Russian Mechanical Device Indicator for SU-25A+T
-function ExportScript.AF.FC_Russian_MDI_SU25(exportid)
-	local lExportID	= exportid or 2
+function ExportScript.AF.FC_Russian_MDI_SU25(FunctionTyp)
+	local lFunctionTyp = FunctionTyp or "Ikarus"
 
     local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
 	if lMechInfo == nil then
@@ -1717,19 +1810,39 @@ function ExportScript.AF.FC_Russian_MDI_SU25(exportid)
     -- speedbreakes on {0, 1}
     -- flap 1. position {0, 1}
     -- flap 2. position {0, 1}
-    SendData(lExportID, string.format("%.1f;%d;%d;%d;%d;%d;%d",
+    --[[SendData(lExportID, string.format("%.1f;%d;%d;%d;%d;%d;%d",
 									lWarningLight,
 									(lMechInfo.gear.value > 0.85 and 1 or 0),           -- nose gear
 									(lMechInfo.gear.value > 0.95 and 1 or 0),           -- left gear
 									(lMechInfo.gear.value == 1 and 1 or 0),             -- right gear
 									(lMechInfo.speedbrakes.value  > 0.1 and 1 or 0),    -- speedbreakes on > 0.1 (0 - 1)
 									(lMechInfo.flaps.value > 0.25 and 1 or 0),          -- flap 1. position
-									(lMechInfo.flaps.value > 0.93 and 1 or 0)))         -- flap 2. position
+									(lMechInfo.flaps.value > 0.93 and 1 or 0)))         -- flap 2. position]]
+
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+        ExportScript.Tools.SendData(500, string.format("%.1f", lWarningLight))
+        ExportScript.Tools.SendData(501, (lMechInfo.gear.value > 0.85 and 1 or 0))           -- nose gear
+        ExportScript.Tools.SendData(502, (lMechInfo.gear.value > 0.95 and 1 or 0))           -- left gear
+        ExportScript.Tools.SendData(503, (lMechInfo.gear.value == 1 and 1 or 0))             -- right gear
+        ExportScript.Tools.SendData(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0))    -- speedbreakes on > 0.1 (0 - 1)
+        ExportScript.Tools.SendData(531, (lMechInfo.flaps.value > 0.25 and 1 or 0))          -- flap 1. position
+        ExportScript.Tools.SendData(532, (lMechInfo.flaps.value > 0.93 and 1 or 0))          -- flap 2. position
+    end
+    
+    if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+        ExportScript.Tools.SendDataDAC(500, (((lMechInfo.gear.status == 1 and lMechInfo.gear.value < 1) or (lMechInfo.gear.status == 0 and lMechInfo.gear.value > 0)) and 1 or 0 ))
+        ExportScript.Tools.SendDataDAC(501, (lMechInfo.gear.value > 0.85 and 1 or 0))           -- nose gear
+        ExportScript.Tools.SendDataDAC(502, (lMechInfo.gear.value > 0.95 and 1 or 0))           -- left gear
+        ExportScript.Tools.SendDataDAC(503, (lMechInfo.gear.value == 1 and 1 or 0))             -- right gear
+        ExportScript.Tools.SendDataDAC(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0))    -- speedbreakes on > 0.1 (0 - 1)
+        ExportScript.Tools.SendDataDAC(531, (lMechInfo.flaps.value > 0.25 and 1 or 0))          -- flap 1. position
+        ExportScript.Tools.SendDataDAC(532, (lMechInfo.flaps.value > 0.93 and 1 or 0))          -- flap 2. position
+        ExportScript.Tools.SendDataDAC(533, ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1 or 0))   -- Speed Warning for Flaps, same light as gear warning light, but blinking light
+    end
 end
 
 -- Russian System Test EKRAN
-function ExportScript.AF.FC_EKRAN(exportid)
-	local lExportID	= exportid or 16
+function ExportScript.AF.FC_EKRAN()
 
 	local lMCPState = LoGetMCPState() -- Warning Lights
 	if lMCPState == nil then
@@ -1828,11 +1941,16 @@ function ExportScript.AF.FC_EKRAN(exportid)
 	-- FAILlight (failure text)
 	-- MEMORYlight (memmory text)
 	-- TURNlight (turn text)
-	SendData(lExportID, string.format("%s;%s;%s;%s",
+	--[[SendData(lExportID, string.format("%s;%s;%s;%s",
 										gDisplayWindow,
 										lFAILlight,
 										lMEMORYlight,
-										lTURNlight))
+										lTURNlight))]]
+
+    ExportScript.Tools.SendData(80, string.format("%s;", gDisplayWindow))
+    ExportScript.Tools.SendData(81, string.format("%s;", lFAILlight))
+    ExportScript.Tools.SendData(82, string.format("%s;", lMEMORYlight))
+    ExportScript.Tools.SendData(83, string.format("%s;", lTURNlight))
 end
 
 -- ADI for A-10A, F-15C
@@ -2253,7 +2371,7 @@ function ExportScript.AF.FC_OneNeedleGauge(value, scala, exportid)
 	lValue = lValue / lScala
 	lValue = (lValue > 1.0 and 1.0 or lValue)	-- the result is limited to 1.0
 
-	SendData(lExportID, string.format("%.4f", lValue))
+	ExportScript.Tools.SendData(lExportID, string.format("%.4f", lValue))
 end
 
 -- Gauges with 1 needle and 2 digits display
@@ -2464,7 +2582,7 @@ emitter_table =
 	if lTWSInfo == nil then
 		return
 	end
-	--WriteToLog('lTWSInfo: '..dump(lTWSInfo))
+	--ExportScript.Tools.WriteToLog('lTWSInfo: '..ExportScript.Tools.dump(lTWSInfo))
 	--[[
 	[Emitters] = {
         [1] = {
@@ -2496,18 +2614,25 @@ emitter_table =
     }
     [Mode] = number: "0"
 	]]
-ExportScript.Tools.WriteToLog("SPO15RWR: "..ExportScript.AF.EventNumberOLD.." < "..ExportScript.AF.EventNumber)
-	if(ExportScript.AF.EventNumberOLD < ExportScript.AF.EventNumber) then
-		ExportScript.AF.EventNumberOLD = ExportScript.AF.EventNumber
+
+	--if(ExportScript.AF.EventNumberOLD < ExportScript.AF.EventNumber) then
 		local lPriorityTmp		= 0
 		local lPrimaryThreatTmp	= 0
 		local lActiveLamp		= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} -- 10 x for direction
 		if ExportScript.AF.SPO15RWRData == nil then
-			ExportScript.AF.SPO15RWRData = {}
+			ExportScript.AF.SPO15RWRData      = {}
+			
+			ExportScript.AF.SPO15RWRData[400] = 1	-- Power light
 		end
-ExportScript.Tools.WriteToLog("1")
+		
+		if ExportScript.AF.SPO15RWRDataIkarus == nil then
+			ExportScript.AF.SPO15RWRDataIkarus      = {}
+			
+			ExportScript.AF.SPO15RWRDataIkarus[400] = 1	-- Power light
+		end
+		
 		if(#lTWSInfo.Emitters > 0) then
-ExportScript.Tools.WriteToLog("2")
+
 			ExportScript.AF.SPO15_FoundErmitter = true
 		
 			for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
@@ -2518,11 +2643,10 @@ ExportScript.Tools.WriteToLog("2")
 			end
 		
 			for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
-ExportScript.Tools.WriteToLog("3")
+
 				local lAzimut = ExportScript.Tools.round(lTWSInfo.Emitters[EmitterIndex].Azimuth * 90, 1)
 				
 				if EmitterIndex == lPrimaryThreatTmp then
-ExportScript.Tools.WriteToLog("3.1")
 					-- primary threat
 					-- direction to the threat
 					ExportScript.AF.SPO15RWRData[401] = (lAzimut <= -170.0 and 1 or 0) -- left back side
@@ -2579,7 +2703,8 @@ ExportScript.Tools.WriteToLog("3.1")
 					lPrimaryTypeTmp = nil
 
 				end
-ExportScript.Tools.WriteToLog("3.2")
+
+				-- secondary threat
 				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  1, 451, lAzimut <= -170.0) -- left back side
 				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  2, 452, (lAzimut <= -90.0  and lAzimut >= -170.0 )) -- left 90 degree
 				lActiveLamp = ExportScript.AF.SPO15RWR_SendDataHW(lActiveLamp,  3, 453, (lAzimut <= -55.0  and lAzimut >= -125.0 )) -- left 50 degree
@@ -2595,7 +2720,7 @@ ExportScript.Tools.WriteToLog("3.2")
 
 			-- type of the secondary threat
 			local lSecondaryTypeTmp = ExportScript.AF.FindRadarTypeForSPO15(lTWSInfo)
-			ExportScript.AF.SPO15RWRData[470] = (lSecondaryTypeTmp.AIR == 1 and 1 or 0)	-- primary Air or Weapon
+			ExportScript.AF.SPO15RWRData[470] = (lSecondaryTypeTmp.AIR == 1 and 1 or 0)	-- secondary Air or Weapon
 			ExportScript.AF.SPO15RWRData[471] = (lSecondaryTypeTmp.LRR == 1 and 1 or 0)	-- long range radar
 			ExportScript.AF.SPO15RWRData[472] = (lSecondaryTypeTmp.MRR == 1 and 1 or 0)	-- mid range radar
 			ExportScript.AF.SPO15RWRData[473] = (lSecondaryTypeTmp.SRR == 1 and 1 or 0)	-- short range radar
@@ -2603,26 +2728,112 @@ ExportScript.Tools.WriteToLog("3.2")
 			ExportScript.AF.SPO15RWRData[475] = (lSecondaryTypeTmp.AWACS == 1 and 1 or 0)	-- AWACS
 			lSecondaryTypeTmp = nil
 			
+			
+			if ExportScript.Config.IkarusExport then
+				-- all data conditioned for Ikarus
+				ExportScript.AF.SPO15RWRDataIkarus = {[400]=1,[401]=0,[402]=0,[403]=0,[404]=0,[405]=0,[406]=0,[407]=0,[408]=0,[409]=0,[410]=0,[411]=0,[412]=0,[413]=0,[414]=0,[415]=0,[416]=0,[417]=0,[418]=0,[419]=0,[420]=0,[421]=0,[422]=0}
+				
+				-- Primary threat Light 1/2
+				local lTmp = 0.1
+				for Index=401, 410, 1 do
+					if ExportScript.AF.SPO15RWRData[Index] == 1 and ExportScript.AF.SPO15RWRDataIkarus[401] == 0 then
+						ExportScript.AF.SPO15RWRDataIkarus[401] = lTmp		-- Primary threat Light 1
+					end
+					if ExportScript.AF.SPO15RWRData[Index] == 1 and ExportScript.AF.SPO15RWRDataIkarus[402] == 0 and ExportScript.AF.SPO15RWRDataIkarus[401] ~= lTmp then
+						ExportScript.AF.SPO15RWRDataIkarus[402] = lTmp		-- Primary threat Light 2
+						break
+					end
+					lTmp = lTmp + 0.1
+				end
+				
+				-- Primary threat Type
+				for Index=430, 435, 1 do
+					if ExportScript.AF.SPO15RWRData[Index] == 1 then
+						ExportScript.AF.SPO15RWRDataIkarus[403] = ((Index - 430) / 10) + 0.1	-- 0.1=primary Air or Weapon, 0.2=long range radar, 0.3=mid range radar, 0.4=short range radar, 0.5=EWR, 0.6=AWACS
+						break
+					end
+				end
+				
+				-- Hemisphere
+				if ExportScript.AF.SPO15RWRData[442] == 1 and ExportScript.AF.SPO15RWRData[443] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[404] = 0.3		-- top and bottom hemisphere
+				elseif ExportScript.AF.SPO15RWRData[442] == 0 and ExportScript.AF.SPO15RWRData[443] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[404] = 0.2		-- bottom hemisphere
+				elseif ExportScript.AF.SPO15RWRData[442] == 1 and ExportScript.AF.SPO15RWRData[443] == 0 then
+					ExportScript.AF.SPO15RWRDataIkarus[404] = 0.1		-- top hemisphere
+				end
+
+				-- Lock
+				if ExportScript.AF.SPO15RWRData[440] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[405] = 0.1	-- Lock
+				elseif ExportScript.AF.SPO15RWRData[441] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[405] = 0.2	-- Missle on air
+				end
+				
+				-- Ermitter power
+				for Index=411, 425, 1 do
+					if ExportScript.AF.SPO15RWRData[Index] == 1 then
+						ExportScript.AF.SPO15RWRDataIkarus[406] = ExportScript.AF.SPO15RWRDataIkarus[406] + 0.01	-- Ermitter power 0.0 off, 0.01=first lamp - 0.15=last lamp
+					else
+						break
+					end
+				end
+				
+				-- Secondary thread
+				lTmp = 407	-- to 416
+				for Index=451, 460, 1 do
+					if ExportScript.AF.SPO15RWRData[Index] == 1 then
+						ExportScript.AF.SPO15RWRDataIkarus[lTmp] = 1
+					end
+					lTmp = lTmp + 1
+				end
+				
+				-- type of the secondary threat
+				if ExportScript.AF.SPO15RWRData[470] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[417] = 1	-- secondary Air or Weapon
+				end
+				if ExportScript.AF.SPO15RWRData[471] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[418] = 1	-- long range radar
+				end
+				if ExportScript.AF.SPO15RWRData[472] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[419] = 1	-- mid range radar
+				end
+				if ExportScript.AF.SPO15RWRData[473] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[420] = 1	-- short range radar
+				end
+				if ExportScript.AF.SPO15RWRData[474] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[421] = 1	-- EWR
+				end
+				if ExportScript.AF.SPO15RWRData[475] == 1 then
+					ExportScript.AF.SPO15RWRDataIkarus[422] = 1		-- AWACS
+				end
+			end
+			
 		else
 			lPriorityTmp      = 0
 			lPrimaryThreatTmp = 0
-ExportScript.Tools.WriteToLog("4")
+
 			if ExportScript.AF.SPO15_FoundErmitter == nil or ExportScript.AF.SPO15_FoundErmitter then
 				ExportScript.AF.SPO15RWR_Reset(401, 480)
+				
+				ExportScript.AF.SPO15RWRDataIkarus = {[400]=1,[401]=0,[402]=0,[403]=0,[404]=0,[405]=0,[406]=0,[407]=0,[408]=0,[409]=0,[410]=0,[411]=0,[412]=0,[413]=0,[414]=0,[415]=0,[416]=0,[417]=0,[418]=0,[419]=0,[420]=0,[421]=0,[422]=0}
+			end
+		end
+	--end
+	
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+		if ExportScript.AF.SPO15RWRDataIkarus ~= nil then
+			for key, value in pairs(ExportScript.AF.SPO15RWRDataIkarus) do
+				ExportScript.Tools.SendData(key, value)
 			end
 		end
 	end
 	
-	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
-ExportScript.Tools.WriteToLog("SPO15RWRData: "..ExportScript.Tools.dump(ExportScript.AF.SPO15RWRData))
-		for key, value in pairs(ExportScript.AF.SPO15RWRData) do
-			ExportScript.Tools.SendData(key, value)
-		end
-	end
-	
 	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
-		for key, value in pairs(ExportScript.AF.SPO15RWRData) do
-			ExportScript.Tools.SendDataDAC(key, value)
+		if ExportScript.AF.SPO15RWRData ~= nil then
+			for key, value in pairs(ExportScript.AF.SPO15RWRData) do
+				ExportScript.Tools.SendDataDAC(key, value)
+			end
 		end
 	end
 	
@@ -2780,7 +2991,7 @@ function ExportScript.AF.WeaponStatusPanel_selectCurrentPayloadStation(_index)
 end
 
 function ExportScript.AF.SPO15RWR_Reset(lMinId, lMaxID)
-ExportScript.Tools.WriteToLog('SPO15RWR_Reset')
+--ExportScript.Tools.WriteToLog('SPO15RWR_Reset')
 	for lCounter = lMinId, lMaxID, 1 do
 		ExportScript.AF.SPO15RWRData[lCounter] = 0
 	end

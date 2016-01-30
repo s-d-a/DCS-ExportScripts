@@ -13,48 +13,52 @@ dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")
 
 function ExportScript.ProcessIkarusFCHighImportanceConfig()
 	local lFunctionTyp = "Ikarus"	-- function type for shared function
-	local myData	= nil --					= LoGetSelfData()
+	local myData       = LoGetSelfData()
 
 	if (myData) then
 		local lLatitude					= myData.LatLongAlt.Lat									-- LATITUDE
 		local lLongitude				= myData.LatLongAlt.Long								-- LONGITUDE
+		--[[
 		local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()						-- BAROMETRIC PRESSURE
 		local lAltBar					= LoGetAltitudeAboveSeaLevel()							-- ALTITUDE SEA LEVEL (Meter)
 		local lAltRad					= LoGetAltitudeAboveGroundLevel()						-- ALTITUDE GROUND LEVEL (Meter)
-		--local lTrueAirSpeed			    = LoGetTrueAirSpeed()									-- TRUE AIRSPEED (Meter/Second)
+		local lTrueAirSpeed			    = LoGetTrueAirSpeed()									-- TRUE AIRSPEED (Meter/Second)
 		local lPitch, lBank, lYaw		= LoGetADIPitchBankYaw()								-- PITCH, BANK, YAW (Radian)
 
 		local lHeading					= myData.Heading										-- HEADING (Radian)
 		local lVVI						= LoGetVerticalVelocity()								-- VERTICAL SPEED (Meter/Second)
 		local lIAS						= LoGetIndicatedAirSpeed()								-- INDICATED AIRSPEED (Meter/Second)
-		--local lMachNumber				= LoGetMachNumber										-- MACH
+		local lMachNumber				= LoGetMachNumber										-- MACH
 		local lAoA						= LoGetAngleOfAttack()									-- ANGLE OF ATTACK AoA (Radian)
 		
 		local lGlide					= LoGetGlideDeviation()									-- VOR1 HORIZONTAL DEFLECTION (-1 +1)
 		local lSide						= LoGetSideDeviation()									-- VOR1 VERTICAL DEFLECTION (-1 +1)
-		--local lSlipBallPosition			= LoGetSlipBallPosition()								-- SLIP BALL (-1 +1)
-		--local lAccelerationUnits		= LoGetAccelerationUnits().y							-- G-LOAD
+		local lSlipBallPosition			= LoGetSlipBallPosition()								-- SLIP BALL (-1 +1)
+		local lAccelerationUnits		= LoGetAccelerationUnits().y							-- G-LOAD
 		
-		--local lNavInfoPitch				= LoGetNavigationInfo().Requirements.pitch				-- AP REQUIRED PITCH (Radian)
-		--local lNavInfoRoll				= LoGetNavigationInfo().Requirements.roll				-- AP REQUIRED BANK (Radian)
-		--local lNavInfoSpeed				= LoGetNavigationInfo().Requirements.speed				-- AP SPEED (Meter/Second)
-		--local lNavInfoAltitude			= LoGetNavigationInfo().Requirements.altitude      	 	-- AP ALTITUDE (Meter)
-		--local lNavInfoVerticalSpeed		= LoGetNavigationInfo().Requirements.vertical_speed		-- AP VERTICAL SPEED (Meter/Second)
+		local lNavInfoPitch				= LoGetNavigationInfo().Requirements.pitch				-- AP REQUIRED PITCH (Radian)
+		local lNavInfoRoll				= LoGetNavigationInfo().Requirements.roll				-- AP REQUIRED BANK (Radian)
+		local lNavInfoSpeed				= LoGetNavigationInfo().Requirements.speed				-- AP SPEED (Meter/Second)
+		local lNavInfoAltitude			= LoGetNavigationInfo().Requirements.altitude      	 	-- AP ALTITUDE (Meter)
+		local lNavInfoVerticalSpeed		= LoGetNavigationInfo().Requirements.vertical_speed		-- AP VERTICAL SPEED (Meter/Second)
 
-		--local lControlPanel_HSI			= LoGetControlPanel_HSI()								-- HSI Data
+		local lControlPanel_HSI			= LoGetControlPanel_HSI()								-- HSI Data
 		local lHSI_RMI					= LoGetControlPanel_HSI().RMI_raw						-- VOR1 OBS (Radian)
 		local lHSI_ADF					= LoGetControlPanel_HSI().ADF_raw						-- ADF OBS (Radian)
-		--local lHSI_Heading				= LoGetControlPanel_HSI().Heading_raw					-- Heading (Radian)
+		local lHSI_Heading				= LoGetControlPanel_HSI().Heading_raw					-- Heading (Radian)
 		
 		local lEngineRPMleft			= LoGetEngineInfo().RPM.left							-- ENG1 RPM %
 		local lEngineRPMright			= LoGetEngineInfo().RPM.right							-- ENG2 RPM %
-		local lEngineTempLeft			= LoGetEngineInfo().Temperature.left					-- ENG1 EGT ºC
-		local lEngineTempRight			= LoGetEngineInfo().Temperature.right					-- ENG2 EGT ºC
-		--local lEngineFuelInternal		= LoGetEngineInfo().fuel_internal						-- TANK1 (INT) (KG)
-		--local lEngineFuelExternal		= LoGetEngineInfo().fuel_external						-- TANK2 (EXT) (KG)
+		]]
+		local lEngineTempLeft			= LoGetEngineInfo().Temperature.left					-- ENG1 EGT 
+		local lEngineTempRight			= LoGetEngineInfo().Temperature.right					-- ENG2 EGT
+		--[[ 
+		local lEngineFuelInternal		= LoGetEngineInfo().fuel_internal						-- TANK1 (INT) (KG)
+		local lEngineFuelExternal		= LoGetEngineInfo().fuel_external						-- TANK2 (EXT) (KG)
 		
-		--local lMechInfo 				= LoGetMechInfo() 										-- mechanical components,  e.g. Flaps, Wheelbrakes,...
-		--local lPayloadInfo				= LoGetPayloadInfo()									-- Paylod, e.g. bombs, guns, rockets, fuel tanks,...
+		local lMechInfo 				= LoGetMechInfo() 										-- mechanical components,  e.g. Flaps, Wheelbrakes,...
+		local lPayloadInfo				= LoGetPayloadInfo()									-- Paylod, e.g. bombs, guns, rockets, fuel tanks,...
+		]]
 		
 		local lDistanceToWay			= 999
 		local lRoute					= LoGetRoute()
@@ -65,84 +69,43 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 			lDistanceToWay              = math.sqrt((myLoc.x - lRoute.goto_point.world_point.x)^2 + (myLoc.z -  lRoute.goto_point.world_point.z)^2)
 		end
 
-		if gES_GlassCockpitType == 1 then
-		-- HELIOS Version 1.3
-		-- customizing for HELOS
-			lPitch							= math.deg(lPitch)			-- PITCH, (Radian to Grad)
-			lBank							= math.deg(lBank)			-- BANK (Radian to Grad)
-			lYaw							= math.deg(lYaw)			-- YAW (Radian to Grad)
-			lHSI_RMI						= math.deg(lHSI_RMI)		-- VOR1 OBS (Radian to Grad)
-			lHSI_ADF						= math.deg(lHSI_ADF)		-- ADF OBS (Radian to Grad)
-			lAoA							= math.deg(lAoA)			-- ANGLE OF ATTACK AoA (Radian to Grad)
-			lHeading						= math.deg(lHeading)		-- Heading (Radian to Grad)
-			lHSI_ADF						= (360 - lHSI_ADF) + (360 - lHeading)
-			lHSI_RMI						= 360 - lHSI_RMI
-			lIAS 							= lIAS   * 3.6				-- change from m/s to km/h
-			
-			SendData("1", string.format("%.2f", lPitch) )
-			SendData("2", string.format("%.2f", lBank) )
-			SendData("3", string.format("%.2f", lYaw) )
-			SendData("4", string.format("%.2f", lAltBar) )
-			SendData("5", string.format("%.2f", lAltRad) )
-			SendData("6", string.format("%.2f", lHSI_ADF) )
-			SendData("7", string.format("%.2f", lHSI_RMI) )
-			SendData("8", string.format("%.2f", lHeading) )
-			SendData("9", string.format("%.2f", lEngineRPMleft) )
-			SendData("10", string.format("%.2f", lEngineRPMright) )
-			SendData("11", string.format("%.2f", lEngineTempLeft) )
-			SendData("12", string.format("%.2f", lEngineTempRight) )
-			SendData("13", string.format("%.2f", lVVI) )
-			SendData("14", string.format("%.2f", lIAS) )
-			SendData("15", string.format("%.2f", lDistanceToWay) )
-			SendData("16", string.format("%.2f", lAoA) )
-			SendData("17", string.format("%.2f", lGlide) )
-			SendData("18", string.format("%.2f", lSide) )
+		-- IAS-TAS Indicator (IAS, TAS) {"%.4f;%.4f"}
+		ExportScript.AF.FC_Russian_AirSpeed_1100hkm()
+
+		-- AOA Indicator and Accelerometer (AOA, GLoad)
+		ExportScript.AF.FC_Russian_AOA_Su25()
+
+		-- ADI
+		ExportScript.AF.FC_Russian_ADI_Old()
+
+		-- HSI
+		ExportScript.AF.FC_Russian_HSI(lDistanceToWay)
+
+		-- Vertical Velocity Indicator (VVI) (VVI, TurnIndicator, SlipBallPosition)
+		ExportScript.AF.FC_Russian_VVI_Old(6)
+
+		-- Radar Altimeter (AltRad, MinAltitude, WarningFlag, MinAltitudeLamp) {"%.4f;%.4f;%.1f;%.1f"} (below 100m is warning light on)
+		ExportScript.AF.FC_Russian_RadarAltimeter_1500m(100)
+
+		-- Barometric Altimeter (AltBar, BasicAtmospherePressure)
+		ExportScript.AF.FC_Russian_BarometricAltimeter_late()
+
+		-- Tachometer (RPM) (EngineRPMleft, EngineRPMright) {"%.4f;%.4f"}
+		ExportScript.AF.FC_Russian_EngineRPM()
+
+		-- Left Jet Engine Turbine Temperature Indicator (EngineTemp) {"%.4f"}
+		ExportScript.AF.FC_Russian_EGT_1000gc(lEngineTempLeft, 70)
+
+		-- Right Jet Engine Turbine Temperature Indicator (EngineTemp) {"%.4f"}
+		ExportScript.AF.FC_Russian_EGT_1000gc(lEngineTempRight, 71)
+
+		-- Clock from Ka-50 {CurrentHours, CurrentMinutes, CurrentSeconds, 0, FlightTimeHours, FlightTimeMinutes, 0, 0) {"%.4f;%.4f;%.4f;%.1f;%.4f;%.4f;%.4f;%.4f"}
+		ExportScript.AF.FC_Russian_Clock_late()
 		
-		elseif gES_GlassCockpitType == 2 then
-		-- HawgTouch version 1.6
-
-			local lRadToDCSsignd	= math.pi
-			local lRadToDCSunsignd	= math.pi * 2
-			local lDefaultNull		= 0.0
-			local lDefaultOne		= 1.0
-
-			-- IAS-TAS Indicator (IAS, TAS) {"%.4f;%.4f"}
-			FC_Russian_AirSpeed_1100hkm(1)
-
-			-- AOA Indicator and Accelerometer (AOA, GLoad)
-			FC_Russian_AOA_Su25(3)
-
-			-- ADI
-			FC_Russian_ADI_Old(4)
-
-			-- HSI
-			FC_Russian_HSI(lDistanceToWay, 5)
-
-			-- Vertical Velocity Indicator (VVI) (VVI, TurnIndicator, SlipBallPosition)
-			FC_Russian_VVI_Old(6)
-
-			-- Radar Altimeter (AltRad, MinAltitude, WarningFlag, MinAltitudeLamp) {"%.4f;%.4f;%.1f;%.1f"} (below 100m is warning light on)
-			FC_Russian_RadarAltimeter_1500m(100, 7)
-
-			-- Barometric Altimeter (AltBar, BasicAtmospherePressure)
-			FC_Russian_BarometricAltimeter_late(8)
-
-			-- Tachometer (RPM) (EngineRPMleft, EngineRPMright) {"%.4f;%.4f"}
-			FC_Russian_EngineRPM(9)
-
-			-- Left Jet Engine Turbine Temperature Indicator (EngineTemp) {"%.4f"}
-			FC_Russian_EGT_1000gc(lEngineTempLeft, 10)
-
-			-- Right Jet Engine Turbine Temperature Indicator (EngineTemp) {"%.4f"}
-			FC_Russian_EGT_1000gc(lEngineTempRight, 11)
-
-			-- Clock from Ka-50 {CurrentHours, CurrentMinutes, CurrentSeconds, 0, FlightTimeHours, FlightTimeMinutes, 0, 0) {"%.4f;%.4f;%.4f;%.1f;%.4f;%.4f;%.4f;%.4f"}
-			FC_Russian_Clock_late(12)
-		end
+		ExportScript.AF.EventNumberOLD = ExportScript.AF.EventNumber
 	else
 		--WriteToLog("Unknown FC Error, no LoGetSelfData.")
 	end
-	
 end
 
 function ExportScript.ProcessDACConfigHighImportance()
@@ -151,157 +114,160 @@ end
 
 function ExportScript.ProcessIkarusFCLowImportanceConfig()
 	local lFunctionTyp = "Ikarus"	-- function type for shared function
-
-	ExportScript.AF.SPO15RWR(lFunctionTyp)
+	-- Weapon Panel
 	ExportScript.AF.WeaponPanel_SU25(lFunctionTyp)
+	
+	-- SPO15 Radar Warning Reciver
+	ExportScript.AF.SPO15RWR(lFunctionTyp)
 
-    if gES_GlassCockpitType == 1 then
-		-- HELIOS Version 1.3
-		
-	elseif gES_GlassCockpitType == 2 then
-		-- HawgTouch version 1.6
+	-- EKRAN Message
+	ExportScript.AF.FC_EKRAN()
 
-		FC_WeaponPanel_SU25(13)
+	-- Mechanical Configuration Indicator (GearWarningLight, NoseGear, LeftGear, RightGear, Airbreaks, Flaps1, Flaps2)
+	ExportScript.AF.FC_Russian_MDI_SU25(lFunctionTyp)
 
-		FC_RadarWarning_SPO15(14)
+	--  Fuel Quantity Indicator
+	local lEngineInfo = LoGetEngineInfo()
+	if lEngineInfo ~= nil then
+    	-- ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
+    	--[[
+    	[fuel_external] = number: "0"
+        [Temperature] = {
+            [left] = number: "626.99444580078"
+            [right] = number: "626.99444580078"
+        }
+        [RPM] = {
+            [left] = number: "87.453765869141"
+            [right] = number: "87.453758239746"
+        }
+        [FuelConsumption] = {
+            [left] = number: "0.1500396137767"
+            [right] = number: "0.1500396137767"
+        }
+        [fuel_internal] = number: "3773.2749023438"
+        [EngineStart] = {
+            [left] = number: "0"
+            [right] = number: "0"
+        }
+        [HydraulicPressure] = {
+            [left] = number: "210"
+            [right] = number: "210"
+        }
+    	lPayloadInfo.Stations[8].CLSID == E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF   -- ext 800l Fuel Tank
+    	]]
 
-		--  Fuel Quantity Indicator
-		local lEngineInfo = LoGetEngineInfo()
-    	if lEngineInfo ~= nil then
-        	--WriteToLog('lEngineInfo: '..dump(lEngineInfo))
-        	--[[
-        	[fuel_external] = number: "0"
-            [Temperature] = {
-                [left] = number: "626.99444580078"
-                [right] = number: "626.99444580078"
-            }
-            [RPM] = {
-                [left] = number: "87.453765869141"
-                [right] = number: "87.453758239746"
-            }
-            [FuelConsumption] = {
-                [left] = number: "0.1500396137767"
-                [right] = number: "0.1500396137767"
-            }
-            [fuel_internal] = number: "3773.2749023438"
-            [EngineStart] = {
-                [left] = number: "0"
-                [right] = number: "0"
-            }
-            [HydraulicPressure] = {
-                [left] = number: "210"
-                [right] = number: "210"
-            }
-        	lPayloadInfo.Stations[8].CLSID == E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF   -- ext 800l Fuel Tank
-        	]]
+    	local lTotalFuel = lEngineInfo.fuel_internal
+		--local lTotalFuel = string.format("%3d", ExportScript.Tools.round((lEngineInfo.fuel_internal / 10), 0, "ceil") * 10)
+    	--local lTotalFuel = string.format("%4d", lEngineInfo.fuel_internal) -- total fuel in kg
+    	--local lTotalFuel = string.format("%4d", lEngineInfo.fuel_external) -- external fuel in kg
+		local lFuelCounter = {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
+		lTotalFuel = string.format("%03d", ExportScript.Tools.round((lEngineInfo.fuel_internal / 10), 0, "ceil")) -- auf drei stellen bringen
 
-        	local lTotalFuel = lEngineInfo.fuel_internal
-			--local lTotalFuel = string.format("%3d", math.round((lEngineInfo.fuel_internal / 10), 0, "ceil") * 10)
-        	--local lTotalFuel = string.format("%4d", lEngineInfo.fuel_internal) -- total fuel in kg
-        	--local lTotalFuel = string.format("%4d", lEngineInfo.fuel_external) -- external fuel in kg
-			local lFuelCounter = {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
-			lTotalFuel = string.format("%03d", math.round((lEngineInfo.fuel_internal / 10), 0, "ceil")) -- auf drei stellen bringen
+    	local lExtTank1 = 1.0    -- external tanks
+    	local lExtTank2 = 1.0    -- inner tanks
 
-        	local lExtTank1 = 1.0    -- external tanks
-        	local lExtTank2 = 1.0    -- inner tanks
+    	local lPayloadInfo = LoGetPayloadInfo()
+    	if lPayloadInfo ~= nil then
+    		--ExportScript.Tools.WriteToLog('lPayloadInfo: '..ExportScript.Tools.dump(lPayloadInfo))
+    		if lPayloadInfo.Stations[10].CLSID == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or 
+    		   lPayloadInfo.Stations[9].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then -- external tanks presend and full (panel 6 and 5)
+    			lExtTank1 = ((lEngineInfo.fuel_external < 1240.0 ) and 1.0 or 0.0)
+    		end
+    		if lPayloadInfo.Stations[5].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or
+    		   lPayloadInfo.Stations[6].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then-- inner tanks presend and full (panel 3 and 8)
+    			lExtTank2 = ((lEngineInfo.fuel_external < 1.0 ) and 1.0 or 0.0)
+    		end
+    	end
+    	-- TotalFuel_100
+		-- TotalFuel_10
+		-- TotalFuel_1
+		-- Light1
+		-- Light2
+		-- Light3
+		-- Light4
+		-- Light5
+		-- BingoLight
+		--[[SendData("15", string.format("%0.2f;%0.2f;%0.2f;%d;%d;%d;%d;%d;%d",
+										lFuelCounter[tonumber(string.sub(lTotalFuel, 1, 1))],
+										lFuelCounter[tonumber(string.sub(lTotalFuel, 2, 2))],
+										lFuelCounter[tonumber(string.sub(lTotalFuel, 3, 3))],
+										lExtTank1,												-- external tanks
+										lExtTank2,												-- inner tanks
+										(lEngineInfo.fuel_internal < 2800.0 and 1 or 0),		-- Interne Flügeltanks
+										(lEngineInfo.fuel_internal < 1840.0 and 1 or 0),		-- Interne Rumpftanks
+										(lEngineInfo.fuel_internal < 1.0    and 1 or 0),		-- Zentraler Rumpftanks
+										(lEngineInfo.fuel_internal < 600.0  and 1 or 0)))		-- Bingo Fuel]]
 
-        	local lPayloadInfo = LoGetPayloadInfo()
-        	if lPayloadInfo ~= nil then
-        		--WriteToLog('lPayloadInfo: '..dump(lPayloadInfo))
-        		if lPayloadInfo.Stations[10].CLSID == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or 
-        		   lPayloadInfo.Stations[9].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then -- external tanks presend and full (panel 6 and 5)
-        			lExtTank1 = ((lEngineInfo.fuel_external < 1240.0 ) and 1.0 or 0.0)
-        		end
-        		if lPayloadInfo.Stations[5].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or
-        		   lPayloadInfo.Stations[6].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then-- inner tanks presend and full (panel 3 and 8)
-        			lExtTank2 = ((lEngineInfo.fuel_external < 1.0 ) and 1.0 or 0.0)
-        		end
-        	end
-        	-- TotalFuel_100
-			-- TotalFuel_10
-			-- TotalFuel_1
-			-- Light1
-			-- Light2
-			-- Light3
-			-- Light4
-			-- Light5
-			-- BingoLight
-			SendData("15", string.format("%0.2f;%0.2f;%0.2f;%d;%d;%d;%d;%d;%d",
-											lFuelCounter[tonumber(string.sub(lTotalFuel, 1, 1))],
-											lFuelCounter[tonumber(string.sub(lTotalFuel, 2, 2))],
-											lFuelCounter[tonumber(string.sub(lTotalFuel, 3, 3))],
-											lExtTank1,												-- external tanks
-											lExtTank2,												-- inner tanks
-											(lEngineInfo.fuel_internal < 2800.0 and 1 or 0),		-- Interne Flügeltanks
-											(lEngineInfo.fuel_internal < 1840.0 and 1 or 0),		-- Interne Rumpftanks
-											(lEngineInfo.fuel_internal < 1.0    and 1 or 0),		-- Zentraler Rumpftanks
-											(lEngineInfo.fuel_internal < 600.0  and 1 or 0)))		-- Bingo Fuel
+        ExportScript.Tools.SendData(300, string.format("%0.2f", lFuelCounter[tonumber(string.sub(lTotalFuel, 1, 1))]))
+        ExportScript.Tools.SendData(301, string.format("%0.2f", lFuelCounter[tonumber(string.sub(lTotalFuel, 2, 2))]))
+        ExportScript.Tools.SendData(302, string.format("%0.2f", lFuelCounter[tonumber(string.sub(lTotalFuel, 3, 3))]))
+        ExportScript.Tools.SendData(303, lExtTank1)                                         -- external tanks
+        ExportScript.Tools.SendData(304, lExtTank2)                                         -- inner tanks
+        ExportScript.Tools.SendData(305, (lEngineInfo.fuel_internal < 2800.0 and 1 or 0))   -- inner wing tank
+        ExportScript.Tools.SendData(306, (lEngineInfo.fuel_internal < 1840.0 and 1 or 0))   -- inner hull tank
+        ExportScript.Tools.SendData(307, (lEngineInfo.fuel_internal < 1.0    and 1 or 0))   -- central hull tank
+        ExportScript.Tools.SendData(308, (lEngineInfo.fuel_internal < 600.0  and 1 or 0))   -- Bingo Fuel
 
-			-- Hydraulic Pressure Left
-			FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.left, 240, 17)
+		-- Hydraulic Pressure Left
+		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.left, 240, 85)
 
-			-- Hydraulic Pressure Right
-			FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.right, 240, 18)
-		end
-
-		-- EKRAN Message
-		FC_EKRAN(16)
-
-		-- Mechanical Configuration Indicator (GearWarningLight, NoseGear, LeftGear, RightGear, Airbreaks, Flaps1, Flaps2) {"%.1f;%d;%d;%d;%d;%d;%d"}
-		FC_Russian_MDI_SU25(2)
-
-		local lMechInfo = LoGetMechInfo()	-- mechanical components,  e.g. Flaps, Wheelbrakes,...
-		if lMechInfo ~= nil then
-			-- Wheelbrakes Hydraulic Pressure Left
-			FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 19)
-
-			-- Wheelbrakes Hydraulic Pressure Right
-			FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 20)
-		end
+		-- Hydraulic Pressure Right
+		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.right, 240, 86)
 	end
-        
-		--(x < 0 and 'negative' or 'non-negative')
-		--[[
-		local lPayloadInfo = LoGetPayloadInfo()
-		WriteToLog('lPayloadInfo: '..dump(lPayloadInfo))
-		
-		local lSnares = LoGetSnares() -- Flare and Chaff
-		WriteToLog('lSnares: '..dump(lSnares))
-		
-		local lSightingSystemInfo = LoGetSightingSystemInfo()
-		WriteToLog('lSightingSystemInfo: '..dump(lSightingSystemInfo))
-		
-		local lTWSInfo = LoGetTWSInfo() -- SPO Informationen, z.B. Radarwarner F15C
-		WriteToLog('lTWSInfo: '..dump(lTWSInfo))
-		
-		local lTargetInformation = LoGetTargetInformation() -- detalierte Radar Infos z.B. F15C
-		WriteToLog('lTargetInformation: '..dump(lTargetInformation))
-		
-		local lLockedTargetInformation = LoGetLockedTargetInformation()
-		WriteToLog('lLockedTargetInformation: '..dump(lLockedTargetInformation))
-		
-		local lF15_TWS_Contacs = LoGetF15_TWS_Contacts() -- the same information but only for F-15 in TWS mode
-		WriteToLog('lF15_TWS_Contacs: '..dump(lF15_TWS_Contacs))
-		
-		local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
-		WriteToLog('lMechInfo: '..dump(lMechInfo))
-		
-		local lMCPState = LoGetMCPState() -- Warnlichter
-		WriteToLog('lMCPState: '..dump(lMCPState))
-		
-		local lControlPanel_HSI = LoGetControlPanel_HSI()
-		WriteToLog('lControlPanel_HSI: '..dump(lControlPanel_HSI))
-		
-		local lRadioBeaconsStatus = LoGetRadioBeaconsStatus()
-		WriteToLog('lRadioBeaconsStatus: '..dump(lRadioBeaconsStatus))
-		
-		local lEngineInfo = LoGetEngineInfo()
-		WriteToLog('lEngineInfo: '..dump(lEngineInfo))
-		]]
-		-- Weapon Control System
-        --local lNameByType = LoGetNameByType () -- args 4 (number : level1,level2,level3,level4), result string
-		-- values from LoGetTargetInformation().type
-		--WriteToLog('lNameByType: '..dump(lNameByType))
+
+	local lMechInfo = LoGetMechInfo()	-- mechanical components,  e.g. Flaps, Wheelbrakes,...
+	if lMechInfo ~= nil then
+		-- Wheelbrakes Hydraulic Pressure Left
+		ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 87)
+
+		-- Wheelbrakes Hydraulic Pressure Right
+		ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 88)
+	end
+    
+	ExportScript.AF.EventNumberOLD = ExportScript.AF.EventNumber
+	
+	-- (x < 0 and 'negative' or 'non-negative')
+	--[[
+	local lPayloadInfo = LoGetPayloadInfo()
+	ExportScript.Tools.WriteToLog('lPayloadInfo: '..ExportScript.Tools.dump(lPayloadInfo))
+	
+	local lSnares = LoGetSnares() -- Flare and Chaff
+	ExportScript.Tools.WriteToLog('lSnares: '..ExportScript.Tools.dump(lSnares))
+	
+	local lSightingSystemInfo = LoGetSightingSystemInfo()
+	ExportScript.Tools.WriteToLog('lSightingSystemInfo: '..ExportScript.Tools.dump(lSightingSystemInfo))
+	
+	local lTWSInfo = LoGetTWSInfo() -- SPO Informationen, z.B. Radarwarner F15C
+	ExportScript.Tools.WriteToLog('lTWSInfo: '..ExportScript.Tools.dump(lTWSInfo))
+	
+	local lTargetInformation = LoGetTargetInformation() -- detalierte Radar Infos z.B. F15C
+	ExportScript.Tools.WriteToLog('lTargetInformation: '..ExportScript.Tools.dump(lTargetInformation))
+	
+	local lLockedTargetInformation = LoGetLockedTargetInformation()
+	ExportScript.Tools.WriteToLog('lLockedTargetInformation: '..ExportScript.Tools.dump(lLockedTargetInformation))
+	
+	local lF15_TWS_Contacs = LoGetF15_TWS_Contacts() -- the same information but only for F-15 in TWS mode
+	ExportScript.Tools.WriteToLog('lF15_TWS_Contacs: '..ExportScript.Tools.dump(lF15_TWS_Contacs))
+	
+	local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
+	ExportScript.Tools.WriteToLog('lMechInfo: '..ExportScript.Tools.dump(lMechInfo))
+	
+	local lMCPState = LoGetMCPState() -- Warnlichter
+	ExportScript.Tools.WriteToLog('lMCPState: '..ExportScript.Tools.dump(lMCPState))
+	
+	local lControlPanel_HSI = LoGetControlPanel_HSI()
+	ExportScript.Tools.WriteToLog('lControlPanel_HSI: '..ExportScript.Tools.dump(lControlPanel_HSI))
+	
+	local lRadioBeaconsStatus = LoGetRadioBeaconsStatus()
+	ExportScript.Tools.WriteToLog('lRadioBeaconsStatus: '..ExportScript.Tools.dump(lRadioBeaconsStatus))
+	
+	local lEngineInfo = LoGetEngineInfo()
+	ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
+	]]
+	-- Weapon Control System
+    -- local lNameByType = LoGetNameByType () -- args 4 (number : level1,level2,level3,level4), result string
+	-- values from LoGetTargetInformation().type
+	-- ExportScript.Tools.WriteToLog('lNameByType: '..ExportScript.Tools.dump(lNameByType))
 end
 
 function ExportScript.ProcessDACConfigLowImportance()
@@ -702,7 +668,7 @@ function WeaponStatusPanel(hardware)
 	-- CurrentStation 8, panel 7
 	-- CurrentStation 6, panel 8
 	-- wenn die Waffenstationen gleichmässig belegt sind, hat bei Auswahl CurrentStation immer den Wert der linken Station
-	-- bei ungleichmäßiger Belegung, hat CurrentStation immer den Wert der jeweiligen Station
+	-- bei ungleichmässiger Belegung, hat CurrentStation immer den Wert der jeweiligen Station
 	-- Waffenbezeichnung als UUID, gES_PayloadInfo.Stations[X].CLSID 
 	
 	-- defination
@@ -736,9 +702,8 @@ function WeaponStatusPanel(hardware)
 	end
 end
 
-function FuelQuantityIndicator(hardware)
+function FuelQuantityIndicator()
 -- Fuel quantity shows the fuel remaining in all tanks
-	local lHardware = hardware or 1
 	local lEngineInfo = LoGetEngineInfo()
 	if lEngineInfo == nil then
 		return
@@ -770,33 +735,33 @@ function FuelQuantityIndicator(hardware)
 	lPayloadInfo.Stations[8].CLSID == E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF   -- ext 800l Fuel Tank
 	]]
 
-	SendDataHW("300", string.format("%d", math.round((lEngineInfo.fuel_internal / 10), 0, "ceil") * 10), lHardware ) -- total fuel in kg
-	--SendDataHW("301", string.format("%d", lEngineInfo.fuel_internal)) -- total fuel in kg
-	--SendDataHW("302", string.format("%d", lEngineInfo.fuel_external)) -- external fuel in kg
+	ExportScript.Tools.SendDataDAC("300", string.format("%d", math.round((lEngineInfo.fuel_internal / 10), 0, "ceil") * 10)) -- total fuel in kg
+	--ExportScript.Tools.SendDataDAC("301", string.format("%d", lEngineInfo.fuel_internal)) -- total fuel in kg
+	--ExportScript.Tools.SendDataDAC("302", string.format("%d", lEngineInfo.fuel_external)) -- external fuel in kg
 	
 	local lPayloadInfo = LoGetPayloadInfo()
 	if lPayloadInfo ~= nil then
 		--WriteToLog('lPayloadInfo: '..dump(lPayloadInfo))
 		if lPayloadInfo.Stations[10].CLSID == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or 
 		   lPayloadInfo.Stations[9].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then -- external tanks presend and full (panel 6 and 5)
-			SendDataHW("303", ((lEngineInfo.fuel_external < 1240.0 ) and 1 or 0), lHardware )
+			ExportScript.Tools.SendDataDAC("303", ((lEngineInfo.fuel_external < 1240.0 ) and 1 or 0))
 		else
-			SendDataHW("303", 1, lHardware )
+			ExportScript.Tools.SendDataDAC("303", 1)
 		end
 		if lPayloadInfo.Stations[5].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or
 		   lPayloadInfo.Stations[6].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then-- inner tank presend and full (panel 3 and 8)
-			SendDataHW("304", ((lEngineInfo.fuel_external < 1.0 ) and 1 or 0), lHardware )
+			ExportScript.Tools.SendDataDAC("304", ((lEngineInfo.fuel_external < 1.0 ) and 1 or 0))
 		else
-			SendDataHW("304", 1, lHardware )
+			ExportScript.Tools.SendDataDAC("304", 1)
 		end
 	else
-		SendDataHW("303", 1, lHardware )
-		SendDataHW("304", 1, lHardware )
+		ExportScript.Tools.SendDataDAC("303", 1)
+		ExportScript.Tools.SendDataDAC("304", 1)
 	end
-	SendDataHW("305", (lEngineInfo.fuel_internal < 2800.0 and 1 or 0), lHardware ) -- Interne Flügeltanks
-	SendDataHW("306", (lEngineInfo.fuel_internal < 1840.0 and 1 or 0), lHardware ) -- Interne Rumpftanks
-	SendDataHW("307", (lEngineInfo.fuel_internal < 1.0    and 1 or 0), lHardware ) -- Zentraler Rumpftanks
-	SendDataHW("308", (lEngineInfo.fuel_internal < 600.0  and 1 or 0), lHardware ) -- Bingo Fuel
+	ExportScript.Tools.SendDataDAC("305", (lEngineInfo.fuel_internal < 2800.0 and 1 or 0)) -- inner wing tank
+	ExportScript.Tools.SendDataDAC("306", (lEngineInfo.fuel_internal < 1840.0 and 1 or 0)) -- inner hull tank
+	ExportScript.Tools.SendDataDAC("307", (lEngineInfo.fuel_internal < 1.0    and 1 or 0)) -- central hull tank
+	ExportScript.Tools.SendDataDAC("308", (lEngineInfo.fuel_internal < 600.0  and 1 or 0)) -- Bingo Fuel
 	
 end
 
