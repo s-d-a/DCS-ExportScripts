@@ -24,11 +24,11 @@ ExportScript.ConfigEveryFrameArguments =
 	[60]  = "%.1f", 	-- OXYGENE_instrument_IK52_blinking_lungs
 	[58]  = "%.1f", 	-- OXYGENE_instrument_M2000
 --GEAR LIGHTS == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-	[9]   = "%.f",	 	-- GEAR_NOSE_UP_LIGHT
+	--[9]   = "%.f",	 	-- GEAR_NOSE_UP_LIGHT
 	[12]  = "%.f",	 	-- GEAR_NOSE_DOWN_LIGHT
-	[10]  = "%.f",	 	-- GEAR_LEFT_UP_LIGHT
+	--[10]  = "%.f",	 	-- GEAR_LEFT_UP_LIGHT
 	[13]  = "%.f",	 	-- GEAR_LEFT_DOWN_LIGHT
-	[11]  = "%.f",	 	-- GEAR_RIGHT_UP_LIGHT
+	--[11]  = "%.f",	 	-- GEAR_RIGHT_UP_LIGHT
 	[14]  = "%.f",	 	-- GEAR_RIGHT_DOWN_LIGHT
 -- AIRBRAKES == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 	[316] = "%.1f", 	-- AIRBRAKES_button
@@ -64,7 +64,7 @@ ExportScript.ConfigEveryFrameArguments =
 --/N/ ARK subgroup ---------------------------------------------------------------------------------------------------------------------------------
 	[174] = "%.1f", 	-- ARK_switch
 	[254] = "%.1f", 	-- ARK_dal_bliz_selector
-	--[36]  = "%.4f", 	-- ARK_RSBN_needle
+	[36]  = "%.4f", 	-- ARK_RSBN_needle
 -- Radio-altimeter subgroup ------------------------------------------------------------------------------------------------------------------------------------------------------
 	[175] = "%.1f", 	-- RADIO_ALTIMETER_MARKER_switch
 	[103] = "%.4f", 	-- RADIO_ALTIMETER_indicator
@@ -117,7 +117,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[160] = "%.1f", 	-- FUEL_PUMP_1
 	[161] = "%.1f", 	-- FUEL_PUMP_RASHOD
 	[402] = "%.4f", 	-- FUEL_PRESSURE  { 0, 45 } ????
-	[52]  = "%.1f", 	-- FUEL_METER
+	[52]  = "%.4f", 	-- FUEL_METER
 --FUEL LIGHTS (in connection with previous) == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = 
 	[501] = "%.f",	 	-- FUEL_LIGHT_FUELPODC
 	[502] = "%.f", 		-- FUEL_LIGHT_1GR
@@ -235,9 +235,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[544] =   "%.f", 	-- SAU_landing_COMMAND_LIGHT
 	[545] =   "%.f", 	-- SAU_landing_AUTO_LIGHT
 -- ARU == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = 
-	[64] =   "%.1f", 	-- ARU_3G_instrument
+	[64] =   "%.4f", 	-- ARU_3G_instrument
 -- KONUS == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = 
-	[66] =   "%.1f", 	-- KONUS_UPES_3_instrument
+	[66] =   "%.4f", 	-- KONUS_UPES_3_instrument
 -- DRAG CHUTE == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 	[550] =   "%.f", 	-- GUN_GOTOVN_LIGHT
 -- SPO == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == = 
@@ -595,9 +595,6 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	-- ADI/KPP correction
 	ExportScript.Tools.SendData(565, string.format("%.4f", (mainPanelDevice:get_argument_value(565) * 3))) -- RSBN_KPP_kurs_director
 	ExportScript.Tools.SendData(566, string.format("%.4f", (mainPanelDevice:get_argument_value(566) * 3))) -- RSBN_KPP_glisada_director
-
-	-- HSI/NPP correction
-	ExportScript.Tools.SendData(36, string.format("%.4f", (mainPanelDevice:get_argument_value(36) - 0.5)))
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -630,6 +627,10 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+	-- logic error with upper landing gear lights
+	ExportScript.Tools.SendData(9, (mainPanelDevice:get_argument_value(9) == 0 and 1 or 0))		-- GEAR_NOSE_UP_LIGHT
+	ExportScript.Tools.SendData(10, (mainPanelDevice:get_argument_value(10) == 0 and 1 or 0))	-- GEAR_LEFT_UP_LIGHT
+	ExportScript.Tools.SendData(11, (mainPanelDevice:get_argument_value(11) == 0 and 1 or 0))	-- GEAR_RIGHT_UP_LIGHT
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
