@@ -1,26 +1,55 @@
 ###Deutsch###
 ---
 Dies ist ein universell einsetzbares Export Script für DCS.
-Es wird der gleichzeitige Export von Daten an verschiedene Software(Hardware)-Tools ermöglicht.
+Es wird der gleichzeitige Export von Daten an Glasscockpitsoftware und IO Hardware ermöglicht.
 
 Zur Zeit werden folgende Export-Formate unterstützt.
-- DAC (DCS Arcaze Connector) von [H-J-P](http://github.com/h-j-p/DAC/) um die Arcaze USB Controller anzusprechen (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
-- HawkTouch in der Version 1.5/1.6 (http://forums.eagle.ru/showthread.php?t=71729) mit der GaugePack.dll in der Version von [H-J-P](http://github.com/h-j-p/HT/).
-- HELIOS in der Version 1.3.19 (http://www.gadrocsworkshop.com/helios/) (Unterstützt nur die DCS Module A-10C, Ka-50 und im Eingeschränkten Umfang die SU-25T und die Flaming Cliffs Flugzeuge)
+- DAC (DCS Arcaze Connector) von [H-J-P](https://github.com/H-J-P/DAC/) um die Arcaze USB Controller anzusprechen (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
+- Ikarus von [H-J-P](https://github.com/H-J-P/Ikarus), unsere neue Glasscockpitsoftware
 
-und andere Software/Hardware die ihre Daten über eine UDP Netzwerkverbindung bekommen und die Daten in einem Key=Value Format verarbeiten.
+Die Unterstüng von HELIOS und HawgTouch mit unser HT Gauges DLL entfällt.
+
+Der Export von Daten wird für folgende Module unterstützt:
+- Ka-50
+- A-10C
+- MiG-15bis
+- MiG-21Bis
+- F-86F Sabre
+- UH-1H
+- Mi-8MT
+- P-51D
+- TF-51D
+- Bf-109K-4
+- FW-190D9
+
+An der Unterstützung für die Flaiming cliffs Flugzeuge wird derzeit gearbeitet.
 
 ###English###
 ---
-This is an universally insertable export script for DCS. It allows for the simultaneous export of data of different programs and hardware
+This is an universally insertable export script for DCS. It allows for the simultaneous export of data at glass cockpit software and IO hardware.
 
 At present the following export formats are supported:
-- DAC. (DCS Arcaze Connector) by [H-J-P](http://github.com/h-j-p/DAC/) to address the Arcaze USB Controller (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
-- HawkTouch in version 1.5/1.6 (http://forums.eagle.ru/showthread.php?t=71729) with GaugePack.dll in the version by [H-J-P](http://github.com/h-j-p/HT/).
-- HELIOS in the version 1.3.19 (http://www.gadrocsworkshop.com/helios/) (Only supports the DCS Module A-10C, Ka-50 and in a limited capacity the SU-25T and the Flaming Cliffs Aircraft)
+- DAC (DCS Arcaze Connector) by [H-J-P](https://github.com/H-J-P/DAC/) to address the Arcaze USB Controller (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
+- Ikarus by [H-J-P](https://github.com/H-J-P/Ikarus), our new glass cockpit software
 
-and other Software/Hardware that obtain your data via a UDP network connection and then process it into a Key=Value Format.
+The support for HELIOS and HawgTouch with our HT gauges pack DLL is canceled.
+
+Following moduls are supported:
+- Ka-50
+- A-10C
+- MiG-15bis
+- MiG-21Bis
+- F-86F Sabre
+- UH-1H
+- Mi-8MT
+- P-51D
+- TF-51D
+- Bf-109K-4
+- FW-190D9
+
+Flaming Cliffs support is in developing.
+
 
 ###Wiki###
 ---
-[DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deutsch and English)
+[DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deutsch and English) !!!the Document is out dated!!!
