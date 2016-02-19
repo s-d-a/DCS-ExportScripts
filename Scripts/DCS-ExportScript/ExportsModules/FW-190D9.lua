@@ -157,7 +157,7 @@ ExportScript.ConfigArguments =
 	--Trimmer
 	[77] = "%1d",     -- Stabilizer Trimmer Up/Down {-1, 0, 1}
 	--Clock
-	[24] = "%.2f",     -- Turnable Bezel (axis) in 0.2 steps
+	[24] = "%.4f",     -- Turnable Bezel (axis) in 0.2 steps
 	[25] = "%.2f",     -- Wind/Set Knob (axis) in 0.1 steps
 	[26] = "%1d",     -- Start - Stop Button {0, 1}
 	[28] = "%1d",     -- Stopwatch Button {0, 1}

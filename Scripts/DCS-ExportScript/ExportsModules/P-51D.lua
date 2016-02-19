@@ -20,7 +20,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[29] = "%.4f",		-- Variometer {-6000,-4000,-2000,2000,4000,6000} {-0.6,-0.4,-0.2,0.2,0.4,0.6}
 	-- Altimeter
 	[97] = "%.4f",		-- Altimeter_Pressure {28.1, 31.0}{0.0, 1.0}
-	[96] = "%.41f",		-- Altimeter_10000_footPtr {0.0, 100000.0}{0.0, 1.0}
+	[96] = "%.4f",		-- Altimeter_10000_footPtr {0.0, 100000.0}{0.0, 1.0}
 	[24] = "%.4f",		-- Altimeter_1000_footPtr {0.0, 10000.0}{0.0, 1.0}
 	[25] = "%.4f",		-- Altimeter_100_footPtr{0.0, 1000.0}{0.0, 1.0}
 	-- Artificial horizon

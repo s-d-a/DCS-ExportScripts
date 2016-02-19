@@ -40,8 +40,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[9] = "%.4f",		-- AGK_47B_turn {-1.0, 1.0}
 	[10] = "%.4f",		-- AGK_47B_horizon {-1.0, 1.0}
 	[35] = "%.4f",		-- PRV_46_RAlt {-10.0, 0.0, 1200.0}{-1.0, 0.0, 1.0}
-	[32] = "%.4f",		-- PDK-45 HeadingScale {0.0, 1.0}
-	[33] = "%.4f",		-- PDK-45 Heading {0.0, 1.0}
+	[32] = "%.4f",		-- PDK-45 HeadingScale {1.0, 0.0}
+	[33] = "%.4f",		-- PDK-45 Heading {1.0, 0.0}
 	-- Weapon System
 	[95] = "%.4f",		-- N37D_Ready_Lamp
 	[93] = "%.4f",		-- NR23_TOP_Ready_Lamp

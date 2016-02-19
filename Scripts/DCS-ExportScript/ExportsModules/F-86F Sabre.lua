@@ -120,7 +120,7 @@ ExportScript.ConfigArguments =
 	based on "clickabledata.lua"
 	]]
 	-- cockpit mechanics
-	[718] = "%.1f",     -- Canopy Switch, OPEN/OFF/CLOSE {-1.0, 1.0}
+	[718] = "%.1f",     -- Canopy Switch, OPEN/OFF/CLOSE {-1.0, 0.0, 1.0}
 	[818] = "%.1f",     -- Emergency Jettison Handle, IN/OUT {0.0, 1.0}
 	[817] = "%.1f",     -- Canopy Alternate Emergency Jettison Handle, IN/OUT {0.0, 1.0}
 	[816] = "%.1f",     -- Canopy Declutch Handle, IN/OUT {0.0, 1.0}
@@ -217,10 +217,10 @@ ExportScript.ConfigArguments =
 	--[732] = "%1d",     -- Emergency (In-air) Ignition Switch Cover {1, -1}
 	[733] = "%.1f",     -- Emergency (In-air) Ignition Switch, ON/OFF {1.0, 1.0}
 	-- Control Interface
-	[649] = "%.1f",     -- Lateral Alternate Trim Switch, NORMAL/OFF/LEFT/RIGHT {-0.1, 0.1}
+	[649] = "%.1f",     -- Lateral Alternate Trim Switch, LEFT/RIGHT/NORMAL/OFF {0.3, 0.5, 0.1, 0.0}
 	[648] = "%.1f",     -- Rudder Trim Switch, LEFT/OFF/RIGHT {1.0, -1.0}
 	--[738] = "%1d",     -- Longitudinal Alternate Trim Switch Cover {1, -1}
-	[739] = "%.1f",     -- Longitudinal Alternate Trim Switch, NORMAL GRIP CONT/OFF/NOSE UP/NOSE DOWN {-0.1, 0.0, 0.1}
+	[739] = "%.1f",     -- Longitudinal Alternate Trim Switch, NORMAL GRIP CONT/NOSE UP/NOSE DOWN/OFF {0.5, 0.3, 0.1, 0.0}
 	[683] = "%1d",     -- Take-off (Trim) Position Indicator Light (Push to test) {1}
 	[735] = "%1d",     -- Wing Flaps Handle {-1, 1}
 	-- radio ARC-27
@@ -235,6 +235,7 @@ ExportScript.ConfigArguments =
 	--[null] = "%.4f",     -- AN/ARN-6 Tuning Crank {0.0, 1.0} in 0.01 steps
 	[657] = "%.1f",     -- AN/ARN-6 Scale Light Switch, HI/OFF/LO {-0.1, 0.0, 0.1}
 	[826] = "%.4f",     -- AN/ARN-6 East/West Variation Knob (rotary) {0.0, 1.0} in 0.05 steps
+	[658] = "%.1f",		-- AN/ARN-6 CW-VOICE Switch, CW/VOICE {1.0, -1.0}
 	-- IFF APX-6
 	[810] = "%.1f",     -- AN/APX-6 IFF Master Switch, EMERGENCY/NORM/LOW/STDBY/OFF {0.0, 0.1, 0.2, 0.3, 0.4}
 	[659] = "%.1f",     -- AN/APX-6 IFF Mode 2 Switch, MODE 2/OUT/I/P {-0.1, 0.0, 0.1}
@@ -274,7 +275,7 @@ ExportScript.ConfigArguments =
 	[751] = "%.1f",     -- Rocket Release Selector Switch, SINGLE/OFF/AUTO {-1.0, 0.0, 1.0}
 	[668] = "%.1f",     -- Gun Selector Switch {-0.2, 0.2}
 	[665] = "%.1f",     -- Gun-Missile Selector Switch, OFF/SIGHT CAMERA & RADAR/GUNS/MISSILE {0, 0.3}
-	[636] = "%1d",     -- Gun Heater Switch, HEATER/OFF {2,- 2}
+	[636] = "%.1f",     -- Gun Heater Switch, HEATER/OFF/(N/F) {-1.0, 1.0}
 	[663] = "%1d",     -- Manual Pip Control Switch, BOMB/NORMAL {2, -2}
 	[796] = "%.1f",     -- Manual Pip Control Change Calibrated Dials (Presets) {0.0, 0.3, 0.6, 0.9}
 	[797] = "%.4f",     -- Manual Pip Control Knob (rotary) {0.0, 1.0} in 0.1 steps
