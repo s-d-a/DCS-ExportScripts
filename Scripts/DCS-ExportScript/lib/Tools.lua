@@ -73,7 +73,8 @@ function ExportScript.Tools.ProcessInput()
                     end
                 elseif lDevice == "1000" then
                     --ExportScript.genericRadio(key, value, hardware)
-                    ExportScript.genericRadio(lCommandArgs[2],lCommandArgs[3], ExportScript.Config.genericRadioHardwareID)
+                    --ExportScript.genericRadio(lCommandArgs[2],lCommandArgs[3], ExportScript.Config.genericRadioHardwareID)
+					ExportScript.genericRadio(lCommandArgs[2],lCommandArgs[3])
                 end
             end
         end
@@ -140,10 +141,19 @@ end
 
 -- Network Functions for GlassCockpit
 function ExportScript.Tools.SendData(id, value)    
+	if id == nil then
+		ExportScript.Tools.WriteToLog("Export id is nil")
+		return
+	end
+	if value == nil then
+		ExportScript.Tools.WriteToLog("Value for id "..id.." is nil")
+		return
+	end
+
     if string.len(value) > 3 and value == string.sub("-0.00000000",1, string.len(value)) then
         value = value:sub(2)
     end
-    
+
     if ExportScript.LastData[id] == nil or ExportScript.LastData[id] ~= value then
         local ldata    =  id .. "=" .. value
         local ldataLen = string.len(ldata)
@@ -161,6 +171,14 @@ end
 -- Network Functions for DAC
 function ExportScript.Tools.SendDataDAC(id, value)
 	for hardware=1, #ExportScript.Config.DAC, 1 do
+		if id == nil then
+			ExportScript.Tools.WriteToLog("Export id is nil")
+			return
+		end
+		if value == nil then
+			ExportScript.Tools.WriteToLog("Value for id "..id.." is nil")
+			return
+		end		
 		if ExportScript.Config.DAC[hardware] == nil then
 			ExportScript.Tools.WriteToLog("unknown hardware ID '"..hardware.."' for value: '"..id.."="..value.."'")
 			return
