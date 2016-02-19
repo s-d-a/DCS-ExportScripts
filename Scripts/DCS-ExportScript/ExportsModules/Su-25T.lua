@@ -12,12 +12,15 @@ dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")
 -----------------------------------------
 
 function ExportScript.ProcessIkarusFCHighImportanceConfig()
-	local lFunctionTyp = "Ikarus"	-- function type for shared function
-	local myData       = LoGetSelfData()
+	local lFunctionTyp 					= "Ikarus"	-- function type for shared function
+	local myData       					= LoGetSelfData()
 
 	if (myData) then
 		local lLatitude					= myData.LatLongAlt.Lat									-- LATITUDE
 		local lLongitude				= myData.LatLongAlt.Long								-- LONGITUDE
+
+		local lEngineTempLeft			= LoGetEngineInfo().Temperature.left					-- ENG1 EGT ºC
+		local lEngineTempRight			= LoGetEngineInfo().Temperature.right					-- ENG2 EGT ºC
 		--[[
 		local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()						-- BAROMETRIC PRESSURE
 		local lAltBar					= LoGetAltitudeAboveSeaLevel()							-- ALTITUDE SEA LEVEL (Meter)
@@ -28,14 +31,14 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		local lHeading					= myData.Heading										-- HEADING (Radian)
 		local lVVI						= LoGetVerticalVelocity()								-- VERTICAL SPEED (Meter/Second)
 		local lIAS						= LoGetIndicatedAirSpeed()								-- INDICATED AIRSPEED (Meter/Second)
-		local lMachNumber				= LoGetMachNumber										-- MACH
+		local lMachNumber				= LoGetMachNumber()										-- MACH
 		local lAoA						= LoGetAngleOfAttack()									-- ANGLE OF ATTACK AoA (Radian)
-		
+
 		local lGlide					= LoGetGlideDeviation()									-- VOR1 HORIZONTAL DEFLECTION (-1 +1)
 		local lSide						= LoGetSideDeviation()									-- VOR1 VERTICAL DEFLECTION (-1 +1)
 		local lSlipBallPosition			= LoGetSlipBallPosition()								-- SLIP BALL (-1 +1)
 		local lAccelerationUnits		= LoGetAccelerationUnits().y							-- G-LOAD
-		
+
 		local lNavInfoPitch				= LoGetNavigationInfo().Requirements.pitch				-- AP REQUIRED PITCH (Radian)
 		local lNavInfoRoll				= LoGetNavigationInfo().Requirements.roll				-- AP REQUIRED BANK (Radian)
 		local lNavInfoSpeed				= LoGetNavigationInfo().Requirements.speed				-- AP SPEED (Meter/Second)
@@ -46,33 +49,30 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		local lHSI_RMI					= LoGetControlPanel_HSI().RMI_raw						-- VOR1 OBS (Radian)
 		local lHSI_ADF					= LoGetControlPanel_HSI().ADF_raw						-- ADF OBS (Radian)
 		local lHSI_Heading				= LoGetControlPanel_HSI().Heading_raw					-- Heading (Radian)
-		
+
 		local lEngineRPMleft			= LoGetEngineInfo().RPM.left							-- ENG1 RPM %
 		local lEngineRPMright			= LoGetEngineInfo().RPM.right							-- ENG2 RPM %
-		]]
-		local lEngineTempLeft			= LoGetEngineInfo().Temperature.left					-- ENG1 EGT 
-		local lEngineTempRight			= LoGetEngineInfo().Temperature.right					-- ENG2 EGT
-		--[[ 
+
 		local lEngineFuelInternal		= LoGetEngineInfo().fuel_internal						-- TANK1 (INT) (KG)
 		local lEngineFuelExternal		= LoGetEngineInfo().fuel_external						-- TANK2 (EXT) (KG)
-		
+
 		local lMechInfo 				= LoGetMechInfo() 										-- mechanical components,  e.g. Flaps, Wheelbrakes,...
 		local lPayloadInfo				= LoGetPayloadInfo()									-- Paylod, e.g. bombs, guns, rockets, fuel tanks,...
 		]]
-		
+
 		local lDistanceToWay			= 999
 		local lRoute					= LoGetRoute()
-		
+
 		if (myData and lRoute) then -- if neither are nil
 			local myLoc					= LoGeoCoordinatesToLoCoordinates(lLongitude, lLatitude)
 			--lDistanceToWay				= math.sqrt((myLoc.x - lRoute.goto_point.world_point.x)^2 + (myLoc.y -  lRoute.goto_point.world_point.y)^2)
 			lDistanceToWay              = math.sqrt((myLoc.x - lRoute.goto_point.world_point.x)^2 + (myLoc.z -  lRoute.goto_point.world_point.z)^2)
 		end
 
-		-- IAS-TAS Indicator (IAS, TAS) {"%.4f;%.4f"}
+		-- IAS-TAS Indicator
 		ExportScript.AF.FC_Russian_AirSpeed_1100hkm()
 
-		-- AOA Indicator and Accelerometer (AOA, GLoad)
+		-- AOA Indicator and Accelerometer
 		ExportScript.AF.FC_Russian_AOA_Su25()
 
 		-- ADI
@@ -81,133 +81,57 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		-- HSI
 		ExportScript.AF.FC_Russian_HSI(lDistanceToWay)
 
-		-- Vertical Velocity Indicator (VVI) (VVI, TurnIndicator, SlipBallPosition)
-		ExportScript.AF.FC_Russian_VVI_Old(6)
+		-- Vertical Velocity Indicator (VVI, TurnIndicator, SlipBallPosition)
+		ExportScript.AF.FC_Russian_VVI_Old()
 
-		-- Radar Altimeter (AltRad, MinAltitude, WarningFlag, MinAltitudeLamp) {"%.4f;%.4f;%.1f;%.1f"} (below 100m is warning light on)
+		-- Radar Altimeter (below 100m is warning light on)
 		ExportScript.AF.FC_Russian_RadarAltimeter_1500m(100)
 
-		-- Barometric Altimeter (AltBar, BasicAtmospherePressure)
+		-- Barometric Altimeter
 		ExportScript.AF.FC_Russian_BarometricAltimeter_late()
 
-		-- Tachometer (RPM) (EngineRPMleft, EngineRPMright) {"%.4f;%.4f"}
+		-- Tachometer (RPM)
 		ExportScript.AF.FC_Russian_EngineRPM()
 
-		-- Left Jet Engine Turbine Temperature Indicator (EngineTemp) {"%.4f"}
+		-- Left Jet Engine Turbine Temperature Indicator (EngineTemp, ExportID)
 		ExportScript.AF.FC_Russian_EGT_1000gc(lEngineTempLeft, 70)
 
-		-- Right Jet Engine Turbine Temperature Indicator (EngineTemp) {"%.4f"}
+		-- Right Jet Engine Turbine Temperature Indicator (EngineTemp, ExportID)
 		ExportScript.AF.FC_Russian_EGT_1000gc(lEngineTempRight, 71)
 
-		-- Clock from Ka-50 {CurrentHours, CurrentMinutes, CurrentSeconds, 0, FlightTimeHours, FlightTimeMinutes, 0, 0) {"%.4f;%.4f;%.4f;%.1f;%.4f;%.4f;%.4f;%.4f"}
+		-- Clock from Ka-50
 		ExportScript.AF.FC_Russian_Clock_late()
-		
-		ExportScript.AF.EventNumberOLD = ExportScript.AF.EventNumber
 	else
-		--WriteToLog("Unknown FC Error, no LoGetSelfData.")
+		ExportScript.Tools.WriteToLog("Unknown FC Error, no LoGetSelfData.")
 	end
 end
 
 function ExportScript.ProcessDACConfigHighImportance()
 	local lFunctionTyp = "DAC"	-- function type for shared function
+
+	-- your script
+
 end
 
 function ExportScript.ProcessIkarusFCLowImportanceConfig()
 	local lFunctionTyp = "Ikarus"	-- function type for shared function
 	-- Weapon Panel
-	ExportScript.AF.WeaponPanel_SU25(lFunctionTyp)
-	
+	ExportScript.AF.FC_WeaponPanel_SU25(lFunctionTyp)
+
 	-- SPO15 Radar Warning Reciver
-	ExportScript.AF.SPO15RWR(lFunctionTyp)
+	ExportScript.AF.FC_SPO15RWR(lFunctionTyp)
 
 	-- EKRAN Message
 	ExportScript.AF.FC_EKRAN()
 
-	-- Mechanical Configuration Indicator (GearWarningLight, NoseGear, LeftGear, RightGear, Airbreaks, Flaps1, Flaps2)
+	-- Mechanical Configuration Indicator
 	ExportScript.AF.FC_Russian_MDI_SU25(lFunctionTyp)
 
 	--  Fuel Quantity Indicator
+	ExportScript.AF.FC_FuelQuantityIndicator(lFunctionTyp)
+
 	local lEngineInfo = LoGetEngineInfo()
 	if lEngineInfo ~= nil then
-    	-- ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
-    	--[[
-    	[fuel_external] = number: "0"
-        [Temperature] = {
-            [left] = number: "626.99444580078"
-            [right] = number: "626.99444580078"
-        }
-        [RPM] = {
-            [left] = number: "87.453765869141"
-            [right] = number: "87.453758239746"
-        }
-        [FuelConsumption] = {
-            [left] = number: "0.1500396137767"
-            [right] = number: "0.1500396137767"
-        }
-        [fuel_internal] = number: "3773.2749023438"
-        [EngineStart] = {
-            [left] = number: "0"
-            [right] = number: "0"
-        }
-        [HydraulicPressure] = {
-            [left] = number: "210"
-            [right] = number: "210"
-        }
-    	lPayloadInfo.Stations[8].CLSID == E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF   -- ext 800l Fuel Tank
-    	]]
-
-    	local lTotalFuel = lEngineInfo.fuel_internal
-		--local lTotalFuel = string.format("%3d", ExportScript.Tools.round((lEngineInfo.fuel_internal / 10), 0, "ceil") * 10)
-    	--local lTotalFuel = string.format("%4d", lEngineInfo.fuel_internal) -- total fuel in kg
-    	--local lTotalFuel = string.format("%4d", lEngineInfo.fuel_external) -- external fuel in kg
-		local lFuelCounter = {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
-		lTotalFuel = string.format("%03d", ExportScript.Tools.round((lEngineInfo.fuel_internal / 10), 0, "ceil")) -- auf drei stellen bringen
-
-    	local lExtTank1 = 1.0    -- external tanks
-    	local lExtTank2 = 1.0    -- inner tanks
-
-    	local lPayloadInfo = LoGetPayloadInfo()
-    	if lPayloadInfo ~= nil then
-    		--ExportScript.Tools.WriteToLog('lPayloadInfo: '..ExportScript.Tools.dump(lPayloadInfo))
-    		if lPayloadInfo.Stations[10].CLSID == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or 
-    		   lPayloadInfo.Stations[9].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then -- external tanks presend and full (panel 6 and 5)
-    			lExtTank1 = ((lEngineInfo.fuel_external < 1240.0 ) and 1.0 or 0.0)
-    		end
-    		if lPayloadInfo.Stations[5].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or
-    		   lPayloadInfo.Stations[6].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then-- inner tanks presend and full (panel 3 and 8)
-    			lExtTank2 = ((lEngineInfo.fuel_external < 1.0 ) and 1.0 or 0.0)
-    		end
-    	end
-    	-- TotalFuel_100
-		-- TotalFuel_10
-		-- TotalFuel_1
-		-- Light1
-		-- Light2
-		-- Light3
-		-- Light4
-		-- Light5
-		-- BingoLight
-		--[[SendData("15", string.format("%0.2f;%0.2f;%0.2f;%d;%d;%d;%d;%d;%d",
-										lFuelCounter[tonumber(string.sub(lTotalFuel, 1, 1))],
-										lFuelCounter[tonumber(string.sub(lTotalFuel, 2, 2))],
-										lFuelCounter[tonumber(string.sub(lTotalFuel, 3, 3))],
-										lExtTank1,												-- external tanks
-										lExtTank2,												-- inner tanks
-										(lEngineInfo.fuel_internal < 2800.0 and 1 or 0),		-- Interne Flügeltanks
-										(lEngineInfo.fuel_internal < 1840.0 and 1 or 0),		-- Interne Rumpftanks
-										(lEngineInfo.fuel_internal < 1.0    and 1 or 0),		-- Zentraler Rumpftanks
-										(lEngineInfo.fuel_internal < 600.0  and 1 or 0)))		-- Bingo Fuel]]
-
-        ExportScript.Tools.SendData(300, string.format("%0.2f", lFuelCounter[tonumber(string.sub(lTotalFuel, 1, 1))]))
-        ExportScript.Tools.SendData(301, string.format("%0.2f", lFuelCounter[tonumber(string.sub(lTotalFuel, 2, 2))]))
-        ExportScript.Tools.SendData(302, string.format("%0.2f", lFuelCounter[tonumber(string.sub(lTotalFuel, 3, 3))]))
-        ExportScript.Tools.SendData(303, lExtTank1)                                         -- external tanks
-        ExportScript.Tools.SendData(304, lExtTank2)                                         -- inner tanks
-        ExportScript.Tools.SendData(305, (lEngineInfo.fuel_internal < 2800.0 and 1 or 0))   -- inner wing tank
-        ExportScript.Tools.SendData(306, (lEngineInfo.fuel_internal < 1840.0 and 1 or 0))   -- inner hull tank
-        ExportScript.Tools.SendData(307, (lEngineInfo.fuel_internal < 1.0    and 1 or 0))   -- central hull tank
-        ExportScript.Tools.SendData(308, (lEngineInfo.fuel_internal < 600.0  and 1 or 0))   -- Bingo Fuel
-
 		-- Hydraulic Pressure Left
 		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.left, 240, 85)
 
@@ -223,44 +147,42 @@ function ExportScript.ProcessIkarusFCLowImportanceConfig()
 		-- Wheelbrakes Hydraulic Pressure Right
 		ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 88)
 	end
-    
-	ExportScript.AF.EventNumberOLD = ExportScript.AF.EventNumber
-	
+
 	-- (x < 0 and 'negative' or 'non-negative')
 	--[[
 	local lPayloadInfo = LoGetPayloadInfo()
 	ExportScript.Tools.WriteToLog('lPayloadInfo: '..ExportScript.Tools.dump(lPayloadInfo))
-	
+
 	local lSnares = LoGetSnares() -- Flare and Chaff
 	ExportScript.Tools.WriteToLog('lSnares: '..ExportScript.Tools.dump(lSnares))
-	
+
 	local lSightingSystemInfo = LoGetSightingSystemInfo()
 	ExportScript.Tools.WriteToLog('lSightingSystemInfo: '..ExportScript.Tools.dump(lSightingSystemInfo))
-	
+
 	local lTWSInfo = LoGetTWSInfo() -- SPO Informationen, z.B. Radarwarner F15C
 	ExportScript.Tools.WriteToLog('lTWSInfo: '..ExportScript.Tools.dump(lTWSInfo))
-	
+
 	local lTargetInformation = LoGetTargetInformation() -- detalierte Radar Infos z.B. F15C
 	ExportScript.Tools.WriteToLog('lTargetInformation: '..ExportScript.Tools.dump(lTargetInformation))
-	
+
 	local lLockedTargetInformation = LoGetLockedTargetInformation()
 	ExportScript.Tools.WriteToLog('lLockedTargetInformation: '..ExportScript.Tools.dump(lLockedTargetInformation))
-	
+
 	local lF15_TWS_Contacs = LoGetF15_TWS_Contacts() -- the same information but only for F-15 in TWS mode
 	ExportScript.Tools.WriteToLog('lF15_TWS_Contacs: '..ExportScript.Tools.dump(lF15_TWS_Contacs))
-	
+
 	local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
 	ExportScript.Tools.WriteToLog('lMechInfo: '..ExportScript.Tools.dump(lMechInfo))
-	
+
 	local lMCPState = LoGetMCPState() -- Warnlichter
 	ExportScript.Tools.WriteToLog('lMCPState: '..ExportScript.Tools.dump(lMCPState))
-	
+
 	local lControlPanel_HSI = LoGetControlPanel_HSI()
 	ExportScript.Tools.WriteToLog('lControlPanel_HSI: '..ExportScript.Tools.dump(lControlPanel_HSI))
-	
+
 	local lRadioBeaconsStatus = LoGetRadioBeaconsStatus()
 	ExportScript.Tools.WriteToLog('lRadioBeaconsStatus: '..ExportScript.Tools.dump(lRadioBeaconsStatus))
-	
+
 	local lEngineInfo = LoGetEngineInfo()
 	ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
 	]]
@@ -272,25 +194,29 @@ end
 
 function ExportScript.ProcessDACConfigLowImportance()
 	local lFunctionTyp = "DAC"	-- function type for shared function
---	WeaponStatusPanel()
---	MechanicalDevicesIndicator()
---	StatusLamp()
---	FuelQuantityIndicator()
---	SightingSystem()
---	SPO15RWR()
+	-- Weapon Panel
+	ExportScript.AF.FC_WeaponPanel_SU25(lFunctionTyp)
+	-- SPO15 Radar Warning Reciver
+	ExportScript.AF.FC_SPO15RWR(lFunctionTyp)
+	-- Mechanical Configuration Indicator
+	ExportScript.AF.FC_Russian_MDI_SU25(lFunctionTyp)
+	-- Fuel
+	ExportScript.AF.FC_FuelQuantityIndicator(lFunctionTyp)
+
+	ExportScript.AF.FC_StatusLamp()
+	ExportScript.AF.FC_SightingSystem()
 end
 
 -----------------------------
 --     Custom functions    --
 -----------------------------
 
-function SightingSystem(hardware)
-	local lHardware = hardware or 1
+function ExportScript.AF.FC_SightingSystem()
 	local lSightingSystemInfo = LoGetSightingSystemInfo()
 	if lSightingSystemInfo == nil then
 		return
 	end
-	--WriteToLog('lSightingSystemInfo: '..dump(lSightingSystemInfo)9
+	--ExportScript.Tools.WriteToLog('lSightingSystemInfo: '..ExportScript.Tools.dump(lSightingSystemInfo)9
 	--[[
 	[PRF] = {
         [selection] = string: "ILV"
@@ -327,32 +253,30 @@ function SightingSystem(hardware)
         }
     }
 	]]
-	SendDataHW("600", lSightingSystemInfo.ECM_on            == true and 1 or 0, lHardware )
-	SendDataHW("601", lSightingSystemInfo.laser_on          == true and 1 or 0, lHardware )
-	SendDataHW("602", lSightingSystemInfo.optical_system_on == true and 1 or 0, lHardware )
-	SendDataHW("603", lSightingSystemInfo.LaunchAuthorized  == true and 1 or 0, lHardware )
-	--SendDataHW("604", lSightingSystemInfo.radar_on          == true and 1 or 0, lHardware )
+	ExportScript.Tools.SendDataDAC("600", lSightingSystemInfo.ECM_on            == true and 1 or 0 )
+	--ExportScript.Tools.SendDataDAC("601", lSightingSystemInfo.laser_on          == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("602", lSightingSystemInfo.optical_system_on == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("603", lSightingSystemInfo.LaunchAuthorized  == true and 1 or 0 )
+	--ExportScript.Tools.SendDataDAC("604", lSightingSystemInfo.radar_on          == true and 1 or 0 )
 end
 
-function FlareChaff(hardware)
-	local lHardware = hardware or 1
+function ExportScript.AF.FC_FlareChaff()
 	local lSnares = LoGetSnares() -- Flare and Chaff
 	if lSnares == nil then
 		return
 	end
-	--WriteToLog('lSnares: '..dump(lSnares))
-	
+	--ExportScript.Tools.WriteToLog('lSnares: '..ExportScript.Tools.dump(lSnares))
+
 	--[chaff] = number: "128"
     --[flare] = number: "128"
 end
 
-function StatusLamp(hardware)
-	local lHardware = hardware or 1
+function ExportScript.AF.FC_StatusLamp()
 	local lMCPState = LoGetMCPState() -- Warning Lights
 	if lMCPState == nil then
 		return
 	end
-	--WriteToLog('lMCPState: '..dump(lMCPState))
+	--ExportScript.Tools.WriteToLog('lMCPState: '..ExportScript.Tools.dump(lMCPState))
 	--[[
 	[RightTailPlaneFailure] = boolean: "false"
     [EOSFailure] = boolean: "false"
@@ -383,332 +307,58 @@ function StatusLamp(hardware)
     [AutopilotOn] = boolean: "false"
     [LeftTailPlaneFailure] = boolean: "false"
 	]]
-	
-	SendDataHW("700", lMCPState.LeftTailPlaneFailure == true and 1 or 0, lHardware )
-	SendDataHW("701", lMCPState.RightTailPlaneFailure == true and 1 or 0, lHardware )
-	SendDataHW("702", lMCPState.MasterWarning == true and 1 or 0, lHardware )
-	SendDataHW("703", lMCPState.LeftEngineFailure == true and 1 or 0, lHardware )
-	SendDataHW("704", lMCPState.RightEngineFailure == true and 1 or 0, lHardware )
-	SendDataHW("705", lMCPState.LeftAileronFailure == true and 1 or 0, lHardware )
-	SendDataHW("706", lMCPState.RightAileronFailure == true and 1 or 0, lHardware )
-	SendDataHW("707", lMCPState.LeftMainPumpFailure == true and 1 or 0, lHardware )
-	SendDataHW("708", lMCPState.RightMainPumpFailure == true and 1 or 0, lHardware )
-	SendDataHW("709", lMCPState.LeftWingPumpFailure == true and 1 or 0, lHardware )
-	SendDataHW("710", lMCPState.RightWingPumpFailure == true and 1 or 0, lHardware )
-	SendDataHW("711", lMCPState.EOSFailure == true and 1 or 0, lHardware )
-	SendDataHW("712", lMCPState.ECMFailure == true and 1 or 0, lHardware )
-	SendDataHW("713", lMCPState.CannonFailure == true and 1 or 0, lHardware )
-	SendDataHW("714", lMCPState.MLWSFailure == true and 1 or 0, lHardware )
-	SendDataHW("715", lMCPState.ACSFailure == true and 1 or 0, lHardware )
-	SendDataHW("716", lMCPState.RadarFailure == true and 1 or 0, lHardware )
-	SendDataHW("717", lMCPState.HelmetFailure == true and 1 or 0, lHardware )
-	SendDataHW("718", lMCPState.HUDFailure == true and 1 or 0, lHardware )
-	SendDataHW("719", lMCPState.MFDFailure == true and 1 or 0, lHardware )
-	SendDataHW("720", lMCPState.RWSFailure == true and 1 or 0, lHardware )
-	SendDataHW("721", lMCPState.GearFailure == true and 1 or 0, lHardware )
-	SendDataHW("722", lMCPState.HydraulicsFailure == true and 1 or 0, lHardware )
-	SendDataHW("723", lMCPState.AutopilotFailure == true and 1 or 0, lHardware )
-	SendDataHW("724", lMCPState.FuelTankDamage == true and 1 or 0, lHardware )
-	SendDataHW("725", lMCPState.CanopyOpen == true and 1 or 0, lHardware )
-	SendDataHW("726", lMCPState.StallSignalization == true and 1 or 0, lHardware )
-	SendDataHW("727", lMCPState.AutopilotOn == true and 1 or 0, lHardware )
-	
+
+	ExportScript.Tools.SendDataDAC("700", lMCPState.LeftTailPlaneFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("701", lMCPState.RightTailPlaneFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("702", lMCPState.MasterWarning == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("703", lMCPState.LeftEngineFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("704", lMCPState.RightEngineFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("705", lMCPState.LeftAileronFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("706", lMCPState.RightAileronFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("707", lMCPState.LeftMainPumpFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("708", lMCPState.RightMainPumpFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("709", lMCPState.LeftWingPumpFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("710", lMCPState.RightWingPumpFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("711", lMCPState.EOSFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("712", lMCPState.ECMFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("713", lMCPState.CannonFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("714", lMCPState.MLWSFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("715", lMCPState.ACSFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("716", lMCPState.RadarFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("717", lMCPState.HelmetFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("718", lMCPState.HUDFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("719", lMCPState.MFDFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("720", lMCPState.RWSFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("721", lMCPState.GearFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("722", lMCPState.HydraulicsFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("723", lMCPState.AutopilotFailure == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("724", lMCPState.FuelTankDamage == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("725", lMCPState.CanopyOpen == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("726", lMCPState.StallSignalization == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("727", lMCPState.AutopilotOn == true and 1 or 0 )
+
 	local lEngineInfo = LoGetEngineInfo()
 	if lEngineInfo ~= nil then
-		--WriteToLog('lEngineInfo: '..dump(lEngineInfo))
-		SendDataHW("728", lEngineInfo.EngineStart.left, lHardware ) -- lamp start left engine 1 (0|1)
-		SendDataHW("729", lEngineInfo.EngineStart.right, lHardware ) -- lamp start right engine 1 (0|1)
+		--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
+		ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine 1 (0|1)
+		ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine 1 (0|1)
 	end
-	
+
 	local lAoA = LoGetAngleOfAttack()
 	if lAoA ~= nil then
 		lAoA = lAoA * 57.3
-		SendDataHW("730", (lAoA > 20.0 and 1 or 0), lHardware ) -- lamp start AOA warning (0|1)
+		ExportScript.Tools.SendDataDAC("730", (lAoA > 20.0 and 1 or 0) ) -- lamp start AOA warning (0|1)
 	end
 end
 
-function WeaponStatusPanel(hardware)
--- The weapon status panel, quantity and readiness of the currently selected weapon and the remaining gun ammunition are indicated.
-	local lHardware = hardware or 1
-	gES_PayloadInfo = LoGetPayloadInfo()
-	if gES_PayloadInfo == nil then
-		return
-	end
-	--WriteToLog('gES_PayloadInfo: '..dump(gES_PayloadInfo))
-	--[[ exsample
-	[Stations] = {
-        [1] = {
-            [CLSID] = string: "{682A481F-0CB5-4693-A382-D00DD4A156D7}"
-            [container] = boolean: "false"
-            [count] = number: "1"
-            [weapon] = {
-                [level3] = number: "7"
-                [level1] = number: "4"
-                [level4] = number: "10"
-                [level2] = number: "4"
-            }
-        }
-        [2] = {
-            [CLSID] = string: "{682A481F-0CB5-4693-A382-D00DD4A156D7}"
-            [container] = boolean: "false"
-            [count] = number: "1"
-            [weapon] = {
-                [level3] = number: "7"
-                [level1] = number: "4"
-                [level4] = number: "10"
-                [level2] = number: "4"
-            }
-        }
-        [3] = {
-            [wstype] = {
-                [level3] = number: "32"
-                [level1] = number: "4"
-                [level4] = number: "6"
-                [level2] = number: "7"
-            }
-            [count] = number: "20"
-            [CLSID] = string: "{F72F47E5-C83A-4B85-96ED-D3E46671EE9A}"
-            [adapter] = {
-                [level3] = number: "0"
-                [level1] = number: "0"
-                [level4] = number: "0"
-                [level2] = number: "0"
-            }
-            [container] = boolean: "true"
-            [weapon] = {
-                [level3] = number: "33"
-                [level1] = number: "4"
-                [level4] = number: "32"
-                [level2] = number: "7"
-            }
-        }
-        [4] = {
-            [wstype] = {
-                [level3] = number: "32"
-                [level1] = number: "4"
-                [level4] = number: "6"
-                [level2] = number: "7"
-            }
-            [count] = number: "20"
-            [CLSID] = string: "{F72F47E5-C83A-4B85-96ED-D3E46671EE9A}"
-            [adapter] = {
-                [level3] = number: "0"
-                [level1] = number: "0"
-                [level4] = number: "0"
-                [level2] = number: "0"
-            }
-            [container] = boolean: "true"
-            [weapon] = {
-                [level3] = number: "33"
-                [level1] = number: "4"
-                [level4] = number: "32"
-                [level2] = number: "7"
-            }
-        }
-        [5] = {
-            [wstype] = {
-                [level3] = number: "32"
-                [level1] = number: "4"
-                [level4] = number: "99"
-                [level2] = number: "4"
-            }
-            [count] = number: "1"
-            [CLSID] = string: "{79D73885-0801-45a9-917F-C90FE1CE3DFC}"
-            [adapter] = {
-                [level3] = number: "0"
-                [level1] = number: "0"
-                [level4] = number: "0"
-                [level2] = number: "0"
-            }
-            [container] = boolean: "true"
-            [weapon] = {
-                [level3] = number: "8"
-                [level1] = number: "4"
-                [level4] = number: "45"
-                [level2] = number: "4"
-            }
-        }
-        [6] = {
-            [wstype] = {
-                [level3] = number: "32"
-                [level1] = number: "4"
-                [level4] = number: "99"
-                [level2] = number: "4"
-            }
-            [count] = number: "1"
-            [CLSID] = string: "{79D73885-0801-45a9-917F-C90FE1CE3DFC}"
-            [adapter] = {
-                [level3] = number: "0"
-                [level1] = number: "0"
-                [level4] = number: "0"
-                [level2] = number: "0"
-            }
-            [container] = boolean: "true"
-            [weapon] = {
-                [level3] = number: "8"
-                [level1] = number: "4"
-                [level4] = number: "45"
-                [level2] = number: "4"
-            }
-        }
-        [7] = {
-            [wstype] = {
-                [level3] = number: "32"
-                [level1] = number: "4"
-                [level4] = number: "47"
-                [level2] = number: "4"
-            }
-            [count] = number: "8"
-            [CLSID] = string: "{F789E86A-EE2E-4E6B-B81E-D5E5F903B6ED}"
-            [adapter] = {
-                [level3] = number: "0"
-                [level1] = number: "0"
-                [level4] = number: "0"
-                [level2] = number: "0"
-            }
-            [container] = boolean: "true"
-            [weapon] = {
-                [level3] = number: "8"
-                [level1] = number: "4"
-                [level4] = number: "58"
-                [level2] = number: "4"
-            }
-        }
-        [8] = {
-            [wstype] = {
-                [level3] = number: "32"
-                [level1] = number: "4"
-                [level4] = number: "47"
-                [level2] = number: "4"
-            }
-            [count] = number: "8"
-            [CLSID] = string: "{F789E86A-EE2E-4E6B-B81E-D5E5F903B6ED}"
-            [adapter] = {
-                [level3] = number: "0"
-                [level1] = number: "0"
-                [level4] = number: "0"
-                [level2] = number: "0"
-            }
-            [container] = boolean: "true"
-            [weapon] = {
-                [level3] = number: "8"
-                [level1] = number: "4"
-                [level4] = number: "58"
-                [level2] = number: "4"
-            }
-        }
-        [9] = {
-            [CLSID] = string: "{D5435F26-F120-4FA3-9867-34ACE562EF1B}"
-            [container] = boolean: "false"
-            [count] = number: "1"
-            [weapon] = {
-                [level3] = number: "38"
-                [level1] = number: "4"
-                [level4] = number: "20"
-                [level2] = number: "5"
-            }
-        }
-        [10] = {
-            [CLSID] = string: "{D5435F26-F120-4FA3-9867-34ACE562EF1B}"
-            [container] = boolean: "false"
-            [count] = number: "1"
-            [weapon] = {
-                [level3] = number: "38"
-                [level1] = number: "4"
-                [level4] = number: "20"
-                [level2] = number: "5"
-            }
-        }
-        [11] = {
-            [CLSID] = string: ""
-            [container] = boolean: "false"
-            [count] = number: "0"
-            [weapon] = {
-                [level3] = number: "0"
-                [level1] = number: "0"
-                [level4] = number: "0"
-                [level2] = number: "0"
-            }
-        }
-    }
-    [CurrentStation] = number: "0"
-    [Cannon] = {
-        [shells] = number: "250"
-    }
-	]]
-	--[[
-	Weapon Panel
-	                         |
-	---------------------------------------------------
-	|    |    |    |    |    |    |    |    |    |    |
-	1    2    3    4    5    C    6    7    8    9    10
-	]]
-	-- Payload Info
-	-- weapon stations (panel) 1 (left) - 10 (right), no lamp for center station
-	SendDataHW("100", gES_PayloadInfo.Cannon.shells, lHardware ) -- count cannon shells
-	SendDataHW("101", (gES_PayloadInfo.Stations[1].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 1)
-	SendDataHW("110", (gES_PayloadInfo.Stations[2].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 10)
-	SendDataHW("102", (gES_PayloadInfo.Stations[3].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 2)
-	SendDataHW("109", (gES_PayloadInfo.Stations[4].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 9)
-	SendDataHW("103", (gES_PayloadInfo.Stations[5].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 3)
-	SendDataHW("108", (gES_PayloadInfo.Stations[6].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 8)
-	SendDataHW("104", (gES_PayloadInfo.Stations[7].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 4)
-	SendDataHW("107", (gES_PayloadInfo.Stations[8].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 7)
-	SendDataHW("105", (gES_PayloadInfo.Stations[9].count  > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 5)
-	SendDataHW("106", (gES_PayloadInfo.Stations[10].count > 0 and 1 or 0), lHardware ) -- weapon presend > 0 (panel 6)
-	--SendDataHW("110", (gES_PayloadInfo.Stations[11].count > 0 and 1 or 0) ) -- weapon presend > 0 center station, not visible
-	--SendDataHW("CurrentStation", gES_PayloadInfo.CurrentStation, lHardware ) 
-	-- air-to-air missils panel 1 and 11, air combat modus, CurrentStation = 1, panel 1 and 11 on
-	-- CurrentStation 5, panel 3
-	-- CurrentStation 3, panel 2
-	-- CurrentStation 7, panel 4
-	-- CurrentStation 4, panel 9
-	-- CurrentStation 9, panel 5
-	-- CurrentStation 10, panel 6
-	-- CurrentStation 8, panel 7
-	-- CurrentStation 6, panel 8
-	-- wenn die Waffenstationen gleichmässig belegt sind, hat bei Auswahl CurrentStation immer den Wert der linken Station
-	-- bei ungleichmässiger Belegung, hat CurrentStation immer den Wert der jeweiligen Station
-	-- Waffenbezeichnung als UUID, gES_PayloadInfo.Stations[X].CLSID 
-	
-	-- defination
-	if gES_CurrentStationTmp == nil then
-		gES_CurrentStationTmp = -1
-	end
-
-	if gES_PayloadInfo.CurrentStation  > 0 and
-	    gES_CurrentStationTmp ~= gES_PayloadInfo.CurrentStation then
-		gES_CurrentStationTmp  = gES_PayloadInfo.CurrentStation
-
-		gES_TmpStationToPanel = {}
-		gES_TmpStationToPanel[1] =  {Panel =  1, StationID = 101, CurrentID = 201, HardwareID = lHardware }	-- left
-		gES_TmpStationToPanel[2] =  {Panel = 10, StationID = 110, CurrentID = 210, HardwareID = lHardware }	-- right
-		gES_TmpStationToPanel[3] =  {Panel =  2, StationID = 102, CurrentID = 202, HardwareID = lHardware }
-		gES_TmpStationToPanel[4] =  {Panel =  9, StationID = 109, CurrentID = 209, HardwareID = lHardware }
-		gES_TmpStationToPanel[5] =  {Panel =  3, StationID = 103, CurrentID = 203, HardwareID = lHardware }
-		gES_TmpStationToPanel[6] =  {Panel =  8, StationID = 108, CurrentID = 208, HardwareID = lHardware }
-		gES_TmpStationToPanel[7] =  {Panel =  4, StationID = 104, CurrentID = 204, HardwareID = lHardware }
-		gES_TmpStationToPanel[8] =  {Panel =  7, StationID = 107, CurrentID = 207, HardwareID = lHardware }
-		gES_TmpStationToPanel[9] =  {Panel =  5, StationID = 105, CurrentID = 205, HardwareID = lHardware }
-		gES_TmpStationToPanel[10] = {Panel =  6, StationID = 106, CurrentID = 206, HardwareID = lHardware }
-	
-		WeaponStatusPanel_Reset(201, 210, lHardware)
-
-		if gES_TmpStationToPanel[gES_PayloadInfo.CurrentStation] ~= nil then
-			SendDataHW(gES_TmpStationToPanel[gES_PayloadInfo.CurrentStation].CurrentID, 1, lHardware ) -- eigentliche Auswahl
-
-			table.foreach(gES_PayloadInfo.Stations, WeaponStatusPanel_selectCurrentPayloadStation) -- zugehörige Stationen
-		end
-	end
-end
-
-function FuelQuantityIndicator()
+function ExportScript.AF.FC_FuelQuantityIndicator(FunctionTyp)
+	local lFunctionTyp = FunctionTyp or "Ikarus"
 -- Fuel quantity shows the fuel remaining in all tanks
 	local lEngineInfo = LoGetEngineInfo()
 	if lEngineInfo == nil then
 		return
 	end
-	--WriteToLog('lEngineInfo: '..dump(lEngineInfo))
+	--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
 	--[[
 	[fuel_external] = number: "0"
     [Temperature] = {
@@ -735,135 +385,59 @@ function FuelQuantityIndicator()
 	lPayloadInfo.Stations[8].CLSID == E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF   -- ext 800l Fuel Tank
 	]]
 
-	ExportScript.Tools.SendDataDAC("300", string.format("%d", math.round((lEngineInfo.fuel_internal / 10), 0, "ceil") * 10)) -- total fuel in kg
-	--ExportScript.Tools.SendDataDAC("301", string.format("%d", lEngineInfo.fuel_internal)) -- total fuel in kg
-	--ExportScript.Tools.SendDataDAC("302", string.format("%d", lEngineInfo.fuel_external)) -- external fuel in kg
-	
+	local lTotalFuel = lEngineInfo.fuel_internal
+	--local lTotalFuel = string.format("%3d", ExportScript.Tools.round((lEngineInfo.fuel_internal / 10), 0, "ceil") * 10)
+	--local lTotalFuel = string.format("%4d", lEngineInfo.fuel_internal) -- total fuel in kg
+	--local lTotalFuel = string.format("%4d", lEngineInfo.fuel_external) -- external fuel in kg
+	local lFuelCounter = {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
+	lTotalFuel = string.format("%03d", ExportScript.Tools.round((lEngineInfo.fuel_internal / 10), 0, "ceil")) -- auf drei stellen bringen
+
+	local lExtTank1 = 1.0    -- external tanks
+	local lExtTank2 = 1.0    -- inner tanks
+
 	local lPayloadInfo = LoGetPayloadInfo()
 	if lPayloadInfo ~= nil then
-		--WriteToLog('lPayloadInfo: '..dump(lPayloadInfo))
+		--ExportScript.Tools.WriteToLog('lPayloadInfo: '..ExportScript.Tools.dump(lPayloadInfo))
 		if lPayloadInfo.Stations[10].CLSID == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or 
 		   lPayloadInfo.Stations[9].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then -- external tanks presend and full (panel 6 and 5)
-			ExportScript.Tools.SendDataDAC("303", ((lEngineInfo.fuel_external < 1240.0 ) and 1 or 0))
-		else
-			ExportScript.Tools.SendDataDAC("303", 1)
+			lExtTank1 = ((lEngineInfo.fuel_external < 1240.0 ) and 1.0 or 0.0)
 		end
 		if lPayloadInfo.Stations[5].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" or
-		   lPayloadInfo.Stations[6].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then-- inner tank presend and full (panel 3 and 8)
-			ExportScript.Tools.SendDataDAC("304", ((lEngineInfo.fuel_external < 1.0 ) and 1 or 0))
-		else
-			ExportScript.Tools.SendDataDAC("304", 1)
+		   lPayloadInfo.Stations[6].CLSID  == "{E8D4652F-FD48-45B7-BA5B-2AE05BB5A9CF}" then-- inner tanks presend and full (panel 3 and 8)
+			lExtTank2 = ((lEngineInfo.fuel_external < 1.0 ) and 1.0 or 0.0)
 		end
-	else
-		ExportScript.Tools.SendDataDAC("303", 1)
-		ExportScript.Tools.SendDataDAC("304", 1)
 	end
-	ExportScript.Tools.SendDataDAC("305", (lEngineInfo.fuel_internal < 2800.0 and 1 or 0)) -- inner wing tank
-	ExportScript.Tools.SendDataDAC("306", (lEngineInfo.fuel_internal < 1840.0 and 1 or 0)) -- inner hull tank
-	ExportScript.Tools.SendDataDAC("307", (lEngineInfo.fuel_internal < 1.0    and 1 or 0)) -- central hull tank
-	ExportScript.Tools.SendDataDAC("308", (lEngineInfo.fuel_internal < 600.0  and 1 or 0)) -- Bingo Fuel
-	
-end
+	-- TotalFuel_100
+	-- TotalFuel_10
+	-- TotalFuel_1
+	-- Light1
+	-- Light2
+	-- Light3
+	-- Light4
+	-- Light5
+	-- BingoLight
 
-function MechanicalDevicesIndicator(hardware)
--- The mechanical devices indicator shows the position of the landing gear, flaps, leading edge flaps and airbrake
-	local lHardware = hardware or 1
-	local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
-	if lMechInfo == nil then
-		return
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+        ExportScript.Tools.SendData(300, string.format("%0.2f", lFuelCounter[tonumber(string.sub(lTotalFuel, 1, 1))]))
+        ExportScript.Tools.SendData(301, string.format("%0.2f", lFuelCounter[tonumber(string.sub(lTotalFuel, 2, 2))]))
+        ExportScript.Tools.SendData(302, string.format("%0.2f", lFuelCounter[tonumber(string.sub(lTotalFuel, 3, 3))]))
+        ExportScript.Tools.SendData(303, lExtTank1)                                         -- external tanks
+        ExportScript.Tools.SendData(304, lExtTank2)                                         -- inner tanks
+        ExportScript.Tools.SendData(305, (lEngineInfo.fuel_internal < 2800.0 and 1 or 0))   -- inner wing tank
+        ExportScript.Tools.SendData(306, (lEngineInfo.fuel_internal < 1840.0 and 1 or 0))   -- inner hull tank
+        ExportScript.Tools.SendData(307, (lEngineInfo.fuel_internal < 1.0    and 1 or 0))   -- central hull tank
+        ExportScript.Tools.SendData(308, (lEngineInfo.fuel_internal < 600.0  and 1 or 0))   -- Bingo Fuel
 	end
-	--[[
-	[hook] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }
-    [parachute] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }
-    [controlsurfaces] = {
-        [eleron] = {
-            [left] = number: "0"
-            [right] = number: "-0.21084336936474"
-        }
-        [elevator] = {
-            [left] = number: "-0"
-            [right] = number: "-0"
-        }
-        [rudder] = {
-            [left] = number: "0"
-            [right] = number: "0"
-        }
-    }
-    [airintake] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }
-    [canopy] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }
-    [refuelingboom] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }
-    [wing] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }
-    [noseflap] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }
-    [gear] = {
-        [value] = number: "0"
-        [nose] = {
-            [rod] = number: "0"
-        }
-        [main] = {
-            [left] = {
-                [rod] = number: "0"
-            }
-            [right] = {
-                [rod] = number: "0"
-            }
-        }
-        [status] = number: "0"
-    }
-    [speedbrakes] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }
-    [wheelbrakes] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }
-    [flaps] = {
-        [status] = number: "0"
-        [value] = number: "0"
-    }]]
-	--SendDataHW("500", lMechInfo.gear.status )
-	--SendDataHW("501", lMechInfo.gear.value )
-	--SendDataHW("502", lMechInfo.gear.nose.rod )  -- zeigt an wie weit das Fahrwerk einsackt wenn das Flugzeug auf dem Boden ist
-	--SendDataHW("503", lMechInfo.gear.main.left.rod )  -- zeigt an wie weit das Fahrwerk einsackt wenn das Flugzeug auf dem Boden ist
-	--SendDataHW("504", lMechInfo.gear.main.right.rod )  -- zeigt an wie weit das Fahrwerk einsackt wenn das Flugzeug auf dem Boden ist
-	--SendDataHW("500", ((lMechInfo.gear.status == 1 and lMechInfo.gear.value < 1) and 1 or 0 ) ) -- gear warning light, go up
-	--SendDataHW("500", ((lMechInfo.gear.status == 0 and lMechInfo.gear.value > 0) and 1 or 0 ) ) -- gear warning light, go down
-	SendDataHW("500", (((lMechInfo.gear.status == 1 and lMechInfo.gear.value < 1) or (lMechInfo.gear.status == 0 and lMechInfo.gear.value > 0)) and 1 or 0 ), lHardware ) -- gear warning light
-	SendDataHW("501", (lMechInfo.gear.value > 0.85 and 1 or 0), lHardware ) -- nose gear
-	SendDataHW("502", (lMechInfo.gear.value > 0.95 and 1 or 0), lHardware ) -- left gear
-	SendDataHW("503", (lMechInfo.gear.value == 1 and 1 or 0), lHardware )   -- right gear
-	
-	--SendDataHW("510", lMechInfo.speedbrakes.status ) -- speedbreakes on 1 (0|1)
-	SendDataHW("510", (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0), lHardware ) -- speedbreakes on > 0.1 (0 - 1)
 
-	--SendDataHW("520", lMechInfo.wheelbrakes.status, lHardware ) -- not in use
-	--SendDataHW("521", lMechInfo.wheelbrakes.value, lHardware ) -- not in use
-
-	local lTrueAirSpeed = LoGetTrueAirSpeed()
-	--SendDataHW("530", lMechInfo.flaps.status ) -- flap switch off 0, 1. position 1, 2. position 2 (0|1|2)
-	--SendDataHW("531", lMechInfo.flaps.value ) -- flap 1. position > 0.25, 2. position > 0.93 (0 - 1)
-	SendDataHW("531", (lMechInfo.flaps.value > 0.25 and 1 or 0), lHardware ) -- flap 1. position
-	SendDataHW("532", (lMechInfo.flaps.value > 0.93 and 1 or 0), lHardware ) -- flap 2. position
-	SendDataHW("533", ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1 or 0), lHardware ) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		ExportScript.Tools.SendDataDAC("300", string.format("%d", ExportScript.Tools.round((lEngineInfo.fuel_internal / 10), 0, "ceil") * 10)) -- total fuel in kg
+		--ExportScript.Tools.SendDataDAC("301", string.format("%d", lEngineInfo.fuel_internal)) -- total fuel in kg
+		--ExportScript.Tools.SendDataDAC("302", string.format("%d", lEngineInfo.fuel_external)) -- external fuel in kg
+        ExportScript.Tools.SendDataDAC(303, lExtTank1)                                         -- external tanks
+        ExportScript.Tools.SendDataDAC(304, lExtTank2)                                         -- inner tanks
+        ExportScript.Tools.SendDataDAC(305, (lEngineInfo.fuel_internal < 2800.0 and 1 or 0))   -- inner wing tank
+        ExportScript.Tools.SendDataDAC(306, (lEngineInfo.fuel_internal < 1840.0 and 1 or 0))   -- inner hull tank
+        ExportScript.Tools.SendDataDAC(307, (lEngineInfo.fuel_internal < 1.0    and 1 or 0))   -- central hull tank
+        ExportScript.Tools.SendDataDAC(308, (lEngineInfo.fuel_internal < 600.0  and 1 or 0))   -- Bingo Fuel
+	end
 end
