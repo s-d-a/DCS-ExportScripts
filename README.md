@@ -1,7 +1,7 @@
 ###Deutsch###
 ---
 Dies ist ein universell einsetzbares Export Script für DCS.
-Es wird der gleichzeitige Export von Daten an Glasscockpitsoftware und IO Hardware ermöglicht.
+Es wird der gleichzeitige Export von Daten an Glasscockpitsoftware und I/O Hardware ermöglicht.
 
 Zur Zeit werden folgende Export-Formate unterstützt.
 - DAC (DCS Arcaze Connector) von [H-J-P](https://github.com/H-J-P/DAC/) um die Arcaze USB Controller anzusprechen (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
@@ -21,12 +21,13 @@ Der Export von Daten wird für folgende Module unterstützt:
 - TF-51D
 - Bf-109K-4
 - FW-190D9
+- Su-25T
+- alle Flaming Cliffs Flugzeuge
 
-An der Unterstützung für die Flaiming cliffs Flugzeuge wird derzeit gearbeitet.
 
 ###English###
 ---
-This is an universally insertable export script for DCS. It allows for the simultaneous export of data at glass cockpit software and IO hardware.
+This is an universally insertable export script for DCS. It allows for the simultaneous export of data at glass cockpit software and I/O hardware.
 
 At present the following export formats are supported:
 - DAC (DCS Arcaze Connector) by [H-J-P](https://github.com/H-J-P/DAC/) to address the Arcaze USB Controller (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
@@ -46,8 +47,9 @@ Following moduls are supported:
 - TF-51D
 - Bf-109K-4
 - FW-190D9
+- Su-25T
+- all Flaming Cliffs aircrafts
 
-Flaming Cliffs support is in developing.
 
 
 ###Wiki###
