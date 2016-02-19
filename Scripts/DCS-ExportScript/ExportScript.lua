@@ -21,6 +21,7 @@ ExportScript.LastDataDAC    = {}
 
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\Config.lua]])
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\Tools.lua]])
+dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\genericRadio.lua]])
 
 for i = 1, #ExportScript.Config.DAC, 1 do
     ExportScript.PacketSizeDAC[i]  = 0
@@ -69,8 +70,7 @@ function LuaExportStart()
 --        ExportScript.Tools.WriteToLog("Rename Error: "..lrename2)
 --    end
     
-    ExportScript.AF                = {} -- Table for Auxiliary functions
-	ExportScript.AF.EventNumberOLD = 0  -- event number from previous event
+    ExportScript.AF = {} -- Table for Auxiliary functions
 
     ExportScript.Tools.SelectModule()   -- point globals to Module functions and data.
 end
@@ -112,7 +112,8 @@ function LuaExportActivityNextEvent(t)
 	t = t + ExportScript.Config.ExportInterval
 	local coStatus
 
-	ExportScript.TickCount = ExportScript.TickCount + 1
+	--ExportScript.TickCount = ExportScript.TickCount + 1
+	ExportScript.TickCount = ExportScript.TickCount + ExportScript.Config.ExportInterval
 
 	local lMyInfo = LoGetSelfData()
 	if lMyInfo ~= nil then
@@ -128,6 +129,7 @@ function LuaExportActivityNextEvent(t)
 		lDevice:update_arguments()
 
 		if ExportScript.Config.Debug then
+			ExportScript.Tools.WriteToLog("run hight importance export universally")
 			ExportScript.Tools.ProcessArguments(lDevice, ExportScript.EveryFrameArguments) -- Module arguments as appropriate
 		else
 			ExportScript.coProcessArguments_EveryFrame = coroutine.create(ExportScript.Tools.ProcessArguments)
@@ -136,6 +138,7 @@ function LuaExportActivityNextEvent(t)
 
 		if ExportScript.Config.IkarusExport then
 			if ExportScript.Config.Debug then
+				ExportScript.Tools.WriteToLog("run hight importance export Ikarus")
 				ExportScript.ProcessIkarusDCSHighImportance(lDevice) -- Module, as appropriate; determined in ExportScript.Tools.SelectModule()
 			else
 				ExportScript.coProcessIkarusDCSHighImportance = coroutine.create(ExportScript.ProcessIkarusDCSHighImportance)
@@ -145,6 +148,7 @@ function LuaExportActivityNextEvent(t)
 
 		if ExportScript.Config.DACExport then
 			if ExportScript.Config.Debug then
+				ExportScript.Tools.WriteToLog("run hight importance export DAC")
 				ExportScript.ProcessDACHighImportance(lDevice) -- Module, as appropriate; determined in ExportScript.Tools.SelectModule()
 			else
 				ExportScript.coProcessDACHighImportance = coroutine.create(ExportScript.ProcessDACHighImportance)
@@ -166,6 +170,7 @@ function LuaExportActivityNextEvent(t)
 
 		if ExportScript.TickCount >= ExportScript.Config.ExportLowTickInterval then
 			if ExportScript.Config.Debug then
+				ExportScript.Tools.WriteToLog("run low importance export universally")
 				ExportScript.Tools.ProcessArguments(lDevice, ExportScript.Arguments) -- Module arguments as appropriate
 			else
 				ExportScript.coProcessArguments_Arguments = coroutine.create(ExportScript.Tools.ProcessArguments)
@@ -174,6 +179,7 @@ function LuaExportActivityNextEvent(t)
 
 			if ExportScript.Config.IkarusExport then
 				if ExportScript.Config.Debug then
+					ExportScript.Tools.WriteToLog("run low importance export Ikarus")
 					ExportScript.ProcessIkarusDCSLowImportance(lDevice) -- Module as appropriate; determined in ExportScript.Tools.SelectModule()
 				else
 					ExportScript.coProcessIkarusDCSLowImportance = coroutine.create(ExportScript.ProcessIkarusDCSLowImportance)
@@ -183,6 +189,7 @@ function LuaExportActivityNextEvent(t)
 
 			if ExportScript.Config.DACExport then
 				if ExportScript.Config.Debug then
+					ExportScript.Tools.WriteToLog("run low importance export DAC")
 					ExportScript.ProcessDACLowImportance(lDevice) -- Module, as appropriate; determined in ExportScript.Tools.SelectModule()
 				else
 					ExportScript.coProcessDACLowImportance = coroutine.create(ExportScript.ProcessDACLowImportance)
@@ -208,6 +215,7 @@ function LuaExportActivityNextEvent(t)
 		
 		if ExportScript.Config.IkarusExport then
 			if ExportScript.Config.Debug then
+				ExportScript.Tools.WriteToLog("run hight importance export Ikarus")
 				ExportScript.ProcessIkarusFCHighImportance()
 			else
 				ExportScript.coProcessGlassCockpitFCHighImportance = coroutine.create(ExportScript.ProcessIkarusFCHighImportance)
@@ -216,6 +224,7 @@ function LuaExportActivityNextEvent(t)
 		end
 		if ExportScript.Config.DACExport then
 			if ExportScript.Config.Debug then
+				ExportScript.Tools.WriteToLog("run hight importance export DAC")
 				ExportScript.ProcessDACHighImportance(lDevice)
 			else
 				ExportScript.coProcessDACHighImportance = coroutine.create(ExportScript.ProcessDACHighImportance)
@@ -238,6 +247,7 @@ function LuaExportActivityNextEvent(t)
 		if ExportScript.TickCount >= ExportScript.Config.ExportLowTickInterval then
 			if ExportScript.Config.IkarusExport then
 				if ExportScript.Config.Debug then
+					ExportScript.Tools.WriteToLog("run low importance export Ikarus")
 					ExportScript.ProcessIkarusFCLowImportance()
 				else
 					ExportScript.coProcessIkarusFCLowImportance = coroutine.create(ExportScript.ProcessIkarusFCLowImportance)
@@ -247,6 +257,7 @@ function LuaExportActivityNextEvent(t)
 
 			if ExportScript.Config.DACExport then
 				if ExportScript.Config.Debug then
+					ExportScript.Tools.WriteToLog("run low importance export DAC")
 					ExportScript.ProcessDACLowImportance(lDevice)
 				else
 					ExportScript.coProcessDACLowImportance = coroutine.create(ExportScript.ProcessDACLowImportance)
