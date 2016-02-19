@@ -40,4 +40,3 @@ ExportScript.Config.ExportModulePath       = lfs.writedir()..[[Scripts\DCS-Expor
 ExportScript.Config.Debug                  = false
 ExportScript.Config.FirstNewDataSend       = true
 ExportScript.Config.FirstNewDataSendCount  = 5
-ExportScript.Config.genericRadioHardwareID = 1
