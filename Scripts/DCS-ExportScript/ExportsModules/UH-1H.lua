@@ -621,16 +621,122 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	lAN_APN_209 = lAN_APN_209 .. lAN_APN_209_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(471), 2)]
 	ExportScript.Tools.SendDataDAC("2008", string.format("%s", lAN_APN_209))
 
+	--ExportScript.Tools.WriteToLog('VHF_ARC_134: '..string.format("%7.3f", lVHF_ARC_134:get_frequency()/1000000))
+	--ExportScript.Tools.WriteToLog('VHF_ARC134_Freq1: '..mainPanelDevice:get_argument_value(1))
+	--ExportScript.Tools.WriteToLog('VHF_ARC134_Freq2: '..mainPanelDevice:get_argument_value(2))
+	--ExportScript.Tools.WriteToLog('VHF_ARC134_Freq3: '..mainPanelDevice:get_argument_value(3))
+	--ExportScript.Tools.WriteToLog('VHF_ARC134_Freq4: '..mainPanelDevice:get_argument_value(4))
+
 	-- generic Radio display and frequency rotarys
 	-------------------------------------------------
-	ExportScript.genericRadio(nil, nil, ExportScript.Config.genericRadioHardwareID)
+	-- genericRadioConf
+	ExportScript.genericRadioConf = {}
+	ExportScript.genericRadioConf['maxRadios'] = 3                       -- numbers of aviables/supported radios
+	ExportScript.genericRadioConf[1] = {}                                -- first radio
+	ExportScript.genericRadioConf[1]['Name'] = "AN/ARC-131 VHF FM"          -- name of radio
+	ExportScript.genericRadioConf[1]['DeviceID'] = 23                    -- DeviceID for GetDevice from device.lua
+	ExportScript.genericRadioConf[1]['setFrequency'] = true              -- change frequency active
+	ExportScript.genericRadioConf[1]['FrequencyMultiplicator'] = 1000000 -- Multiplicator from Hz to MHz
+	ExportScript.genericRadioConf[1]['FrequencyFormat'] = "%7.3f"        -- frequency view format LUA style
+	ExportScript.genericRadioConf[1]['FrequencyStep'] = 25               -- minimal step for frequency change
+	ExportScript.genericRadioConf[1]['minFrequency'] = 100.000           -- lowest frequency
+	ExportScript.genericRadioConf[1]['maxFrequency'] = 399.975           -- highest frequency
+	ExportScript.genericRadioConf[1]['Power'] = {}                       -- power button active
+	ExportScript.genericRadioConf[1]['Power']['ButtonID'] = 3008         -- power button id from cklickable.lua
+	ExportScript.genericRadioConf[1]['Power']['ValueOn'] = 0.1           -- power on value from cklickable.lua
+	ExportScript.genericRadioConf[1]['Power']['ValueOff'] = 0.0          -- power off value from cklickable.lua
+	ExportScript.genericRadioConf[1]['Volume'] = {}                      -- volume knob active
+	ExportScript.genericRadioConf[1]['Volume']['ButtonID'] = 3006        -- volume button id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Preset'] = {}                      -- preset knob active
+--	ExportScript.genericRadioConf[1]['Preset']['ArgumentID'] = 161       -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Preset']['ButtonID'] = 3001        -- preset button id from cklickable.lua
+	-- Preset based on switchlogic on clickabledata.lua
+--	ExportScript.genericRadioConf[1]['Preset']['List'] = {[0.0]="01",[0.05]="02",[0.10]="03",[0.15]="04",[0.20]="05",[0.25]="06",[0.30]="07",[0.35]="08",[0.40]="09",[0.45]="10",[0.50]="11",[0.55]="12",[0.60]="13",[0.65]="14",[0.70]="15",[0.75]="16",[0.80]="17",[0.85]="18",[0.90]="19",[0.95]="20",[1.00]="01"}
+--	ExportScript.genericRadioConf[1]['Preset']['Step'] = 0.05            -- minimal step for preset change
+	ExportScript.genericRadioConf[1]['Squelch'] = {}                     -- squelch switch active
+	ExportScript.genericRadioConf[1]['Squelch']['ArgumentID'] = 36       -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[1]['Squelch']['ButtonID'] = 3005       -- squelch button id from cklickable.lua
+	ExportScript.genericRadioConf[1]['Squelch']['ValueOn'] = 0.1         -- squelch on value from cklickable.lua
+	ExportScript.genericRadioConf[1]['Squelch']['ValueOff'] = 0.0        -- squelch off value from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Load'] = {}                        -- load button preset
+--	ExportScript.genericRadioConf[1]['Load']['ButtonID'] = 3015          -- load button id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['ManualPreset'] = {}                -- switch manual or preset active
+--	ExportScript.genericRadioConf[1]['ManualPreset']['ArgumentID'] = 167 -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['ManualPreset']['ButtonID'] = 3007  -- ManualPreset button id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['ManualPreset']['ValueManual'] = 0.0-- ManualPreset Manual value from cklickable.lua
+--	ExportScript.genericRadioConf[1]['ManualPreset']['ValuePreset'] = 0.1-- ManualPreset Preset value from cklickable.lua
 
+	ExportScript.genericRadioConf[2] = {}                                -- secound radio
+	ExportScript.genericRadioConf[2]['Name'] = "AN/ARC-51BX UHF AM"      -- name of radio
+	ExportScript.genericRadioConf[2]['DeviceID'] = 22                    -- DeviceID for GetDevice from device.lua
+	ExportScript.genericRadioConf[2]['setFrequency'] = true              -- change frequency active
+	ExportScript.genericRadioConf[2]['FrequencyMultiplicator'] = 1000000 -- Multiplicator from Hz to MHz
+	ExportScript.genericRadioConf[2]['FrequencyFormat'] = "%7.3f"        -- frequency view format LUA style
+	ExportScript.genericRadioConf[2]['FrequencyStep'] = 50               -- minimal step for frequency change
+	ExportScript.genericRadioConf[2]['minFrequency'] = 225.000           -- lowest frequency
+	ExportScript.genericRadioConf[2]['maxFrequency'] = 399.950           -- highest frequency
+	ExportScript.genericRadioConf[2]['Power'] = {}                       -- power button active
+	ExportScript.genericRadioConf[2]['Power']['ButtonID'] = 3006         -- power button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Power']['ValueOn'] = 0.1           -- power on value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Power']['ValueOff'] = 0.0          -- power off value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Volume'] = {}                      -- volume knob active
+	ExportScript.genericRadioConf[2]['Volume']['ButtonID'] = 3008        -- volume button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Preset'] = {}                      -- preset knob active
+	ExportScript.genericRadioConf[2]['Preset']['ArgumentID'] = 16        -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Preset']['ButtonID'] = 3001        -- preset button id from cklickable.lua
+	-- Preset based on switchlogic on clickabledata.lua
+	ExportScript.genericRadioConf[2]['Preset']['List'] = {[0.0]="01",[0.05]="02",[0.10]="03",[0.15]="04",[0.20]="05",[0.25]="06",[0.30]="07",[0.35]="08",[0.40]="09",[0.45]="10",[0.50]="11",[0.55]="12",[0.60]="13",[0.65]="14",[0.70]="15",[0.75]="16",[0.80]="17",[0.85]="18",[0.90]="19",[0.95]="20"}
+	ExportScript.genericRadioConf[2]['Preset']['Step'] = 0.05            -- minimal step for preset change
+	ExportScript.genericRadioConf[2]['Squelch'] = {}                     -- squelch switch active
+	ExportScript.genericRadioConf[2]['Squelch']['ArgumentID'] = 134      -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Squelch']['ButtonID'] = 3007       -- squelch button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Squelch']['ValueOn'] = 1.0         -- squelch on value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Squelch']['ValueOff'] = 0.0        -- squelch off value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Load'] = {}                        -- load button preset
+	ExportScript.genericRadioConf[2]['Load']['ButtonID'] = 3006          -- load button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['ManualPreset'] = {}                -- switch manual or preset active
+	ExportScript.genericRadioConf[2]['ManualPreset']['ArgumentID'] = 135 -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[2]['ManualPreset']['ButtonID'] = 3005  -- ManualPreset button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['ManualPreset']['ValueManual'] = 0.1-- ManualPreset Manual value from cklickable.lua
+	ExportScript.genericRadioConf[2]['ManualPreset']['ValuePreset'] = 0.0-- ManualPreset Preset value from cklickable.lua
+
+	ExportScript.genericRadioConf[3] = {}                                -- secound radio
+	ExportScript.genericRadioConf[3]['Name'] = "AN/ARC-134 VHF AM"       -- name of radio
+	ExportScript.genericRadioConf[3]['DeviceID'] = 20                    -- DeviceID for GetDevice from device.lua
+	ExportScript.genericRadioConf[3]['setFrequency'] = true              -- change frequency active
+	ExportScript.genericRadioConf[3]['FrequencyMultiplicator'] = 1000000 -- Multiplicator from Hz to MHz
+	ExportScript.genericRadioConf[3]['FrequencyFormat'] = "%7.3f"        -- frequency view format LUA style
+	ExportScript.genericRadioConf[3]['FrequencyStep'] = 25               -- minimal step for frequency change
+	ExportScript.genericRadioConf[3]['minFrequency'] = 100.000           -- lowest frequency
+	ExportScript.genericRadioConf[3]['maxFrequency'] = 399.975           -- highest frequency
+	ExportScript.genericRadioConf[3]['Power'] = {}                       -- power button active
+	ExportScript.genericRadioConf[3]['Power']['ButtonID'] = 3001         -- power button id from cklickable.lua
+	ExportScript.genericRadioConf[3]['Power']['ValueOn'] = 1.0           -- power on value from cklickable.lua
+	ExportScript.genericRadioConf[3]['Power']['ValueOff'] = 0.85          -- power off value from cklickable.lua
+	ExportScript.genericRadioConf[3]['Volume'] = {}                      -- volume knob active
+	ExportScript.genericRadioConf[3]['Volume']['ButtonID'] = 3003        -- volume button id from cklickable.lua
+--	ExportScript.genericRadioConf[3]['Preset'] = {}                      -- preset knob active
+--	ExportScript.genericRadioConf[3]['Preset']['ArgumentID'] = 151       -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[3]['Preset']['ButtonID'] = 3001        -- preset button id from cklickable.lua
+--	ExportScript.genericRadioConf[3]['Preset']['ButtonID2'] = 3002       -- preset button id from cklickable.lua
+	-- Preset based on switchlogic on clickabledata.lua
+--	ExportScript.genericRadioConf[3]['Preset']['List'] = {[0.0]="01",[0.01]="02",[0.02]="03",[0.03]="04",[0.04]="05",[0.05]="06",[0.06]="07",[0.07]="08",[0.08]="09",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="01"}
+--	ExportScript.genericRadioConf[3]['Preset']['Step'] = 0.01            -- minimal step for preset change
+--	ExportScript.genericRadioConf[3]['Preset']['Step2'] = -0.01          -- minimal step for preset change
+--	ExportScript.genericRadioConf[3]['Squelch'] = {}                     -- squelch switch active
+--	ExportScript.genericRadioConf[3]['Squelch']['ArgumentID'] = 148      -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[3]['Squelch']['ButtonID'] = 3008       -- squelch button id from cklickable.lua
+--	ExportScript.genericRadioConf[3]['Squelch']['ValueOn'] = 0.0         -- squelch on value from cklickable.lua
+--	ExportScript.genericRadioConf[3]['Squelch']['ValueOff'] = -1.0        -- squelch off value from cklickable.lua
+--	ExportScript.genericRadioConf[3]['Load'] = {}                        -- load button preset
+--	ExportScript.genericRadioConf[3]['Load']['ButtonID'] = 3004          -- load button id from cklickable.lua
+--	ExportScript.genericRadioConf[3]['ManualPreset'] = {}                -- switch manual or preset active
+--	ExportScript.genericRadioConf[3]['ManualPreset']['ArgumentID'] = 149 -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[3]['ManualPreset']['ButtonID'] = 3004  -- ManualPreset button id from cklickable.lua
+--	ExportScript.genericRadioConf[3]['ManualPreset']['ValueManual'] = 0.2-- ManualPreset Manual value from cklickable.lua
+--	ExportScript.genericRadioConf[3]['ManualPreset']['ValuePreset'] = 0.3-- ManualPreset Preset value from cklickable.lua
 	
-	ExportScript.Tools.WriteToLog('VHF_ARC_134: '..string.format("%7.3f", lVHF_ARC_134:get_frequency()/1000000))
-	ExportScript.Tools.WriteToLog('VHF_ARC134_Freq1: '..mainPanelDevice:get_argument_value(1))
-	ExportScript.Tools.WriteToLog('VHF_ARC134_Freq2: '..mainPanelDevice:get_argument_value(2))
-	ExportScript.Tools.WriteToLog('VHF_ARC134_Freq3: '..mainPanelDevice:get_argument_value(3))
-	ExportScript.Tools.WriteToLog('VHF_ARC134_Freq4: '..mainPanelDevice:get_argument_value(4))
+	ExportScript.genericRadio(nil, nil)
 	
 	--[[
 	-- ENGINE_INTERFACE
@@ -716,621 +822,4 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 	]]
-end
-
------------------------------
---     Custom functions    --
------------------------------
-
-function ExportScript.genericRadio(key, value, hardware)
-	local lHardware = hardware or 1
-	-- Werte werden per Encoder im Bereich von 0.0 bis 2.0 in 0.1 Schritten uebergeben
-	-- im jeweiligen Abschnitt muessen die Eingangsdaten auf den Zulaessigen Bereich eingeschraengt werden
-	local lRotaryFrequency_1, lRotaryFrequency_2, lVolume, lPreset, lLoad, lSquelch, lManualPreset, lPower, lDevice, lClickAction, lSetFrequency = nil
-	local lMainPanelDevice = GetDevice(0)
-	local lMaxRadios = 3
-	
-	if gES_genericRadio == nil then
-		gES_genericRadio = 0
-	end
-	if gES_genericRadioFrequency1 == nil then
-		gES_genericRadioFrequency1 = 0.0
-	end
-	if gES_genericRadioFrequency2 == nil then
-		gES_genericRadioFrequency2 = 0.0
-	end
-	if gES_genericRadioPresetChannel == nil then
-		gES_genericRadioPresetChannel = 0.0
-	end
-	if gES_genericRadioPower == nil then
-		gES_genericRadioPower = {}
-	end
-	if gES_genericRadioPresetManual == nil then
-		gES_genericRadioPresetManual = {}
-	end
-	if gES_genericRadioSquelch == nil then
-		gES_genericRadioSquelch = {}
-	end
-
-	if key == "3001" then
-		gES_genericRadio = tonumber(value)
-	end
-	if key == "3002" then
-		lRotaryFrequency_1 = tonumber(value)
-	end
-	if key == "3003" then
-		lRotaryFrequency_2 = tonumber(value)
-	end
-	if key == "3004" then
-		lVolume = tonumber(value)
-	end
-	if key == "3005" then
-		lPreset = tonumber(value)
-	end
-	if key == "3006" then
-		lLoad = tonumber(value)
-	end
-	if key == "3007" then
-		lSquelch = tonumber(value)
-	end
-	if key == "3008" then
-		lManualPreset = tonumber(value)
-	end
-	if key == "3009" then
-		lPower = tonumber(value)
-	end
-	
-	if gES_genericRadio > lMaxRadios then
-		ExportScript.Tools.WriteToLog("Radio Nr. "..gES_genericRadio.." not defined.")
-		return
-	end
-	
-	if gES_genericRadio == 1 then
-	--  AN/ARC-131 VHF FM Radio
-		local lDeviceID = 23
-		local lVHF_FM_RADIO = GetDevice(lDeviceID)
-		
-		-- check status of the radio
-		if gES_genericRadioPower[gES_genericRadio] == nil then
-			if lVHF_FM_RADIO:is_on() then
-				gES_genericRadioPower[gES_genericRadio] = 1.0
-			else
-				gES_genericRadioPower[gES_genericRadio] = 0.0
-			end
-		end
-		if gES_genericRadioPresetManual[gES_genericRadio] == nil then
-			gES_genericRadioPresetManual[gES_genericRadio] = 0 -- no preset channels
-		end
-		if gES_genericRadioSquelch[gES_genericRadio] == nil then
-			gES_genericRadioSquelch[gES_genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(36), 1) == 0.1) and 0 or 1)
-		end
-
-		local lVHF_FM_RADIO_FREQUENCY = ExportScript.Tools.round(lVHF_FM_RADIO:get_frequency()/1000000 , 3, "floor")
-
-		ExportScript.Tools.SendDataDAC("3000", string.format("%.3f", lVHF_FM_RADIO_FREQUENCY), lHardware)
-		ExportScript.Tools.SendDataDAC("3001", string.format("-"), lHardware)
-		ExportScript.Tools.SendDataDAC("3002", string.format("%.3f", lVHF_FM_RADIO_FREQUENCY), lHardware)
-		
-		if lRotaryFrequency_1 ~= nil and (lRotaryFrequency_1 >= 0.0 and lRotaryFrequency_1 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lVHF_FM_RADIO_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 25)
-					lFrequency[2] = ltmp * 25
-				end
-				if lRotaryFrequency_1 < gES_genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
-					lFrequency[1] = lFrequency[1] - 1
-					if lFrequency[1] == 99 then
-						lFrequency[1] = 399
-					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
-				else
-					lFrequency[1] = lFrequency[1] + 1
-					if lFrequency[1] == 400 then
-						lFrequency[1] = 100
-					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
-				end
-				
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("1. genericUH-1H AN/ARC-131 VHF FM Radio, don't split frequency: "..lFrequency)
-			end
-		end
-
-		if lRotaryFrequency_2 ~= nil and (lRotaryFrequency_2 >= 0.0 and lRotaryFrequency_2 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lVHF_FM_RADIO_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 25)
-					lFrequency[2] = ltmp * 25
-				end
-				if lRotaryFrequency_2 < gES_genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
-					lFrequency[2] = lFrequency[2] - 25
-					if lFrequency[2] == -25 then
-						lFrequency[2] = 975
-					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
-				else
-					lFrequency[2] = lFrequency[2] + 25
-					if lFrequency[2] == 1000 then
-						lFrequency[2] = 0
-					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
-				end
-				
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("2. generic UH-1H AN/ARC-131 VHF FM Radio, don't split frequency: "..lFrequency)
-			end
-		end
-
-		if lVolume ~= nil and (lVolume >= 0.0 and lVolume <= 2.0) then
-			lVolume = lVolume / 2
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3006,
-							Value    = lVolume}
-		end
---[[
-		if lPreset ~= nil and (lPreset >= 0.0 and lPreset <= 2.0) then
-			-- Preset 0.0 to 0.20 in 0.01 steps
-			if lPreset < gES_genericRadioPresetChannel or lPreset == 0.0 or lPreset == 2.0 then
-				lClickAction = {DeviceID = lDeviceID,
-								ButtonID = 3001,
-								Value    = 0.01}
-				gES_genericRadioPresetChannel = lPreset
-			else
-				lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3002,
-							Value    = -0.01}
-				gES_genericRadioPresetChannel = lPreset
-			end
-		end
-		if lLoad ~= nil and (lLoad == 0.0 or lLoad <= 1.0) then
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3006,
-							Value    = lLoad}
-		end
-		if lManualPreset ~= nil and (lManualPreset == 0.0 or lManualPreset <= 1.0) then
-			if lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 1.0 then
-				-- Manual on
-				lManualPreset = 0.1
-				gES_genericRadioPresetManual[gES_genericRadio] = 0
-			elseif lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 0 then
-				-- Preset on
-				lManualPreset = 0.0
-				gES_genericRadioPresetManual[gES_genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3005,
-							Value    = lManualPreset}
-		end
-]]
-		if lSquelch ~= nil and (lSquelch == 0.0 or lSquelch <= 1.0) then
-			if lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 1.0 then
-				-- Squelch off
-				lSquelch = 0.0
-				gES_genericRadioSquelch[gES_genericRadio] = 0
-			elseif lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 0 then
-				-- Squelch on
-				lSquelch = 0.1
-				gES_genericRadioSquelch[gES_genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3005,
-							Value    = lSquelch}
-		end
-		if lPower ~= nil and (lPower == 0.0 or lPower <= 1.0) then
-			if lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 1.0 then
-				-- Power off
-				lPower = 0.0
-				gES_genericRadioPower[gES_genericRadio] = 0
-			elseif lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 0 then
-				-- Power on
-				lPower = 0.1
-				gES_genericRadioPower[gES_genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3007,
-							Value    = lPower}
-		end
-
-	elseif gES_genericRadio == 2 then
-		-- AN/ARC-51BX UHF AM Radio
-		local lDeviceID = 22
-		local lUHF_AM_RADIO = GetDevice(lDeviceID)
-		
-		-- check status of the radio
-		if gES_genericRadioPower[gES_genericRadio] == nil then
-			if lUHF_AM_RADIO:is_on() then
-				gES_genericRadioPower[gES_genericRadio] = 1.0
-			else
-				gES_genericRadioPower[gES_genericRadio] = 0.0
-			end
-		end
-		if gES_genericRadioPresetManual[gES_genericRadio] == nil then
-			gES_genericRadioPresetManual[gES_genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(15), 1) == 0.1) and 0 or 1)
-		end
-		if gES_genericRadioSquelch[gES_genericRadio] == nil then
-			gES_genericRadioSquelch[gES_genericRadio] = ExportScript.Tools.round(lMainPanelDevice:get_argument_value(22), 1)
-		end
-		
-		local lPresetChannel = ExportScript.Tools.round(lMainPanelDevice:get_argument_value(16), 2)
-		
-		local lUHF_AM_RADIO_PRESET = {[0.0]="01",[0.05]="02",[0.10]="03",[0.15]="04",[0.20]="05",[0.25]="06",[0.30]="07",[0.35]="08",[0.40]="09",[0.45]="10",[0.50]="11",[0.55]="12",[0.60]="13",[0.65]="14",[0.70]="15",[0.75]="16",[0.80]="17",[0.85]="18",[0.90]="19",[0.95]="20"}
-		local lUHF_AM_RADIO_FREQUENCY = ExportScript.Tools.round(lUHF_AM_RADIO:get_frequency()/1000000 , 3, "floor")
-		
-		ExportScript.Tools.SendDataDAC("3000", string.format("%s%.3f", lUHF_AM_RADIO_PRESET[lPresetChannel], lUHF_AM_RADIO_FREQUENCY), lHardware)
-		ExportScript.Tools.SendDataDAC("3001", string.format("%s", lUHF_AM_RADIO_PRESET[lPresetChannel]), lHardware)
-		ExportScript.Tools.SendDataDAC("3002", string.format("%.3f", lUHF_AM_RADIO_FREQUENCY), lHardware)
-		
-		if lRotaryFrequency_1 ~= nil and (lRotaryFrequency_1 >= 0.0 and lRotaryFrequency_1 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lUHF_AM_RADIO_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 50)
-					lFrequency[2] = ltmp * 50
-				end
-				if lRotaryFrequency_1 < gES_genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
-					lFrequency[1] = lFrequency[1] - 1
-					if lFrequency[1] == 224 then
-						lFrequency[1] = 399
-					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
-				else
-					lFrequency[1] = lFrequency[1] + 1
-					if lFrequency[1] == 400 then
-						lFrequency[1] = 225
-					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
-				end
-				
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("1. generic UH-1H AN/ARC-51BX UHF AM Radio, don't split frequency: "..lFrequency)
-			end
-		end
-
-		if lRotaryFrequency_2 ~= nil and (lRotaryFrequency_2 >= 0.0 and lRotaryFrequency_2 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lUHF_AM_RADIO_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 50)
-					lFrequency[2] = ltmp * 50
-				end
-				if lRotaryFrequency_2 < gES_genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
-					lFrequency[2] = lFrequency[2] - 50
-					if lFrequency[2] == -50 then
-						lFrequency[2] = 950
-					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
-				else
-					lFrequency[2] = lFrequency[2] + 50
-					if lFrequency[2] == 1000 then
-						lFrequency[2] = 0
-					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
-				end
-				
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("2. generic UH-1H AN/ARC-51BX UHF AM Radio, don't split frequency: "..lFrequency)
-			end
-		end
-		if lVolume ~= nil and (lVolume >= 0.0 and lVolume <= 2.0) then
-			lVolume = lVolume / 2
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3008,
-							Value    = lVolume}
-		end
-		if lPreset ~= nil and (lPreset >= 0.0 and lPreset <= 2.0) then
-			-- Preset 0.0 to 0.95 in 0.05 steps
-			if lPreset < gES_genericRadioPresetChannel or lPreset == 0.0 or lPreset == 2.0 then
-				lPresetChannel = lPresetChannel + 0.05
-				gES_genericRadioPresetChannel = lPreset
-				if lPresetChannel == 1.00 then
-					lPresetChannel = 0.0
-				end
-			else
-				lPresetChannel = lPresetChannel - 0.05
-				gES_genericRadioPresetChannel = lPreset
-				if lPresetChannel == -0.05 then
-					lPresetChannel = 0.95
-				end
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3001,
-							Value    = lPresetChannel}
-		end
-		if lSquelch ~= nil and (lSquelch == 0.0 or lSquelch <= 1.0) then
-			if lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 1.0 then
-				-- Power off
-				lSquelch = 0.0
-				gES_genericRadioSquelch[gES_genericRadio] = 0
-			elseif lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 0 then
-				-- Power on
-				lSquelch = 1.0
-				gES_genericRadioSquelch[gES_genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3007,
-							Value    = lSquelch}
-		end
-		if lManualPreset ~= nil and (lManualPreset == 0.0 or lManualPreset <= 1.0) then
-			if lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 1.0 then
-				-- Manual on
-				lManualPreset = 0.1
-				gES_genericRadioPresetManual[gES_genericRadio] = 0
-			elseif lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 0 then
-				-- Preset on
-				lManualPreset = 0.0
-				gES_genericRadioPresetManual[gES_genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3005,
-							Value    = lManualPreset}
-		end
-		if lPower ~= nil and (lPower == 0.0 or lPower <= 1.0) then
-			if lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 1.0 then
-				-- Power off
-				lPower = 0.0
-				gES_genericRadioPower[gES_genericRadio] = 0
-			elseif lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 0 then
-				-- Power on
-				lPower = 0.1
-				gES_genericRadioPower[gES_genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3006,
-							Value    = lPower}
-		end
-
-	elseif gES_genericRadio == 3 then
-		-- AN/ARC-134 VHF AM Radio
-		local lDeviceID = 20
-		local lVHF_AM_RADIO = GetDevice(lDeviceID)
-
-		-- check status of the radio
-		if gES_genericRadioPower[gES_genericRadio] == nil then
-			if lVHF_AM_RADIO:is_on() then
-				gES_genericRadioPower[gES_genericRadio] = 1.0
-			else
-				gES_genericRadioPower[gES_genericRadio] = 0.85
-			end
-		end
-		if gES_genericRadioPresetManual[gES_genericRadio] == nil then
-			gES_genericRadioPresetManual[gES_genericRadio] = 0.0 -- no preset channels
-		end
-		if gES_genericRadioSquelch[gES_genericRadio] == nil then
-			gES_genericRadioSquelch[gES_genericRadio] = 0.0 -- no Squelch
-		end
-
-		local lVHF_AM_RADIO_FREQUENCY = ExportScript.Tools.round(lVHF_AM_RADIO:get_frequency()/1000000 , 3, "floor")
-
-		ExportScript.Tools.SendDataDAC("3000", string.format("%.3f", lVHF_AM_RADIO_FREQUENCY), lHardware)
-		ExportScript.Tools.SendDataDAC("3001", string.format("-"), lHardware)
-		ExportScript.Tools.SendDataDAC("3002", string.format("%.3f", lVHF_AM_RADIO_FREQUENCY), lHardware)
-
-		if lRotaryFrequency_1 ~= nil and (lRotaryFrequency_1 >= 0.0 and lRotaryFrequency_1 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lVHF_AM_RADIO_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 25)
-					lFrequency[2] = ltmp * 25
-				end
-				if lRotaryFrequency_1 < gES_genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
-					lFrequency[1] = lFrequency[1] - 1
-					if lFrequency[1] == 99 then
-						lFrequency[1] = 399
-					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
-				else
-					lFrequency[1] = lFrequency[1] + 1
-					if lFrequency[1] == 400 then
-						lFrequency[1] = 100
-					end
-					gES_genericRadioFrequency1 = lRotaryFrequency_1
-				end
-
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("1. genericUH-1H AN/ARC-134 VHF AM Radio, don't split frequency: "..lFrequency)
-			end
-		end
-
-		if lRotaryFrequency_2 ~= nil and (lRotaryFrequency_2 >= 0.0 and lRotaryFrequency_2 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lVHF_AM_RADIO_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 25)
-					lFrequency[2] = ltmp * 25
-				end
-				if lRotaryFrequency_2 < gES_genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
-					lFrequency[2] = lFrequency[2] - 25
-					if lFrequency[2] == -25 then
-						lFrequency[2] = 975
-					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
-				else
-					lFrequency[2] = lFrequency[2] + 25
-					if lFrequency[2] == 1000 then
-						lFrequency[2] = 0
-					end
-					gES_genericRadioFrequency2 = lRotaryFrequency_2
-				end
-
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("2. generic UH-1H AN/ARC-134 VHF AM Radio, don't split frequency: "..lFrequency)
-			end
-		end
-
-		if lVolume ~= nil and (lVolume >= 0.0 and lVolume <= 2.0) then
-			lVolume = lVolume / 3
-			if lVolume > 0.65 then
-				lVolume = 0.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3003,
-							Value    = lVolume}
-		end
---[[
-		if lPreset ~= nil and (lPreset >= 0.0 and lPreset <= 2.0) then
-			-- Preset 0.0 to 0.20 in 0.01 steps
-			if lPreset < gES_genericRadioPresetChannel or lPreset == 0.0 or lPreset == 2.0 then
-				lClickAction = {DeviceID = lDeviceID,
-								ButtonID = 3001,
-								Value    = 0.01}
-				gES_genericRadioPresetChannel = lPreset
-			else
-				lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3002,
-							Value    = -0.01}
-				gES_genericRadioPresetChannel = lPreset
-			end
-		end
-		if lLoad ~= nil and (lLoad == 0.0 or lLoad <= 1.0) then
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3006,
-							Value    = lLoad}
-		end
-		if lSquelch ~= nil and (lSquelch == 0.0 or lSquelch <= 1.0) then
-			if lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 1.0 then
-				-- Power off
-				lSquelch = 0.0
-				gES_genericRadioSquelch[gES_genericRadio] = 0
-			elseif lSquelch == 1.0 and gES_genericRadioSquelch[gES_genericRadio] == 0 then
-				-- Power on
-				lSquelch = 1.0
-				gES_genericRadioSquelch[gES_genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3007,
-							Value    = lSquelch}
-		end
-		if lManualPreset ~= nil and (lManualPreset == 0.0 or lManualPreset <= 1.0) then
-			if lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 1.0 then
-				-- Manual on
-				lManualPreset = 0.1
-				gES_genericRadioPresetManual[gES_genericRadio] = 0
-			elseif lManualPreset == 1.0 and gES_genericRadioPresetManual[gES_genericRadio] == 0 then
-				-- Preset on
-				lManualPreset = 0.0
-				gES_genericRadioPresetManual[gES_genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3005,
-							Value    = lManualPreset}
-		end
-]]
-		if lPower ~= nil and (lPower == 0.0 or lPower <= 1.0) then
-			if lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 1.0 then
-				-- Power off
-				lPower = 0.85
-				gES_genericRadioPower[gES_genericRadio] = 0
-			elseif lPower == 1.0 and gES_genericRadioPower[gES_genericRadio] == 0 then
-				-- Power on
-				lPower = 1.0
-				gES_genericRadioPower[gES_genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3001,
-							Value    = lPower}
-		end
-
-	else
-		ExportScript.Tools.SendDataDAC("3000", "-", lHardware)
-		ExportScript.Tools.SendDataDAC("3001", "-", lHardware)
-		ExportScript.Tools.SendDataDAC("3002", "-", lHardware)
-		ExportScript.Tools.SendDataDAC("3010", 0, lHardware)
-		ExportScript.Tools.SendDataDAC("3011", 0, lHardware)
-		ExportScript.Tools.SendDataDAC("3012", 0, lHardware)
-		return
-	end
-
-	ExportScript.Tools.SendDataDAC("3010", gES_genericRadioPower[gES_genericRadio], lHardware)
-	ExportScript.Tools.SendDataDAC("3011", gES_genericRadioPresetManual[gES_genericRadio], lHardware)
-	ExportScript.Tools.SendDataDAC("3012", gES_genericRadioSquelch[gES_genericRadio], lHardware)
-
-	if lClickAction ~= nil then
-		lDevice = GetDevice(lClickAction.DeviceID)
-		if type(lDevice) == "table" then
-			--ExportScript.Tools.WriteToLog("GetDevice("..lClickAction.DeviceID.."):performClickableAction("..lClickAction.ButtonID..", "..lClickAction.Value..") ")
-			lDevice:performClickableAction(lClickAction.ButtonID, lClickAction.Value)
-		end
-	elseif lSetFrequency ~= nil then
-		lDevice = GetDevice(lSetFrequency.DeviceID)
-		if type(lDevice) == "table" and lDevice:is_on() then
-			--ExportScript.Tools.WriteToLog("GetDevice("..lSetFrequency.DeviceID.."):set_frequency("..lSetFrequency.Frequency..") ")
-			lDevice:set_frequency(lSetFrequency.Frequency)
-		else
-			ExportScript.Tools.WriteToLog("GetDevice("..lSetFrequency.DeviceID..") is no table or Radio is not on")
-		end
-	end
 end

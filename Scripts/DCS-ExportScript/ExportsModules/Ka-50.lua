@@ -1027,7 +1027,81 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	
 	-- generic Radio display and frequency rotarys
 	-------------------------------------------------
-	ExportScript.genericRadio(nil, nil, ExportScript.Config.genericRadioHardwareID)
+	-- genericRadioConf
+	ExportScript.genericRadioConf = {}
+	ExportScript.genericRadioConf['maxRadios'] = 2                       -- numbers of aviables/supported radios
+	ExportScript.genericRadioConf[1] = {}                                -- first radio
+	ExportScript.genericRadioConf[1]['Name'] = "R_800 FM/AM"             -- name of radio
+	ExportScript.genericRadioConf[1]['DeviceID'] = 48                    -- DeviceID for GetDevice from device.lua
+	ExportScript.genericRadioConf[1]['setFrequency'] = true              -- change frequency active
+	ExportScript.genericRadioConf[1]['FrequencyMultiplicator'] = 1000000 -- Multiplicator from Hz to MHz
+	ExportScript.genericRadioConf[1]['FrequencyFormat'] = "%7.3f"        -- frequency view format LUA style
+	ExportScript.genericRadioConf[1]['FrequencyStep'] = 25               -- minimal step for frequency change
+	ExportScript.genericRadioConf[1]['minFrequency'] = 100.000           -- lowest frequency
+	ExportScript.genericRadioConf[1]['maxFrequency'] = 399.975           -- highest frequency
+	ExportScript.genericRadioConf[1]['Power'] = {}                       -- power button active
+	ExportScript.genericRadioConf[1]['Power']['ButtonID'] = 3011         -- power button id from cklickable.lua
+	ExportScript.genericRadioConf[1]['Power']['ValueOn'] = 1.0           -- power on value from cklickable.lua
+	ExportScript.genericRadioConf[1]['Power']['ValueOff'] = 0.0          -- power off value from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Volume'] = {}                      -- volume knob active
+--	ExportScript.genericRadioConf[1]['Volume']['ButtonID'] = 3011        -- volume button id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Preset'] = {}                      -- preset knob active
+--	ExportScript.genericRadioConf[1]['Preset']['ArgumentID'] = 161       -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Preset']['ButtonID'] = 3001        -- preset button id from cklickable.lua
+	-- Preset based on switchlogic on clickabledata.lua
+--	ExportScript.genericRadioConf[1]['Preset']['List'] = {[0.0]="01",[0.05]="02",[0.10]="03",[0.15]="04",[0.20]="05",[0.25]="06",[0.30]="07",[0.35]="08",[0.40]="09",[0.45]="10",[0.50]="11",[0.55]="12",[0.60]="13",[0.65]="14",[0.70]="15",[0.75]="16",[0.80]="17",[0.85]="18",[0.90]="19",[0.95]="20",[1.00]="01"}
+--	ExportScript.genericRadioConf[1]['Preset']['Step'] = 0.05            -- minimal step for preset change
+	ExportScript.genericRadioConf[1]['Squelch'] = {}                     -- squelch switch active
+	ExportScript.genericRadioConf[1]['Squelch']['ArgumentID'] = 170      -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[1]['Squelch']['ButtonID'] = 3006       -- squelch button id from cklickable.lua
+	ExportScript.genericRadioConf[1]['Squelch']['ValueOn'] = 1.0         -- squelch on value from cklickable.lua
+	ExportScript.genericRadioConf[1]['Squelch']['ValueOff'] = 0.0        -- squelch off value from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Load'] = {}                        -- load button preset
+--	ExportScript.genericRadioConf[1]['Load']['ButtonID'] = 3015          -- load button id from cklickable.lua
+	-- ManualPreset is AM FM modus switch Manual=AM, Preset=FM
+	ExportScript.genericRadioConf[1]['ManualPreset'] = {}                -- switch manual or preset active
+	ExportScript.genericRadioConf[1]['ManualPreset']['ArgumentID'] = 167 -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[1]['ManualPreset']['ButtonID'] = 3002  -- ManualPreset button id from cklickable.lua
+	ExportScript.genericRadioConf[1]['ManualPreset']['ValueManual'] = 1.0-- ManualPreset Manual value from cklickable.lua
+	ExportScript.genericRadioConf[1]['ManualPreset']['ValuePreset'] = 0.0-- ManualPreset Preset value from cklickable.lua
+
+	ExportScript.genericRadioConf[2] = {}                                -- secound radio
+	ExportScript.genericRadioConf[2]['Name'] = "R_828 VHF"               -- name of radio
+	ExportScript.genericRadioConf[2]['DeviceID'] = 49                    -- DeviceID for GetDevice from device.lua
+	ExportScript.genericRadioConf[2]['setFrequency'] = false             -- change frequency active
+	ExportScript.genericRadioConf[2]['FrequencyMultiplicator'] = 1000000 -- Multiplicator from Hz to MHz
+	ExportScript.genericRadioConf[2]['FrequencyFormat'] = "%7.3f"        -- frequency view format LUA style
+--	ExportScript.genericRadioConf[2]['FrequencyStep'] = 25               -- minimal step for frequency change
+--	ExportScript.genericRadioConf[2]['minFrequency'] = 116.000           -- lowest frequency
+--	ExportScript.genericRadioConf[2]['maxFrequency'] = 151.975           -- highest frequency
+	ExportScript.genericRadioConf[2]['Power'] = {}                       -- power button active
+	ExportScript.genericRadioConf[2]['Power']['ButtonID'] = 3003         -- power button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Power']['ValueOn'] = 0.1           -- power on value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Power']['ValueOff'] = 0.0          -- power off value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Volume'] = {}                      -- volume knob active
+	ExportScript.genericRadioConf[2]['Volume']['ButtonID'] = 3002        -- volume button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Preset'] = {}                      -- preset knob active
+	ExportScript.genericRadioConf[2]['Preset']['ArgumentID'] = 371       -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Preset']['ButtonID'] = 3001        -- preset button id from cklickable.lua
+	-- Preset based on switchlogic on clickabledata.lua
+	ExportScript.genericRadioConf[2]['Preset']['List'] = {[0.0]="1",[0.1]="2",[0.2]="3",[0.3]="4",[0.4]="5",[0.5]="6",[0.6]="7",[0.7]="8",[0.8]="9",[0.9]="10"}
+	ExportScript.genericRadioConf[2]['Preset']['Step'] = 0.1             -- minimal step for preset change
+	ExportScript.genericRadioConf[2]['Squelch'] = {}                     -- squelch switch active
+	ExportScript.genericRadioConf[2]['Squelch']['ArgumentID'] = 134      -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Squelch']['ButtonID'] = 3004       -- squelch button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Squelch']['ValueOn'] = 1.0         -- squelch on value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Squelch']['ValueOff'] = 0.0        -- squelch off value from cklickable.lua
+	-- Load Button is Autotune
+	ExportScript.genericRadioConf[2]['Load'] = {}                        -- load button preset
+	ExportScript.genericRadioConf[2]['Load']['ButtonID'] = 3003          -- load button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Load']['ArgumentID'] = 375         -- load argument id for autotune lamp on Ka-50
+--	ExportScript.genericRadioConf[2]['ManualPreset'] = {}                -- switch manual or preset active
+--	ExportScript.genericRadioConf[2]['ManualPreset']['ArgumentID'] = 135 -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[2]['ManualPreset']['ButtonID'] = 0     -- ManualPreset button id from cklickable.lua
+--	ExportScript.genericRadioConf[2]['ManualPreset']['ValueManual'] = 0.0-- ManualPreset Manual value from cklickable.lua
+--	ExportScript.genericRadioConf[2]['ManualPreset']['ValuePreset'] = 0.0-- ManualPreset Preset value from cklickable.lua
+	
+	ExportScript.genericRadio(nil, nil)
 
 --[[	
 	-- ENGINE_INTERFACE
@@ -1165,466 +1239,4 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 ]]
-end
-
------------------------------
---     Custom functions    --
------------------------------
-
-function ExportScript.genericRadio(key, value, hardware)
-	local lHardware = hardware or 1
-	-- Werte werden per Encoder im Bereich von 0.0 bis 2.0 in 0.1 Schritten uebergeben
-	-- im jeweiligen Abschnitt muessen die Eingangsdaten auf den Zulaessigen Bereich eingeschraengt werden
-	local lRotaryFrequency_1, lRotaryFrequency_2, lVolume, lPreset, lLoad, lSquelch, lManualPreset, lPower, lDevice, lClickAction, lSetFrequency = nil
-	local lMainPanelDevice = GetDevice(0)
-	local lMaxRadios = 2
-	
-	if ExportScript.AF.genericRadio == nil then
-		ExportScript.AF.genericRadio = 0
-	end
-	if ExportScript.AF.genericRadioFrequency1 == nil then
-		ExportScript.AF.genericRadioFrequency1 = 0.0
-	end
-	if ExportScript.AF.genericRadioFrequency2 == nil then
-		ExportScript.AF.genericRadioFrequency2 = 0.0
-	end
-	if ExportScript.AF.genericRadioPresetChannel == nil then
-		ExportScript.AF.genericRadioPresetChannel = 0.0
-	end
-	if ExportScript.AF.genericRadioPower == nil then
-		ExportScript.AF.genericRadioPower = {}
-	end
-	if ExportScript.AF.genericRadioPresetManual == nil then
-		ExportScript.AF.genericRadioPresetManual = {}
-	end
-	if ExportScript.AF.genericRadioSquelch == nil then
-		ExportScript.AF.genericRadioSquelch = {}
-	end	
-
-	if key == "3001" then
-		ExportScript.AF.genericRadio = tonumber(value)
-	end
-	if key == "3002" then
-		lRotaryFrequency_1 = tonumber(value)
-	end
-	if key == "3003" then
-		lRotaryFrequency_2 = tonumber(value)
-	end
-	if key == "3004" then
-		lVolume = tonumber(value)
-	end
-	if key == "3005" then
-		lPreset = tonumber(value)
-	end
-	if key == "3006" then
-		lLoad = tonumber(value)
-	end
-	if key == "3007" then
-		lSquelch = tonumber(value)
-	end
-	if key == "3008" then
-		lManualPreset = tonumber(value)
-	end
-	if key == "3009" then
-		lPower = tonumber(value)
-	end
-
-	if ExportScript.AF.genericRadio > lMaxRadios then
-		ExportScript.Tools.WriteToLog("Radio Nr. "..ExportScript.AF.genericRadio.." not defined.")
-		return
-	end
-
-	if ExportScript.AF.genericRadio == 1 then
-		-- R_800 FM/AM Radio###.###
-		local lDeviceID = 48
-		local lR_800 = GetDevice(lDeviceID)
-
-		-- check status of the radio
-		if ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == nil then
-			if lR_800:is_on() then
-				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
-			else
-				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0.0
-			end
-		end
-		if ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == nil then
-			ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(167), 1) == 0) and 1 or 0)
-		end
-		if ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == nil then
-			ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(170), 1) == 0) and 1 or 0)
-		end
-
-		local lR_800_FREQUENCY = ExportScript.Tools.round(lR_800:get_frequency()/1000000 , 3, "floor")
-		
-		ExportScript.Tools.SendDataDAC("3000", string.format("%.3f", lR_800_FREQUENCY), lHardware)
-		ExportScript.Tools.SendDataDAC("3001", string.format("-"), lHardware)
-		ExportScript.Tools.SendDataDAC("3002", string.format("%.3f", lR_800_FREQUENCY), lHardware)
-		
-		if lRotaryFrequency_1 ~= nil and (lRotaryFrequency_1 >= 0.0 and lRotaryFrequency_1 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lR_800_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 25)
-					lFrequency[2] = ltmp * 25
-				end
-				if lRotaryFrequency_1 < ExportScript.AF.genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
-					lFrequency[1] = lFrequency[1] - 1
-					if lFrequency[1] == 99 then
-						lFrequency[1] = 399
-					end
-					ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
-				else
-					lFrequency[1] = lFrequency[1] + 1
-					if lFrequency[1] == 400 then
-						lFrequency[1] = 100
-					end
-					ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
-				end
-				
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("1. generic Ka-50 R_800 Radio, don't split frequency: "..lFrequency)
-			end
-		end
-
-		if lRotaryFrequency_2 ~= nil and (lRotaryFrequency_2 >= 0.0 and lRotaryFrequency_2 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lR_800_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 25)
-					lFrequency[2] = ltmp * 25
-				end
-				if lRotaryFrequency_2 < ExportScript.AF.genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
-					lFrequency[2] = lFrequency[2] - 25
-					if lFrequency[2] == -25 then
-						lFrequency[2] = 975
-					end
-					ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
-				else
-					lFrequency[2] = lFrequency[2] + 25
-					if lFrequency[2] == 1000 then
-						lFrequency[2] = 0
-					end
-					ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
-				end
-				
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("2. generic Ka-50 R_800 Radio, don't split frequency: "..lFrequency)
-			end
-		end
---[[
-		if lVolume ~= nil and (lVolume >= 0.0 and lVolume <= 2.0) then
-			lVolume = lVolume / 2
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3005,
-							Value    = lVolume}
-		end
-		if lPreset ~= nil and (lPreset >= 0.0 and lPreset <= 2.0) then
-			-- Preset 0.0 to 0.20 in 0.01 steps
-			if lPreset < ExportScript.AF.genericRadioPresetChannel or lPreset == 0.0 or lPreset == 2.0 then
-				lClickAction = {DeviceID = lDeviceID,
-								ButtonID = 3001,
-								Value    = 0.01}
-				ExportScript.AF.genericRadioPresetChannel = lPreset
-			else
-				lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3002,
-							Value    = -0.01}
-				ExportScript.AF.genericRadioPresetChannel = lPreset
-			end
-		end
-		if lLoad ~= nil and (lLoad == 0.0 or lLoad <= 1.0) then
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3006,
-							Value    = lLoad}
-		end
-]]
-		if lSquelch ~= nil and (lSquelch == 0.0 or lSquelch <= 1.0) then
-			if lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 1.0 then
-				-- Squelch off
-				lSquelch = 0.0
-				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 0
-			elseif lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 0 then
-				-- Squelch on
-				lSquelch = 1.0
-				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3006,
-							Value    = lSquelch}
-		end
-		-- ManualPreset is AM FM modus switch
-		if lManualPreset ~= nil and (lManualPreset == 0.0 or lManualPreset <= 1.0) then
-			if lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 0.0 then
-				-- AM
-				lManualPreset = 1.0
-				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 1.0
-			elseif lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 1.0 then
-				-- FM
-				lManualPreset = 0.0
-				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 0.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3002,
-							Value    = lManualPreset}
-		end
-		if lPower ~= nil and (lPower == 0.0 or lPower <= 1.0) then
-			if lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 1.0 then
-				-- Power off
-				lPower = 0.0
-				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0
-			elseif lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 0 then
-				-- Power on
-				lPower = 1.0
-				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3011,
-							Value    = lPower}
-		end
-	
-	elseif ExportScript.AF.genericRadio == 2 then
-		-- R_828 VHF ###.###
-		---------------------------------------------------
-		local lDeviceID = 49
-		local lR_828_RADIO = GetDevice(lDeviceID)
-
-		-- check status of the radio
-		if ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == nil then
-			if lR_828_RADIO:is_on() then
-				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
-			else
-				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0.0
-			end
-		end
-		if ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == nil then
-			ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(135), 1) == 0.1) and 1 or 0)
-		end
-		if ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == nil then
-			ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = ((ExportScript.Tools.round(lMainPanelDevice:get_argument_value(134), 1) == 1.0) and 0 or 1)
-		end
-
-		local lR_828_RADIO_PRESET = {[0.0]="1",[0.1]="2",[0.2]="3",[0.3]="4",[0.4]="5",[0.5]="6",[0.6]="7",[0.7]="8",[0.8]="9",[0.9]="10"}
-		local lR_828_RADIO_FREQUENCY = ExportScript.Tools.round(lR_828_RADIO:get_frequency()/1000000 , 3, "floor")
-
-		local lPresetChannel = ExportScript.Tools.round(lMainPanelDevice:get_argument_value(371), 1)
-
-		ExportScript.Tools.SendDataDAC("3000", string.format("%s0%.3f", lR_828_RADIO_PRESET[lPresetChannel], lR_828_RADIO_FREQUENCY), lHardware)
-		ExportScript.Tools.SendDataDAC("3001", string.format("%s0", lR_828_RADIO_PRESET[lPresetChannel]), lHardware)
-		ExportScript.Tools.SendDataDAC("3002", string.format("%.3f", lR_828_RADIO_FREQUENCY), lHardware)
-
---[[		
-		if lRotaryFrequency_1 ~= nil and (lRotaryFrequency_1 >= 0.0 and lRotaryFrequency_1 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lR_828_RADIO_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 25)
-					lFrequency[2] = ltmp * 25
-				end
-				if lRotaryFrequency_1 < ExportScript.AF.genericRadioFrequency1 or lRotaryFrequency_1 == 0.0 or lRotaryFrequency_1 == 2.0 then
-					lFrequency[1] = lFrequency[1] - 1
-					if lFrequency[1] == 29 then
-						lFrequency[1] = 159
-					end
-					ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
-				else
-					lFrequency[1] = lFrequency[1] + 1
-					if lFrequency[1] == 160 then
-						lFrequency[1] = 30
-					end
-					ExportScript.AF.genericRadioFrequency1 = lRotaryFrequency_1
-				end
-				
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("1. generic Ka-50 VHF Radio, don't split frequency: "..lFrequency)
-			end
-		end
-
-		if lRotaryFrequency_2 ~= nil and (lRotaryFrequency_2 >= 0.0 and lRotaryFrequency_2 <= 2.0) then
-
-			local lFrequency = ExportScript.Tools.StrSplit(lR_828_RADIO_FREQUENCY, "%.")
-
-			if type(lFrequency) == "table" and lFrequency[1] ~= nil then
-				lFrequency[1] = tonumber(lFrequency[1])
-				if lFrequency[2] == nil then
-					lFrequency[2] = 0
-				else
-					lFrequency[2] = tonumber(lFrequency[2])
-					local ltmp = string.format("%.0f", lFrequency[2] / 25)
-					lFrequency[2] = ltmp * 25
-				end
-				if lRotaryFrequency_2 < ExportScript.AF.genericRadioFrequency2 or lRotaryFrequency_2 == 0.0 or lRotaryFrequency_2 == 2.0 then
-					lFrequency[2] = lFrequency[2] - 25
-					if lFrequency[2] == -25 then
-						lFrequency[2] = 975
-					end
-					ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
-				else
-					lFrequency[2] = lFrequency[2] + 25
-					if lFrequency[2] == 1000 then
-						lFrequency[2] = 0
-					end
-					ExportScript.AF.genericRadioFrequency2 = lRotaryFrequency_2
-				end
-				
-				lFrequency[2] = string.format("%.3f", lFrequency[2] / 1000)
-				local ltempFrequency = string.format("%.3f", lFrequency[1] + lFrequency[2])
-				ltempFrequency = tonumber(ltempFrequency)
-				lSetFrequency = {DeviceID = lDeviceID,
-				                 Frequency = ltempFrequency * 1000000}
-
-			else
-				ExportScript.Tools.WriteToLog("2. generic Ka-50 VHF Radio, don't split frequency: "..lFrequency)
-			end
-		end
-]]
-		if lVolume ~= nil and (lVolume >= 0.0 and lVolume <= 2.0) then
-			lVolume = lVolume / 2
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3002,
-							Value    = lVolume}
-		end
-		if lPreset ~= nil and (lPreset >= 0.0 and lPreset <= 2.0) then
---[[
-			-- Preset 0.0 to 0.9 in 0.1 steps
-			lPreset = (lPreset / 2) - 0.1
-			if lPreset < ExportScript.AF.genericRadioPresetChannel or lPreset == 0.0 or lPreset == 2.0 then
-				lClickAction = {DeviceID = lDeviceID,
-								ButtonID = 3001,
-								Value    = 0.1}
-				ExportScript.AF.genericRadioPresetChannel = lPreset
-			else
-				lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3001,
-							Value    = -0.1}
-				ExportScript.AF.genericRadioPresetChannel = lPreset
-			end
-]]
-			-- Preset 0.0 to 0.9 in 0.1 steps
-			lPreset = lPreset / 2
-			if lPreset == 1.0 then
-				lPreset = 0.9
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3001,
-							Value    = lPreset}
-		end
-		-- Load Button change the Frequence
-		if lLoad ~= nil and (lLoad == 0.0 or lLoad <= 1.0) then
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3003,
-							Value    = lLoad}
-		end
-		if lSquelch ~= nil and (lSquelch == 0.0 or lSquelch <= 1.0) then
-			if lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 1.0 then
-				-- Squelch off
-				lSquelch = 0.0
-				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 0
-			elseif lSquelch == 1.0 and ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] == 0 then
-				-- Squelch on
-				lSquelch = 1.0
-				ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3004,
-							Value    = lSquelch}
-		end
---[[
-		if lManualPreset ~= nil and (lManualPreset == 0.0 or lManualPreset <= 1.0) then
-			if lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 1.0 then
-				-- Manual on
-				lManualPreset = 0.2
-				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 0
-			elseif lManualPreset == 1.0 and ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] == 0 then
-				-- Preset on
-				lManualPreset = 0.3
-				ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3003,
-							Value    = lManualPreset}
-		end
-]]
-		if lPower ~= nil and (lPower == 0.0 or lPower <= 1.0) then
-			if lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 1.0 then
-				-- Power off
-				lPower = 0.0
-				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 0
-			elseif lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 0 then
-				-- Power on
-				lPower = 1.0
-				ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] = 1.0
-			end
-			lClickAction = {DeviceID = lDeviceID,
-							ButtonID = 3005,
-							Value    = lPower}
-		end
-		
-		--ExportScript.Tools.SendDataDAC("3011", lMainPanelDevice:get_argument_value(375), lHardware)
-		ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio] = lMainPanelDevice:get_argument_value(375)
-
-	else
-		ExportScript.Tools.SendDataDAC("3000", "-", lHardware)
-		ExportScript.Tools.SendDataDAC("3001", "-", lHardware)
-		ExportScript.Tools.SendDataDAC("3002", "-", lHardware)
-		ExportScript.Tools.SendDataDAC("3010", 0, lHardware)
-		ExportScript.Tools.SendDataDAC("3011", 0, lHardware)
-		ExportScript.Tools.SendDataDAC("3012", 0, lHardware)
-		return
-	end
-
-	ExportScript.Tools.SendDataDAC("3010", ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio], lHardware)
-	ExportScript.Tools.SendDataDAC("3011", ExportScript.AF.genericRadioPresetManual[ExportScript.AF.genericRadio], lHardware)
-	ExportScript.Tools.SendDataDAC("3012", ExportScript.AF.genericRadioSquelch[ExportScript.AF.genericRadio], lHardware)
-
-	if lClickAction ~= nil then
-		lDevice = GetDevice(lClickAction.DeviceID)
-		if type(lDevice) == "table" then
-			--ExportScript.Tools.WriteToLog("GetDevice("..lClickAction.DeviceID.."):performClickableAction("..lClickAction.ButtonID..", "..lClickAction.Value..") ")
-			lDevice:performClickableAction(lClickAction.ButtonID, lClickAction.Value)
-		end
-	elseif lSetFrequency ~= nil then
-		lDevice = GetDevice(lSetFrequency.DeviceID)
-		if type(lDevice) == "table" and lDevice:is_on() then
-			--ExportScript.Tools.WriteToLog("GetDevice("..lSetFrequency.DeviceID.."):set_frequency("..lSetFrequency.Frequency..") ")
-			lDevice:set_frequency(lSetFrequency.Frequency)
-		else
-			ExportScript.Tools.WriteToLog("GetDevice("..lSetFrequency.DeviceID..") is no table or Radio is not on")
-		end
-	end
 end

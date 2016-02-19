@@ -1025,18 +1025,18 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.WriteToLog('lAGB_3K_LEFT:get_sideslip '..ExportScript.Tools.dump(lAGB_3K_LEFT:get_sideslip()))
 	ExportScript.Tools.WriteToLog('lAGB_3K_LEFT:get_bank '..ExportScript.Tools.dump(lAGB_3K_LEFT:get_bank()))
 	ExportScript.Tools.WriteToLog('lAGB_3K_LEFT:get_pitch '..ExportScript.Tools.dump(lAGB_3K_LEFT:get_pitch()))
-	
+
 	-- AGB_3K_RIGHT
 	local lAGB_3K_RIGHT = GetDevice(7)
 	ExportScript.Tools.WriteToLog('lAGB_3K_RIGHT:get_sideslip '..ExportScript.Tools.dump(lAGB_3K_RIGHT:get_sideslip()))
 	ExportScript.Tools.WriteToLog('lAGB_3K_RIGHT:get_bank '..ExportScript.Tools.dump(lAGB_3K_RIGHT:get_bank()))
 	ExportScript.Tools.WriteToLog('lAGB_3K_RIGHT:get_pitch '..ExportScript.Tools.dump(lAGB_3K_RIGHT:get_pitch()))
-	
+
 	-- DISS_15
 	local lDISS_15 = GetDevice(15)
 	ExportScript.Tools.WriteToLog('lDISS_15:get_w_vector '..ExportScript.Tools.dump(lDISS_15:get_w_vector()))
 	ExportScript.Tools.WriteToLog('lDISS_15:get_drift_angle '..ExportScript.Tools.dump(lDISS_15:get_drift_angle()))
-	
+
 	-- RADAR_ALTIMETER
 	local lRADAR_ALTIMETER = GetDevice(18)
 	ExportScript.Tools.WriteToLog('lRADAR_ALTIMETER:get_altitude '..ExportScript.Tools.dump(lRADAR_ALTIMETER:get_altitude()))
@@ -1047,12 +1047,12 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.WriteToLog('lRADAR_ALTIMETER:get_mode '..ExportScript.Tools.dump(lRADAR_ALTIMETER:get_mode()))
 	ExportScript.Tools.WriteToLog('lRADAR_ALTIMETER:get_aperture_size '..ExportScript.Tools.dump(lRADAR_ALTIMETER:get_aperture_size()))
 	ExportScript.Tools.WriteToLog('lRADAR_ALTIMETER:get_needle_value '..ExportScript.Tools.dump(lRADAR_ALTIMETER:get_needle_value()))
-	
+
 	-- MISC_SYSTEMS_INTERFACE
 	local lMISC_SYSTEMS_INTERFACE = GetDevice(20)
 	ExportScript.Tools.WriteToLog('lMISC_SYSTEMS_INTERFACE:get_rotor_blades_pitch '..ExportScript.Tools.dump(lMISC_SYSTEMS_INTERFACE:get_rotor_blades_pitch()))
 	ExportScript.Tools.WriteToLog('lMISC_SYSTEMS_INTERFACE:get_main_rotor_rpm '..ExportScript.Tools.dump(lMISC_SYSTEMS_INTERFACE:get_main_rotor_rpm()))
-	
+
 	-- SPU_7 (Intercom)
 	local lSPU_7 = GetDevice(36)
 	ExportScript.Tools.WriteToLog('lSPU_7:is_communicator_available '..ExportScript.Tools.dump(lSPU_7:is_communicator_available()))
@@ -1060,7 +1060,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.WriteToLog('lSPU_7:get_signal_level '..ExportScript.Tools.dump(lSPU_7:get_signal_level()))
 	--ExportScript.Tools.WriteToLog('lSPU_7:set_communicator '..ExportScript.Tools.dump(lSPU_7:set_communicator())) -- test parameters
 	--ExportScript.Tools.WriteToLog('lSPU_7:set_voip_mode '..ExportScript.Tools.dump(lSPU_7:set_voip_mode())) -- test parameters
-	
+
 	-- JADRO_1A
 	local lJADRO_1A = GetDevice(37)
 	ExportScript.Tools.WriteToLog('lJADRO_1A:is_on '..ExportScript.Tools.dump(lJADRO_1A:is_on()))
@@ -1096,10 +1096,10 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("2004",  mainPanelDevice:get_argument_value(659))			-- GEAR_N_SAFE
 	ExportScript.Tools.SendDataDAC("2005",  mainPanelDevice:get_argument_value(660))			-- GEAR_L_SAFE
 	ExportScript.Tools.SendDataDAC("2006",  mainPanelDevice:get_argument_value(661))			-- GEAR_R_SAFE
-	
+
 	Device test, Device 2 to 32
 	is value "userdata", is only DLL intern functions
-	
+
 	local ltmp1 = 0
 	for ltmp2 = 1, 50, 1 do
 		ltmp1 = GetDevice(ltmp2)
@@ -1116,24 +1116,24 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	else
 		ExportScript.Tools.SendDataDAC("2000", "-")
 	end
-	
+
 	-- R_863 (center)
 	local lR_863_c = GetDevice(38)
 	ExportScript.Tools.SendDataDAC("2001", string.format("%7.3f", lR_863_c:get_frequency()/1000000))
-	
+
 	-- R_863 (left) Channel
 	local lR_863_l = {[0.0]="1",[0.05]="2",[0.10]="3",[0.15]="4",[0.20]="5",[0.25]="6",[0.30]="7",[0.35]="8",[0.40]="9",[0.45]="10",[0.50]="11",[0.55]="12",[0.60]="13",[0.65]="14",[0.70]="15",[0.75]="16",[0.80]="17",[0.85]="18",[0.90]="19",[0.95]="20"}
 	ExportScript.Tools.SendDataDAC("2002", lR_863_l[ExportScript.Tools.round(mainPanelDevice:get_argument_value(370), 2)])
-	
+
 	-- R_863 (left) Frequency
 	-- is the same frequency as R_863 (center), but not the frequency from R_863 (left)
 	local lR_863_F = GetDevice(38)
 	ExportScript.Tools.SendDataDAC("2003", string.format("%7.3f", lR_863_F:get_frequency()/1000000))
-	
+
 	-- R_828 Channel
 	local lR_828 = {[0.0]="1",[0.101]="2",[0.199]="3",[0.302]="4",[0.400]="5",[0.502]="6",[0.601]="7",[0.697]="8",[0.801]="9",[0.898]="10"}
 	ExportScript.Tools.SendDataDAC("2004", lR_828[ExportScript.Tools.round(mainPanelDevice:get_argument_value(736), 3)])
-	
+
 	-- R_828 Frequency
 	local lR_828_F = GetDevice(39)
 	if lR_828_F:is_on() then
@@ -1141,16 +1141,132 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	else
 		ExportScript.Tools.SendDataDAC("2005", "-")
 	end
-	
+
 	-- UV-26
 	local lUV26 = list_indication(5)
 	lUV26 = lUV26:gsub("-----------------------------------------", "")
 	lUV26 = lUV26:gsub("txt_digits", "")
 	lUV26 = lUV26:gsub("%c", "")
-	
+
 	ExportScript.Tools.SendDataDAC("2006", string.format("%s", lUV26))
-	
-	
+
+	-- generic Radio display and frequency rotarys
+	-------------------------------------------------
+	-- genericRadioConf
+	ExportScript.genericRadioConf = {}
+	ExportScript.genericRadioConf['maxRadios'] = 3                       -- numbers of aviables/supported radios
+	ExportScript.genericRadioConf[1] = {}                                -- first radio
+	ExportScript.genericRadioConf[1]['Name'] = "R-863 VHF/UHF"          -- name of radio
+	ExportScript.genericRadioConf[1]['DeviceID'] = 38                    -- DeviceID for GetDevice from device.lua
+	ExportScript.genericRadioConf[1]['setFrequency'] = true              -- change frequency active
+	ExportScript.genericRadioConf[1]['FrequencyMultiplicator'] = 1000000 -- Multiplicator from Hz to MHz
+	ExportScript.genericRadioConf[1]['FrequencyFormat'] = "%7.3f"        -- frequency view format LUA style
+	ExportScript.genericRadioConf[1]['FrequencyStep'] = 25               -- minimal step for frequency change
+	ExportScript.genericRadioConf[1]['minFrequency'] = 100.000           -- lowest frequency
+	ExportScript.genericRadioConf[1]['maxFrequency'] = 399.975           -- highest frequency
+	ExportScript.genericRadioConf[1]['Power'] = {}                       -- power button active
+	ExportScript.genericRadioConf[1]['Power']['ButtonID'] = 3068         -- power button id from cklickable.lua
+	ExportScript.genericRadioConf[1]['Power']['ValueOn'] = 1.0           -- power on value from cklickable.lua
+	ExportScript.genericRadioConf[1]['Power']['ValueOff'] = -1.0         -- power off value from cklickable.lua
+	ExportScript.genericRadioConf[1]['Volume'] = {}                      -- volume knob active
+	ExportScript.genericRadioConf[1]['Volume']['ButtonID'] = 3005        -- volume button id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Preset'] = {}                      -- preset knob active
+--	ExportScript.genericRadioConf[1]['Preset']['ArgumentID'] = 161       -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Preset']['ButtonID'] = 3001        -- preset button id from cklickable.lua
+	-- Preset based on switchlogic on clickabledata.lua
+--	ExportScript.genericRadioConf[1]['Preset']['List'] = {[0.0]="01",[0.05]="02",[0.10]="03",[0.15]="04",[0.20]="05",[0.25]="06",[0.30]="07",[0.35]="08",[0.40]="09",[0.45]="10",[0.50]="11",[0.55]="12",[0.60]="13",[0.65]="14",[0.70]="15",[0.75]="16",[0.80]="17",[0.85]="18",[0.90]="19",[0.95]="20",[1.00]="01"}
+--	ExportScript.genericRadioConf[1]['Preset']['Step'] = 0.05            -- minimal step for preset change
+	ExportScript.genericRadioConf[1]['Squelch'] = {}                     -- squelch switch active
+	ExportScript.genericRadioConf[1]['Squelch']['ArgumentID'] = 155      -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[1]['Squelch']['ButtonID'] = 3004       -- squelch button id from cklickable.lua
+	ExportScript.genericRadioConf[1]['Squelch']['ValueOn'] = 1.0         -- squelch on value from cklickable.lua
+	ExportScript.genericRadioConf[1]['Squelch']['ValueOff'] = 0.0        -- squelch off value from cklickable.lua
+--	ExportScript.genericRadioConf[1]['Load'] = {}                        -- load button preset
+--	ExportScript.genericRadioConf[1]['Load']['ButtonID'] = 3015          -- load button id from cklickable.lua
+	-- ManualPreset is AM FM modus switch Manual=AM, Preset=FM
+--	ExportScript.genericRadioConf[1]['ManualPreset'] = {}                -- switch manual or preset active
+--	ExportScript.genericRadioConf[1]['ManualPreset']['ArgumentID'] = 369 -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['ManualPreset']['ButtonID'] = 3001  -- ManualPreset button id from cklickable.lua
+--	ExportScript.genericRadioConf[1]['ManualPreset']['ValueManual'] = 0.0-- ManualPreset Manual value from cklickable.lua
+--	ExportScript.genericRadioConf[1]['ManualPreset']['ValuePreset'] = 0.1-- ManualPreset Preset value from cklickable.lua
+
+	ExportScript.genericRadioConf[2] = {}                                -- secound radio
+	ExportScript.genericRadioConf[2]['Name'] = "YaDRO-1A HF"             -- name of radio
+	ExportScript.genericRadioConf[2]['DeviceID'] = 37                    -- DeviceID for GetDevice from device.lua
+	ExportScript.genericRadioConf[2]['setFrequency'] = true              -- change frequency active
+	ExportScript.genericRadioConf[2]['FrequencyMultiplicator'] = 1000000 -- Multiplicator from Hz to MHz
+	ExportScript.genericRadioConf[2]['FrequencyFormat'] = "%7.4f"        -- frequency view format LUA style
+	ExportScript.genericRadioConf[2]['FrequencyStep'] = 1                -- minimal step for frequency change
+	ExportScript.genericRadioConf[2]['minFrequency'] = 2.000             -- lowest frequency
+	ExportScript.genericRadioConf[2]['maxFrequency'] = 17.999            -- highest frequency
+	ExportScript.genericRadioConf[2]['Power'] = {}                       -- power button active
+	ExportScript.genericRadioConf[2]['Power']['ButtonID'] = 3013         -- power button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Power']['ValueOn'] = 0.1           -- power on value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Power']['ValueOff'] = 0.0          -- power off value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Volume'] = {}                      -- volume knob active
+	ExportScript.genericRadioConf[2]['Volume']['ButtonID'] = 3007        -- volume button id from cklickable.lua
+--	ExportScript.genericRadioConf[2]['Preset'] = {}                      -- preset knob active
+--	ExportScript.genericRadioConf[2]['Preset']['ArgumentID'] = 137       -- ManualPreset argument id from cklickable.lua
+--	ExportScript.genericRadioConf[2]['Preset']['ButtonID'] = 3001        -- preset button id from cklickable.lua
+	-- Preset based on switchlogic on clickabledata.lua
+--	ExportScript.genericRadioConf[2]['Preset']['List'] = {[0.0]="01",[0.01]="02",[0.02]="03",[0.03]="04",[0.04]="05",[0.05]="06",[0.06]="07",[0.07]="08",[0.08]="09",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="01"}
+--	ExportScript.genericRadioConf[2]['Preset']['Step'] = 0.01            -- minimal step for preset change
+	ExportScript.genericRadioConf[2]['Squelch'] = {}                     -- squelch switch active
+	ExportScript.genericRadioConf[2]['Squelch']['ArgumentID'] = 743      -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Squelch']['ButtonID'] = 3008       -- squelch button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['Squelch']['ValueOn'] = 0.7         -- squelch on value from cklickable.lua
+	ExportScript.genericRadioConf[2]['Squelch']['ValueOff'] = 0.0        -- squelch off value from cklickable.lua
+	-- Load is autotune lamp on Mi-8
+	ExportScript.genericRadioConf[2]['Load'] = {}                        -- load button preset
+	ExportScript.genericRadioConf[2]['Load']['ButtonID'] = nil           -- load button id from cklickable.lua, Load button deactiviert
+	ExportScript.genericRadioConf[2]['Load']['ArgumentID'] = 849         -- load argument id for autotune lamp on Mi-8
+	-- ManualPreset button change between SSB (Single SideBand) and AM, Manual=SSB, AM=Preset
+	ExportScript.genericRadioConf[2]['ManualPreset'] = {}                -- switch manual or preset active
+	ExportScript.genericRadioConf[2]['ManualPreset']['ArgumentID'] = 744 -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[2]['ManualPreset']['ButtonID'] = 3001  -- ManualPreset button id from cklickable.lua
+	ExportScript.genericRadioConf[2]['ManualPreset']['ValueManual'] = 0.5-- ManualPreset Manual value from cklickable.lua
+	ExportScript.genericRadioConf[2]['ManualPreset']['ValuePreset'] = 1.0-- ManualPreset Preset value from cklickable.lua
+
+	ExportScript.genericRadioConf[3] = {}                                -- secound radio
+	ExportScript.genericRadioConf[3]['Name'] = " R-828 LVHF FM"          -- name of radio
+	ExportScript.genericRadioConf[3]['DeviceID'] = 39                    -- DeviceID for GetDevice from device.lua
+	ExportScript.genericRadioConf[3]['setFrequency'] = false             -- change frequency active
+	ExportScript.genericRadioConf[3]['FrequencyMultiplicator'] = 1000000 -- Multiplicator from Hz to MHz
+	ExportScript.genericRadioConf[3]['FrequencyFormat'] = "%7.3f"        -- frequency view format LUA style
+	ExportScript.genericRadioConf[3]['FrequencyStep'] = 25               -- minimal step for frequency change
+	ExportScript.genericRadioConf[3]['minFrequency'] = 20.000            -- lowest frequency
+	ExportScript.genericRadioConf[3]['maxFrequency'] = 59.975            -- highest frequency
+	ExportScript.genericRadioConf[3]['Power'] = {}                       -- power button active
+	ExportScript.genericRadioConf[3]['Power']['ButtonID'] = 3005         -- power button id from cklickable.lua
+	ExportScript.genericRadioConf[3]['Power']['ValueOn'] = 1.0           -- power on value from cklickable.lua
+	ExportScript.genericRadioConf[3]['Power']['ValueOff'] = 0.0          -- power off value from cklickable.lua
+	ExportScript.genericRadioConf[3]['Volume'] = {}                      -- volume knob active
+	ExportScript.genericRadioConf[3]['Volume']['ButtonID'] = 3002        -- volume button id from cklickable.lua
+	ExportScript.genericRadioConf[3]['Preset'] = {}                      -- preset knob active
+	ExportScript.genericRadioConf[3]['Preset']['ArgumentID'] = 735       -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[3]['Preset']['ButtonID'] = 3001        -- preset button id from cklickable.lua
+--	ExportScript.genericRadioConf[3]['Preset']['ButtonID2'] = 3002       -- preset button id from cklickable.lua
+	-- Preset based on switchlogic on clickabledata.lua
+	ExportScript.genericRadioConf[3]['Preset']['List'] = {[0.0]="1",[0.1]="2",[0.2]="3",[0.3]="4",[0.4]="5",[0.5]="6",[0.6]="7",[0.7]="8",[0.8]="9",[0.9]="10"}
+	ExportScript.genericRadioConf[3]['Preset']['Step'] = 0.1            -- minimal step for preset change
+--	ExportScript.genericRadioConf[3]['Preset']['Step2'] = -0.1           -- minimal step for preset change
+	ExportScript.genericRadioConf[3]['Squelch'] = {}                     -- squelch switch active
+	ExportScript.genericRadioConf[3]['Squelch']['ArgumentID'] = 739      -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[3]['Squelch']['ButtonID'] = 3004       -- squelch button id from cklickable.lua
+	ExportScript.genericRadioConf[3]['Squelch']['ValueOn'] = 0.0         -- squelch on value from cklickable.lua
+	ExportScript.genericRadioConf[3]['Squelch']['ValueOff'] = -1.0        -- squelch off value from cklickable.lua
+	ExportScript.genericRadioConf[3]['Load'] = {}                        -- load button preset
+	ExportScript.genericRadioConf[3]['Load']['ButtonID'] = 3003          -- load button id from cklickable.lua
+	ExportScript.genericRadioConf[3]['Load']['ArgumentID'] = 740         -- load argument id for autotune lamp on Mi-8
+	-- ManualPreset change betwen VOICE and HOMING Mode, Manual=Voice, Preset=Homing
+	ExportScript.genericRadioConf[3]['ManualPreset'] = {}                -- switch manual or preset active
+	ExportScript.genericRadioConf[3]['ManualPreset']['ArgumentID'] = 757 -- ManualPreset argument id from cklickable.lua
+	ExportScript.genericRadioConf[3]['ManualPreset']['ButtonID'] = 3006  -- ManualPreset button id from cklickable.lua
+	ExportScript.genericRadioConf[3]['ManualPreset']['ValueManual'] = 1.0-- ManualPreset Manual value from cklickable.lua
+	ExportScript.genericRadioConf[3]['ManualPreset']['ValuePreset'] = 0.0-- ManualPreset Preset value from cklickable.lua
+
+	ExportScript.genericRadio(nil, nil)
+
 	--============================================================================================
 	--[[
 	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
@@ -1162,11 +1278,4 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 	]]
-end
-
------------------------------
---     Custom functions    --
------------------------------
-
-function ExportScript.genericRadio(key, value, hardware)
 end
