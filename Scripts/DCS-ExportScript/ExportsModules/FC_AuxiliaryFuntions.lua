@@ -1526,8 +1526,9 @@ function ExportScript.AF.FC_Russian_MDI_MiG29(FunctionTyp)
 		ExportScript.Tools.SendData(502, (lMechInfo.gear.value > 0.95 and 1 or 0))           -- left gear
 		ExportScript.Tools.SendData(503, (lMechInfo.gear.value == 1 and 1 or 0))             -- right gear
 		ExportScript.Tools.SendData(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0))    -- speedbreakes on > 0.1 (0 - 1)
-		ExportScript.Tools.SendData(531, (lMechInfo.gear.value > 0.5 and 1 or 0))            -- flap
-		ExportScript.Tools.SendData(532, (lMechInfo.flaps.value > 0.93 and 1 or 0))          -- Intake FOD shild
+		ExportScript.Tools.SendData(531, (lMechInfo.flaps.value > 0.25 and 1 or 0))            -- flap 1. position
+		ExportScript.Tools.SendData(532, (lMechInfo.flaps.value > 0.93 and 1 or 0))          -- flap 2. position
+		ExportScript.Tools.SendData(534, (lMechInfo.gear.value > 0.5 and 1 or 0))            -- Intake FOD shields
 	end
 end
 
