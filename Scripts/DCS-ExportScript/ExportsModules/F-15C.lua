@@ -363,7 +363,7 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		end
 		ExportScript.Tools.SendData(73,  string.format("%.4f", lAccelerationUnits))
 		-- AccelerationUnits End
---[[
+
 		-- Standby Barometrisic Altimeter
 		--lAltBarTmp 					= lAltBar - (9.5 * (760 - lBasicAtmospherePressure))	-- 9.5 m per 1mmHg difference, has been calculated
 		lAltBarTmp 						= lAltBar * 3.28084										-- meter to feeds
@@ -385,7 +385,6 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		else
 			AltBar_dafeet_needle	= lAltBarTmp / 100
 		end
-]]
 		--[[
 		y_min = 0.0		-- minimaler Ausgabewert
 		y_max = 1.0		-- maximaler Ausgabewert
@@ -400,19 +399,17 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 
 		y = 0.25		-- Ergebnis (m * x + n)
 		]]
---[[
 		AltBar_kilofeet_needle	= 0.1 * AltBar_kilofeet_needle
 		AltBar_hektofeet_needle	= 0.1 * AltBar_hektofeet_needle
 		AltBar_dafeet_needle	= 0.1 * AltBar_dafeet_needle
 		-- AltBar_kilofeet_needle {0.0,1.0}
 		-- AltBar_hektofeet_needle {0.0,1.0}
 		-- AltBar_dafeet_needle {0.0,1.0}
-		SendData(24, string.format("%.4f;%.4f;%0.4f",
-										AltBar_kilofeet_needle,
-										AltBar_hektofeet_needle,
-										AltBar_dafeet_needle))
+		ExportScript.Tools.SendData(41, string.format("%.4f", AltBar_kilofeet_needle))
+		ExportScript.Tools.SendData(42, string.format("%.4f", AltBar_hektofeet_needle))
+		ExportScript.Tools.SendData(43, string.format("%.4f", AltBar_dafeet_needle))
 		-- Standby Barometrisic Altimeter end
-]]
+
 	else
 		ExportScript.Tools.WriteToLog("Unknown FC Error, no LoGetSelfData.")
 	end
