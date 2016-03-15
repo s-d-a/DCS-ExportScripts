@@ -109,7 +109,9 @@ function ExportScript.genericRadio(key, value)
 	local lFrequency				= "" -- ID 3002
 
 	if ExportScript.AF.genericRadio == 0 or ExportScript.AF.genericRadio > ExportScript.genericRadioConf['maxRadios'] then
-		ExportScript.Tools.WriteToLog("Radio Nr. "..ExportScript.AF.genericRadio.." not defined.")
+		if ExportScript.AF.genericRadio ~= 0 then
+			ExportScript.Tools.WriteToLog("Radio Nr. "..ExportScript.AF.genericRadio.." not defined.")
+		end
 		ExportScript.Tools.SendDataDAC("3000", "")
 		ExportScript.Tools.SendDataDAC("3001", "")
 		ExportScript.Tools.SendDataDAC("3002", "")
