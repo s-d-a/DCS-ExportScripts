@@ -1019,6 +1019,11 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+
+	-- Cockpit Light
+	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {280, 281, 491, 492, 894, 895, 914})
+	-- Lh RedLights Brightness Rst gr.1, Lh RedLights Brightness Rst gr.2, Rh RedLights Brightness Rst gr.1, Rh RedLights Brightness Rst gr.2, Central RedLights Brightness Rst gr.1, Central RedLights Brightness Rst gr.2, 5.5V Lights Brightness Rheostat
+
 	--[[
 	-- AGB_3K_LEFT
 	local lAGB_3K_LEFT = GetDevice(6)

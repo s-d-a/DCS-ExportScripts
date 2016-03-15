@@ -69,11 +69,15 @@ ExportScript.ConfigEveryFrameArguments =
 	[715] = "%.4f",		-- Standby Attitude Indicator manual pitch adjustment
 	-- Engine Gauges
 	[70] = "%.4f",		-- Left Engine Temperature
+	[71] = "%.4f",		-- Left Engine TemperatureUnits
 	[73] = "%.4f",		-- Right Engine Temperature
+	[74] = "%.4f",		-- Right Engine TemperatureUnits
 	[76] = "%.4f",		-- EngineLeftFanSpeed
 	[77] = "%.4f",		-- EngineRightFanSpeed
 	[78] = "%.4f",		-- EngineLeftCoreSpeedTenth
+	[79] = "%.4f",		-- EngineLeftCoreSpeedUnits
 	[80] = "%.4f",		-- EngineRightCoreSpeedTenth
+	[81] = "%.4f",		-- EngineRightCoreSpeedUnits
 	[82] = "%.4f",		-- Left Engine Oil Pressure
 	[83] = "%.4f",		-- Right Engine Oil Pressure
 	[84] = "%.4f",		-- EngineLeftFuelFlow
@@ -765,6 +769,10 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2006, "")	-- txt_JMR
 		ExportScript.Tools.SendData(2007, "")	-- txt_MWS
 	end
+
+	-- Cockpit Light
+	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {290,292,293})
+	-- Engine Instruments Lights, Flight Instruments Lights, Auxiliary Instruments Lights	
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -954,7 +962,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.genericRadioConf[3]['ManualPreset']['ButtonID'] = 3004  -- ManualPreset button id from cklickable.lua
 	ExportScript.genericRadioConf[3]['ManualPreset']['ValueManual'] = 0.2-- ManualPreset Manual value from cklickable.lua
 	ExportScript.genericRadioConf[3]['ManualPreset']['ValuePreset'] = 0.3-- ManualPreset Preset value from cklickable.lua
-	
+
 	ExportScript.genericRadio(nil, nil)
 
 	-- NOT FOR ARCAZE

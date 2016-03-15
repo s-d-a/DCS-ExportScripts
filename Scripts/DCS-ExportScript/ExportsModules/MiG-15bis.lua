@@ -322,6 +322,10 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+
+	-- Cockpit Light
+	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, 220)
+	-- Panels Light Rheostat
 end
 
 

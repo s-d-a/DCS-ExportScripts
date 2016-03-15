@@ -439,7 +439,7 @@ ExportScript.ConfigArguments =
 	[201] = "%1d",		-- Search Light
 	[205] = "%1d",		-- Landing Light Ctrl
 	-- Light System
-	[230] = "%.4f",		-- "Overhead Console Panel Lights Brightness Rheostat, Axis
+	[230] = "%.4f",		-- Overhead Console Panel Lights Brightness Rheostat, Axis
 	[231] = "%.4f",		-- Pedestal Lights Brightness Rheostat, Axis
 	[232] = "%.4f",		-- Secondary Instrument Lights Brightness Rheostat, Axis
 	[233] = "%.4f",		-- Engine Instrument Lights Brightness Rheostat, Axis
@@ -546,6 +546,10 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+
+	-- Cockpit Light
+	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {230, 231, 232, 233, 234, 235})
+	-- Overhead Console Panel Lights Brightness Rheostat, Pedestal Lights Brightness Rheostat, Secondary Instrument Lights Brightness Rheostat, Engine Instrument Lights Brightness Rheostat, Copilot Instrument Lights Brightness Rheostat, Pilot Instrument Lights Brightness Rheostat, Axis
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)

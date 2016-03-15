@@ -769,10 +769,14 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	--ExportScript.Tools.WriteToLog('lEKRANtxtqueue: '..ExportScript.Tools.dump(lEKRANtxtqueue))
 	--ExportScript.Tools.WriteToLog('lEKRANtxt1: '..ExportScript.Tools.dump(lEKRANtxt1))
 	--ExportScript.Tools.WriteToLog('lEKRANtxt2: '..ExportScript.Tools.dump(lEKRANtxt2))
-	
+
 	lEkranSendString = string.sub(lEKRANtxt2,1,9).."\n"..string.sub(lEKRANtxt2,11,19).."\n"..string.sub(lEKRANtxt2,21,29).."\n"..string.sub(lEKRANtxt2,31,39)
 	ExportScript.Tools.SendData(2001, string.format("%s", lEkranSendString))
 	ExportScript.Tools.SendData(2004, string.format("%s", lEKRANtxtqueue))
+
+	-- Cockpit Light
+	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {300, 299, 298})
+	-- Lighting cockpit panel switch, Lighting night vision cockpit switch, Lighting ADI and SAI switch
 end
 
 -- Pointed to by ProcessDACLowImportance, if the player aircraft is a Ka-50
@@ -800,7 +804,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	-- R_828 Channel
 	local lR_828 = {[0.0]="1",[0.1]="2",[0.2]="3",[0.3]="4",[0.4]="5",[0.5]="6",[0.6]="7",[0.7]="8",[0.8]="9",[0.9]="10"}
 	ExportScript.Tools.SendDataDAC("2002", lR_828[ExportScript.Tools.round(mainPanelDevice:get_argument_value(371), 1)])
-	
+
 	-- R_828 Frequency
 	local lR_828_F = GetDevice(49)
 	if lR_828_F:is_on() then
@@ -850,10 +854,9 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	lUV26 = lUV26:gsub("-----------------------------------------", "")
 	lUV26 = lUV26:gsub("txt_digits", "")
 	lUV26 = lUV26:gsub("%c", "")
-	
+
 	ExportScript.Tools.SendDataDAC("2007", string.format("%s", lUV26))
-	
-	
+
 	local lPVI800 = list_indication(5)
 	--[[
 	txt_VIT Inhalt obere Zeile
@@ -920,7 +923,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	if pos2 ~= nil then
 		ltxt_NIT_apostrophe2 = true
 	end
-	
+
 	if ltxt_VIT ~= nil then
 		ltxt_VIT = ltxt_VIT:gsub("%c", "")
 		ltxt_upper_row = ltxt_VIT:sub(1, 3)
@@ -933,7 +936,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		end
 		ltxt_upper_row = ltxt_upper_row..ltxt_VIT:sub(6)
 	end
-	
+
 	if ltxt_NIT ~= nil then
 		ltxt_NIT = ltxt_NIT:gsub("%c", "")
 		ltxt_lower_row = ltxt_NIT:sub(1, 3)
@@ -946,85 +949,36 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		end
 		ltxt_lower_row = ltxt_lower_row..ltxt_NIT:sub(6)
 	end
-	
+
 	if ltxt_VIT ~= nil then
 		ltxt_upper_row = ltxt_upper_row..string.rep(" ", 7 - ltxt_VIT:len())
 	else
 		ltxt_upper_row = string.rep(" ", 7)
 	end
-	
+
 	if ltxt_OIT_PPM ~= nil then
 		ltxt_OIT_PPM = ltxt_OIT_PPM:gsub("%c", "")
 		ltxt_upper_row = ltxt_upper_row..ltxt_OIT_PPM
 	else
 		ltxt_upper_row = ltxt_upper_row.." "
 	end
-	
+
 	if ltxt_NIT ~= nil then
 		ltxt_lower_row = ltxt_lower_row..string.rep(" ", 7 - ltxt_NIT:len())
 	else
 		ltxt_lower_row = string.rep(" ", 7)
 	end
-	
+
 	if ltxt_OIT_NOT ~= nil then
 		ltxt_OIT_NOT = ltxt_OIT_NOT:gsub("%c", "")
 		ltxt_lower_row = ltxt_lower_row..ltxt_OIT_NOT
 	else
 		ltxt_lower_row = ltxt_lower_row.." "
 	end
-	
+
 	ExportScript.Tools.SendDataDAC("2008", string.format("%s", ltxt_upper_row))
 	ExportScript.Tools.SendDataDAC("2009", string.format("%s", ltxt_lower_row))
 
-	--[[
-	--ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
-	
-	local ltmp1 = 0
-	for ltmp2 = 1, 14, 1 do
-		ltmp1 = list_indication(ltmp2)
-		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
-		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
-	end
-	]]
-end
-
------------------------------
--- HIGH IMPORTANCE EXPORTS --
--- done every export event --
------------------------------
-
--- Pointed to by ProcessIkarusDCSHighImportance
-function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
-	--[[
-	every frame export to Ikarus
-	Example from A-10C
-	Get Radio Frequencies
-	get data from device
-	local lUHFRadio = GetDevice(54)
-	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
-	]]
-	ExportScript.Tools.SendData(44, string.format("%.1f", mainPanelDevice:get_argument_value(44)))		-- lamp_MasterWarning {0.0,0.3}
-	ExportScript.Tools.SendData(46, string.format("%.1f", mainPanelDevice:get_argument_value(46)))		-- lamp_RotorRPM {0.0,0.1}
-end
-
--- Pointed to by ProcessDACHighImportance, if the player aircraft is a Ka-50
-function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
-	--[[
-	every frame export to hardware
-	Example from A-10C
-	Get Radio Frequencies
-	get data from device
-	local UHF_RADIO = GetDevice(54)
-	ExportScript.Tools.SendDataDAC("ExportID", "Format")
-	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
-	]]
-
-	ExportScript.Tools.SendDataDAC("44", mainPanelDevice:get_argument_value(44) > 0.0 and 1 or 0)			-- lamp_MasterWarning {0.0,0.3}
-	ExportScript.Tools.SendDataDAC("46", mainPanelDevice:get_argument_value(46) > 0.0 and 1 or 0)			-- lamp_RotorRPM {0.0,0.1}
-	
 	-- generic Radio display and frequency rotarys
 	-------------------------------------------------
 	-- genericRadioConf
@@ -1100,8 +1054,57 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 --	ExportScript.genericRadioConf[2]['ManualPreset']['ButtonID'] = 0     -- ManualPreset button id from cklickable.lua
 --	ExportScript.genericRadioConf[2]['ManualPreset']['ValueManual'] = 0.0-- ManualPreset Manual value from cklickable.lua
 --	ExportScript.genericRadioConf[2]['ManualPreset']['ValuePreset'] = 0.0-- ManualPreset Preset value from cklickable.lua
-	
+
 	ExportScript.genericRadio(nil, nil)
+
+	--[[
+	--ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	
+	local ltmp1 = 0
+	for ltmp2 = 1, 14, 1 do
+		ltmp1 = list_indication(ltmp2)
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
+	end
+	]]
+end
+
+-----------------------------
+-- HIGH IMPORTANCE EXPORTS --
+-- done every export event --
+-----------------------------
+
+-- Pointed to by ProcessIkarusDCSHighImportance
+function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	]]
+	ExportScript.Tools.SendData(44, string.format("%.1f", mainPanelDevice:get_argument_value(44)))		-- lamp_MasterWarning {0.0,0.3}
+	ExportScript.Tools.SendData(46, string.format("%.1f", mainPanelDevice:get_argument_value(46)))		-- lamp_RotorRPM {0.0,0.1}
+end
+
+-- Pointed to by ProcessDACHighImportance, if the player aircraft is a Ka-50
+function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to hardware
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local UHF_RADIO = GetDevice(54)
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	]]
+
+	ExportScript.Tools.SendDataDAC("44", mainPanelDevice:get_argument_value(44) > 0.0 and 1 or 0)			-- lamp_MasterWarning {0.0,0.3}
+	ExportScript.Tools.SendDataDAC("46", mainPanelDevice:get_argument_value(46) > 0.0 and 1 or 0)			-- lamp_RotorRPM {0.0,0.1}
 
 --[[	
 	-- ENGINE_INTERFACE
