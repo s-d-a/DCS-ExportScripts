@@ -43,9 +43,9 @@ ExportScript.ConfigEveryFrameArguments =
 	-- SlipIndicator
 	[31] = "%.4f",		-- SlipIndicator {-1.0, 1.0}
 	-- Accelerometer
-	[6] = "%.4f",		-- Accelerometer {-5, 0, 10} = {-0.5, 0, 1.0}
-	[1003] = "%.4f",		-- AccelerometerMin {-5.0, 0.0} = {-0.5, 0.0}
-	[1002] = "%.4f",		-- AccelerometerMax {0.0, 10} = {0.0, 1.0}
+	[6] = "%.4f",		-- Accelerometer {-5.0, 0.0, 10.0} {0.0, 0.334, 1.0}
+	[1003] = "%.4f",		-- AccelerometerMin {-5.0, 0.0, 10.0} {0.0, 0.334, 1.0}
+	[1002] = "%.4f",		-- AccelerometerMax {-5.0, 0.0, 10.0} {0.0, 0.334, 1.0}
 	-- GyroCompass
 	[711] = "%.4f",		-- GyroCompassNeedle {1.0, 0.0}
 	[712] = "%.4f",		-- GyroCompassScale {0.0, 1.0}
@@ -83,14 +83,19 @@ ExportScript.ConfigEveryFrameArguments =
 	[600] = "%.4f",		-- ARN6_Bearing {0.0, 1.0}
 	[814] = "%.4f",		-- ARN6_Scale {1.0, 0.0}
 	[830] = "%.4f",		-- ARN6_FreqScale {0.0, 1.0}
+	[219] = "%.4f",		-- ARN6_ScaleLight {0.0, 1.0}
 	-- light system
 	[182] = "%.f",		-- IlluminationLights {0.0, 1.0}
 	[825] = "%.f",		-- StandByCompassLight {0.0, 1.0}
 	[180] = "%.f",		-- PrimaryInstLights {0.0, 1.0}
 	[185] = "%.f",		-- AuxiliaryInstrumentLights {0.0, 1.0}
+	[222] = "%.4f",		-- LandingGearUnsafe {0.0, 1.0}
 	--
 	[603] = "%.4f",		-- LABS_roll_needle {-1.0, 1.0}
 	[604] = "%.4f",		-- LABS_pitch_needle {-1.0, 1.0}
+	--
+	[818] = "%.4f",		-- EmergencyJettisonHandlePos {0.0, 1.0}
+	[221] = "%.4f",		-- EmergencyJettisonHandleRot {0.0, 1.0}
 	-- LAMPS
 	-- electric system
 	[617] = "%.f",		-- lamp_ELEC_GenOff {-1.0, 1.0}
@@ -181,6 +186,9 @@ ExportScript.ConfigArguments =
 	[706] = "%1d",     -- Alternate Hydraulic Emergency Override Handle, IN/OUT {1, -1}
 	[647] = "%1d",     -- Flight Control Switch, ALTERNATE ON/NORMAL/RESET {1}
 	[815] = "%1d",     -- Landing Gear Warning Horn Cutout Button (Push to silence horn) {1}
+	[819] = "%.4f",	   -- Landing Gear Emergency Release Handle (rotary) {0.0,1.0} in 0.1 steps
+	[211] = "%1d",     -- Speed Brake Switch, OUT/HOLD/IN {-1.0,0.0,1.0}
+	[217] = "%1d",     -- Parking Brake Handle, ON/OFF
 	-- Fuel Interface
 	[672] = "%1d",     -- Fuel Densitometer Selection Switch, IN/OUT {2, -2}
 	[662] = "%.1f",     -- Drop Tank Selector Switch {-0.1, 0.1}
@@ -203,6 +211,7 @@ ExportScript.ConfigArguments =
 	[645] = "%.1f",     -- Engine Anti-Ice & Screen Switch, EXTEND/RET./ANTI-ICE {-1.0, 1.0}
 	[741] = "%1d",     -- Air Outlet Selector Lever, FLOOR/BOTH/DEFROST {-1, 1}
 	[691] = "%1d",     -- Windshield Anti-Ice Overheat Warning Light
+	[202] = "%.4f",    -- Windshield Anti-Icing Lever (rotary) {0.0,1.0} in 0.1 steps
 	-- Light Interface
 	[654] = "%1d",     -- Compass Light Switch, ON/OFF {2, -2}
 	[813] = "%.1f",     -- Instrument Panel Primary Light Rheostat (rotary) {0.0, 1.0} in 0.5 steps
@@ -223,10 +232,12 @@ ExportScript.ConfigArguments =
 	[739] = "%.1f",     -- Longitudinal Alternate Trim Switch, NORMAL GRIP CONT/NOSE UP/NOSE DOWN/OFF {0.5, 0.3, 0.1, 0.0}
 	[683] = "%1d",     -- Take-off (Trim) Position Indicator Light (Push to test) {1}
 	[735] = "%1d",     -- Wing Flaps Handle {-1, 1}
+	[209] = "%1d",     -- Nose Wheel Steering Button
 	-- radio ARC-27
 	[806] = "%.4f",     -- AN/ARC-27 UHF Audio Volume Knob (rotary) {0.1, 0.9} in 0.5 steps
 	[807] = "%.1f",     -- AN/ARC-27 UHF Preset Channel Selector {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8}
 	[805] = "%.1f",     -- AN/ARC-27 UHF Power Switch, OFF/T/R/T/R + G REC/ADF  {0.0, 0.1, 0.2, 0.3}
+	[213] = "%1d",      -- Microphone Button
 	-- radio compass ARN-6
 	[802] = "%.4f",     -- AN/ARN-6 Audio Volume Control (rotary) {0.1, 0.9} in 0.5 steps
 	[803] = "%.1f",     -- AN/ARN-6 Frequency Band Switch {0.0, 0.1, 0.2, 0.3}
@@ -243,7 +254,7 @@ ExportScript.ConfigArguments =
 	--[808] = "%1d",     -- AN/APX-6 IFF Destruct Switch Cover {1, -1}
 	[809] = "%1d",     -- AN/APX-6 IFF Destruct Switch, OFF/ON {0, -1}
 	-- baro altimeter
-	--[null] = "%.4f",     -- Altimeter reference pressure adjusting knob (rotary) {0.0, 1.0} in 0.1 steps
+	[218] = "%.4f",     -- Altimeter reference pressure adjusting knob (rotary) {0.0, 1.0} in 0.1 steps
 	-- gyromag compass
 	--[null] = "%.4f",     -- Compass Correction (rotary) {0.0, 1.0} in 0.05 steps
 	[598] = "%.1f",     -- Directional Indicator Fast Slaving Button {0.0, 1.0}
@@ -258,11 +269,14 @@ ExportScript.ConfigArguments =
 	[716] = "%.4f",     -- A-4 Sight Wing Span Adjustment Knob (rotary) {0.0, 1.0} in 0.1 steps
 	[715] = "%.4f",     -- A-4 Sight Radar Range Sweep Rheostat (rotary) {0.0, 1.0} in 0.1 steps
 	[734] = "%.4f",     -- A-4 Sight Reticle Dimmer Control (rotary) {0, 0.74} in -0.2 steps
-	[755] = "%1d",     -- A-4 Sight Mechanical Caging Lever, CAGE/UNCAGE {0, 1}
-	[755] = "%.4f",     -- A-4 Sight Mechanical Caging Lever, CAGE/UNCAGE (rotary) {0.001, 0.999}
-	[642] = "%1d",     -- A-4 Sight Filament Selector Switch, SECONDARY/PRIMARY {2, -2}
+	[755] = "%1d",      -- A-4 Sight Mechanical Caging Lever, CAGE/UNCAGE {0, 1}
+	[755] = "%.4f",     -- A-4 Sight Mechanical Caging Lever, CAGE/UNCAGE (rotary) {0.001, 0.999} in 0.1 steps
+	[212] = "%1d",      -- A-4 Sight Electrical Caging Button
+	[642] = "%1d",      -- A-4 Sight Filament Selector Switch, SECONDARY/PRIMARY {2, -2}
+	[210] = "%.4f",     -- A-4 Sight Rotating Grip - Mouse Wheel for manual ranging {-1.0,1.0} in 0.2 steps
+	[210] = "%1d",      -- A-4 Sight Rotating Grip - Right Click for return to CCW spring-loaded position {1.0}
 	[721] = "%.1f",     -- Variable Sight Selector Unit - Sight Function Selector Lever, ROCKET/GUN/BOMB {0.0, 0.1, 0.2}
-	[720] = "%1d",     -- Variable Sight Selector Unit - Target Speed Switch, HI/LO {1, -1}
+	[720] = "%.1f",     -- Variable Sight Selector Unit - Target Speed Switch, HI/LO {0.0,0.5,1.0}
 	[722] = "%.4f",     -- Variable Sight Selector Unit - Rocket Depression Angle Selector (rotary) {0.0, 1.0} in 0.1 steps
 	[727] = "%.4f",     -- Bomb-Target Wind Control Knob (rotary) {0.0, 1.0} in 0.6 steps
 	-- weapon system
@@ -288,7 +302,8 @@ ExportScript.ConfigArguments =
 	[820] = "%.1f",     -- Missile Control Switch, LH & RH/RH/SALVO {-1.0, 0.0, 1.0}
 	[821] = "%.4f",     -- Tone Volume (rotary) {0.0, 1.0} in 0.1 steps
 	[822] = "%.1f",     -- Safe Launch Button {0.0, 1.0}
-	[1001] = "%.1f"     -- Rocket Intervalometer {0.0, 1.0}
+	[1001] = "%.1f",    -- Rocket Intervalometer {0.0, 1.0}
+	[208] = "%1d"       -- A-4 Sight Radar Target Selector Button
 }
 
 -----------------------------
@@ -339,6 +354,19 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+--[[
+	-- Cockpit Light
+	if mainPanelDevice:get_argument_value(654) > 0.4 or 	-- Compass Light Switch
+	   mainPanelDevice:get_argument_value(813) > 0.4 or 	-- Instrument Panel Primary Light Rheostat
+	   mainPanelDevice:get_argument_value(811) > 0.4 or 	-- Instrument Panel Auxiliary Light Rheostat
+	   mainPanelDevice:get_argument_value(812) > 0.4 then 	-- Console and Panel Light Rheostat
+		ExportScript.Tools.SendData(2222, "1.0")	-- Ikarus Cockpit Light on
+	else
+		ExportScript.Tools.SendData(2222, "0.0")	-- Ikarus Cockpit Light off
+	end
+	]]
+	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {654,813,811,812}) 
+	-- Compass Light Switch, Instrument Panel Primary Light Rheostat, Instrument Panel Auxiliary Light Rheostat, Console and Panel Light Rheostat
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
