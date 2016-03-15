@@ -25,8 +25,8 @@ function ExportScript.Tools.ProcessInput()
     -- C1,3001,4
     -- lComand = C
     -- lCommandArgs[1] = 1 => lDevice
-    -- lCommandArgs[2] = 3001
-    -- lCommandArgs[3] = 4
+    -- lCommandArgs[2] = 3001 => ButtonID
+    -- lCommandArgs[3] = 4 => Value
 
     if ExportScript.Config.IkarusExport then
         local lInput,from,port    = ExportScript.UDPsender:receivefrom()
@@ -426,6 +426,36 @@ function ExportScript.Tools.split(stringvalue, delimiter)
     return result;
 end
 
+-- the function evaluation of the handover parameters and makes accordingly to the light on or off
+-- handover parameters, singel id or a table with id's
+function ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, ExportIDs)
+	local TmpExportIDs = ExportIDs or 0
+	local TmpLight     = false
+	
+	if type(mainPanelDevice) ~= "table" then
+		return
+	end 
+	
+	if type(TmpExportIDs) == "table" then
+		for key,value in pairs(TmpExportIDs) do
+			if type(value) == "number" then
+				if mainPanelDevice:get_argument_value(value) > 0.4 then
+					TmpLight = true
+				end
+			end
+		end
+	elseif type(TmpExportIDs) == "number" then
+		if mainPanelDevice:get_argument_value(TmpExportIDs) > 0.4 then
+			TmpLight = true
+		end
+	end
+
+	if TmpLight then
+		ExportScript.Tools.SendData(2222, "1.0")	-- Ikarus Cockpit Light on
+	else
+		ExportScript.Tools.SendData(2222, "0.0")	-- Ikarus Cockpit Light off
+	end
+end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSHighImportance, if the player aircraft is something else
 function ExportScript.ProcessIkarusDCSHighImportanceNoConfig(mainPanelDevice)
