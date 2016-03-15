@@ -24,7 +24,7 @@ ExportScript.ConfigEveryFrameArguments =
 	-- AFN2 blind landing system
 	[14] = "%.4f",	-- AFN2_Horizontal_Needle {-1.0, 1.0}
 	[15] = "%.4f",	-- AFN2_Vertical_Needle {0.0, 1.0}
-	[16] = "%f",	-- AFN2_Signal_Lamp {0.0, 1.0}
+	[16] = "%.f",	-- AFN2_Signal_Lamp {0.0, 1.0}
 	--Dual-Range Pressure Gauge
 	[25] = "%.4f",	-- Fuel_Pressure {0.0, 2.0} -- kg/cm2 = {0.0, 1.0}
 	[26] = "%.4f",	-- Oil_Pressure {0.0, 10.0} = {0, 1.0}
@@ -51,9 +51,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[44] = "%.f",	-- LeftWing_MG151_Control_Lamp {0.0, 1.0}
 	[45] = "%.f",	-- RightWing_MG151_Control_Lamp {0.0, 1.0}
 	--REVI_16B_Gunsight
-	[46] = "%4.f",	-- BodyState {0.0, 0.15,0.25, 1.0} = {0.0, 0.15,0.25, 1.0}
-	[47] = "%4.f",	-- SmokedScreen {0.0, 1.0}
-	[48] = "%4.f",	-- SightBrightness {0.0, 1.0}
+	[46] = "%.4f",	-- BodyState {0.0, 0.15,0.25, 1.0} = {0.0, 0.15,0.25, 1.0}
+	[47] = "%.4f",	-- SmokedScreen {0.0, 1.0}
+	[48] = "%.4f",	-- SightBrightness {0.0, 1.0}
 	-- Landing Gear Light
 	[56] = "%.f",	-- LandingGearRedLight {0.0, 1.0}
 	[57] = "%.f",	-- LandingGearGreenLightLeft {0.0, 1.0}
@@ -104,28 +104,28 @@ ExportScript.ConfigArguments =
 	-- Magneto Selector
 	[59] = "%.1f",	-- Magnetos (Off, M1, M2, M1+M2) {0.0, 0.1, 0.2, 0.3}
 	-- Starter Handle Cover
-	[51] = "%.1d",	-- Starter Handle Cover {0, 1}
+	[51] = "%1d",	-- Starter Handle Cover {0, 1}
 	-- Starter Turn Handle
-	[52] = "%.1d",	-- Starter {0, 1}
+	[52] = "%1d",	-- Starter {0, 1}
 	-- WM-Kommandgerat Toggle
-	[62] = "%.1d",	-- Governor Automation {0, 1}
+	[62] = "%1d",	-- Governor Automation {0, 1}
 	-- Dashboard and Secondary Switches
 	-- A 104 - Kill Switch
-	[49] = "%.1d",	-- Kill Switch {0, 1}
+	[49] = "%1d",	-- Kill Switch {0, 1}
 	-- Button T - Gun Camera Trigger
-	[149] = "%.1d",	-- Button T {0, 1}
+	[149] = "%1d",	-- Button T {0, 1}
 	-- SZKK3 Weapons Control Master Switch
-	[37] = "%.1d",	-- Weapons Master {0, 1}
+	[37] = "%1d",	-- Weapons Master {0, 1}
 	-- LH SZ 500 Ammo Counter
 	[38] = "%.1f",	-- Left Ammo Counter Setter Pinion (axis) {0.0 - 0.0}
 	-- RH SZ 500 Ammo Counter
 	[39] = "%.1f",	-- Right Ammo Counter Setter Pinion (axis) {0.0 - 0.0}
 	-- MW50 Operational Toggle
-	[60] = "%.1d",	-- MW50 Boost {0, 1}
+	[60] = "%1d",	-- MW50 Boost {0, 1}
 	-- Wing Cannons Toggle
-	[61] = "%.1d",	-- Wing Cannons {0, 1}
+	[61] = "%1d",	-- Wing Cannons {0, 1}
 	-- MK 108 / Wing Guns Toggle
-	[62] = "%.1d",	-- MK 108 / R 21 {0, 1}
+	[62] = "%1d",	-- MK 108 / R 21 {0, 1}
 	-- R 101 ZSK 244 A Bomb Panel Master Switch
 	-- Operated internally via ZSK 244 A Mode Control
 	-- R 101 ZSK 244 A Mode Selector
@@ -137,33 +137,33 @@ ExportScript.ConfigArguments =
 	[82] = "%.1f",	-- Right UV Lamp Brightness (axis) {0.0 - 0.5}
 	-- Oxygen Apparatus Controls
 	-- Apparatus Connecting Valve
-	[127] = "%.1d",	-- Oxygen Operating Valve {0, 1}
-	[126] = "%.1d",	-- Oxygen Emergency By-Pass {0, 1}
+	[127] = "%1d",	-- Oxygen Operating Valve {0, 1}
+	[126] = "%1d",	-- Oxygen Emergency By-Pass {0, 1}
 	-- Main Panel Controls
 	-- Undercarriage Controls
 	-- U/C Plungers Cover
-	[53] = "%.1d",	-- Undercarriage Controls Cover {0, 1}
-	[54] = "%.1d",	-- Undercarriage Raise {1.0, 1.0}
-	[55] = "%.1d",	-- Undercarriage Lower {1.0, 1.0}
-	[63] = "%.1d",	-- Undercarriage Emergency Release
+	[53] = "%1d",	-- Undercarriage Controls Cover {0, 1}
+	[54] = "%1d",	-- Undercarriage Raise {1.0, 1.0}
+	[55] = "%1d",	-- Undercarriage Lower {1.0, 1.0}
+	[63] = "%1d",	-- Undercarriage Emergency Release
 	-- Fuel and MW50 Systems Controls
 	-- Fuel Primer Hand Pump
-	[140] = "%.1d",	-- Fuel Priming Pump {0, 1}
+	[140] = "%1d",	-- Fuel Priming Pump {0, 1}
 	-- Schnellstop Lever
-	[88] = "%.1d",	-- Engine Stop {0, 1}
+	[88] = "%1d",	-- Engine Stop {0, 1}
 	-- Booster Pumps Lever
 	[87] = "%.1f",	-- Booster Pumps (Off, P1, P2, P1+P2) {0.0, 0.1, 0.2, 0.3}
 	-- Stoff-Kraftstoff Ventilbatterie Lever
-	[96] = "%.1d",	-- MW / Fuel {0, 1}
+	[96] = "%1d",	-- MW / Fuel {0, 1}
 	-- Fuel Jettison Knob
-	[112] = "%.1d",	-- "Fuel / MW Jettison {0, 1}
+	[112] = "%1d",	-- "Fuel / MW Jettison {0, 1}
 	-- Coolant System Controls
 	-- Radiator Mode Lever {0, 1}
 	[113] = "%.1f",	-- Radiators Mode (Drive Off, Open, Automatic, Close) {0.0, 0.1, 0.2, 0.3}
 	-- LH Radiator Hose Cut-Off Pull Handle
-	[90] = "%.1d",	-- LH Radiator Cut-Off {0, 1}
+	[90] = "%1d",	-- LH Radiator Cut-Off {0, 1}
 	-- RH Radiator Hose Cut-Off Pull Handle
-	[91] = "%.1d",	-- RH Radiator Cut-Off {0, 1}
+	[91] = "%1d",	-- RH Radiator Cut-Off {0, 1}
 	-- Navigation Instruments
 	-- Altimeter
 	[11] = "%.2f",	-- Altimeter Pressure Set (axis) 1.0 in 0.04 steps
@@ -177,56 +177,56 @@ ExportScript.ConfigArguments =
 	-- Clock Setter Pinion
 	[22] = "%.1f",	-- Adjusting Knob (axis) 0.0 in 0.1 steps
 	-- Clock Freeze Lever
-	[23] = "%.1d",	-- Time Setting Lever {0, 1}
+	[23] = "%1d",	-- Time Setting Lever {0, 1}
 	-- Clock Stopwatch Button
-	[24] = "%.1d",	-- Start/Stop/Reset Chronometer
+	[24] = "%1d",	-- Start/Stop/Reset Chronometer
 	-- P 112 Gun Sight Brightness Rheostat {0, 1}
 	[48] = "%.1f",	-- Gun Sight Brightness (axis) 0.5 in 0.1 steps
 	-- P 112 Gun Sight Folding Controls
-	[139] = "%.1d",	-- Gunsight Fold {0, 1}
+	[139] = "%1d",	-- Gunsight Fold {0, 1}
 	-- P 112 Gun Sight Smoked Screen Controls
-	[47] = "%.1d",	-- Gunsight Smoked Screen {0, 1}
+	[47] = "%.1f",	-- Gunsight Smoked Screen (axis) {0, 1} in 01 steps
 	-- Radio Controls
 	-- FUG16
 	[128] = "%.1f",	-- FuG16ZY Preset Selector (1, 2, TR, SQ) {0.0, 0.1, 0.2, 0.3}
 	[129] = "%.2f",	-- FuG16 ZY Fine Tune (axis) 0.5 in 0.05 steps
 	[130] = "%.2f",	-- FuG16 ZY Volume (axis) 0.0 in 0.04 steps
-	[131] = "%.1d",	-- "Mic. On/Off {0, 1}
+	[131] = "%1d",	-- "Mic. On/Off {0, 1}
 	-- FUG25
 	[132] = "%.1f",	-- FuG25 Mode Selector (1, 2) {0.0, 1.0}
-	[133] = "%.1d",	-- FuG25 Test {0, 1}
+	[133] = "%1d",	-- FuG25 Test {0, 1}
 	-- Left Wall Controls
 	-- Tail Wheel Lock Handle
-	[97] = "%.1d",	-- Tail Wheel Lock {0, 1}
+	[97] = "%1d",	-- Tail Wheel Lock {0, 1}
 	-- Cockpit Open/Close Control
-	[136] = "%.1d",	-- Canopy (Open/Close) {0, 1}
-	[137] = "%.1d",	-- Canopy (Open/Close) H {0, 1}
-	[138] = "%.1d",	-- Canopy (Open/Close) S {0, 1}
+	[136] = "%1d",	-- Canopy (Open/Close) {0, 1}
+	[137] = "%1d",	-- Canopy (Open/Close) H {0, 1}
+	[138] = "%1d",	-- Canopy (Open/Close) S {0, 1}
 	-- Cockpit Jettison Pull Handle
-	[83] = "%.1d",	-- Jettison Canopy {0, 1}
+	[83] = "%1d",	-- Jettison Canopy {0, 1}
 	-- Trim Wheel
-	[141] = "%.1d",	-- Stabilizer Trim Nose Up {0, 1}
-	[142] = "%.1d",	-- Stabilizer Trim Nose Down {0, 1}
+	[141] = "%1d",	-- Stabilizer Trim Nose Up {0, 1}
+	[142] = "%1d",	-- Stabilizer Trim Nose Down {0, 1}
 	-- Flaps Wheel
-	[143] = "%.1d",	-- Extend Flaps {0, 1}
-	[144] = "%.1d",	-- Retract Flaps {0, 1}
+	[143] = "%1d",	-- Extend Flaps {0, 1}
+	[144] = "%1d",	-- Retract Flaps {0, 1}
 	-- Notwurf / Ordinance Dump
-	[92] = "%.1d",	-- Ordinance Emergency Release
-	--[98] = "$.1d",	-- Cockpit Left Vent {0, 1}
+	[92] = "%1d",	-- Ordinance Emergency Release
+	--[98] = "$1d",	-- Cockpit Left Vent {0, 1}
 	-- Right Wall Controls
 	-- RH Cockpit Vent
-	--[99] = "%.1d",	-- Cockpit Right Vent {0, 1}
+	--[99] = "%1d",	-- Cockpit Right Vent {0, 1}
 	-- Flare Gun Trigger
-	[72] = "%.1d",	-- Fire Flare Gun
+	[72] = "%1d",	-- Fire Flare Gun
 	-- Engine Controls & Quadrant
 	-- Propellor Control Rocker
 	[85] = "%.1f",	-- Decrease RPM {1.0, -1.0}
 	-- Radio Transmit Button
-	[150] = "%.1d",	-- Microphone On {0, 1}
+	[150] = "%1d",	-- Microphone On {0, 1}
 	-- E 103 Propellor Automation Switch
-	[89] = "%.1d",	-- Governor Automation {0, 1}
+	[89] = "%1d",	-- Governor Automation {0, 1}
 	-- Cold Weather Start Valve Handle
-	[86] = "%.1d"	-- Cold Weather Start {0, 1}
+	[86] = "%1d"	-- Cold Weather Start {0, 1}
 }
 
 -----------------------------
