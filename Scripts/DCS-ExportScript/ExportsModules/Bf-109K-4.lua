@@ -42,7 +42,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[34] = "%.4f",	-- Oxygen_Pressure {0.0, 250.0} = {0.0, 1.0}
 	--[35] = "%.1f",	-- Oxygen_Flow_Blinker {0.0, 1.0}
 	-- Variometer
-	[36] = "%.2f",	-- Variometer {-30,  -10,  -5,    0,   5,    10,  30} = {-0.3, -0.1, -0.05, 0.0, 0.05, 0.1, 0.3}
+	[36] = "%.4f",	-- Variometer {-30,  -10,  -5,    0,   5,    10,  30} = {-0.3, -0.1, -0.05, 0.0, 0.05, 0.1, 0.3}
 	--Weapon gauges
 	[40] = "%.4f",	-- MG131_0_Shell_Counter {0.0, 500.0} = {0.0, 1.0}
 	[41] = "%.4f",	-- MG131_1_Shell_Counter {0.0, 500.0} = {0.0, 1.0}
@@ -168,9 +168,9 @@ ExportScript.ConfigArguments =
 	-- Altimeter
 	[11] = "%.2f",	-- Altimeter Pressure Set (axis) 1.0 in 0.04 steps
 	-- Artificial Horizon
-	[7] = "%.2f",	-- Horizon Cage (axis) {0.0, 0.511} in 0.04 steps
+	--[7] = "%.2f",	-- Horizon Cage (axis) {0.0, 0.511} in 0.04 steps
 	-- Repeater Compass
-	[12] = "%.2f",	-- Course Set (axis) 0.0 in 0.04 steps
+	--[12] = "%.2f",	-- Course Set (axis) 0.0 in 0.04 steps
 	-- Instruments
 	-- Clock Scale
 	[21] = "%.8f",	-- Scale Set (axis) 0.0 in 0.01612434 steps
@@ -181,11 +181,11 @@ ExportScript.ConfigArguments =
 	-- Clock Stopwatch Button
 	[24] = "%1d",	-- Start/Stop/Reset Chronometer
 	-- P 112 Gun Sight Brightness Rheostat {0, 1}
-	[48] = "%.1f",	-- Gun Sight Brightness (axis) 0.5 in 0.1 steps
+	--[48] = "%.1f",	-- Gun Sight Brightness (axis) 0.5 in 0.1 steps
 	-- P 112 Gun Sight Folding Controls
 	[139] = "%1d",	-- Gunsight Fold {0, 1}
 	-- P 112 Gun Sight Smoked Screen Controls
-	[47] = "%.1f",	-- Gunsight Smoked Screen (axis) {0, 1} in 01 steps
+	--[47] = "%.1f",	-- Gunsight Smoked Screen (axis) {0, 1} in 01 steps
 	-- Radio Controls
 	-- FUG16
 	[128] = "%.1f",	-- FuG16ZY Preset Selector (1, 2, TR, SQ) {0.0, 0.1, 0.2, 0.3}
