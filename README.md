@@ -22,10 +22,11 @@ Der Export von Daten wird für folgende Module unterstützt:
 - Bf-109K-4
 - FW-190D9
 - L-39C
+- L-39ZA
 - Su-25T
 - alle Flaming Cliffs Flugzeuge
 
-Kompatibel zur DCS World 1.5.3 Update 1 und DCS World (Alpha) 2.0.1 Update 1
+Kompatibel zur DCS World 1.5.3 Update 2 und DCS World (Alpha) 2.0.1 Update 1
 
 ###English###
 ---
@@ -50,10 +51,11 @@ Following moduls are supported:
 - Bf-109K-4
 - FW-190D9
 - L-39C
+- L-39ZA
 - Su-25T
 - all Flaming Cliffs aircrafts
 
-Compatible with DCS World 1.5.3 Update 1 and DCS World (Alpha) 2.0.1 Update 1
+Compatible with DCS World 1.5.3 Update 2 and DCS World (Alpha) 2.0.1 Update 1
 
 ###Wiki###
 ---
