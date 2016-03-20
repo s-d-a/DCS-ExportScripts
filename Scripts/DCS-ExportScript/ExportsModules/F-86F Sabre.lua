@@ -302,6 +302,8 @@ ExportScript.ConfigArguments =
 	[820] = "%.1f",     -- Missile Control Switch, LH & RH/RH/SALVO {-1.0, 0.0, 1.0}
 	[821] = "%.4f",     -- Tone Volume (rotary) {0.0, 1.0} in 0.1 steps
 	[822] = "%.1f",     -- Safe Launch Button {0.0, 1.0}
+	[225] = "%1d",      -- G-Limit Light - Push to test
+	[226] = "%.4f",     -- G-Limit Light - Rotate to adjust brightness(MW) (rotary) {0.0,0.5} in 0.02 steps
 	[1001] = "%.1f",    -- Rocket Intervalometer {0.0, 1.0}
 	[208] = "%1d"       -- A-4 Sight Radar Target Selector Button
 }
