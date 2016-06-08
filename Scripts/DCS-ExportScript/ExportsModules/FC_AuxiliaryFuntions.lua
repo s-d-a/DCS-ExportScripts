@@ -2177,11 +2177,12 @@ end
 function ExportScript.AF.FC_OneNeedleGauge3Digits(value, scala, fixdigits, exportidNeedle, exportid100, exportid10, exportid1)
 	local lValue			= value				or 1
 	local lScala			= scala				or 100
-	local lExportidNeedle	= exportidNeedle	or 0
-	local lExportid100		= exportid100		or 0
-	local lExportid10		= exportid10		or 0
-	local lExportid1		= exportid1			or 0
 	local lFixDigits		= fixdigits			or 0
+	--local lExportidNeedle	= exportidNeedle	or 0
+	--local lExportid100		= exportid100		or 0
+	--local lExportid10		= exportid10		or 0
+	--local lExportid1		= exportid1			or 0
+
 	local lValueTmp			= lValue
 	local lFactor			= string.len(tostring(lScala)) - 2
 	lFactor =  math.pow(10, lFactor)
@@ -2201,18 +2202,10 @@ function ExportScript.AF.FC_OneNeedleGauge3Digits(value, scala, fixdigits, expor
 	lValue = lValue / lScala
 	lValue = (lValue > 1.0 and 1.0 or lValue)	-- the result is limited to 1.0
 
-ExportScript.Tools.WriteToLog("lExportIDNeedle: "..ExportScript.Tools.dump(lExportIDNeedle))
-ExportScript.Tools.WriteToLog("lExportID100: "..ExportScript.Tools.dump(lExportID100))
-ExportScript.Tools.WriteToLog("lExportID10: "..ExportScript.Tools.dump(lExportID10))
-ExportScript.Tools.WriteToLog("lExportID1: "..ExportScript.Tools.dump(lExportID1))
-ExportScript.Tools.WriteToLog("lExportIDNeedle: "..ExportScript.Tools.dump(lValue))
-ExportScript.Tools.WriteToLog("lExportID100: "..ExportScript.Tools.dump(lCounter[tonumber(string.sub(lValueTmp2, 1, 1))]))
-ExportScript.Tools.WriteToLog("lExportID10: "..ExportScript.Tools.dump(lCounter[tonumber(string.sub(lValueTmp2, 2, 2))]))
-ExportScript.Tools.WriteToLog("lExportID1: "..ExportScript.Tools.dump(lCounter3))
-    ExportScript.Tools.SendData(lExportIDNeedle, string.format("%.4f", lValue))
-    ExportScript.Tools.SendData(lExportID100,    string.format("%.2f", lCounter[tonumber(string.sub(lValueTmp2, 1, 1))]))
-    ExportScript.Tools.SendData(lExportID10,     string.format("%.2f", lCounter[tonumber(string.sub(lValueTmp2, 2, 2))]))
-    ExportScript.Tools.SendData(lExportID1,      string.format("%.2f", lCounter3))
+    ExportScript.Tools.SendData(exportidNeedle, string.format("%.4f", lValue))
+    ExportScript.Tools.SendData(exportid100,    string.format("%.2f", lCounter[tonumber(string.sub(lValueTmp2, 1, 1))]))
+    ExportScript.Tools.SendData(exportid10,     string.format("%.2f", lCounter[tonumber(string.sub(lValueTmp2, 2, 2))]))
+    ExportScript.Tools.SendData(exportid1,      string.format("%.2f", lCounter3))
 end
 
 -- Gauges with 1 needle and 4 digits display
