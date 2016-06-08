@@ -33,8 +33,8 @@ ExportScript.Config.DACListener      = true         -- false for not use
 ExportScript.Config.DACListenerPort  = 26027        -- Listener Port for D.A.C.
 
 -- Other
-ExportScript.Config.ExportInterval         = 0.1
-ExportScript.Config.ExportLowTickInterval  = 1
+ExportScript.Config.ExportInterval         = 0.05   -- 20Hz
+ExportScript.Config.ExportLowTickInterval  = 0.5
 ExportScript.Config.LogPath                = lfs.writedir()..[[Logs\Export.log]]
 ExportScript.Config.ExportModulePath       = lfs.writedir()..[[Scripts\DCS-ExportScript\ExportsModules\]]
 ExportScript.Config.Debug                  = false
