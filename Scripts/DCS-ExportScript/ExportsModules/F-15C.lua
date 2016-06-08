@@ -241,13 +241,13 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		ExportScript.AF.FC_F15C_ExaustGasTemp(lEngineTempLeft - 1.4, 52, 53, 54, 55)
 
 		-- Exaust Gas Temperature Right
-		ExportScript.AF.FC_F15C_ExaustGasTemp(lEngineTempLeft - 1.4, 56, 57, 58, 59)
+		ExportScript.AF.FC_F15C_ExaustGasTemp(lEngineTempRight - 1.4, 56, 57, 58, 59)
 
 		-- Fuel Flow Left
-		--ExportScript.AF.FC_OneNeedleGauge3Digits(((lEngineFuelConsumptionLeft * 2.2046223302272) * 3600), 10000, 2, 60, 61, 62, 63)
+		ExportScript.AF.FC_OneNeedleGauge3Digits(((lEngineFuelConsumptionLeft * 2.2046223302272) * 3600), 10000, 2, 60, 61, 62, 63)
 
 		-- Fuel Flow Right
-		--ExportScript.AF.FC_OneNeedleGauge3Digits(((lEngineFuelConsumptionRight * 2.2046223302272) * 3600), 10000, 2, 64, 65, 66, 67)
+		ExportScript.AF.FC_OneNeedleGauge3Digits(((lEngineFuelConsumptionRight * 2.2046223302272) * 3600), 10000, 2, 64, 65, 66, 67)
 
 		-- Hydraulic Pressure Left
 		ExportScript.AF.FC_OneNeedleGauge(lEngineHydraulicPressureLeft, 100, 68)
@@ -327,7 +327,7 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		-- Standby Air Speed Indicator End
 
 		-- AccelerationUnits
-		ExportScript.Tools.WriteToLog("lAccelerationUnits: "..ExportScript.Tools.dump(lAccelerationUnits))
+		--ExportScript.Tools.WriteToLog("lAccelerationUnits: "..ExportScript.Tools.dump(lAccelerationUnits))
 		if lAccelerationUnits > 0.0 then	-- positive AccelerationUnits
 			--[[
 			y_min = 0.333							-- minimaler Ausgabewert
@@ -410,6 +410,7 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		ExportScript.Tools.SendData(43, string.format("%.4f", AltBar_dafeet_needle))
 		-- Standby Barometrisic Altimeter end
 
+		ExportScript.AF.FlareChaff(lFunctionTyp)
 	else
 		ExportScript.Tools.WriteToLog("Unknown FC Error, no LoGetSelfData.")
 	end
@@ -419,7 +420,7 @@ function ExportScript.ProcessDACConfigHighImportance()
 	local lFunctionTyp = "DAC"	-- function type for shared function
 
 	-- your script
-
+	ExportScript.AF.FlareChaff(lFunctionTyp)
 end
 
 function ExportScript.ProcessIkarusFCLowImportanceConfig()
@@ -427,9 +428,11 @@ function ExportScript.ProcessIkarusFCLowImportanceConfig()
 
 	-- Gear Lamps
 	ExportScript.AF.MechanicalDevicesIndicator(lFunctionTyp)
-
-	-- Fuel Indicator
 	ExportScript.AF.FuelQuantityIndicator(lFunctionTyp)
+
+	ExportScript.AF.SightingSystem(lFunctionTyp)
+	ExportScript.AF.StatusLamp(lFunctionTyp)
+	ExportScript.AF.RWRlite(lFunctionTyp)
 end
 
 function ExportScript.ProcessDACConfigLowImportance()
@@ -438,19 +441,19 @@ function ExportScript.ProcessDACConfigLowImportance()
 	ExportScript.AF.MechanicalDevicesIndicator(lFunctionTyp)
 	ExportScript.AF.FuelQuantityIndicator(lFunctionTyp)
 
-	ExportScript.AF.SightingSystem()
-	ExportScript.AF.StatusLamp()
-	ExportScript.AF.FlareChaff()
-	ExportScript.AF.WeaponStatusPanel()
-	ExportScript.AF.RWRlite()
+	ExportScript.AF.SightingSystem(lFunctionTyp)
+	ExportScript.AF.StatusLamp(lFunctionTyp)
+	ExportScript.AF.WeaponStatusPanel(lFunctionTyp)
+	ExportScript.AF.RWRlite(lFunctionTyp)
 end
 
 -----------------------------
 --     Custom functions    --
 -----------------------------
 
-function ExportScript.AF.SightingSystem()
+function ExportScript.AF.SightingSystem(FunctionTyp)
 	local lSightingSystemInfo = LoGetSightingSystemInfo()
+	local lFunctionTyp = FunctionTyp or "Ikarus"
 	if lSightingSystemInfo == nil then
 		return
 	end
@@ -491,11 +494,21 @@ function ExportScript.AF.SightingSystem()
         }
     }
 	]]
-	ExportScript.Tools.SendDataDAC("600", lSightingSystemInfo.ECM_on            == true and 1 or 0 )
-	--ExportScript.Tools.SendDataDAC("601", lSightingSystemInfo.laser_on          == true and 1 or 0 )
-	--ExportScript.Tools.SendDataDAC("602", lSightingSystemInfo.optical_system_on == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("603", lSightingSystemInfo.LaunchAuthorized  == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("604", lSightingSystemInfo.radar_on          == true and 1 or 0 )
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+		ExportScript.Tools.SendData(600, lSightingSystemInfo.ECM_on            == true and 1 or 0 )
+		--ExportScript.Tools.SendData(601, lSightingSystemInfo.laser_on          == true and 1 or 0 )
+		--ExportScript.Tools.SendData(602, lSightingSystemInfo.optical_system_on == true and 1 or 0 )
+		ExportScript.Tools.SendData(603, lSightingSystemInfo.LaunchAuthorized  == true and 1 or 0 )
+		ExportScript.Tools.SendData(604, lSightingSystemInfo.radar_on          == true and 1 or 0 )
+	end
+
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		ExportScript.Tools.SendDataDAC(600, lSightingSystemInfo.ECM_on            == true and 1 or 0 )
+		--ExportScript.Tools.SendDataDAC(601, lSightingSystemInfo.laser_on          == true and 1 or 0 )
+		--ExportScript.Tools.SendDataDAC(602, lSightingSystemInfo.optical_system_on == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC(603, lSightingSystemInfo.LaunchAuthorized  == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC(604, lSightingSystemInfo.radar_on          == true and 1 or 0 )
+	end
 end
 
 function ExportScript.AF.FuelQuantityIndicator(FunctionTyp)
@@ -570,18 +583,19 @@ function ExportScript.AF.FuelQuantityIndicator(FunctionTyp)
 	end
 
 	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
-		ExportScript.Tools.SendDataDAC("300", string.format("%d", lFuelCounterLeft))	-- Left Fuel
-		ExportScript.Tools.SendDataDAC("301", string.format("%d", lFuelCounterRight))	-- Right Fuel
-		ExportScript.Tools.SendDataDAC("302", string.format("%d", lEngineFuelTotal))	-- Total Fuel
+		ExportScript.Tools.SendDataDAC(300, string.format("%d", lFuelCounterLeft))	-- Left Fuel
+		ExportScript.Tools.SendDataDAC(301, string.format("%d", lFuelCounterRight))	-- Right Fuel
+		ExportScript.Tools.SendDataDAC(302, string.format("%d", lEngineFuelTotal))	-- Total Fuel
 	end
 end
 
-function ExportScript.AF.StatusLamp()
+function ExportScript.AF.StatusLamp(FunctionTyp)
+	local lFunctionTyp = FunctionTyp or "Ikarus"
 	local lMCPState = LoGetMCPState() -- Warning Lights
 	if lMCPState == nil then
 		return
 	end
-	--ExportScript.Tools.WriteToLog('lMCPState: '..ExportScript.Tools.dump(lMCPState))
+	ExportScript.Tools.WriteToLog('lMCPState: '..ExportScript.Tools.dump(lMCPState))
 	--[[
 	[RightTailPlaneFailure] = boolean: "false"
     [EOSFailure] = boolean: "false"
@@ -612,49 +626,93 @@ function ExportScript.AF.StatusLamp()
     [AutopilotOn] = boolean: "false"
     [LeftTailPlaneFailure] = boolean: "false"
 	]]
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+		ExportScript.Tools.SendData(700, lMCPState.LeftTailPlaneFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(701, lMCPState.RightTailPlaneFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(702, lMCPState.MasterWarning == true and 1 or 0 )
+		ExportScript.Tools.SendData(703, lMCPState.LeftEngineFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(704, lMCPState.RightEngineFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(705, lMCPState.LeftAileronFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(706, lMCPState.RightAileronFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(707, lMCPState.LeftMainPumpFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(708, lMCPState.RightMainPumpFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(709, lMCPState.LeftWingPumpFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(710, lMCPState.RightWingPumpFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(711, lMCPState.EOSFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(712, lMCPState.ECMFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(713, lMCPState.CannonFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(714, lMCPState.MLWSFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(715, lMCPState.ACSFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(716, lMCPState.RadarFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(717, lMCPState.HelmetFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(718, lMCPState.HUDFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(719, lMCPState.MFDFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(720, lMCPState.RWSFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(721, lMCPState.GearFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(722, lMCPState.HydraulicsFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(723, lMCPState.AutopilotFailure == true and 1 or 0 )
+		ExportScript.Tools.SendData(724, lMCPState.FuelTankDamage == true and 1 or 0 )
+		--ExportScript.Tools.SendData(725, lMCPState.CanopyOpen == true and 1 or 0 )
+		ExportScript.Tools.SendData(726, lMCPState.StallSignalization == true and 1 or 0 )
+		ExportScript.Tools.SendData(727, lMCPState.AutopilotOn == true and 1 or 0 )
 
-	ExportScript.Tools.SendDataDAC("700", lMCPState.LeftTailPlaneFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("701", lMCPState.RightTailPlaneFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("702", lMCPState.MasterWarning == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("703", lMCPState.LeftEngineFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("704", lMCPState.RightEngineFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("705", lMCPState.LeftAileronFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("706", lMCPState.RightAileronFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("707", lMCPState.LeftMainPumpFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("708", lMCPState.RightMainPumpFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("709", lMCPState.LeftWingPumpFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("710", lMCPState.RightWingPumpFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("711", lMCPState.EOSFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("712", lMCPState.ECMFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("713", lMCPState.CannonFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("714", lMCPState.MLWSFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("715", lMCPState.ACSFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("716", lMCPState.RadarFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("717", lMCPState.HelmetFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("718", lMCPState.HUDFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("719", lMCPState.MFDFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("720", lMCPState.RWSFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("721", lMCPState.GearFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("722", lMCPState.HydraulicsFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("723", lMCPState.AutopilotFailure == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("724", lMCPState.FuelTankDamage == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("725", lMCPState.CanopyOpen == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("726", lMCPState.StallSignalization == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("727", lMCPState.AutopilotOn == true and 1 or 0 )
+		local lEngineInfo = LoGetEngineInfo()
+		if lEngineInfo ~= nil then
+			--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
 
-	local lEngineInfo = LoGetEngineInfo()
-	if lEngineInfo ~= nil then
-		--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
+			ExportScript.Tools.SendData(728, lEngineInfo.EngineStart.left ) -- lamp start left engine 1 (0|1)
+			ExportScript.Tools.SendData(729, lEngineInfo.EngineStart.right ) -- lamp start right engine 1 (0|1)
 
-		ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine 1 (0|1)
-		ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine 1 (0|1)
+			ExportScript.Tools.SendData(730, lEngineInfo.RPM.left  < 45 and 1 or 0 ) -- lamp generator left engine 1 (0|1)
+			ExportScript.Tools.SendData(731, lEngineInfo.RPM.right < 45 and 1 or 0 ) -- lamp generator right engine 1 (0|1)
+		end
+	
+	end
 
-		ExportScript.Tools.SendDataDAC("730", lEngineInfo.RPM.left  < 45 and 1 or 0 ) -- lamp generator left engine 1 (0|1)
-		ExportScript.Tools.SendDataDAC("731", lEngineInfo.RPM.right < 45 and 1 or 0 ) -- lamp generator right engine 1 (0|1)
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		ExportScript.Tools.SendDataDAC("700", lMCPState.LeftTailPlaneFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("701", lMCPState.RightTailPlaneFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("702", lMCPState.MasterWarning == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("703", lMCPState.LeftEngineFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("704", lMCPState.RightEngineFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("705", lMCPState.LeftAileronFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("706", lMCPState.RightAileronFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("707", lMCPState.LeftMainPumpFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("708", lMCPState.RightMainPumpFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("709", lMCPState.LeftWingPumpFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("710", lMCPState.RightWingPumpFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("711", lMCPState.EOSFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("712", lMCPState.ECMFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("713", lMCPState.CannonFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("714", lMCPState.MLWSFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("715", lMCPState.ACSFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("716", lMCPState.RadarFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("717", lMCPState.HelmetFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("718", lMCPState.HUDFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("719", lMCPState.MFDFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("720", lMCPState.RWSFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("721", lMCPState.GearFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("722", lMCPState.HydraulicsFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("723", lMCPState.AutopilotFailure == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("724", lMCPState.FuelTankDamage == true and 1 or 0 )
+		--ExportScript.Tools.SendDataDAC("725", lMCPState.CanopyOpen == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("726", lMCPState.StallSignalization == true and 1 or 0 )
+		ExportScript.Tools.SendDataDAC("727", lMCPState.AutopilotOn == true and 1 or 0 )
+
+		local lEngineInfo = LoGetEngineInfo()
+		if lEngineInfo ~= nil then 
+				--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
+			ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine 1 (0|1)
+			ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine 1 (0|1)
+
+			ExportScript.Tools.SendDataDAC("730", lEngineInfo.RPM.left  < 45 and 1 or 0 ) -- lamp generator left engine 1 (0|1)
+			ExportScript.Tools.SendDataDAC("731", lEngineInfo.RPM.right < 45 and 1 or 0 ) -- lamp generator right engine 1 (0|1)
+		end
 	end
 end
 
-function ExportScript.AF.FlareChaff()
+function ExportScript.AF.FlareChaff(FunctionTyp)
+	local lFunctionTyp = FunctionTyp or "Ikarus"
 	local lSnares = LoGetSnares() -- Flare and Chaff
 	if lSnares == nil then
 		return
@@ -687,14 +745,25 @@ function ExportScript.AF.FlareChaff()
 	if ExportScript.AF.tmpChaff == 0 then
 		lblinkChaff = 1
 	end
-
+	if ExportScript.AF.tmpFlare == 0 then
+		lblinkFlare = 1
+	end
+	
 	if lSnares.chaff < ExportScript.AF.tmpChaff then
-	ExportScript.Tools.WriteToLog('Chaff: '..ExportScript.Tools.dump(lSnares.chaff)..', ExportScript.AF.tmpChaff:'..ExportScript.Tools.dump(ExportScript.AF.tmpChaff))
+	--ExportScript.Tools.WriteToLog('Chaff: '..ExportScript.Tools.dump(lSnares.chaff)..', ExportScript.AF.tmpChaff:'..ExportScript.Tools.dump(ExportScript.AF.tmpChaff))
 		ExportScript.AF.tmpChaff = lSnares.chaff
 		--ExportScript.AF.timerChaff = os.time()
 		ExportScript.AF.timerChaff = os.clock()
 		ExportScript.Tools.WriteToLog('Chaff ausgeworfen, Zeit: '..ExportScript.Tools.dump(ExportScript.AF.timerChaff))
 		ExportScript.AF.timerChaffCounter = 3
+	end
+	if lSnares.flare < ExportScript.AF.tmpFlare then
+	--ExportScript.Tools.WriteToLog('Flare: '..ExportScript.Tools.dump(lSnares.flare)..', ExportScript.AF.tmpFlare:'..ExportScript.Tools.dump(ExportScript.AF.tmpFlare))
+		ExportScript.AF.tmpFlare = lSnares.flare
+		--ExportScript.AF.timerFlare = os.time()
+		ExportScript.AF.timerFlare = os.clock()
+		ExportScript.Tools.WriteToLog('Flare ausgeworfen, Zeit: '..ExportScript.Tools.dump(ExportScript.AF.timerFlare))
+		ExportScript.AF.timerFlareCounter = 3
 	end
 
 	if lblinkChaff == 0 and ExportScript.AF.timerChaff > 0.0 and ExportScript.AF.timerChaffCounter > 0 then
@@ -734,7 +803,7 @@ function ExportScript.AF.FlareChaff()
 			ExportScript.AF.timerChaffCounter = 3
 			ExportScript.AF.timerChaff = 0.0
 		end
-
+		
 		--[[
 		if ExportScript.AF.timerChaffCounter == 3 and ldiffTimer < 0.5 then
 		ExportScript.Tools.WriteToLog('0')
@@ -798,24 +867,78 @@ function ExportScript.AF.FlareChaff()
 			ExportScript.AF.timerChaff = 0
 		end]]
 	end
+	
+	if lblinkFlare == 0 and ExportScript.AF.timerFlare > 0.0 and ExportScript.AF.timerFlareCounter > 0 then
+		--local ldiffTimer = os.difftime (os.time(), ExportScript.AF.timerFlare)
+		local ldiffTimer = os.clock() - ExportScript.AF.timerFlare
+		ltmp, ldiffTimer = math.modf(ldiffTimer)
+		--ExportScript.Tools.WriteToLog('Zeit: '..ExportScript.AF.timerFlare..', Counter: '..ExportScript.AF.timerFlareCounter)
+		--ExportScript.Tools.WriteToLog('Zeit Diff: '..ldiffTimer)
+		if ExportScript.AF.timerFlareCounter == 1 and ldiffTimer > 0.9 then
+		--ExportScript.Tools.WriteToLog('0')
+			lblinkFlare = 0
+			ExportScript.AF.timerFlareCounter = 3
+			ExportScript.AF.timerFlare = 0.0
+		elseif ExportScript.AF.timerFlareCounter == 1 and ldiffTimer > 0.8 then
+		--ExportScript.Tools.WriteToLog('1')
+			lblinkFlare = 1
+			--ExportScript.AF.timerFlareCounter = ExportScript.AF.timerFlareCounter - 1
+		elseif ExportScript.AF.timerFlareCounter == 2 and ldiffTimer > 0.6 then
+		--ExportScript.Tools.WriteToLog('2')
+			lblinkFlare = 0
+			ExportScript.AF.timerFlareCounter = ExportScript.AF.timerFlareCounter - 1
+		elseif ExportScript.AF.timerFlareCounter == 2 and ldiffTimer > 0.4 then
+		--ExportScript.Tools.WriteToLog('3')
+			lblinkFlare = 1
+			--ExportScript.AF.timerFlareCounter = ExportScript.AF.timerFlareCounter - 1
+		elseif ExportScript.AF.timerFlareCounter == 3 and ldiffTimer > 0.2 then
+		--ExportScript.Tools.WriteToLog('4')
+			lblinkFlare = 0
+			ExportScript.AF.timerFlareCounter = ExportScript.AF.timerFlareCounter - 1
+		elseif ExportScript.AF.timerFlareCounter == 3 and ldiffTimer > 0.0 then
+		--ExportScript.Tools.WriteToLog('5')
+			lblinkFlare = 1
+			--ExportScript.AF.timerFlareCounter = ExportScript.AF.timerFlareCounter - 1
+		elseif ldiffTimer > 0.95 then
+		--ExportScript.Tools.WriteToLog('else')
+			lblinkFlare = 0
+			ExportScript.AF.timerFlareCounter = 3
+			ExportScript.AF.timerFlare = 0.0
+		end
+	end
 
 	--ExportScript.Tools.WriteToLog('lblinkChaff: '..lblinkChaff)
 
-	ExportScript.Tools.SendDataDAC("800", lSnares.chaff ) -- display chaff
-	ExportScript.Tools.SendDataDAC("801", lSnares.flare ) -- display flare
-	ExportScript.Tools.SendDataDAC("802", lblinkChaff ) -- blink chaff active/aktive empty chaff
-	ExportScript.Tools.SendDataDAC("803", lblinkFlare ) -- blink flare active/aktive empty flare
-	ExportScript.Tools.SendDataDAC("804", ExportScript.AF.tmpChaff < 20 and 1 or 0 ) -- minimum chaff lamp
-	ExportScript.Tools.SendDataDAC("805", ExportScript.AF.tmpFlare < 10 and 1 or 0 ) -- minimum flare lamp
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+		ExportScript.Tools.SendData(800, lSnares.chaff ) -- display chaff
+		ExportScript.Tools.SendData(801, lSnares.flare ) -- display flare
+		ExportScript.Tools.SendData(802, lblinkChaff ) -- blink chaff active/aktive empty chaff
+		ExportScript.Tools.SendData(803, lblinkFlare ) -- blink flare active/aktive empty flare
+		ExportScript.Tools.SendData(804, ExportScript.AF.tmpChaff < 20 and 1 or 0 ) -- minimum chaff lamp
+		ExportScript.Tools.SendData(805, ExportScript.AF.tmpFlare < 10 and 1 or 0 ) -- minimum flare lamp
+	end
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		ExportScript.Tools.SendDataDAC(800, lSnares.chaff ) -- display chaff
+		ExportScript.Tools.SendDataDAC(801, lSnares.flare ) -- display flare
+		ExportScript.Tools.SendDataDAC(802, lblinkChaff ) -- blink chaff active/aktive empty chaff
+		ExportScript.Tools.SendDataDAC(803, lblinkFlare ) -- blink flare active/aktive empty flare
+		ExportScript.Tools.SendDataDAC(804, ExportScript.AF.tmpChaff < 20 and 1 or 0 ) -- minimum chaff lamp
+		ExportScript.Tools.SendDataDAC(805, ExportScript.AF.tmpFlare < 10 and 1 or 0 ) -- minimum flare lamp
+	end
 end
 
 function ExportScript.AF.MechanicalDevicesIndicator(FunctionTyp)
 	local lFunctionTyp = FunctionTyp or "Ikarus"
 -- The mechanical devices indicator shows the position of the landing gear, flaps, leading edge flaps and airbrake
-	local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
+	local lMechInfo		= LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
 	if lMechInfo == nil then
 		return
 	end
+	local lTrueAirSpeed	= LoGetTrueAirSpeed()
+	if lTrueAirSpeed == nil then
+		lTrueAirSpeed = 0
+	end
+	--ExportScript.Tools.WriteToLog('ExportScript.AF.MechanicalDevicesIndicator: '..ExportScript.Tools.dump(lMechInfo))
 	--[[
 	[hook] = {
         [status] = number: "0"
@@ -891,17 +1014,36 @@ function ExportScript.AF.MechanicalDevicesIndicator(FunctionTyp)
 		ExportScript.Tools.SendData(501, (lMechInfo.gear.value > 0.85 and 1 or 0) ) -- nose gear
 		ExportScript.Tools.SendData(502, (lMechInfo.gear.value > 0.95 and 1 or 0) ) -- left gear
 		ExportScript.Tools.SendData(503, (lMechInfo.gear.value == 1 and 1 or 0) )   -- right gear
+
+	    ExportScript.Tools.SendData(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0) ) -- speedbreakes on > 0.1 (0 - 1)
+
+		ExportScript.Tools.SendData(531, (lMechInfo.flaps.value > 0.25 and 1 or 0) ) -- flap 1. position
+		ExportScript.Tools.SendData(532, (lMechInfo.flaps.value > 0.93 and 1 or 0) ) -- flap 2. position
+		ExportScript.Tools.SendData(533, ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1 or 0) ) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
+		ExportScript.Tools.SendData(534, (lMechInfo.gear.value > 0.5 and 1 or 0) )	-- Intake FOD shields
+
+	    ExportScript.Tools.SendData(725, (lMechInfo.canopy.value  == 1 and 1 or 0) ) -- CanopyOpen
 	end
 
 	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
-		ExportScript.Tools.SendDataDAC("501", (lMechInfo.gear.value > 0.85 and 1 or 0) ) -- nose gear
-		ExportScript.Tools.SendDataDAC("502", (lMechInfo.gear.value > 0.95 and 1 or 0) ) -- left gear
-		ExportScript.Tools.SendDataDAC("503", (lMechInfo.gear.value == 1 and 1 or 0) )   -- right gear
+		ExportScript.Tools.SendDataDAC(501, (lMechInfo.gear.value > 0.85 and 1 or 0) ) -- nose gear
+		ExportScript.Tools.SendDataDAC(502, (lMechInfo.gear.value > 0.95 and 1 or 0) ) -- left gear
+		ExportScript.Tools.SendDataDAC(503, (lMechInfo.gear.value == 1 and 1 or 0) )   -- right gear		
+
+	    ExportScript.Tools.SendDataDAC(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0) ) -- speedbreakes on > 0.1 (0 - 1)
+
+		ExportScript.Tools.SendDataDAC(531, (lMechInfo.flaps.value > 0.25 and 1 or 0) ) -- flap 1. position
+		ExportScript.Tools.SendDataDAC(532, (lMechInfo.flaps.value > 0.93 and 1 or 0) ) -- flap 2. position
+		ExportScript.Tools.SendDataDAC(533, ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1 or 0) ) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
+		ExportScript.Tools.SendDataDAC(534, (lMechInfo.gear.value > 0.5 and 1 or 0) )	-- Intake FOD shields
+
+	    ExportScript.Tools.SendDataDAC(725, (lMechInfo.canopy.value  == 1 and 1 or 0) ) -- CanopyOpen
 	end
 end
 
-function ExportScript.AF.WeaponStatusPanel()
+function ExportScript.AF.WeaponStatusPanel(FunctionTyp)
 -- The weapon status panel, quantity and readiness of the currently selected weapon and the remaining gun ammunition are indicated.
+	local lFunctionTyp = FunctionTyp or "Ikarus"
 	ExportScript.AF.PayloadInfo = LoGetPayloadInfo()
 	if ExportScript.AF.PayloadInfo == nil then
 		return
@@ -1129,6 +1271,12 @@ function ExportScript.AF.WeaponStatusPanel()
 	]]
 	-- Payload Info
 	-- weapon stations (panel) 1 (left) - 11 (right) reserved
+
+	--ExportScript.Tools.SendDataDAC("CurrentStation", ExportScript.AF.PayloadInfo.CurrentStation ) 
+	-- air-to-air missils panel 1 and 11, air combat modus, CurrentStation = 1, panel 1 and 11 on
+	-- wenn die Waffenstationen gleichmässig belegt sind, hat bei Auswahl CurrentStation immer den Wert der linken Station
+	-- bei ungleichmäßiger Belegung, hat CurrentStation immer den Wert der jeweiligen Station
+	-- Waffenbezeichnung als UUID, ExportScript.AF.PayloadInfo.Stations[X].CLSID 	
 	ExportScript.Tools.SendDataDAC("100", ExportScript.AF.PayloadInfo.Cannon.shells ) -- count cannon shells
 	ExportScript.Tools.SendDataDAC("101", (ExportScript.AF.PayloadInfo.Stations[1].count  > 0 and 1 or 0) ) -- weapon presend > 0 (panel 1)
 	ExportScript.Tools.SendDataDAC("102", (ExportScript.AF.PayloadInfo.Stations[2].count  > 0 and 1 or 0) ) -- weapon presend > 0 (panel 2)
@@ -1153,11 +1301,6 @@ function ExportScript.AF.WeaponStatusPanel()
 	ExportScript.Tools.SendDataDAC("129", (ExportScript.AF.PayloadInfo.Stations[9].count  == 0 and 1 or 0) ) -- weapon presend > 0 (panel 9)
 	ExportScript.Tools.SendDataDAC("130", (ExportScript.AF.PayloadInfo.Stations[10].count == 0 and 1 or 0) ) -- weapon presend > 0 (panel 10)
 	ExportScript.Tools.SendDataDAC("131", (ExportScript.AF.PayloadInfo.Stations[11].count == 0 and 1 or 0) ) -- weapon presend > 0 (panel 11)	
-	--ExportScript.Tools.SendDataDAC("CurrentStation", ExportScript.AF.PayloadInfo.CurrentStation ) 
-	-- air-to-air missils panel 1 and 11, air combat modus, CurrentStation = 1, panel 1 and 11 on
-	-- wenn die Waffenstationen gleichmässig belegt sind, hat bei Auswahl CurrentStation immer den Wert der linken Station
-	-- bei ungleichmäßiger Belegung, hat CurrentStation immer den Wert der jeweiligen Station
-	-- Waffenbezeichnung als UUID, ExportScript.AF.PayloadInfo.Stations[X].CLSID 
 
 	-- defination
 	if ExportScript.AF.CurrentStationTmp == nil then
@@ -1200,7 +1343,8 @@ function ExportScript.AF.WeaponStatusPanel()
 	end
 end
 
-function ExportScript.AF.RWRlite()
+function ExportScript.AF.RWRlite(FunctionTyp)
+	local lFunctionTyp = FunctionTyp or "Ikarus"
 	local lTWSInfo = LoGetTWSInfo() -- RWR Information
 	if lTWSInfo == nil then
 		return
@@ -1208,6 +1352,8 @@ function ExportScript.AF.RWRlite()
 
 	local lPriorityTmp      = 0
 	local lPrimaryThreatTmp = 0
+	local lPrimaryAir       = 0
+	local lPrimarySAM       = 0
 
 	if(#lTWSInfo.Emitters > 0) then
 		for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
@@ -1224,19 +1370,25 @@ function ExportScript.AF.RWRlite()
 			local lAzimut = ExportScript.Tools.round(lTWSInfo.Emitters[EmitterIndex].Azimuth * 90, 1)
 
 			if EmitterIndex == lPrimaryThreatTmp then
-			    ExportScript.AF.RWRlite_FoundErmitter = true
-
-				ExportScript.Tools.SendDataDAC("400", (lType.level1 == 1 and 1 or 0) ) -- primary Air
-
-				ExportScript.Tools.SendDataDAC("401", ((lType.level1 == 2 and lType.level2 == 16) and 1 or 0) ) -- primary SAM
+				ExportScript.AF.RWRlite_FoundErmitter = true
+				lPrimaryAir = (lType.level1 == 1 and 1 or 0)
+				lPrimarySAM = ((lType.level1 == 2 and lType.level2 == 16) and 1 or 0)
 			end
 		end
 	else
 		if ExportScript.AF.RWRlite_FoundErmitter ~= nil and ExportScript.AF.RWRlite_FoundErmitter then
-			ExportScript.Tools.SendDataDAC("400", 0 ) -- primary Air
-
-			ExportScript.Tools.SendDataDAC("401", 0 ) -- primary SAM
+			lPrimaryAir = 0
+			lPrimarySAM = 0
 		end
+	end
+	
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+		ExportScript.Tools.SendData(400, lPrimaryAir) -- primary Air
+		ExportScript.Tools.SendData(401, lPrimarySAM) -- primary SAM
+	end
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		ExportScript.Tools.SendDataDAC(400, lPrimaryAir) -- primary Air
+		ExportScript.Tools.SendDataDAC(401, lPrimarySAM) -- primary SAM
 	end
 end	
 
