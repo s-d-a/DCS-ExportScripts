@@ -26,7 +26,7 @@ Der Export von Daten wird für folgende Module unterstützt:
 - Su-25T
 - alle Flaming Cliffs Flugzeuge
 
-Kompatibel zur DCS World 1.5.3 Update 2 und DCS World (Alpha) 2.0.1 Update 1
+Kompatibel zur DCS World 1.5.3 Update 7 und DCS World (Alpha) 2.0.2 Update 1
 
 ###English###
 ---
@@ -55,7 +55,7 @@ Following moduls are supported:
 - Su-25T
 - all Flaming Cliffs aircrafts
 
-Compatible with DCS World 1.5.3 Update 2 and DCS World (Alpha) 2.0.1 Update 1
+Compatible with DCS World 1.5.3 Update 7 and DCS World (Alpha) 2.0.2 Update 1
 
 ###Wiki###
 ---
