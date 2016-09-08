@@ -55,6 +55,16 @@ ExportScript.ConfigEveryFrameArguments =
 	[54] = "%.4f",		-- VD-20 km Ind {0.0, 1.0}{0.0, 20.0}
 	[55] = "%.4f",		-- VD-20 m Ind {0.0, 1.0}{0.0, 1000.0}
 	[56] = "%.4f",		-- VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
+	-- Barometric altimeter
+	-- Altimeter Feet , copy of A-10 altimeter
+	[637] = "%.4f",		-- Altimeter_100_footPtr {0.0, 1.0}{0.0, 1000.0}
+	[632] = "%.4f",		-- Altimeter_10000_footCount {0.0, 1.0}{0.0, 10.0}
+	[631] = "%.4f",		-- Altimeter_1000_footCount {0.0, 1.0}{0.0, 10.0}
+	[630] = "%.4f",		-- Altimeter_100_footCount {0.0, 1.0}{0.0, 10.0}
+	[636] = "%.4f",		-- pressure_setting_0 {0.0, 1.0}{0.0, 10.0}
+	[635] = "%.4f",		-- pressure_setting_1 {0.0, 1.0}{0.0, 10.0}
+	[634] = "%.4f",		-- pressure_setting_2 {0.0, 1.0}{0.0, 10.0}
+	[633] = "%.4f",		-- pressure_setting_3 {0.0, 1.0}{0.0, 10.0}
 	-- AIRSPEED AND MACH
 	[49] = "%.4f",		-- IAS {0.0, 0.08, 0.186, 0.296, 0.436, 0.55, 0.635, 0.705, 0.765, 0.824, 1.0}{0.0, 100.0, 150.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 1200.0}
 	[50] = "%.4f",		-- TAS {0.0, 0.08, 0.186, 0.296, 0.436, 0.55, 0.635, 0.705, 0.765, 0.824, 1.0}{0.0, 100.0, 150.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 1200.0}
@@ -210,6 +220,16 @@ ExportScript.ConfigEveryFrameArguments =
 	[391] = "%.4f",		-- Backseat - VD-20 km Ind {0.0, 1.0}{0.0, 20.0}
 	[392] = "%.4f",		-- Backseat - VD-20 m Ind {0.0, 1.0}{0.0, 1000.0}
 	[393] = "%.4f",		-- Backseat - VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
+	-- Barometric altimeter
+	-- Altimeter Feet , copy of A-10 altimeter
+	[737] = "%.4f",		-- Altimeter_100_footPtr {0.0, 1.0}{0.0, 1000.0}
+	[732] = "%.4f",		-- Altimeter_10000_footCount {0.0, 1.0}{0.0, 10.0}
+	[731] = "%.4f",		-- Altimeter_1000_footCount {0.0, 1.0}{0.0, 10.0}
+	[730] = "%.4f",		-- Altimeter_100_footCount {0.0, 1.0}{0.0, 10.0}
+	[736] = "%.4f",		-- pressure_setting_0 {0.0, 1.0}{0.0, 10.0}
+	[735] = "%.4f",		-- pressure_setting_1 {0.0, 1.0}{0.0, 10.0}
+	[734] = "%.4f",		-- pressure_setting_2 {0.0, 1.0}{0.0, 10.0}
+	[733] = "%.4f",		-- pressure_setting_3 {0.0, 1.0}{0.0, 10.0}
 	-- AIRSPEED AND MACH
 	[386] = "%.4f",		-- Backseat - IAS {0.0, 0.08, 0.186, 0.296, 0.436, 0.55, 0.635, 0.705, 0.765, 0.824, 1.0}{0.0, 100.0, 150.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 1200.0}
 	[387] = "%.4f",		-- Backseat - TAS {0.0, 0.08, 0.186, 0.296, 0.436, 0.55, 0.635, 0.705, 0.765, 0.824, 1.0}{0.0, 100.0, 150.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 1200.0}
@@ -625,6 +645,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get frequency()/1000000)) <- special function for get frequency data
 	]]
 	
+	-- Front Seat
+	
 	-- ADI correction
 	--[31] = "%.4f",		-- KPP 1273K pitch {-0.5, 0.5} {-math.pi / 2.0, math.pi / 2.0}
 	--[40] = "%.4f",		-- KPP 1273K sideslip {-1.0, 1.0}
@@ -643,7 +665,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	-- HSI correction
 	--[41] = "%.4f",		-- HSI heading {1.0, 0.0} {0.0, math.pi * 2.0}
-	--[42] = "%.4f",		-- HSI commanded course needle (yellow needle) {1.0, 0.0} {0.0, math.pi * 2.0} 
+	--[42] = "%.4f",		-- HSI commanded course needle (white needle) {1.0, 0.0} {0.0, math.pi * 2.0} 
 	local lHeading 			= mainPanelDevice:get_argument_value(41)
 	local lCommandCourse	= mainPanelDevice:get_argument_value(42)
 	if lHeading < 0.0 then
@@ -652,10 +674,53 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		lHeading = 0 - lHeading	-- negate
 	end
 	
-	lCommandCourse = lCommandCourse * 0.5 -- 180 degree turn
+	lCommandCourse = lCommandCourse + 0.5 -- 180 degree turn
 	
 	ExportScript.Tools.SendData(41, string.format("%.4f", lHeading))
 	ExportScript.Tools.SendData(42, string.format("%.4f", lCommandCourse))
+	
+	--[56] = "%.4f",		-- VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
+	--local lPressure 			= mainPanelDevice:get_argument_value(56)
+	--ExportScript.Tools.WriteToLog('lPressure: '..ExportScript.Tools.dump(lPressure))
+	
+	--[51] = "%.4f",		-- MACH
+	--local lMACH 			= mainPanelDevice:get_argument_value(51)
+	--ExportScript.Tools.WriteToLog('lMACH: '..ExportScript.Tools.dump(lMACH))
+	
+	
+	-- Back Seat
+	
+	-- ADI correction
+	--[368] = "%.4f",		-- KPP 1273K pitch {-0.5, 0.5} {-math.pi / 2.0, math.pi / 2.0}
+	--[377] = "%.4f",		-- KPP 1273K sideslip {-1.0, 1.0}
+	local lPitch2 	 = mainPanelDevice:get_argument_value(368)
+	local lSideslip2 = mainPanelDevice:get_argument_value(377)
+	if lSideslip2 < 0.0 then
+		lSideslip2 = lSideslip2 - lSideslip2 - lSideslip2	-- negate
+	else
+		lSideslip2 = 0 - lSideslip2
+	end
+	
+	lPitch2 = lPitch2 * 2
+	
+	ExportScript.Tools.SendData(368, string.format("%.4f", lPitch2))
+	ExportScript.Tools.SendData(377, string.format("%.4f", lSideslip2))
+	
+	-- HSI correction
+	--[378] = "%.4f",		-- HSI heading {1.0, 0.0} {0.0, math.pi * 2.0}
+	--[379] = "%.4f",		-- HSI commanded course needle (wihte needle) {1.0, 0.0} {0.0, math.pi * 2.0} 
+	local lHeading2 		= mainPanelDevice:get_argument_value(378)
+	local lCommandCourse2	= mainPanelDevice:get_argument_value(379)
+	if lHeading2 < 0.0 then
+		lHeading2 = lHeading2 - lHeading2 - lHeading2	-- negate
+	else
+		lHeading2 = 0 - lHeading2	-- negate
+	end
+	
+	lCommandCourse2 = lCommandCourse2 + 0.5 -- 180 degree turn
+	
+	ExportScript.Tools.SendData(378, string.format("%.4f", lHeading2))
+	ExportScript.Tools.SendData(379, string.format("%.4f", lCommandCourse2))
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
