@@ -28,13 +28,13 @@ ExportScript.Config.DAC[1].Separator = ":"
 --ExportScript.Config.DAC[2].SendPort  = 9092        -- Port for hardware 2
 --ExportScript.Config.DAC[2].Separator = ":"
 
--- D.A.C. can data send
-ExportScript.Config.DACListener      = true         -- false for not use
-ExportScript.Config.DACListenerPort  = 26027        -- Listener Port for D.A.C.
+-- Ikarus and D.A.C. can data send
+ExportScript.Config.Listener         = true         -- false for not use
+ExportScript.Config.ListenerPort     = 26027        -- Listener Port for D.A.C.
 
 -- Other
-ExportScript.Config.ExportInterval         = 0.05   -- 20Hz
-ExportScript.Config.ExportLowTickInterval  = 0.5
+ExportScript.Config.ExportInterval         = 0.05	-- export evry 0.05 secounds
+ExportScript.Config.ExportLowTickInterval  = 0.5	-- export evry 0.5 secounds
 ExportScript.Config.LogPath                = lfs.writedir()..[[Logs\Export.log]]
 ExportScript.Config.ExportModulePath       = lfs.writedir()..[[Scripts\DCS-ExportScript\ExportsModules\]]
 ExportScript.Config.Debug                  = false
