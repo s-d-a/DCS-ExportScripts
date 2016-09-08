@@ -186,19 +186,19 @@ ExportScript.ConfigEveryFrameArguments =
 	[203] = "%.f", 			-- lamp_RightInnerTank {0.0,1.0}
 	-- DATALINK
 	---------------------------------------------------
-	[159] = "%.f", 			-- PRC_button_SEND {0.0,0.3}
-	[150] = "%.f", 			-- PRC_button_ESCAPE {0.0,0.3}
-	[161] = "%.f", 			-- PRC_button_ERASE {0.0,0.3}
-	[15]  = "%.f", 			-- PRC_button_CLEAN {0.0,0.3}
-	[16]  = "%.f", 			-- PRC_button_WINGMAN_ALL {0.0,0.3}
-	[17]  = "%.f", 			-- PRC_button_WINGMAN_1 {0.0,0.3}
-	[18]  = "%.f", 			-- PRC_button_WINGMAN_2 {0.0,0.3}
-	[19]  = "%.f", 			-- PRC_button_WINGMAN_3 {0.0,0.3}
-	[20]  = "%.f", 			-- PRC_button_WINGMAN_4 {0.0,0.3}
-	[21]  = "%.f", 			-- PRC_button_TARGET_1 {0.0,0.3}
-	[22]  = "%.f", 			-- PRC_button_TARGET_2 {0.0,0.3}
-	[23]  = "%.f", 			-- PRC_button_TARGET_3 {0.0,0.3}
-	[50]  = "%.f", 			-- PRC_button_TARGET_POINT {0.0,0.3}
+	--[159] = "%.1f", 			-- PRC_button_SEND {0.0,0.3}
+	--[150] = "%.1f", 			-- PRC_button_ESCAPE {0.0,0.3}
+	--[161] = "%.1f", 			-- PRC_button_ERASE {0.0,0.3}
+	--[15]  = "%.1f", 			-- PRC_button_CLEAN {0.0,0.3}
+	--[16]  = "%.1f", 			-- PRC_button_WINGMAN_ALL {0.0,0.3}
+	--[17]  = "%.1f", 			-- PRC_button_WINGMAN_1 {0.0,0.3}
+	--[18]  = "%.1f", 			-- PRC_button_WINGMAN_2 {0.0,0.3}
+	--[19]  = "%.1f", 			-- PRC_button_WINGMAN_3 {0.0,0.3}
+	--[20]  = "%.1f", 			-- PRC_button_WINGMAN_4 {0.0,0.3}
+	--[21]  = "%.1f", 			-- PRC_button_TARGET_1 {0.0,0.3}
+	--[22]  = "%.1f", 			-- PRC_button_TARGET_2 {0.0,0.3}
+	--[23]  = "%.1f", 			-- PRC_button_TARGET_3 {0.0,0.3}
+	--[50]  = "%.1f", 			-- PRC_button_TARGET_POINT {0.0,0.3}
 	-- Laser warning system
 	---------------------------------------------------
 	[25]  = "%.f", 			-- LWS_LampAzimuth_0 {0.0,1.0}
@@ -248,11 +248,11 @@ ExportScript.ConfigEveryFrameArguments =
 	[576] = "%.2f", 		-- R800Rotary4 {0.0,1.0}
 	-- WEAPON  INTERFACE
 	---------------------------------------------------
-	[437] = "%0.1f", 		-- PRC_button_AUTO_TURN {0.0,0.3}
-	[438] = "%0.1f", 		-- PRC_button_AIRBORNE_TARGET {0.0,0.3}
-	[439] = "%0.1f", 		-- PRC_button_FORWARD_HEMISPHERE {0.0,0.3}
-	[440] = "%0.1f", 		-- PRC_button_GROUND_MOVING_TARGET {0.0,0.3}
-	[441] = "%0.1f", 		-- PRC_button_CLEAR {0.0,0.3}
+	--[437] = "%.1f", 		-- PRC_button_AUTO_TURN {0.0,0.3}
+	--[438] = "%.1f", 		-- PRC_button_AIRBORNE_TARGET {0.0,0.3}
+	--[439] = "%.1f", 		-- PRC_button_FORWARD_HEMISPHERE {0.0,0.3}
+	--[440] = "%.1f", 		-- PRC_button_GROUND_MOVING_TARGET {0.0,0.3}
+	--[441] = "%.1f", 		-- PRC_button_CLEAR {0.0,0.3}
 	-- Engines start panel
 	---------------------------------------------------
 	[163] = "%.f", 			-- lamp_EnginesStartValve{0.0, 1.0}
@@ -380,7 +380,7 @@ ExportScript.ConfigArguments =
 	[396] = "%1d",         -- MASTER-EXPLODE-PTR (Jettison arm mode - arm fuse/disarm fuse)
 	[403] = "%1d",         -- PUI800-AUTO-PTR (Manual/Auto weapon system control switch) 
 	[399] = "%1d",         -- PUI800-OFBR-PTR (Cannon round selector switch HE/AP)
-	[400] = "%0.1f",       -- SR-PTR (Weapon mode switch - Burst Length)
+	[400] = "%.1f",       -- SR-PTR (Weapon mode switch - Burst Length) {0.0,0.1,0.2}
 	[398] = "%1d",         -- MT-PTR (Cannon rate of fire setting)
 	[397] = "%.1f",        -- MASTER-UNLOAD-PTR (Expedite emergency ATGM launch)
 	-- PUR Weapons Aux Panel
@@ -720,9 +720,17 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	--ExportScript.Tools.SendData(2004, string.format("%s", lTURNlight))
 	-- PUI-800 Weapon panel
 	---------------------------------------------------
-	ExportScript.Tools.SendData(2005, string.format("%s", lStationType))
-	ExportScript.Tools.SendData(2006, string.format("%s", lStationCount))
-	ExportScript.Tools.SendData(2007, string.format("%s", lCannonAmmoCount))
+	ExportScript.Tools.SendData(2004, string.format("%s", lStationType))
+	ExportScript.Tools.SendData(2005, string.format("%s", lStationCount))
+	ExportScript.Tools.SendData(2006, string.format("%s", lCannonAmmoCount))
+	
+	-- UV-26
+	local lUV26 = list_indication(7)
+	lUV26 = lUV26:gsub("-----------------------------------------", "")
+	lUV26 = lUV26:gsub("txt_digits", "")
+	lUV26 = lUV26:gsub("%c", "")
+
+	ExportScript.Tools.SendData(2007, string.format("%s", lUV26))
 	
 	--ExportScript.Tools.WriteToLog('lEkranSendString: '..ExportScript.Tools.dump(lEkranSendString))
 	--ExportScript.Tools.WriteToLog('lFAILlight: '..ExportScript.Tools.dump(lFAILlight))
@@ -771,12 +779,34 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	--ExportScript.Tools.WriteToLog('lEKRANtxt2: '..ExportScript.Tools.dump(lEKRANtxt2))
 
 	lEkranSendString = string.sub(lEKRANtxt2,1,9).."\n"..string.sub(lEKRANtxt2,11,19).."\n"..string.sub(lEKRANtxt2,21,29).."\n"..string.sub(lEKRANtxt2,31,39)
-	ExportScript.Tools.SendData(2001, string.format("%s", lEkranSendString))
-	ExportScript.Tools.SendData(2004, string.format("%s", lEKRANtxtqueue))
+	ExportScript.Tools.SendData(2010, string.format("%s", lEkranSendString))
+	ExportScript.Tools.SendData(2011, string.format("%s", lEKRANtxtqueue))
 
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {300, 299, 298})
 	-- Lighting cockpit panel switch, Lighting night vision cockpit switch, Lighting ADI and SAI switch
+	
+	-- Datalink Lamps
+	ExportScript.Tools.SendData(159, string.format("%.1f", mainPanelDevice:get_argument_value(159)))		-- PRC_button_SEND {0.0,0.3}
+	ExportScript.Tools.SendData(150, string.format("%.1f", mainPanelDevice:get_argument_value(150)))		-- PRC_button_ESCAPE {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(161, string.format("%.1f", mainPanelDevice:get_argument_value(161)))		-- PRC_button_ERASE {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(15, string.format("%.1f", mainPanelDevice:get_argument_value(15)))		-- PRC_button_CLEAN {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(16, string.format("%.1f", mainPanelDevice:get_argument_value(16)))		-- PRC_button_WINGMAN_ALL {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(17, string.format("%.1f", mainPanelDevice:get_argument_value(17)))		-- PRC_button_WINGMAN_1 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(18, string.format("%.1f", mainPanelDevice:get_argument_value(18)))		-- PRC_button_WINGMAN_2 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(19, string.format("%.1f", mainPanelDevice:get_argument_value(19)))		-- PRC_button_WINGMAN_3 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(20, string.format("%.1f", mainPanelDevice:get_argument_value(20)))		-- PRC_button_WINGMAN_4 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(21, string.format("%.1f", mainPanelDevice:get_argument_value(21)))		-- PRC_button_TARGET_1 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(22, string.format("%.1f", mainPanelDevice:get_argument_value(22)))		-- PRC_button_TARGET_2 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(23, string.format("%.1f", mainPanelDevice:get_argument_value(23)))		-- PRC_button_TARGET_3 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(50, string.format("%.1f", mainPanelDevice:get_argument_value(50)))		-- PRC_button_TARGET_POINT {0.0,0.3} {0,1}
+	
+	-- WEAPON  INTERFACE
+	ExportScript.Tools.SendData(437, string.format("%.1f", mainPanelDevice:get_argument_value(437)))		-- PRC_button_AUTO_TURN {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(438, string.format("%.1f", mainPanelDevice:get_argument_value(438)))		-- PRC_button_AIRBORNE_TARGET {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(439, string.format("%.1f", mainPanelDevice:get_argument_value(439)))		-- PRC_button_FORWARD_HEMISPHERE {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(440, string.format("%.1f", mainPanelDevice:get_argument_value(440)))		-- PRC_button_GROUND_MOVING_TARGET {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(441, string.format("%.1f", mainPanelDevice:get_argument_value(441)))		-- PRC_button_CLEAR {0.0,0.3} {0,1}
 end
 
 -- Pointed to by ProcessDACLowImportance, if the player aircraft is a Ka-50
@@ -850,6 +880,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("2005",lStationCount)
 	ExportScript.Tools.SendDataDAC("2006",lCannonAmmoCount)
 
+	-- UV-26
 	local lUV26 = list_indication(7)
 	lUV26 = lUV26:gsub("-----------------------------------------", "")
 	lUV26 = lUV26:gsub("txt_digits", "")
@@ -979,6 +1010,28 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("2008", string.format("%s", ltxt_upper_row))
 	ExportScript.Tools.SendDataDAC("2009", string.format("%s", ltxt_lower_row))
 
+	-- Datalink Lamps
+	ExportScript.Tools.SendData(159, (mainPanelDevice:get_argument_value(159) > 0 and 1 or 0))		-- PRC_button_SEND {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(150, (mainPanelDevice:get_argument_value(150) > 0 and 1 or 0))		-- PRC_button_ESCAPE {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(161, (mainPanelDevice:get_argument_value(161) > 0 and 1 or 0))		-- PRC_button_ERASE {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(15, (mainPanelDevice:get_argument_value(15) > 0 and 1 or 0))		-- PRC_button_CLEAN {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(16, (mainPanelDevice:get_argument_value(16) > 0 and 1 or 0))		-- PRC_button_WINGMAN_ALL {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(17, (mainPanelDevice:get_argument_value(17) > 0 and 1 or 0))		-- PRC_button_WINGMAN_1 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(18, (mainPanelDevice:get_argument_value(18) > 0 and 1 or 0))		-- PRC_button_WINGMAN_2 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(19, (mainPanelDevice:get_argument_value(19) > 0 and 1 or 0))		-- PRC_button_WINGMAN_3 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(20, (mainPanelDevice:get_argument_value(20) > 0 and 1 or 0))		-- PRC_button_WINGMAN_4 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(21, (mainPanelDevice:get_argument_value(21) > 0 and 1 or 0))		-- PRC_button_TARGET_1 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(22, (mainPanelDevice:get_argument_value(22) > 0 and 1 or 0))		-- PRC_button_TARGET_2 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(23, (mainPanelDevice:get_argument_value(23) > 0 and 1 or 0))		-- PRC_button_TARGET_3 {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(50, (mainPanelDevice:get_argument_value(50) > 0 and 1 or 0))		-- PRC_button_TARGET_POINT {0.0,0.3} {0,1}
+	
+	-- WEAPON  INTERFACE
+	ExportScript.Tools.SendData(437, (mainPanelDevice:get_argument_value(437) > 0 and 1 or 0))		-- PRC_button_AUTO_TURN {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(438, (mainPanelDevice:get_argument_value(438) > 0 and 1 or 0))		-- PRC_button_AIRBORNE_TARGET {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(439, (mainPanelDevice:get_argument_value(439) > 0 and 1 or 0))		-- PRC_button_FORWARD_HEMISPHERE {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(440, (mainPanelDevice:get_argument_value(440) > 0 and 1 or 0))		-- PRC_button_GROUND_MOVING_TARGET {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(441, (mainPanelDevice:get_argument_value(441) > 0 and 1 or 0))		-- PRC_button_CLEAR {0.0,0.3} {0,1}
+	
 	-- generic Radio display and frequency rotarys
 	-------------------------------------------------
 	-- genericRadioConf
@@ -1085,8 +1138,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
-	ExportScript.Tools.SendData(44, string.format("%.1f", mainPanelDevice:get_argument_value(44)))		-- lamp_MasterWarning {0.0,0.3}
-	ExportScript.Tools.SendData(46, string.format("%.1f", mainPanelDevice:get_argument_value(46)))		-- lamp_RotorRPM {0.0,0.1}
+	ExportScript.Tools.SendData(44, string.format("%.1f", mainPanelDevice:get_argument_value(44)))		-- lamp_MasterWarning {0.0,0.3} {0,1}
+	ExportScript.Tools.SendData(46, string.format("%.1f", mainPanelDevice:get_argument_value(46)))		-- lamp_RotorRPM {0.0,0.1} {0,1}
+
 end
 
 -- Pointed to by ProcessDACHighImportance, if the player aircraft is a Ka-50
