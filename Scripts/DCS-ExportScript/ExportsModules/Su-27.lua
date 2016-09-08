@@ -368,7 +368,7 @@ function ExportScript.AF.StatusLamp()
 		ExportScript.Tools.SendDataDAC("730", (lEngineInfo.RPM.left  > 99.95 and 1 or 0) ) -- lamp after burner left engine
 		ExportScript.Tools.SendDataDAC("731", (lEngineInfo.RPM.right > 99.95 and 1 or 0) ) -- lam after burner right engine
 	end
-
+	
 	local lAccelerationUnits = LoGetAccelerationUnits()
 	if lAccelerationUnits ~= nil then
 		--ExportScript.Tools.WriteToLog('lAccelerationUnits: '..ExportScript.Tools.dump(lAccelerationUnits))
