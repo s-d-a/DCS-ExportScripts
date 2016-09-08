@@ -27,53 +27,32 @@ function ExportScript.Tools.ProcessInput()
     -- lCommandArgs[1] = 1 => lDevice
     -- lCommandArgs[2] = 3001 => ButtonID
     -- lCommandArgs[3] = 4 => Value
-
-    if ExportScript.Config.IkarusExport then
-        local lInput,from,port    = ExportScript.UDPsender:receivefrom()
-
+    if ExportScript.Config.Listener then
+        local lInput,from,port    = ExportScript.UDPListener:receivefrom()
+        if ExportScript.Config.Debug then
+            ExportScript.Tools.WriteToLog("lInput: "..ExportScript.Tools.dump(lInput)..", from: "..ExportScript.Tools.dump(from)..", port: "..ExportScript.Tools.dump(port))
+        end
         if lInput then
-            if ExportScript.Config.Debug then
-                ExportScript.Tools.WriteToLog("lInput: "..lInput..", from: "..from..", port: "..port)
-            end
             lCommand = string.sub(lInput,1,1)
 
-            if lCommand == "R" then
-                ExportScript.Tools.ResetChangeValues()
+            if lCommand == "R" then -- R == Reset
+                if ExportScript.Config.IkarusExport then
+					ExportScript.Tools.ResetChangeValues()
+				end
+				if ExportScript.Config.DACExport then
+					ExportScript.Tools.ResetChangeValuesDAC()
+				end
             end
 
             if (lCommand == "C") then
                 lCommandArgs = ExportScript.Tools.StrSplit(string.sub(lInput,2),",")
-                lDevice = GetDevice(lCommandArgs[1])
-                if type(lDevice) == "table" then
-                    lDevice:performClickableAction(lCommandArgs[2],lCommandArgs[3])    
-                end
-            end
-        end
-    end
-    
-    if ExportScript.Config.DACExport then
-        local lInput2,from2,port2 = ExportScript.UDPListener:receivefrom() -- Hardware
-
-        if lInput2 then
-            if ExportScript.Config.Debug then
-                ExportScript.Tools.WriteToLog("lInput2: "..lInput2..", from2: "..from2..", port2: "..port2)
-            end
-            lCommand = string.sub(lInput2,1,1)
-
-            if lCommand == "C" then
-                ExportScript.Tools.ResetChangeValuesDAC()
-            end
-
-            if (lCommand == "C") then
-                lCommandArgs = ExportScript.Tools.StrSplit(string.sub(lInput2,2),",")
                 lDevice = GetDevice(lCommandArgs[1])
                 if lDevice ~= "1000" then
                     if type(lDevice) == "table" then
                         lDevice:performClickableAction(lCommandArgs[2],lCommandArgs[3])
                     end
                 elseif lDevice == "1000" then
-                    --ExportScript.genericRadio(key, value, hardware)
-                    --ExportScript.genericRadio(lCommandArgs[2],lCommandArgs[3], ExportScript.Config.genericRadioHardwareID)
+                    --ExportScript.genericRadio(key, value)
 					ExportScript.genericRadio(lCommandArgs[2],lCommandArgs[3])
                 end
             end
