@@ -57,18 +57,21 @@ function LuaExportStart()
     ExportScript.UDPsender:setoption('broadcast', true)
     ExportScript.UDPsender:settimeout(.001) -- set the timeout for reading the socket
 
-    if ExportScript.Config.DACListener then
+    if ExportScript.Config.Listener then
         ExportScript.UDPListener = ExportScript.socket.udp()
-        ExportScript.UDPListener:setsockname("*", ExportScript.Config.DACListenerPort)
+        ExportScript.UDPListener:setsockname("*", ExportScript.Config.ListenerPort)
         ExportScript.UDPListener:setoption('broadcast', true)
         ExportScript.UDPListener:settimeout(.001) -- set the timeout for reading the socket
     end
 
---    local lrename1, lrename2 = os.rename(ExportScript.Config.LogPath, ExportScript.Config.LogPath..".old")
+    --local lrename1, lrename2 = os.rename(ExportScript.Config.LogPath, ExportScript.Config.LogPath..".old")
     ExportScript.logFile = io.open(ExportScript.Config.LogPath, "w+")
---    if lrenmae1 == nil then
---        ExportScript.Tools.WriteToLog("Rename Error: "..lrename2)
---    end
+	if ExportScript.logFile then
+		ExportScript.logFile:write('\239\187\191') -- create a UTF-8 BOM
+	end
+    --if lrenmae1 == nil then
+    --    ExportScript.Tools.WriteToLog("Rename Error: "..lrename2)
+    --end
     
     ExportScript.AF = {} -- Table for Auxiliary functions
 
@@ -76,7 +79,7 @@ function LuaExportStart()
 end
 
 function LuaExportBeforeNextFrame()
-    ExportScript.Tools.ProcessInput()
+	ExportScript.Tools.ProcessInput()
 end
 
 function LuaExportAfterNextFrame()
@@ -93,7 +96,7 @@ function LuaExportStop()
 	ExportScript.Tools.FlushData()
 
 	ExportScript.UDPsender:close()
-	if ExportScript.Config.DACListener then
+	if ExportScript.Config.Listener then
 		ExportScript.UDPListener:close()
 	end
 	
