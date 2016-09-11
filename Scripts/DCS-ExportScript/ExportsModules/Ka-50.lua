@@ -1140,7 +1140,6 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	]]
 	ExportScript.Tools.SendData(44, string.format("%.1f", mainPanelDevice:get_argument_value(44)))		-- lamp_MasterWarning {0.0,0.3} {0,1}
 	ExportScript.Tools.SendData(46, string.format("%.1f", mainPanelDevice:get_argument_value(46)))		-- lamp_RotorRPM {0.0,0.1} {0,1}
-
 end
 
 -- Pointed to by ProcessDACHighImportance, if the player aircraft is a Ka-50
