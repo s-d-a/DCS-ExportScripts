@@ -75,7 +75,7 @@ ExportScript.ConfigEveryFrameArguments =
 -- DA-200 subgroup ---------------------------------------------------------------------------------------------------------------------------------------------------------
 	[107] = "%.6f", 	-- DA200_TurnNeedle
 	[106] = "%.4f", 	-- DA200_VerticalVelocity
-	[31]  = "%.1f", 	-- DA200_Slipball
+	[31]  = "%.4f", 	-- DA200_Slipball
 	[177] = "%.1f", 	-- KPP_switch
 	[259] = "%.1f", 	-- KPP_ARRETIR
 	[535] = "%.1f", 	-- KPP_ARRETIR_light
@@ -275,6 +275,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[120] =   "%.4f",	-- flightMinutes
 	[121] =   "%.4f",	-- secondsMeterTimeMinutes
 	[122] =   "%.4f",	-- secondsMeterTimeSeconds
+-- Gear Brake
+	[56] =   "%.4f",	-- Gearbrake_needle2
+	[57] =   "%.4f",	-- Gearbrake_needle1
 }
 ExportScript.ConfigArguments =  
 {
