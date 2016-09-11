@@ -1039,6 +1039,8 @@ function ExportScript.AF.FC_Russian_VVI_Old()
 		lBank = lBank / 45
 		lBank = (lBank < -1.0 and -1.0 or lBank)	-- the result is limited to -1.0
 	end
+	
+	lSlipBallPosition = (lSlipBallPosition > 0.0 and (0 - lSlipBallPosition) or (lSlipBallPosition - lSlipBallPosition - lSlipBallPosition))	-- slipball muss negiert werden
 	--lTurn = lTAS / 187.628865979					-- TRUE AIRSPEED (Meter/Second) / 187.628865979 m/s = Turn-Winkel or True Airspeed in Knots/min / 364 Knots
 	--ExportScript.Tools.WriteToLog('lTurn: '..ExportScript.Tools.dump(lTurn))
 	--ExportScript.Tools.WriteToLog('lVVI: '..ExportScript.Tools.dump(lVVI)..', lBank :'..ExportScript.Tools.dump(lBank))
@@ -2364,14 +2366,14 @@ emitter_table =
 		if(#lTWSInfo.Emitters > 0) then
 
 			ExportScript.AF.SPO15_FoundErmitter = true
-		
+			
 			for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
 				if(lTWSInfo.Emitters[EmitterIndex].Priority > lPriorityTmp) then
 					lPriorityTmp      = lTWSInfo.Emitters[EmitterIndex].Priority
 					lPrimaryThreatTmp = EmitterIndex
 				end
 			end
-		
+			
 			for EmitterIndex = 1, #lTWSInfo.Emitters, 1 do
 
 				local lAzimut = ExportScript.Tools.round(lTWSInfo.Emitters[EmitterIndex].Azimuth * 90, 1)
@@ -2431,7 +2433,6 @@ emitter_table =
 					ExportScript.AF.SPO15RWRData[443] = lPrimaryTypeTmp.BottomHemisphere	-- bottom hemisphere
 					
 					lPrimaryTypeTmp = nil
-
 				end
 
 				ExportScript.AF.SPO15RWR_SendData(451, lAzimut <= -170.0) -- left back side
@@ -2538,63 +2539,115 @@ function ExportScript.AF.FindRadarTypeForSPO15(lTWSInfo, PrimaryThreat)
 			lReturn.AIR = 1  -- primary Air or Weapon
 		end
 
-		if lType.level1 == 2 or lType.level1 == 3 then
-			-- ground or navy
-			if lType.level2 == 16 then
-				local lAn, lEn
-				-- Ground SAM
-				lAn, lEn = string.find("s300 sr,s300 tr,an/mpq-53", lNameByType, 0, true)
-				-- long range radar
-				if lAn ~= nil then
-					lReturn.LRR = 1
-				end
+		if lNameByType ~= nil then 
+			if lType.level1 == 2 or lType.level1 == 3 then
+				-- ground or navy
+				if lType.level2 == 16 then
+					local lAn, lEn
+					-- Ground SAM
+					-- RU: s-300ps 64h6e sr,s-300ps 40b6m tr
+					-- US: patriot str
+					lAn, lEn = string.find("s-300ps 64h6e sr,s-300ps 40b6m tr,an/mpq-53,patriot str", lNameByType, 0, true)
+					-- long range radar
+					if lAn ~= nil then
+						lReturn.LRR = 1
+					end
 
-				lAn, lEn = string.find("p19,snr-125,kub,hawk sr,hawk tr,buk sr,buk tr,5n66m sr", lNameByType, 0, true)
-				-- mid range radar
-				if lAn ~= nil then
-					lReturn.MRR = 1
-				end
+					-- US: hawk sr,hawk tr
+					-- Ru: s-300ps 40b6md sr,buk 9s18m1 sr,buk 9a310m1 ln,PATRIOT-RLS_P_1,MT-LB_P_1,kub 1s91 str
+					-- PATRIOT-RLS_P_1 = SA-3 S-125 SR
+					-- MT-LB_P_1 = SA-3-3 S-125 TR
+					lAn, lEn = string.find("s-300ps 40b6md sr,buk 9s18m1 sr,buk 9a310m1 ln,PATRIOT-RLS_P_1,MT-LB_P_1,kub 1s91 str,hawk sr,hawk tr", lNameByType, 0, true)
+					-- mid range radar
+					if lAn ~= nil then
+						lReturn.MRR = 1
+					end
 
-				lAn, lEn = string.find("M163 Vulcan,shilka zsu-23-4,gepard,roland ads,roland radar,osa 9a33 ln,2c6m,9a331,Dog Ear Radar", lNameByType, 0, true)
-				-- short range radar
-				if lAn ~= nil then
-					lReturn.SRR = 1
-				end
---[[			if lType.level4 == 27 or -- Dog Ear Radar
-				   lType.level4 == 31 or -- roland ads
-				   lType.level4 == 32 or -- roland radar
-				   lType.level4 == 38 then -- gepard
-					lReturn.SRR = 1
-				end
-]]
-				lAn, lEn = string.find("1l13 ewr station,55G6", lNameByType, 0, true)
-				-- EWR
-				if lAn ~= nil then
-					lReturn.EWR = 1
-				end
+					-- US: M163 Vulcan,roland ads,roland radar,gepard
+					-- RU: Dog Ear Radar,tor 9a331,tunguska 2c6m,osa 9a33 ln,shilka zsu-23-4
+					lAn, lEn = string.find("M163 Vulcan,gepard,roland ads,roland radar,Dog Ear Radar,tor 9a331,tunguska 2c6m,osa 9a33 ln,shilka zsu-23-4", lNameByType, 0, true)
+					-- short range radar
+					if lAn ~= nil then
+						lReturn.SRR = 1
+					end
+	--[[			if lType.level4 == 27 or -- Dog Ear Radar
+					   lType.level4 == 31 or -- roland ads
+					   lType.level4 == 32 or -- roland radar
+					   lType.level4 == 38 then -- gepard
+						lReturn.SRR = 1
+					end
+	]]
+					-- RU: 1l13 ewr station,55g6 ewr station
+					lAn, lEn = string.find("1l13 ewr station,55g6 ewr station", lNameByType, 0, true)
+					-- EWR
+					if lAn ~= nil then
+						lReturn.EWR = 1
+					end
 
-			elseif lType.level2 == 12 then
-				local lAn, lEn
-				-- Ship
-				lAn, lEn = string.find("FFG-7 Oliver H. Perry class,SG-47 Ticonderoga class", lNameByType, 0, true)
-				-- long range radar
-				if lAn ~= nil then
-					lReturn.LRR = 1
-				end
+				elseif lType.level2 == 12 then
+					local lAn, lEn
+					-- Ship
+					-- RU Ships: Moscow,Piotr Velikiy,Rezky (Krivak-2)
+					-- US Ships: FFG-7 Oliver H. Perry class,SG-47 Ticonderoga class
+					lAn, lEn = string.find("Moscow,Piotr Velikiy,Rezky (Krivak-2),FFG-7 Oliver H. Perry class,SG-47 Ticonderoga class", lNameByType, 0, true)
+					-- long range radar
+					if lAn ~= nil then
+						lReturn.LRR = 1
+					end
 
-				lAn, lEn = string.find("CVN-70 Vinson", lNameByType, 0, true)
-				-- short range radar
-				if lAn ~= nil then
-					lReturn.SRR = 1
+					-- RU Ships: Albatros (Grisha-5),TAKR Kuznetsov,Molniya (Tarantul-3),Neustrashimy
+					-- US Ships: CVN-70 Vinson
+					lAn, lEn = string.find("Albatros (Grisha-5),TAKR Kuznetsov,Molniya (Tarantul-3),Neustrashimy,CVN-70 Vinson", lNameByType, 0, true)
+					-- short range radar
+					if lAn ~= nil then
+						lReturn.SRR = 1
+					end
+				end
+			elseif lType.level1 == 1 and lType.level2 == 1 and lType.level3 == 5 then 
+				 if lType.level4 == 26 or lType.level4 == 27 or lType.level4 == 41 then
+					-- AWACS
+					-- level4 26: a-50
+					-- level4 27: e-3a
+					-- level4 41: e-2c hawkeye
+					lReturn.AWACS = 1
 				end
 			end
-		elseif lType.level1 == 1 and lType.level2 == 1 and lType.level3 == 5 then 
-		     if lType.level4 == 26 or lType.level4 == 27 or lType.level4 == 41 then
-			    -- AWACS
-			    -- level4 26: A-50
-			    -- level4 27: E-3
-			    -- level4 41: E-2C
-			    lReturn.AWACS = 1
+		else -- if lNameByType == nil
+			if lType.level1 == 2 or lType.level1 == 3 then
+				-- ground or navy
+				if lType.level2 == 16 then
+					-- Ground SAM
+					-- long range radar
+
+					-- mid range radar
+					if lType.level4 == 42 then -- SAM Hawk CWAR /MPQ-55
+						lReturn.MRR = 1
+					end
+
+					-- short range radar
+	--[[			if lType.level4 == 27 or -- Dog Ear Radar
+					   lType.level4 == 31 or -- roland ads
+					   lType.level4 == 32 or -- roland radar
+					   lType.level4 == 38 then -- gepard
+						lReturn.SRR = 1
+					end
+	]]
+
+					-- EWR
+
+				elseif lType.level2 == 12 then
+					-- long range radar
+
+					-- short range radar
+				end
+			elseif lType.level1 == 1 and lType.level2 == 1 and lType.level3 == 5 then 
+				 if lType.level4 == 26 or lType.level4 == 27 or lType.level4 == 41 then
+					-- AWACS
+					-- level4 26: a-50
+					-- level4 27: e-3a
+					-- level4 41: e-2c hawkeye
+					lReturn.AWACS = 1
+				end
 			end
 		end
 		-- primary threat handling only
