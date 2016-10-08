@@ -687,7 +687,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	else
 		lDigitalClock = ""
 	end
-	ExportScript.Tools.SendData(2001, string.format("%s", lDigitalClock))
+	ExportScript.Tools.SendData(2010, string.format("%s", lDigitalClock))
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -731,20 +731,50 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
-	--AN/ARC-164 UHF
+	-- AN/ARC-164 UHF and UHF Preset Channel
 	---------------------------------------------------
-	local lUHFRadio = GetDevice(54)
-	ExportScript.Tools.SendData(2002, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
+	local lUHF_RADIO = GetDevice(54)
+	if lUHF_RADIO:is_on() then
+		ExportScript.Tools.SendData(2000, string.format("%.3f", lUHF_RADIO:get_frequency()/1000000))
+		
+		local lPresetChannel = list_indication(10)
+		lPresetChannel = lPresetChannel:gsub("-----------------------------------------", "")
+		lPresetChannel = lPresetChannel:gsub("txtPresetChannel", "")
+		lPresetChannel = lPresetChannel:gsub("%c", "")
+	
+		ExportScript.Tools.SendData(2001, string.format("%s", lPresetChannel))
+	else
+		ExportScript.Tools.SendData(2000, "")
+		ExportScript.Tools.SendData(2001, "")
+	end
 
-	-- AN/ARC-186(V) VHF AM
+	-- AN/ARC-186(V) VHF AM and Preset Channel
 	---------------------------------------------------
 	local lVHF_AM_RADIO = GetDevice(55)
-	ExportScript.Tools.SendData(2003, string.format("%.3f", lVHF_AM_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendData(2002, string.format("%.3f", lVHF_AM_RADIO:get_frequency()/1000000))
 
-	-- AN/ARC-186(V) VHF FM
+	local lVHF_AM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
+	ExportScript.Tools.SendData(2003, lVHF_AM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(137), 2)])
+
+	-- AN/ARC-186(V) VHF FM and Preset Channel
 	-------------------------------------------------
 	local lVHF_FM_RADIO = GetDevice(56)
 	ExportScript.Tools.SendData(2004, string.format("%.3f", lVHF_FM_RADIO:get_frequency()/1000000))
+
+	-- Preset is buggy
+	local lVHF_FM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
+	ExportScript.Tools.SendData(2005, lVHF_FM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(151), 2, "ceil")])
+
+	-- TACAN Channel
+	-------------------------------------------------
+	ExportScript.Tools.SendData(2008, (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0)..(string.format("%1d", (mainPanelDevice:get_argument_value(266))) == "0" and "X" or "Y"))
+
+	-- ILS Channel
+	-------------------------------------------------
+	local lILSFrequencyMHz = {[0]="108",[0.1]="109",[0.2]="110",[0.3]="111"}
+	local lILSFrequencyKHz = {[0]="10",[0.1]="15",[0.2]="30",[0.3]="35",[0.4]="50",[0.5]="55",[0.6]="70",[0.7]="75",[0.8]="90",[0.9]="95"}
+
+	ExportScript.Tools.SendData(2009, lILSFrequencyMHz[ExportScript.Tools.round(mainPanelDevice:get_argument_value(251), 1)].."."..lILSFrequencyKHz[ExportScript.Tools.round(mainPanelDevice:get_argument_value(252), 1)])
 
 	-- CMSC 2020 (Text only)
 	-------------------------------------------------
@@ -760,26 +790,37 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	lCMSCTable = ExportScript.Tools.split(lCMSC, "%c")
 
 	if lCMSCTable[2] ~= nil then
-		ExportScript.Tools.SendData(2005, string.format("%s", lCMSCTable[1]))	-- txt_CHAFF_FLARE
-		ExportScript.Tools.SendData(2006, string.format("%s", lCMSCTable[2]))	-- txt_JMR
-		ExportScript.Tools.SendData(2007, string.format("%s", lCMSCTable[3]))	-- txt_MWS
+		ExportScript.Tools.SendData(2011, string.format("%s", lCMSCTable[1]))	-- txt_CHAFF_FLARE
+		ExportScript.Tools.SendData(2012, string.format("%s", lCMSCTable[2]))	-- txt_JMR
+		ExportScript.Tools.SendData(2013, string.format("%s", lCMSCTable[3]))	-- txt_MWS
 	else
-		ExportScript.Tools.SendData(2005, "")	-- txt_CHAFF_FLARE
-		ExportScript.Tools.SendData(2006, "")	-- txt_JMR
-		ExportScript.Tools.SendData(2007, "")	-- txt_MWS
+		ExportScript.Tools.SendData(2011, "")	-- txt_CHAFF_FLARE
+		ExportScript.Tools.SendData(2012, "")	-- txt_JMR
+		ExportScript.Tools.SendData(2013, "")	-- txt_MWS
 	end
-
-	-- TACAN Channel
+	
+	--[[
+	-- CMSP
 	-------------------------------------------------
-	ExportScript.Tools.SendData(2008, (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0)..(string.format("%1d", (mainPanelDevice:get_argument_value(266))) == "0" and "X" or "Y"))
+	local lCMSP = list_indication(7)
+	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(lCMSP))
+	lCMSP = lCMSP:gsub("-----------------------------------------", "")
+	lCMSP = lCMSP:gsub("txt_UP", "")
+	lCMSP = lCMSP:gsub("txt_DOWN1", "")
+	lCMSP = lCMSP:gsub("txt_DOWN2", "")
+	lCMSP = lCMSP:gsub("txt_DOWN3", "")
+	lCMSP = lCMSP:gsub("txt_DOWN4", "")
+	lCMSP = lCMSP:gsub("%c%c(%C)", "%1")
+	lCMSP = lCMSP.."\n"
 
-	-- ILS Channel
-	-------------------------------------------------
-	local lILSFrequencyMHz = {[0]="108",[0.1]="109",[0.2]="110",[0.3]="111"}
-	local lILSFrequencyKHz = {[0]="10",[0.1]="15",[0.2]="30",[0.3]="35",[0.4]="50",[0.5]="55",[0.6]="70",[0.7]="75",[0.8]="90",[0.9]="95"}
+	local lCMSPTable = {}
+	lCMSPTable = ExportScript.Tools.split(lCMSP, "%c")
 
-	ExportScript.Tools.SendData(2009, lILSFrequencyMHz[ExportScript.Tools.round(mainPanelDevice:get_argument_value(251), 1)].."."..lILSFrequencyKHz[ExportScript.Tools.round(mainPanelDevice:get_argument_value(252), 1)])
-
+	lCMSP = lCMSPTable[1].."\n"..table.concat(lCMSPTable, " ", 2)
+	ExportScript.Tools.SendData(2014, lCMSP)
+	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(lCMSP))
+	]]
+	
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {290,292,293})
 	-- Engine Instruments Lights, Flight Instruments Lights, Auxiliary Instruments Lights
@@ -981,25 +1022,6 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	-- NOT FOR ARCAZE
 	-------------------------------------------------
 	--[[
-	-- CMSP
-	-------------------------------------------------
-	local lCMPS = list_indication(7)
-	lCMPS = lCMPS:gsub("-----------------------------------------", "")
-	lCMPS = lCMPS:gsub("txt_UP", "")
-	lCMPS = lCMPS:gsub("txt_DOWN1", "")
-	lCMPS = lCMPS:gsub("txt_DOWN2", "")
-	lCMPS = lCMPS:gsub("txt_DOWN3", "")
-	lCMPS = lCMPS:gsub("txt_DOWN4", "")
-	lCMPS = lCMPS:gsub("%c%c(%C)", "%1")
-	lCMPS = lCMPS.."\n"
-
-	local lCMPSTable = {}
-	lCMPSTable = ExportScript.Tools.split(lCMPS, "%c")
-
-	lCMPS = lCMPSTable[1].."\n"..table.concat(lCMPSTable, " ", 2)
-	ExportScript.Tools.SendDataDAC("2011", lCMPS)
-	
-	
 	-- CMSC
 	-------------------------------------------------
 	local lCMSC = list_indication(8)
@@ -1014,15 +1036,34 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	lCMSCTable = ExportScript.Tools.split(lCMSC, "%c")
 
     if lCMSCTable[2] ~= nil then
-		ExportScript.Tools.SendDataDAC("2012", lCMSCTable[1]) -- txt_CHAFF_FLARE
-		ExportScript.Tools.SendDataDAC("2013", lCMSCTable[2]) -- txt_JMR
-		ExportScript.Tools.SendDataDAC("2014", lCMSCTable[3]) -- txt_MWS
+		ExportScript.Tools.SendDataDAC("2011", lCMSCTable[1]) -- txt_CHAFF_FLARE
+		ExportScript.Tools.SendDataDAC("2012", lCMSCTable[2]) -- txt_JMR
+		ExportScript.Tools.SendDataDAC("2013", lCMSCTable[3]) -- txt_MWS
 	else
-		ExportScript.Tools.SendDataDAC("2012", "") -- txt_CHAFF_FLARE
-		ExportScript.Tools.SendDataDAC("2013", "") -- txt_JMR
-		ExportScript.Tools.SendDataDAC("2014", "") -- txt_MWS
+		ExportScript.Tools.SendDataDAC("2011", "") -- txt_CHAFF_FLARE
+		ExportScript.Tools.SendDataDAC("2012", "") -- txt_JMR
+		ExportScript.Tools.SendDataDAC("2013", "") -- txt_MWS
 	end
+
+	-- CMSP
+	-------------------------------------------------
+	local lCMSP = list_indication(7)
+	lCMSP = lCMSP:gsub("-----------------------------------------", "")
+	lCMSP = lCMSP:gsub("txt_UP", "")
+	lCMSP = lCMSP:gsub("txt_DOWN1", "")
+	lCMSP = lCMSP:gsub("txt_DOWN2", "")
+	lCMSP = lCMSP:gsub("txt_DOWN3", "")
+	lCMSP = lCMSP:gsub("txt_DOWN4", "")
+	lCMSP = lCMSP:gsub("%c%c(%C)", "%1")
+	lCMSP = lCMSP.."\n"
+
+	local lCMSPTable = {}
+	lCMSPTable = ExportScript.Tools.split(lCMSP, "%c")
+
+	lCMSP = lCMSPTable[1].."\n"..table.concat(lCMSPTable, " ", 2)
+	ExportScript.Tools.SendDataDAC("2014", lCMSP)
 	]]
+	
 	
 	--=====================================================================================
 	--[[
