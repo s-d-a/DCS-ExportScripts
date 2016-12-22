@@ -778,9 +778,11 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	--ExportScript.Tools.WriteToLog('lEKRANtxt1: '..ExportScript.Tools.dump(lEKRANtxt1))
 	--ExportScript.Tools.WriteToLog('lEKRANtxt2: '..ExportScript.Tools.dump(lEKRANtxt2))
 
-	lEkranSendString = string.sub(lEKRANtxt2,1,9).."\n"..string.sub(lEKRANtxt2,11,19).."\n"..string.sub(lEKRANtxt2,21,29).."\n"..string.sub(lEKRANtxt2,31,39)
-	ExportScript.Tools.SendData(2010, string.format("%s", lEkranSendString))
-	ExportScript.Tools.SendData(2011, string.format("%s", lEKRANtxtqueue))
+	--lEkranSendString = string.sub(lEKRANtxt2,1,9).."\n"..string.sub(lEKRANtxt2,11,19).."\n"..string.sub(lEKRANtxt2,21,29).."\n"..string.sub(lEKRANtxt2,31,39)
+	ExportScript.Tools.SendData(2010, string.format("%s", string.sub(lEKRANtxt2,1,9)))
+	ExportScript.Tools.SendData(2011, string.format("%s", string.sub(lEKRANtxt2,11,19)))
+	ExportScript.Tools.SendData(2012, string.format("%s", string.sub(lEKRANtxt2,21,29)))
+	ExportScript.Tools.SendData(2013, string.format("%s", string.sub(lEKRANtxt2,31,39)))
 
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {300, 299, 298})
