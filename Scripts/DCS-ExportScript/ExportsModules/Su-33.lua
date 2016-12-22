@@ -464,6 +464,7 @@ function ExportScript.AF.MechanicalDevicesIndicator(FunctionTyp)
 	local lFunctionTyp = FunctionTyp or "Ikarus"
 -- The mechanical devices indicator shows the position of the landing gear, flaps, leading edge flaps and airbrake
 	local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
+	--ExportScript.Tools.WriteToLog('lMechInfo: '..ExportScript.Tools.dump(lMechInfo))
 	if lMechInfo == nil then
 		return
 	end
@@ -537,7 +538,7 @@ function ExportScript.AF.MechanicalDevicesIndicator(FunctionTyp)
         [status] = number: "0"
         [value] = number: "0"
     }]]
-	local lTrueAirSpeed = LoGetTrueAirSpeed()
+	--local lTrueAirSpeed = LoGetTrueAirSpeed()
 
 	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
 		ExportScript.Tools.SendDataDAC("500", (((lMechInfo.gear.status == 1 and lMechInfo.gear.value < 1) or (lMechInfo.gear.status == 0 and lMechInfo.gear.value > 0)) and 1 or 0 ) ) -- gear warning light
@@ -547,10 +548,9 @@ function ExportScript.AF.MechanicalDevicesIndicator(FunctionTyp)
 
 		ExportScript.Tools.SendDataDAC("510", (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0) ) -- speedbreakes on > 0.1 (0 - 1)
 
-		ExportScript.Tools.SendDataDAC("531", (lMechInfo.flaps.value > 0.25 and 1 or 0) ) -- flap 1. position
-		ExportScript.Tools.SendDataDAC("532", (lMechInfo.flaps.value > 0.93 and 1 or 0) ) -- flap 2. position
-		ExportScript.Tools.SendDataDAC("533", ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1 or 0) ) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
-		ExportScript.Tools.SendDataDAC("534", (lMechInfo.gear.value > 0.5 and 1 or 0) )			-- Intake FOD shields
+		ExportScript.Tools.SendDataDAC("531", (lMechInfo.flaps.value > 0.93 and 1 or 0) ) -- flap 
+		ExportScript.Tools.SendDataDAC("532", ((lMechInfo.gear.value > 0.5 and lMechInfo.gear.nose.rod > 0.02) and 1 or 0) ) -- Intake FOD shields
+		ExportScript.Tools.SendDataDAC("533", ((lMechInfo.gear.status == 0 and lMechInfo.flaps.status > 0) and 1 or 0) ) -- Flaps Warning, same light as gear warning light, but blinking light
    
 		ExportScript.Tools.SendDataDAC("541", (lMechInfo.hook.value > 0.8 and 1 or 0) )		-- Hook
 		ExportScript.Tools.SendDataDAC("551", (lMechInfo.noseflap.value > 20.0 and 1 or 0) )
@@ -559,18 +559,17 @@ function ExportScript.AF.MechanicalDevicesIndicator(FunctionTyp)
 	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
 		local lWarningLight = 0.0
 
-		if lTrueAirSpeed ~= nil then
-			lWarningLight = ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1.0 or 0.0) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
-			lWarningLight = (((lMechInfo.gear.status == 1 and lMechInfo.gear.value < 1) or (lMechInfo.gear.status == 0 and lMechInfo.gear.value > 0)) and 1.0 or lWarningLight )  -- gear warning light
-		end
+		--lWarningLight = ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1.0 or 0.0) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
+		lWarningLight = ((lMechInfo.gear.status == 0 and lMechInfo.flaps.status > 0) and 1.0 or lWarningLight ) -- Flaps Warning, same light as gear warning light, but blinking light
+		lWarningLight = (((lMechInfo.gear.status == 1 and lMechInfo.gear.value < 1) or (lMechInfo.gear.status == 0 and lMechInfo.gear.value > 0)) and 1.0 or lWarningLight )  -- gear warning light
 
 		ExportScript.Tools.SendData(500, string.format("%.1f", lWarningLight))
 		ExportScript.Tools.SendData(501, (lMechInfo.gear.value > 0.85 and 1 or 0))           -- nose gear
 		ExportScript.Tools.SendData(502, (lMechInfo.gear.value > 0.95 and 1 or 0))           -- left gear
 		ExportScript.Tools.SendData(503, (lMechInfo.gear.value == 1 and 1 or 0))             -- right gear
 		ExportScript.Tools.SendData(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0))    -- speedbreakes on > 0.1 (0 - 1)
-		ExportScript.Tools.SendData(531, (lMechInfo.gear.value > 0.5 and 1 or 0))            -- Intake FOD shields
-		ExportScript.Tools.SendData(532, (lMechInfo.flaps.value > 0.93 and 1 or 0))          -- flap
+		ExportScript.Tools.SendData(531, (lMechInfo.flaps.value > 0.93 and 1 or 0))          -- flap
+		ExportScript.Tools.SendData(532, ((lMechInfo.gear.value > 0.5 and lMechInfo.gear.nose.rod > 0.02) and 1 or 0))            -- Intake FOD shields
 		ExportScript.Tools.SendData(541, (lMechInfo.hook.value > 0.8 and 1 or 0))            -- Hook
 	end
 end
