@@ -799,11 +799,11 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2013, "")	-- txt_MWS
 	end
 	
-	--[[
+	
 	-- CMSP
 	-------------------------------------------------
 	local lCMSP = list_indication(7)
-	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(lCMSP))
+	--ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(lCMSP))
 	lCMSP = lCMSP:gsub("-----------------------------------------", "")
 	lCMSP = lCMSP:gsub("txt_UP", "")
 	lCMSP = lCMSP:gsub("txt_DOWN1", "")
@@ -811,15 +811,28 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	lCMSP = lCMSP:gsub("txt_DOWN3", "")
 	lCMSP = lCMSP:gsub("txt_DOWN4", "")
 	lCMSP = lCMSP:gsub("%c%c(%C)", "%1")
-	lCMSP = lCMSP.."\n"
 
-	local lCMSPTable = {}
-	lCMSPTable = ExportScript.Tools.split(lCMSP, "%c")
+	local lCMSPTable = {"","","","","","","",""}
+	
+	if lCMSP ~= "" then
+		--ExportScript.Tools.WriteToLog('CMSP 2: '..ExportScript.Tools.dump(lCMSP))
+		
+		lCMSP = lCMSP:gsub("  ", " ")
+		lCMSP = lCMSP:gsub(" %c", "\n")
+		lCMSP = lCMSP:gsub(" ", "\n")
+		
+		lCMSPTable  = ExportScript.Tools.split(lCMSP, "%c")
+	end
 
-	lCMSP = lCMSPTable[1].."\n"..table.concat(lCMSPTable, " ", 2)
-	ExportScript.Tools.SendData(2014, lCMSP)
-	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(lCMSP))
-	]]
+	--ExportScript.Tools.WriteToLog('lCMSPTable: '..ExportScript.Tools.dump(lCMSPTable))
+	ExportScript.Tools.SendData(2014,  string.format("%s", lCMSPTable[1]))
+	ExportScript.Tools.SendData(2015,  string.format("%s", lCMSPTable[2]))
+	ExportScript.Tools.SendData(2016,  string.format("%s", lCMSPTable[3]))
+	ExportScript.Tools.SendData(2017,  string.format("%s", lCMSPTable[4]))
+	ExportScript.Tools.SendData(2018,  string.format("%s", lCMSPTable[5]))
+	ExportScript.Tools.SendData(2019,  string.format("%s", lCMSPTable[6]))
+	ExportScript.Tools.SendData(2020,  string.format("%s", lCMSPTable[7]))
+	ExportScript.Tools.SendData(2021,  string.format("%s", lCMSPTable[8]))
 	
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {290,292,293})
