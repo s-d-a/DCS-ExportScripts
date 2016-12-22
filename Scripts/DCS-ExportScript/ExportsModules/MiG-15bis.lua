@@ -36,7 +36,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[6] = "%.4f",		-- AGK_47B_roll {-1.0, 1.0}
 	[7] = "%.4f",		-- AGK_47B_pitch {1.0, -1.0}
 	[11] = "%.4f",		-- AGK_47B_failure_flag {0.0, 1.0}
-	[8] = "%.4f",		-- AGK_47B_sideslip {-1.0, 1.0}
+	--[8] = "%.4f",		-- AGK_47B_sideslip {-1.0, 1.0}
 	[9] = "%.4f",		-- AGK_47B_turn {-1.0, 1.0}
 	[10] = "%.4f",		-- AGK_47B_horizon {-1.0, 1.0}
 	[35] = "%.4f",		-- PRV_46_RAlt {-10.0, 0.0, 1200.0}{-1.0, 0.0, 1.0}
@@ -290,6 +290,11 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+	-- AGK_47B_sideslip negate
+	--[8] = "%.4f",		-- AGK_47B_sideslip {-1.0, 1.0}
+	local lAGK_47B_sideslip = mainPanelDevice:get_argument_value(8)
+	lAGK_47B_sideslip = (lAGK_47B_sideslip > 0.0 and (0 - lAGK_47B_sideslip) or (lAGK_47B_sideslip - lAGK_47B_sideslip - lAGK_47B_sideslip))	-- negate
+	ExportScript.Tools.SendData(8, string.format("%.4f", lAGK_47B_sideslip)) -- AGK_47B_sideslip
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
