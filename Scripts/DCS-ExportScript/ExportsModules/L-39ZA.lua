@@ -73,7 +73,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[77] = "%.4f",		-- RKL-41 needle {0.0, 1.0}{0.0, math.pi * 2.0}
 	[156] = "%.4f",		-- RKL-41 Signal
 	[531] = "%.4f",		-- KM-8 heading  {0.0, 1.0}{0.0, math.pi * 2.0}
-	[530] = "%.4f",		-- KM-8 variation {-1.0, 1.0}{-math.pi, math.pi}
+	[530] = "%.4f",		-- KM-8 variation {1.0, -1.0}{-math.pi, math.pi}
 	-- electric interface
 	[92] = "%.4f",		-- Voltmeter {0.0, 1.0}{0.0, 40.0}
 	[93] = "%.4f",		-- Ampermeter {0.0, 1.0}{-100.0, 300.0}
@@ -220,16 +220,6 @@ ExportScript.ConfigEveryFrameArguments =
 	[391] = "%.4f",		-- Backseat - VD-20 km Ind {0.0, 1.0}{0.0, 20.0}
 	[392] = "%.4f",		-- Backseat - VD-20 m Ind {0.0, 1.0}{0.0, 1000.0}
 	[393] = "%.4f",		-- Backseat - VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
-	-- Barometric altimeter
-	-- Altimeter Feet , copy of A-10 altimeter
-	[737] = "%.4f",		-- Altimeter_100_footPtr {0.0, 1.0}{0.0, 1000.0}
-	[732] = "%.4f",		-- Altimeter_10000_footCount {0.0, 1.0}{0.0, 10.0}
-	[731] = "%.4f",		-- Altimeter_1000_footCount {0.0, 1.0}{0.0, 10.0}
-	[730] = "%.4f",		-- Altimeter_100_footCount {0.0, 1.0}{0.0, 10.0}
-	[736] = "%.4f",		-- pressure_setting_0 {0.0, 1.0}{0.0, 10.0}
-	[735] = "%.4f",		-- pressure_setting_1 {0.0, 1.0}{0.0, 10.0}
-	[734] = "%.4f",		-- pressure_setting_2 {0.0, 1.0}{0.0, 10.0}
-	[733] = "%.4f",		-- pressure_setting_3 {0.0, 1.0}{0.0, 10.0}
 	-- AIRSPEED AND MACH
 	[386] = "%.4f",		-- Backseat - IAS {0.0, 0.08, 0.186, 0.296, 0.436, 0.55, 0.635, 0.705, 0.765, 0.824, 1.0}{0.0, 100.0, 150.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 1200.0}
 	[387] = "%.4f",		-- Backseat - TAS {0.0, 0.08, 0.186, 0.296, 0.436, 0.55, 0.635, 0.705, 0.765, 0.824, 1.0}{0.0, 100.0, 150.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 1200.0}
@@ -646,7 +636,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	]]
 	
 	-- Front Seat
-	
+
 	-- ADI correction
 	--[31] = "%.4f",		-- KPP 1273K pitch {-0.5, 0.5} {-math.pi / 2.0, math.pi / 2.0}
 	--[40] = "%.4f",		-- KPP 1273K sideslip {-1.0, 1.0}
@@ -665,7 +655,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	-- HSI correction
 	--[41] = "%.4f",		-- HSI heading {1.0, 0.0} {0.0, math.pi * 2.0}
-	--[42] = "%.4f",		-- HSI commanded course needle (white needle) {1.0, 0.0} {0.0, math.pi * 2.0} 
+	--[42] = "%.4f",		-- HSI commanded course needle (yellow needle) {1.0, 0.0} {0.0, math.pi * 2.0} 
 	local lHeading 			= mainPanelDevice:get_argument_value(41)
 	local lCommandCourse	= mainPanelDevice:get_argument_value(42)
 	if lHeading < 0.0 then
@@ -674,7 +664,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		lHeading = 0 - lHeading	-- negate
 	end
 	
-	lCommandCourse = lCommandCourse + 0.5 -- 180 degree turn
+	lCommandCourse = lCommandCourse * 0.5 -- 180 degree turn
 	
 	ExportScript.Tools.SendData(41, string.format("%.4f", lHeading))
 	ExportScript.Tools.SendData(42, string.format("%.4f", lCommandCourse))
@@ -797,8 +787,4 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
-
-function ExportScript.genericRadio(key, value, hardware)
-end
-
 
