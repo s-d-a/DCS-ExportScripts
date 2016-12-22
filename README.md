@@ -7,8 +7,6 @@ Zur Zeit werden folgende Export-Formate unterstützt.
 - DAC (DCS Arcaze Connector) von [H-J-P](https://github.com/H-J-P/DAC/) um die Arcaze USB Controller anzusprechen (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
 - Ikarus von [H-J-P](https://github.com/H-J-P/Ikarus), unsere neue Glasscockpitsoftware
 
-Die Unterstüng von HELIOS und HawgTouch mit unser HT Gauges DLL entfällt.
-
 Der Export von Daten wird für folgende Module unterstützt:
 - Ka-50
 - A-10C
@@ -27,7 +25,7 @@ Der Export von Daten wird für folgende Module unterstützt:
 - Su-25T
 - alle Flaming Cliffs Flugzeuge
 
-Kompatibel zur DCS World 1.5.4 Update 5 und DCS World (Alpha) 2.0.3 Update 2
+Kompatibel zur DCS World 1.5.5 und DCS World (Alpha) 2.0.4
 
 ###English###
 ---
@@ -36,8 +34,6 @@ This is an universally insertable export script for DCS. It allows for the simul
 At present the following export formats are supported:
 - DAC (DCS Arcaze Connector) by [H-J-P](https://github.com/H-J-P/DAC/) to address the Arcaze USB Controller (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
 - Ikarus by [H-J-P](https://github.com/H-J-P/Ikarus), our new glass cockpit software
-
-The support for HELIOS and HawgTouch with our HT gauges pack DLL is canceled.
 
 Following moduls are supported:
 - Ka-50
@@ -57,7 +53,7 @@ Following moduls are supported:
 - Su-25T
 - all Flaming Cliffs aircrafts
 
-Compatible with DCS World 1.5.4 Update 5 and DCS World (Alpha) 2.0.3 Update 2
+Compatible with DCS World 1.5.5 and DCS World (Alpha) 2.0.4
 
 ###Wiki###
 ---
