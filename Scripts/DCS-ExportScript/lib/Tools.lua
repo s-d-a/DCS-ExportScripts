@@ -85,6 +85,43 @@ function ExportScript.Tools.StrSplit(str, delim, maxNb)
     return lResult
 end
 
+-- remove trailing and leading whitespace from string.
+function ExportScript.Tools.trim(s)
+	return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+-- remove leading whitespace from string.
+function ExportScript.Tools.ltrim(s)
+	return (s:gsub("^%s*", ""))
+end
+
+-- remove trailing whitespace from string.
+function ExportScript.Tools.rtrim(s)
+	local n = #s
+	while n > 0 and s:find("^%s", n) do n = n - 1 end
+	return s:sub(1, n)
+end
+-- The following more obvious implementation is generally not
+-- as efficient, particularly for long strings since Lua pattern matching
+-- starts at the left (though in special cases it is more efficient).
+-- Related discussion on p.197 of book "Beginning Lua Programming".
+--[[
+function ExportScript.Tools.rtrim(s) 
+	return (s:gsub("%s*$", "")) 
+end
+]]
+
+-- substitute variables into string.
+-- Example: subst("a=$(a),b=$(b)", {a=1, b=2}) --> "a=1,b=2".
+function ExportScript.Tools.subst(s, t)
+  -- note: handle {a=false} substitution
+	s = s:gsub("%$%(([%w_]+)%)", function(name)
+		local val = t[name]
+		return val ~= nil and tostring(val)
+	end)
+	return s
+end
+
 function ExportScript.Tools.round(num, idp)
   local lMult = 10^(idp or 0)
   return math.floor(num * lMult + 0.5) / lMult
