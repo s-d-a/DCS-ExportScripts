@@ -73,7 +73,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[77] = "%.4f",		-- RKL-41 needle {0.0, 1.0}{0.0, math.pi * 2.0}
 	[156] = "%.4f",		-- RKL-41 Signal
 	[531] = "%.4f",		-- KM-8 heading  {0.0, 1.0}{0.0, math.pi * 2.0}
-	[530] = "%.4f",		-- KM-8 variation {-1.0, 1.0}{-math.pi, math.pi}
+	[530] = "%.4f",		-- KM-8 variation {1.0, -1.0}{-math.pi, math.pi}
 	-- electric interface
 	[92] = "%.4f",		-- Voltmeter {0.0, 1.0}{0.0, 40.0}
 	[93] = "%.4f",		-- Ampermeter {0.0, 1.0}{-100.0, 300.0}
@@ -645,7 +645,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	-- HSI correction
 	--[41] = "%.4f",		-- HSI heading {1.0, 0.0} {0.0, math.pi * 2.0}
-	--[42] = "%.4f",		-- HSI commanded course needle (white needle) {1.0, 0.0} {0.0, math.pi * 2.0} 
+	--[42] = "%.4f",		-- HSI commanded course needle (wihte needle) {1.0, 0.0} {0.0, math.pi * 2.0} 
 	local lHeading 			= mainPanelDevice:get_argument_value(41)
 	local lCommandCourse	= mainPanelDevice:get_argument_value(42)
 	if lHeading < 0.0 then
