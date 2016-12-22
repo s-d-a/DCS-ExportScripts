@@ -34,22 +34,24 @@ ExportScript.ConfigEveryFrameArguments =
 	--[881] = "%.4f",		-- wheelBrakes {0.0, 1.0}
 	----[579] = "",		-- throttle_cover {0.0, 1.0}
 	----[208] = "",		-- rotor_brake_handle {0.0, 1.0}
-	-- Left main panel
+	-- Variometer
 	---------------------------------------------------------------
-	[16] = "%.2f",		-- Variometer_L {-30, -20, -10, -5, -2, -1, 0, 1, 2, 5, 10, 20, 30} {-1.0, -0.71, -0.43, -0.23, -0.09, -0.05, 0, 0.05, 0.09, 0.23, 0.43, 0.71, 1.0}
-	[95] = "%.2f",		-- Variometer_R {-30, -20, -10, -5, -2, -1, 0, 1, 2, 5, 10, 20, 30} {-1.0, -0.71, -0.43, -0.23, -0.09, -0.05, 0, 0.05, 0.09, 0.23, 0.43, 0.71, 1.0}
-	[24] = "%.3f",		-- IAS_L {-10.0, 0.0, 13.889, 27.78, 41.67, 55.56, 69.44, 83.33, 111.1, 125.0, 129.2} {0.0, 0.001, 0.028, 0.165, 0.277, 0.393, 1.0}
-	[790] = "%.3f",		-- IAS_R {-10.0, 0.0, 13.889, 27.78, 41.67, 55.56, 69.44, 83.33, 111.1, 125.0, 129.2} {0.0, 0.001, 0.028, 0.165, 0.277, 0.393, 1.0}
+	[16] = "%.4f",		-- Variometer_L {-30, -20, -10, -5, -2, -1, 0, 1, 2, 5, 10, 20, 30} {-1.0, -0.71, -0.43, -0.23, -0.09, -0.05, 0, 0.05, 0.09, 0.23, 0.43, 0.71, 1.0}
+	[95] = "%.4f",		-- Variometer_R {-30, -20, -10, -5, -2, -1, 0, 1, 2, 5, 10, 20, 30} {-1.0, -0.71, -0.43, -0.23, -0.09, -0.05, 0, 0.05, 0.09, 0.23, 0.43, 0.71, 1.0}
+	-- Airspeed
+	---------------------------------------------------------------
+	[24] = "%.4f",		-- IAS_L {-10.0, 0.0, 13.889, 27.78, 41.67, 55.56, 69.44, 83.33, 111.1, 125.0, 129.2} {0.0, 0.001, 0.028, 0.165, 0.277, 0.393, 1.0}
+	[790] = "%.4f",		-- IAS_R {-10.0, 0.0, 13.889, 27.78, 41.67, 55.56, 69.44, 83.33, 111.1, 125.0, 129.2} {0.0, 0.001, 0.028, 0.165, 0.277, 0.393, 1.0}
 	-- AGB-3k
 	---------------------------------------------------------------
 	[13] = "%.4f",		-- AGB_3K_Left_roll {-1.0, 1.0}
-	[12] = "%.4f",		-- AGB_3K_Left_pitch {1.0, -1.0}
+	--[12] = "%.4f",		-- AGB_3K_Left_pitch {1.0, -1.0}
 	[14] = "%.4f",		-- AGB_3K_Left_failure_flag {0.0, 1.0}
 	[15] = "%.4f",		-- AGB_3K_Left_sideslip {1.0, -1.0}
 	[820] = "%.4f",		-- AGB_3K_Left_index {0.5, -0.5}
 	------
 	[92] = "%.4f",		-- AGB_3K_Right_roll {-1.0, 1.0}
-	[91] = "%.4f",		-- AGB_3K_Right_pitch {1.0, -1.0}
+	--[91] = "%.4f",		-- AGB_3K_Right_pitch {1.0, -1.0}
 	[93] = "%.4f",		-- AGB_3K_Right_failure_flag {0.0, 1.0}
 	[94] = "%.4f",		-- AGB_3K_Right_sideslip {1.0, -1.0}
 	[821] = "%.4f",		-- AGB_3K_Right_index {0.5, -0.5}
@@ -414,6 +416,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[547] = "%.f",		-- LeftPlafond {1.0, 0.0}
 	[665] = "%.f",		-- RightPlafond {1.0, 0.0}
 	[920] = "%.f"		-- RecorderP503B_PanelLightness {1.0, 0.0}
+	-- Windshield Wiper
+	--[254] = "%.4f"		-- WindscreenWiperL {0.0, 1.0}
+	--[255] = "%.4f"		-- WindscreenWiperR {0.0, 1.0}
 }
 ExportScript.ConfigArguments = 
 {
@@ -876,7 +881,7 @@ ExportScript.ConfigArguments =
 	[481] = "%1d",		--PTR-RES-TMB-BLOCK (ARC-UD, Lock Switch)
 	-------------------------------------------------------------
 	-- PKV Sight
-	[589] =  "%.4f",		--PTR-LAZS-LVR-AIMLGT (Sight Brightness)
+	[589] = "%.4f",		--PTR-LAZS-LVR-AIMLGT (Sight Brightness)
 
 	[855] = "%.4f",		--PTR-PKV-ROTARY (Sight Limb)
 
@@ -969,6 +974,12 @@ ExportScript.ConfigArguments =
 	------------------------------------------------
 	-- jump descent siren
 	[323] = "%1d",		--PTR-LSPE-TMB-AIR-SIREN (Alarm Bell Button)
+	------------------------------------------------
+	[352] = "%1d",		--PTR-LPE-TMB-FKP (Gun Camera Switch, ON/OFF)
+	------------------------------------------------
+	-- Windshield Wiper
+	[331] = "%.1f",		--PTR-LES-TMB-GLSCLN (Left Windscreen Wiper Control Switch, OFF, START, RESET, SPEED 1, SPEED 2) {0.0,0.1,0.2,0.3,0.4}
+	[478] = "%.1f",		--PTR-RES-TMB-GLSCLN (Right Windscreen Wiper Control Switch, OFF, START, RESET, SPEED 1, SPEED 2) {0.0,0.1,0.2,0.3,0.4}
 }
 
 -----------------------------
@@ -987,6 +998,16 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+	
+	--[12] = "%.4f",		-- AGB_3K_Left_pitch {1.0, -1.0}
+	--[91] = "%.4f",		-- AGB_3K_Right_pitch {1.0, -1.0}
+	local lPitch = mainPanelDevice:get_argument_value(12)
+	lPitch = (lPitch > 0.0 and (0 - lPitch) or (lPitch - lPitch - lPitch)) -- negate
+	ExportScript.Tools.SendData(12, string.format("%.4f", lPitch))
+	
+	lPitch = mainPanelDevice:get_argument_value(91)
+	lPitch = (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch)) -- negate
+	ExportScript.Tools.SendData(91, string.format("%.4f", lPitch))
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -1024,6 +1045,9 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {280, 281, 491, 492, 894, 895, 914})
 	-- Lh RedLights Brightness Rst gr.1, Lh RedLights Brightness Rst gr.2, Rh RedLights Brightness Rst gr.1, Rh RedLights Brightness Rst gr.2, Central RedLights Brightness Rst gr.1, Central RedLights Brightness Rst gr.2, 5.5V Lights Brightness Rheostat
 
+	-- deactivated WPADI right warning Flag 
+	ExportScript.Tools.SendData(2020, 0)
+	
 	--[[
 	-- AGB_3K_LEFT
 	local lAGB_3K_LEFT = GetDevice(6)
