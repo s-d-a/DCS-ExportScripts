@@ -100,12 +100,18 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		--local lAltCounter				= {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
 		local lAltCounter				= {[0] = 0.0, [1] = 0.1, [2] = 0.2, [3] = 0.3, [4] = 0.4, [5] = 0.5, [6] = 0.6, [7] = 0.7, [8] = 0.8, [9] = 0.9}
 		--local lAltBarTmp				= string.format("%03d", ((lAltBar * 3.28084) / 100))			-- meter to feeds
+--ExportScript.Tools.WriteToLog("lAltBar 1: "..ExportScript.Tools.dump(lAltBar))
 		--lAltBar 						= lAltBar + (9.5 * (760 - lBasicAtmospherePressure))	-- 9.5 m per 1mmHg difference , eventuell minus der Differenz
+		-- bei 5000 feed in Ikarus 5100 feed
+--ExportScript.Tools.WriteToLog("lAltBar 2: "..ExportScript.Tools.dump(lAltBar))
+
 		local lAltBarTmp				= ((lAltBar * 3.28084) / 100)			-- meter to feeds
 		lAltBar 						= lAltBar * 3.28084										-- meter to feeds
 		lBasicAtmospherePressure		= lBasicAtmospherePressure * 3.937023					-- mmHg to inPa (0.03937023 * 100)
 		lBasicAtmospherePressure		= string.format("%04d", lBasicAtmospherePressure)
 
+--ExportScript.Tools.WriteToLog("lAltBar 3: "..ExportScript.Tools.dump(lAltBar))
+		
 		lAltBar = lAltBar / 1000
 		lAltBar = lAltBar - ExportScript.Tools.round(lAltBar, 0, "floor")
 
@@ -202,85 +208,60 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		ExportScript.AF.FC_OneNeedleGauge(lEngineRPMright, 110, 55)
 
 		-- RPM FAN Left
-		if lEngineRPMleft > 98.85 then
-			lEngineRPMleft = lEngineRPMleft / 1.88 --52.58 > 80%
-		elseif lEngineRPMleft > 97.9768 then
-			lEngineRPMleft = lEngineRPMleft / 2.33278 --42.0 = 79%
-		elseif lEngineRPMleft > 97.2773 then
-			lEngineRPMleft = lEngineRPMleft / 3.03992 --32.0 = 78%
-		elseif lEngineRPMleft > 96.7213 then
-			lEngineRPMleft = lEngineRPMleft / 3.5429 --27.3 = 77%
-		elseif lEngineRPMleft > 96.2496 then
-			lEngineRPMleft = lEngineRPMleft / 3.5648 --27.0 = 76%
-		elseif lEngineRPMleft > 95.7494 then
-			lEngineRPMleft = lEngineRPMleft / 3.5996 --26.6 = 75%
-		elseif lEngineRPMleft > 93.2737 then
-			lEngineRPMleft = lEngineRPMleft / 3.54653 --26.3 = 70%
-		elseif lEngineRPMleft > 90.7216 then
-			lEngineRPMleft = lEngineRPMleft / 3.4893 --26.0 = 65%
-		elseif lEngineRPMleft > 88.1733 then
-			lEngineRPMleft = lEngineRPMleft / 3.4376 --25.65 = 60%
-		elseif lEngineRPMleft > 85.0282 then
-			lEngineRPMleft = lEngineRPMleft / 3.3608 --25.3 = 55%
-		elseif lEngineRPMleft > 81.9344 then
-			lEngineRPMleft = lEngineRPMleft / 3.2774 --25.0 = 50%
-		elseif lEngineRPMleft > 77.7911 then
-			lEngineRPMleft = lEngineRPMleft / 3.53596 --22.0 = 45%
-		elseif lEngineRPMleft > 72.1855 then
-			lEngineRPMleft = lEngineRPMleft / 3.6093 --20.0 = 40%
-		elseif lEngineRPMleft > 67.8386 then
-			lEngineRPMleft = lEngineRPMleft / 3.9905 --17.0 = 35%
-		elseif lEngineRPMleft > 63.4883 then
-			lEngineRPMleft = lEngineRPMleft / 3.968 --16.0 = 33%
-		end
-
 		--[[
-		y_min = 0.0		0.25		0.2659	0.49	-- minimaler Ausgabewert
-		y_max = 0.25	0.2659		0.49	1.0		-- maximaler Ausgabewert
-		x_min = 0.0		50.0		70.0	80.0	-- minimaler Eingangswert
-		x_max = 50.0	70.0		80.0	100.0	-- maximaler Eingangswert
-		x = 40.0		60.0		75.0	95.0	-- aktueller Eingangswert 
+		y_min = 0.0		0.11		0.375		0.50		-- minimaler Ausgabewert
+		y_max = 0.11	0.375		0.50		1.0			-- maximaler Ausgabewert
+		x_min = 0.0		64.2		91.3		99.7		-- minimaler Eingangswert
+		x_max = 64.2	91.3		99.7		100.0		-- maximaler Eingangswert
+		x = 40.0		75.0		85.0		99.9		-- aktueller Eingangswert 
 
-		d_y = 0.25		0.0159		0.2241	0.51	-- Delta Ausgabewerte (y_max - y_min)
-		d_x = 50.0		20.0		10.0	20.0	-- Delta Eingangswerte (x_max - x_min)
-		m = 0.005		0.000795	0.02241	0.0255	-- Steigung der linearen Funktion (d_y / d_x) 
-		n = 0.0			0.21025		-1.3028	-1.55	-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+		d_y = 0.11		0.265		0.125		0.50		-- Delta Ausgabewerte (y_max - y_min)
+		d_x = 64.2		27.1		8.4			0.3			-- Delta Eingangswerte (x_max - x_min)
+		m = 0.001713	0.009779	0.014881	1.666667	-- Steigung der linearen Funktion (d_y / d_x) 
+		n = 0.000254	-0.517823	-0.983636	-165.66667	-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
 
-		y = 0.2			0.25795		0.37795	0.8725	-- Ergebnis (m * x + n)
+		y = 0.2			0.25795		0.37795		0.8725		-- Ergebnis (m * x + n)
 		]]
---[[			if lEngineRPMleft > 80 then
-			lEngineRPMleft = 0.0255 * lEngineRPMleft + -1.55
-		elseif lEngineRPMleft > 70 then
-			lEngineRPMleft = 0.02241 * lEngineRPMleft + -1.3028
-		elseif lEngineRPMleft > 50 then
-			lEngineRPMleft = 0.000795 * lEngineRPMleft + 0.21025
-		else
-			lEngineRPMleft = 0.005 * lEngineRPMleft
+		local lFanRPMleft = 0
+		if lEngineRPMleft > 99.7 then
+			lFanRPMleft = 1.666667 * lEngineRPMleft + -165.66667 -- > 81%
+		elseif lEngineRPMleft > 91.3 and lEngineRPMleft < 99.7 then
+			lFanRPMleft = 0.014881 * lEngineRPMleft + -0.983636 -- > 50%
+		elseif lEngineRPMleft > 64.2 and lEngineRPMleft < 91.3 then
+			lFanRPMleft = 0.009779 * lEngineRPMleft + -0.517823 -- > 23%
+		elseif lEngineRPMleft < 64.2 then
+			lFanRPMleft = 0.001713 * lEngineRPMleft + 0.000254 -- < 23%
 		end
 
-		lEngineRPMleft = lEngineRPMleft * 85.263157894736842105263157894737
-]]
-		ExportScript.AF.FC_OneNeedleGauge(lEngineRPMleft, 100, 56)
+		ExportScript.AF.FC_OneNeedleGauge(lFanRPMleft, 1, 56)
 
 		-- RPM FAN Right
-		if lEngineRPMright > 94 then
-			lEngineRPMright = lEngineRPMright / 1.88 --50.0
-		elseif lEngineRPMright > 90 then
-			lEngineRPMright = lEngineRPMright / 3.384 --26.6
-		elseif lEngineRPMright > 85 then
-			lEngineRPMright = lEngineRPMright / 3.334 --25.5
-		elseif lEngineRPMright > 80 then
-			lEngineRPMright = lEngineRPMright / 3.2 --25.0
-		elseif lEngineRPMright > 75 then
-			lEngineRPMright = lEngineRPMright / 3.75 --20.0
-		elseif lEngineRPMright > 70 then
-			lEngineRPMright = lEngineRPMright / 4.667 --15.0
-		elseif lEngineRPMright > 65 then
-			lEngineRPMright = lEngineRPMright / 4.815 --13.5
-		elseif lEngineRPMright > 60 then
-			lEngineRPMright = lEngineRPMright / 5 --12.0
+		--[[
+		y_min = 0.0		0.11		0.375		0.50		-- minimaler Ausgabewert
+		y_max = 0.11	0.375		0.50		1.0			-- maximaler Ausgabewert
+		x_min = 0.0		64.2		91.3		99.7		-- minimaler Eingangswert
+		x_max = 64.2	91.3		99.7		100.0		-- maximaler Eingangswert
+		x = 40.0		75.0		85.0		99.9		-- aktueller Eingangswert 
+
+		d_y = 0.11		0.265		0.125		0.50		-- Delta Ausgabewerte (y_max - y_min)
+		d_x = 64.2		27.1		8.4			0.3			-- Delta Eingangswerte (x_max - x_min)
+		m = 0.001713	0.009779	0.014881	1.666667	-- Steigung der linearen Funktion (d_y / d_x) 
+		n = 0.000254	-0.517823	-0.983636	-165.66667	-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+
+		y = 0.2			0.25795		0.37795		0.8725		-- Ergebnis (m * x + n)
+		]]
+		local lFanRPMright = 0
+		if lEngineRPMright > 99.7 then
+			lFanRPMright = 1.666667 * lEngineRPMright + -165.66667 -- > 81%
+		elseif lEngineRPMright > 91.3 and lEngineRPMright < 99.7 then
+			lFanRPMright = 0.014881 * lEngineRPMright + -0.983636 -- > 50%
+		elseif lEngineRPMright > 64.2 and lEngineRPMright < 91.3 then
+			lFanRPMright = 0.009779 * lEngineRPMright + -0.517823 -- > 23%
+		elseif lEngineRPMright < 64.2 then
+			lFanRPMright = 0.001713 * lEngineRPMright + 0.000254 -- < 23%
 		end
-		ExportScript.AF.FC_OneNeedleGauge(lEngineRPMright, 100, 57)
+
+		ExportScript.AF.FC_OneNeedleGauge(lFanRPMright, 1, 57)
 
 		-- RPM APU, no value
 		-- Exaust Gas Temperature APU, no value
@@ -716,6 +697,7 @@ function ExportScript.AF.MechanicalDevicesIndicator(FunctionTyp)
 	local lFunctionTyp = FunctionTyp or "Ikarus"
 -- The mechanical devices indicator shows the position of the landing gear, flaps, leading edge flaps and airbrake
 	local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
+	--ExportScript.Tools.WriteToLog("lMechInfo: "..ExportScript.Tools.dump(lMechInfo))
 	if lMechInfo == nil then
 		return
 	end
