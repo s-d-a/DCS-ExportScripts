@@ -132,12 +132,12 @@ function ExportScript.ProcessIkarusFCLowImportanceConfig()
 	ExportScript.AF.FC_Russian_MDI_MiG29(lFunctionTyp)
 
 	--  Fuel Quantity Indicator
-	ExportScript.AF.FuelQuantityIndicator(lFunctionTyp)
+	ExportScript.AF.FuelQuantityIndicator_MiG29(lFunctionTyp)
 
 	-- Airintake
-	ExportScript.AF.FC_Russian_AirIntake()
+	ExportScript.AF.FC_Russian_AirIntake() -- Bug: Airintake.value always 1
 
-	--  Fuel Quantity Indicator
+	--  Hydraulic Pressure Indicator
 	local lEngineInfo = LoGetEngineInfo()
 	if lEngineInfo ~= nil then
 		-- Hydraulic Pressure Left
@@ -205,65 +205,16 @@ function ExportScript.ProcessDACConfigLowImportance()
 	ExportScript.AF.FC_WeaponPanel_MiG29(lFunctionTyp)
 	ExportScript.AF.FC_SPO15RWR(lFunctionTyp)
 	ExportScript.AF.FC_Russian_MDI_MiG29(lFunctionTyp)
-	ExportScript.AF.FuelQuantityIndicator(lFunctionTyp)
+	ExportScript.AF.FuelQuantityIndicator_MiG29(lFunctionTyp)
 	ExportScript.AF.FC_Russian_FlareChaff_MiG29(lFunctionTyp)
 
 	ExportScript.AF.StatusLamp()
-	ExportScript.AF.SightingSystem()
+	ExportScript.AF.SightingSystem_MiG29()
 end
 
 -----------------------------
 --     Custom functions    --
 -----------------------------
-
-function ExportScript.AF.SightingSystem()
-	local lSightingSystemInfo = LoGetSightingSystemInfo()
-	if lSightingSystemInfo == nil then
-		return
-	end
-	--ExportScript.Tools.WriteToLog('lSightingSystemInfo: '..ExportScript.Tools.dump(lSightingSystemInfo)9
-	--[[
-	[PRF] = {
-        [selection] = string: "ILV"
-        [current] = string: "MED"
-    }
-    [laser_on] = boolean: "false"
-    [scale] = {
-        [azimuth] = number: "0.52359873056412"
-        [distance] = number: "10000"
-    }
-    [radar_on] = boolean: "false"
-    [optical_system_on] = boolean: "false"
-    [LaunchAuthorized] = boolean: "false"
-    [ECM_on] = boolean: "false"
-    [Manufacturer] = string: "RUS"
-    [TDC] = {
-        [y] = number: "0"
-        [x] = number: "0"
-    }
-    [ScanZone] = {
-        [coverage_H] = {
-            [min] = number: "0"
-            [max] = number: "20000"
-        }
-        [size] = {
-            [azimuth] = number: "1.0471974611282"
-            [elevation] = number: "0.17453290522099"
-        }
-        [position] = {
-            [exceeding_manual] = number: "0"
-            [distance_manual] = number: "0"
-            [azimuth] = number: "0"
-            [elevation] = number: "0"
-        }
-    }
-	]]
-	ExportScript.Tools.SendDataDAC("600", lSightingSystemInfo.ECM_on            == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("601", lSightingSystemInfo.laser_on          == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("602", lSightingSystemInfo.optical_system_on == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("603", lSightingSystemInfo.LaunchAuthorized  == true and 1 or 0 )
-	ExportScript.Tools.SendDataDAC("604", lSightingSystemInfo.radar_on          == true and 1 or 0 )
-end
 
 function ExportScript.AF.StatusLamp()
 	local lMCPState = LoGetMCPState() -- Warning Lights
@@ -346,111 +297,5 @@ function ExportScript.AF.StatusLamp()
 	if lAccelerationUnits ~= nil then
 		--ExportScript.Tools.WriteToLog('lAccelerationUnits: '..ExportScript.Tools.dump(lAccelerationUnits))
 		ExportScript.Tools.SendDataDAC("732", (lAccelerationUnits.y > 8.0 and 1 or 0) ) -- lamp Over-G warning
-	end
-end
-
-function ExportScript.AF.FuelQuantityIndicator(FunctionTyp)
-	local lFunctionTyp = FunctionTyp or "Ikarus"
--- Fuel quantity shows the fuel remaining in all tanks
-	local lEngineInfo = LoGetEngineInfo()
-	if lEngineInfo == nil then
-		return
-	end
-	--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
-	--[[
-	[fuel_external] = number: "0"
-    [Temperature] = {
-        [left] = number: "626.99444580078"
-        [right] = number: "626.99444580078"
-    }
-    [RPM] = {
-        [left] = number: "87.453765869141"
-        [right] = number: "87.453758239746"
-    }
-    [FuelConsumption] = {
-        [left] = number: "0.1500396137767"
-        [right] = number: "0.1500396137767"
-    }
-    [fuel_internal] = number: "3773.2749023438"
-    [EngineStart] = {
-        [left] = number: "0"
-        [right] = number: "0"
-    }
-    [HydraulicPressure] = {
-        [left] = number: "210"
-        [right] = number: "210"
-    }
-	lPayloadInfo.Stations[7].CLSID == 2BEC576B-CDF5-4B7F-961F-B0FA4312B841   -- ext 1500l Fuel Tank
-	]]
-
-	local lTotalFuel = lEngineInfo.fuel_internal + lEngineInfo.fuel_external
-
-	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
-		ExportScript.Tools.SendDataDAC("300", string.format("%d", ExportScript.Tools.round(((lEngineInfo.fuel_internal + lEngineInfo.fuel_external) / 10), 0, "ceil") * 10) ) -- total fuel in kg
-
-		ExportScript.Tools.SendDataDAC("304", (lEngineInfo.fuel_internal < 3200.0 and 1 or 0) ) -- Tank warning 1
-		ExportScript.Tools.SendDataDAC("305", (lEngineInfo.fuel_internal < 2800.0 and 1 or 0) ) -- Tank warning 2
-		ExportScript.Tools.SendDataDAC("306", (lEngineInfo.fuel_internal < 1390.0 and 1 or 0) ) -- Tank warning 3
-		ExportScript.Tools.SendDataDAC("307", (lEngineInfo.fuel_internal < 760.0  and 1 or 0) ) -- Tank warning 4
-		--ExportScript.Tools.SendDataDAC("308", (lEngineInfo.fuel_internal < 600.0  and 1 or 0) ) -- Bingo Fuel
-	end
-
-	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
-		local lTotalFuel_7_5	= 0
-		local lTotalFuel_5_0	= 0
-
-		if lTotalFuel < 7500 then
-			if lTotalFuel > 5000 then
-				--[[
-				y_min = 0.0		-- minimaler Ausgabewert
-				y_max = 1.0		-- maximaler Ausgabewert
-				x_min = 5000	-- minimaler Eingangswert
-				x_max = 7500	-- maximaler Eingangswert
-
-				x = 6000		-- aktueller Eingangswert
-
-				d_y = 1			-- Delta Ausgabewerte (y_max - y_min)
-				d_x = 2500		-- Delta Eingangswerte (x_max - x_min)
-				m = 0.0004		-- Steigung der linearen Funktion (d_y / d_x)
-				n = -2.0		-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
-
-				y = 0.4			-- Ergebnis (m * x + n)
-				]]
-				lTotalFuel_7_5 = 0.0004 * lTotalFuel + -2.0
-			else
-				lTotalFuel_7_5	= 0.0
-			end
-		else
-			lTotalFuel_7_5 = 1.0
-		end
-		if lTotalFuel < 5000 then
-			--[[
-			y_min = 0.04	-- minimaler Ausgabewert
-			y_max = 1.0		-- maximaler Ausgabewert
-			x_min = 0		-- minimaler Eingangswert
-			x_max = 5000	-- maximaler Eingangswert
-
-			x = 3000		-- aktueller Eingangswert
-
-			d_y = 0.96		-- Delta Ausgabewerte (y_max - y_min)
-			d_x = 5000		-- Delta Eingangswerte (x_max - x_min)
-			m = 0.000192	-- Steigung der linearen Funktion (d_y / d_x)
-			n = 0.04		-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
-
-			y = 0.616		-- Ergebnis (m * x + n)
-			]]
-			lTotalFuel_5_0 = 0.000192 * lTotalFuel + 0.04
-		else
-			lTotalFuel_5_0 = 1.0
-		end
-
-		ExportScript.Tools.SendData(301, string.format("%0.4f", lTotalFuel_7_5) )
-		ExportScript.Tools.SendData(302, string.format("%0.4f", lTotalFuel_5_0) )
-
-		ExportScript.Tools.SendData(304, (lEngineInfo.fuel_internal < 3200.0 and 1 or 0) ) -- Tank warning 1
-		ExportScript.Tools.SendData(305, (lEngineInfo.fuel_internal < 2800.0 and 1 or 0) ) -- Tank warning 2
-		ExportScript.Tools.SendData(306, (lEngineInfo.fuel_internal < 1390.0 and 1 or 0) ) -- Tank warning 3
-		ExportScript.Tools.SendData(307, (lEngineInfo.fuel_internal < 760.0  and 1 or 0) ) -- Tank warning 4
-		--ExportScript.Tools.SendData(308, (lEngineInfo.fuel_internal < 600.0  and 1 or 0) ) -- Bingo Fuel
 	end
 end
