@@ -134,7 +134,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[624] = "%.1f", 	-- SPS_state
 	[625] = "%.4f", 	-- KONUS_efficiency
 	[626] = "%.4f", 	-- SOPLO_efficiency
-	[50]  = "%.4f", 	-- ENGINE_RPM
+	--[50]  = "%.4f", 	-- ENGINE_RPM
 	[670] = "%.4f", 	-- ENGINE_RPM2
 	[51]  = "%.4f", 	-- ENGINE_TEMP
 	[404] = "%.4f", 	-- ENGINE_STRESS
@@ -612,6 +612,45 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
 	]]
+	--[50]  = "%.4f", 	-- ENGINE_RPM
+	local lENGINE_RPM = mainPanelDevice:get_argument_value(50)
+	local ltmpENGINE_RPM = lENGINE_RPM
+	--ExportScript.Tools.WriteToLog('ENGINE_RPM: '..ExportScript.Tools.dump(lENGINE_RPM))
+	--[[
+	Export           = Input  = Anzeige = differenz
+0.48699209094048 = 0.31   = 3,48	-- Idle
+0.52623742818832 = 0.36   = 4
+0.59046465158463 = 0.455  = 5
+0.65491729974747 = 0.545  = 6
+0.71658140420914 = 0.635  = 7
+0.7799117565155  = 0.725  = 8
+0.84348386526108 = 0.82   = 9
+0.90568602085114 = 0.903  = 10
+			idle				4					5					6					7					8					9					10					5 - 9
+	y_min = 0,0					0,31				0,36				0,455				0,545				0,635				0,725				0,82				-- minimaler Ausgabewert
+	y_max = 0,31				0,36				0,455				0,545				0,635				0,725				0,82				0,903				-- maximaler Ausgabewert
+	x_min = 0					0,48699209094048	0,52623742818832	0,59046465158463	0,65491729974747	0,71658140420914	0,7799117565155		0,84348386526108	-- minimaler Eingangswert
+	x_max = 0,48699209094048	0,52623742818832	0,59046465158463	0,65491729974747	0,71658140420914	0,7799117565155		0,84348386526108	0,90568602085114	-- maximaler Eingangswert
+
+	d_y   = 0,31				0,05				0,095				0,09				0,09				0,09				0,095				0,083				0,09			-- Delta Ausgabewerte (y_max - y_min)
+	d_x   = 0,48699209094048	0,03924533724784	0,06422722339631	0,06445264816284	0,06166410446167	0,06333035230636	0,06357210874558	0,06220215559006	0,063			-- Delta Eingangswerte (x_max - x_min)
+	m     = 0,63656064598776	1,27403670107974	1,47912357060508	1,39637396701862	1,45952010145454	1,42111952203622	1,49436603369878	1,33435890143433	1,428571428571	-- Steigung der linearen Funktion (d_y / d_x)
+	n     = -0,000000000000002	-0,3104457969937	-0,4183701837679	-0,3695094679175	-0,4108649637718	-0,3833478226497	-0,4404736382191	-0,3055102038274	-0,38915965216	-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+	
+	y = 0,0171875	0,636	-- Ergebnis (m * x + n)
+	]]
+	if lENGINE_RPM < 0.48699209094048 then
+		ltmpENGINE_RPM = 0.63656064598776 * lENGINE_RPM + -0.000000000000002
+	elseif lENGINE_RPM > 0.48699209094048 and lENGINE_RPM < 0.52623742818832 then
+		ltmpENGINE_RPM = 1.27403670107974 * lENGINE_RPM + -0.3104457969937
+	elseif lENGINE_RPM > 0.52623742818832 and lENGINE_RPM < 0.84348386526108 then
+		ltmpENGINE_RPM = 1.428571428571 * lENGINE_RPM + -0.38915965216
+	elseif lENGINE_RPM > 0.84348386526108 then
+		ltmpENGINE_RPM = 1.33435890143433 * lENGINE_RPM + -0.3055102038274
+	end
+
+	--ExportScript.Tools.WriteToLog('ENGINE_RPM: '..ExportScript.Tools.dump(ltmpENGINE_RPM))
+	ExportScript.Tools.SendData(50, string.format("%.4f", ltmpENGINE_RPM)) -- ENGINE_RPM
 end
 
 -----------------------------------------------------
