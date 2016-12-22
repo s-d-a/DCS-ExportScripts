@@ -414,6 +414,7 @@ function ExportScript.AF.FC_Russian_HSI_old()
 	local lGlide			= LoGetGlideDeviation()				-- VOR1 HORIZONTAL DEFLECTION (-1 +1)
 	local lSide				= LoGetSideDeviation()				-- VOR1 VERTICAL DEFLECTION (-1 +1)
 	local lHeading			= LoGetSelfData().Heading			-- HEADING (Radian)
+	--ExportScript.Tools.WriteToLog('LoGetControlPanel_HSI: '..ExportScript.Tools.dump(LoGetControlPanel_HSI()))
 --[[
     [Course] = number: "0.76548692098835"
     [CourseDeviation] = number: "0"
@@ -479,7 +480,7 @@ function ExportScript.AF.FC_Russian_HSI_Distance_old(distancetoway)
     ExportScript.Tools.SendData(20, string.format("%.4f", lRangeCounter3))
 end
 
--- ADI for SU-25, SU25T, SU-27, MIG-29A and MIG-29S
+-- ADI for SU-25, SU-25T, SU-27, MIG-29A and MIG-29S
 function ExportScript.AF.FC_Russian_ADI_Old()
 	
 	local lDefaultNull				= 0.0
@@ -508,8 +509,8 @@ function ExportScript.AF.FC_Russian_ADI_Old()
 	lNavInfoRoll      = (lNavInfoRoll > 0.5625 and 0.5625 or lNavInfoRoll)
 	lNavInfoRoll      = (lNavInfoRoll < -0.5625 and -0.5625 or lNavInfoRoll)
 	lPitch            = lPitch / (lRadToDCSsignd / 2)
-	--lPitch            = (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch))	-- pitch muss negiert werden
-	lSlipBallPosition = (lSlipBallPosition > 0.0 and (0 - lSlipBallPosition) or (lSlipBallPosition - lSlipBallPosition - lSlipBallPosition))	-- slipball muss negiert werden
+	--lPitch            = (lPitch > 0.0 and (0 - lPitch) or (lPitch - lPitch - lPitch))	-- negate
+	lSlipBallPosition = (lSlipBallPosition > 0.0 and (0 - lSlipBallPosition) or (lSlipBallPosition - lSlipBallPosition - lSlipBallPosition))	-- negate
 	--lBank             = lBank / (lRadToDCSsignd / 2)
 	lBank             = lBank / lRadToDCSsignd
 
@@ -564,7 +565,7 @@ function ExportScript.AF.FC_Russian_ADI_New()
 	lNavInfoPitch = lNavInfoPitch / lRadToDCSsignd
 	lNavInfoRoll  = lNavInfoRoll / lRadToDCSsignd
 	lPitch        = lPitch / (lRadToDCSsignd / 2)
-	lPitch        = (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch))	-- pitch muss negiert werden
+	lPitch        = (lPitch > 0.0 and (0 - lPitch) or (lPitch - lPitch - lPitch))	-- negate
 	lBank         = lBank / lRadToDCSsignd --(lRadToDCSsignd / 2)
 
     ExportScript.Tools.SendData(1, string.format("%.4f", lBank))
@@ -579,7 +580,7 @@ function ExportScript.AF.FC_Russian_ADI_New()
     ExportScript.Tools.SendData(10, string.format("%.4f", lSlipBallPosition))
 end
 									   
--- Radar Altimeter for SU-25A, SU25-T, SU-27, SU-33
+-- Radar Altimeter for SU-25A, SU-25T, SU-27, SU-33
 function ExportScript.AF.FC_Russian_RadarAltimeter_1500m(warningflag)
 	local lWarning_Flag    	= warningflag or 100
 
@@ -602,7 +603,7 @@ function ExportScript.AF.FC_Russian_RadarAltimeter_1500m(warningflag)
     ExportScript.Tools.SendData(28, lDangerRALT_Lamp)
 end
 
--- Radar Altimeter for MiG-29A, MiG-29S
+-- Radar Altimeter for MiG-29A/G/S
 function ExportScript.AF.FC_Russian_RadarAltimeter_1000m(warningflag)
 	local lWarning_Flag    	= warningflag or 100
 
@@ -635,17 +636,17 @@ function ExportScript.AF.FC_Russian_BarometricAltimeter_late()
 
 	lAltBar 						= lAltBar - ((9.5 * (760 - lBasicAtmospherePressure)) / 2)	-- 9.5 m per 1mmHg difference
 
-	if lAltBar > 10000 then
-		lAltBar_kilometer_needle	= lAltBar / 100000
-	else
+--	if lAltBar > 10000 then
+--		lAltBar_kilometer_needle	= lAltBar / 100000
+--	else
 		lAltBar_kilometer_needle	= lAltBar / 10000
-	end
-	if lAltBar > 1000 then
+--	end
+--	if lAltBar > 1000 then
+--		lAltBar_meter_needle		= lAltBar / 1000
+--		lAltBar_meter_needle		= lAltBar_meter_needle - ExportScript.Tools.round(lAltBar_meter_needle, 0, "floor")
+--	else
 		lAltBar_meter_needle		= lAltBar / 1000
-		lAltBar_meter_needle		= lAltBar_meter_needle - ExportScript.Tools.round(lAltBar_meter_needle, 0, "floor")
-	else
-		lAltBar_meter_needle		= lAltBar / 1000
-	end
+--	end
 	lAltBar							= lAltBar / 1000
 
 	-- AltBar_kilometer_needle {0.0,1.0}
@@ -669,17 +670,17 @@ function ExportScript.AF.FC_Russian_BarometricAltimeter_20000()
 
 	lAltBar 						= lAltBar - ((9.5 * (760 - lBasicAtmospherePressure)) / 2)	-- 9.5 m per 1mmHg difference
 
-	if lAltBar > 10000 then
-		lAltBar_kilometer_needle	= lAltBar / 200000
-	else
+--	if lAltBar > 10000 then
+--		lAltBar_kilometer_needle	= lAltBar / 200000
+--	else
 		lAltBar_kilometer_needle	= lAltBar / 20000
-	end
-	if lAltBar > 1000 then
+--	end
+--	if lAltBar > 1000 then
+--		lAltBar_meter_needle		= lAltBar / 1000
+--		lAltBar_meter_needle		= lAltBar_meter_needle - ExportScript.Tools.round(lAltBar_meter_needle, 0, "floor")
+--	else
 		lAltBar_meter_needle		= lAltBar / 1000
-		lAltBar_meter_needle		= lAltBar_meter_needle - ExportScript.Tools.round(lAltBar_meter_needle, 0, "floor")
-	else
-		lAltBar_meter_needle		= lAltBar / 1000
-	end
+--	end
 	lBasicAtmospherePressure		= (lBasicAtmospherePressure - 600) / 200
 
 	-- AltBar_kilometer_needle {0.0,1.0}
@@ -691,7 +692,7 @@ function ExportScript.AF.FC_Russian_BarometricAltimeter_20000()
     ExportScript.Tools.SendData(32, string.format("%.4f", lBasicAtmospherePressure))
 end
 
--- Barometric Altimeter for MiG-29A, MiG-29S
+-- Barometric Altimeter for MiG-29A/G/S
 function ExportScript.AF.FC_Russian_BarometricAltimeter_30000()
 
 	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
@@ -701,17 +702,10 @@ function ExportScript.AF.FC_Russian_BarometricAltimeter_30000()
 
 	lAltBar 						= lAltBar - ((9.5 * (760 - lBasicAtmospherePressure)) / 2)	-- 9.5 m per 1mmHg difference
 
-	if lAltBar > 10000 then
-		lAltBar_kilometer_needle	= lAltBar / 300000
-	else
-		lAltBar_kilometer_needle	= lAltBar / 30000
-	end
-	if lAltBar > 1000 then
-		lAltBar_meter_needle		= lAltBar / 1000
-		lAltBar_meter_needle		= lAltBar_meter_needle - ExportScript.Tools.round(lAltBar_meter_needle, 0, "floor")
-	else
-		lAltBar_meter_needle		= lAltBar / 1000
-	end
+	lAltBar_kilometer_needle		= lAltBar / 30000
+
+	lAltBar_meter_needle			= lAltBar / 1000
+
 	lBasicAtmospherePressure		= (lBasicAtmospherePressure - 600) / 200
 
 	-- AltBar_kilometer_needle {0.0,1.0}
@@ -1014,7 +1008,7 @@ function ExportScript.AF.FC_Russian_Mach_MiG29()
 	ExportScript.Tools.SendData(38, 0) -- Mach max
 end
 	
--- Vertical Velocity Indicator (Old Style) for SU-25, SU25T, SU-27, MIG-29A and MIG-29S
+-- Vertical Velocity Indicator (Old Style) for SU-25, SU-25T, SU-27, MIG-29A and MIG-29S
 function ExportScript.AF.FC_Russian_VVI_Old()
 
 	local lVVI						= LoGetVerticalVelocity()		-- VERTICAL SPEED (Meter/Second)
@@ -1040,7 +1034,7 @@ function ExportScript.AF.FC_Russian_VVI_Old()
 		lBank = (lBank < -1.0 and -1.0 or lBank)	-- the result is limited to -1.0
 	end
 	
-	lSlipBallPosition = (lSlipBallPosition > 0.0 and (0 - lSlipBallPosition) or (lSlipBallPosition - lSlipBallPosition - lSlipBallPosition))	-- slipball muss negiert werden
+	lSlipBallPosition = (lSlipBallPosition > 0.0 and (0 - lSlipBallPosition) or (lSlipBallPosition - lSlipBallPosition - lSlipBallPosition))	-- negate
 	--lTurn = lTAS / 187.628865979					-- TRUE AIRSPEED (Meter/Second) / 187.628865979 m/s = Turn-Winkel or True Airspeed in Knots/min / 364 Knots
 	--ExportScript.Tools.WriteToLog('lTurn: '..ExportScript.Tools.dump(lTurn))
 	--ExportScript.Tools.WriteToLog('lVVI: '..ExportScript.Tools.dump(lVVI)..', lBank :'..ExportScript.Tools.dump(lBank))
@@ -1092,7 +1086,7 @@ function ExportScript.AF.FC_Russian_VVI_New()
     ExportScript.Tools.SendData(40, string.format("%.4f", lVVI))
 end
 
--- Airintake for SU-27 and SU-33
+-- Airintake for MiG-29A/S/G, SU-27 and SU-33
 function ExportScript.AF.FC_Russian_AirIntake()
 
 	local lAirI		= LoGetMechInfo().airintake.value
@@ -1101,45 +1095,50 @@ function ExportScript.AF.FC_Russian_AirIntake()
     ExportScript.Tools.SendData(46, string.format("%.4f", lAirI))
 end
 
--- AOA Indicator and Accelerometer (AOA, GLoad) for SU-25, SU25T
+-- AOA Indicator and Accelerometer (AOA, GLoad) for SU-25A, SU25T
 function ExportScript.AF.FC_Russian_AOA_Su25()
 
 	local lAoA						= LoGetAngleOfAttack()			-- ANGLE OF ATTACK AoA (Radian)
 	local lAccelerationUnits		= LoGetAccelerationUnits().y	-- G-LOAD
+	local lTrueAirSpeed			    = LoGetTrueAirSpeed()			-- TRUE AIRSPEED (Meter/Second)
 
 	-- AOA Indicator and Accelerometer (AOA, GLoad)
-	if lAoA > 0.0 then	-- positive AOA
-		--[[
-		y_min = 0.0		-- minimaler Ausgabewert
-		y_max = 1.0		-- maximaler Ausgabewert
-		x_min = 0.0		-- minimaler Eingangswert
-		x_max = 40.0	-- maximaler Eingangswert
-		x = 1.4			-- aktueller Eingangswert
+	if lTrueAirSpeed > 1.0 then
+		if lAoA > 0.0 then	-- positive AOA
+			--[[
+			y_min = 0.0		-- minimaler Ausgabewert
+			y_max = 1.0		-- maximaler Ausgabewert
+			x_min = 0.0		-- minimaler Eingangswert
+			x_max = 40.0	-- maximaler Eingangswert
+			x = 1.4			-- aktueller Eingangswert
 
-		d_y = 1.0		-- Delta Ausgabewerte (y_max - y_min)
-		d_x = 40.0		-- Delta Eingangswerte (x_max - x_min)
-		m = 0.025		-- Steigung der linearen Funktion (d_y / d_x)
-		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
-		
-		y = 0.035		-- Ergebnis (m * x + n)
-		]]
-		lAoA = 0.025 * lAoA
+			d_y = 1.0		-- Delta Ausgabewerte (y_max - y_min)
+			d_x = 40.0		-- Delta Eingangswerte (x_max - x_min)
+			m = 0.025		-- Steigung der linearen Funktion (d_y / d_x)
+			n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+			
+			y = 0.035		-- Ergebnis (m * x + n)
+			]]
+			lAoA = 0.025 * lAoA
+		else
+			--[[
+			y_min = 0.0		-- minimaler Ausgabewert
+			y_max = -0.28	-- maximaler Ausgabewert
+			x_min = 0.0		-- minimaler Eingangswert
+			x_max = -10.0	-- maximaler Eingangswert
+			x = -3.2		-- aktueller Eingangswert
+
+			d_y = -0.28		-- Delta Ausgabewerte (y_max - y_min)
+			d_x = -10.0		-- Delta Eingangswerte (x_max - x_min)
+			m = 0.028		-- Steigung der linearen Funktion (d_y / d_x)
+			n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+			
+			y = -0.0896		-- Ergebnis (m * x + n)
+			]] --0.14
+			lAoA = 0.028 * lAoA
+		end
 	else
-		--[[
-		y_min = 0.0		-- minimaler Ausgabewert
-		y_max = -0.28	-- maximaler Ausgabewert
-		x_min = 0.0		-- minimaler Eingangswert
-		x_max = -10.0	-- maximaler Eingangswert
-		x = -3.2		-- aktueller Eingangswert
-
-		d_y = -0.28		-- Delta Ausgabewerte (y_max - y_min)
-		d_x = -10.0		-- Delta Eingangswerte (x_max - x_min)
-		m = 0.028		-- Steigung der linearen Funktion (d_y / d_x)
-		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
-		
-		y = -0.0896		-- Ergebnis (m * x + n)
-		]] --0.14
-		lAoA = 0.028 * lAoA
+		lAoA = 0.06
 	end
 
 	if lAccelerationUnits > 0.0 then	-- positive AOA
@@ -1185,39 +1184,44 @@ function ExportScript.AF.FC_Russian_AOA_Su2733()
 
 	local lAoA						= LoGetAngleOfAttack()			-- ANGLE OF ATTACK AoA (Radian)
 	local lAccelerationUnits		= LoGetAccelerationUnits().y	-- G-LOAD
+	local lTrueAirSpeed			    = LoGetTrueAirSpeed()			-- TRUE AIRSPEED (Meter/Second)
 
-	if lAoA > 0.0 then	-- positive AOA
-		--[[
-		y_min = 0.0		-- minimaler Ausgabewert
-		y_max = 1.0		-- maximaler Ausgabewert
-		x_min = 0.0		-- minimaler Eingangswert
-		x_max = 40.0	-- maximaler Eingangswert
-		x = 1.4			-- aktueller Eingangswert
+	if lTrueAirSpeed > 1.0 then
+		if lAoA > 0.0 then	-- positive AOA
+			--[[
+			y_min = 0.0		-- minimaler Ausgabewert
+			y_max = 1.0		-- maximaler Ausgabewert
+			x_min = 0.0		-- minimaler Eingangswert
+			x_max = 40.0	-- maximaler Eingangswert
+			x = 1.4			-- aktueller Eingangswert
 
-		d_y = 1.0		-- Delta Ausgabewerte (y_max - y_min)
-		d_x = 40.0		-- Delta Eingangswerte (x_max - x_min)
-		m = 0.025		-- Steigung der linearen Funktion (d_y / d_x)
-		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
-		
-		y = 0.035		-- Ergebnis (m * x + n)
-		]]
-		lAoA = 0.025 * lAoA
+			d_y = 1.0		-- Delta Ausgabewerte (y_max - y_min)
+			d_x = 40.0		-- Delta Eingangswerte (x_max - x_min)
+			m = 0.025		-- Steigung der linearen Funktion (d_y / d_x)
+			n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+			
+			y = 0.035		-- Ergebnis (m * x + n)
+			]]
+			lAoA = 0.025 * lAoA
+		else
+			--[[
+			y_min = 0.0		-- minimaler Ausgabewert
+			y_max = -0.28	-- maximaler Ausgabewert
+			x_min = 0.0		-- minimaler Eingangswert
+			x_max = -10.0	-- maximaler Eingangswert
+			x = -3.2		-- aktueller Eingangswert
+
+			d_y = -0.28		-- Delta Ausgabewerte (y_max - y_min)
+			d_x = -10.0		-- Delta Eingangswerte (x_max - x_min)
+			m = 0.028		-- Steigung der linearen Funktion (d_y / d_x)
+			n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+			
+			y = -0.0896		-- Ergebnis (m * x + n)
+			]] --0.14
+			lAoA = 0.028 * lAoA
+		end
 	else
-		--[[
-		y_min = 0.0		-- minimaler Ausgabewert
-		y_max = -0.28	-- maximaler Ausgabewert
-		x_min = 0.0		-- minimaler Eingangswert
-		x_max = -10.0	-- maximaler Eingangswert
-		x = -3.2		-- aktueller Eingangswert
-
-		d_y = -0.28		-- Delta Ausgabewerte (y_max - y_min)
-		d_x = -10.0		-- Delta Eingangswerte (x_max - x_min)
-		m = 0.028		-- Steigung der linearen Funktion (d_y / d_x)
-		n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
-		
-		y = -0.0896		-- Ergebnis (m * x + n)
-		]] --0.14
-		lAoA = 0.028 * lAoA
+		lAoA = 0.06
 	end
 
 	if lAccelerationUnits > 0.0 then	-- positive AOA
@@ -1374,7 +1378,6 @@ end
 
 -- Russian Clock (latest Model) for SU-25T, SU-27, SU-33
 function ExportScript.AF.FC_Russian_Clock_late()
-
 	local lDefaultOne			= 1.0
 	local lDefaultNull			= 0.0
 
@@ -1424,7 +1427,7 @@ function ExportScript.AF.FC_Russian_EngineRPM()
     ExportScript.Tools.SendData(66, string.format("%.4f", lEngineRPMright))
 end
 
--- Russian Exthaus Gas Temperature 1.000GradC for SU-25A, SU25T, MIG-29
+-- Russian Exthaus Gas Temperature 1.000GradC for SU-25A, SU-25T, MIG-29
 function ExportScript.AF.FC_Russian_EGT_1000gc(egttemp, exportid)
     local lEGTtemp  	= egttemp  or 1
 	local lExportID		= exportid or 70
@@ -1459,6 +1462,7 @@ function ExportScript.AF.FC_Russian_MDI_SU25(FunctionTyp)
 	local lFunctionTyp = FunctionTyp or "Ikarus"
 
     local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
+	--ExportScript.Tools.WriteToLog('lMechInfo: '..ExportScript.Tools.dump(lMechInfo))
 	if lMechInfo == nil then
 		return
 	end
@@ -1501,11 +1505,12 @@ function ExportScript.AF.FC_Russian_MDI_SU25(FunctionTyp)
     end
 end
 
--- Russian Mechanical Device Indicator for MiG-29A+S
+-- Russian Mechanical Device Indicator for MiG-29A/G/S
 function ExportScript.AF.FC_Russian_MDI_MiG29(FunctionTyp)
 	local lFunctionTyp = FunctionTyp or "Ikarus"
 -- The mechanical devices indicator shows the position of the landing gear, flaps, leading edge flaps and airbrake
 	local lMechInfo = LoGetMechInfo() -- mechanical components,  e.g. Flaps, Wheelbrakes,...
+	--ExportScript.Tools.WriteToLog('lMechInfo: '..ExportScript.Tools.dump(lMechInfo))
 	if lMechInfo == nil then
 		return
 	end
@@ -1520,10 +1525,13 @@ function ExportScript.AF.FC_Russian_MDI_MiG29(FunctionTyp)
 
 		ExportScript.Tools.SendDataDAC(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0) ) -- speedbreakes on > 0.1 (0 - 1)
 
-		ExportScript.Tools.SendDataDAC(531, (lMechInfo.flaps.value > 0.25 and 1 or 0) ) -- flap 1. position
-		ExportScript.Tools.SendDataDAC(532, (lMechInfo.flaps.value > 0.93 and 1 or 0) ) -- flap 2. position
-		ExportScript.Tools.SendDataDAC(533, ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1 or 0) ) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
-		ExportScript.Tools.SendDataDAC(534, (lMechInfo.gear.value > 0.5 and 1 or 0) )			-- Intake FOD shields
+		--ExportScript.Tools.SendDataDAC(531, (lMechInfo.flaps.value > 0.25 and 1 or 0) ) -- flap 1. position
+		--ExportScript.Tools.SendDataDAC(532, (lMechInfo.flaps.value > 0.93 and 1 or 0) ) -- flap 2. position
+		--ExportScript.Tools.SendDataDAC(533, ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1 or 0) ) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
+		ExportScript.Tools.SendDataDAC(531, (lMechInfo.flaps.value > 0.24 and 1 or 0) ) -- flap 1. position
+		ExportScript.Tools.SendDataDAC(532, (lMechInfo.flaps.value > 0.49 and 1 or 0) ) -- flap 2. position
+		ExportScript.Tools.SendDataDAC(533, ((lMechInfo.flaps.value > 0.49 and lTrueAirSpeed > 340) and 1 or 0) ) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
+		--ExportScript.Tools.SendDataDAC(534, (lMechInfo.gear.value > 0.5 and 1 or 0) )			-- Intake FOD shields -- falscher Wert
     
 		ExportScript.Tools.SendDataDAC(541, (lMechInfo.parachute.value < 0.5 and 1 or 0) )
 
@@ -1536,7 +1544,8 @@ function ExportScript.AF.FC_Russian_MDI_MiG29(FunctionTyp)
 		local lWarningLight = 0.0
 
 		if lTrueAirSpeed ~= nil then
-			lWarningLight = ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1.0 or 0.0) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
+			--lWarningLight = ((lMechInfo.flaps.value > 0.93 and lTrueAirSpeed > 340) and 1.0 or 0.0) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
+			lWarningLight = ((lMechInfo.flaps.value > 0.49 and lTrueAirSpeed > 340) and 1.0 or 0.0) -- Speed Warning for Flaps, same light as gear warning light, but blinking light
 			lWarningLight = (((lMechInfo.gear.status == 1 and lMechInfo.gear.value < 1) or (lMechInfo.gear.status == 0 and lMechInfo.gear.value > 0)) and 1.0 or lWarningLight )  -- gear warning light
 		end
 
@@ -1545,13 +1554,15 @@ function ExportScript.AF.FC_Russian_MDI_MiG29(FunctionTyp)
 		ExportScript.Tools.SendData(502, (lMechInfo.gear.value > 0.95 and 1 or 0))           -- left gear
 		ExportScript.Tools.SendData(503, (lMechInfo.gear.value == 1 and 1 or 0))             -- right gear
 		ExportScript.Tools.SendData(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0))    -- speedbreakes on > 0.1 (0 - 1)
-		ExportScript.Tools.SendData(531, (lMechInfo.flaps.value > 0.25 and 1 or 0))            -- flap 1. position
-		ExportScript.Tools.SendData(532, (lMechInfo.flaps.value > 0.93 and 1 or 0))          -- flap 2. position
-		ExportScript.Tools.SendData(534, (lMechInfo.gear.value > 0.5 and 1 or 0))            -- Intake FOD shields
+		--ExportScript.Tools.SendData(531, (lMechInfo.flaps.value > 0.25 and 1 or 0))            -- flap 1. position
+		--ExportScript.Tools.SendData(532, (lMechInfo.flaps.value > 0.93 and 1 or 0))          -- flap 2. position
+		ExportScript.Tools.SendData(531, (lMechInfo.flaps.value > 0.24 and 1 or 0))           -- flap 1. position
+		ExportScript.Tools.SendData(532, (lMechInfo.flaps.value > 0.49 and 1 or 0))           -- flap 2. position
+		--ExportScript.Tools.SendData(534, (lMechInfo.gear.value > 0.5 and 1 or 0))            -- Intake FOD shields -- falscher Wert
 	end
 end
 
--- Russian Mechanical Device Indicator for MiG-29A+S
+-- Russian Mechanical Device Indicator for MiG-29A/G/S
 function ExportScript.AF.FC_Russian_FlareChaff_MiG29(FunctionTyp)
 	local lFunctionTyp = FunctionTyp or "Ikarus"
 	local lSnares = LoGetSnares() -- Flare and Chaff
@@ -1567,6 +1578,180 @@ function ExportScript.AF.FC_Russian_FlareChaff_MiG29(FunctionTyp)
 	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
 		ExportScript.Tools.SendDataDAC(800, lSnares.chaff + lSnares.flare )
 	end
+end
+
+-- Russian Fuel Quantity Indicator for MiG-29A/G/S
+function ExportScript.AF.FuelQuantityIndicator_MiG29(FunctionTyp)
+	local lFunctionTyp = FunctionTyp or "Ikarus"
+-- Fuel quantity shows the fuel remaining in all tanks
+	local lEngineInfo = LoGetEngineInfo()
+	if lEngineInfo == nil then
+		return
+	end
+	--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
+	--[[
+	[fuel_external] = number: "0"
+    [Temperature] = {
+        [left] = number: "626.99444580078"
+        [right] = number: "626.99444580078"
+    }
+    [RPM] = {
+        [left] = number: "87.453765869141"
+        [right] = number: "87.453758239746"
+    }
+    [FuelConsumption] = {
+        [left] = number: "0.1500396137767"
+        [right] = number: "0.1500396137767"
+    }
+    [fuel_internal] = number: "3773.2749023438"
+    [EngineStart] = {
+        [left] = number: "0"
+        [right] = number: "0"
+    }
+    [HydraulicPressure] = {
+        [left] = number: "210"
+        [right] = number: "210"
+    }
+	lPayloadInfo.Stations[7].CLSID == 2BEC576B-CDF5-4B7F-961F-B0FA4312B841   -- ext 1500l Fuel Tank
+	]]
+
+	local lTotalFuel = lEngineInfo.fuel_internal + lEngineInfo.fuel_external
+	--ExportScript.Tools.WriteToLog('lTotalFuel: '..ExportScript.Tools.dump(lTotalFuel))
+
+	-- Fuel value correction, difference 3D cockpit gauges and export value
+	-- 3000kg = 2740             1,10
+	-- 2500kg = 2260 <- Lamp 2   1,11
+	-- 1000kg = 890              1,12
+	-- 800kg  = 700 <- Lamp 3    1,14
+	-- 650kg  = 550 <- Lamp 4    1,18
+	if lTotalFuel > 2740 then
+		lTotalFuel = lTotalFuel * 1.1
+	elseif lTotalFuel > 2260 and lTotalFuel < 2740 then
+		lTotalFuel = lTotalFuel * 1.11
+	elseif lTotalFuel > 890 and lTotalFuel < 2260 then
+		lTotalFuel = lTotalFuel * 1.12
+	elseif lTotalFuel > 700 and lTotalFuel < 290 then
+		lTotalFuel = lTotalFuel * 1.14
+	elseif lTotalFuel > 0 and lTotalFuel < 700 then
+		lTotalFuel = lTotalFuel * 1.18
+	end
+
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		ExportScript.Tools.SendDataDAC("300", string.format("%d", ExportScript.Tools.round(((lTotalFuel) / 10), 0, "ceil") * 10) ) -- total fuel in kg
+
+		ExportScript.Tools.SendDataDAC("304", (lTotalFuel < 3800.0 and 1 or 0) ) -- Tank warning 1
+		ExportScript.Tools.SendDataDAC("305", (lTotalFuel < 2550.0 and 1 or 0) ) -- Tank warning 2
+		ExportScript.Tools.SendDataDAC("306", (lTotalFuel < 800.0  and 1 or 0) ) -- Tank warning 3
+		ExportScript.Tools.SendDataDAC("307", (lTotalFuel < 650.0  and 1 or 0) ) -- Tank warning 4
+	end
+
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+		local lTotalFuel_5_4	= 0
+		local lTotalFuel_4_0	= 0
+
+		if lTotalFuel < 5500 then
+			if lTotalFuel > 4000 then
+				--[[
+				y_min = 0.0		-- minimaler Ausgabewert
+				y_max = 1.0		-- maximaler Ausgabewert
+				x_min = 4000	-- minimaler Eingangswert
+				x_max = 5500	-- maximaler Eingangswert
+
+				x = 5000		-- aktueller Eingangswert
+
+				d_y = 1			-- Delta Ausgabewerte (y_max - y_min)
+				d_x = 1500		-- Delta Eingangswerte (x_max - x_min)
+				m = 0.00066667	-- Steigung der linearen Funktion (d_y / d_x)
+				n = -2.666685	-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+
+				y = 0.666665	-- Ergebnis (m * x + n)
+				]]
+				lTotalFuel_5_4 = 0.00066667 * lTotalFuel + -2.666685
+			else
+				lTotalFuel_5_4	= 0.0
+			end
+		else
+			lTotalFuel_5_4 = 1.0
+		end
+		if lTotalFuel < 4000 then
+			--[[
+			y_min = 0.0		-- minimaler Ausgabewert
+			y_max = 1.0		-- maximaler Ausgabewert
+			x_min = 0		-- minimaler Eingangswert
+			x_max = 4000	-- maximaler Eingangswert
+
+			x = 3000		-- aktueller Eingangswert
+
+			d_y = 1.0		-- Delta Ausgabewerte (y_max - y_min)
+			d_x = 4000		-- Delta Eingangswerte (x_max - x_min)
+			m = 0.00025		-- Steigung der linearen Funktion (d_y / d_x)
+			n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+
+			y = 0.75		-- Ergebnis (m * x + n)
+			]]
+			lTotalFuel_4_0 = 0.00025 * lTotalFuel
+		else
+			lTotalFuel_4_0 = 1.0
+		end
+
+		ExportScript.Tools.SendData(301, string.format("%0.4f", lTotalFuel_5_4) )
+		ExportScript.Tools.SendData(302, string.format("%0.4f", lTotalFuel_4_0) )
+
+		ExportScript.Tools.SendData(304, (lTotalFuel < 3800.0 and 1 or 0) ) -- Tank warning 1
+		ExportScript.Tools.SendData(305, (lTotalFuel < 2550.0 and 1 or 0) ) -- Tank warning 2
+		ExportScript.Tools.SendData(306, (lTotalFuel < 800.0  and 1 or 0) ) -- Tank warning 3
+		ExportScript.Tools.SendData(307, (lTotalFuel < 650.0  and 1 or 0) ) -- Tank warning 4
+	end
+end
+
+-- Russian Sighting System for MiG-29A/G/S (DAC only)
+function ExportScript.AF.SightingSystem_MiG29()
+	local lSightingSystemInfo = LoGetSightingSystemInfo()
+	if lSightingSystemInfo == nil then
+		return
+	end
+	--ExportScript.Tools.WriteToLog('lSightingSystemInfo: '..ExportScript.Tools.dump(lSightingSystemInfo)9
+	--[[
+	[PRF] = {
+        [selection] = string: "ILV"
+        [current] = string: "MED"
+    }
+    [laser_on] = boolean: "false"
+    [scale] = {
+        [azimuth] = number: "0.52359873056412"
+        [distance] = number: "10000"
+    }
+    [radar_on] = boolean: "false"
+    [optical_system_on] = boolean: "false"
+    [LaunchAuthorized] = boolean: "false"
+    [ECM_on] = boolean: "false"
+    [Manufacturer] = string: "RUS"
+    [TDC] = {
+        [y] = number: "0"
+        [x] = number: "0"
+    }
+    [ScanZone] = {
+        [coverage_H] = {
+            [min] = number: "0"
+            [max] = number: "20000"
+        }
+        [size] = {
+            [azimuth] = number: "1.0471974611282"
+            [elevation] = number: "0.17453290522099"
+        }
+        [position] = {
+            [exceeding_manual] = number: "0"
+            [distance_manual] = number: "0"
+            [azimuth] = number: "0"
+            [elevation] = number: "0"
+        }
+    }
+	]]
+	ExportScript.Tools.SendDataDAC("600", lSightingSystemInfo.ECM_on            == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("601", lSightingSystemInfo.laser_on          == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("602", lSightingSystemInfo.optical_system_on == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("603", lSightingSystemInfo.LaunchAuthorized  == true and 1 or 0 )
+	ExportScript.Tools.SendDataDAC("604", lSightingSystemInfo.radar_on          == true and 1 or 0 )
 end
 
 -- Russian System Test EKRAN
@@ -1702,9 +1887,9 @@ function ExportScript.AF.FC_US_ADI()
 	lNavInfoRoll  = lNavInfoRoll / lRadToDCSsignd
 	lNavInfoPitch = (lNavInfoPitch > 0.0 and (0 - lNavInfoPitch) or (lNavInfoPitch - lNavInfoPitch - lNavInfoPitch))
 	lPitch        = lPitch / (lRadToDCSsignd / 1.5)
-	lPitch        = (lPitch > 0.0 and (0 - lPitch) or (lPitch - lPitch - lPitch))	-- pitch muss negiert werden
+	lPitch        = (lPitch > 0.0 and (0 - lPitch) or (lPitch - lPitch - lPitch))	-- negate
 	lBank         = lBank / lRadToDCSsignd
-	--lBank         = (lBank > 0.0 and (0 - lBank) or (lBank - lBank - lBank))	-- Bank muss negiert werden
+	--lBank         = (lBank > 0.0 and (0 - lBank) or (lBank - lBank - lBank))	-- negate
 
 	ExportScript.Tools.SendData(2, string.format("%.4f", lPitch))
     ExportScript.Tools.SendData(1, string.format("%.4f", lBank))
@@ -1728,13 +1913,13 @@ function ExportScript.AF.FC_US_stbyADI()
 	-- [64] = "%.4f",		-- Standby Attitude Indicator bank	{-1.0, 1.0}
 	-- [65] = "%0.1f",		-- Standby Attitude Indicator warning flag	{0.0, 1.0}
 	lPitch			= lPitch / (lRadToDCSsignd / 1.5)
-	--lPitch		= (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch))	-- pitch muss negiert werden
+	--lPitch		= (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch))	-- negate
 	lBank			= lBank / lRadToDCSsignd
-	lBank			= (lBank > 0.0 and (0 - lBank) or (lBank - lBank - lBank))	-- Bank muss negiert werden
+	lBank			= (lBank > 0.0 and (0 - lBank) or (lBank - lBank - lBank))	-- negate
 
-    ExportScript.Tools.SendData(34, string.format("%.4f;", lPitch))
-    ExportScript.Tools.SendData(35, string.format("%.4f;", lBank))
-    ExportScript.Tools.SendData(0, 0)
+    ExportScript.Tools.SendData(34, string.format("%.4f", lPitch))
+    ExportScript.Tools.SendData(35, string.format("%.4f", lBank))
+    --ExportScript.Tools.SendData(0, 0) -- Warning Flag
 end
 
 -- HSI for A-10A, F-15C
