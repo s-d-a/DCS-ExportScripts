@@ -1,5 +1,5 @@
 -- F-5E-3
--- Version 1.0.0
+-- 1.0.0
 
 ExportScript.FoundDCSModule = true
 
@@ -138,12 +138,12 @@ ExportScript.ConfigEveryFrameArguments =
 	[600] = "%.4f",	-- FlowBlinker
 	-- RADIO ------------------------------------------------------
 	-- UHF Radio AN/ARC-164
-	[326] = "%.2f",	-- UHFRadioChannel
+	[326] = "%.1f",	-- UHFRadioChannel
 	[302] = "%.1f",	-- UHFRadio100MHz
 	[303] = "%.1f",	-- UHFRadio10MHz {1.0, 0.0} {0.0, 1.0}
 	[304] = "%.1f",	-- UHFRadio1MHz {1.0, 0.0} {0.0, 1.0}
 	[305] = "%.1f",	-- UHFRadio01MHz {1.0, 0.0} {0.0, 1.0}
-	[306] = "%.2f",	-- UHFRadio0025MHz {1.0, 0.0} {0.0, 1.0}
+	[306] = "%.1f",	-- UHFRadio0025MHz {1.0, 0.0} {0.0, 1.0}
 	-- IFF/SIF APX72
 	[197] = "%.4f",	-- IFF_Code4Sw_Pull
 	[198] = "%.4f",	-- IFF_MasterSw_Pull
@@ -208,7 +208,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[576] = "%.f",	-- rwr_Power
 	[572] = "%.f",	-- rwr_Ship_unkn
 	[571] = "%.f",	-- rwr_Ship_U
-	[568] = "%.1f",	-- rwr_Sys_On
+	[568] = "%.f",	-- rwr_Sys_On
 	[569] = "%.f",	-- rwr_Sys
 	[565] = "%.f",	-- rwr_Sep_Up
 	[566] = "%.f",	-- rwr_Sep_Down
@@ -354,7 +354,7 @@ ExportScript.ConfigArguments =
 	[340] = "%1d",	-- Interval Switch [sec], .06/.10/.14 {-1.0, 0.0, 1.0}
 	[341] = "%1d",	-- Bombs Arm Switch, SAFE/TAIL/NOSE & TAIL/NOSE {0.0, 0.1, 0.2, 0.3}
 	[343] = "%1d",	-- Guns, Missile and Camera Switch, GUNS MSL & CAMR/OFF/CAMR ONLY {-1.0, 0.0, 1.0}
-	[344] = "%1d",	-- External Stores Selector, RIPL/BOMB/SAFE/RKT DISP {0.0,0.1,0.2,0.3}
+	[344] = "%.1f",	-- External Stores Selector, RIPL/BOMB/SAFE/RKT DISP {0.0,0.1,0.2,0.3}
 	[345] = "%.2f",	-- Missile Volume Knob - Rotate to adjust volume (Axis) {0.0, 1.0} in 0.15 Steps
 	[128] = "%1d",	-- Weapon Release Button - Press to release (Stick)
 	[137] = "%1d",	-- Missile Uncage Switch - Press and hold to uncage missile seeker head
@@ -543,20 +543,18 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	]]
 	--AN/ARC-164 UHF 
 	---------------------------------------------------
-	--[[ HJP
-
 	local lUHFRadio = GetDevice(23)
 	if lUHFRadio:is_on() then
 		ExportScript.Tools.SendData(2000, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
 		
 		local lUHFRadio_PRESET = {[0.0]="01",[0.1]="02",[0.2]="03",[0.3]="04",[0.4]="05",[0.5]="06",[0.6]="07",[0.7]="08",[0.8]="09",[0.9]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20"}
-		ExportScript.Tools.SendData("2001", lUHFRadio_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(300), 2)])
+		ExportScript.Tools.SendData(2001, lUHFRadio_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(300), 2)])
 	end
 	
 	-- TACAN Channel
 	-------------------------------------------------
 	ExportScript.Tools.SendData(2002, (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0)..(string.format("%1d", (mainPanelDevice:get_argument_value(266))) == "0" and "X" or "Y"))
-]]
+
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -579,13 +577,21 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendDataDAC(2000, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
 		
 		local lUHFRadio_PRESET = {[0.0]="01",[0.1]="02",[0.2]="03",[0.3]="04",[0.4]="05",[0.5]="06",[0.6]="07",[0.7]="08",[0.8]="09",[0.9]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20"}
-		ExportScript.Tools.SendDataDAC("2001", lUHFRadio_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(300), 2)])
+		ExportScript.Tools.SendDataDAC(2001, lUHFRadio_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(300), 2)])
 	end
 	
 	-- TACAN Channel
 	-------------------------------------------------
 	ExportScript.Tools.SendData(2002, (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0)..(string.format("%1d", (mainPanelDevice:get_argument_value(266))) == "0" and "X" or "Y"))
 
+	-- Fuel Quantity Indicator (Dual)
+	local lLeftFuel = ExportScript.Tools.round(mainPanelDevice:get_argument_value(22) * 2500, 0)
+	local lRightFuel = ExportScript.Tools.round(mainPanelDevice:get_argument_value(23) * 2500, 0)
+	
+	ExportScript.Tools.SendData(2003, lLeftFuel)
+	ExportScript.Tools.SendData(2004, lRightFuel)
+	ExportScript.Tools.SendData(2005, lLeftFuel + lRightFuel)
+	
 	-- generic Radio display and frequency rotarys
 	-------------------------------------------------
 	-- genericRadioConf
