@@ -22,11 +22,12 @@ ExportScript.LastDataDAC    = {}
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\Config.lua]])
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\Tools.lua]])
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\genericRadio.lua]])
+dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\Maps.lua]])
 
 for i = 1, #ExportScript.Config.DAC, 1 do
-    ExportScript.PacketSizeDAC[i]  = 0
-    ExportScript.SendStringsDAC[i] = {}
-    ExportScript.LastDataDAC[i]    = {}
+	ExportScript.PacketSizeDAC[i]  = 0
+	ExportScript.SendStringsDAC[i] = {}
+	ExportScript.LastDataDAC[i]    = {}
 end
 
 -- Frame counter for non important data
@@ -46,36 +47,34 @@ function LuaExportStart()
 -- Works once just before mission start.
 -- (and before player selects their aircraft, if there is a choice!)
     
-    -- 2) Setup udp sockets to talk to GlassCockpit
-    package.path  = package.path..";.\\LuaSocket\\?.lua"
-    package.cpath = package.cpath..";.\\LuaSocket\\?.dll"
-   
-    ExportScript.socket = require("socket")
-    
-    ExportScript.UDPsender = ExportScript.socket.udp()
-    ExportScript.UDPsender:setsockname("*", 0)
-    ExportScript.UDPsender:setoption('broadcast', true)
-    ExportScript.UDPsender:settimeout(.001) -- set the timeout for reading the socket
+	-- 2) Setup udp sockets to talk to GlassCockpit
+	package.path  = package.path..";.\\LuaSocket\\?.lua"
+	package.cpath = package.cpath..";.\\LuaSocket\\?.dll"
 
-    if ExportScript.Config.Listener then
-        ExportScript.UDPListener = ExportScript.socket.udp()
-        ExportScript.UDPListener:setsockname("*", ExportScript.Config.ListenerPort)
-        ExportScript.UDPListener:setoption('broadcast', true)
-        ExportScript.UDPListener:settimeout(.001) -- set the timeout for reading the socket
-    end
+	ExportScript.socket = require("socket")
 
-    --local lrename1, lrename2 = os.rename(ExportScript.Config.LogPath, ExportScript.Config.LogPath..".old")
-    ExportScript.logFile = io.open(ExportScript.Config.LogPath, "w+")
+	ExportScript.UDPsender = ExportScript.socket.udp()
+	ExportScript.UDPsender:setsockname("*", 0)
+	ExportScript.UDPsender:settimeout(.004) -- set the timeout for reading the socket; 250 fps
+
+	if ExportScript.Config.Listener then
+		ExportScript.UDPListener = ExportScript.socket.udp()
+		ExportScript.UDPListener:setsockname("*", ExportScript.Config.ListenerPort)
+		ExportScript.UDPListener:settimeout(.004) -- set the timeout for reading the socket; 250 fps
+	end
+
+	--local lrename1, lrename2 = os.rename(ExportScript.Config.LogPath, ExportScript.Config.LogPath..".old")
+	ExportScript.logFile = io.open(ExportScript.Config.LogPath, "w+")
 	if ExportScript.logFile then
 		ExportScript.logFile:write('\239\187\191') -- create a UTF-8 BOM
 	end
-    --if lrenmae1 == nil then
-    --    ExportScript.Tools.WriteToLog("Rename Error: "..lrename2)
-    --end
-    
-    ExportScript.AF = {} -- Table for Auxiliary functions
+	--if lrenmae1 == nil then
+	--    ExportScript.Tools.WriteToLog("Rename Error: "..lrename2)
+	--end
 
-    ExportScript.Tools.SelectModule()   -- point globals to Module functions and data.
+	ExportScript.AF = {} -- Table for Auxiliary functions
+
+	ExportScript.Tools.SelectModule()   -- point globals to Module functions and data.
 end
 
 function LuaExportBeforeNextFrame()
@@ -87,13 +86,17 @@ end
 
 function LuaExportStop()
 -- Works once just after mission stop.
-	ExportScript.Tools.SendDataDAC("DAC", "stop")
-	for i=1, #ExportScript.Config.DAC, 1 do
-		ExportScript.Tools.FlushDataDAC(i)
-    end
+	if ExportScript.Config.DACExport then
+		ExportScript.Tools.SendDataDAC("DAC", "stop")
+		for i=1, #ExportScript.Config.DAC, 1 do
+			ExportScript.Tools.FlushDataDAC(i)
+		end
+	end
 
-	ExportScript.Tools.SendData("Ikarus", "stop")
-	ExportScript.Tools.FlushData()
+	if ExportScript.Config.IkarusExport then
+		ExportScript.Tools.SendData("Ikarus", "stop")
+		ExportScript.Tools.FlushData()
+	end
 
 	ExportScript.UDPsender:close()
 	if ExportScript.Config.Listener then
