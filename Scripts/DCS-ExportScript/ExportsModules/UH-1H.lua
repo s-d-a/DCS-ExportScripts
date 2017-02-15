@@ -230,10 +230,10 @@ ExportScript.ConfigArguments =
 	-- Electrosystem
 	[219] = "%1d",		-- Battery
 	[220] = "%1d",		-- Starter/Stdby GEN
-	[218] = "%.1f",		-- DC Voltmeter Selector
+	[218] = "%.1f",		-- DC Voltmeter Selector BAT, MAIN GEN, STBY GEN, ESS BUS, NON-ESS BUS {0.0,0.1,0.2,0.3,0.4}
 	[221] = "%1d",		-- Non Essential bus
-	[214] = "%.1f",		-- AC Voltmeter Selector
-	[215] = "%1d",		-- Inverter
+	[214] = "%.1f",		-- AC Voltmeter Selector AB, AC PHASE, BC {0.0,0.1,0.2}
+	[215] = "%1d",		-- Inverter MAIN/OFF/SPARE {-1.0,0.0,1.0}
 	-- Electrosystem circuit breakers
 	-- Essential BUS. line 1
 	[285] = "%1d",		-- CB IFF APX 1 (N/F)
@@ -326,8 +326,8 @@ ExportScript.ConfigArguments =
 	[81] = "%1d",		-- Main Fuel
 	[240] = "%1d",		-- Test Fuel Gauge
 	--Transponder APX-72
-	[58] = "%.1f",		-- Code
-	[59] = "%.1f",		-- Master
+	[58] = "%.1f",		-- Code ZERO/B/A/HOLD input{-1.0,0.0,1.0} output{0.0,0.1,0.2,0.3}
+	[59] = "%.1f",		-- Master OFF/STBY/LOW/NOMR/EMER {0.0,0.1,0.2,0.3,0.4}
 	[60] = "%1d",		-- Audio/light
 	
 	[61] = "%1d",		-- Test M-1 {-1, 0, 1}
@@ -340,24 +340,24 @@ ExportScript.ConfigArguments =
 	-- IFF
 	[67] = "%1d",		-- IFF On/Out
 	
-	[68] = "%1d",		-- MODE1-WHEEL1
-	[69] = "%1d",		-- MODE1-WHEEL2
+	[68] = "%.2f",		-- MODE1-WHEEL1 0/1/2/3 {0.0,0.33,0.66,0.99}
+	[69] = "%.2f",		-- MODE1-WHEEL2 0/1/2/3/4/5/6/7 {0.0,0.11,0.22,0.33,0.44,0.55,0.66,0.77}
 	
-	[70] = "%1d",		-- "MODE3A-WHEEL1
-	[71] = "%1d",		-- "MODE3A-WHEEL2
-	[72] = "%1d",		-- "MODE3A-WHEEL3
-	[73] = "%1d",		-- "MODE3A-WHEEL4
+	[70] = "%.2f",		-- MODE3A-WHEEL1 0/1/2/3/4/5/6/7 {0.0,0.11,0.22,0.33,0.44,0.55,0.66,0.77}
+	[71] = "%.2f",		-- MODE3A-WHEEL2 0/1/2/3/4/5/6/7 {0.0,0.11,0.22,0.33,0.44,0.55,0.66,0.77}
+	[72] = "%.2f",		-- MODE3A-WHEEL3 0/1/2/3/4/5/6/7 {0.0,0.11,0.22,0.33,0.44,0.55,0.66,0.77}
+	[73] = "%.2f",		-- MODE3A-WHEEL4 0/1/2/3/4/5/6/7 {0.0,0.11,0.22,0.33,0.44,0.55,0.66,0.77}
 	
-	[74] = "%.4f",		-- Reply test, Axis
+	[74] = "%.4f",		-- Reply test, (Axis) {0.0,1.0} in 0.1 steps
 	[78] = "%1d",		-- Reply test, Button
 	
-	[75] = "%.4f",		-- Test test, Axis
+	[75] = "%.4f",		-- Test test, (Axis) {0.0,1.0} in 0.1 steps
 	[79] = "%1d",		-- Test test, Button
 	
-	[130] = "%1d",		-- Winding/Adjustment Clock, Axis ??
-	[131] = "%1d",		-- Winding/Adjustment Clock, Button ??
+	[130] = "%1d",		-- Winding/Adjustment Clock (Axis) {0.0,1.0} in 0.04 steps
+	[131] = "%1d",		-- Winding/Adjustment Clock, Button 
 	-- ENGINE INTERFACE
-	[250] = "%.4f",		-- Throttle {-1.0, 0.4}
+	[250] = "%.4f",		-- Throttle (Axis) {-1.0, 0.4} in -0.1 steps
 	[206] = "%1d",		-- Throttle Stop
 	
 	[84] = "%1d",		-- De-Ice On/Off
@@ -371,90 +371,90 @@ ExportScript.ConfigArguments =
 	-- ADI OPERATOR
 	-- Copilot's attutude indicator
 	[140] = "%1d",		-- Cage Copilot's Attitude Indicator, Button
-	[146] = "%.4f",		-- Attitude Indicator Pitch Trim Knob, Axis
+	[146] = "%.4f",		-- Attitude Indicator Pitch Trim Knob (Axis) {0.0,1.0} in 0.1 steps
 	-- ADI PILOT
-	[145] = "%.4f",		-- Attitude Indicator Pitch Trim Knob, Axis
-	[144] = "%.4f",		-- Attitude Indicator Roll Trim Knob, Axis
+	[145] = "%.4f",		-- Attitude Indicator Pitch Trim Knob (Axis) {0.0,1.0} in 0.1 steps
+	[144] = "%.4f",		-- Attitude Indicator Roll Trim Knob (Axis) {0.0,1.0} in 0.1 steps
 	-- AAU32
 	-- Copilot's altimeter
-	[172] = "%.4f",		-- Pressure Adjustment, Axis
+	[172] = "%.4f",		-- Pressure Adjustment (Axis) {0.0,1.0} in 0.2 steps
 	-- AAU7
 	-- Pilot's altimeter
-	[181] = "%.4f",		-- Pressure Adjustment, Axis
+	[181] = "%.4f",		-- Pressure Adjustment (Axis) {0.0,1.0} in 0.2 steps
 	-- VHF ARC-134
 	[6] = "%1d",		-- Comm Test Button
-	[7] = "%1d",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Button
-	[5] = "%.4f",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Axis
-	[8] = "%1d",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume, Button
-	[9] = "%.4f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume, Axis
+	[7] = "%1d",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Button {0.85, 1.0}
+	[5] = "%.1f",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value (Axis) {0.0, 1.0} in 0.1 Steps
+	[8] = "%.2f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume (Axis) {0.0, 0.65} in 0.15 Steps
+	[9] = "%.1f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume (Axis) {0.0, 1.0} in 0.1 Steps
 	-- Intercom Control Panel
-	[29] = "%.4f",		-- Intercom volume {0.3,1.0}
+	[29] = "%.4f",		-- Intercom volume (Axis) {0.3,1.0} in 0.1 Steps
 	[23] = "%1d",		-- VHF AM Radio Receiver
 	[24] = "%1d",		-- UHF Radio Receiver
 	[25] = "%1d",		-- VHF FM Radio Receiver
 	[26] = "%1d",		-- Receiver 4 N/F
 	[27] = "%1d",		-- INT Receiver
 	[28] = "%1d",		-- Receiver NAV
-	[30] = "%.1f",		-- Intercom Mode (PVT - hot line; INT - interphone; 1 - VHF FM transmitter; 2 - UHF transmitter; 3 - VHF AM transmitter; 4 - Not used)
+	[30] = "%.1f",		-- Intercom Mode (PVT - hot line; INT - interphone; 1 - VHF FM transmitter; 2 - UHF transmitter; 3 - VHF AM transmitter; 4 - Not used) {0.0,0.1,0.2,0.3,0.4,0.5}
 	[194] = "%.1f",		-- Radio/ICS
 	-- ARC 51BX UHF Raido
-	[16] = "%.1f",		-- Preset Channel Selector
-	[18] = "%.4f",		-- 10 MHz Selector, Axis
-	[19] = "%.4f",		-- 1 MHz Selector, Axis
-	[20] = "%.4f",		-- 50 kHz Selector, Axis
+	[16] = "%.2f",		-- Preset Channel Selector 1/2/.../19/20 {0.0,0.05,...,0.90,0.95}
+	[18] = "%.4f",		-- 10 MHz Selector (Axis) {0.0,1.0} in 0.1 Steps
+	[19] = "%.4f",		-- 1 MHz Selector (Axis) {0.0,1.0} in 0.1 Steps
+	[20] = "%.4f",		-- 50 kHz Selector (Axis) {0.0,1.0} in 0.1 Steps
 	
-	[15] = "%.1f",		-- Frequency Mode Dial
-	[17] = "%.1f",		-- Function Dial
+	[15] = "%.1f",		-- Frequency Mode Dial {0.0,0.1,0.2}
+	[17] = "%.1f",		-- Function Dial {0.0,0.1,0.2,0.3}
 	[22] = "%1d",		-- Squelch
-	[21] = "%.4f",		-- Volume, Axis
+	[21] = "%.4f",		-- Volume (Axis) {0.0,1.0} in 0.1 Steps
 	-- VHF ARC 131
-	[31] = "%.1f",		-- Frequency Tens MHz
-	[32] = "%.1f",		-- Frequency Ones MHz
-	[33] = "%.1f",		-- Frequency Decimals MHz
-	[34] = "%.1f",		-- Frequency Hundredths MHz
-	[35] = "%.1f",		-- Mode OFF/TR/RETRAN(N/F)/HOME(N/F)
-	[36] = "%.1f",		-- quelch Mode
-	[37] = "%.4f",		-- Volume, Axis
+	[31] = "%.1f",		-- Frequency Tens MHz {0.3,0.4,0.5,0.6,0.7}
+	[32] = "%.1f",		-- Frequency Ones MHz {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9}
+	[33] = "%.1f",		-- Frequency Decimals MHz {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9}
+	[34] = "%.1f",		-- Frequency Hundredths MHz {0.0,0.1}
+	[35] = "%.1f",		-- Mode OFF/TR/RETRAN(N/F)/HOME(N/F) {0.0,0.1,0.2,0.3}
+	[36] = "%.1f",		-- quelch Mode {0.0,0.1,0.2}
+	[37] = "%.4f",		-- Volume (Axis) {0.0,1.0} in 0.1 Steps
 	-- ARN-82
-	[52] = "%1d",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Button
-	[51] = "%.4f",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Axis
-	[53] = "%1d",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume, Button
-	[54] = "%.4f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume, Axis
+	[52] = "%1d",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Button {0.8, 1.0}
+	[51] = "%.4f",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value (Axis) {0.0,1.0} in 0.1 Steps
+	[53] = "%.4f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume (Axis) {0.0, 0.65} in 0.15 Steps
+	[54] = "%.4f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume (Axis) {0.0,1.0} in 0.1 Steps
 	-- Marker beakon
-	[57] = "%.4f",		-- Marker beacon On/Off/Volume
+	[57] = "%.4f",		-- Marker beacon On/Off/Volume (Axis) {0.0,1.0} in 0.1 Steps
 	[55] = "%1d",		-- Marker beacon sensing
 	-- AN/ARN-83
-	[42] = "%.1f",		-- ADF Loop Antenna speed {0.1,0.3}
+	[42] = "%.1f",		-- ADF Loop Antenna speed Left/Nom/Right {0.1,0.2,0.3}
 	[41] = "%1d",		-- BFO (N/F)
-	[43] = "%1d",		-- Gain control / Mode. Right mouse click to cycle mode. Rotate mouse wheel to adjust gain, Button
-	[44] = "%.4f",		-- Gain control / Mode. Right mouse click to cycle mode. Rotate mouse wheel to adjust gain, Axis
-	[38] = "%1d",		-- Tune control / Band selection. Right mouse click to select a band. Rotate mouse wheel to adjust tune, Button
-	[39] = "%.4f",		-- Tune control / Band selection. Right mouse click to select a band. Rotate mouse wheel to adjust tune, Axis
+	[43] = "%.1f",		-- Gain control / Mode. Right mouse click to cycle mode. Rotate mouse wheel to adjust gain (Axis) OFF/ADF/ANT/LOOP {0.0,0.3} in 0.1 Steps
+	[44] = "%.4f",		-- Gain control / Mode. Right mouse click to cycle mode. Rotate mouse wheel to adjust gain (Axis) {0.0,1.0} in 0.1 Steps
+	[38] = "%1d",		-- Tune control / Band selection. Right mouse click to select a band. Rotate mouse wheel to adjust tune (Axis) 190/400/800 {-1.0,0.0,1.0}
+	[39] = "%.4f",		-- Tune control / Band selection. Right mouse click to select a band. Rotate mouse wheel to adjust tune (Axis) {0.0,1.0} in 0.1 Steps
 	-- Nav lights
-	[222] = "%.1f",		-- Navigation lights
-	[223] = "%1d",		-- Position Lights, STEADY/OFF/FLASH
+	[222] = "%.1f",		-- Navigation lights, OFF/1/2/3/4/BRT {0.0,0.1,0.2,0.3,0.4,0.5}
+	[223] = "%1d",		-- Position Lights, STEADY/OFF/FLASH {-1.0,0.0,1.0}
 	[224] = "%1d",		-- Position Lights, DIM/BRIGHT
 	[225] = "%1d",		-- Anti-Collision Lights, ON/OFF
 	[202] = "%1d",		-- Landing Light
 	[201] = "%1d",		-- Search Light
 	[205] = "%1d",		-- Landing Light Ctrl
 	-- Light System
-	[230] = "%.4f",		-- Overhead Console Panel Lights Brightness Rheostat, Axis
-	[231] = "%.4f",		-- Pedestal Lights Brightness Rheostat, Axis
-	[232] = "%.4f",		-- Secondary Instrument Lights Brightness Rheostat, Axis
-	[233] = "%.4f",		-- Engine Instrument Lights Brightness Rheostat, Axis
-	[234] = "%.4f",		-- Copilot Instrument Lights Brightness Rheostat, Axis
-	[235] = "%.4f",		-- Pilot Instrument Lights Brightness Rheostat, Axis
+	[230] = "%.4f",		-- Overhead Console Panel Lights Brightness Rheostat (Axis) {0.0,1.0} in 0.2 Steps
+	[231] = "%.4f",		-- Pedestal Lights Brightness Rheostat (Axis) {0.0,1.0} in 0.2 Steps
+	[232] = "%.4f",		-- Secondary Instrument Lights Brightness Rheostat (Axis) {0.0,1.0} in 0.2 Steps
+	[233] = "%.4f",		-- Engine Instrument Lights Brightness Rheostat (Axis) {0.0,1.0} in 0.2 Steps
+	[234] = "%.4f",		-- Copilot Instrument Lights Brightness Rheostat (Axis) {0.0,1.0} in 0.2 Steps
+	[235] = "%.4f",		-- Pilot Instrument Lights Brightness Rheostat (Axis) {0.0,1.0} in 0.2 Steps
 	[226] = "%1d",		-- Dome Light Ctrl
 	-- HEATING SYSTEM
-	[236] = "%.1f",		-- Bleed Air
+	[236] = "%.1f",		-- Bleed Air, OFF/1/2/3/4 {0.0,0.1,0.2,0.3,0.4}
 	-- GCI(ID-998/ASN)
-	[163] = "%.4f",		-- Heading Set Knob, Axis
-	[161] = "%.4f",		-- Compass Synchronizing, Axis
+	[163] = "%.4f",		-- Heading Set Knob (Axis) {0.0,1.0} in 0.1 Steps
+	[161] = "%.4f",		-- Compass Synchronizing (Axis) {0.0,1.0} in 0.05 Steps
 	[164] = "%1d",		-- ADF/VOR control
 	[241] = "%1d",		-- DG/Slave gyro mode
 	-- COURSE IND
-	[155] = "%.4f",		-- Course select knob, Axis
+	[155] = "%.4f",		-- Course select knob (Axis) {0.0,1.0} in 0.1 Steps
 	-- weapon system
 	[252] = "%1d",		-- Armed/Safe/Off
 	[253] = "%1d",		-- Left/Right/All
@@ -464,16 +464,16 @@ ExportScript.ConfigArguments =
 	[259] = "%1d",		-- Jettison Cover
 	[260] = "%1d",		-- Jettison
 	-- sighting station
-	[281] = "%.4f",		-- Sighting Station Intensity
-	[408] = "%1d",		-- Sighting Station Lamp Switch BACKUP/OFF/MAIN
+	[281] = "%.4f",		-- Sighting Station Intensity (Axis) {0.0,1.0} in 0.1 Steps
+	[408] = "%1d",		-- Sighting Station Lamp Switch BACKUP/OFF/MAIN {-1.0,0.0,1.0}
 	
-	[0] = "%1d",		-- Pilot Sight Armed/Safe ??
+	--[0] = "%1d",		-- Pilot Sight Armed/Safe ??
 	[439] = "%1d",		-- Pilot Sight On/Off
-	[440] = "%.4f",		-- Pilot Sighting Station Intensity, Axis
-	[441] = "%.4f",		-- Sight Elevation, Axis
+	[440] = "%.4f",		-- Pilot Sighting Station Intensity (Axis) {0.0,1.0} in 0.1 Steps
+	[441] = "%.4f",		-- Sight Elevation (Axis) {-1.0,1.0} in 0.1 Steps
 	-- Windshield Wipers
-	[227] = "%1d",		-- Pilot/Both/Operator
-	[229] = "%.1f",		-- Wipers Speed
+	[227] = "%1d",		-- Pilot/Both/Operator {-1.0,0.0,1.0}
+	[229] = "%.1f",		-- Wipers Speed PARK/OFF/LOW/MED/HIGH input{-1.0,0.0,1.0} output{0.0,0.1,0.2,0.3,0.4}
 	-- Stick
 	[189] = "%1d",		-- Force Trim ON/OFF (Pilot)
 	[193] = "%1d",		-- Force Trim ON/OFF (CoPilot)
@@ -485,14 +485,14 @@ ExportScript.ConfigArguments =
 	[464] = "%1d",		-- Flare Dispense
 	[457] = "%1d",		-- Armed lamp Test
 	[453] = "%1d",		-- Flare counter Reset. Rotate mouse wheel to set Number, Button
-	[452] = "%.4f",		-- Flare counter Reset. Rotate mouse wheel to set Number, Axis
+	[452] = "%.4f",		-- Flare counter Reset. Rotate mouse wheel to set Number (Axis) {0.0,1.0} in 0.2 Steps
 	[455] = "%1d",		-- Chaff counter Reset. Rotate mouse wheel to set Number, Button
-	[454] = "%.4f",		-- Chaff counter Reset. Rotate mouse wheel to set Number, Axis
+	[454] = "%.4f",		-- Chaff counter Reset. Rotate mouse wheel to set Number (Axis) {0.0,1.0} in 0.2 Steps
 	-- Radar Altimeter
 	[449] = "%1d",		-- Radar Altimeter Power
 	[445] = "%.4f",		-- Turn On. Low Set.
 	[446] = "%1d",		-- Test / Hight Set. Left mouse click to Test. Rotate mouse wheel to set Hight, Button
-	[464] = "%1d",		-- Test / Hight Set. Left mouse click to Test. Rotate mouse wheel to set Hight, Axis
+	[464] = "%.4f",		-- Test / Hight Set. Left mouse click to Test. Rotate mouse wheel to set Hight (Axis) {0.0,1.0} in 0.2 Steps
 	-- Doors
 	[419] = "%1d",		-- Open Left Doors
 	[421] = "%1d"		-- Open Right Doors
