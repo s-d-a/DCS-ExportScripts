@@ -370,16 +370,12 @@ ExportScript.ConfigArguments =
 	[251] = "%0.1f",   -- ILS_window_wheel_MHz
 	[252] = "%0.1f",   -- ILS_window_wheel_KHz
 	-- TACAN
-	[256] = "%.1f",	-- Channel Selector (Tens). Rotate mouse wheel to select
-	[257] = "%0.2f",	-- Channel Selector (Ones) / X/Y Mode. Right mouse click to select X/Y. 
-	[258] = "%0.2f",   -- PTR-TACAN-CHANNEL-SELECTOR-2 (Channel Selector (Ones) / X/Y Mode. Rotate mouse wheel to make channel selection)
+	[256] = "%.1f",	   -- Channel Selector (Tens). Rotate mouse wheel to select (Axis) {0.0,1.0} in 0.1 steps
+	[257] = "%0.2f",   -- Channel Selector (Ones) / X/Y Mode. Rotate mouse wheel to make channel selection (Axis) {0.0,1.0} in 0.1 steps
+	[258] = "%1d",     -- Channel Selector (Ones) / X/Y Mode. Right mouse click to select X/Y.
 	[259] = "%.1f",    -- PTR-TACAN-TEST (Test TACAN Signal on HSI)
-	[261] = "%.3f",    -- PTR-TACAN-VOL (Signal Volume)
-	[262] = "%0.1f",   -- PTR-TACAN-MODE (Mode Dial)
-	[266] = "%1d",     -- XYwheel
-	[263] = "%.1f",    -- TACAN_digit_pos.hundreds
-	[264] = "%.1f",    -- TACAN_digit_pos.tens
-	[265] = "%.1f",    -- TACAN_digit_pos.ones
+	[261] = "%.3f",    -- PTR-TACAN-VOL (Signal Volume) (Axis) {0.0,1.0} in 0.1 steps
+	[262] = "%0.1f",   -- PTR-TACAN-MODE (Mode Dial) {0.0,0.1,0.2,0.3,0.4}
 	-- HARS
 	[267] = "%.1f",    -- PTR-HARS-CP-PUSH-TO-SYNC (HARS Push-To-Sync)
 	[268] = "%.3f",    -- PTR-HARS-CP-PUSH-TO-SYNC (HARS Push-To-Sync)
@@ -631,8 +627,8 @@ ExportScript.ConfigArguments =
 	-- Light System Control Panel
 	[655] = "%0.1f",   -- PTR-LIGHTS-LAND (Land Taxi Lights)
 	-- STALL
-	[704] = "%.3f",    -- PTR-STALLWCP-STALL (Stall Volume)
-	[705] = "%.3f",    -- PTR-STALLWCP-PEAK (Peak Volume)
+	[704] = "%.1f",    -- PTR-STALLWCP-STALL (Stall Volume) (Axis) {0.0,1.0} in 0.1 steps
+	[705] = "%.1f",    -- PTR-STALLWCP-PEAK (Peak Volume) (Axis) {0.0,1.0} in 0.1 steps
 	-- Canopy
 	[712] = "%0.2f",   -- PTR-CANOPY-OPEN (Canopy Open/Hold/Close)
 	-- Auxiliary Landing Gear Handle
