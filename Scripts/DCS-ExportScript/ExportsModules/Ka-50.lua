@@ -666,11 +666,10 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
     -- function for Ikarus
 
 	local lWeaponSystem = GetDevice(12)
-	local lEKRAN = GetDevice(10)
-	local lCannonAmmoCount = ""
+	local lCannonAmmoCount = "  "
 	local lStationNumbers = lWeaponSystem:get_selected_weapon_stations()
-	local lStationCount = ""
-	local lStationType = ""	
+	local lStationCount = "  "
+	local lStationType = "  "
 	local lTargetingPower = mainPanelDevice:get_argument_value(433)
 	local lTrigger = mainPanelDevice:get_argument_value(615)
 	if lTrigger == 0 then
@@ -698,12 +697,40 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		end
 	end
 
+	-- PUI-800 Weapon panel
+	---------------------------------------------------
+	ExportScript.Tools.SendData(2004, string.format("%s", lStationType))
+	ExportScript.Tools.SendData(2005, string.format("%s", lStationCount))
+	ExportScript.Tools.SendData(2006, string.format("%s", lCannonAmmoCount))
+
+	-- UV-26
+	local lUV26 = list_indication(7)
+	lUV26 = lUV26:gsub("-----------------------------------------", "")
+	lUV26 = lUV26:gsub("txt_digits", "")
+	lUV26 = lUV26:gsub("%c", "")
+
+	ExportScript.Tools.SendData(2007, string.format("%s", lUV26))
+
+	-- EKRAN
+	---------------------------------------------------
+
+	local lEKRAN = GetDevice(10)
 	local lEkranSendString = ""
 	local lEkranText = lEKRAN:get_actual_text_frame()
 	if lEkranText ~= "" then
-		lEkranSendString = string.sub(lEkranText,1,8).."\n"..string.sub(lEkranText,12,19).."\n"..string.sub(lEkranText,23,30).."\n"..string.sub(lEkranText,34,41)
+		--lEkranSendString = string.sub(lEkranText,1,8).."\n"..string.sub(lEkranText,12,19).."\n"..string.sub(lEkranText,23,30).."\n"..string.sub(lEkranText,34,41)
+		ExportScript.Tools.SendData(2010, string.format("%s", string.sub(lEkranText,1,8)))
+		ExportScript.Tools.SendData(2011, string.format("%s", string.sub(lEkranText,12,19)))
+		ExportScript.Tools.SendData(2012, string.format("%s", string.sub(lEkranText,23,30)))
+		ExportScript.Tools.SendData(2013, string.format("%s", string.sub(lEkranText,34,41)))
+	else
+		ExportScript.Tools.SendData(2010, "        ")
+		ExportScript.Tools.SendData(2011, "        ")
+		ExportScript.Tools.SendData(2012, "        ")
+		ExportScript.Tools.SendData(2013, "        ")
 	end
 
+	--[[
 	local lFAILlight		= ""	-- FAILURE
 	local lMEMORYlight		= ""	-- MEMORY
 	local lTURNlight		= ""	-- TURN
@@ -718,25 +745,12 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	--ExportScript.Tools.SendData(2002, string.format("%s", lFAILlight))
 	--ExportScript.Tools.SendData(2003, string.format("%s", lMEMORYlight))
 	--ExportScript.Tools.SendData(2004, string.format("%s", lTURNlight))
-	-- PUI-800 Weapon panel
-	---------------------------------------------------
-	ExportScript.Tools.SendData(2004, string.format("%s", lStationType))
-	ExportScript.Tools.SendData(2005, string.format("%s", lStationCount))
-	ExportScript.Tools.SendData(2006, string.format("%s", lCannonAmmoCount))
-	
-	-- UV-26
-	local lUV26 = list_indication(7)
-	lUV26 = lUV26:gsub("-----------------------------------------", "")
-	lUV26 = lUV26:gsub("txt_digits", "")
-	lUV26 = lUV26:gsub("%c", "")
-
-	ExportScript.Tools.SendData(2007, string.format("%s", lUV26))
-	
 	--ExportScript.Tools.WriteToLog('lEkranSendString: '..ExportScript.Tools.dump(lEkranSendString))
 	--ExportScript.Tools.WriteToLog('lFAILlight: '..ExportScript.Tools.dump(lFAILlight))
 	--ExportScript.Tools.WriteToLog('lMEMORYlight: '..ExportScript.Tools.dump(lMEMORYlight))
 	--ExportScript.Tools.WriteToLog('lTURNlight: '..ExportScript.Tools.dump(lTURNlight))
-	
+	]]
+	--[[
 	--ExportScript.Tools.WriteToLog('EKRAN: '..ExportScript.Tools.dump(list_indication(4)))
 	local lEKRAN = list_indication(4)
 	lEKRAN = lEKRAN:gsub("-----------------------------------------", "")
@@ -783,6 +797,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2011, string.format("%s", string.sub(lEKRANtxt2,11,19)))
 	ExportScript.Tools.SendData(2012, string.format("%s", string.sub(lEKRANtxt2,21,29)))
 	ExportScript.Tools.SendData(2013, string.format("%s", string.sub(lEKRANtxt2,31,39)))
+	]]
 
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {300, 299, 298})
