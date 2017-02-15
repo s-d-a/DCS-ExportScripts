@@ -148,7 +148,7 @@ function ExportScript.Tools.ProcessArguments(device, arguments)
 		ExportScript.Tools.WriteToLog("======Begin========")
 	end
 
-	for lArgument, lFormat in pairs(arguments) do 
+	for lArgument, lFormat in pairs(arguments) do
 		lArgumentValue = string.format(lFormat,device:get_argument_value(lArgument))
 		if ExportScript.Config.Debug then
 			lCounter = lCounter + 1
@@ -161,14 +161,14 @@ function ExportScript.Tools.ProcessArguments(device, arguments)
 			ExportScript.Tools.SendDataDAC(lArgument, lArgumentValue)
 		end
 	end
-	
+
 	if ExportScript.Config.Debug then
 		ExportScript.Tools.WriteToLog("======End========")
 	end
 end
 
 -- Network Functions for GlassCockpit
-function ExportScript.Tools.SendData(id, value)	
+function ExportScript.Tools.SendData(id, value)
 	if id == nil then
 		ExportScript.Tools.WriteToLog("Export id is nil")
 		return
@@ -191,7 +191,7 @@ function ExportScript.Tools.SendData(id, value)
 		end
 
 		table.insert(ExportScript.SendStrings, ldata)
-		ExportScript.LastData[id] = value	
+		ExportScript.LastData[id] = value
 		ExportScript.PacketSize   = ExportScript.PacketSize + ldataLen + 1
 	end
 end
@@ -225,7 +225,7 @@ function ExportScript.Tools.SendDataDAC(id, value)
 			end
 
 			table.insert(ExportScript.SendStringsDAC[hardware], ldata)
-			ExportScript.LastDataDAC[hardware][id] = value	
+			ExportScript.LastDataDAC[hardware][id] = value
 			ExportScript.PacketSizeDAC[hardware]   = ExportScript.PacketSizeDAC[hardware] + ldataLen + 1
 			--ExportScript.Tools.WriteToLog("id=ldata: "..ldata)
 			--ExportScript.Tools.WriteToLog("ExportScript.LastDataDAC["..hardware.."]: "..ExportScript.Tools.dump(ExportScript.LastDataDAC[hardware]))
@@ -297,7 +297,7 @@ function ExportScript.Tools.SelectModule()
 	ExportScript.FoundNoModul = false
 
 	for file in lfs.dir(ExportScript.Config.ExportModulePath) do
-		if lfs.attributes(ExportScript.Config.ExportModulePath..file,"mode") == "file" then 
+		if lfs.attributes(ExportScript.Config.ExportModulePath..file,"mode") == "file" then
 			if file == lModuleName then
 				lModuleFile = ExportScript.Config.ExportModulePath..file
 			end
@@ -308,7 +308,7 @@ function ExportScript.Tools.SelectModule()
 
 	if string.len(lModuleFile) > 1 then
 		ExportScript.Tools.ResetChangeValuesDAC()
-		
+
 		-- load Aircraft File
 		dofile(lModuleFile)
 		if ExportScript.Config.DACExport then
@@ -317,7 +317,7 @@ function ExportScript.Tools.SelectModule()
 				ExportScript.Tools.FlushDataDAC(i)
 			end
 		end
-		
+
 		if ExportScript.Config.IkarusExport then
 			ExportScript.Tools.SendData("File", lMyInfo.Name)
 		end
@@ -404,7 +404,7 @@ function ExportScript.Tools.dump(var, depth)
 		if type(var) == "string" then
 			return 'string: "' .. var .. '"\n'
 		elseif type(var) == "nil" then
-			return 'nil\n' 
+			return 'nil\n'
 		elseif type(var) == "number" then
 			return 'number: "' .. var .. '"\n'
 		elseif type(var) == "boolean" then
@@ -415,15 +415,15 @@ function ExportScript.Tools.dump(var, depth)
 				local info = debug.getinfo(var, "S")
 				if info.what == "C" then
 					return string.format('%q', fcnname .. ', C function') .. '\n'
-				else 
+				else
 					if (string.sub(info.source, 1, 2) == [[./]]) then
 						return string.format('%q', fcnname .. ', defined in (' .. info.linedefined .. '-' .. info.lastlinedefined .. ')' .. info.source) ..'\n'
 					else
 						return string.format('%q', fcnname .. ', defined in (' .. info.linedefined .. '-' .. info.lastlinedefined .. ')') ..'\n'
 					end
-				end				
+				end
 			else
-				return 'a function\n'	
+				return 'a function\n'
 			end
 		elseif type(var) == "thread" then
 			return 'thread\n'
@@ -436,7 +436,7 @@ function ExportScript.Tools.dump(var, depth)
 						out = out .. (" "):rep(depth*4).. "["..k.."] = " .. ExportScript.Tools.dump(v, depth)
 				end
 				return out .. (" "):rep((depth-1)*4) .. "}\n"
-		else 
+		else
 				return tostring(var) .. "\n"
 		end
 end
