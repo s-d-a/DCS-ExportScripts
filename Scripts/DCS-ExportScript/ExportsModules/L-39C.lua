@@ -29,8 +29,8 @@ ExportScript.ConfigEveryFrameArguments =
 	--[40] = "%.4f",		-- KPP 1273K sideslip {-1.0, 1.0}
 	[35] = "%.4f",		-- KPP Course Deviation Bar {-1.0, 1.0}
 	[34] = "%.4f",		-- KPP Alt Deviation Bar {-1.0, 1.0}
-	[36] = "%.4f",		-- KPP Glide Beacon
-	[37] = "%.4f",		-- KPP Localizer Beacon
+	[36] = "%1d",		-- KPP Glide Beacon
+	[37] = "%1d",		-- KPP Localizer Beacon
 	[29] = "%.4f",		-- KPP Arretir
 	[32] = "%.4f",		-- KPP SDU Roll {-1.0, 1.0}
 	[33] = "%.4f",		-- KPP SDU Pitch {-1.0, 1.0}
@@ -40,8 +40,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[43] = "%.4f",		-- HSI bearing needle {1.0, 0.0} {0.0, math.pi * 2.0}
 	[47] = "%.4f",		-- HSI Course Deviation Bar {-0.8, 0.8}{-1.0, 1.0}
 	[45] = "%.4f",		-- HSI Alt Deviation Bar {-0.8, 0.8}{-1.0, 1.0}
-	[46] = "%.4f",		-- HSI Glide Beacon
-	[44] = "%.4f",		-- HSI Localizer Beacon
+	[46] = "%.4f",		-- HSI Glide Beacon G
+	[44] = "%.4f",		-- HSI Localizer Beacon K
 	-- RSBN
 	[189] = "%.4f",		-- RSBN NAV Chan {0.0, 0.39} {1.0, 40.0}
 	[190] = "%.4f",		-- RSBN LAND Chan {0.0, 0.39} {1.0, 40.0}
@@ -54,7 +54,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[53] = "%.4f",		-- VD-20 m {0.0, 1.0}{0.0, 1000.0}
 	[54] = "%.4f",		-- VD-20 km Ind {0.0, 1.0}{0.0, 20.0}
 	[55] = "%.4f",		-- VD-20 m Ind {0.0, 1.0}{0.0, 1000.0}
-	[56] = "%.4f",		-- VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
+	--[56] = "%.4f",		-- VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
 	-- Barometric altimeter
 	-- Altimeter Feet , copy of A-10 altimeter
 	[637] = "%.4f",		-- Altimeter_100_footPtr {0.0, 1.0}{0.0, 1000.0}
@@ -624,83 +624,75 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get frequency()/1000000)) <- special function for get frequency data
 	]]
-	
+
 	-- Front Seat
-	
+
 	-- ADI correction
 	--[31] = "%.4f",		-- KPP 1273K pitch {-0.5, 0.5} {-math.pi / 2.0, math.pi / 2.0}
 	--[40] = "%.4f",		-- KPP 1273K sideslip {-1.0, 1.0}
 	local lPitch 	= mainPanelDevice:get_argument_value(31)
-	local lSideslip = mainPanelDevice:get_argument_value(40)
-	if lSideslip < 0.0 then
-		lSideslip = lSideslip - lSideslip - lSideslip	-- negate
-	else
-		lSideslip = 0 - lSideslip
-	end
-	
+
 	lPitch = lPitch * 2
-	
+
 	ExportScript.Tools.SendData(31, string.format("%.4f", lPitch))
-	ExportScript.Tools.SendData(40, string.format("%.4f", lSideslip))
-	
+	ExportScript.Tools.SendData(40, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(40)))) -- negate
+
 	-- HSI correction
 	--[41] = "%.4f",		-- HSI heading {1.0, 0.0} {0.0, math.pi * 2.0}
 	--[42] = "%.4f",		-- HSI commanded course needle (wihte needle) {1.0, 0.0} {0.0, math.pi * 2.0} 
-	local lHeading 			= mainPanelDevice:get_argument_value(41)
 	local lCommandCourse	= mainPanelDevice:get_argument_value(42)
-	if lHeading < 0.0 then
-		lHeading = lHeading - lHeading - lHeading	-- negate
-	else
-		lHeading = 0 - lHeading	-- negate
-	end
-	
+
 	lCommandCourse = lCommandCourse + 0.5 -- 180 degree turn
-	
-	ExportScript.Tools.SendData(41, string.format("%.4f", lHeading))
+
+	ExportScript.Tools.SendData(41, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(41)))) -- negate
 	ExportScript.Tools.SendData(42, string.format("%.4f", lCommandCourse))
-	
-	--[56] = "%.4f",		-- VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
-	--local lPressure 			= mainPanelDevice:get_argument_value(56)
-	--ExportScript.Tools.WriteToLog('lPressure: '..ExportScript.Tools.dump(lPressure))
-	
-	--[51] = "%.4f",		-- MACH
-	--local lMACH 			= mainPanelDevice:get_argument_value(51)
-	--ExportScript.Tools.WriteToLog('lMACH: '..ExportScript.Tools.dump(lMACH))
-	
-	
+
 	-- Back Seat
 	
 	-- ADI correction
 	--[368] = "%.4f",		-- KPP 1273K pitch {-0.5, 0.5} {-math.pi / 2.0, math.pi / 2.0}
 	--[377] = "%.4f",		-- KPP 1273K sideslip {-1.0, 1.0}
 	local lPitch2 	 = mainPanelDevice:get_argument_value(368)
-	local lSideslip2 = mainPanelDevice:get_argument_value(377)
-	if lSideslip2 < 0.0 then
-		lSideslip2 = lSideslip2 - lSideslip2 - lSideslip2	-- negate
-	else
-		lSideslip2 = 0 - lSideslip2
-	end
 	
 	lPitch2 = lPitch2 * 2
 	
 	ExportScript.Tools.SendData(368, string.format("%.4f", lPitch2))
-	ExportScript.Tools.SendData(377, string.format("%.4f", lSideslip2))
+	ExportScript.Tools.SendData(377, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(377)))) -- negate
 	
 	-- HSI correction
 	--[378] = "%.4f",		-- HSI heading {1.0, 0.0} {0.0, math.pi * 2.0}
 	--[379] = "%.4f",		-- HSI commanded course needle (wihte needle) {1.0, 0.0} {0.0, math.pi * 2.0} 
-	local lHeading2 		= mainPanelDevice:get_argument_value(378)
 	local lCommandCourse2	= mainPanelDevice:get_argument_value(379)
-	if lHeading2 < 0.0 then
-		lHeading2 = lHeading2 - lHeading2 - lHeading2	-- negate
-	else
-		lHeading2 = 0 - lHeading2	-- negate
-	end
-	
+
 	lCommandCourse2 = lCommandCourse2 + 0.5 -- 180 degree turn
-	
-	ExportScript.Tools.SendData(378, string.format("%.4f", lHeading2))
+
+	ExportScript.Tools.SendData(378, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(378))))-- negate
 	ExportScript.Tools.SendData(379, string.format("%.4f", lCommandCourse2))
+	
+	-- VD-20 Presseure correction
+	--[56] = "%.4f",		-- VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
+	local lVD_20_PRESS = mainPanelDevice:get_argument_value(56)
+	--ExportScript.Tools.WriteToLog('Pressure: '..ExportScript.Tools.dump(lVD_20_PRESS))
+	--[[
+	y_min = 0.0					-- minimaler Ausgabewert
+	y_max = 0.89				-- maximaler Ausgabewert
+	x_min = 0.0					-- minimaler Eingangswert
+	x_max = 0.76793104410172	-- maximaler Eingangswert
+	x = 0.57506740093231		-- aktueller Eingangswert
+
+	d_y = 0.89																	-- Delta Ausgabewerte (y_max - y_min)
+	d_x = 0.76793104410172														-- Delta Eingangswerte (x_max - x_min)
+	m = 1.158958225267568124678891052043										-- Steigung der linearen Funktion (d_y / d_x)
+	n = 0.0000000000000000000000000000002387929418604	(2.387929418604e-32)	-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+	
+	y = 0.66648		-- Ergebnis (m * x + n)
+	]]
+	if gVD_20_PRESS ~= lVD_20_PRESS then
+		gVD_20_PRESS = lVD_20_PRESS
+		lVD_20_PRESS = 1.158958225267568124678891052043 * lVD_20_PRESS + 0.0000000000000000000000000000002387929418604
+		--ExportScript.Tools.WriteToLog('Pressure2: '..ExportScript.Tools.dump(lVD_20_PRESS))
+		ExportScript.Tools.SendData(56, string.format("%.4f", lVD_20_PRESS))
+	end
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -774,10 +766,8 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 ]]
 end
 
+-- global VD-20 Pressure variable
+gVD_20_PRESS = 0
 -----------------------------
 --     Custom functions    --
 -----------------------------
-
-function ExportScript.genericRadio(key, value, hardware)
-end
-
