@@ -218,7 +218,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[390] = "%.4f",		-- Backseat - VD-20 m {0.0, 1.0}{0.0, 1000.0}
 	[391] = "%.4f",		-- Backseat - VD-20 km Ind {0.0, 1.0}{0.0, 20.0}
 	[392] = "%.4f",		-- Backseat - VD-20 m Ind {0.0, 1.0}{0.0, 1000.0}
-	[393] = "%.4f",		-- Backseat - VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
+	--[393] = "%.4f",		-- Backseat - VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
 	-- Barometric altimeter
 	-- Altimeter Feet , copy of A-10 altimeter
 	[737] = "%.4f",		-- Altimeter_100_footPtr {0.0, 1.0}{0.0, 1000.0}
@@ -693,6 +693,30 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		--ExportScript.Tools.WriteToLog('Pressure2: '..ExportScript.Tools.dump(lVD_20_PRESS))
 		ExportScript.Tools.SendData(56, string.format("%.4f", lVD_20_PRESS))
 	end
+
+        --[393] = "%.4f",               -- Backseat - VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
+        local lVD_20_PRESS_Backseat = mainPanelDevice:get_argument_value(393)
+        --ExportScript.Tools.WriteToLog('Pressure: '..ExportScript.Tools.dump(lVD_20_PRESS_Backseat))
+        --[[
+        y_min = 0.0                                     -- minimaler Ausgabewert
+        y_max = 0.89                            -- maximaler Ausgabewert
+        x_min = 0.0                                     -- minimaler Eingangswert
+        x_max = 0.76793104410172        -- maximaler Eingangswert
+        x = 0.57506740093231            -- aktueller Eingangswert
+
+        d_y = 0.89                                                                                                                                      -- Delta Ausgabewerte (y_max - y_min)
+        d_x = 0.76793104410172                                                                                                          -- Delta Eingangswerte (x_max - x_min)
+        m = 1.158958225267568124678891052043                                                                            -- Steigung der linearen Funktion (d_y / d_x)
+        n = 0.0000000000000000000000000000002387929418604       (2.387929418604e-32)    -- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+        
+        y = 0.66648             -- Ergebnis (m * x + n)
+        ]]
+        if gVD_20_PRESS_Backseat ~= lVD_20_PRESS_Backseat then
+                gVD_20_PRESS_Backseat = lVD_20_PRESS_Backseat
+                lVD_20_PRESS_Backseat = 1.158958225267568124678891052043 * lVD_20_PRESS_Backseat + 0.0000000000000000000000000000002387929418604
+                --ExportScript.Tools.WriteToLog('Pressure2: '..ExportScript.Tools.dump(lVD_20_PRESS_Backseat))
+                ExportScript.Tools.SendData(393, string.format("%.4f", lVD_20_PRESS_Backseat))
+        end
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -768,6 +792,7 @@ end
 
 -- global VD-20 Pressure variable
 gVD_20_PRESS = 0
+gVD_20_PRESS_Backseat = 0
 -----------------------------
 --     Custom functions    --
 -----------------------------
