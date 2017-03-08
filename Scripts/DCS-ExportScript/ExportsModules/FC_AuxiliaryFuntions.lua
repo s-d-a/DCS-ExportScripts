@@ -505,19 +505,15 @@ function ExportScript.AF.FC_Russian_ADI_Old()
 	Required heading
 	Required altitude
 	]]
-	--lNavInfoRoll      = lNavInfoRoll * lRadToDCSsignd
 	lNavInfoRoll      = (lNavInfoRoll > 0.5625 and 0.5625 or lNavInfoRoll)
 	lNavInfoRoll      = (lNavInfoRoll < -0.5625 and -0.5625 or lNavInfoRoll)
 	lPitch            = lPitch / (lRadToDCSsignd / 2)
-	--lPitch            = (lPitch > 0.0 and (0 - lPitch) or (lPitch - lPitch - lPitch))	-- negate
-	lSlipBallPosition = (lSlipBallPosition > 0.0 and (0 - lSlipBallPosition) or (lSlipBallPosition - lSlipBallPosition - lSlipBallPosition))	-- negate
-	--lBank             = lBank / (lRadToDCSsignd / 2)
 	lBank             = lBank / lRadToDCSsignd
 
 	if lNavInfo.SystemMode.submode == "ROUTE" then
 		lNavInfoPitch     = lNavInfoPitch * lRadToDCSsignd
 	elseif lNavInfo.SystemMode.submode == "ARRIVAL" then
-		lNavInfoPitch     = lNavInfoPitch * 2--(lRadToDCSsignd * 2)
+		lNavInfoPitch     = lNavInfoPitch * 2
 	elseif lNavInfo.SystemMode.submode == "LANDING" then
 		lNavInfoPitch     = lNavInfoPitch * (lRadToDCSsignd * 0.75)
 	elseif lNavInfo.SystemMode.submode == "OFF" then
@@ -530,7 +526,7 @@ function ExportScript.AF.FC_Russian_ADI_Old()
 
     ExportScript.Tools.SendData(1, string.format("%.4f", lBank))
     ExportScript.Tools.SendData(2, string.format("%.4f", lPitch))
-    ExportScript.Tools.SendData(3, string.format("%.4f", lSlipBallPosition))
+    ExportScript.Tools.SendData(3, string.format("%.4f", ExportScript.Tools.negate(lSlipBallPosition))) -- negate
     ExportScript.Tools.SendData(4, lSteeringWarningFlag)
 	ExportScript.Tools.SendData(5, lAttitudeWarningFlag)
     ExportScript.Tools.SendData(6, string.format("%.4f", lNavInfoRoll))
@@ -565,11 +561,10 @@ function ExportScript.AF.FC_Russian_ADI_New()
 	lNavInfoPitch = lNavInfoPitch / lRadToDCSsignd
 	lNavInfoRoll  = lNavInfoRoll / lRadToDCSsignd
 	lPitch        = lPitch / (lRadToDCSsignd / 2)
-	lPitch        = (lPitch > 0.0 and (0 - lPitch) or (lPitch - lPitch - lPitch))	-- negate
-	lBank         = lBank / lRadToDCSsignd --(lRadToDCSsignd / 2)
+	lBank         = lBank / lRadToDCSsignd
 
     ExportScript.Tools.SendData(1, string.format("%.4f", lBank))
-    ExportScript.Tools.SendData(2, string.format("%.4f", lPitch))
+    ExportScript.Tools.SendData(2, string.format("%.4f", ExportScript.Tools.negate(lPitch))) -- negate
     ExportScript.Tools.SendData(3, lDefaultNull)
     ExportScript.Tools.SendData(4, lDefaultNull)
     ExportScript.Tools.SendData(5, string.format("%.4f", lNavInfoRoll))
@@ -1034,7 +1029,6 @@ function ExportScript.AF.FC_Russian_VVI_Old()
 		lBank = (lBank < -1.0 and -1.0 or lBank)	-- the result is limited to -1.0
 	end
 	
-	lSlipBallPosition = (lSlipBallPosition > 0.0 and (0 - lSlipBallPosition) or (lSlipBallPosition - lSlipBallPosition - lSlipBallPosition))	-- negate
 	--lTurn = lTAS / 187.628865979					-- TRUE AIRSPEED (Meter/Second) / 187.628865979 m/s = Turn-Winkel or True Airspeed in Knots/min / 364 Knots
 	--ExportScript.Tools.WriteToLog('lTurn: '..ExportScript.Tools.dump(lTurn))
 	--ExportScript.Tools.WriteToLog('lVVI: '..ExportScript.Tools.dump(lVVI)..', lBank :'..ExportScript.Tools.dump(lBank))
@@ -1044,7 +1038,7 @@ function ExportScript.AF.FC_Russian_VVI_Old()
 
     ExportScript.Tools.SendData(40, string.format("%.4f", lVVI))
     ExportScript.Tools.SendData(41, string.format("%.4f", lBank))
-    ExportScript.Tools.SendData(42, string.format("%.4f", lSlipBallPosition))
+    ExportScript.Tools.SendData(42, string.format("%.4f", ExportScript.Tools.negate(lSlipBallPosition))) -- negate
 end
 
 -- VVI for SU-33
@@ -1885,17 +1879,14 @@ function ExportScript.AF.FC_US_ADI()
 		]]
 	lNavInfoPitch = lNavInfoPitch / lRadToDCSsignd
 	lNavInfoRoll  = lNavInfoRoll / lRadToDCSsignd
-	lNavInfoPitch = (lNavInfoPitch > 0.0 and (0 - lNavInfoPitch) or (lNavInfoPitch - lNavInfoPitch - lNavInfoPitch))
 	lPitch        = lPitch / (lRadToDCSsignd / 1.5)
-	lPitch        = (lPitch > 0.0 and (0 - lPitch) or (lPitch - lPitch - lPitch))	-- negate
 	lBank         = lBank / lRadToDCSsignd
-	--lBank         = (lBank > 0.0 and (0 - lBank) or (lBank - lBank - lBank))	-- negate
 
-	ExportScript.Tools.SendData(2, string.format("%.4f", lPitch))
+	ExportScript.Tools.SendData(2, string.format("%.4f", ExportScript.Tools.negate(lPitch))) -- negate
     ExportScript.Tools.SendData(1, string.format("%.4f", lBank))
     ExportScript.Tools.SendData(10, string.format("%.4f", lSlipBallPosition))
     ExportScript.Tools.SendData(5, string.format("%.4f", lNavInfoRoll))
-    ExportScript.Tools.SendData(6, string.format("%.4f", lNavInfoPitch))
+    ExportScript.Tools.SendData(6, string.format("%.4f", ExportScript.Tools.negate(lNavInfoPitch))) -- negate
     ExportScript.Tools.SendData(3, string.format("%.4f", lBank))   -- as Turn Needle
     ExportScript.Tools.SendData(4, string.format("%.4f", lGlide))
     ExportScript.Tools.SendData(7, 0)
@@ -1913,12 +1904,10 @@ function ExportScript.AF.FC_US_stbyADI()
 	-- [64] = "%.4f",		-- Standby Attitude Indicator bank	{-1.0, 1.0}
 	-- [65] = "%0.1f",		-- Standby Attitude Indicator warning flag	{0.0, 1.0}
 	lPitch			= lPitch / (lRadToDCSsignd / 1.5)
-	--lPitch		= (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch))	-- negate
 	lBank			= lBank / lRadToDCSsignd
-	lBank			= (lBank > 0.0 and (0 - lBank) or (lBank - lBank - lBank))	-- negate
 
     ExportScript.Tools.SendData(34, string.format("%.4f", lPitch))
-    ExportScript.Tools.SendData(35, string.format("%.4f", lBank))
+    ExportScript.Tools.SendData(35, string.format("%.4f", ExportScript.Tools.negate(lBank))) -- negate
     --ExportScript.Tools.SendData(0, 0) -- Warning Flag
 end
 
