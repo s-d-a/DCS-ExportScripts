@@ -1001,13 +1001,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	--[12] = "%.4f",		-- AGB_3K_Left_pitch {1.0, -1.0}
 	--[91] = "%.4f",		-- AGB_3K_Right_pitch {1.0, -1.0}
-	local lPitch = mainPanelDevice:get_argument_value(12)
-	lPitch = (lPitch > 0.0 and (0 - lPitch) or (lPitch - lPitch - lPitch)) -- negate
-	ExportScript.Tools.SendData(12, string.format("%.4f", lPitch))
+	ExportScript.Tools.SendData(12, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(12)))) -- negate
 	
-	lPitch = mainPanelDevice:get_argument_value(91)
-	lPitch = (lPitch > 0.0 and (0 - lPitch) or (lPitch + lPitch + lPitch)) -- negate
-	ExportScript.Tools.SendData(91, string.format("%.4f", lPitch))
+	ExportScript.Tools.SendData(91, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(91)))) -- negate
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
