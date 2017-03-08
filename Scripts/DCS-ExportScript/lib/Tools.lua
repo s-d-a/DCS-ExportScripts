@@ -134,9 +134,20 @@ function ExportScript.Tools.subst(s, t)
 	return s
 end
 
+--[[
 function ExportScript.Tools.round(num, idp)
   local lMult = 10^(idp or 0)
   return math.floor(num * lMult + 0.5) / lMult
+end
+]]
+
+-- this function negate the numeric input values
+function ExportScript.Tools.negate(Input)
+	if type(Input) == "number" then
+		return (Input > 0.0 and (0 - Input) or (Input - Input - Input))
+	else
+		return Input
+	end
 end
 
 -- Status Gathering Functions
