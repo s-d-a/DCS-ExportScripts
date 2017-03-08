@@ -292,9 +292,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	]]
 	-- AGK_47B_sideslip negate
 	--[8] = "%.4f",		-- AGK_47B_sideslip {-1.0, 1.0}
-	local lAGK_47B_sideslip = mainPanelDevice:get_argument_value(8)
-	lAGK_47B_sideslip = (lAGK_47B_sideslip > 0.0 and (0 - lAGK_47B_sideslip) or (lAGK_47B_sideslip - lAGK_47B_sideslip - lAGK_47B_sideslip))	-- negate
-	ExportScript.Tools.SendData(8, string.format("%.4f", lAGK_47B_sideslip)) -- AGK_47B_sideslip
+	ExportScript.Tools.SendData(8, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(8)))) -- negate
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
