@@ -93,13 +93,13 @@ ExportScript.ConfigEveryFrameArguments =
 	[134] = "%.4f",		-- VertVelocPilot {-4000.0, -3000.0, -1500.0, -1000.0, 1000.0, 1500.0, 3000.0, 4000.0} {-1.0, -0.81,  -0.54, -0.36, 0.36, 0.54, 0.81, 1.0}
 	[251] = "%.4f",		-- VertVelocCopilot {-4000.0, -3000.0, -1500.0, -1000.0, 1000.0, 1500.0, 3000.0, 4000.0} {-1.0, -0.81,  -0.54, -0.36, 0.36, 0.54, 0.81, 1.0}
 	-- ADI - pilot
-	[142] = "%.4f",		-- Attitude_Roll {1.0, -1.0}
+	--[142] = "%.4f",		-- Attitude_Roll {1.0, -1.0}
 	[143] = "%.4f",		-- Attitude_Pitch {1.0, -1.0}
 	[148] = "%.1f",		-- Attitude_Off_flag
 	-- ADI - operator
-	[135] = "%.4f",		-- Attitude_Roll_left {1.0, -1.0}
+	--[135] = "%.4f",		-- Attitude_Roll_left {1.0, -1.0}
 	[136] = "%.4f",		-- Attitude_Pitch_left {1.0, -1.0}
-	[141] = "%.1f",		-- Attitude_Off_flag_left  {0.0, 1.0} {1.0, 0.0}
+	--[141] = "%.1f",		-- Attitude_Off_flag_left  {0.0, 1.0} {1.0, 0.0}
 	[138] = "%.4f",		-- Attitude_PitchShift {0.0, 1.0} {-1.0, 1.0}
 	-- operator
 	--[149] = "%.4f",		-- DCVoltmeter
@@ -219,7 +219,11 @@ ExportScript.ConfigEveryFrameArguments =
 	[531] = "%.4f",		-- DC_VU_III_current {0.0, 400.0} {0.0, 1.0}
 	[533] = "%.2f",		-- AC_generator_I_current {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
 	[534] = "%.2f",		-- AC_generator_II_current {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
-	[371] = "%.2f"		-- AntiIce_ampermeter {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
+	[371] = "%.2f",		-- AntiIce_ampermeter {0.0,  50,  70,   90,   120,  130,  140,  150} {0.0, 0.1, 0.2, 0.36, 0.63, 0.75, 0.86, 1.0}
+	-- Magnetic Compass
+	--[272] = "%.4f",		-- Heading
+	[273] = "%.4f",		-- Roll
+	[274] = "%.4f"		-- Pitch
 }
 ExportScript.ConfigArguments = 
 {
@@ -514,6 +518,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+	-- Magnetic Compass
+	--[272] = "%.4f",		-- Heading
+	ExportScript.Tools.SendData(272, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(272)))) -- negate
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -528,6 +535,12 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
 	]]
+	-- ADI Pilot
+	--[142] = "%.4f",		-- Attitude_Roll {1.0, -1.0}
+	ExportScript.Tools.SendData(142, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(142)))) -- negate
+	-- ADI - operator
+	--[135] = "%.4f",		-- Attitude_Roll_left {1.0, -1.0}
+	ExportScript.Tools.SendData(135, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(135)))) -- negate
 end
 
 -----------------------------------------------------
@@ -550,6 +563,15 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {230, 231, 232, 233, 234, 235})
 	-- Overhead Console Panel Lights Brightness Rheostat, Pedestal Lights Brightness Rheostat, Secondary Instrument Lights Brightness Rheostat, Engine Instrument Lights Brightness Rheostat, Copilot Instrument Lights Brightness Rheostat, Pilot Instrument Lights Brightness Rheostat, Axis
+
+	-- ADI, disable needles and flags
+	ExportScript.Tools.SendData(2100, -1.0) -- Horizontal yellow needle
+	ExportScript.Tools.SendData(2101, -1.0) -- Vertical yellow needle
+	ExportScript.Tools.SendData(2102, -1.0) -- Left white needle
+
+	-- ADI - operator
+	--[141] = "%.1f",		-- Attitude_Off_flag_left  {0.0, 1.0} {1.0, 0.0}
+	ExportScript.Tools.SendData(141, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(141)))) -- negate
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
