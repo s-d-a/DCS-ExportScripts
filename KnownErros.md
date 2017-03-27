@@ -1,4 +1,4 @@
-###Known errors are listed here.###
+# Known errors are listed here.
 ---
 Please do not complain about the mistakes, but find a solution.
 ---
