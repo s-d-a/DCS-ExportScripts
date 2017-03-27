@@ -704,8 +704,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
         x_max = 0.76793104410172        -- maximaler Eingangswert
         x = 0.57506740093231            -- aktueller Eingangswert
 
-        d_y = 0.89                                                                                                                                      -- Delta Ausgabewerte (y_max - y_min)
-        d_x = 0.76793104410172                                                                                                          -- Delta Eingangswerte (x_max - x_min)
+        d_y = 0.89                                                                                                                                      -- Delta Ausga
+        d_x = 0.76793104410172                                                                                                          -- Delta Eingangswerte (x_max 
         m = 1.158958225267568124678891052043                                                                            -- Steigung der linearen Funktion (d_y / d_x)
         n = 0.0000000000000000000000000000002387929418604       (2.387929418604e-32)    -- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
         
@@ -728,8 +728,8 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	local UHF RADIO = GetDevice(54)
 	ExportScript.Tools.SendDataDAC("ExportID", "Format")
 	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF RADIO:get frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF RADIO:get frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
 	]]
 end
 
@@ -747,9 +747,23 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	get data from device
 	local lUHFRadio = GetDevice(54)
 	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get frequency()/1000000)) <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
 
+	-- R_832M Channel
+	local R_832M = {[0.0]="0",[0.05]="1",[0.1]="2",[0.15]="3",[0.2]="4",[0.25]="5",[0.3]="6",[0.35]="7",[0.4]="8",[0.45]="9",[0.5]="10",[0.55]="11",[0.6]="12",[0.65]="13",[0.7]="14",[0.75]="15",[0.8]="16",[0.85]="17",[0.9]="18",[0.95]="19"}
+	ExportScript.Tools.SendData(2000, R_832M[ExportScript.Tools.round(mainPanelDevice:get_argument_value(284), 2)])
+	--ExportScript.Tools.WriteToLog('R_832M Channel: '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(284))..', '..R_832M[ExportScript.Tools.round(mainPanelDevice:get_argument_value(284), 2)])
+	
+	-- R_832M Frequency
+	local lR_832M_F = GetDevice(19)
+	if lR_832M_F:is_on() then
+		ExportScript.Tools.SendData(2001, string.format("%7.3f", lR_832M_F:get_frequency()/1000000))
+		--ExportScript.Tools.WriteToLog('R_832M Frequency: '..ExportScript.Tools.dump(string.format("%7.3f", lR_832M_F:get_frequency()/1000000)))
+	else
+		ExportScript.Tools.SendData(2001, "       ")
+	end
+	
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {222, 225, 226, 497})
 	-- CB Nav. Lights, CB Red Lights, CB White Lights, Backseat - Instrument Lighting Switch
@@ -768,26 +782,40 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF RADIO:get frequency()/1000000), 2) -- export to Hardware '2' Config
 	]]
 
-	--=====================================================================================
-	--[[
-	ExportScript.Tools.WriteToLog('list cockpit params(): '..ExportScript.Tools.dump(list cockpit params()))
-	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list indication(7)))
+	-- R_832M Channel
+	local R_832M = {[0.0]="0",[0.05]="1",[0.1]="2",[0.15]="3",[0.2]="4",[0.25]="5",[0.3]="6",[0.35]="7",[0.4]="8",[0.45]="9",[0.5]="10",[0.55]="11",[0.6]="12",[0.65]="13",[0.7]="14",[0.75]="15",[0.8]="16",[0.85]="17",[0.9]="18",[0.95]="19"}
+	ExportScript.Tools.SendDataDAC(2000, R_832M[ExportScript.Tools.round(mainPanelDevice:get_argument_value(284), 2)])
+	--ExportScript.Tools.WriteToLog('R_832M Channel: '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(284))..', '..R_832M[ExportScript.Tools.round(mainPanelDevice:get_argument_value(284), 2)])
 	
+	
+	-- R_832M Frequency
+	local lR_832M_F = GetDevice(19)
+	if lR_832M_F:is_on() then
+		ExportScript.Tools.SendDataDAC(2001, string.format("%7.3f", lR_832M_F:get_frequency()/1000000))
+		--ExportScript.Tools.WriteToLog('R_832M Frequency: '..ExportScript.Tools.dump(string.format("%7.3f", lR_832M_F:get_frequency()/1000000)))
+	else
+		ExportScript.Tools.SendDataDAC(2001, "       ")
+	end
+	
+	--=====================================================================================
+
+	--ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	--ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
+	--[[
 	local ltmp1 = 0
-	for ltmp2 = 0, 13, 1 do
-		ltmp1 = list indication(ltmp2)
+	for ltmp2 = 0, 20, 1 do
+		ltmp1 = list_indication(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
 		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
-	]]
---[[
+
 	local ltmp1 = 0
-	for ltmp2 = 1, 73, 1 do
+	for ltmp2 = 1, 46, 1 do
 		ltmp1 = GetDevice(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
 		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
-]]
+	]]
 end
 
 -- global VD-20 Pressure variable
