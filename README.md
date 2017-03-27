@@ -1,4 +1,4 @@
-###Deutsch###
+# Deutsch
 ---
 Dies ist ein universell einsetzbares Export Script für DCS.
 Es wird der gleichzeitige Export von Daten an Glasscockpitsoftware und I/O Hardware ermöglicht.
@@ -22,12 +22,13 @@ Der Export von Daten wird für folgende Module unterstützt:
 - L-39C
 - L-39ZA
 - F-5E-3
+- SpitfireLFMkIX
 - Su-25T
 - alle Flaming Cliffs Flugzeuge
 
 Kompatibel zur DCS World 1.5.6 und DCS World (Alpha) 2.0.5
 
-###English###
+# English
 ---
 This is an universally insertable export script for DCS. It allows for the simultaneous export of data at glass cockpit software and I/O hardware.
 
@@ -50,11 +51,12 @@ Following moduls are supported:
 - L-39C
 - L-39ZA
 - F-5E-3
+- SpitfireLFMkIX
 - Su-25T
 - all Flaming Cliffs aircrafts
 
 Compatible with DCS World 1.5.6 and DCS World (Alpha) 2.0.5
 
-###Wiki###
+# Wiki
 ---
 [DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deutsch and English)
