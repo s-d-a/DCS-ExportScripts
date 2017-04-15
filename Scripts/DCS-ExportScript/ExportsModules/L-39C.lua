@@ -43,8 +43,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[46] = "%.4f",		-- HSI Glide Beacon G
 	[44] = "%.4f",		-- HSI Localizer Beacon K
 	-- RSBN
-	[189] = "%.4f",		-- RSBN NAV Chan {0.0, 0.39} {1.0, 40.0}
-	[190] = "%.4f",		-- RSBN LAND Chan {0.0, 0.39} {1.0, 40.0}
+	--[189] = "%.4f",		-- RSBN NAV Chan {0.0, 0.39} {1.0, 40.0}
+	--[190] = "%.4f",		-- RSBN LAND Chan {0.0, 0.39} {1.0, 40.0}
 	[66] = "%.4f",		-- RSBN Range 100
 	[65] = "%.4f",		-- RSBN Range 10
 	[64] = "%.4f",		-- RSBN Range 1
@@ -764,6 +764,18 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2001, "       ")
 	end
 	
+	-- RSBN
+	--[189] = "%.4f",		-- RSBN NAV Chan {0.0, 0.39} {1.0, 40.0}
+	--[190] = "%.4f",		-- RSBN LAND Chan {0.0, 0.39} {1.0, 40.0}
+	local lRSBN_Chan = {[0.0]="01",[0.01]="02",[0.02]="03",[0.03]="04",[0.04]="05",[0.05]="06",[0.06]="07",[0.07]="08",[0.08]="09",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="21",[0.21]="22",[0.22]="23",[0.23]="24",[0.24]="25",[0.25]="26",[0.26]="27",[0.27]="28",[0.28]="29",[0.29]="30",[0.30]="31",[0.31]="32",[0.32]="33",[0.33]="34",[0.34]="35",[0.35]="36",[0.36]="37",[0.37]="38",[0.38]="39",[0.39]="40"}
+	ExportScript.Tools.SendData(189, lRSBN_Chan[ExportScript.Tools.round(mainPanelDevice:get_argument_value(189), 2)])
+	--ExportScript.Tools.WriteToLog('RSBN 1: '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(189)))
+	--ExportScript.Tools.WriteToLog('RSBN 2: '..ExportScript.Tools.dump(ExportScript.Tools.round(mainPanelDevice:get_argument_value(189), 2)))
+	
+	ExportScript.Tools.SendData(190, lRSBN_Chan[ExportScript.Tools.round(mainPanelDevice:get_argument_value(190), 2)])
+	--ExportScript.Tools.WriteToLog('RSBN 1: '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(190)))
+	--ExportScript.Tools.WriteToLog('RSBN 2: '..ExportScript.Tools.dump(ExportScript.Tools.round(mainPanelDevice:get_argument_value(190), 2)))
+	
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {222, 225, 226, 497})
 	-- CB Nav. Lights, CB Red Lights, CB White Lights, Backseat - Instrument Lighting Switch
@@ -796,6 +808,14 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	else
 		ExportScript.Tools.SendDataDAC(2001, "       ")
 	end
+	
+	-- RSBN
+	--[189] = "%.4f",		-- RSBN NAV Chan {0.0, 0.39} {1.0, 40.0}
+	--[190] = "%.4f",		-- RSBN LAND Chan {0.0, 0.39} {1.0, 40.0}
+	local lRSBN_Chan = {[0.0]="01",[0.01]="02",[0.02]="03",[0.03]="04",[0.04]="05",[0.05]="06",[0.06]="07",[0.07]="08",[0.08]="09",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="21",[0.21]="22",[0.22]="23",[0.23]="24",[0.24]="25",[0.25]="26",[0.26]="27",[0.27]="28",[0.28]="29",[0.29]="30",[0.30]="31",[0.31]="32",[0.32]="33",[0.33]="34",[0.34]="35",[0.35]="36",[0.36]="37",[0.37]="38",[0.38]="39",[0.39]="40"}
+	ExportScript.Tools.SendDataDAC(189, lRSBN_Chan[ExportScript.Tools.round(mainPanelDevice:get_argument_value(189), 2)])
+	
+	ExportScript.Tools.SendDataDAC(190, lRSBN_Chan[ExportScript.Tools.round(mainPanelDevice:get_argument_value(190), 2)])
 	
 	--=====================================================================================
 
