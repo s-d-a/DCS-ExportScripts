@@ -78,7 +78,12 @@ function LuaExportStart()
 end
 
 function LuaExportBeforeNextFrame()
-	ExportScript.Tools.ProcessInput()
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.ProcessInput()
+	else
+		ExportScript.coProcessArguments_BeforeNextFrame = coroutine.create(ExportScript.Tools.ProcessInput)
+		coStatus = coroutine.resume(ExportScript.coProcessArguments_BeforeNextFrame)
+	end
 end
 
 function LuaExportAfterNextFrame()
