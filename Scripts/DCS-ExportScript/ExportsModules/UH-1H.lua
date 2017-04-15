@@ -321,7 +321,7 @@ ExportScript.ConfigArguments =
 	[435] = "%1d",		-- CB Course Ind(N/F)
 	--
 	[238] = "%1d",		-- Pitot Heater
-	[216] = "%1d",		-- Main generator (Left button - ON/OFF. Right button RESET) {-1, 0, 1}
+	[216] = "%1d",		-- Main generator (ON/OFF/RESET) {-1, 0, 1}
 	[217] = "%1d",		-- Main generator switch cover
 	--
 	[111] = "%1d",		-- Reset/Test switch {-1, 0, 1}
@@ -352,11 +352,11 @@ ExportScript.ConfigArguments =
 	[72] = "%.2f",		-- MODE3A-WHEEL3 0/1/2/3/4/5/6/7 {0.0,0.11,0.22,0.33,0.44,0.55,0.66,0.77}
 	[73] = "%.2f",		-- MODE3A-WHEEL4 0/1/2/3/4/5/6/7 {0.0,0.11,0.22,0.33,0.44,0.55,0.66,0.77}
 	
-	[74] = "%.4f",		-- Reply test, (Axis) {0.0,1.0} in 0.1 steps
-	[78] = "%1d",		-- Reply test, Button
+	[74] = "%1d",		-- Reply test, Button
+	[78] = "%.4f",		-- Reply test, (Axis) {0.0,1.0} in 0.1 steps
 	
-	[75] = "%.4f",		-- Test test, (Axis) {0.0,1.0} in 0.1 steps
-	[79] = "%1d",		-- Test test, Button
+	[75] = "1d%.",		-- Test test, Button
+	[79] = "%4f",		-- Test test, (Axis) {0.0,1.0} in 0.1 steps
 	
 	[130] = "%1d",		-- Winding/Adjustment Clock (Axis) {0.0,1.0} in 0.04 steps
 	[131] = "%1d",		-- Winding/Adjustment Clock, Button 
@@ -387,9 +387,9 @@ ExportScript.ConfigArguments =
 	[181] = "%.4f",		-- Pressure Adjustment (Axis) {0.0,1.0} in 0.2 steps
 	-- VHF ARC-134
 	[6] = "%1d",		-- Comm Test Button
-	[7] = "%1d",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Button {0.85, 1.0}
+	[7] = "%.2f",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Button {0.85, 1.0}
 	[5] = "%.1f",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value (Axis) {0.0, 1.0} in 0.1 Steps
-	[8] = "%.2f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume (Axis) {0.0, 0.65} in 0.15 Steps
+	[8] = "%.2f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume (Axis) {0.0, 0.65} in 0.05 Steps
 	[9] = "%.1f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume (Axis) {0.0, 1.0} in 0.1 Steps
 	-- Intercom Control Panel
 	[29] = "%.4f",		-- Intercom volume (Axis) {0.3,1.0} in 0.1 Steps
@@ -420,7 +420,7 @@ ExportScript.ConfigArguments =
 	[36] = "%.1f",		-- quelch Mode {0.0,0.1,0.2}
 	[37] = "%.4f",		-- Volume (Axis) {0.0,1.0} in 0.1 Steps
 	-- ARN-82
-	[52] = "%1d",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Button {0.8, 1.0}
+	[52] = "%.2f",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value, Button {0.8, 1.0}
 	[51] = "%.4f",		-- Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value (Axis) {0.0,1.0} in 0.1 Steps
 	[53] = "%.4f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume (Axis) {0.0, 0.65} in 0.15 Steps
 	[54] = "%.4f",		-- Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click to adjust volume (Axis) {0.0,1.0} in 0.1 Steps
@@ -432,7 +432,7 @@ ExportScript.ConfigArguments =
 	[41] = "%1d",		-- BFO (N/F)
 	[43] = "%.1f",		-- Gain control / Mode. Right mouse click to cycle mode. Rotate mouse wheel to adjust gain (Axis) OFF/ADF/ANT/LOOP {0.0,0.3} in 0.1 Steps
 	[44] = "%.4f",		-- Gain control / Mode. Right mouse click to cycle mode. Rotate mouse wheel to adjust gain (Axis) {0.0,1.0} in 0.1 Steps
-	[38] = "%1d",		-- Tune control / Band selection. Right mouse click to select a band. Rotate mouse wheel to adjust tune (Axis) 190/400/800 {-1.0,0.0,1.0}
+	[38] = "%1d",		-- Tune control / Band selection. Right mouse click to select a band. Rotate mouse wheel to adjust tune 190/400/800 {-1.0,0.0,1.0}
 	[39] = "%.4f",		-- Tune control / Band selection. Right mouse click to select a band. Rotate mouse wheel to adjust tune (Axis) {0.0,1.0} in 0.1 Steps
 	-- Nav lights
 	[222] = "%.1f",		-- Navigation lights, OFF/1/2/3/4/BRT {0.0,0.1,0.2,0.3,0.4,0.5}
@@ -460,10 +460,10 @@ ExportScript.ConfigArguments =
 	-- COURSE IND
 	[155] = "%.4f",		-- Course select knob (Axis) {0.0,1.0} in 0.1 Steps
 	-- weapon system
-	[252] = "%1d",		-- Armed/Safe/Off
-	[253] = "%1d",		-- Left/Right/All
-	[256] = "%1d",		-- 7.62/2.75/40
-	[257] = "%.1f",		-- Rocket Pair
+	[252] = "%1d",		-- Armed/Safe/Off {-1.0,0.0,1.0}
+	[253] = "%1d",		-- Left/Right/All {-1.0,0.0,1.0}
+	[256] = "%1d",		-- 7.62/2.75/40 {-1.0,0.0,1.0}
+	[257] = "%.1f",		-- Rocket Pair {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7}
 	[258] = "%1d",		-- Rocket Reset
 	[259] = "%1d",		-- Jettison Cover
 	[260] = "%1d",		-- Jettison
@@ -568,7 +568,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2100, -1.0) -- Horizontal yellow needle
 	ExportScript.Tools.SendData(2101, -1.0) -- Vertical yellow needle
 	ExportScript.Tools.SendData(2102, -1.0) -- Left white needle
-
+	
 	-- ADI - operator
 	--[141] = "%.1f",		-- Attitude_Off_flag_left  {0.0, 1.0} {1.0, 0.0}
 	ExportScript.Tools.SendData(141, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(141)))) -- negate
