@@ -40,6 +40,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[41] = "%.4f", 	-- Oil temperature gauge {0.0, 1.0}{0.0, 100.0}
 	[42] = "%.4f", 	-- Radiator temperature gauge {0.0, 0.7}{0.0, 140.0}
 	[43] = "%.4f", 	-- Fuel contents gauge {0.0, 0.1, 1.0}{-1.0, 0.0, 37.0}
+	[51] = "%.4f", 	-- Clock Hour
+	[52] = "%.4f", 	-- Clock Minute
+	[53] = "%.4f", 	-- Clock Second
 	[71] = "%.4f", 	-- Magnetic compass CompassRoseRoll {-1.0, 1.0}{-20.0, 20.0}
 	[72] = "%.4f", 	-- Magnetic compass CompassRosePitch {-1.0, 1.0}{-20.0, 20.0}
 	[73] = "%.4f", 	-- Magnetic compass CompassHeading{0.0, 1.0}
@@ -191,34 +194,12 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {163, 62, 63})
 	-- Gauges light, left panel light, right panel light
-
-	-- VHF_Radio
-	local lVHF_Radio = GetDevice(15)
-	if lVHF_Radio:is_on() then
-		ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", lVHF_Radio:get_frequency()/1000000))
-	else
-		ExportScript.Tools.SendDataDAC("2000", "       ")
-	end
-
-	--[[
-	[115] = "%1d",	-- Off Button
-	[116] = "%1d",	-- A Button
-	[117] = "%1d",	-- B Button
-	[118] = "%1d",	-- C Button
-	[119] = "%1d",	-- D Button]]
-	local lVHF_Radio_PRESET = ""
-	if mainPanelDevice:get_argument_value(116) > 0.8 then   
-		lVHF_Radio_PRESET = 1
-	elseif mainPanelDevice:get_argument_value(117) > 0.8 then   
-		lVHF_Radio_PRESET = 2
-	elseif mainPanelDevice:get_argument_value(118) > 0.8 then   
-		lVHF_Radio_PRESET = 3
-	elseif mainPanelDevice:get_argument_value(119) > 0.8 then   
-		lVHF_Radio_PRESET = 4
-	else
-		lVHF_Radio_PRESET = ""
-	end
-	ExportScript.Tools.SendDataDAC("2001", lVHF_Radio_PRESET)
+	
+	ExportScript.Tools.WriteToLog('DI   : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(31)))
+	ExportScript.Tools.WriteToLog('AIS  : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(21)))
+	ExportScript.Tools.WriteToLog('RPM  : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(37)))
+	ExportScript.Tools.WriteToLog('Bank : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(23)))
+	ExportScript.Tools.WriteToLog('Pitch: '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(24)))
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -254,6 +235,34 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 	]]
+	
+	-- VHF_Radio
+	local lVHF_Radio = GetDevice(15)
+	if lVHF_Radio:is_on() then
+		ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", lVHF_Radio:get_frequency()/1000000))
+	else
+		ExportScript.Tools.SendDataDAC("2000", "       ")
+	end
+
+	--[[
+	[115] = "%1d",	-- Off Button
+	[116] = "%1d",	-- A Button
+	[117] = "%1d",	-- B Button
+	[118] = "%1d",	-- C Button
+	[119] = "%1d",	-- D Button]]
+	local lVHF_Radio_PRESET = ""
+	if mainPanelDevice:get_argument_value(116) > 0.8 then   
+		lVHF_Radio_PRESET = 1
+	elseif mainPanelDevice:get_argument_value(117) > 0.8 then   
+		lVHF_Radio_PRESET = 2
+	elseif mainPanelDevice:get_argument_value(118) > 0.8 then   
+		lVHF_Radio_PRESET = 3
+	elseif mainPanelDevice:get_argument_value(119) > 0.8 then   
+		lVHF_Radio_PRESET = 4
+	else
+		lVHF_Radio_PRESET = ""
+	end
+	ExportScript.Tools.SendDataDAC("2001", lVHF_Radio_PRESET)
 end
 
 -----------------------------
