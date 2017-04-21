@@ -93,11 +93,11 @@ ExportScript.ConfigEveryFrameArguments =
 	[134] = "%.4f",		-- VertVelocPilot {-4000.0, -3000.0, -1500.0, -1000.0, 1000.0, 1500.0, 3000.0, 4000.0} {-1.0, -0.81,  -0.54, -0.36, 0.36, 0.54, 0.81, 1.0}
 	[251] = "%.4f",		-- VertVelocCopilot {-4000.0, -3000.0, -1500.0, -1000.0, 1000.0, 1500.0, 3000.0, 4000.0} {-1.0, -0.81,  -0.54, -0.36, 0.36, 0.54, 0.81, 1.0}
 	-- ADI - pilot
-	--[142] = "%.4f",		-- Attitude_Roll {1.0, -1.0}
+	[142] = "%.4f",		-- Attitude_Roll {1.0, -1.0}
 	[143] = "%.4f",		-- Attitude_Pitch {1.0, -1.0}
 	[148] = "%.1f",		-- Attitude_Off_flag
 	-- ADI - operator
-	--[135] = "%.4f",		-- Attitude_Roll_left {1.0, -1.0}
+	[135] = "%.4f",		-- Attitude_Roll_left {1.0, -1.0}
 	[136] = "%.4f",		-- Attitude_Pitch_left {1.0, -1.0}
 	--[141] = "%.1f",		-- Attitude_Off_flag_left  {0.0, 1.0} {1.0, 0.0}
 	[138] = "%.4f",		-- Attitude_PitchShift {0.0, 1.0} {-1.0, 1.0}
@@ -537,10 +537,10 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	]]
 	-- ADI Pilot
 	--[142] = "%.4f",		-- Attitude_Roll {1.0, -1.0}
-	ExportScript.Tools.SendData(142, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(142)))) -- negate
+	--ExportScript.Tools.SendData(142, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(142)))) -- negate
 	-- ADI - operator
 	--[135] = "%.4f",		-- Attitude_Roll_left {1.0, -1.0}
-	ExportScript.Tools.SendData(135, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(135)))) -- negate
+	--ExportScript.Tools.SendData(135, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(135)))) -- negate
 end
 
 -----------------------------------------------------
