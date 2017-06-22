@@ -23,10 +23,11 @@ Der Export von Daten wird für folgende Module unterstützt:
 - L-39ZA
 - F-5E-3
 - SpitfireLFMkIX
+- AJS37 Viggen
 - Su-25T
 - alle Flaming Cliffs Flugzeuge
 
-Kompatibel zur DCS World 1.5.6 und DCS World (Alpha) 2.0.5
+Kompatibel zur DCS World 1.5.6 und DCS World (Alpha) 2.1.1
 
 # English
 ---
@@ -52,10 +53,11 @@ Following moduls are supported:
 - L-39ZA
 - F-5E-3
 - SpitfireLFMkIX
+- AJS37 Viggen
 - Su-25T
 - all Flaming Cliffs aircrafts
 
-Compatible with DCS World 1.5.6 and DCS World (Alpha) 2.0.5
+Compatible with DCS World 1.5.6 and DCS World (Alpha) 2.1.0
 
 # Wiki
 ---
