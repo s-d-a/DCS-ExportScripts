@@ -28,3 +28,9 @@ ExportScript.Maps.Nevada.Lat1  = 37.578333   -- high left Latitude  37° 34' 42"
 ExportScript.Maps.Nevada.Long1 = -119.964722 -- high left Longitude 119° 57' 53" W
 ExportScript.Maps.Nevada.Lat2  = 34.651667   -- low right Latitude 34° 39' 06" N
 ExportScript.Maps.Nevada.Long2 = -114.536111 -- low right Longitude 114° 32' 10" W
+-- Normandy Map
+ExportScript.Maps.Normandy       = {} -- Normandy Map
+ExportScript.Maps.Normandy.Lat1  = 53.85556   -- high left Latitude  53° 51' 20" N
+ExportScript.Maps.Normandy.Long1 = 15.02667 -- high left Longitude 15° 01' 36" E
+ExportScript.Maps.Normandy.Lat2  = 45.07167   -- low right Latitude 45° 04' 18" N
+ExportScript.Maps.Normandy.Long2 = 8.437222 -- low right Longitude 08° 26' 14" E
