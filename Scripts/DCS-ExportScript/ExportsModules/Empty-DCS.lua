@@ -1,5 +1,5 @@
--- modul name
--- Version
+-- Module Name Export
+-- Version 
 
 ExportScript.FoundDCSModule = true
 
@@ -112,6 +112,3 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
-
-function ExportScript.genericRadio(key, value, hardware)
-end
