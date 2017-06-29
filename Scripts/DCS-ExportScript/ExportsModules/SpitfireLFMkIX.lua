@@ -195,11 +195,11 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {163, 62, 63})
 	-- Gauges light, left panel light, right panel light
 	
-	ExportScript.Tools.WriteToLog('DI   : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(31)))
-	ExportScript.Tools.WriteToLog('AIS  : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(21)))
-	ExportScript.Tools.WriteToLog('RPM  : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(37)))
-	ExportScript.Tools.WriteToLog('Bank : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(23)))
-	ExportScript.Tools.WriteToLog('Pitch: '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(24)))
+	--ExportScript.Tools.WriteToLog('DI   : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(31)))
+	--ExportScript.Tools.WriteToLog('AIS  : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(21)))
+	--ExportScript.Tools.WriteToLog('RPM  : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(37)))
+	--ExportScript.Tools.WriteToLog('Bank : '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(23)))
+	--ExportScript.Tools.WriteToLog('Pitch: '..ExportScript.Tools.dump(mainPanelDevice:get_argument_value(24)))
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
