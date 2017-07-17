@@ -376,6 +376,10 @@ ExportScript.ConfigArguments =
 	[259] = "%.1f",    -- PTR-TACAN-TEST (Test TACAN Signal on HSI)
 	[261] = "%.3f",    -- PTR-TACAN-VOL (Signal Volume) (Axis) {0.0,1.0} in 0.1 steps
 	[262] = "%0.1f",   -- PTR-TACAN-MODE (Mode Dial) {0.0,0.1,0.2,0.3,0.4}
+	[263] = "%.1f",    -- TACAN_digit_pos.hundreds
+	[264] = "%.1f",    -- TACAN_digit_pos.tens
+	[265] = "%.1f",    -- TACAN_digit_pos.ones
+	--[266] = "%1d",     -- XYwheel
 	-- HARS
 	[267] = "%.1f",    -- PTR-HARS-CP-PUSH-TO-SYNC (HARS Push-To-Sync)
 	[268] = "%.3f",    -- PTR-HARS-CP-PUSH-TO-SYNC (HARS Push-To-Sync)
@@ -763,7 +767,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
 	-- TACAN Channel
 	-------------------------------------------------
-	ExportScript.Tools.SendData(2008, (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0)..(string.format("%1d", (mainPanelDevice:get_argument_value(266))) == "0" and "X" or "Y"))
+	ExportScript.Tools.SendData(2008, (mainPanelDevice:get_argument_value(263) == 0 and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0)..(mainPanelDevice:get_argument_value(266) == 0 and "X" or "Y"))
+	ExportScript.Tools.SendData(266, (mainPanelDevice:get_argument_value(266) == 0 and "0" or "1"))
 
 	-- ILS Channel
 	-------------------------------------------------
@@ -908,7 +913,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 
 	-- TACAN Channel
 	-------------------------------------------------
-	ExportScript.Tools.SendDataDAC("2008", (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0))
+	ExportScript.Tools.SendDataDAC("2008", (mainPanelDevice:get_argument_value(263) == 0 and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0))
 
 	-- ILS Channel
 	-------------------------------------------------
