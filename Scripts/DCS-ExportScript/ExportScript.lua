@@ -1,7 +1,7 @@
 -- Ikarus and D.A.C. Export Script
--- Version 1.0.0 BETA
+-- Version 1.0.1
 --
--- Copyright by Michael aka McMicha 2014
+-- Copyright by Michael aka McMicha 2014 - 2017
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
 
@@ -19,6 +19,9 @@ ExportScript.PacketSizeDAC  = {}
 ExportScript.SendStringsDAC = {}
 ExportScript.LastDataDAC    = {}
 
+ExportScript.lastExportTimeHI       = 0
+ExportScript.lastExportTimeLI       = 0
+
 local PrevExport                    = {}
 PrevExport.LuaExportStart           = LuaExportStart
 PrevExport.LuaExportStop            = LuaExportStop
@@ -35,10 +38,6 @@ for i = 1, #ExportScript.Config.DAC, 1 do
 	ExportScript.SendStringsDAC[i] = {}
 	ExportScript.LastDataDAC[i]    = {}
 end
-
--- Frame counter for non important data
-ExportScript.TickCount   = 0
-ExportScript.TickCountDAC = 0
 
 -- Found DCS or FC Module
 ExportScript.FoundDCSModule = false
