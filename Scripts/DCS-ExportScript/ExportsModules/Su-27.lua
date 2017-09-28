@@ -128,11 +128,18 @@ function ExportScript.ProcessIkarusFCLowImportanceConfig()
 
 	local lEngineInfo = LoGetEngineInfo()
 	if lEngineInfo ~= nil then
+		--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
 		-- Hydraulic Pressure Left
 		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.left, 240, 85)
 
 		-- Hydraulic Pressure Right
 		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.right, 240, 86)
+
+		ExportScript.Tools.SendData(728, lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
+		ExportScript.Tools.SendData(729, lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
+
+		ExportScript.Tools.SendData(730, (lEngineInfo.RPM.left  > 99.8 and 1 or 0) ) -- lamp after burner left engine
+		ExportScript.Tools.SendData(731, (lEngineInfo.RPM.right > 99.8 and 1 or 0) ) -- lam after burner right engine
 	end
 
 	-- Mechanical Configuration Indicator
@@ -362,11 +369,11 @@ function ExportScript.AF.StatusLamp()
 	if lEngineInfo ~= nil then
 		--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
 
-		ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine 1 (0|1)
-		ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine 1 (0|1)
+		ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
+		ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
 
-		ExportScript.Tools.SendDataDAC("730", (lEngineInfo.RPM.left  > 99.95 and 1 or 0) ) -- lamp after burner left engine
-		ExportScript.Tools.SendDataDAC("731", (lEngineInfo.RPM.right > 99.95 and 1 or 0) ) -- lam after burner right engine
+		ExportScript.Tools.SendDataDAC("730", (lEngineInfo.RPM.left  > 99.8 and 1 or 0) ) -- lamp after burner left engine
+		ExportScript.Tools.SendDataDAC("731", (lEngineInfo.RPM.right > 99.8 and 1 or 0) ) -- lam after burner right engine
 	end
 	
 	local lAccelerationUnits = LoGetAccelerationUnits()
