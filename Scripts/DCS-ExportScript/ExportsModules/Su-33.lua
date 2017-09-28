@@ -130,10 +130,19 @@ function ExportScript.ProcessIkarusFCLowImportanceConfig()
 	ExportScript.AF.MechanicalDevicesIndicator(lFunctionTyp)
 
 	local lEngineInfo = LoGetEngineInfo()
-	local lTotalFuel  = 0
 	if lEngineInfo ~= nil then
+		--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
 		-- Hydraulic Pressure Left
 		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.left, 300, 85)
+
+		-- Hydraulic Pressure Right
+		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.left, 300, 86)
+
+		ExportScript.Tools.SendData(728, lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
+		ExportScript.Tools.SendData(729, lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
+
+		ExportScript.Tools.SendData(730, (lEngineInfo.RPM.left  > 99.8 and 1 or 0) ) -- lamp after burner left engine
+		ExportScript.Tools.SendData(731, (lEngineInfo.RPM.right > 99.8 and 1 or 0) ) -- lam after burner right engine
 	end
 
 	local lMechInfo = LoGetMechInfo()	-- mechanical components,  e.g. Flaps, Wheelbrakes,...
@@ -149,9 +158,6 @@ function ExportScript.ProcessIkarusFCLowImportanceConfig()
 
 	-- Airintake
 	ExportScript.AF.FC_Russian_AirIntake(20)
-
-	-- Fuel Quantity Standby Indicator
-	ExportScript.AF.FC_OneNeedleGauge(lTotalFuel, 10000, 21) --??
 
 	-- (x < 0 and 'negative' or 'non-negative')
 	--[[
@@ -364,11 +370,11 @@ function ExportScript.AF.StatusLamp()
 	if lEngineInfo ~= nil then
 		--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
 
-		ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine 1 (0|1)
-		ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine 1 (0|1)
+		ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
+		ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
 
-		ExportScript.Tools.SendDataDAC("730", (lEngineInfo.RPM.left > 100.0 and 1 or 0) ) -- lamp after burner left engine
-		ExportScript.Tools.SendDataDAC("731", (lEngineInfo.RPM.right > 100.0 and 1 or 0) ) -- lam after burner right engine
+		ExportScript.Tools.SendDataDAC("730", (lEngineInfo.RPM.left > 99.8 and 1 or 0) ) -- lamp after burner left engine
+		ExportScript.Tools.SendDataDAC("731", (lEngineInfo.RPM.right > 99.8 and 1 or 0) ) -- lam after burner right engine
 	end
 
 	local lAccelerationUnits = LoGetAccelerationUnits()
@@ -414,6 +420,7 @@ function ExportScript.AF.FuelQuantityIndicator(FunctionTyp)
 
 	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
 		lTotalFuel = lEngineInfo.fuel_internal
+		--ExportScript.Tools.WriteToLog('lTotalFuel: '..ExportScript.Tools.dump(lTotalFuel))
 		--lTotalFuel = string.format("%3d", ExportScript.Tools.round((lEngineInfo.fuel_internal / 10), 0, "ceil") * 10)
     	--lTotalFuel = string.format("%4d", lEngineInfo.fuel_internal) -- total fuel in kg
     	--lTotalFuel = string.format("%4d", lEngineInfo.fuel_external) -- external fuel in kg
@@ -438,10 +445,10 @@ function ExportScript.AF.FuelQuantityIndicator(FunctionTyp)
 		end
 
 		ExportScript.Tools.SendData("301", string.format("%.4f", lTotalFuel_12_0) )
-		ExportScript.Tools.SendData("304", (lEngineInfo.fuel_internal < 5000.0 and 1 or 0) ) -- Tank warning 1
-		ExportScript.Tools.SendData("305", (lEngineInfo.fuel_internal < 1000.0 and 1 or 0) ) -- Tank warning 2 4000
-		ExportScript.Tools.SendData("306", (lEngineInfo.fuel_internal < 4000.0 and 1 or 0) ) -- Tank warning 3 1500
-		ExportScript.Tools.SendData("307", (lEngineInfo.fuel_internal < 1500.0 and 1 or 0) ) -- Tank warning 4 1000
+		ExportScript.Tools.SendData("304", (lEngineInfo.fuel_internal < 6900.0 and 1 or 0) ) -- Tank warning 1
+		ExportScript.Tools.SendData("305", (lEngineInfo.fuel_internal < 5400.0 and 1 or 0) ) -- Tank warning 2
+		ExportScript.Tools.SendData("306", (lEngineInfo.fuel_internal < 4700.0 and 1 or 0) ) -- Tank warning 3
+		ExportScript.Tools.SendData("307", (lEngineInfo.fuel_internal < 1500.0 and 1 or 0) ) -- Tank warning 4
 		ExportScript.Tools.SendData("308", (lEngineInfo.fuel_internal < 600.0  and 1 or 0) ) -- Bingo Fuel
 
 		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.fuel_internal, 10000, 302) -- Standby Fuel Indicator
@@ -452,10 +459,10 @@ function ExportScript.AF.FuelQuantityIndicator(FunctionTyp)
 		--ExportScript.Tools.SendDataDAC("301", string.format("%d", lEngineInfo.fuel_internal) ) -- total fuel in kg
 		--ExportScript.Tools.SendDataDAC("302", string.format("%d", lEngineInfo.fuel_external) ) -- external fuel in kg
 
-		ExportScript.Tools.SendDataDAC("304", (lEngineInfo.fuel_internal < 5000.0 and 1 or 0) ) -- Tank warning 1
-		ExportScript.Tools.SendDataDAC("305", (lEngineInfo.fuel_internal < 1000.0 and 1 or 0) ) -- Tank warning 2 4000
-		ExportScript.Tools.SendDataDAC("306", (lEngineInfo.fuel_internal < 4000.0 and 1 or 0) ) -- Tank warning 3 1500
-		ExportScript.Tools.SendDataDAC("307", (lEngineInfo.fuel_internal < 1500.0 and 1 or 0) ) -- Tank warning 4 1000
+		ExportScript.Tools.SendDataDAC("304", (lEngineInfo.fuel_internal < 6900.0 and 1 or 0) ) -- Tank warning 1
+		ExportScript.Tools.SendDataDAC("305", (lEngineInfo.fuel_internal < 5400.0 and 1 or 0) ) -- Tank warning 2
+		ExportScript.Tools.SendDataDAC("306", (lEngineInfo.fuel_internal < 4700.0 and 1 or 0) ) -- Tank warning 3
+		ExportScript.Tools.SendDataDAC("307", (lEngineInfo.fuel_internal < 1500.0 and 1 or 0) ) -- Tank warning 4
 		ExportScript.Tools.SendDataDAC("308", (lEngineInfo.fuel_internal < 600.0  and 1 or 0) ) -- Bingo Fuel
 	end	
 end
