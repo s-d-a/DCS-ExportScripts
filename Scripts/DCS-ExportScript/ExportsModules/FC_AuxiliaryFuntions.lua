@@ -1,6 +1,10 @@
 -- Flaming Cliffs Auxiliary Functons
 -- Version 1.0.0
 
+-- Workaround for engine start-up
+ExportScript.AF.LeftEngineOn  = false
+ExportScript.AF.RightEngineOn = false
+
 -- Weapon Panel for Su-25A and Su-25T
 function ExportScript.AF.FC_WeaponPanel_SU25(FunctionTyp)
 	local lFunctionTyp = FunctionTyp or "Ikarus"
@@ -2445,6 +2449,100 @@ function ExportScript.AF.FC_OneNeedleGauge4Digits(value, scala, fixdigits, expor
 									lCounter4))
 end
 
+-- Engine Lamps, Start and Afterburner
+-- with Workaround for engine start-up on Su-27/33
+
+function ExportScript.AF.FC_EngineLamps_SU2733(FunctionTyp)
+	local lFunctionTyp = FunctionTyp or "Ikarus"
+
+	local lEngineInfo = LoGetEngineInfo()
+	local lLeftEngineStart  = 0
+	local lRightEngineStart = 0
+	
+	if lEngineInfo == nil then
+		return
+	end
+	--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
+
+	if ExportScript.AF.LeftEngineOn == false then
+		if (lEngineInfo.RPM.left > 0.1 and lEngineInfo.RPM.left < 49.0) then
+			lLeftEngineStart = 1
+		end
+		if lEngineInfo.RPM.left > 49.0 then
+			ExportScript.AF.LeftEngineOn = true
+		end
+	elseif ExportScript.AF.LeftEngineOn == true then
+		if lEngineInfo.RPM.left < 0.1 then
+			ExportScript.AF.LeftEngineOn = false
+		end
+	end
+
+	if ExportScript.AF.RightEngineOn == false then
+		if (lEngineInfo.RPM.right > 0.1 and lEngineInfo.RPM.right < 49.0) then
+			lRightEngineStart = 1
+		end
+		if lEngineInfo.RPM.right > 49.0 then
+			ExportScript.AF.RightEngineOn = true
+		end
+	elseif ExportScript.AF.RightEngineOn == true then
+		if lEngineInfo.RPM.right < 0.1 then
+			ExportScript.AF.RightEngineOn = false
+		end
+	end	
+
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+		--ExportScript.Tools.SendData(728, lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
+		--ExportScript.Tools.SendData(729, lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
+		ExportScript.Tools.SendData(728, lLeftEngineStart  ) -- lamp start left engine (0|1)
+		ExportScript.Tools.SendData(729, lRightEngineStart ) -- lamp start right engine (0|1)
+	
+		ExportScript.Tools.SendData(730, (lEngineInfo.RPM.left  > 99.8 and 1 or 0) ) -- lamp after burner left engine
+		ExportScript.Tools.SendData(731, (lEngineInfo.RPM.right > 99.8 and 1 or 0) ) -- lam after burner right engine
+	end
+	
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		--ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
+		--ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
+		ExportScript.Tools.SendDataDAC("728", lLeftEngineStart ) -- lamp start left engine (0|1)
+		ExportScript.Tools.SendDataDAC("729", lRightEngineStart ) -- lamp start right engine (0|1)
+
+		ExportScript.Tools.SendDataDAC("730", (lEngineInfo.RPM.left  > 99.8 and 1 or 0) ) -- lamp after burner left engine
+		ExportScript.Tools.SendDataDAC("731", (lEngineInfo.RPM.right > 99.8 and 1 or 0) ) -- lam after burner right engine
+	end
+end
+
+
+-- Engine Lamps, Start and Afterburner
+-- MiG29A/G/S
+
+function ExportScript.AF.FC_EngineLamps_MiG29(FunctionTyp)
+	local lFunctionTyp = FunctionTyp or "Ikarus"
+
+	local lEngineInfo = LoGetEngineInfo()
+	local lLeftEngineStart  = 0
+	local lRightEngineStart = 0
+	
+	if lEngineInfo == nil then
+		return
+	end
+	ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
+
+	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
+		ExportScript.Tools.SendData(728, lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
+		ExportScript.Tools.SendData(729, lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
+	
+		ExportScript.Tools.SendData(730, (lEngineInfo.RPM.left  > 100 and 1 or 0) ) -- lamp after burner left engine
+		ExportScript.Tools.SendData(731, (lEngineInfo.RPM.right > 100 and 1 or 0) ) -- lam after burner right engine
+	end
+	
+	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
+		ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
+		ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
+
+		ExportScript.Tools.SendDataDAC("730", (lEngineInfo.RPM.left  > 100 and 1 or 0) ) -- lamp after burner left engine
+		ExportScript.Tools.SendDataDAC("731", (lEngineInfo.RPM.right > 100 and 1 or 0) ) -- lam after burner right engine
+	end
+end
 
 -- Auxiliary Functions for Hardware export
 
