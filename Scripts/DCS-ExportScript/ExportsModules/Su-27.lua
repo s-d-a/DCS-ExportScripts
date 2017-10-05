@@ -134,13 +134,10 @@ function ExportScript.ProcessIkarusFCLowImportanceConfig()
 
 		-- Hydraulic Pressure Right
 		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.right, 240, 86)
-
-		ExportScript.Tools.SendData(728, lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
-		ExportScript.Tools.SendData(729, lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
-
-		ExportScript.Tools.SendData(730, (lEngineInfo.RPM.left  > 99.8 and 1 or 0) ) -- lamp after burner left engine
-		ExportScript.Tools.SendData(731, (lEngineInfo.RPM.right > 99.8 and 1 or 0) ) -- lam after burner right engine
 	end
+
+	-- Engine Lamps, Start and Afterburner
+	ExportScript.AF.FC_EngineLamps_SU2733(lFunctionTyp)
 
 	-- Mechanical Configuration Indicator
 	ExportScript.AF.MechanicalDevicesIndicator(lFunctionTyp)
@@ -209,6 +206,7 @@ function ExportScript.ProcessDACConfigLowImportance()
 	ExportScript.AF.FC_SPO15RWR(lFunctionTyp)
 	ExportScript.AF.MechanicalDevicesIndicator(lFunctionTyp)
 	ExportScript.AF.FuelQuantityIndicator(lFunctionTyp)
+	ExportScript.AF.FC_EngineLamps_SU2733(lFunctionTyp)
 	ExportScript.AF.StatusLamp()
 	ExportScript.AF.SightingSystem()
 	ExportScript.AF.PPDSPPanel()
@@ -365,17 +363,6 @@ function ExportScript.AF.StatusLamp()
 	ExportScript.Tools.SendDataDAC("726", lMCPState.StallSignalization == true and 1 or 0 )
 	ExportScript.Tools.SendDataDAC("727", lMCPState.AutopilotOn == true and 1 or 0 )
 
-	local lEngineInfo = LoGetEngineInfo()
-	if lEngineInfo ~= nil then
-		--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
-
-		ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)
-		ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine (0|1)
-
-		ExportScript.Tools.SendDataDAC("730", (lEngineInfo.RPM.left  > 99.8 and 1 or 0) ) -- lamp after burner left engine
-		ExportScript.Tools.SendDataDAC("731", (lEngineInfo.RPM.right > 99.8 and 1 or 0) ) -- lam after burner right engine
-	end
-	
 	local lAccelerationUnits = LoGetAccelerationUnits()
 	if lAccelerationUnits ~= nil then
 		--ExportScript.Tools.WriteToLog('lAccelerationUnits: '..ExportScript.Tools.dump(lAccelerationUnits))
