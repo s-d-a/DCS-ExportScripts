@@ -147,6 +147,9 @@ function ExportScript.ProcessIkarusFCLowImportanceConfig()
 		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.right, 240, 86)
 	end
 
+	-- Engine Lamps, Start and Afterburner
+	ExportScript.AF.FC_EngineLamps_MiG29(lFunctionTyp)
+
 	local lMechInfo = LoGetMechInfo()	-- mechanical components,  e.g. Flaps, Wheelbrakes,...
 	if lMechInfo ~= nil then
 		-- Wheelbrakes Hydraulic Pressure Left
@@ -207,6 +210,7 @@ function ExportScript.ProcessDACConfigLowImportance()
 	ExportScript.AF.FC_Russian_MDI_MiG29(lFunctionTyp)
 	ExportScript.AF.FuelQuantityIndicator_MiG29(lFunctionTyp)
 	ExportScript.AF.FC_Russian_FlareChaff_MiG29(lFunctionTyp)
+	ExportScript.AF.FC_EngineLamps_MiG29(lFunctionTyp)
 
 	ExportScript.AF.StatusLamp()
 	ExportScript.AF.SightingSystem_MiG29()
@@ -281,17 +285,6 @@ function ExportScript.AF.StatusLamp()
 	ExportScript.Tools.SendDataDAC("725", lMCPState.CanopyOpen == true and 1 or 0 )
 	ExportScript.Tools.SendDataDAC("726", lMCPState.StallSignalization == true and 1 or 0 )
 	ExportScript.Tools.SendDataDAC("727", lMCPState.AutopilotOn == true and 1 or 0 )
-
-	local lEngineInfo = LoGetEngineInfo()
-	if lEngineInfo ~= nil then
-		--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
-
-		ExportScript.Tools.SendDataDAC("728", lEngineInfo.EngineStart.left ) -- lamp start left engine 1 (0|1)
-		ExportScript.Tools.SendDataDAC("729", lEngineInfo.EngineStart.right ) -- lamp start right engine 1 (0|1)
-
-		ExportScript.Tools.SendDataDAC("730", (lEngineInfo.RPM.left > 100.0 and 1 or 0) ) -- lamp after burner left engine
-		ExportScript.Tools.SendDataDAC("731", (lEngineInfo.RPM.right > 100.0 and 1 or 0) ) -- lam after burner right engine
-	end
 
 	local lAccelerationUnits = LoGetAccelerationUnits()
 	if lAccelerationUnits ~= nil then
