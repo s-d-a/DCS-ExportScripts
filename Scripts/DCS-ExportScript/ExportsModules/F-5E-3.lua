@@ -582,15 +582,15 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	
 	-- TACAN Channel
 	-------------------------------------------------
-	ExportScript.Tools.SendData(2002, (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0)..(string.format("%1d", (mainPanelDevice:get_argument_value(266))) == "0" and "X" or "Y"))
+	ExportScript.Tools.SendDataDAC(2002, (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0)..(string.format("%1d", (mainPanelDevice:get_argument_value(266))) == "0" and "X" or "Y"))
 
 	-- Fuel Quantity Indicator (Dual)
 	local lLeftFuel = ExportScript.Tools.round(mainPanelDevice:get_argument_value(22) * 2500, 0)
 	local lRightFuel = ExportScript.Tools.round(mainPanelDevice:get_argument_value(23) * 2500, 0)
 	
-	ExportScript.Tools.SendData(2003, lLeftFuel)
-	ExportScript.Tools.SendData(2004, lRightFuel)
-	ExportScript.Tools.SendData(2005, lLeftFuel + lRightFuel)
+	ExportScript.Tools.SendDataDAC(2003, lLeftFuel)
+	ExportScript.Tools.SendDataDAC(2004, lRightFuel)
+	ExportScript.Tools.SendDataDAC(2005, lLeftFuel + lRightFuel)
 	
 	-- generic Radio display and frequency rotarys
 	-------------------------------------------------
