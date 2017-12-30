@@ -2,8 +2,8 @@
 -- Config and execute in function ExportScript.ProcessDACConfigLowImportance()
 
 -- genericRadioConf for example A-10C Radio AN/ARC-164 UHF
-ExportScript.genericRadioConf = {}
-ExportScript.genericRadioConf['maxRadios'] = 1                           -- numbers of aviables/supported radios
+	ExportScript.genericRadioConf = {}
+	ExportScript.genericRadioConf['maxRadios'] = 1                       -- numbers of aviables/supported radios
 	ExportScript.genericRadioConf[1] = {}                                -- first radio
 	ExportScript.genericRadioConf[1]['Name'] = "AN/ARC-164 UHF"          -- name of radio
 	ExportScript.genericRadioConf[1]['DeviceID'] = 54                    -- DeviceID for GetDevice from device.lua
@@ -104,17 +104,17 @@ function ExportScript.genericRadio(key, value)
 		lPower = tonumber(value)
 	end
 
-	local lPresetChannelFrequency	= "" -- ID 3000
-	local lPresetChannel			= "" -- ID 3001
-	local lFrequency				= "" -- ID 3002
+	local lPresetChannelFrequency	= "-" -- ID 3000
+	local lPresetChannel			= "-" -- ID 3001
+	local lFrequency				= "-" -- ID 3002
 
 	if ExportScript.AF.genericRadio == 0 or ExportScript.AF.genericRadio > ExportScript.genericRadioConf['maxRadios'] then
 		if ExportScript.AF.genericRadio ~= 0 then
 			ExportScript.Tools.WriteToLog("Radio Nr. "..ExportScript.AF.genericRadio.." not defined.")
 		end
-		ExportScript.Tools.SendDataDAC("3000", "")
-		ExportScript.Tools.SendDataDAC("3001", "")
-		ExportScript.Tools.SendDataDAC("3002", "")
+		ExportScript.Tools.SendDataDAC("3000", lPresetChannelFrequency)
+		ExportScript.Tools.SendDataDAC("3001", lPresetChannel)
+		ExportScript.Tools.SendDataDAC("3002", lFrequency)
 		ExportScript.Tools.SendDataDAC("3010", 0)
 		ExportScript.Tools.SendDataDAC("3011", 0)
 		ExportScript.Tools.SendDataDAC("3012", 0)
@@ -158,7 +158,9 @@ function ExportScript.genericRadio(key, value)
 
 	if lRADIO:is_on() then
 		if ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset'] ~= nil then
-			lPresetChannel = string.format("%s", ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset']['List'][ExportScript.Tools.round(lMainPanelDevice:get_argument_value(ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset']['ArgumentID']), 2)])
+			--lPresetChannel = string.format("%s", ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset']['List'][ExportScript.Tools.round(lMainPanelDevice:get_argument_value(ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset']['ArgumentID']), 2)])
+			--ExportScript.Tools.WriteToLog('Preset index: '..ExportScript.Tools.dump(ExportScript.Tools.round(lMainPanelDevice:get_argument_value(ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset']['ArgumentID']), string.match(string.reverse(ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset']['Step']), '.'))))
+			lPresetChannel = string.format("%s", ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset']['List'][ExportScript.Tools.round(lMainPanelDevice:get_argument_value(ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset']['ArgumentID']), string.match(string.reverse(ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Preset']['Step']), '.'))])
 		end
 
 		lFrequency = ExportScript.Tools.round(lRADIO:get_frequency()/ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['FrequencyMultiplicator'] , 3, "floor")
@@ -166,6 +168,7 @@ function ExportScript.genericRadio(key, value)
 
 		lPresetChannelFrequency = string.format("%s%s", lPresetChannel, lFrequency)
 		lPresetChannelFrequency = lPresetChannelFrequency:gsub(" ", "0")
+		lPresetChannelFrequency = lPresetChannelFrequency:gsub("-", "")
 --ExportScript.Tools.WriteToLog('lPresetChannel: '..ExportScript.Tools.dump(lPresetChannel))
 --ExportScript.Tools.WriteToLog('lFrequency: '..ExportScript.Tools.dump(lFrequency))
 --ExportScript.Tools.WriteToLog('lPresetChannelFrequency: '..ExportScript.Tools.dump(lPresetChannelFrequency))
@@ -351,7 +354,7 @@ function ExportScript.genericRadio(key, value)
 		end
 	end
 
-	if ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['ManualPreset']  ~= nil then
+	if ExportScript.genericRadioConf[ExportScript.AF.genericRadio]['Power']  ~= nil then
 		if lPower ~= nil and (lPower == 0.0 or lPower <= 1.0) then
 			if lPower == 1.0 and ExportScript.AF.genericRadioPower[ExportScript.AF.genericRadio] == 1.0 then
 				-- Power off
