@@ -71,7 +71,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[116] = "%.4f",		-- TransmOilTemp {-70.0, -50.0, 0.0, 100.0, 150.0} {0.0, 0.13, 0.38, 0.71, 1.0}
 	--[117] = "%.4f",		-- AIRSPEED_Nose
 	--[118] = "%.4f",		-- AIRSPEED_Roof
-	[121] = "%.4f",		-- ExhaustTemp {0.0, 1000.0} {0.0, 1.0}
+	[121] = "%.4f",		-- ExhaustTemp {0.0, 500.0, 600.0, 900.0, 1000.0} {0.0, 0.508, 0.604, 0.904, 1.0}
 	[122] = "%.4f",		-- EngineTach {0.0, 7200.0} {0.0, 1.0}
 	[123] = "%.4f",		-- RotorTach {0.0, 360.0} {0.0, 1.0}
 	[119] = "%.4f",		-- GasProducerTach {0.0, 101.5} {0.0, 1.0}
@@ -481,6 +481,10 @@ ExportScript.ConfigArguments =
 	-- Stick
 	[189] = "%1d",		-- Force Trim ON/OFF (Pilot)
 	[193] = "%1d",		-- Force Trim ON/OFF (CoPilot)
+	-- Cargo Equipment
+	[195] = "%1d",		-- Cargo Release Pilot
+	[198] = "%1d",		-- Cargo Release CoPilot
+	[228] = "%1d",		-- Cargo Safety
 	-- XM 130 Chaff Flare
 	[450] = "%1d",		-- Ripple Fire Cover
 	[451] = "%1d",		-- Ripple Fire
