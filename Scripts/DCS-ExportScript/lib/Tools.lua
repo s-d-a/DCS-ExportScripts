@@ -79,7 +79,9 @@ function ExportScript.Tools.ProcessOutput()
     local lMyInfo = LoGetSelfData()
     if lMyInfo ~= nil then
         if ExportScript.ModuleName ~= lMyInfo.Name then
-            ExportScript.Tools.SelectModule()  -- point globals to Module functions and data.
+            ExportScript.NoLuaExportBeforeNextFrame = false
+			ExportScript.Tools.SelectModule()  -- point globals to Module functions and data.
+			return
         end
         lMyInfo = nil
     end

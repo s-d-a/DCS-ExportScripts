@@ -22,6 +22,8 @@ ExportScript.LastDataDAC    = {}
 ExportScript.lastExportTimeHI       = 0
 ExportScript.lastExportTimeLI       = 0
 
+ExportScript.NoLuaExportBeforeNextFrame = false
+
 local PrevExport                    = {}
 PrevExport.LuaExportStart           = LuaExportStart
 PrevExport.LuaExportStop            = LuaExportStop
@@ -29,6 +31,7 @@ PrevExport.LuaExportBeforeNextFrame = LuaExportBeforeNextFrame
 PrevExport.LuaExportAfterNextFrame  = LuaExportAfterNextFrame
 
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\Config.lua]])
+ExportScript.utf8 = dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\utf8.lua]])
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\Tools.lua]])
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\genericRadio.lua]])
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\Maps.lua]])
@@ -69,7 +72,7 @@ function LuaExportStart()
 	end
 
 	--local lrename1, lrename2 = os.rename(ExportScript.Config.LogPath, ExportScript.Config.LogPath..".old")
-	ExportScript.logFile = io.open(ExportScript.Config.LogPath, "w+")
+	ExportScript.logFile = io.open(ExportScript.Config.LogPath, "wa") -- "W+"
 	if ExportScript.logFile then
 		ExportScript.logFile:write('\239\187\191') -- create a UTF-8 BOM
 	end
@@ -79,6 +82,7 @@ function LuaExportStart()
 
 	ExportScript.AF = {} -- Table for Auxiliary functions
 
+	ExportScript.NoLuaExportBeforeNextFrame = false
 	ExportScript.Tools.SelectModule()   -- point globals to Module functions and data.
 	
 	-- Chain previously-included export as necessary
@@ -95,7 +99,9 @@ function LuaExportBeforeNextFrame()
 		coStatus = coroutine.resume(ExportScript.coProcessArguments_BeforeNextFrame)
 	end
 	
-	ExportScript.Tools.ProcessOutput()
+	if ExportScript.NoLuaExportBeforeNextFrame == false then
+		ExportScript.Tools.ProcessOutput()
+	end
 	
 	-- Chain previously-included export as necessary
 	if PrevExport.LuaExportBeforeNextFrame then
@@ -104,6 +110,10 @@ function LuaExportBeforeNextFrame()
 end
 
 function LuaExportAfterNextFrame()
+	if ExportScript.NoLuaExportBeforeNextFrame then
+		ExportScript.Tools.ProcessOutput()
+	end
+	
 	-- Chain previously-included export as necessary
 	if PrevExport.LuaExportAfterNextFrame then
 		PrevExport.LuaExportAfterNextFrame()
