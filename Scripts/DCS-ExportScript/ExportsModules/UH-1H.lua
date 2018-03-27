@@ -1,5 +1,5 @@
 -- Uh-1H Export
--- Version 1.0.0 BETA
+-- Version 1.0.1
 
 ExportScript.FoundDCSModule = true
 
@@ -177,7 +177,7 @@ ExportScript.ConfigEveryFrameArguments =
 	-- XM130 Chaff Flare
 	[458] = "%.f",		-- lamp_XM130_ARMED
 	-- SIGHTS_FOR_CIVIL
-	[473] = "$.1f",		-- SIGHTS_FOR_CIVIL
+	[473] = "%.1f",		-- SIGHTS_FOR_CIVIL
 	-- Main Panel Lights
 	[277] = "%.f",		-- lamp_MASTER
 	[276] = "%.f",		-- lamp_LOW_RPM
@@ -355,7 +355,7 @@ ExportScript.ConfigArguments =
 	[74] = "%1d",		-- Reply test, Button
 	[78] = "%.4f",		-- Reply test, (Axis) {0.0,1.0} in 0.1 steps
 	
-	[75] = "1d%.",		-- Test test, Button
+	[75] = "%1d",		-- Test test, Button
 	[79] = "%4f",		-- Test test, (Axis) {0.0,1.0} in 0.1 steps
 	
 	[130] = "%1d",		-- Winding/Adjustment Clock (Axis) {0.0,1.0} in 0.04 steps
@@ -576,6 +576,48 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- ADI - operator
 	--[141] = "%.1f",		-- Attitude_Off_flag_left  {0.0, 1.0} {1.0, 0.0}
 	ExportScript.Tools.SendData(141, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(141)))) -- negate
+	
+	-- Radio
+	local lVHF_ARC_134 = GetDevice(20)
+	ExportScript.Tools.SendData(2003, string.format("%7.3f", lVHF_ARC_134:get_frequency()/1000000))
+	
+	local lUHF_ARC_51 = GetDevice(22)
+	ExportScript.Tools.SendData(2000, string.format("%6.2f", lUHF_ARC_51:get_frequency()/1000000))
+	
+	local lVHF_ARC_131 = GetDevice(23)
+	ExportScript.Tools.SendData(2002, string.format("%5.2f", lVHF_ARC_131:get_frequency()/1000000))
+	
+	ExportScript.Tools.SendData(2005, string.format("%02d", ExportScript.Tools.round(mainPanelDevice:get_argument_value(460) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(461) * 10, 0)))		-- FLARE_Digit_1 -- FLARE_Digit_2
+	ExportScript.Tools.SendData(2006, string.format("%02d", ExportScript.Tools.round(mainPanelDevice:get_argument_value(462) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(463) * 10, 0)))		-- CHAFF_Digit_1 -- CHAFF_Digit_2
+	
+	--[[
+	-- ARN_82 VHF Navigation Set  NOT FUNCTIONAL
+	--local lARN_82 = GetDevice(26)
+	--ExportScript.Tools.WriteToLog('lARN_82: '..ExportScript.Tools.dump(lARN_82))
+	--ExportScript.Tools.WriteToLog('lARN_82 (metatable): '..ExportScript.Tools.dump(getmetatable(lARN_82)))
+	--ExportScript.Tools.SendData(2004, string.format("%6.2f", lVHF_ARC_134:get_frequency()/1000000))
+	]]
+	--[[
+	-- ADF_ARN83
+	local lpos1, pos2, lpos3, pos4
+	local lADF_ARN83 = ""
+	local lCockpitParams = list_cockpit_params()
+	if lCockpitParams ~= nil then
+	--ExportScript.Tools.WriteToLog('lCockpitParams: '..ExportScript.Tools.dump(lCockpitParams))
+		lpos1, pos2 = lCockpitParams:find("ADF_FREQ:", 1)
+		if pos2 ~= nil then
+			lpos3, pos4 = lCockpitParams:find("%c", pos2)
+			if lpos3 ~= nil then
+				lADF_ARN83 = lCockpitParams:sub(pos2 + 1, lpos3 - 2)
+			else
+				lADF_ARN83 = lCockpitParams:sub(pos2 + 1)
+			end
+			--ExportScript.Tools.WriteToLog('lADF_ARN83: '..ExportScript.Tools.dump(lADF_ARN83))
+			lADF_ARN83 = ExportScript.Tools.round(tonumber(lADF_ARN83) / 1000, 2)
+		end
+	end
+	ExportScript.Tools.SendData(2007, string.format("%s", lADF_ARN83))
+	]]
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
