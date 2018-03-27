@@ -1,5 +1,5 @@
 -- AJS37 Export
--- Version 1.0
+-- Version 1.0.1
 
 ExportScript.FoundDCSModule = true
 

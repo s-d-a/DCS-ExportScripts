@@ -1,3 +1,11 @@
+-- Ikarus and D.A.C. Export Script
+-- Version 1.0.1
+--
+-- generic Radio File
+--
+-- Copyright by Michael aka McMicha 2014
+-- Contact dcs2arcaze.micha@farbpigmente.org
+
 --[[
 -- Config and execute in function ExportScript.ProcessDACConfigLowImportance()
 

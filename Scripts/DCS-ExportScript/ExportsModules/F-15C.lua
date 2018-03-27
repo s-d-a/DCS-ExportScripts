@@ -1,5 +1,5 @@
 -- F-15C Export
--- Version 1.0.0 BETA
+-- Version 1.0.1
 
 ExportScript.FoundFCModule = true
 

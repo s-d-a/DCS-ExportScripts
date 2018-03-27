@@ -1,5 +1,5 @@
 -- Ikarus and D.A.C. Export Script
--- Version 1.0.0 BETA
+-- Version 1.0.1
 --
 -- Config File
 --

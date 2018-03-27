@@ -1,5 +1,5 @@
 -- Mi-8MTV2 Export
--- Version 1.0.0 BETA
+-- Version 1.0.1
 
 ExportScript.FoundDCSModule = true
 

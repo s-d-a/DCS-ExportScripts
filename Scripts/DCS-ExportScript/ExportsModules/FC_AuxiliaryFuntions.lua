@@ -1,5 +1,5 @@
 -- Flaming Cliffs Auxiliary Functons
--- Version 1.0.0
+-- Version 1.0.1
 
 -- Workaround for engine start-up
 ExportScript.AF.LeftEngineOn  = false
@@ -2525,7 +2525,7 @@ function ExportScript.AF.FC_EngineLamps_MiG29(FunctionTyp)
 	if lEngineInfo == nil then
 		return
 	end
-	ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
+	--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
 
 	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
 		ExportScript.Tools.SendData(728, lEngineInfo.EngineStart.left ) -- lamp start left engine (0|1)

@@ -1,5 +1,5 @@
 -- F-5E-3
--- 1.0.0
+-- Version 1.0.1
 
 ExportScript.FoundDCSModule = true
 

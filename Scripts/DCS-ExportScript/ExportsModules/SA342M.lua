@@ -1,5 +1,5 @@
 -- SA342M
--- Version 0.1
+-- Version 1.0.1
 
 ExportScript.FoundDCSModule = true
 
