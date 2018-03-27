@@ -27,7 +27,7 @@ Der Export von Daten wird für folgende Module unterstützt:
 - UH-1H
 - alle Flaming Cliffs Flugzeuge
 
-Kompatibel zur DCS World 1.5.8 und DCS World (Alpha) 2.2.0
+Kompatibel zur DCS World 1.5.8 und DCS World (Open BETA) 2.5.0
 
 # English
 ---
@@ -57,7 +57,7 @@ Following moduls are supported:
 - UH-1H
 - all Flaming Cliffs aircrafts
 
-Compatible with DCS World 1.5.8 and DCS World (Alpha) 2.2.0
+Compatible with DCS World 1.5.8 and DCS World (Open BETA) 2.5.0
 
 # Wiki
 ---
