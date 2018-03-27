@@ -1,5 +1,5 @@
 -- A-10C Export
--- Version 1.0.0 BETA
+-- Version 1.0.1
 
 ExportScript.FoundDCSModule = true
 
@@ -21014,16 +21014,16 @@ function ExportScript.AF.exportCDU()
 		if ExportScript.Config.Debug then
 			ExportScript.Tools.WriteToLog('keine cdu daten')
 		end
-		ExportScript.Tools.SendData(2020, cdu_lines[1])
-		ExportScript.Tools.SendData(2021, cdu_lines[2])
-		ExportScript.Tools.SendData(2022, cdu_lines[3])
-		ExportScript.Tools.SendData(2023, cdu_lines[4])
-		ExportScript.Tools.SendData(2024, cdu_lines[5])
-		ExportScript.Tools.SendData(2025, cdu_lines[6])
-		ExportScript.Tools.SendData(2026, cdu_lines[7])
-		ExportScript.Tools.SendData(2027, cdu_lines[8])
-		ExportScript.Tools.SendData(2028, cdu_lines[9])
-		ExportScript.Tools.SendData(2029, cdu_lines[10])
+		ExportScript.Tools.SendData(2030, cdu_lines[1])
+		ExportScript.Tools.SendData(2031, cdu_lines[2])
+		ExportScript.Tools.SendData(2032, cdu_lines[3])
+		ExportScript.Tools.SendData(2033, cdu_lines[4])
+		ExportScript.Tools.SendData(2034, cdu_lines[5])
+		ExportScript.Tools.SendData(2035, cdu_lines[6])
+		ExportScript.Tools.SendData(2036, cdu_lines[7])
+		ExportScript.Tools.SendData(2037, cdu_lines[8])
+		ExportScript.Tools.SendData(2038, cdu_lines[9])
+		ExportScript.Tools.SendData(2039, cdu_lines[10])
 		return
 	end
 	if ExportScript.Config.Debug then
@@ -21089,6 +21089,7 @@ function ExportScript.AF.exportCDU()
 	if ExportScript.Config.Debug then
 		ExportScript.Tools.WriteToLog('cdu_lines: '..ExportScript.Tools.dump(cdu_lines))
 	end
+	
 	cdu_lines[1] = ExportScript.AF.replaceSymbols(cdu_lines[1])
 	cdu_lines[2] = ExportScript.AF.replaceSymbols(cdu_lines[2])
 	cdu_lines[3] = ExportScript.AF.replaceSymbols(cdu_lines[3])
@@ -21099,18 +21100,19 @@ function ExportScript.AF.exportCDU()
 	cdu_lines[8] = ExportScript.AF.replaceSymbols(cdu_lines[8])
 	cdu_lines[9] = ExportScript.AF.replaceSymbols(cdu_lines[9])
 	cdu_lines[10] = ExportScript.AF.replaceSymbols(cdu_lines[10])
+	
 	if ExportScript.Config.Debug then
 		ExportScript.Tools.WriteToLog('cdu_lines: '..ExportScript.Tools.dump(cdu_lines))
 	end
-	ExportScript.Tools.SendData(2020, cdu_lines[1])
-	ExportScript.Tools.SendData(2021, cdu_lines[2])
-	ExportScript.Tools.SendData(2022, cdu_lines[3])
-	ExportScript.Tools.SendData(2023, cdu_lines[4])
-	ExportScript.Tools.SendData(2024, cdu_lines[5])
-	ExportScript.Tools.SendData(2025, cdu_lines[6])
-	ExportScript.Tools.SendData(2026, cdu_lines[7])
-	ExportScript.Tools.SendData(2027, cdu_lines[8])
-	ExportScript.Tools.SendData(2028, cdu_lines[9])
-	ExportScript.Tools.SendData(2029, cdu_lines[10])
+	ExportScript.Tools.SendData(2030, cdu_lines[1])
+	ExportScript.Tools.SendData(2031, cdu_lines[2])
+	ExportScript.Tools.SendData(2032, cdu_lines[3])
+	ExportScript.Tools.SendData(2033, cdu_lines[4])
+	ExportScript.Tools.SendData(2034, cdu_lines[5])
+	ExportScript.Tools.SendData(2035, cdu_lines[6])
+	ExportScript.Tools.SendData(2036, cdu_lines[7])
+	ExportScript.Tools.SendData(2037, cdu_lines[8])
+	ExportScript.Tools.SendData(2038, cdu_lines[9])
+	ExportScript.Tools.SendData(2039, cdu_lines[10])
 	
 end
