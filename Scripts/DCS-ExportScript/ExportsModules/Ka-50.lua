@@ -1,5 +1,5 @@
 -- Ka-50 Export
--- Version 1.0.0 BETA
+-- Version 1.0.1
 
 ExportScript.FoundDCSModule = true
 
@@ -91,7 +91,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[68]  = "%.4f", 		-- CLOCK_currtime_hours {0.0,1.0}
 	[69]  = "%.4f", 		-- CLOCK_currtime_minutes {0.0,1.0}
 	[70]  = "%.4f", 		-- CLOCK_currtime_seconds {0.0,1.0}
-	[75]  = "%0.1f", 		-- CLOCK_flight_time_meter_status{0.0,0.2}
+	--[75]  = "%0.1f", 		-- CLOCK_flight_time_meter_status{0.0,0.1,0.2}
 	[72]  = "%.4f", 		-- CLOCK_flight_hours {0.0,1.0}
 	[531] = "%.4f", 		-- CLOCK_flight_minutes {0.0,1.0}
 	[73]  = "%.4f", 		-- CLOCK_seconds_meter_time_minutes {0.0,1.0}
@@ -364,7 +364,8 @@ ExportScript.ConfigArguments =
 	[514] = "%.1f",        -- PTR_BTN-ABRIS-03 (ABRIS Pushbutton 3) 
 	[515] = "%.1f",        -- PTR_BTN-ABRIS-04 (ABRIS Pushbutton 4) 
 	[516] = "%.1f",        -- PTR_BTN-ABRIS-05 (ABRIS Pushbutton 5) 
-	[523] = "%.1f",        -- ABRIS_SHUNT_PTR (ABRIS Cursor Control (rot/push))
+	[518] = "%.1f",        -- ABRIS_SHUNT_PTR (ABRIS Cursor Control (rotary)){0.0,1.0} (0.04) 
+	[523] = "%.1f",        -- ABRIS_SHUNT_PTR (ABRIS Cursor Control (push))
 	[517] = "%.3f",        -- ABRIS_BRIGHTNESS_PTR (ABRIS Brightness) {0.0,1.0} (0.05) 
 	[130] = "%0.1f",       -- ABRIS-POWER_PTR (ABRIS Power)
 	-- HUD
@@ -717,19 +718,40 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	local lEKRAN = GetDevice(10)
 	local lEkranSendString = ""
 	local lEkranText = lEKRAN:get_actual_text_frame()
-	if lEkranText ~= "" then
+	--ExportScript.Tools.WriteToLog('lEkranText: '..ExportScript.Tools.dump(lEkranText))
+	--if lEkranText ~= "" then
+	if ExportScript.utf8.len(lEkranText) > 0 then
 		--lEkranSendString = string.sub(lEkranText,1,8).."\n"..string.sub(lEkranText,12,19).."\n"..string.sub(lEkranText,23,30).."\n"..string.sub(lEkranText,34,41)
-		ExportScript.Tools.SendData(2010, string.format("%s", string.sub(lEkranText,1,8)))
-		ExportScript.Tools.SendData(2011, string.format("%s", string.sub(lEkranText,12,19)))
-		ExportScript.Tools.SendData(2012, string.format("%s", string.sub(lEkranText,23,30)))
-		ExportScript.Tools.SendData(2013, string.format("%s", string.sub(lEkranText,34,41)))
+		--ExportScript.Tools.SendData(2010, string.format("%s", string.sub(lEkranText,1,9)))
+		--ExportScript.Tools.SendData(2011, string.format("%s", string.sub(lEkranText,12,20)))
+		--ExportScript.Tools.SendData(2012, string.format("%s", string.sub(lEkranText,23,31)))
+		--ExportScript.Tools.SendData(2013, string.format("%s", string.sub(lEkranText,34,42)))
+		--ExportScript.Tools.WriteToLog('2011: '..ExportScript.Tools.dump(string.format("%s", ExportScript.utf8.sub(lEkranText,12,20))))
+		ExportScript.Tools.SendData(2010, string.format("%s", ExportScript.utf8.sub(lEkranText,1,9)))
+		ExportScript.Tools.SendData(2011, string.format("%s", ExportScript.utf8.sub(lEkranText,12,20)))
+		ExportScript.Tools.SendData(2012, string.format("%s", ExportScript.utf8.sub(lEkranText,23,31)))
+		ExportScript.Tools.SendData(2013, string.format("%s", ExportScript.utf8.sub(lEkranText,34,42)))
 	else
-		ExportScript.Tools.SendData(2010, "        ")
-		ExportScript.Tools.SendData(2011, "        ")
-		ExportScript.Tools.SendData(2012, "        ")
-		ExportScript.Tools.SendData(2013, "        ")
+		ExportScript.Tools.SendData(2010, "         ")
+		ExportScript.Tools.SendData(2011, "         ")
+		ExportScript.Tools.SendData(2012, "         ")
+		ExportScript.Tools.SendData(2013, "         ")
 	end
 
+	--[75]  = "%0.1f", 		-- CLOCK_flight_time_meter_status{0.0,0.1,0.2}
+	-- Ikarus WPClock		Ka-50 Clock
+	-- White = 0.2			0.0
+	-- Red = 0.0			0.1
+	-- White/Red = 0.6		0.2
+	local lClock  = string.format("%0.1f", mainPanelDevice:get_argument_value(75))
+	if lClock == "0.0" then
+		ExportScript.Tools.SendData(75, "0.2")
+	elseif lClock == "0.1" then
+		ExportScript.Tools.SendData(75, "0.0")
+	elseif lClock == "0.2" then
+		ExportScript.Tools.SendData(75, "0.6")
+	end
+	
 	--[[
 	local lFAILlight		= ""	-- FAILURE
 	local lMEMORYlight		= ""	-- MEMORY
