@@ -1,5 +1,5 @@
 -- L-39C
--- Version 1.0.1
+-- Version 1.0.2
 
 ExportScript.FoundDCSModule = true
 
@@ -220,16 +220,16 @@ ExportScript.ConfigEveryFrameArguments =
 	[391] = "%.4f",		-- Backseat - VD-20 km Ind {0.0, 1.0}{0.0, 20.0}
 	[392] = "%.4f",		-- Backseat - VD-20 m Ind {0.0, 1.0}{0.0, 1000.0}
 	--[393] = "%.4f",		-- Backseat - VD-20 PRESS {0.0, 1.0}{670.0, 826.0}
-        -- Barometric altimeter
-        -- Altimeter Feet , copy of A-10 altimeter
-        [737] = "%.4f",         -- Altimeter_100_footPtr {0.0, 1.0}{0.0, 1000.0}
-        [732] = "%.4f",         -- Altimeter_10000_footCount {0.0, 1.0}{0.0, 10.0}
-        [731] = "%.4f",         -- Altimeter_1000_footCount {0.0, 1.0}{0.0, 10.0}
-        [730] = "%.4f",         -- Altimeter_100_footCount {0.0, 1.0}{0.0, 10.0}
-        [736] = "%.4f",         -- pressure_setting_0 {0.0, 1.0}{0.0, 10.0}
-        [735] = "%.4f",         -- pressure_setting_1 {0.0, 1.0}{0.0, 10.0}
-        [734] = "%.4f",         -- pressure_setting_2 {0.0, 1.0}{0.0, 10.0}
-        [733] = "%.4f",         -- pressure_setting_3 {0.0, 1.0}{0.0, 10.0}
+	-- Barometric altimeter
+	-- Altimeter Feet , copy of A-10 altimeter
+	[737] = "%.4f",         -- Altimeter_100_footPtr {0.0, 1.0}{0.0, 1000.0}
+	[732] = "%.4f",         -- Altimeter_10000_footCount {0.0, 1.0}{0.0, 10.0}
+	[731] = "%.4f",         -- Altimeter_1000_footCount {0.0, 1.0}{0.0, 10.0}
+	[730] = "%.4f",         -- Altimeter_100_footCount {0.0, 1.0}{0.0, 10.0}
+	[736] = "%.4f",         -- pressure_setting_0 {0.0, 1.0}{0.0, 10.0}
+	[735] = "%.4f",         -- pressure_setting_1 {0.0, 1.0}{0.0, 10.0}
+	[734] = "%.4f",         -- pressure_setting_2 {0.0, 1.0}{0.0, 10.0}
+	[733] = "%.4f",         -- pressure_setting_3 {0.0, 1.0}{0.0, 10.0}
 	-- AIRSPEED AND MACH
 	[386] = "%.4f",		-- Backseat - IAS {0.0, 0.08, 0.186, 0.296, 0.436, 0.55, 0.635, 0.705, 0.765, 0.824, 1.0}{0.0, 100.0, 150.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 1200.0}
 	[387] = "%.4f",		-- Backseat - TAS {0.0, 0.08, 0.186, 0.296, 0.436, 0.55, 0.635, 0.705, 0.765, 0.824, 1.0}{0.0, 100.0, 150.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 1200.0}
@@ -642,7 +642,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	get data from device
 	local lUHFRadio = GetDevice(54)
 	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get frequency()/1000000)) <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 	
 	-- Front Seat
@@ -749,7 +750,7 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("ExportID", "Format")
 	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF RADIO:get frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF RADIO:get frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 end
 
@@ -767,7 +768,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	get data from device
 	local lUHFRadio = GetDevice(54)
 	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get frequency()/1000000)) <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
 	-- R_832M Channel
@@ -778,7 +780,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- R_832M Frequency
 	local lR_832M_F = GetDevice(19)
 	if lR_832M_F:is_on() then
-		ExportScript.Tools.SendData(2001, string.format("%7.3f", lR_832M_F:get_frequency()/1000000))
+		--ExportScript.Tools.SendData(2001, string.format("%7.3f", lR_832M_F:get_frequency()/1000000))
+		ExportScript.Tools.SendData(2001, ExportScript.Tools.RoundFreqeuncy(lR_832M_F:get_frequency()/1000000))
 		--ExportScript.Tools.WriteToLog('R_832M Frequency: '..ExportScript.Tools.dump(string.format("%7.3f", lR_832M_F:get_frequency()/1000000)))
 	else
 		ExportScript.Tools.SendData(2001, "       ")
@@ -799,7 +802,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("ExportID", "Format")
 	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF RADIO:get frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF RADIO:get frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
 	-- R_832M Channel
@@ -811,7 +814,8 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	-- R_832M Frequency
 	local lR_832M_F = GetDevice(19)
 	if lR_832M_F:is_on() then
-		ExportScript.Tools.SendDataDAC(2001, string.format("%7.3f", lR_832M_F:get_frequency()/1000000))
+		--ExportScript.Tools.SendDataDAC(2001, string.format("%7.3f", lR_832M_F:get_frequency()/1000000))
+		ExportScript.Tools.SendDataDAC(2001, ExportScript.Tools.RoundFreqeuncy(lR_832M_F:get_frequency()/1000000))
 		--ExportScript.Tools.WriteToLog('R_832M Frequency: '..ExportScript.Tools.dump(string.format("%7.3f", lR_832M_F:get_frequency()/1000000)))
 	else
 		ExportScript.Tools.SendDataDAC(2001, "       ")
@@ -819,19 +823,20 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	
 	--=====================================================================================
 	--[[
-	ExportScript.Tools.WriteToLog('list cockpit params(): '..ExportScript.Tools.dump(list cockpit params()))
-	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list indication(7)))
+	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
+	-- list_indication get tehe value of cockpit displays
 	local ltmp1 = 0
-	for ltmp2 = 0, 13, 1 do
-		ltmp1 = list indication(ltmp2)
+	for ltmp2 = 0, 20, 1 do
+		ltmp1 = list_indication(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
-		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 	]]
 --[[
+	-- getmetatable get function name from devices
 	local ltmp1 = 0
-	for ltmp2 = 1, 73, 1 do
+	for ltmp2 = 1, 70, 1 do
 		ltmp1 = GetDevice(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
 		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))

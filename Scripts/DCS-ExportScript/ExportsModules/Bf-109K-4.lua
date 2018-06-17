@@ -1,5 +1,5 @@
 -- Bf-109K-4 Kurfürst
--- Version 1.0.1
+-- Version 1.0.2
 
 ExportScript.FoundDCSModule = true
 
@@ -236,22 +236,33 @@ ExportScript.ConfigArguments =
 
 -- Pointed to by ProcessIkarusDCSHighImportance
 function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
+	]]
 	ExportScript.Tools.SendData(35, string.format("%0.4f", mainPanelDevice:get_argument_value(35)))	-- Oxygen_Flow_Blinker
 	ExportScript.Tools.SendData(42, string.format("%0.4f", mainPanelDevice:get_argument_value(42)))	-- MG131_0_Klappanker
 	ExportScript.Tools.SendData(43, string.format("%0.4f", mainPanelDevice:get_argument_value(43)))	-- MG131_1_Klappanker
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
--- Hier kommen alle Daten rein die ueber die Hardware in schneller folge ausgeben werden soll
--- In der Regel sind das die Statusanzeigen
-
--- ExportScript.Tools.SendDataDAC(), ist die Funktion zur Ausgabe der Werte an die Hardware
--- "178" ist die ID des Wertes die in der entsprechenden XML Datei festgelegt wird, sollte der DCS ID entsprechen
--- mainPanelDevice:get_argument_value() ist eine Funktion die die Werte der übergeben DCS ID aus dem Spiel ausliest
--- 178 ist die DCS ID von dem man die Werte haben will
--- Description
-	--ExportScript.Tools.SendDataDAC("178",  mainPanelDevice:get_argument_value(178))	-- L_AILERON_EMER_DISENGAGE
-	--ExportScript.Tools.SendDataDAC("",  mainPanelDevice:get_argument_value())	-- 
+	--[[
+	every frame export to DAC
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local UHF_RADIO = GetDevice(54)
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
+	]]
 end
 
 -----------------------------------------------------
@@ -261,6 +272,16 @@ end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+	--[[
+	export in low tick interval to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
+	]]
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -273,11 +294,12 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("ExportID", "Format")
 	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
 	local lRADIO = GetDevice(14)
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", lRADIO:get_frequency()/1000000))
+	--ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", lRADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy(lRADIO:get_frequency()/1000000))
 
 	-- Lamps
 	ExportScript.Tools.SendDataDAC("35",  mainPanelDevice:get_argument_value(35) > 0.8 and 1 or 0)	-- Oxygen_Flow_Blinker
@@ -289,16 +311,17 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
 	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
+	-- list_indication get tehe value of cockpit displays
 	local ltmp1 = 0
-	for ltmp2 = 0, 13, 1 do
+	for ltmp2 = 0, 20, 1 do
 		ltmp1 = list_indication(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
-		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 	]]
 --[[
+	-- getmetatable get function name from devices
 	local ltmp1 = 0
-	for ltmp2 = 1, 16, 1 do
+	for ltmp2 = 1, 70, 1 do
 		ltmp1 = GetDevice(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
 		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
@@ -309,6 +332,3 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
-
-function ExportScript.genericRadio(key, value, hardware)
-end

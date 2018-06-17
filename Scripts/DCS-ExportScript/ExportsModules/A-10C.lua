@@ -1,5 +1,5 @@
 -- A-10C Export
--- Version 1.0.1
+-- Version 1.0.2
 
 ExportScript.FoundDCSModule = true
 
@@ -666,28 +666,23 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	get data from device
 	local lUHFRadio = GetDevice(54)
 	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 	-- Digital Clock
 	-------------------------------------------------
-	local lDigitalClock = list_indication(4)
-	lDigitalClock = lDigitalClock:gsub("-----------------------------------------", "")
-	lDigitalClock = lDigitalClock:gsub("txtHours", "")
-	lDigitalClock = lDigitalClock:gsub("txtColon", "")
-	lDigitalClock = lDigitalClock:gsub(":", "")
-	lDigitalClock = lDigitalClock:gsub("txtMinutes", "")
-	lDigitalClock = lDigitalClock:gsub("txtSeconds", "")
-	lDigitalClock = lDigitalClock:gsub("%c", "")
-	lDigitalClock = lDigitalClock:gsub("txt", "")
-	lDigitalClock = lDigitalClock:sub(1, 8)
-	if lDigitalClock:sub(7, 7) == "C" then
-		lDigitalClock = lDigitalClock:sub(1, 6)..";  C"
-	elseif lDigitalClock:sub(7, 8) == "ET" then
-		lDigitalClock = lDigitalClock:sub(1, 6)..";ET"
-	else
-		lDigitalClock = ""
+	local lDigitalClock = ExportScript.Tools.getListIndicatorValue(4)
+
+	if lDigitalClock ~= nil and lDigitalClock.txtHours ~= nil then
+		local lCET = ""
+		if lDigitalClock.txtET ~= nil then
+			lCET = ";"..lDigitalClock.txtET
+		else
+			lCET = ";  "..lDigitalClock.txtC
+		end
+
+		ExportScript.Tools.SendData(2010, string.format("%s%s%s%s", lDigitalClock.txtHours, lDigitalClock.txtMinutes, lDigitalClock.txtSeconds, lCET))
 	end
-	ExportScript.Tools.SendData(2010, string.format("%s", lDigitalClock))
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -700,19 +695,15 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("ExportID", "Format")
 	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 	-- Digital Clock
 	-------------------------------------------------
-	local lDigitalClock = list_indication(4)
-	lDigitalClock = lDigitalClock:gsub("-----------------------------------------", "")
-	lDigitalClock = lDigitalClock:gsub("txtHours", "")
-	lDigitalClock = lDigitalClock:gsub("txtColon", "")
-	lDigitalClock = lDigitalClock:gsub(":", "")
-	lDigitalClock = lDigitalClock:gsub("txtMinutes", "")
-	lDigitalClock = lDigitalClock:gsub("txtSeconds", "")
-	lDigitalClock = lDigitalClock:gsub("%c", "")
-	ExportScript.Tools.SendDataDAC("2010", string.format("%s", lDigitalClock:sub(1, 6)))  -- with : lDigitalClock:sub(1, 7)
+	local lDigitalClock = ExportScript.Tools.getListIndicatorValue(4)
+
+	if lDigitalClock ~= nil and lDigitalClock.txtHours ~= nil then
+		ExportScript.Tools.SendDataDAC("2010", string.format("%s%s%s", lDigitalClock.txtHours, lDigitalClock.txtMinutes, lDigitalClock.txtSeconds))
+	end
 end
 
 -----------------------------------------------------
@@ -729,29 +720,27 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	get data from device
 	local lUHFRadio = GetDevice(54)
 	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 	-- AN/ARC-164 UHF and UHF Preset Channel
 	---------------------------------------------------
 	local lUHF_RADIO = GetDevice(54)
 	if lUHF_RADIO:is_on() then
-		ExportScript.Tools.SendData(2000, string.format("%.3f", lUHF_RADIO:get_frequency()/1000000))
-		
-		local lPresetChannel = list_indication(10)
-		lPresetChannel = lPresetChannel:gsub("-----------------------------------------", "")
-		lPresetChannel = lPresetChannel:gsub("txtPresetChannel", "")
-		lPresetChannel = lPresetChannel:gsub("%c", "")
-	
-		ExportScript.Tools.SendData(2001, string.format("%s", lPresetChannel))
+		ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((lUHF_RADIO:get_frequency()/1000000)))
+
+		local lPresetChannel = ExportScript.Tools.getListIndicatorValue(10)
+
+		ExportScript.Tools.SendData(2001, string.format("%s", lPresetChannel.txtPresetChannel))
 	else
-		ExportScript.Tools.SendData(2000, "")
-		ExportScript.Tools.SendData(2001, "")
+		ExportScript.Tools.SendData(2000, " ")
+		ExportScript.Tools.SendData(2001, " ")
 	end
 
 	-- AN/ARC-186(V) VHF AM and Preset Channel
 	---------------------------------------------------
 	local lVHF_AM_RADIO = GetDevice(55)
-	ExportScript.Tools.SendData(2002, string.format("%.3f", lVHF_AM_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendData(2002, ExportScript.Tools.RoundFreqeuncy((lVHF_AM_RADIO:get_frequency()/1000000)))
 
 	local lVHF_AM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
 	ExportScript.Tools.SendData(2003, lVHF_AM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(137), 2)])
@@ -759,7 +748,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- AN/ARC-186(V) VHF FM and Preset Channel
 	-------------------------------------------------
 	local lVHF_FM_RADIO = GetDevice(56)
-	ExportScript.Tools.SendData(2004, string.format("%.3f", lVHF_FM_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendData(2004, ExportScript.Tools.RoundFreqeuncy((lVHF_FM_RADIO:get_frequency()/1000000)))
 
 	-- Preset is buggy
 	local lVHF_FM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
@@ -779,62 +768,55 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
 	-- CMSC 2020 (Text only)
 	-------------------------------------------------
-	local lCMSC = list_indication(8)
-	lCMSC = lCMSC:gsub("-----------------------------------------", "")
-	lCMSC = lCMSC:gsub("txt_CHAFF_FLARE", "")
-	lCMSC = lCMSC:gsub("txt_JMR", "")
-	lCMSC = lCMSC:gsub("txt_MWS", "")
-	lCMSC = lCMSC:gsub("%c%c(%C)", "%1")
-	lCMSC = lCMSC.."\n"
+	if mainPanelDevice:get_argument_value(364) > 0 then
+		local lCMSCTable = ExportScript.Tools.getListIndicatorValue(8)
 
-	local lCMSCTable = {}
-	lCMSCTable = ExportScript.Tools.split(lCMSC, "%c")
-
-	if lCMSCTable[2] ~= nil then
-		ExportScript.Tools.SendData(2011, string.format("%s", lCMSCTable[1]))	-- txt_CHAFF_FLARE
-		ExportScript.Tools.SendData(2012, string.format("%s", lCMSCTable[2]))	-- txt_JMR
-		ExportScript.Tools.SendData(2013, string.format("%s", lCMSCTable[3]))	-- txt_MWS
+		if lCMSCTable ~= nil and lCMSCTable.txt_JMR ~= nil then
+			ExportScript.Tools.SendData(2011, string.format("%s", lCMSCTable.txt_CHAFF_FLARE))	-- txt_CHAFF_FLARE
+			ExportScript.Tools.SendData(2012, string.format("%s", lCMSCTable.txt_JMR))	-- txt_JMR
+			ExportScript.Tools.SendData(2013, string.format("%s", lCMSCTable.txt_MWS))	-- txt_MWS
+		end
 	else
-		ExportScript.Tools.SendData(2011, "")	-- txt_CHAFF_FLARE
-		ExportScript.Tools.SendData(2012, "")	-- txt_JMR
-		ExportScript.Tools.SendData(2013, "")	-- txt_MWS
+		ExportScript.Tools.SendData(2011, " ")	-- txt_CHAFF_FLARE
+		ExportScript.Tools.SendData(2012, " ")	-- txt_JMR
+		ExportScript.Tools.SendData(2013, " ")	-- txt_MWS
 	end
-	
 	
 	-- CMSP
 	-------------------------------------------------
-	local lCMSP = list_indication(7)
-	--ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(lCMSP))
-	lCMSP = lCMSP:gsub("-----------------------------------------", "")
-	lCMSP = lCMSP:gsub("txt_UP", "")
-	lCMSP = lCMSP:gsub("txt_DOWN1", "")
-	lCMSP = lCMSP:gsub("txt_DOWN2", "")
-	lCMSP = lCMSP:gsub("txt_DOWN3", "")
-	lCMSP = lCMSP:gsub("txt_DOWN4", "")
-	lCMSP = lCMSP:gsub("%c%c(%C)", "%1")
-
-	local lCMSPTable = {"","","","","","","",""}
-	
-	if lCMSP ~= "" then
-		--ExportScript.Tools.WriteToLog('CMSP 2: '..ExportScript.Tools.dump(lCMSP))
+	if mainPanelDevice:get_argument_value(364) > 0 then
+		local lCMSP = ExportScript.Tools.getListIndicatorValue(7)
 		
-		lCMSP = lCMSP:gsub("  ", " ")
-		lCMSP = lCMSP:gsub(" %c", "\n")
-		lCMSP = lCMSP:gsub(" ", "\n")
+		local lCMSPTable = {"","","",""}
 		
-		lCMSPTable  = ExportScript.Tools.split(lCMSP, "%c")
-	end
+		if lCMSP ~= nil and lCMSP.txt_UP ~= nil then
+			lCMSP.txt_UP = lCMSP.txt_UP:gsub("  ", " ")
+			lCMSP.txt_UP = lCMSP.txt_UP.." "
+			lCMSPTable  = ExportScript.Tools.split(lCMSP.txt_UP, "%s")
+		end
+		
+		--ExportScript.Tools.WriteToLog('lCMSP: '..ExportScript.Tools.dump(lCMSP))
+		--ExportScript.Tools.WriteToLog('lCMSPTable: '..ExportScript.Tools.dump(lCMSPTable))
+		
+		ExportScript.Tools.SendData(2014,  string.format("%s", lCMSPTable[1]))
+		ExportScript.Tools.SendData(2015,  string.format("%s", lCMSPTable[2]))
+		ExportScript.Tools.SendData(2016,  string.format("%s", lCMSPTable[3]))
+		ExportScript.Tools.SendData(2017,  string.format("%s", lCMSPTable[4]))
+		ExportScript.Tools.SendData(2018,  string.format("%s", lCMSP.txt_DOWN1))
+		ExportScript.Tools.SendData(2019,  string.format("%s", lCMSP.txt_DOWN2))
+		ExportScript.Tools.SendData(2020,  string.format("%s", lCMSP.txt_DOWN3))
+		ExportScript.Tools.SendData(2021,  string.format("%s", lCMSP.txt_DOWN4))
+	else
+		ExportScript.Tools.SendData(2014,  " ")
+		ExportScript.Tools.SendData(2015,  " ")
+		ExportScript.Tools.SendData(2016,  " ")
+		ExportScript.Tools.SendData(2017,  " ")
+		ExportScript.Tools.SendData(2018,  " ")
+		ExportScript.Tools.SendData(2019,  " ")
+		ExportScript.Tools.SendData(2020,  " ")
+		ExportScript.Tools.SendData(2021,  " ")
+	end	
 
-	--ExportScript.Tools.WriteToLog('lCMSPTable: '..ExportScript.Tools.dump(lCMSPTable))
-	ExportScript.Tools.SendData(2014,  string.format("%s", lCMSPTable[1]))
-	ExportScript.Tools.SendData(2015,  string.format("%s", lCMSPTable[2]))
-	ExportScript.Tools.SendData(2016,  string.format("%s", lCMSPTable[3]))
-	ExportScript.Tools.SendData(2017,  string.format("%s", lCMSPTable[4]))
-	ExportScript.Tools.SendData(2018,  string.format("%s", lCMSPTable[5]))
-	ExportScript.Tools.SendData(2019,  string.format("%s", lCMSPTable[6]))
-	ExportScript.Tools.SendData(2020,  string.format("%s", lCMSPTable[7]))
-	ExportScript.Tools.SendData(2021,  string.format("%s", lCMSPTable[8]))
-	
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {290,292,293})
 	-- Engine Instruments Lights, Flight Instruments Lights, Auxiliary Instruments Lights
@@ -853,21 +835,18 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("ExportID", "Format")
 	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
 	-- AN/ARC-164 UHF and UHF Preset Channel
 	---------------------------------------------------
 	local lUHF_RADIO = GetDevice(54)
 	if lUHF_RADIO:is_on() then
-		ExportScript.Tools.SendDataDAC("2000", string.format("%.3f", lUHF_RADIO:get_frequency()/1000000))
-		
-		local lPresetChannel = list_indication(10)
-		lPresetChannel = lPresetChannel:gsub("-----------------------------------------", "")
-		lPresetChannel = lPresetChannel:gsub("txtPresetChannel", "")
-		lPresetChannel = lPresetChannel:gsub("%c", "")
+		ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((lUHF_RADIO:get_frequency()/1000000)))
+
+		local lPresetChannel = ExportScript.Tools.getListIndicatorValue(10)
 	
-		ExportScript.Tools.SendDataDAC("2001", string.format("%s", lPresetChannel))
+		ExportScript.Tools.SendDataDAC("2001", string.format("%s", lPresetChannel.txtPresetChannel))
 	else
 		ExportScript.Tools.SendDataDAC("2000", "-")
 		ExportScript.Tools.SendDataDAC("2001", "-")
@@ -876,7 +855,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	-- AN/ARC-186(V) VHF AM and Preset Channel
 	---------------------------------------------------
 	local lVHF_AM_RADIO = GetDevice(55)
-	ExportScript.Tools.SendDataDAC("2002", string.format("%.3f", lVHF_AM_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2002", ExportScript.Tools.RoundFreqeuncy((lVHF_AM_RADIO:get_frequency()/1000000)))
 
 	local lVHF_AM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
 	ExportScript.Tools.SendDataDAC("2003", lVHF_AM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(137), 2)])
@@ -884,7 +863,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	-- AN/ARC-186(V) VHF FM and Preset Channel
 	-------------------------------------------------
 	local lVHF_FM_RADIO = GetDevice(56)
-	ExportScript.Tools.SendDataDAC("2004", string.format("%.3f", lVHF_FM_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2004", ExportScript.Tools.RoundFreqeuncy((lVHF_FM_RADIO:get_frequency()/1000000)))
 
 	-- Preset is buggy
 	local lVHF_FM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
@@ -1085,12 +1064,12 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
 	local ltmp1 = 0
-	for ltmp2 = 0, 13, 1 do
+	for ltmp2 = 0, 20, 1 do
 		ltmp1 = list_indication(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
 		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
-	]]
+]]	
 --[[
 	-- LITENING_INTERFACE
 	local lLITENING_INTERFACE = GetDevice(11)
@@ -20981,22 +20960,8 @@ function ExportScript.AF.replaceSymbols(s)
 	return s
 end
 
-
-function ExportScript.AF.parse_indication(indicator_id)
-	local ret = {}
-	local li = list_indication(indicator_id)
-	if li == "" then return nil end
-	local m = li:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
-	while true do
-        local name, value = m()
-        if not name then break end
-		ret[name] = value
-	end
-	return ret
-end
-
 function ExportScript.AF.exportCDU()
-	local cdu = ExportScript.AF.parse_indication(3)
+	local cdu = ExportScript.Tools.getListIndicatorValue(3)
 	
 	local cdu_lines = {}
 	local empty_line = "                        " -- 24 spaces

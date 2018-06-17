@@ -1,5 +1,5 @@
 -- Flaming Cliffs Auxiliary Functons
--- Version 1.0.1
+-- Version 1.0.2
 
 -- Workaround for engine start-up
 ExportScript.AF.LeftEngineOn  = false
@@ -1881,9 +1881,9 @@ function ExportScript.AF.FC_US_ADI()
 		[25] = "%0.1f",		-- ADI Attitude Warning Flag
 		[19] = "%0.1f",		-- ADI Course Warning Flag
 		]]
-	lNavInfoPitch = lNavInfoPitch / lRadToDCSsignd
+	lNavInfoPitch = lNavInfoPitch / (lRadToDCSsignd * -1) -- lNavInfoPitch / lRadToDCSsignd
 	lNavInfoRoll  = lNavInfoRoll / lRadToDCSsignd
-	lPitch        = lPitch / (lRadToDCSsignd / 1.5)
+	lPitch        = lPitch / (lRadToDCSsignd / 2) -- lPitch / (lRadToDCSsignd / 1.5)
 	lBank         = lBank / lRadToDCSsignd
 
 	ExportScript.Tools.SendData(2, string.format("%.4f", ExportScript.Tools.negate(lPitch))) -- negate

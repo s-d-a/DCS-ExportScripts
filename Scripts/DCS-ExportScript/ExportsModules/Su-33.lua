@@ -1,5 +1,5 @@
 -- Su-33 Export
--- Version 1.0.1
+-- Version 1.0.2
 
 ExportScript.FoundFCModule = true
 

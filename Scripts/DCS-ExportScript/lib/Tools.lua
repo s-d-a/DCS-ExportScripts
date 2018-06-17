@@ -1,5 +1,5 @@
 -- Ikarus and D.A.C. Export Script
--- Version 1.0.1
+-- Version 1.0.2
 --
 -- Tools
 --
@@ -667,8 +667,8 @@ function ExportScript.Tools.split(stringvalue, delimiter)
     return result;
 end
 
--- the function evaluation of the handover parameters and makes accordingly to the light on or off
--- handover parameters, singel id or a table with id's
+-- the function checks whether the cockpit light should be activated in ikarus on the basis of the parameters
+-- functional parameters, a single ID, or a table with IDs
 function ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, ExportIDs)
     local TmpExportIDs = ExportIDs or 0
     local TmpLight     = false
@@ -696,6 +696,66 @@ function ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, ExportIDs)
     else
         ExportScript.Tools.SendData(2222, "0.0")    -- Ikarus Cockpit Light off
     end
+end
+
+-- The function returns a correctly formatted string with the given radio frequency.
+-- Frequency: MHz/KHz, format: e.g. "7.3" or "5.2", fill with leading zeros (default false), least value of frequency (default 0.025 (MHz))
+function ExportScript.Tools.RoundFreqeuncy(Freqeuncy, Format, PrefixZeros, LeastValue)
+	local freqeuncy   = Freqeuncy   or 0.0
+	local format      = Format      or "7.3"
+	local prefixzeros = PrefixZeros or false
+	local leastvalue  = LeastValue or 0.025
+	local tmpstring   = ""
+	local tmp1, tmp2, tmp3, tmp4  = 0, 0, 0, 0
+
+	local from ,to = string.find(format, "%.")
+	tmp1 = string.sub(format, 0, to)
+	tmp2 = string.sub(format, to)
+	tmp1 = tonumber(string.sub(tmp1, string.find(tmp1, "%d+")))
+	tmp2 = tonumber(string.sub(tmp2, string.find(tmp2, "%d+")))
+
+	local tmp3, tmp4 = math.modf(freqeuncy)
+	local bla3, bla4 =  math.modf(tmp4 / leastvalue)
+
+	tmpstring = (tmp3 + (bla3 * leastvalue ))
+
+	tmpstring = string.format("%."..tmp2.."f", tmpstring)
+	
+	while string.len(tmpstring) < tmp1 do
+		tmpstring = " "..tmpstring
+	end
+
+	if prefixzeros then
+		tmpstring = string.gsub(tmpstring, " ", "0")
+	end
+
+	return tmpstring
+end
+
+-- The function return a table with values of given indicator
+-- The value is retrievable via a named index. e.g. TmpReturn.txt_digits
+function ExportScript.Tools.getListIndicatorValue(IndicatorID)
+	local ListIindicator = list_indication(IndicatorID)
+	local TmpReturn = {}
+
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog('list_indication('..IndicatorID..'): '..ExportScript.Tools.dump(ListIindicator))
+	end
+	
+	if ListIindicator == "" then
+		return nil
+	end
+
+	local ListindicatorMatch = ListIindicator:gmatch("-----------------------------------------\n([^\n]+)\n([^\n]*)\n")
+	while true do
+		local Key, Value = ListindicatorMatch()
+		if not Key then
+			break
+		end
+		TmpReturn[Key] = Value
+	end
+
+	return TmpReturn
 end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSHighImportance, if the player aircraft is something else

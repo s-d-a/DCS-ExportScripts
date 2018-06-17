@@ -1,5 +1,5 @@
 -- SA342M
--- Version 1.0.1
+-- Version 1.0.2
 
 ExportScript.FoundDCSModule = true
 
@@ -412,7 +412,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	get data from device
 	local lUHFRadio = GetDevice(54)
 	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 end
 
@@ -426,7 +427,7 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("ExportID", "Format")
 	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 end
 
@@ -444,7 +445,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	get data from device
 	local lUHFRadio = GetDevice(54)
 	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
 	-- UHF Radio 
@@ -454,22 +456,21 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		--ExportScript.Tools.SendData(2000, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
 		--ExportScript.Tools.WriteToLog('UHF_Freq: '..ExportScript.Tools.dump(list_indication(5)))
 
-		local lUHFRadioFreq = list_indication(5)
-		lUHFRadioFreq = lUHFRadioFreq:gsub("-----------------------------------------", "")
-		lUHFRadioFreq = lUHFRadioFreq:gsub("Base", "")
-		lUHFRadioFreq = lUHFRadioFreq:gsub("total_field_of_view", "")
-		lUHFRadioFreq = lUHFRadioFreq:gsub("UHF_Freq", "")
-		lUHFRadioFreq = lUHFRadioFreq:gsub("%c", "")
+		local lUHFRadioFreq = ExportScript.Tools.getListIndicatorValue(5)
 
-		ExportScript.Tools.SendData(2000, lUHFRadioFreq)
-		--ExportScript.Tools.WriteToLog('UHF_Freq: '..ExportScript.Tools.dump(lUHFRadioFreq))
+		if lUHFRadioFreq ~= nil and lUHFRadioFreq.UHF_Freq ~= nil then
+			ExportScript.Tools.SendData(2000, string.format("%s", lUHFRadioFreq.UHF_Freq))
+		end
+	else
+		ExportScript.Tools.SendData(2000, " ")
 	end
 
 	-- AM Radio 
 	---------------------------------------------------
 	local lAMRadio = GetDevice(5)
 	if lAMRadio:is_on() then
-		ExportScript.Tools.SendData(2001, string.format("%.3f", lAMRadio:get_frequency()/1000000))
+		--ExportScript.Tools.SendData(2001, string.format("%.3f", lAMRadio:get_frequency()/1000000))
+		ExportScript.Tools.SendData(2001, ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000))
 	end
 
 	-- FM Radio PR4G
@@ -479,15 +480,13 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		--ExportScript.Tools.SendData(2002, string.format("%.3f", lFMRadio:get_frequency()/1000000))
 		--ExportScript.Tools.WriteToLog('FM_Freq: '..ExportScript.Tools.dump(list_indication(4)))
 
-		local lFMRadioFreq = list_indication(4)
-		lFMRadioFreq = lFMRadioFreq:gsub("-----------------------------------------", "")
-		lFMRadioFreq = lFMRadioFreq:gsub("Base", "")
-		lFMRadioFreq = lFMRadioFreq:gsub("total_field_of_view", "")
-		lFMRadioFreq = lFMRadioFreq:gsub("FM_Freq", "")
-		lFMRadioFreq = lFMRadioFreq:gsub("%c", "")
+		local lFMRadioFreq = ExportScript.Tools.getListIndicatorValue(4)
 
-		ExportScript.Tools.SendData(2002, lFMRadioFreq)
-		--ExportScript.Tools.WriteToLog('FM_Freq: '..ExportScript.Tools.dump(lFMRadioFreq))
+		if lFMRadioFreq ~= nil and lFMRadioFreq.FM_Freq ~= nil then
+			ExportScript.Tools.SendData(2002, string.format("%s", lFMRadioFreq.FM_Freq))
+		end
+	else
+		ExportScript.Tools.SendData(2002, " ")
 	end
 
 	-- [273] = "%.3f",	-- FM RADIO - Chanel Selector {0.0,0.143,0.286,0.429,0.572,0.715,0.858,1.0} -- laut clickabledata.lua
@@ -498,22 +497,15 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- Weapon Panel
 	---------------------------------------------------
 	if mainPanelDevice:get_argument_value(354) >= 0.0 then -- Weapon panel is On
-		local lWeaponPanelDisplays = list_indication(8)
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("-----------------------------------------", "")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("Base", "")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("total_field_of_view", "")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("LEFT_screen", "LEFT_screen:")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("RIGHT_screen", "RIGHT_screen:")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("%c", "")
+		local lWeaponPanelDisplays = ExportScript.Tools.getListIndicatorValue(8)
 
-		local lLeftDisplay = string.match(lWeaponPanelDisplays, '%d+', 0)
-		local lRightDisplay = string.match(lWeaponPanelDisplays, '%d+', string.find(lWeaponPanelDisplays, "RIGHT_screen"))
-
-		if lLeftDisplay ~= nil then
-			ExportScript.Tools.SendData(2004, lLeftDisplay)
-		end
-		if lRightDisplay ~= nil then
-			ExportScript.Tools.SendData(2005, lRightDisplay)
+		if lWeaponPanelDisplays ~= nil then
+			if lWeaponPanelDisplays.LEFT_screen ~= nil then
+				ExportScript.Tools.SendData(2004, string.format("%s", lWeaponPanelDisplays.LEFT_screen))
+			end
+			if lWeaponPanelDisplays.RIGHT_screen ~= nil then
+				ExportScript.Tools.SendData(2005, string.format("%s", lWeaponPanelDisplays.RIGHT_screen))
+			end
 		end
 	else
 		ExportScript.Tools.SendData(2004, "-")
@@ -531,7 +523,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("ExportID", "Format")
 	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
 	-- UHF Radio 
@@ -541,22 +533,21 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		--ExportScript.Tools.SendDataDAC("2000", string.format("%.3f", lUHFRadio:get_frequency()/1000000))
 		--ExportScript.Tools.WriteToLog('UHF_Freq: '..ExportScript.Tools.dump(list_indication(5)))
 
-		local lUHFRadioFreq = list_indication(5)
-		lUHFRadioFreq = lUHFRadioFreq:gsub("-----------------------------------------", "")
-		lUHFRadioFreq = lUHFRadioFreq:gsub("Base", "")
-		lUHFRadioFreq = lUHFRadioFreq:gsub("total_field_of_view", "")
-		lUHFRadioFreq = lUHFRadioFreq:gsub("UHF_Freq", "")
-		lUHFRadioFreq = lUHFRadioFreq:gsub("%c", "")
+		local lUHFRadioFreq = ExportScript.Tools.getListIndicatorValue(5)
 
-		ExportScript.Tools.SendDataDAC("2000", lUHFRadioFreq)
-		--ExportScript.Tools.WriteToLog('UHF_Freq: '..ExportScript.Tools.dump(lUHFRadioFreq))
+		if lUHFRadioFreq ~= nil and lUHFRadioFreq.UHF_Freq ~= nil then
+			ExportScript.Tools.SendDataDAC("2000", string.format("%s", lUHFRadioFreq.UHF_Freq))
+		end
+	else
+		ExportScript.Tools.SendDataDAC("2000", "-")
 	end
 
 	-- AM Radio 
 	---------------------------------------------------
 	local lAMRadio = GetDevice(5)
 	if lAMRadio:is_on() then
-		ExportScript.Tools.SendDataDAC("2001", string.format("%.3f", lAMRadio:get_frequency()/1000000))
+		--ExportScript.Tools.SendDataDAC("2001", string.format("%.3f", lAMRadio:get_frequency()/1000000))
+		ExportScript.Tools.SendDataDAC("2001", ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000))
 	end
 
 	-- FM Radio PR4G
@@ -566,15 +557,13 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		--ExportScript.Tools.SendDataDAC(2002, string.format("%.3f", lFMRadio:get_frequency()/1000000))
 		--ExportScript.Tools.WriteToLog('FM_Freq: '..ExportScript.Tools.dump(list_indication(4)))
 
-		local lFMRadioFreq = list_indication(4)
-		lFMRadioFreq = lFMRadioFreq:gsub("-----------------------------------------", "")
-		lFMRadioFreq = lFMRadioFreq:gsub("Base", "")
-		lFMRadioFreq = lFMRadioFreq:gsub("total_field_of_view", "")
-		lFMRadioFreq = lFMRadioFreq:gsub("FM_Freq", "")
-		lFMRadioFreq = lFMRadioFreq:gsub("%c", "")
+		local lFMRadioFreq = ExportScript.Tools.getListIndicatorValue(4)
 
-		ExportScript.Tools.SendDataDAC("2002", lFMRadioFreq)
-		--ExportScript.Tools.WriteToLog('FM_Freq: '..ExportScript.Tools.dump(lFMRadioFreq))
+		if lFMRadioFreq ~= nil and lFMRadioFreq.FM_Freq ~= nil then
+			ExportScript.Tools.SendDataDAC("2002", string.format("%s", lFMRadioFreq.FM_Freq))
+		end
+	else
+		ExportScript.Tools.SendDataDAC("2002", "-")
 	end
 
 	-- [273] = "%.3f",	-- FM RADIO - Chanel Selector {0.0,0.143,0.286,0.429,0.572,0.715,0.858,1.0} -- laut clickabledata.lua
@@ -585,22 +574,15 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	-- Weapon Panel
 	---------------------------------------------------
 	if mainPanelDevice:get_argument_value(354) >= 0.0 then -- Weapon panel is On
-		local lWeaponPanelDisplays = list_indication(8)
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("-----------------------------------------", "")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("Base", "")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("total_field_of_view", "")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("LEFT_screen", "LEFT_screen:")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("RIGHT_screen", "RIGHT_screen:")
-		lWeaponPanelDisplays = lWeaponPanelDisplays:gsub("%c", "")
+		local lWeaponPanelDisplays = ExportScript.Tools.getListIndicatorValue(8)
 
-		local lLeftDisplay = string.match(lWeaponPanelDisplays, '%d+', 0)
-		local lRightDisplay = string.match(lWeaponPanelDisplays, '%d+', string.find(lWeaponPanelDisplays, "RIGHT_screen"))
-
-		if lLeftDisplay ~= nil then
-			ExportScript.Tools.SendDataDAC("2004", lLeftDisplay)
-		end
-		if lRightDisplay ~= nil then
-			ExportScript.Tools.SendDataDAC("2005", lRightDisplay)
+		if lWeaponPanelDisplays ~= nil then
+			if lWeaponPanelDisplays.LEFT_screen ~= nil then
+				ExportScript.Tools.SendDataDAC("2004", string.format("%s", lWeaponPanelDisplays.LEFT_screen))
+			end
+			if lWeaponPanelDisplays.RIGHT_screen ~= nil then
+				ExportScript.Tools.SendDataDAC("2005", string.format("%s", lWeaponPanelDisplays.RIGHT_screen))
+			end
 		end
 	else
 		ExportScript.Tools.SendDataDAC("2004", "-")
@@ -721,20 +703,21 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.genericRadio(nil, nil)
 	
 	--=====================================================================================
-
-	--ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
-	--ExportScript.Tools.WriteToLog('FM_Freq: '..ExportScript.Tools.dump(list_indication(4)))
-	--ExportScript.Tools.WriteToLog('UHF_Freq: '..ExportScript.Tools.dump(list_indication(5)))
 	--[[
+	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
+	
+	-- list_indication get tehe value of cockpit displays
 	local ltmp1 = 0
-	for ltmp2 = 0, 10, 1 do
+	for ltmp2 = 0, 20, 1 do
 		ltmp1 = list_indication(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
-		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
-
+	]]
+--[[
+	-- getmetatable get function name from devices
 	local ltmp1 = 0
-	for ltmp2 = 1, 35, 1 do
+	for ltmp2 = 1, 70, 1 do
 		ltmp1 = GetDevice(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
 		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))

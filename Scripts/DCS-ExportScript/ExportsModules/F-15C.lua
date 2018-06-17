@@ -1,5 +1,5 @@
 -- F-15C Export
--- Version 1.0.1
+-- Version 1.0.2
 
 ExportScript.FoundFCModule = true
 
@@ -595,7 +595,7 @@ function ExportScript.AF.StatusLamp(FunctionTyp)
 	if lMCPState == nil then
 		return
 	end
-	ExportScript.Tools.WriteToLog('lMCPState: '..ExportScript.Tools.dump(lMCPState))
+	--ExportScript.Tools.WriteToLog('lMCPState: '..ExportScript.Tools.dump(lMCPState))
 	--[[
 	[RightTailPlaneFailure] = boolean: "false"
     [EOSFailure] = boolean: "false"

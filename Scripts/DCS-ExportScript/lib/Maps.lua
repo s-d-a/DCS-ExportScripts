@@ -34,3 +34,9 @@ ExportScript.Maps.Normandy.Lat1  = 53.85556   -- high left Latitude  53° 51' 20
 ExportScript.Maps.Normandy.Long1 = -15.02667 -- high left Longitude 15° 01' 36" W
 ExportScript.Maps.Normandy.Lat2  = 45.07167   -- low right Latitude 45° 04' 18" N
 ExportScript.Maps.Normandy.Long2 = 8.437222 -- low right Longitude 08° 26' 14" E
+-- Persian Gulf Map
+ExportScript.Maps.PersianGulf       = {}
+ExportScript.Maps.PersianGulf.Lat1  = 30.50833  -- high left Latitude 30° 20.630 N
+ExportScript.Maps.PersianGulf.Long1 = 45.15167  -- high left Longitude 44° 54.906 E
+ExportScript.Maps.PersianGulf.Lat2  = 22.43528  -- low right Latitude 22° 24.127 N
+ExportScript.Maps.PersianGulf.Long2 = 61.67306   -- low right Longitude 61° 36.263 E

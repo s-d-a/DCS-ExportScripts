@@ -1,5 +1,5 @@
 -- Mi-8MTV2 Export
--- Version 1.0.1
+-- Version 1.0.2
 
 ExportScript.FoundDCSModule = true
 
@@ -996,7 +996,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	get data from device
 	local lUHFRadio = GetDevice(54)
 	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 	
 	--[12] = "%.4f",		-- AGB_3K_Left_pitch {1.0, -1.0}
@@ -1016,7 +1017,7 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("ExportID", "Format")
 	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 end
 
@@ -1034,7 +1035,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	get data from device
 	local lUHFRadio = GetDevice(54)
 	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
 	-- Cockpit Light
@@ -1043,6 +1045,15 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
 	-- deactivated WPADI right warning Flag 
 	ExportScript.Tools.SendData(2020, 0)
+	
+	-- UV-26
+	local lUV26 = ExportScript.Tools.getListIndicatorValue(4)
+
+	if lUV26 ~= nil and lUV26.txt_digits ~= nil then
+		ExportScript.Tools.SendData(2006, string.format("%s", lUV26.txt_digits))
+	else
+		ExportScript.Tools.SendData(2006, " ")
+	end
 	
 	--[[
 	-- AGB_3K_LEFT
@@ -1113,38 +1124,32 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
---[[
-	export in low tick interval to hardware
+	--[[
+	export in low tick interval to DAC
 	Example from A-10C
-    Landing Gear
-	mainPanelDevice, basis panel
-	ExportScript.Tools.SendDataDAC("2004",  mainPanelDevice:get_argument_value(659))			-- GEAR_N_SAFE
-	ExportScript.Tools.SendDataDAC("2005",  mainPanelDevice:get_argument_value(660))			-- GEAR_L_SAFE
-	ExportScript.Tools.SendDataDAC("2006",  mainPanelDevice:get_argument_value(661))			-- GEAR_R_SAFE
-
-	Device test, Device 2 to 32
-	is value "userdata", is only DLL intern functions
-
-	local ltmp1 = 0
-	for ltmp2 = 1, 50, 1 do
-		ltmp1 = GetDevice(ltmp2)
-		ExportScript.Tools.ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.ExportScript.Tools.dump(ltmp1))
-		ExportScript.Tools.ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.ExportScript.Tools.dump(getmetatable(ltmp1)))
-	end
+	Get Radio Frequencies
+	get data from device
+	local UHF_RADIO = GetDevice(54)
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
 	-- Radio comunication
 	-- JADRO 1A
 	local lJADRO_1A = GetDevice(37)
 	if lJADRO_1A:is_on() then
-		ExportScript.Tools.SendDataDAC("2000", string.format("%7.4f", lJADRO_1A:get_frequency()/1000000))
+		--ExportScript.Tools.SendDataDAC("2000", string.format("%7.4f", lJADRO_1A:get_frequency()/1000000))
+		ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy(lJADRO_1A:get_frequency()/1000000, "7.4"))
 	else
 		ExportScript.Tools.SendDataDAC("2000", "-")
 	end
 
 	-- R_863 (center)
 	local lR_863_c = GetDevice(38)
-	ExportScript.Tools.SendDataDAC("2001", string.format("%7.3f", lR_863_c:get_frequency()/1000000))
+	--ExportScript.Tools.SendDataDAC("2001", string.format("%7.3f", lR_863_c:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2001", ExportScript.Tools.RoundFreqeuncy(lR_863_c:get_frequency()/1000000))
 
 	-- R_863 (left) Channel
 	local lR_863_l = {[0.0]="1",[0.05]="2",[0.10]="3",[0.15]="4",[0.20]="5",[0.25]="6",[0.30]="7",[0.35]="8",[0.40]="9",[0.45]="10",[0.50]="11",[0.55]="12",[0.60]="13",[0.65]="14",[0.70]="15",[0.75]="16",[0.80]="17",[0.85]="18",[0.90]="19",[0.95]="20"}
@@ -1153,7 +1158,8 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	-- R_863 (left) Frequency
 	-- is the same frequency as R_863 (center), but not the frequency from R_863 (left)
 	local lR_863_F = GetDevice(38)
-	ExportScript.Tools.SendDataDAC("2003", string.format("%7.3f", lR_863_F:get_frequency()/1000000))
+	--ExportScript.Tools.SendDataDAC("2003", string.format("%7.3f", lR_863_F:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2003", ExportScript.Tools.RoundFreqeuncy(lR_863_F:get_frequency()/1000000))
 
 	-- R_828 Channel
 	local lR_828 = {[0.0]="1",[0.101]="2",[0.199]="3",[0.302]="4",[0.400]="5",[0.502]="6",[0.601]="7",[0.697]="8",[0.801]="9",[0.898]="10"}
@@ -1162,18 +1168,20 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	-- R_828 Frequency
 	local lR_828_F = GetDevice(39)
 	if lR_828_F:is_on() then
-		ExportScript.Tools.SendDataDAC("2005", string.format("%7.3f", lR_828_F:get_frequency()/1000000))
+		--ExportScript.Tools.SendDataDAC("2005", string.format("%7.3f", lR_828_F:get_frequency()/1000000))
+		ExportScript.Tools.SendDataDAC("2005", ExportScript.Tools.RoundFreqeuncy(lR_828_F:get_frequency()/1000000))
 	else
 		ExportScript.Tools.SendDataDAC("2005", "-")
 	end
 
 	-- UV-26
-	local lUV26 = list_indication(5)
-	lUV26 = lUV26:gsub("-----------------------------------------", "")
-	lUV26 = lUV26:gsub("txt_digits", "")
-	lUV26 = lUV26:gsub("%c", "")
+	local lUV26 = ExportScript.Tools.getListIndicatorValue(4)
 
-	ExportScript.Tools.SendDataDAC("2006", string.format("%s", lUV26))
+	if lUV26 ~= nil and lUV26.txt_digits ~= nil then
+		ExportScript.Tools.SendDataDAC("2006", string.format("%s", lUV26.txt_digits))
+	else
+		ExportScript.Tools.SendDataDAC("2006", "-")
+	end
 
 	-- generic Radio display and frequency rotarys
 	-------------------------------------------------
@@ -1293,14 +1301,24 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.genericRadio(nil, nil)
 
 	--============================================================================================
-	--[[
+--[[
 	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
+	-- list_indication get tehe value of cockpit displays
 	local ltmp1 = 0
-	for ltmp2 = 1, 10, 1 do
+	for ltmp2 = 0, 20, 1 do
 		ltmp1 = list_indication(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
-		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
-	]]
+]]
+--[[
+	-- getmetatable get function name from devices
+	local ltmp1 = 0
+	for ltmp2 = 1, 70, 1 do
+		ltmp1 = GetDevice(ltmp2)
+		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
+	end
+]]
 end

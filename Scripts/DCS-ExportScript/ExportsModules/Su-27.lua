@@ -1,5 +1,5 @@
 -- Su-27 Export
--- Version 1.0.1
+-- Version 1.0.2
 
 ExportScript.FoundFCModule = true
 
@@ -409,10 +409,10 @@ function ExportScript.AF.FuelQuantityIndicator(FunctionTyp)
 		--ExportScript.Tools.SendDataDAC("301", string.format("%d", lEngineInfo.fuel_internal)) -- total fuel in kg
 		--ExportScript.Tools.SendDataDAC("302", string.format("%d", lEngineInfo.fuel_external)) -- external fuel in kg
 
-		ExportScript.Tools.SendDataDAC("304", (lEngineInfo.fuel_internal < 5000.0 and 1 or 0) ) -- Tank warning 1
-		ExportScript.Tools.SendDataDAC("305", (lEngineInfo.fuel_internal < 4000.0 and 1 or 0) ) -- Tank warning 2
+		ExportScript.Tools.SendDataDAC("304", (lEngineInfo.fuel_internal < 5600.0 and 1 or 0) ) -- Tank warning 1
+		ExportScript.Tools.SendDataDAC("305", (lEngineInfo.fuel_internal < 4500.0 and 1 or 0) ) -- Tank warning 2
 		ExportScript.Tools.SendDataDAC("306", (lEngineInfo.fuel_internal < 1500.0 and 1 or 0) ) -- Tank warning 3
-		ExportScript.Tools.SendDataDAC("307", (lEngineInfo.fuel_internal < 1000.0 and 1 or 0) ) -- Tank warning 4
+		ExportScript.Tools.SendDataDAC("307", (lEngineInfo.fuel_internal < 800.0  and 1 or 0) ) -- Tank warning 4
 		ExportScript.Tools.SendDataDAC("308", (lEngineInfo.fuel_internal < 600.0  and 1 or 0) ) -- Bingo Fuel
 	end
 
@@ -459,10 +459,10 @@ function ExportScript.AF.FuelQuantityIndicator(FunctionTyp)
 		-- BingoLight
 		ExportScript.Tools.SendData(300, lTotalFuel_5_0)
 		ExportScript.Tools.SendData(301, lTotalFuel_9_3)
-		ExportScript.Tools.SendData(302, (lEngineInfo.fuel_internal < 5000.0 and 1 or 0))   -- Tank warning 1
-		ExportScript.Tools.SendData(303, (lEngineInfo.fuel_internal < 4000.0 and 1 or 0))   -- Tank warning 2
+		ExportScript.Tools.SendData(302, (lEngineInfo.fuel_internal < 5600.0 and 1 or 0))   -- Tank warning 1
+		ExportScript.Tools.SendData(303, (lEngineInfo.fuel_internal < 4500.0 and 1 or 0))   -- Tank warning 2
 		ExportScript.Tools.SendData(304, (lEngineInfo.fuel_internal < 1500.0 and 1 or 0))   -- Tank warning 3
-		ExportScript.Tools.SendData(305, (lEngineInfo.fuel_internal < 1000.0 and 1 or 0))   -- Tank warning 4
+		ExportScript.Tools.SendData(305, (lEngineInfo.fuel_internal < 800.0  and 1 or 0))   -- Tank warning 4
 		ExportScript.Tools.SendData(306, (lEngineInfo.fuel_internal < 600.0  and 1 or 0))   -- Bingo Fuel
 	end
 end
