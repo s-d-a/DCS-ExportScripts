@@ -1,12 +1,13 @@
 -- Ikarus and D.A.C. Export Script
--- Version 1.0.1
 --
--- Copyright by Michael aka McMicha 2014 - 2017
+-- Copyright by Michael aka McMicha 2014 - 2018
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
 
 -- Main Table
 ExportScript = {}
+ExportScript.Version = {}
+ExportScript.Version.ExportScript = "1.1.0"
 -- Simulation id
 ExportScript.SimID = string.format("%08x*",os.time())
 
@@ -54,22 +55,10 @@ ExportScript.FoundNoModul   = true
 function LuaExportStart()
 -- Works once just before mission start.
 -- (and before player selects their aircraft, if there is a choice!)
-    
+
 	-- 2) Setup udp sockets to talk to GlassCockpit
 	package.path  = package.path..";.\\LuaSocket\\?.lua"
 	package.cpath = package.cpath..";.\\LuaSocket\\?.dll"
-
-	ExportScript.socket = require("socket")
-
-	ExportScript.UDPsender = ExportScript.socket.udp()
-	ExportScript.UDPsender:setsockname("*", 0)
-	ExportScript.UDPsender:settimeout(.004) -- set the timeout for reading the socket; 250 fps
-
-	if ExportScript.Config.Listener then
-		ExportScript.UDPListener = ExportScript.socket.udp()
-		ExportScript.UDPListener:setsockname("*", ExportScript.Config.ListenerPort)
-		ExportScript.UDPListener:settimeout(.004) -- set the timeout for reading the socket; 250 fps
-	end
 
 	--local lrename1, lrename2 = os.rename(ExportScript.Config.LogPath, ExportScript.Config.LogPath..".old")
 	ExportScript.logFile = io.open(ExportScript.Config.LogPath, "wa") -- "W+"
@@ -79,6 +68,9 @@ function LuaExportStart()
 	--if lrenmae1 == nil then
 	--    ExportScript.Tools.WriteToLog("Rename Error: "..lrename2)
 	--end
+
+	ExportScript.Tools.createUDPSender()
+	ExportScript.Tools.createUDPListner()
 
 	ExportScript.AF = {} -- Table for Auxiliary functions
 

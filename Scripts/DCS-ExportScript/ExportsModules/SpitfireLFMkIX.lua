@@ -1,7 +1,7 @@
 -- Spitfire LFMk IX
--- Version 1.0.2
 
 ExportScript.FoundDCSModule = true
+ExportScript.Version.SpitfireLFMkIX = "1.1.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

@@ -1,7 +1,7 @@
 -- Module Name Export
--- Version 
 
 ExportScript.FoundDCSModule = true
+ExportScript.Version.<ModuleName> = "1.1.X"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

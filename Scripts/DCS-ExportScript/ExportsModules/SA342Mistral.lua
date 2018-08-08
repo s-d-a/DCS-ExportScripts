@@ -1,7 +1,7 @@
 -- SA342Mistral
--- Version 1.0.2
 
 ExportScript.FoundDCSModule = true
+ExportScript.Version.SA342Mistral = "1.1.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

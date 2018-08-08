@@ -1,5 +1,6 @@
 -- Flaming Cliffs Auxiliary Functons
--- Version 1.0.2
+
+ExportScript.Version.FC_AuxiliaryFunctions = "1.1.0"
 
 -- Workaround for engine start-up
 ExportScript.AF.LeftEngineOn  = false
@@ -1881,9 +1882,9 @@ function ExportScript.AF.FC_US_ADI()
 		[25] = "%0.1f",		-- ADI Attitude Warning Flag
 		[19] = "%0.1f",		-- ADI Course Warning Flag
 		]]
-	lNavInfoPitch = lNavInfoPitch / (lRadToDCSsignd * -1) -- lNavInfoPitch / lRadToDCSsignd
+	lNavInfoPitch = lNavInfoPitch / (lRadToDCSsignd * -1)  --lNavInfoPitch / lRadToDCSsignd
 	lNavInfoRoll  = lNavInfoRoll / lRadToDCSsignd
-	lPitch        = lPitch / (lRadToDCSsignd / 2) -- lPitch / (lRadToDCSsignd / 1.5)
+	lPitch        = lPitch / (lRadToDCSsignd / 2)  --lPitch / (lRadToDCSsignd / 1.5)
 	lBank         = lBank / lRadToDCSsignd
 
 	ExportScript.Tools.SendData(2, string.format("%.4f", ExportScript.Tools.negate(lPitch))) -- negate
@@ -1927,6 +1928,9 @@ function ExportScript.AF.FC_US_HSI(distancetoway)
 	local lHSI_ADF			= LoGetControlPanel_HSI().ADF_raw	-- ADF OBS (Radian)
 	local lHSI_Curse		= LoGetControlPanel_HSI().Course	-- HSI Course (Radian)
 	local lHeading			= LoGetSelfData().Heading			-- HEADING (Radian)
+	local lCourseDeviation	= LoGetControlPanel_HSI().CourseDeviation
+	--ExportScript.Tools.WriteToLog('LoGetControlPanel_HSI() 1: '..ExportScript.Tools.dump(LoGetControlPanel_HSI()))
+	
 	lPitch, lBank			= nil
 --[[
     [Course] = number: "0.76548692098835"
@@ -1979,6 +1983,8 @@ function ExportScript.AF.FC_US_HSI(distancetoway)
 	lHeading = 1.0 - (lHeading / lRadToDCSunsignd)
 	lHSI_Curse = (lHSI_Curse / lRadToDCSunsignd)
 	lHSI_ADF = (lHSI_ADF / lRadToDCSunsignd)
+	lCourseDeviation = (lCourseDeviation > 1.0 and 1 or lCourseDeviation)
+	lCourseDeviation = (lCourseDeviation < -1.0 and -1 or lCourseDeviation)
 	-- HSI Heading {0.0, 1.0}
 	-- HSI Bearing #1 {0.0, 1.0}
 	-- HSI Bearing #2 {0.0, 1.0}
@@ -1999,7 +2005,7 @@ function ExportScript.AF.FC_US_HSI(distancetoway)
     ExportScript.Tools.SendData(13, string.format("%.4f", lHSI_Curse))      -- Bearing #2
     ExportScript.Tools.SendData(14, lDefaultNull)
     ExportScript.Tools.SendData(15, string.format("%.4f", lHSI_Curse))
-    ExportScript.Tools.SendData(16, string.format("%.4f", lHSI_ADF))
+	ExportScript.Tools.SendData(16, string.format("%.4f", lCourseDeviation))
     ExportScript.Tools.SendData(17, string.format("%.4f", lRangeCounter1))
     ExportScript.Tools.SendData(18, string.format("%.4f", lRangeCounter2))
     ExportScript.Tools.SendData(19, string.format("%.4f", lRangeCounter3))

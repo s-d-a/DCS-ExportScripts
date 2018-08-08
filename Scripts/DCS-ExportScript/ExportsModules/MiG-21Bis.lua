@@ -1,7 +1,7 @@
 -- MiG-21Bis Export
--- Version 1.0.2
 
 ExportScript.FoundDCSModule = true
+ExportScript.Version.MiG21Bis = "1.1.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

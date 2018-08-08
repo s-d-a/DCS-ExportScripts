@@ -1,7 +1,7 @@
--- A-10C Export
--- Version 1.0.2
+-- A-10C
 
 ExportScript.FoundDCSModule = true
+ExportScript.Version.A10C = "1.1.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -1064,12 +1064,12 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
 	local ltmp1 = 0
-	for ltmp2 = 0, 20, 1 do
+	for ltmp2 = 0, 13, 1 do
 		ltmp1 = list_indication(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
 		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
-]]	
+	]]
 --[[
 	-- LITENING_INTERFACE
 	local lLITENING_INTERFACE = GetDevice(11)

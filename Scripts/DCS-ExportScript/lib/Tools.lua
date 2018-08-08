@@ -1,12 +1,12 @@
 -- Ikarus and D.A.C. Export Script
--- Version 1.0.2
 --
 -- Tools
 --
--- Copyright by Michael aka McMicha 2014 - 2017
+-- Copyright by Michael aka McMicha 2014 - 2018
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
 ExportScript.Tools = {}
+ExportScript.Version.Tools = "1.1.0"
 
 function ExportScript.Tools.WriteToLog(message)
     if ExportScript.logFile then
@@ -20,6 +20,44 @@ function ExportScript.Tools.WriteToLog(message)
     end
 end
 
+function ExportScript.Tools.createUDPSender()
+	ExportScript.socket = require("socket")
+
+	local lcreateUDPSender = ExportScript.socket.protect(function()
+		ExportScript.UDPsender = ExportScript.socket.udp()
+		ExportScript.socket.try(ExportScript.UDPsender:setsockname("*", 0))
+		ExportScript.socket.try(ExportScript.UDPsender:settimeout(.004)) -- set the timeout for reading the socket; 250 fps
+	end)
+
+	local ln, lerror = lcreateUDPSender()
+	if lerror ~= nil then
+		ExportScript.Tools.WriteToLog("createUDPSender protect: "..ExportScript.Tools.dump(ln)..", "..ExportScript.Tools.dump(lerror))
+		return
+	end
+
+	ExportScript.Tools.WriteToLog("Create UDPSender")
+end
+
+function ExportScript.Tools.createUDPListner()
+	if ExportScript.Config.Listener then
+		ExportScript.socket = require("socket")
+
+		local lcreateUDPListner = ExportScript.socket.protect(function()
+			ExportScript.UDPListener = ExportScript.socket.udp()
+			ExportScript.socket.try(ExportScript.UDPListener:setsockname("*", ExportScript.Config.ListenerPort))
+			ExportScript.socket.try(ExportScript.UDPListener:settimeout(.004)) -- set the timeout for reading the socket; 250 fps
+		end)
+
+		local ln, lerror = lcreateUDPListner()
+		if lerror ~= nil then
+			ExportScript.Tools.WriteToLog("createUDPListner protect: "..ExportScript.Tools.dump(ln)..", "..ExportScript.Tools.dump(lerror))
+			return
+		end
+
+		ExportScript.Tools.WriteToLog("Create UDPListner")
+	end
+end
+
 function ExportScript.Tools.ProcessInput()
     local lCommand, lCommandArgs, lDevice
     -- C1,3001,4
@@ -28,8 +66,30 @@ function ExportScript.Tools.ProcessInput()
     -- lCommandArgs[2] = 3001 => ButtonID
     -- lCommandArgs[3] = 4 => Value
     if ExportScript.Config.Listener then
-        local lInput,from,port = ExportScript.UDPListener:receivefrom()
-        if ExportScript.Config.Debug then
+        --local lInput,from,port = ExportScript.UDPListener:receivefrom()
+		ExportScript.UDPListenerValues = {}
+
+		local lUDPListenerReceivefrom = ExportScript.socket.protect(function()
+			--[[
+			local try = ExportScript.socket.newtry(function()
+				ExportScript.UDPListener:close()
+				ExportScript.Tools.createUDPListner()
+			end)
+			ExportScript.UDPListenerValues.Input, ExportScript.UDPListenerValues.from, ExportScript.UDPListenerValues.port = try(ExportScript.UDPListener:receivefrom())
+			]] -- Bei einer newtry Funktion wird im fehlerfall deren inhalt ausgeführt.
+			ExportScript.UDPListenerValues.Input, ExportScript.UDPListenerValues.from, ExportScript.UDPListenerValues.port = ExportScript.socket.try(ExportScript.UDPListener:receivefrom())
+        end)
+
+		local ln, lerror = lUDPListenerReceivefrom()
+		if lerror ~= nil and lerror ~= "timeout" then
+			ExportScript.Tools.WriteToLog("UDPListenerReceivefrom protect: "..ExportScript.Tools.dump(ln)..", "..ExportScript.Tools.dump(lerror))
+			ExportScript.UDPListener:close()
+			ExportScript.Tools.createUDPListner()
+		end
+
+		local lInput, from, port = ExportScript.UDPListenerValues.Input, ExportScript.UDPListenerValues.from, ExportScript.UDPListenerValues.port
+
+		if ExportScript.Config.SocketDebug then
             ExportScript.Tools.WriteToLog("lInput: "..ExportScript.Tools.dump(lInput)..", from: "..ExportScript.Tools.dump(from)..", port: "..ExportScript.Tools.dump(port))
         end
         if lInput then
@@ -52,24 +112,50 @@ function ExportScript.Tools.ProcessInput()
 
             if (lCommand == "C") then
                 lCommandArgs = ExportScript.Tools.StrSplit(string.sub(lInput,2),",")
-                lDevice = GetDevice(lCommandArgs[1])
-                if lDevice ~= "1000" then
-                    if type(lDevice) == "table" then
-                        lDevice:performClickableAction(lCommandArgs[2],lCommandArgs[3])
-                        if ExportScript.Config.Debug then
-                            ExportScript.Tools.WriteToLog("Verarbeite fuer Device: "..lCommandArgs[1]..", ButtonID: "..lCommandArgs[2]..", mit Wert: "..lCommandArgs[3])
-                        end
-                    end
-                elseif lDevice == "1000" then
-                    --ExportScript.genericRadio(key, value)
-                    ExportScript.genericRadio(lCommandArgs[2],lCommandArgs[3])
-                    if ExportScript.Config.Debug then
-                        ExportScript.Tools.WriteToLog("Verarbeite fuer genericRadio, ButtonID: "..lCommandArgs[2]..", mit Wert: "..lCommandArgs[3])
-                    end
-                end
-            end
-        end
-    end
+				lDeviceID = tonumber(lCommandArgs[1])
+				if lDeviceID < 1000 then
+					-- DCS Modules
+					lDevice = GetDevice(lCommandArgs[1])
+					if ExportScript.FoundDCSModule and type(lDevice) == "table" then
+						lDevice:performClickableAction(lCommandArgs[2],lCommandArgs[3])
+						if ExportScript.Config.Debug then
+							ExportScript.Tools.WriteToLog("performClickableAction for Device: "..lCommandArgs[1]..", ButtonID: "..lCommandArgs[2]..", Value: "..lCommandArgs[3])
+						end
+					end
+				elseif lDeviceID == 1000 then
+					-- ExportScript.genericRadio(key, value)
+					if ExportScript.FoundDCSModule then
+						ExportScript.genericRadio(lCommandArgs[2],lCommandArgs[3])
+						if ExportScript.Config.Debug then
+							ExportScript.Tools.WriteToLog("genericRadio, ButtonID: "..lCommandArgs[2]..", Value: "..lCommandArgs[3])
+						end
+					end
+				elseif lDeviceID == 2000 then
+					-- Flaming Cliffs Module (Buttons)
+					if ExportScript.FoundFCModule then
+						-- ComamndID > 3000, because DAC or Ikarus add 300 to CommandID
+						local lComandID = (tonumber(lCommandArgs[2]) - 3000)
+						if tonumber(lCommandArgs[3]) == 1.0 then
+						LoSetCommand(lComandID)
+						if ExportScript.Config.Debug then
+							ExportScript.Tools.WriteToLog("LoSetCommand, CommandID: "..lComandID)
+						end
+						end
+					end
+				elseif lDeviceID == 2001 then
+					-- Flaming Cliffs Module (analog axies)
+					if ExportScript.FoundFCModule then
+						-- ComamndID > 3000, because DAC or Ikarus add 3000 to CommandID
+						local lComandID = (tonumber(lCommandArgs[2]) - 3000)
+						LoSetCommand(lComandID, lCommandArgs[3])
+						if ExportScript.Config.Debug then
+							ExportScript.Tools.WriteToLog("LoSetCommand, CommandID: "..lComandID..", Value: "..lCommandArgs[3])
+						end
+					end
+				end
+			end
+		end
+	end
 end
 
 function ExportScript.Tools.ProcessOutput()
@@ -270,6 +356,7 @@ function ExportScript.Tools.StrSplit(str, delim, maxNb)
     local lNb  = 0
     local lLastPos
     for part, pos in string.gfind(str, lPat) do
+	-- for part, pos in string.gmatch(str, lPat) do -- Lua Version > 5.1
         lNb = lNb + 1
         lResult[lNb] = part
         lLastPos = pos
@@ -429,6 +516,7 @@ function ExportScript.Tools.SendDataDAC(id, value)
     end
 end
 
+--[[
 function ExportScript.Tools.FlushData()
     if #ExportScript.SendStrings > 0 then
         local lES_SimID = ""
@@ -437,25 +525,85 @@ function ExportScript.Tools.FlushData()
 
         local lPacket = lES_SimID .. table.concat(ExportScript.SendStrings, ExportScript.Config.IkarusSeparator) .. "\n"
         ExportScript.socket.try(ExportScript.UDPsender:sendto(lPacket, ExportScript.Config.IkarusHost, ExportScript.Config.IkarusPort))
+
+		if ExportScript.Config.SocketDebug then
+			ExportScript.Tools.WriteToLog("FlushData: send the following data to host: "..ExportScript.Config.IkarusHost..", Port: "..ExportScript.Config.IkarusPort..", Data: "..lPacket)
+		end
+
         ExportScript.SendStrings = {}
         ExportScript.PacketSize  = 0
-    end
+    else
+		if ExportScript.Config.SocketDebug then
+			ExportScript.Tools.WriteToLog("FlushData: nothing sent")
+		end
+	end
 end
+]]
+
+function ExportScript.Tools.FlushData()
+	local lFlushData = ExportScript.socket.protect(function()
+		if #ExportScript.SendStrings > 0 then
+			local lES_SimID = ""
+
+			lES_SimID = ExportScript.SimID
+
+			local lPacket = lES_SimID .. table.concat(ExportScript.SendStrings, ExportScript.Config.IkarusSeparator) .. "\n"
+			--ExportScript.socket.try(ExportScript.UDPsender:sendto(lPacket, ExportScript.Config.IkarusHost, ExportScript.Config.IkarusPort))
+			local try = ExportScript.socket.newtry(function() ExportScript.UDPsender:close() ExportScript.Tools.createUDPSender() ExportScript.Tools.ResetChangeValues() end)
+			try(ExportScript.UDPsender:sendto(lPacket, ExportScript.Config.IkarusHost, ExportScript.Config.IkarusPort))
+
+			if ExportScript.Config.SocketDebug then
+				ExportScript.Tools.WriteToLog("FlushData: send to host: "..ExportScript.Config.IkarusHost..", Port: "..ExportScript.Config.IkarusPort..", Data: "..lPacket)
+			end
+
+			ExportScript.SendStrings = {}
+			ExportScript.PacketSize  = 0
+		else
+			if ExportScript.Config.SocketDebug then
+				ExportScript.Tools.WriteToLog("FlushData: nothing sent")
+			end
+		end
+	end)
+
+	local ln, lerror = lFlushData()
+	if lerror ~= nil then
+		ExportScript.Tools.WriteToLog("FlushData protect: "..ExportScript.Tools.dump(ln)..", "..ExportScript.Tools.dump(lerror))
+	end
+end
+
 
 function ExportScript.Tools.FlushDataDAC(hardware)
     hardware = hardware or 1
 
     if ExportScript.Config.DAC[hardware] == nil then
-        ExportScript.Tools.WriteToLog("unknown hardware ID '"..hardware.."'")
+        ExportScript.Tools.WriteToLog("FlushDataDAC: unknown hardware ID '"..hardware.."'")
         return
     end
 
-    if #ExportScript.SendStringsDAC[hardware] > 0 then
-        local lPacket = ExportScript.SimID .. table.concat(ExportScript.SendStringsDAC[hardware], ExportScript.Config.DAC[hardware].Separator) .. "\n"
-        ExportScript.socket.try(ExportScript.UDPsender:sendto(lPacket, ExportScript.Config.DAC[hardware].Host, ExportScript.Config.DAC[hardware].SendPort))
-        ExportScript.SendStringsDAC[hardware] = {}
-        ExportScript.PacketSizeDAC[hardware]  = 0
-    end
+	local lFlushDataDAC = ExportScript.socket.protect(function()
+		if #ExportScript.SendStringsDAC[hardware] > 0 then
+			local lPacket = ExportScript.SimID .. table.concat(ExportScript.SendStringsDAC[hardware], ExportScript.Config.DAC[hardware].Separator) .. "\n"
+			--ExportScript.socket.try(ExportScript.UDPsender:sendto(lPacket, ExportScript.Config.DAC[hardware].Host, ExportScript.Config.DAC[hardware].SendPort))
+			local try = ExportScript.socket.newtry(function() ExportScript.UDPsender:close() ExportScript.Tools.createUDPSender() ExportScript.Tools.ResetChangeValuesDAC() end)
+			try(ExportScript.UDPsender:sendto(lPacket, ExportScript.Config.DAC[hardware].Host, ExportScript.Config.DAC[hardware].SendPort))
+			
+			if ExportScript.Config.SocketDebug then
+				ExportScript.Tools.WriteToLog("FlushDataDAC["..hardware.."]: send to host: "..ExportScript.Config.DAC[hardware].Host..", Port: "..ExportScript.Config.DAC[hardware].SendPort..", Data: "..lPacket)
+			end
+			
+			ExportScript.SendStringsDAC[hardware] = {}
+			ExportScript.PacketSizeDAC[hardware]  = 0
+		else
+			if ExportScript.Config.SocketDebug then
+				ExportScript.Tools.WriteToLog("FlushDataDAC["..hardware.."]: nothing sent")
+			end
+		end
+	end)
+
+	local ln, lerror = lFlushDataDAC()
+	if lerror ~= nil then
+		ExportScript.Tools.WriteToLog("FlushDataDAC protect: "..ExportScript.Tools.dump(ln)..", "..ExportScript.Tools.dump(lerror))
+	end
 end
 
 function ExportScript.Tools.ResetChangeValues()
@@ -516,6 +664,11 @@ function ExportScript.Tools.SelectModule()
         end
 
         ExportScript.Tools.WriteToLog("File '"..lModuleFile.."' loaded")
+		
+		ExportScript.Tools.WriteToLog("Version:")
+		for k,v in pairs(ExportScript.Version) do
+			ExportScript.Tools.WriteToLog(k..": "..v)
+		end
 
         ExportScript.FirstNewDataSend      = true
         ExportScript.FirstNewDataSendCount = 5
@@ -585,6 +738,11 @@ function ExportScript.Tools.SelectModule()
         ExportScript.ProcessDACLowImportance        = ExportScript.ProcessDACLowImportanceNoConfig
         ExportScript.EveryFrameArguments            = {}
         ExportScript.Arguments                      = {}
+		
+		ExportScript.Tools.WriteToLog("Version:")
+		for k,v in pairs(ExportScript.Version) do
+			ExportScript.Tools.WriteToLog(k..": "..v)
+		end
         ExportScript.Tools.WriteToLog("Unknown Module Name: "..lMyInfo.Name)
     end
 end
@@ -721,9 +879,11 @@ function ExportScript.Tools.RoundFreqeuncy(Freqeuncy, Format, PrefixZeros, Least
 
 	tmpstring = string.format("%."..tmp2.."f", tmpstring)
 	
-	while string.len(tmpstring) < tmp1 do
-		tmpstring = " "..tmpstring
-	end
+--	while string.len(tmpstring) < tmp1 do
+--		tmpstring = " "..tmpstring
+--	end
+	
+	tmpstring = string.rep(" ", tmp1 - string.len(tmpstring))..tmpstring
 
 	if prefixzeros then
 		tmpstring = string.gsub(tmpstring, " ", "0")
@@ -756,6 +916,34 @@ function ExportScript.Tools.getListIndicatorValue(IndicatorID)
 	end
 
 	return TmpReturn
+end
+
+-- The function format a given string for a display
+-- String: value for show in display, maxChars: Display size (default 5), LEFTorRIGHT: flush with left "l" or right "r" site (default "r")
+function ExportScript.Tools.DisplayFormat(String, maxChars, LEFTorRight, DAC)
+	local lString      = String      or ""
+	local lmaxChars    = maxChars    or 5
+	local lLEFTorRight = LEFTorRight or "r"
+	local lDAC         = DAC         or false
+	local lTmpLen      = 0
+	local lRep         = " "
+	
+	if lDAC then
+		lRep = "-"
+	end
+	
+	lString = ExportScript.utf8.sub(lString, 0, lmaxChars)
+	lTmpLen = ExportScript.utf8.len(lString)
+	
+	if lTmpLen < lmaxChars then
+		if string.lower(lLEFTorRight) == "l" then
+			lString = lString..string.rep(" ", lmaxChars - lTmpLen)
+		else
+			lString = string.rep(" ", lmaxChars - lTmpLen)..lString
+		end
+	end
+	
+	return lString
 end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSHighImportance, if the player aircraft is something else

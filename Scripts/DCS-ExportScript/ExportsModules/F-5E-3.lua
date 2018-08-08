@@ -1,7 +1,7 @@
 -- F-5E-3
--- Version 1.0.2
 
 ExportScript.FoundDCSModule = true
+ExportScript.Version.F5E3 = "1.1.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

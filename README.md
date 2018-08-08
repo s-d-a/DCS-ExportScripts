@@ -10,7 +10,9 @@ Zur Zeit werden folgende Export-Formate unterstützt.
 Der Export von Daten wird für folgende Module unterstützt:
 - A-10C
 - AJS37
+- AV-8B N/A
 - Bf-109K-4
+- F/A-18C Hornet
 - F-5E-3
 - F-86F
 - FW-190D9
@@ -19,6 +21,7 @@ Der Export von Daten wird für folgende Module unterstützt:
 - Mi-8MT
 - MiG-15bis
 - MiG-21Bis
+- Mirage 2000
 - P-51D
 - SA342L/M/Mistral
 - SpitfireLFMkIX
@@ -27,7 +30,7 @@ Der Export von Daten wird für folgende Module unterstützt:
 - UH-1H
 - alle Flaming Cliffs Flugzeuge
 
-Kompatibel zur DCS World 1.5.8 und DCS World 2.5.0
+Kompatibel zur DCS World 2.5.2 und BETA Version
 
 # English
 ---
@@ -40,7 +43,9 @@ At present the following export formats are supported:
 Following moduls are supported:
 - A-10C
 - AJS37
+- AV-8B N/A
 - Bf-109K-4
+- F/A-18C Hornet
 - F-5E-3
 - F-86F
 - FW-190D9
@@ -49,6 +54,7 @@ Following moduls are supported:
 - Mi-8MT
 - MiG-15bis
 - MiG-21Bis
+- Mirage 2000
 - P-51D
 - SA342L/M/Mistral
 - SpitfireLFMkIX
@@ -57,7 +63,7 @@ Following moduls are supported:
 - UH-1H
 - all Flaming Cliffs aircrafts
 
-Compatible with DCS World 1.5.8 and DCS World 2.5.0
+Compatible with DCS World 2.5.2 and BETA version
 
 # Wiki
 ---

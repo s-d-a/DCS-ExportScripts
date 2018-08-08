@@ -1,7 +1,7 @@
 -- MiG-29G Export
--- Version 1.0.2
 
 ExportScript.FoundFCModule = true
+ExportScript.Version.MiG29G = "1.1.0"
 
 -- auxiliary function
 dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")

@@ -1,5 +1,4 @@
 -- Ikarus and D.A.C. Export Script
--- Version 1.0.2
 --
 -- Config File
 --
@@ -7,6 +6,7 @@
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
 ExportScript.Config = {}
+ExportScript.Version.Config = "1.1.0"
 
 -- Ikarus a Glass Cockpit Software
 ExportScript.Config.IkarusExport    = true         -- false for not use
@@ -38,5 +38,6 @@ ExportScript.Config.ExportLowTickInterval  = 0.5	-- export evry 0.5 secounds
 ExportScript.Config.LogPath                = lfs.writedir()..[[Logs\Export.log]]
 ExportScript.Config.ExportModulePath       = lfs.writedir()..[[Scripts\DCS-ExportScript\ExportsModules\]]
 ExportScript.Config.Debug                  = false
+ExportScript.Config.SocketDebug            = false
 ExportScript.Config.FirstNewDataSend       = true
 ExportScript.Config.FirstNewDataSendCount  = 5

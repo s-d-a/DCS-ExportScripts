@@ -1,5 +1,4 @@
 -- Ikarus and D.A.C. Export Script
--- Version 1.0.1
 --
 -- Map Config File
 --
@@ -13,6 +12,8 @@
 -- Lat1 and Long1 contain the coordinates of the upper left corner.
 -- Lat2 and Long2 contain the coordinates of the lower right corner.
 --
+
+ExportScript.Version.Maps = "1.1.0"
 
 -- Maps
 ExportScript.Maps                    = {}
