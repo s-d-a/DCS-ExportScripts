@@ -64,7 +64,7 @@ function LuaExportStart()
 	ExportScript.logFile = io.open(ExportScript.Config.LogPath, "wa") -- "W+"
 	if ExportScript.logFile then
 		ExportScript.logFile:write('\239\187\191') -- create a UTF-8 BOM
-		ExportScript.logFile:write("ExportScript Version: "..ExportScript.Version.ExportScript"\r\n")
+		ExportScript.logFile:write("ExportScript Version: "..ExportScript.Version.ExportScript.."\r\n")
 	end
 	--if lrenmae1 == nil then
 	--    ExportScript.Tools.WriteToLog("Rename Error: "..lrename2)
