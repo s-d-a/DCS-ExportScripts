@@ -1,7 +1,7 @@
 -- F-5E-3
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.F5E3 = "1.1.0"
+ExportScript.Version.F5E3 = "1.1.2"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -138,7 +138,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[600] = "%.4f",	-- FlowBlinker
 	-- RADIO ------------------------------------------------------
 	-- UHF Radio AN/ARC-164
-	[326] = "%.1f",	-- UHFRadioChannel
+	[326] = "%.2f",	-- UHFRadioChannel
 	[302] = "%.1f",	-- UHFRadio100MHz
 	[303] = "%.1f",	-- UHFRadio10MHz {1.0, 0.0} {0.0, 1.0}
 	[304] = "%.1f",	-- UHFRadio1MHz {1.0, 0.0} {0.0, 1.0}
@@ -391,7 +391,7 @@ ExportScript.ConfigArguments =
 	[567] = "%1d",	-- RWR Indicator Control SYS TEST Button
 	[570] = "%1d",	-- RWR Indicator Control UNKNOWN SHIP Button
 	[573] = "%1d",	-- RWR Indicator Control ACT/PWR Button
-	[575] = "%1d",	-- RWR Indicator Control POWER Button
+	[575] = "%1d",	-- RWR Indicator Control POWER Button {1.0,0.0,-1.0}
 	[577] = "%.1f",	-- RWR Indicator Control AUDIO Knob (Axis) {0.0, 1.0} in 0.1 Steps
 	[578] = "%.1f",	-- RWR Indicator Control DIM Knob (Axis) {0.0, 1.0} in 0.1 Steps
 	-- AN/ALR-87 RWR
@@ -549,8 +549,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	if lUHFRadio:is_on() then
 		--ExportScript.Tools.SendData(2000, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
 		ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy(lUHFRadio:get_frequency()/1000000))
-		
-		local lUHFRadio_PRESET = {[0.0]="01",[0.1]="02",[0.2]="03",[0.3]="04",[0.4]="05",[0.5]="06",[0.6]="07",[0.7]="08",[0.8]="09",[0.9]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20"}
+
+		local lUHFRadio_PRESET = {[0]="01",[0.05]="02",[0.1]="03",[0.15]="04",[0.2]="05",[0.25]="06",[0.3]="07",[0.35]="08",[0.4]="09",[0.45]="10",[0.5]="11",[0.55]="12",[0.6]="13",[0.65]="14",[0.7]="15",[0.75]="16",[0.80]="17",[0.85]="18",[0.90]="19",[0.95]="20"}
 		ExportScript.Tools.SendData(2001, lUHFRadio_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(300), 2)])
 	end
 	
@@ -579,8 +579,8 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	if lUHFRadio:is_on() then
 		--ExportScript.Tools.SendDataDAC(2000, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
 		ExportScript.Tools.SendDataDAC(2000, ExportScript.Tools.RoundFreqeuncy(lUHFRadio:get_frequency()/1000000))
-		
-		local lUHFRadio_PRESET = {[0.0]="01",[0.1]="02",[0.2]="03",[0.3]="04",[0.4]="05",[0.5]="06",[0.6]="07",[0.7]="08",[0.8]="09",[0.9]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20"}
+
+		local lUHFRadio_PRESET = {[0]="01",[0.05]="02",[0.1]="03",[0.15]="04",[0.2]="05",[0.25]="06",[0.3]="07",[0.35]="08",[0.4]="09",[0.45]="10",[0.5]="11",[0.55]="12",[0.6]="13",[0.65]="14",[0.7]="15",[0.75]="16",[0.80]="17",[0.85]="18",[0.90]="19",[0.95]="20"}
 		ExportScript.Tools.SendDataDAC(2001, lUHFRadio_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(300), 2)])
 	end
 	
