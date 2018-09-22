@@ -6,7 +6,7 @@
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
 ExportScript.Tools = {}
-ExportScript.Version.Tools = "1.1.0"
+ExportScript.Version.Tools = "1.1.1"
 
 function ExportScript.Tools.WriteToLog(message)
     if ExportScript.logFile then
@@ -118,9 +118,9 @@ function ExportScript.Tools.ProcessInput()
 					lDevice = GetDevice(lCommandArgs[1])
 					if ExportScript.FoundDCSModule and type(lDevice) == "table" then
 						lDevice:performClickableAction(lCommandArgs[2],lCommandArgs[3])
-						if ExportScript.Config.Debug then
+						--if ExportScript.Config.Debug then
 							ExportScript.Tools.WriteToLog("performClickableAction for Device: "..lCommandArgs[1]..", ButtonID: "..lCommandArgs[2]..", Value: "..lCommandArgs[3])
-						end
+						--end
 					end
 				elseif lDeviceID == 1000 then
 					-- ExportScript.genericRadio(key, value)
@@ -944,6 +944,24 @@ function ExportScript.Tools.DisplayFormat(String, maxChars, LEFTorRight, DAC)
 	end
 	
 	return lString
+end
+
+function ExportScript.Tools.KeyInTable(Table, Key)
+	for key, value in pairs(Table) do
+		if key == Key then
+			return true
+		end
+	end
+	return false
+end
+
+function ExportScript.Tools.ValueInTable(Table, Value)
+	for key, value in pairs(Table) do
+		if value == Value then
+			return true
+		end
+	end
+	return false
 end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSHighImportance, if the player aircraft is something else
