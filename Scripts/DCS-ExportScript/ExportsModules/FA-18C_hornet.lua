@@ -1,7 +1,7 @@
 -- F/A-18C Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.FA18C_hornet = "1.1.0"
+ExportScript.Version.FA18C_hornet = "1.1.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -176,7 +176,11 @@ ExportScript.ConfigEveryFrameArguments =
 	[265] = "%1d",   -- Bit
 	[520] = "%.1f",   -- RwrLightsBrightness
 	-- CMDS
-	[516] = "%1d"   -- ecmJett  
+	[516] = "%1d",   -- ecmJett  
+	-- Magnetic compas
+	[149] = "%.4f",	-- heading
+	[150] = "%.4f",	-- pitch
+	[151] = "%.4f",	-- bank
 }
 ExportScript.ConfigArguments = 
 {
@@ -539,8 +543,13 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
 	
+	--ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+	
 	-- IFEI - Engine, Fuel and Clock informations
 	local lEngineFuelClock = ExportScript.Tools.getListIndicatorValue(5)
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog('EngineFuelClock: '..ExportScript.Tools.dump(lEngineFuelClock))
+	end
 
 	if lEngineFuelClock ~= nil and lEngineFuelClock.txt_RPM_R ~= nil then
 		-- Engine informations 3 character
@@ -582,8 +591,9 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	
 	-- UFC Displays
 	local lUFCDisplays = ExportScript.Tools.getListIndicatorValue(6)
-	ListIindicator = list_indication(6)
-	--ExportScript.Tools.WriteToLog('UFC: '..ExportScript.Tools.dump(ListIindicator))
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog('UFC: '..ExportScript.Tools.dump(lUFCDisplays))
+	end
 	
 	if lUFCDisplays ~= nil and lUFCDisplays.UFC_MainDummy ~= nil then
 		-- ScratchPadString Displays
@@ -657,6 +667,9 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 
 	-- IFEI - Engine, Fuel and Clock informations
 	local lEngineFuelClock = ExportScript.Tools.getListIndicatorValue(5)
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog('EngineFuelClock: '..ExportScript.Tools.dump(lEngineFuelClock))
+	end
 
 	if lEngineFuelClock ~= nil and lEngineFuelClock.txt_RPM_R ~= nil then
 		-- Engine informations 3 character
