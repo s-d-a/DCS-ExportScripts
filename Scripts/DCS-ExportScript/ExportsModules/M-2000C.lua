@@ -1,7 +1,7 @@
 -- Mirage M-2000C
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.M2000C = "1.1.0"
+ExportScript.Version.M2000C = "1.1.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -185,7 +185,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[371] = "%.4f",	--Drum XX0
 	[372] = "%.4f",	--Drum 00X
 
--- Center console
+-- Center console IFF
 	[377] = "%.4f",	-- X0 MODE
 	[378] = "%.4f",	-- 0X
 
@@ -193,7 +193,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[380] = "%.4f",	--	0X00
 	[381] = "%.4f",	--	00X0
 	[382] = "%.4f",	--	000X
-
+	
 	[388] = "%.1f",	--	Rote Kontrollampe MODE-4 Panel
 	[394] = "%.1f",	--	gelbe „FAULT“ Anzeige
 
@@ -458,15 +458,23 @@ ExportScript.ConfigArguments =
 	[483] = "%.1f",	--Radar Rearm Switch
 	[484] = "%.1f",	--Radar Doppler Reject Selector
 	[486] = "%.1f",	--Radar Power Switch
-	[491] = "%.1f",	--AG Radar A Mode
-	[493] = "%.1f",	--AG Radar DEC Mode
-	[495] = "%.1f",	--AG Radar VISU Mode
+	[488] = "%.4f",	--Radar Gain Dial
+	[491] = "%.1f",	--A/G Radar A Mode
+	[493] = "%.1f",	--A/G Radar DEC Mode
+	[495] = "%.1f",	--A/G Radar VISU Mode
 	[499] = "%.1f",	--Radar Grid Selector
 	[500] = "%.1f",	--Target Memory Time Selector
 	[502] = "%.1f",	--Radar Scan Lines Selector
 	[503] = "%.1f",	--Radar Range Selector
 	[504] = "%.1f",	--AA Radar STT Selector
 	[506] = "%.1f",	--Radar Azimuth Aperture Selector
+	[598] = "%.1f",	--Radar IFF Mode Switch
+	[599] = "%.1f",	--Radar IFF L/R Selector
+	[600] = "%.1f",	--Radar IFF Power Switch
+	[601] = "%.1f",	--Radar IFF Code-4 Selector
+	[602] = "%.1f",	--Radar IFF Code-3 Selector
+	[603] = "%.1f",	--Radar IFF Code-2 Selector
+	[604] = "%.1f",	--Radar IFF Code-1 Selector
 	[709] = "%.1f",	--Radar PRF Selector
 	[710] = "%.1f",	--TDC Mode
 
@@ -476,11 +484,17 @@ ExportScript.ConfigArguments =
 	[522] = "%.1f",	--Alternator 1 Switch
 	[523] = "%.1f",	--Alternator 2 Switch
 	[524] = "%.1f",	--Lights Test Switch
+	[654] = "%.1f",	--Alert Network (QRA) Switch
 
 -- PCN
 	[570] = "%.1f",	--INS PREP Switch
 	[572] = "%.1f",	--INS DEST Switch
 	[574] = "%.1f",	--INS Parameter Selector
+	[575] = "%.4f",	--Light Brightnes Control/Test
+	[576] = "%.1f",	--Offset Waypoint/Target
+	[578] = "%.1f",	--INS Update
+	[580] = "%.1f",	--Validate Data Entry
+	[582] = "%.1f",	--Mark Position
 	[584] = "%.1f",	--INS Button 1
 	[585] = "%.1f",	--INS Button 2
 	[586] = "%.1f",	--INS Button 3
@@ -493,16 +507,23 @@ ExportScript.ConfigArguments =
 	[593] = "%.1f",	--INS Button 0
 	[594] = "%.1f",	--INS Clear Button
 	[596] = "%.1f",	--INS ENTER Button
+	[667] = "%.1f",	--AUTO Navigation
+
+-- PSM
 	[627] = "%.1f",	--INS Mode Selector
 	[629] = "%.1f",	--INS Operational Mode
+	[665] = "%.1f",	--INS Auxiliary Heading/Horizon
 	
 -- EW PANEL
+	[228] = "%.4f",	--RWR Light Brightnes Control
 	[605] = "%.1f",	--EW Mode Selector Switch
 	[606] = "%.1f",	--BR Switch
 	[607] = "%.1f",	--RWR Switch
 	[608] = "%.1f",	--D2M Switch
 	[609] = "%.1f",	--LL (Jammer) Switch
 	[610] = "%.1f",	--Jammer Strength
+	
+-- ECM BOX
 	[194] = "%.1f",	--ECM Box Mode Switch
 	[195] = "%.1f",	--ECM Box Switch
 	[196] = "%.1f",	--ECM Box Lighs Switch
@@ -515,12 +536,16 @@ ExportScript.ConfigArguments =
 	[453] = "%.1f",	--Anti-Collision Lights
 	[454] = "%.1f",	--Navigation Lights
 	[455] = "%.1f",	--Formation Lights
-	[639] = "%.1f",	--Dashboard Flood Lights
-	[640] = "%.1f",	--Dashboard Panel Lights
-	[641] = "%.1f",	--Console Flood Lights
-	[642] = "%.1f",	--Console Panel Lights
+	[639] = "%.4f",	--Dashboard Flood Lights
+	[640] = "%.4f",	--Dashboard Panel Lights
+	[641] = "%.4f",	--Console Flood Lights
+	[642] = "%.4f",	--Console Panel Lights
+	[643] = "%.4f",	--Casution/Advisory Lights Rheostat
+	[644] = "%.4f",	--White Flood Lights Knob
+	[920] = "%.4f",	--Refuel Lights Brightness Knob
 	
 -- Engine Start Panel
+	[468] = "%.1f",	--Engine In-Flight Start Switch
 	[467] = "%.1f",	--Engine Shutdown Button
 	[645] = "%.1f",	--Engine Start Switch Cover
 	[646] = "%.1f",	--Starter Fuel Pump Switch
@@ -528,10 +553,20 @@ ExportScript.ConfigArguments =
 	[648] = "%.1f",	--Engine Fuel Right Boost Pump Switch
 	[649] = "%.1f",	--Engine Start Switch
 	[650] = "%.1f",	--Ventilation Selector Switch
-	[651] = "%.1f",	--Fire Extinguisher Switch Cover
-	[652] = "%.1f",	--Fire Extinguisher Switch
-
--- Radio Panel
+	[651] = "%.1f",	--Fuel Cutoff Switch Cover
+	[652] = "%.1f",	--Fuel Cutoff Switch
+	[477] = "%.1f",	--Fuel Dump Switch Cover
+	[478] = "%.1f",	--Fuel Dump Switch
+	[471] = "%.1f",	--A/B Emergency Cutoff Switch Cover
+	[472] = "%.1f",	--A/B Emergency Cutoff Switch
+	[464] = "%.1f",	--Emergency Throttle Cover
+	[465] = "%.1f",	--Emergency Throttle Handle
+	[473] = "%.1f",	--Secondary Oil Control Cover
+	[474] = "%.1f",	--Secondary Oil Control Switch
+	[475] = "%.1f",	--Engine Emergency Control Cover
+	[476] = "%.1f",	--Engine Emergency Control Switch
+	
+	-- Radio Panel
 	[429] = "%.1f",	--UHF Power 5W/25W Switch
 	[430] = "%.1f",	--UHF SIL Switch
 	[431] = "%.1f",	--UHF E-A2 Switch
@@ -579,17 +614,39 @@ ExportScript.ConfigArguments =
 	
 -- Sound Panel
 	[700] = "%.1f",	--AMPLIS Selector
-	[701] = "%.1f",	--VOR/ILS Volume
-	[702] = "%.1f",	--TACAN Volume
-	[703] = "%.1f",	--MAGIC Tone Volume
-	[704] = "%.1f",	--TB APP Volume
-	[705] = "%.1f",	--Marker Signal Volume
-	[706] = "%.1f",	--V/UHF Radio Volume
-	[707] = "%.1f",	--VHF Radio Volume
+	[701] = "%.1f",	--VOR/ILS Volume {0.0,1.0} in 0.1 steps
+	[702] = "%.1f",	--TACAN Volume {0.0,1.0} in 0.1 steps
+	[703] = "%.1f",	--MAGIC Tone Volume {0.0,1.0} in 0.1 steps
+	[704] = "%.1f",	--TB APP Volume {0.0,1.0} in 0.1 steps
+	[705] = "%.1f",	--Marker Signal Volume {0.0,1.0} in 0.1 steps
+	[706] = "%.1f",	--V/UHF Radio Volume {0.0,1.0} in 0.1 steps
+	[707] = "%.1f",	--VHF Radio Volume {0.0,1.0} in 0.1 steps
 
 -- ALT
 	[309] = "%.1f",	--Barometric Pressure Calibration
-
+	[314] = "%.1f",	--ADI Cage Lever
+	[315] = "%.1f",	--ADI Backlight Switch
+	[325] = "%.1f",	--Backup ADI Cage
+	[328] = "%.1f",	--Backup ADI Pitch Adjust Knob {-1.0,1.0} in 0.1 steps
+-- Center console IFF
+	[383] = "%.1f",	--Ident Power Switch {-1.0,0.0,1.0}
+	[384] = "%.1f",	--Mode-1 Switch
+	[385] = "%.1f",	--Mode-2 Switch
+	[386] = "%.1f",	--Mode-3A Switch
+	[387] = "%.1f",	--Mode-C Switch
+-- Miscelaneous Seat
+	[900] = "%.1f",	--Seat Adjustment Switch
+	[910] = "%.1f",	--LOX Dilution Lever
+	[912] = "%.1f",	--LOX Emergency Supply
+	[911] = "%.1f",	--LOX Test Switch
+-- ECS Panel
+	[630] = "%.1f",	--ECS Main Mode Switch
+	[631] = "%.1f",	--ECS C Button
+	[633] = "%.1f",	--ECS F Button
+	[635] = "%.1f",	--ECS Cond Switch
+	[636] = "%.1f",	--ECS Air Exchange Switch
+	[637] = "%.1f",	--ECS Temperature Select Knob {-1.0,1.0} in 0.1 steps
+	[638] = "%.1f",	--ECS Defog Switch
 }
 
 -----------------------------
@@ -837,301 +894,92 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2023, string.format("%s", lPPA2))
 
 	-- PCN_UR Navigation Displays
-	local lPCNUR = list_indication(10)
 	if ExportScript.Config.Debug then
+		local lPCNUR = list_indication(10)
 		ExportScript.Tools.WriteToLog('lPCNUR : '..ExportScript.Tools.dump(lPCNUR))
 	end
 
-	local to1, to2, from1, from2, lPCN_sub_L_T, lPCN_sub_R_T, lPCN_sub_L_B, lPCN_sub_R_B, lPCN_main_L, lPCN_main_R, lPCN_L_NODATA, lPCN_R_NODATA = nil, nil, nil, nil, "", "", "", "", "", "", "", ""
-	--[574] = "%.1f",	--INS Parameter Selector
-	--ExportScript.Tools.WriteToLog("INS parameter Selector: "..string.format("%.1f", mainPanelDevice:get_argument_value(574)))
-	local lINSparameterSelector = tonumber(string.format("%.1f", mainPanelDevice:get_argument_value(574)))
-	--INS Parameter Selector
-	if lINSparameterSelector == 0.0 then
-	-- 0.0 = TR/VS
-		from1, from2 = lPCNUR:find("text_PCN_R_INT%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-	elseif lINSparameterSelector == 0.1 then
-	-- 0.1 = D/RLT
-		from1, from2 = lPCNUR:find("text_PCN_R_DEG%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-	elseif lINSparameterSelector == 0.2 then
-	-- 0.2 = BUT CP/PD
-		from1, from2 = lPCNUR:find("text_PCN_L_NODATA%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_L = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_R_NODATA%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-	elseif lINSparameterSelector == 0.3 then
-	-- 0.3 = BUT ALT
-		from1, from2 = lPCNUR:find("text_PCN_PLUS_L%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_L_T = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_PLUS_R%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_R_T = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_L_INT%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_L = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_R_INT%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-	elseif lINSparameterSelector == 0.4 then
-	-- 0.4 = BUT L/G
-		from1, from2 = lPCNUR:find("text_PCN_NORD%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_L_T = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_SOUTH%c")  -- search text ????
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_L_B = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_EST%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_R_T = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_OUEST%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_R_B = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_L_LG%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_L = lPCNUR:sub(from2+1, to1-1)
-				lPCN_main_L = lPCN_main_L:gsub(":", ".")
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_R_LG%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-				lPCN_main_R = lPCN_main_R:gsub(":", ".")
-			end
-		end
-	elseif lINSparameterSelector == 0.5 then
-	-- 0.5 = RD/TD
-		from1, from2 = lPCNUR:find("text_PCN_L_DEG%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_L = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_R_TD%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-	elseif lINSparameterSelector == 0.6 then
-	-- 0.6 = BAD L/G
-		from1, from2 = lPCNUR:find("text_PCN_L_NODATA%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_L = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_R_NODATA%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-		
-		from1, from2 = lPCNUR:find("text_PCN_NORD%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_L_T = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_SUD%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_L_B = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_EST%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_R_T = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_OUEST%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_R_B = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-	elseif lINSparameterSelector == 0.7 then
-	-- 0.7 = BAD ALT
-		from1, from2 = lPCNUR:find("text_PCN_L_NODATA%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_L = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_R_NODATA%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-		
-		from1, from2 = lPCNUR:find("text_PCN_PLUS_L%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_L_T = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_MOINS_L%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_L_B = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_PLUS_R%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_R_T = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_MOINS_R%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_R_B = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-	elseif lINSparameterSelector == 0.8 then
-	-- 0.8 = BAD P/O
-		from1, from2 = lPCNUR:find("text_PCN_L_NODATA%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_L = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_R_NODATA%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-	elseif lINSparameterSelector == 0.9 then
-	-- 0.9 = DEC
-		from1, from2 = lPCNUR:find("text_PCN_L_DEG%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_L = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_PLUS_L%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_sub_L_T = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-	elseif lINSparameterSelector == 1.0 then
-	-- 1.0 = TV/FV
-		from1, from2 = lPCNUR:find("text_PCN_L_DEG%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_L = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPCNUR:find("text_PCN_R_INT%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNUR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_main_R = lPCNUR:sub(from2+1, to1-1)
-			end
-		end
+	--    SubLeftTop    SubRightTop   SubLeftBottom SubRightBottom MainLeft     MainRight
+	local lPCN_sub_L_T, lPCN_sub_R_T, lPCN_sub_L_B, lPCN_sub_R_B,  lPCN_main_L, lPCN_main_R = "", "", "", "", "", ""
+	local lPCNUR = ExportScript.Tools.getListIndicatorValue(10)
+	-- das untere durch solche aufrufe ersetzen
+	if lPCNUR.text_PCN_R_INT ~= nil then
+		lPCN_main_R = lPCNUR.text_PCN_R_INT
+	end
+	if lPCNUR.text_PCN_L_INT ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_L_INT
+	end
+	if lPCNUR.text_PCN_L_TR ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_L_TR
+	end
+	if lPCNUR.text_PCN_NORD ~= nil then
+		lPCN_sub_L_T = lPCNUR.text_PCN_NORD
+	end
+	if lPCNUR.text_PCN_EST ~= nil then
+		lPCN_sub_R_T = lPCNUR.text_PCN_EST
+	end
+	if lPCNUR.text_PCN_SUD ~= nil then
+		lPCN_sub_L_B = lPCNUR.text_PCN_SUD
+	end
+	if lPCNUR.text_PCN_OUEST ~= nil then
+		lPCN_sub_R_B = lPCNUR.text_PCN_OUEST
+	end
+	if lPCNUR.text_PCN_L_MRQ_LAT ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_L_MRQ_LAT
+	end
+	if lPCNUR.text_PCN_R_MRQ_LON ~= nil then
+		lPCN_main_R = lPCNUR.text_PCN_R_MRQ_LON
+	end
+	if lPCNUR.text_PCN_PLUS_R ~= nil then
+		lPCN_sub_R_T = lPCN_sub_R_T..lPCNUR.text_PCN_PLUS_R
+	end
+	if lPCNUR.text_PCN_PLUS_L ~= nil then
+		lPCN_sub_L_T = lPCN_sub_L_T..lPCNUR.text_PCN_PLUS_L
+	end
+	if lPCNUR.text_PCN_MOINS_L ~= nil then
+		lPCN_sub_L_B = lPCN_sub_L_B..lPCNUR.text_PCN_MOINS_L
+	end
+	if lPCNUR.text_PCN_MOINS_R ~= nil then
+		lPCN_sub_R_B = lPCN_sub_R_B..lPCNUR.text_PCN_MOINS_R
+	end
+	if lPCNUR.text_PCN_L_DR ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_L_DR
+	end
+	if lPCNUR.text_PCN_R_DEG ~= nil then
+		lPCN_main_R = lPCNUR.text_PCN_R_DEG
+	end
+	if lPCNUR.text_PCN_L_DEG ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_L_DEG
+	end
+	if lPCNUR.text_PCN_RDE ~= nil then
+		lPCN_main_R = lPCNUR.text_PCN_RDE
+	end
+	if lPCNUR.text_PCN_LDE ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_LDE
+	end
+	if lPCNUR.text_PCN_L_LG ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_L_LG
+	end
+	if lPCNUR.text_PCN_R_LG ~= nil then
+		lPCN_main_R = lPCNUR.text_PCN_R_LG
+	end
+	if lPCNUR.text_PCN_R_TD ~= nil then
+		lPCN_main_R = lPCNUR.text_PCN_R_TD
+	end
+	if lPCNUR.text_PCN_L_TD ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_L_TD
+	end
+	if lPCNUR.text_PCN_R_ASTS ~= nil then
+		lPCN_main_R = lPCNUR.text_PCN_R_ASTS
+	end
+	if lPCNUR.text_PCN_L_ACLASS ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_L_ACLASS
+	end
+	if lPCNUR.text_PCN_L_ACTMR ~= nil then
+		lPCN_main_L = lPCN_main_L.."   "..lPCNUR.text_PCN_L_ACTMR
+	end
+	if lPCNUR.text_PCN_MSG ~= nil then
+		lPCN_main_L = lPCNUR.text_PCN_MSG
 	end
 
 	if ExportScript.Config.Debug then
@@ -1144,6 +992,16 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.WriteToLog("2028: "..string.format("%s", lPCN_main_L))
 		ExportScript.Tools.WriteToLog("2029: "..string.format("%s", lPCN_main_R))
 	end
+	
+	lPCN_main_L = lPCN_main_L:gsub(":", "¦")
+	lPCN_main_R = lPCN_main_R:gsub(":", "¦")
+	lPCN_main_L = lPCN_main_L:sub(0, 10)
+	lPCN_main_R = lPCN_main_R:sub(0, 10)
+	lPCN_sub_L_T = lPCN_sub_L_T:sub(0, 2)
+	lPCN_sub_R_T = lPCN_sub_R_T:sub(0, 2)
+	lPCN_sub_L_B = lPCN_sub_L_B:sub(0, 2)
+	lPCN_sub_R_B = lPCN_sub_R_B:sub(0, 2)
+
 	ExportScript.Tools.SendData(2024, string.format("%s", lPCN_sub_L_T))
 	ExportScript.Tools.SendData(2025, string.format("%s", lPCN_sub_R_T))
 	ExportScript.Tools.SendData(2026, string.format("%s", lPCN_sub_L_B))
