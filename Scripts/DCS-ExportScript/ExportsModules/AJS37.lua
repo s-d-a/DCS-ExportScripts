@@ -1,7 +1,7 @@
 -- AJS37
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.AJS37 = "1.1.0"
+ExportScript.Version.AJS37 = "1.1.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -261,7 +261,7 @@ ExportScript.ConfigArguments =
 	[9] = "%1d",	-- Canopy Open/Close {-1.0,0.0,1.0}
 	[210] = "%1d",	-- Canopy Jettison
 	---
-	[210] = "%1d",	-- Countermeasure Fast Release {-1.0,0.0,1.0}
+	[184] = "%1d",	-- Countermeasure Release {-1.0,0.0,1.0}
 	[316] = "%1d",	-- Manual Fuel Regulator
 	[212] = "%1d",	-- Roll Centering
 	[390] = "%1d",	-- Emergency Roll Trim {-1.0,0.0,1.0}
