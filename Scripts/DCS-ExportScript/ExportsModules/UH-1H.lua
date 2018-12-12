@@ -1,7 +1,7 @@
 -- Uh-1H
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.UH1H = "1.1.0"
+ExportScript.Version.UH1H = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 { 

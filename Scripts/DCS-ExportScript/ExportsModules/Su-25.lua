@@ -1,7 +1,7 @@
 -- Su-25A Export
 
 ExportScript.FoundFCModule = true
-ExportScript.Version.Su25 = "1.1.0"
+ExportScript.Version.Su25 = "1.2.0"
 
 -- auxiliary function
 dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")

@@ -1,7 +1,7 @@
 -- MiG-15Bis
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.MiG15bis = "1.1.0"
+ExportScript.Version.MiG15bis = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

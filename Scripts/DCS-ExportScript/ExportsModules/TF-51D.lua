@@ -1,7 +1,7 @@
 -- TF-51D Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.TF51D = "1.1.0"
+ExportScript.Version.TF51D = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 { 

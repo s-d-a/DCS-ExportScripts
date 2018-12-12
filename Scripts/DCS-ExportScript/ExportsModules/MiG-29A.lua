@@ -1,7 +1,7 @@
 -- MiG-29A Export
 
 ExportScript.FoundFCModule = true
-ExportScript.Version.MiG29A = "1.1.0"
+ExportScript.Version.MiG29A = "1.2.0"
 
 -- auxiliary function
 dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")
@@ -95,11 +95,11 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		ExportScript.AF.FC_Russian_EngineRPM()
 
 		-- Left Jet Engine Turbine Temperature Indicator (EngineTemp, ExportID)
-		ExportScript.AF.FC_Russian_EGT_1000gc(lEngineTempLeft + 80, 70)
+		ExportScript.AF.FC_Russian_EGT_1000gc(lEngineTempLeft, 70)
 
 		-- Right Jet Engine Turbine Temperature Indicator (EngineTemp, ExportID)
-		ExportScript.AF.FC_Russian_EGT_1000gc(lEngineTempRight + 80, 71)
-
+		ExportScript.AF.FC_Russian_EGT_1000gc(lEngineTempRight, 71)
+		
 		-- Clock from Ka-50
 		ExportScript.AF.FC_Russian_Clock_late()
 

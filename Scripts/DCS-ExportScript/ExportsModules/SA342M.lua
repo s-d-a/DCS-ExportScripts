@@ -1,7 +1,7 @@
 -- SA342M
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.SA342M = "1.1.0"
+ExportScript.Version.SA342M = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

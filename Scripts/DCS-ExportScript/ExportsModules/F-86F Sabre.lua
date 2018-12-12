@@ -1,7 +1,7 @@
 -- F-86 Export 
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.F86 = "1.1.0"
+ExportScript.Version.F86 = "1.2.0"
 --ExportScript.NoLuaExportBeforeNextFrame = true
 
 ExportScript.ConfigEveryFrameArguments = 

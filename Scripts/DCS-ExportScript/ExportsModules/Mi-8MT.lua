@@ -1,7 +1,7 @@
 -- Mi-8MTV2 Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.Mi8MT = "1.1.0"
+ExportScript.Version.Mi8MT = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 { 

@@ -1,7 +1,7 @@
 -- AV8BNA
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.AV8BNA = "1.1.0"
+ExportScript.Version.AV8BNA = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -378,7 +378,7 @@ ExportScript.ConfigArguments =
 	[286] = "%1d",	--Launch Flare Salvo
 	[287] = "%1d",	--Master Arm Switch
 	-- ECM Control Panel
-	[273] = "%.1f",	--RWR Power/Volume Button
+	[273] = "%.2f",	--RWR Power/Volume Button
 	[274] = "%.1f",	--Decoy Dispenser Control
 	[275] = "%.1f",	--Jammer Control
 	-- Landing Gear/Flaps Control Panel
@@ -436,7 +436,7 @@ ExportScript.ConfigArguments =
 	[483] = "%1d",	--Rudder Trim Switch
 	[482] = "%1d",	--EMS Button
 	[484] = "%1d",	--Manual Fuel Switch
-	[485] = "%,4f",	--Throttle Lever Friction Knob
+	[485] = "%.4f",	--Throttle Lever Friction Knob
 	[486] = "%.4f",	--Nozzle Lever Friction Knob
 	[490] = "%1d",	--Throttle Cutoff Lever
 	[489] = "%1d",	--Parking Brake Lever
@@ -776,7 +776,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	--> McMicha
 	
 	-- UFC Displays
-	local lUfcDisplays = list_indication(3)
+	local lUfcDisplays = list_indication(5)
 	if ExportScript.Config.Debug then
 		ExportScript.Tools.WriteToLog('lUfcDisplays : '..ExportScript.Tools.dump(lUfcDisplays))
 	end
@@ -833,7 +833,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2025, string.format("%s", lUFC_Display)) -- string with max 8 charachters
 
 	-- ODU Display
-	local lODUDisplays = list_indication(4)
+	local lODUDisplays = list_indication(6)
 	if ExportScript.Config.Debug then
 		ExportScript.Tools.WriteToLog('lODUDisplays : '..ExportScript.Tools.dump(lODUDisplays))
 	end
@@ -883,7 +883,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2030, string.format("%s", lODU_Text[5]))
 
 	-- UVHF Display
-	local lUVHFDisplay = list_indication(5)
+	local lUVHFDisplay = list_indication(7)
 	if ExportScript.Config.Debug then
 		ExportScript.Tools.WriteToLog('lUVHFDisplay : '..ExportScript.Tools.dump(lUVHFDisplay))
 	end
@@ -1259,7 +1259,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 
 --> McMicha
 
-	local lUVHFDisplay = list_indication(5)
+	local lUVHFDisplay = list_indication(7)
 	if ExportScript.Config.Debug then
 		ExportScript.Tools.WriteToLog('lUVHFDisplay : '..ExportScript.Tools.dump(lUVHFDisplay))
 	end

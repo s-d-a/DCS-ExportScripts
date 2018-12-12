@@ -1,7 +1,7 @@
 -- A-10A
 
 ExportScript.FoundFCModule = true
-ExportScript.Version.A10A = "1.1.0"
+ExportScript.Version.A10A = "1.2.0"
 
 -- auxiliary function
 dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")

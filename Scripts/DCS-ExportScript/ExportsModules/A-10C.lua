@@ -1,7 +1,7 @@
 -- A-10C
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.A10C = "1.1.0"
+ExportScript.Version.A10C = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -728,7 +728,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	local lUHF_RADIO = GetDevice(54)
 	if lUHF_RADIO:is_on() then
 		ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((lUHF_RADIO:get_frequency()/1000000)))
-
+		
 		local lPresetChannel = ExportScript.Tools.getListIndicatorValue(10)
 
 		ExportScript.Tools.SendData(2001, string.format("%s", lPresetChannel.txtPresetChannel))
@@ -820,7 +820,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {290,292,293})
 	-- Engine Instruments Lights, Flight Instruments Lights, Auxiliary Instruments Lights
-
+	
 	-- CDU Data
 	ExportScript.AF.exportCDU()
 end
@@ -2681,168 +2681,168 @@ ExportScript.AF.CDUIndicatorData={
             y=7
         }
     },
-    ALignMode_BATH={
+    AlignMode_BATH={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignMode_BATH",
+            id="AlignMode_BATH",
             index=0,
             statictext=false,
             x=11,
             y=4
         }
     },
-    ALignMode_Ground={
+    AlignMode_Ground={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignMode_Ground",
+            id="AlignMode_Ground",
             index=0,
             statictext=false,
             x=11,
             y=4
         }
     },
-    ALignMode_InFlt={
+    AlignMode_InFlt={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignMode_InFlt",
+            id="AlignMode_InFlt",
             index=0,
             statictext=false,
             x=11,
             y=4
         }
     },
-    ALignMode_SH={
+    AlignMode_SH={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignMode_SH",
+            id="AlignMode_SH",
             index=0,
             statictext=false,
             x=11,
             y=4
         }
     },
-    ALignModes={
+    AlignModes={
         {
             alignment="RGHT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignModes",
+            id="AlignModes",
             index=0,
             statictext=false,
             x=24,
             y=3
         }
     },
-    ALignStatus={
+    AlignStatus={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignStatus",
+            id="AlignStatus",
             index=0,
             statictext=false,
             x=13,
             y=8
         }
     },
-    ALignStatus1={
+    AlignStatus1={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignStatus1",
+            id="AlignStatus1",
             index=0,
             statictext=false,
             x=13,
             y=8
         }
     },
-    ALignStatus2={
+    AlignStatus2={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignStatus2",
+            id="AlignStatus2",
             index=0,
             statictext=false,
             x=13,
             y=8
         }
     },
-    ALignStatusAsterisk={
+    AlignStatusAsterisk={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignStatusAsterisk",
+            id="AlignStatusAsterisk",
             index=0,
             statictext=false,
             x=13,
             y=8
         }
     },
-    ALignTime={
+    AlignTime={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignTime",
+            id="AlignTime",
             index=0,
             statictext=false,
             x=7,
             y=8
         }
     },
-    ALignTimeAsterisk={
+    AlignTimeAsterisk={
         {
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
                 "ALTALGN"
             },
-            id="ALignTimeAsterisk",
+            id="AlignTimeAsterisk",
             index=0,
             statictext=false,
             x=7,
             y=8
         }
     },
-    ASterisk={
+    Asterisk={
         {
             alignment="LFT",
             cdu_pages={
                 "1ST_LINE",
                 "1ST_LINE"
             },
-            id="ASterisk",
+            id="Asterisk",
             index=0,
             statictext=false,
             x=1,
@@ -8299,6 +8299,32 @@ ExportScript.AF.CDUIndicatorData={
             y=7
         }
     },
+	FPMENUPageNumber={
+        {
+            alignment="LFT",
+            cdu_pages={
+                "FPBUILD"
+            },
+            id="FPMENUPageNumber",
+            index=0,
+            statictext=false,
+            x=20,
+            y=10
+        }
+    },
+	FPBUILDPageNumber={
+        {
+            alignment="LFT",
+            cdu_pages={
+                "FPBUILD"
+            },
+            id="FPMENUPageNumber",
+            index=0,
+            statictext=false,
+            x=20,
+            y=10
+        }
+    },
     FPBUILDPlanName={
         {
             alignment="LFT",
@@ -11692,7 +11718,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="MODE9",
             index=0,
             statictext=false,
@@ -11704,7 +11731,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "TIME"},
+                "TIME"
+            },
             id="MONTH",
             index=0,
             statictext=true,
@@ -11716,7 +11744,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "TIME"},
+                "TIME"
+            },
             id="MONTH_DE",
             index=0,
             statictext=false,
@@ -11728,7 +11757,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "TIME"},
+                "TIME"
+            },
             id="MONTH_TXT",
             index=0,
             statictext=false,
@@ -11740,7 +11770,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI2"},
+                "EGI2"
+            },
             id="MSN",
             index=0,
             statictext=true,
@@ -11750,7 +11781,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "REINIT"},
+                "REINIT"
+            },
             id="MSN",
             index=1,
             statictext=true,
@@ -11760,7 +11792,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGITEST"},
+                "EGITEST"
+            },
             id="MSN",
             index=2,
             statictext=false,
@@ -11772,7 +11805,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="MSN_DUR",
             index=0,
             statictext=true,
@@ -11784,7 +11818,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGITEST"},
+                "EGITEST"
+            },
             id="MSN_SA",
             index=0,
             statictext=true,
@@ -11796,7 +11831,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI2"},
+                "EGI2"
+            },
             id="MSN_STATUS",
             index=0,
             statictext=true,
@@ -11808,7 +11844,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGITEST"},
+                "EGITEST"
+            },
             id="MSN_STATUS0",
             index=0,
             statictext=false,
@@ -11820,7 +11857,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGITEST"},
+                "EGITEST"
+            },
             id="MSN_STATUS1",
             index=0,
             statictext=false,
@@ -11832,7 +11870,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGITEST"},
+                "EGITEST"
+            },
             id="MSN_STATUS2",
             index=0,
             statictext=false,
@@ -11844,7 +11883,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGITEST"},
+                "EGITEST"
+            },
             id="MSN_STATUS3",
             index=0,
             statictext=false,
@@ -11856,7 +11896,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV",
             index=0,
             statictext=false,
@@ -11866,7 +11907,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="MV",
             index=1,
             statictext=false,
@@ -11878,7 +11920,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV1",
             index=0,
             statictext=false,
@@ -11890,7 +11933,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV2",
             index=0,
             statictext=false,
@@ -11902,7 +11946,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV3",
             index=0,
             statictext=false,
@@ -11914,7 +11959,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV4",
             index=0,
             statictext=false,
@@ -11926,7 +11972,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV5",
             index=0,
             statictext=false,
@@ -11938,7 +11985,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV6",
             index=0,
             statictext=false,
@@ -11950,7 +11998,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV_EQ",
             index=0,
             statictext=false,
@@ -11962,7 +12011,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV_EQ1",
             index=0,
             statictext=false,
@@ -11974,7 +12024,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="MV_EQ2",
             index=0,
             statictext=false,
@@ -11986,7 +12037,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "SYS2"},
+                "SYS2"
+            },
             id="MXLOG",
             index=0,
             statictext=true,
@@ -11998,7 +12050,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "MXLOG"},
+                "MXLOG"
+            },
             id="MXOPT",
             index=0,
             statictext=true,
@@ -12010,7 +12063,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="Mach",
             index=0,
             statictext=false,
@@ -12022,7 +12076,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPS"},
+                "GPS"
+            },
             id="NAV",
             index=0,
             statictext=true,
@@ -12033,7 +12088,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "ALIGN",
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="NAV",
             index=1,
             statictext=true,
@@ -12046,7 +12102,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "NAV",
-                "POS"},
+                "POS"
+            },
             id="NAVMODEROTARY",
             index=0,
             statictext=true,
@@ -12058,7 +12115,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="NAV_DAT",
             index=0,
             statictext=true,
@@ -12070,7 +12128,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="NAV_DAT1",
             index=0,
             statictext=false,
@@ -12082,7 +12141,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="NAV_DAT2",
             index=0,
             statictext=false,
@@ -12094,7 +12154,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT1"},
+                "GPSSTAT1"
+            },
             id="NAV_DATA",
             index=0,
             statictext=true,
@@ -12106,7 +12167,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT1"},
+                "GPSSTAT1"
+            },
             id="NAV_DATAs",
             index=0,
             statictext=false,
@@ -12118,7 +12180,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT1"},
+                "GPSSTAT1"
+            },
             id="NAV_DATAs1",
             index=0,
             statictext=false,
@@ -12130,7 +12193,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="NAV_RDY",
             index=0,
             statictext=true,
@@ -12142,7 +12206,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="NAV_RDY1",
             index=0,
             statictext=false,
@@ -12154,7 +12219,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="NAV_RDY2",
             index=0,
             statictext=false,
@@ -12166,7 +12232,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="NAV_RDY3",
             index=0,
             statictext=false,
@@ -12178,7 +12245,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FPMENU"},
+                "FPMENU"
+            },
             id="NEWFPNumber",
             index=0,
             statictext=false,
@@ -12190,7 +12258,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FPMENU"},
+                "FPMENU"
+            },
             id="NEWFPText",
             index=0,
             statictext=false,
@@ -12203,7 +12272,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "OFFSET",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="NEW_WAYPT_NUM",
             index=0,
             statictext=false,
@@ -12215,7 +12285,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="NM",
             index=0,
             statictext=true,
@@ -12227,7 +12298,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="NMDisplay",
             index=0,
             statictext=false,
@@ -12239,7 +12311,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="NMINPUT",
             index=0,
             statictext=false,
@@ -12251,7 +12324,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="NOT_ATTEMPTED",
             index=0,
             statictext=true,
@@ -12263,7 +12337,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ACCREJ"},
+                "ACCREJ"
+            },
             id="NS",
             index=0,
             statictext=true,
@@ -12275,7 +12350,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ACCREJ"},
+                "ACCREJ"
+            },
             id="NS_ERR",
             index=0,
             statictext=false,
@@ -12287,7 +12363,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ANNUNCIATIONS"},
+                "ANNUNCIATIONS"
+            },
             id="NUM",
             index=0,
             statictext=false,
@@ -12299,7 +12376,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="OAT",
             index=0,
             statictext=true,
@@ -12311,7 +12389,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "BITBALL"},
+                "BITBALL"
+            },
             id="OF",
             index=0,
             statictext=true,
@@ -12323,7 +12402,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETDIV",
             index=0,
             statictext=true,
@@ -12335,7 +12415,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTCoordFormat1",
             index=0,
             statictext=false,
@@ -12347,7 +12428,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTCoordFormat2",
             index=0,
             statictext=false,
@@ -12359,7 +12441,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTDIS1",
             index=0,
             statictext=false,
@@ -12371,7 +12454,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTDIS2",
             index=0,
             statictext=false,
@@ -12383,7 +12467,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTLat",
             index=0,
             statictext=false,
@@ -12395,7 +12480,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTLatUTM",
             index=0,
             statictext=false,
@@ -12407,7 +12493,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTLong",
             index=0,
             statictext=false,
@@ -12419,7 +12506,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTLongMGRS",
             index=0,
             statictext=false,
@@ -12431,7 +12519,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTMGRS",
             index=0,
             statictext=false,
@@ -12443,7 +12532,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTMH1",
             index=0,
             statictext=false,
@@ -12455,7 +12545,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTMH2",
             index=0,
             statictext=false,
@@ -12467,7 +12558,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTNumber1",
             index=0,
             statictext=false,
@@ -12479,7 +12571,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTNumber2",
             index=0,
             statictext=false,
@@ -12491,7 +12584,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="OFFSETWAYPTUTM",
             index=0,
             statictext=false,
@@ -12503,7 +12597,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="OFP",
             index=0,
             statictext=true,
@@ -12515,7 +12610,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "SYS2"},
+                "SYS2"
+            },
             id="OFPID",
             index=0,
             statictext=true,
@@ -12527,7 +12623,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID1"},
+                "OFPID1"
+            },
             id="OFPID1_LINE3",
             index=0,
             statictext=true,
@@ -12539,7 +12636,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID1"},
+                "OFPID1"
+            },
             id="OFPID1_LINE4_1",
             index=0,
             statictext=true,
@@ -12551,7 +12649,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID1"},
+                "OFPID1"
+            },
             id="OFPID1_LINE4_2",
             index=0,
             statictext=true,
@@ -12563,7 +12662,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID1"},
+                "OFPID1"
+            },
             id="OFPID1_LINE5",
             index=0,
             statictext=true,
@@ -12575,7 +12675,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID1"},
+                "OFPID1"
+            },
             id="OFPID1_LINE6_1",
             index=0,
             statictext=true,
@@ -12587,7 +12688,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID1"},
+                "OFPID1"
+            },
             id="OFPID1_LINE6_2",
             index=0,
             statictext=true,
@@ -12599,7 +12701,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID1"},
+                "OFPID1"
+            },
             id="OFPID1_LINE7",
             index=0,
             statictext=true,
@@ -12611,7 +12714,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID1"},
+                "OFPID1"
+            },
             id="OFPID1_LINE8",
             index=0,
             statictext=true,
@@ -12623,7 +12727,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID2"},
+                "OFPID2"
+            },
             id="OFPID2_LINE3",
             index=0,
             statictext=true,
@@ -12635,7 +12740,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID2"},
+                "OFPID2"
+            },
             id="OFPID2_LINE4_1",
             index=0,
             statictext=true,
@@ -12647,7 +12753,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID2"},
+                "OFPID2"
+            },
             id="OFPID2_LINE4_2",
             index=0,
             statictext=true,
@@ -12659,7 +12766,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID2"},
+                "OFPID2"
+            },
             id="OFPID2_LINE5",
             index=0,
             statictext=true,
@@ -12671,7 +12779,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID2"},
+                "OFPID2"
+            },
             id="OFPID2_LINE6_1",
             index=0,
             statictext=true,
@@ -12683,7 +12792,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID2"},
+                "OFPID2"
+            },
             id="OFPID2_LINE6_2",
             index=0,
             statictext=true,
@@ -12695,7 +12805,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID2"},
+                "OFPID2"
+            },
             id="OFPID2_LINE7",
             index=0,
             statictext=true,
@@ -12707,7 +12818,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID2"},
+                "OFPID2"
+            },
             id="OFPID2_LINE8",
             index=0,
             statictext=true,
@@ -12719,7 +12831,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="OFP_SA",
             index=0,
             statictext=false,
@@ -12731,7 +12844,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIOMS_MAGHEAD",
             index=0,
             statictext=false,
@@ -12743,7 +12857,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "NAV"},
+                "NAV"
+            },
             id="OPTIONS",
             index=0,
             statictext=true,
@@ -12755,7 +12870,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_CF",
             index=0,
             statictext=false,
@@ -12767,7 +12883,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_DE",
             index=0,
             statictext=true,
@@ -12779,7 +12896,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_EQUAL",
             index=0,
             statictext=false,
@@ -12789,7 +12907,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="OPTIONS_EQUAL",
             index=1,
             statictext=false,
@@ -12801,7 +12920,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_EQUAL1",
             index=0,
             statictext=false,
@@ -12813,7 +12933,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_HD0",
             index=0,
             statictext=false,
@@ -12825,7 +12946,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_HD1",
             index=0,
             statictext=false,
@@ -12837,7 +12959,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_HF0",
             index=0,
             statictext=false,
@@ -12849,7 +12972,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_HF1",
             index=0,
             statictext=false,
@@ -12861,7 +12985,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_HS0",
             index=0,
             statictext=false,
@@ -12871,7 +12996,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="OPTIONS_HS0",
             index=1,
             statictext=true,
@@ -12883,7 +13009,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_HS1",
             index=0,
             statictext=false,
@@ -12895,7 +13022,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_MV",
             index=0,
             statictext=false,
@@ -12907,7 +13035,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="OPTIONS_RTRY",
             index=0,
             statictext=true,
@@ -12919,7 +13048,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSUPLD"},
+                "DTSUPLD"
+            },
             id="ORIG_NAV",
             index=0,
             statictext=true,
@@ -12931,7 +13061,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="OWC",
             index=0,
             statictext=true,
@@ -12943,7 +13074,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="OWC1",
             index=0,
             statictext=true,
@@ -12955,7 +13087,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="OWC_VALUE",
             index=0,
             statictext=false,
@@ -12967,7 +13100,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="OWC_VALUE1",
             index=0,
             statictext=false,
@@ -12979,7 +13113,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="OWC_VALUE2",
             index=0,
             statictext=false,
@@ -12991,7 +13126,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="Overload",
             index=0,
             statictext=false,
@@ -13003,7 +13139,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="Overload1",
             index=0,
             statictext=false,
@@ -13015,7 +13152,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="Overload2",
             index=0,
             statictext=false,
@@ -13027,7 +13165,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="Overload3",
             index=0,
             statictext=false,
@@ -13039,7 +13178,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="Overload4",
             index=0,
             statictext=false,
@@ -13047,11 +13187,24 @@ ExportScript.AF.CDUIndicatorData={
             y=7
         }
     },
+	P={
+        {
+            alignment="LFT",
+            cdu_pages={
+                "FPMENU"},
+            id="P",
+            index=0,
+            statictext=true,
+            x=19,
+            y=10
+        }
+    },
     PC={
         {
             alignment="LFT",
             cdu_pages={
-                "BITBALL"},
+                "BITBALL"
+            },
             id="PC",
             index=0,
             statictext=true,
@@ -13063,7 +13216,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="PGCAS",
             index=0,
             statictext=true,
@@ -13075,7 +13229,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="PGCAS_VALUE",
             index=0,
             statictext=false,
@@ -13087,7 +13242,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="PGCAS_VALUE1",
             index=0,
             statictext=false,
@@ -13099,7 +13255,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="PGCAS_VALUE2",
             index=0,
             statictext=false,
@@ -13111,7 +13268,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "HARS"},
+                "HARS"
+            },
             id="PITCH",
             index=0,
             statictext=true,
@@ -13123,7 +13281,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "HARS"},
+                "HARS"
+            },
             id="PITCH_ST2",
             index=0,
             statictext=false,
@@ -13135,7 +13294,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "HARS"},
+                "HARS"
+            },
             id="PITCH_ST3",
             index=0,
             statictext=false,
@@ -13147,7 +13307,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "HARS"},
+                "HARS"
+            },
             id="PITCH_VAL",
             index=0,
             statictext=false,
@@ -13159,7 +13320,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INS"},
+                "INS"
+            },
             id="POS",
             index=0,
             statictext=true,
@@ -13172,7 +13334,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="POS_SOURCE",
             index=0,
             statictext=true,
@@ -13185,7 +13348,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="POS_Source_DTS",
             index=0,
             statictext=false,
@@ -13198,7 +13362,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="POS_Source_GPS",
             index=0,
             statictext=false,
@@ -13211,7 +13376,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="POS_Source_GPS1",
             index=0,
             statictext=false,
@@ -13224,7 +13390,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="POS_Source_Last_Pos",
             index=0,
             statictext=false,
@@ -13237,7 +13404,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="POS_Source_Man",
             index=0,
             statictext=false,
@@ -13250,7 +13418,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="POS_Source_Standby",
             index=0,
             statictext=false,
@@ -13262,7 +13431,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSGroundSpeed",
             index=0,
             statictext=false,
@@ -13274,7 +13444,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSGroundSpeed1",
             index=0,
             statictext=false,
@@ -13286,7 +13457,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSGroundSpeed2",
             index=0,
             statictext=false,
@@ -13298,7 +13470,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSIAS",
             index=0,
             statictext=false,
@@ -13310,7 +13483,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSSpeedMode",
             index=0,
             statictext=false,
@@ -13322,7 +13496,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSSpeedMode1",
             index=0,
             statictext=false,
@@ -13334,7 +13509,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSSpeedMode2",
             index=0,
             statictext=false,
@@ -13346,7 +13522,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSSpeedMode3",
             index=0,
             statictext=false,
@@ -13358,7 +13535,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSSpeedMode4",
             index=0,
             statictext=false,
@@ -13370,7 +13548,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSSpeedMode5",
             index=0,
             statictext=false,
@@ -13382,7 +13561,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSSpeedRotary",
             index=0,
             statictext=true,
@@ -13394,7 +13574,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PPOSTAS1",
             index=0,
             statictext=false,
@@ -13406,7 +13587,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="PR",
             index=0,
             statictext=true,
@@ -13418,7 +13600,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "DTSUPLD"},
+                "DTSUPLD"
+            },
             id="PREF",
             index=0,
             statictext=true,
@@ -13430,7 +13613,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="PR_VALUE",
             index=0,
             statictext=false,
@@ -13442,7 +13626,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="PR_VALUE1",
             index=0,
             statictext=false,
@@ -13454,7 +13639,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="PR_VALUE2",
             index=0,
             statictext=false,
@@ -13466,7 +13652,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI2"},
+                "EGI2"
+            },
             id="PS",
             index=0,
             statictext=true,
@@ -13478,7 +13665,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI2"},
+                "EGI2"
+            },
             id="PS_STATUS",
             index=0,
             statictext=true,
@@ -13490,7 +13678,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="P_ALT",
             index=0,
             statictext=true,
@@ -13502,7 +13691,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="P_ALT_ST",
             index=0,
             statictext=false,
@@ -13514,7 +13704,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="P_ALT_ST1",
             index=0,
             statictext=false,
@@ -13526,7 +13717,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="P_ALT_VAL",
             index=0,
             statictext=false,
@@ -13538,7 +13730,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "FPMENU"},
+                "FPMENU"
+            },
             id="PageFPBUILD",
             index=0,
             statictext=false,
@@ -13550,7 +13743,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ACCREJ"},
+                "ACCREJ"
+            },
             id="PageNameACCREJ",
             index=0,
             statictext=true,
@@ -13562,7 +13756,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ALIGN"},
+                "ALIGN"
+            },
             id="PageNameALIGN",
             index=0,
             statictext=true,
@@ -13574,7 +13769,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="PageNameALTALGN",
             index=0,
             statictext=true,
@@ -13586,7 +13782,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="PageNameANCHOR",
             index=0,
             statictext=true,
@@ -13598,7 +13795,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="PageNameATTRIB",
             index=0,
             statictext=true,
@@ -13610,7 +13808,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "BBCTL"},
+                "BBCTL"
+            },
             id="PageNameBBCTL",
             index=0,
             statictext=true,
@@ -13622,7 +13821,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "BITBALL"},
+                "BITBALL"
+            },
             id="PageNameBITBALL",
             index=0,
             statictext=true,
@@ -13634,7 +13834,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="PageNameCADC",
             index=0,
             statictext=true,
@@ -13646,7 +13847,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CDUTEST1"},
+                "CDUTEST1"
+            },
             id="PageNameCDUTEST1",
             index=0,
             statictext=true,
@@ -13658,7 +13860,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CDUTEST2"},
+                "CDUTEST2"
+            },
             id="PageNameCDUTEST2",
             index=0,
             statictext=true,
@@ -13670,7 +13873,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DIVERT"},
+                "DIVERT"
+            },
             id="PageNameDIVERT",
             index=0,
             statictext=true,
@@ -13682,7 +13886,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTS"},
+                "DTS"
+            },
             id="PageNameDTS",
             index=0,
             statictext=true,
@@ -13694,7 +13899,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="PageNameDTSAS",
             index=0,
             statictext=true,
@@ -13706,7 +13912,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSDNLD"},
+                "DTSDNLD"
+            },
             id="PageNameDTSDNLD",
             index=0,
             statictext=true,
@@ -13718,7 +13925,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSSTAT"},
+                "DTSSTAT"
+            },
             id="PageNameDTSSTAT",
             index=0,
             statictext=true,
@@ -13730,7 +13938,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSUPLD"},
+                "DTSUPLD"
+            },
             id="PageNameDTSUPLD",
             index=0,
             statictext=true,
@@ -13745,7 +13954,8 @@ ExportScript.AF.CDUIndicatorData={
                 "EGI1",
                 "EGI2",
                 "EGI3",
-                "EGI4"},
+                "EGI4"
+            },
             id="PageNameEGI",
             index=0,
             statictext=true,
@@ -13757,7 +13967,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGITEST"},
+                "EGITEST"
+            },
             id="PageNameEGITEST",
             index=0,
             statictext=true,
@@ -13769,7 +13980,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FLDINFO"},
+                "FLDINFO"
+            },
             id="PageNameFLDINFO",
             index=0,
             statictext=true,
@@ -13781,7 +13993,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="PageNameFPBUILD",
             index=0,
             statictext=true,
@@ -13793,7 +14006,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FPMENU"},
+                "FPMENU"
+            },
             id="PageNameFPMENU",
             index=0,
             statictext=true,
@@ -13805,7 +14019,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FROM"},
+                "FROM"
+            },
             id="PageNameFROM",
             index=0,
             statictext=true,
@@ -13817,7 +14032,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPS"},
+                "GPS"
+            },
             id="PageNameGPS",
             index=0,
             statictext=true,
@@ -13829,7 +14045,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSBIT1"},
+                "GPSBIT1"
+            },
             id="PageNameGPSBIT1",
             index=0,
             statictext=true,
@@ -13841,7 +14058,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSBIT2"},
+                "GPSBIT2"
+            },
             id="PageNameGPSBIT2",
             index=0,
             statictext=true,
@@ -13853,7 +14071,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSBIT3"},
+                "GPSBIT3"
+            },
             id="PageNameGPSBIT3",
             index=0,
             statictext=true,
@@ -13865,7 +14084,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSBIT4"},
+                "GPSBIT4"
+            },
             id="PageNameGPSBIT4",
             index=0,
             statictext=true,
@@ -13877,7 +14097,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSBIT5"},
+                "GPSBIT5"
+            },
             id="PageNameGPSBIT5",
             index=0,
             statictext=true,
@@ -13889,7 +14110,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSKEYS"},
+                "GPSKEYS"
+            },
             id="PageNameGPSKEYS",
             index=0,
             statictext=true,
@@ -13901,7 +14123,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT1"},
+                "GPSSTAT1"
+            },
             id="PageNameGPSSTAT1",
             index=0,
             statictext=true,
@@ -13913,7 +14136,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "HARS"},
+                "HARS"
+            },
             id="PageNameHARS",
             index=0,
             statictext=true,
@@ -13925,7 +14149,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INS"},
+                "INS"
+            },
             id="PageNameINS",
             index=0,
             statictext=true,
@@ -13937,7 +14162,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="PageNameINSSTAT",
             index=0,
             statictext=true,
@@ -13949,7 +14175,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="PageNameLASTE",
             index=0,
             statictext=true,
@@ -13961,7 +14188,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LRUTEST"},
+                "LRUTEST"
+            },
             id="PageNameLRUTEST",
             index=0,
             statictext=true,
@@ -13973,7 +14201,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "MXLOG"},
+                "MXLOG"
+            },
             id="PageNameMXLOG",
             index=0,
             statictext=true,
@@ -13985,7 +14214,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "NAV"},
+                "NAV"
+            },
             id="PageNameNAV",
             index=0,
             statictext=true,
@@ -13997,7 +14227,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="PageNameOFFSET",
             index=0,
             statictext=true,
@@ -14009,7 +14240,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID1"},
+                "OFPID1"
+            },
             id="PageNameOFPID1",
             index=0,
             statictext=true,
@@ -14021,7 +14253,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OFPID2"},
+                "OFPID2"
+            },
             id="PageNameOFPID2",
             index=0,
             statictext=true,
@@ -14033,7 +14266,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "OPTIONS"},
+                "OPTIONS"
+            },
             id="PageNameOPTIONS",
             index=0,
             statictext=true,
@@ -14045,7 +14279,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POS"},
+                "POS"
+            },
             id="PageNamePOS",
             index=0,
             statictext=true,
@@ -14057,7 +14292,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="PageNamePOSINFO",
             index=0,
             statictext=true,
@@ -14069,7 +14305,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "REINIT"},
+                "REINIT"
+            },
             id="PageNameREINIT",
             index=0,
             statictext=true,
@@ -14081,7 +14318,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="PageNameRESET",
             index=0,
             statictext=true,
@@ -14093,7 +14331,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="PageNameSTARTUPBIT",
             index=0,
             statictext=false,
@@ -14105,7 +14344,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="PageNameSTRINFO",
             index=0,
             statictext=true,
@@ -14117,7 +14357,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "SYS"},
+                "SYS"
+            },
             id="PageNameSYS",
             index=0,
             statictext=true,
@@ -14129,7 +14370,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "TIME"},
+                "TIME"
+            },
             id="PageNameTIME",
             index=0,
             statictext=true,
@@ -14141,7 +14383,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="PageNameUPDATE",
             index=0,
             statictext=true,
@@ -14153,7 +14396,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT"},
+                "WAYPT"
+            },
             id="PageNameWAYPT",
             index=0,
             statictext=true,
@@ -14165,7 +14409,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="PageNameWIND",
             index=0,
             statictext=true,
@@ -14177,7 +14422,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT"},
+                "WNDEDIT"
+            },
             id="PageNameWNDEDIT",
             index=0,
             statictext=true,
@@ -14189,7 +14435,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="PageNameWPINFO",
             index=0,
             statictext=true,
@@ -14201,7 +14448,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPMENU"},
+                "WPMENU"
+            },
             id="PageNameWPMENU",
             index=0,
             statictext=true,
@@ -14213,7 +14461,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="PageNameWPTATT",
             index=0,
             statictext=true,
@@ -14226,7 +14475,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "POSINFO",
-                "POS"},
+                "POS"
+            },
             id="PresPositLat",
             index=0,
             statictext=false,
@@ -14239,7 +14489,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "POSINFO",
-                "POS"},
+                "POS"
+            },
             id="PresPositLat1",
             index=0,
             statictext=false,
@@ -14252,7 +14503,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "POSINFO",
-                "POS"},
+                "POS"
+            },
             id="PresPositLong",
             index=0,
             statictext=false,
@@ -14265,7 +14517,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "POSINFO",
-                "POS"},
+                "POS"
+            },
             id="PresPositLong1",
             index=0,
             statictext=false,
@@ -14278,7 +14531,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "POSINFO",
-                "POS"},
+                "POS"
+            },
             id="PresPositMGRS",
             index=0,
             statictext=false,
@@ -14291,7 +14545,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "POSINFO",
-                "POS"},
+                "POS"
+            },
             id="PresPositMGRS1",
             index=0,
             statictext=false,
@@ -14304,7 +14559,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "POSINFO",
-                "POS"},
+                "POS"
+            },
             id="PresPositUTM",
             index=0,
             statictext=false,
@@ -14317,7 +14573,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "POSINFO",
-                "POS"},
+                "POS"
+            },
             id="PresPositUTM1",
             index=0,
             statictext=false,
@@ -14329,7 +14586,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="RAM",
             index=0,
             statictext=false,
@@ -14339,7 +14597,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CDUTEST1"},
+                "CDUTEST1"
+            },
             id="RAM",
             index=1,
             statictext=true,
@@ -14351,7 +14610,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="RAM_1553",
             index=0,
             statictext=false,
@@ -14361,7 +14621,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CDUTEST1"},
+                "CDUTEST1"
+            },
             id="RAM_1553",
             index=1,
             statictext=true,
@@ -14373,7 +14634,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTS"},
+                "DTS"
+            },
             id="READY",
             index=0,
             statictext=true,
@@ -14383,7 +14645,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="READY",
             index=1,
             statictext=true,
@@ -14395,7 +14658,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTS"},
+                "DTS"
+            },
             id="READY_ST0",
             index=0,
             statictext=false,
@@ -14407,7 +14671,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTS"},
+                "DTS"
+            },
             id="READY_ST1",
             index=0,
             statictext=false,
@@ -14419,7 +14684,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTS"},
+                "DTS"
+            },
             id="READY_ST2",
             index=0,
             statictext=false,
@@ -14431,7 +14697,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTS"},
+                "DTS"
+            },
             id="READY_ST3",
             index=0,
             statictext=false,
@@ -14443,7 +14710,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTS"},
+                "DTS"
+            },
             id="READY_ST4",
             index=0,
             statictext=false,
@@ -14455,7 +14723,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSUPLD"},
+                "DTSUPLD"
+            },
             id="RECENT_NAV",
             index=0,
             statictext=true,
@@ -14467,7 +14736,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "LRUTEST"},
+                "LRUTEST"
+            },
             id="RECORD",
             index=0,
             statictext=true,
@@ -14479,7 +14749,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "SYS1"},
+                "SYS1"
+            },
             id="REINIT",
             index=0,
             statictext=true,
@@ -14491,7 +14762,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "REINIT"},
+                "REINIT"
+            },
             id="REINIT_DTSAS",
             index=0,
             statictext=true,
@@ -14503,7 +14775,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "REINIT"},
+                "REINIT"
+            },
             id="REINIT_GPS",
             index=0,
             statictext=true,
@@ -14515,7 +14788,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "REINIT"},
+                "REINIT"
+            },
             id="REINIT_INS",
             index=0,
             statictext=true,
@@ -14527,7 +14801,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "REINIT"},
+                "REINIT"
+            },
             id="REINIT_LASTE",
             index=0,
             statictext=true,
@@ -14539,7 +14814,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ACCREJ"},
+                "ACCREJ"
+            },
             id="REJECT",
             index=0,
             statictext=true,
@@ -14552,7 +14828,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "SYS1",
-                "BBCTL"},
+                "BBCTL"
+            },
             id="RESET",
             index=0,
             statictext=true,
@@ -14564,7 +14841,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_CADC",
             index=0,
             statictext=true,
@@ -14576,7 +14854,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_CICU",
             index=0,
             statictext=true,
@@ -14588,7 +14867,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_CICU0",
             index=0,
             statictext=false,
@@ -14600,7 +14880,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_CICU1",
             index=0,
             statictext=false,
@@ -14612,7 +14893,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_DTS",
             index=0,
             statictext=true,
@@ -14624,7 +14906,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_EGI",
             index=0,
             statictext=true,
@@ -14636,7 +14919,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_HARS",
             index=0,
             statictext=true,
@@ -14648,7 +14932,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_LASTE",
             index=0,
             statictext=true,
@@ -14660,7 +14945,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_LASTE1",
             index=0,
             statictext=true,
@@ -14672,7 +14958,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_ST0",
             index=0,
             statictext=false,
@@ -14684,7 +14971,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "RESET"},
+                "RESET"
+            },
             id="RESET_ST1",
             index=0,
             statictext=false,
@@ -14696,7 +14984,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "HARS"},
+                "HARS"
+            },
             id="ROLL",
             index=0,
             statictext=true,
@@ -14708,7 +14997,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "HARS"},
+                "HARS"
+            },
             id="ROLL_ST2",
             index=0,
             statictext=false,
@@ -14720,7 +15010,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "HARS"},
+                "HARS"
+            },
             id="ROLL_ST3",
             index=0,
             statictext=false,
@@ -14732,7 +15023,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "HARS"},
+                "HARS"
+            },
             id="ROLL_VAL",
             index=0,
             statictext=false,
@@ -14744,7 +15036,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="RPU",
             index=0,
             statictext=true,
@@ -14756,7 +15049,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="RPU4s",
             index=0,
             statictext=false,
@@ -14768,7 +15062,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="RPU4s1",
             index=0,
             statictext=false,
@@ -14781,7 +15076,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "ACCREJ",
-                "UPDATE"},
+                "UPDATE"
+            },
             id="RTR",
             index=0,
             statictext=true,
@@ -14793,7 +15089,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="RT_ADDR",
             index=0,
             statictext=false,
@@ -14805,7 +15102,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FLDINFO"},
+                "FLDINFO"
+            },
             id="RWY",
             index=0,
             statictext=true,
@@ -14817,7 +15115,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "FLDINFO"},
+                "FLDINFO"
+            },
             id="RWY_L_FEET",
             index=0,
             statictext=true,
@@ -14829,7 +15128,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="SAT4",
             index=0,
             statictext=true,
@@ -14841,7 +15141,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="SAT4s",
             index=0,
             statictext=false,
@@ -14853,7 +15154,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="SAT4s1",
             index=0,
             statictext=false,
@@ -14866,7 +15168,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "WPTATT",
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="SCALE",
             index=0,
             statictext=true,
@@ -14876,7 +15179,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="SCALE",
             index=1,
             statictext=true,
@@ -14888,7 +15192,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="SCS",
             index=0,
             statictext=true,
@@ -14900,7 +15205,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="SCS_ROTARY",
             index=0,
             statictext=false,
@@ -14912,7 +15218,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="SENSORS",
             index=0,
             statictext=true,
@@ -14924,7 +15231,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="SEN_ST1",
             index=0,
             statictext=false,
@@ -14936,7 +15244,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "INSSTAT"},
+                "INSSTAT"
+            },
             id="SEN_ST2",
             index=0,
             statictext=false,
@@ -14948,7 +15257,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="SERVICE",
             index=0,
             statictext=true,
@@ -14960,7 +15270,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="SFKEYSs",
             index=0,
             statictext=false,
@@ -14972,7 +15283,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="SFKEYSs1",
             index=0,
             statictext=false,
@@ -14984,7 +15296,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="SFKEYSs2",
             index=0,
             statictext=false,
@@ -14996,7 +15309,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FLDINFO"},
+                "FLDINFO"
+            },
             id="SLASH1",
             index=0,
             statictext=true,
@@ -15008,7 +15322,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FLDINFO"},
+                "FLDINFO"
+            },
             id="SLASH2",
             index=0,
             statictext=true,
@@ -15020,7 +15335,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WPMENU"},
+                "WPMENU"
+            },
             id="SPHEROID",
             index=0,
             statictext=false,
@@ -15032,7 +15348,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI2"},
+                "EGI2"
+            },
             id="SPU",
             index=0,
             statictext=true,
@@ -15044,7 +15361,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI2"},
+                "EGI2"
+            },
             id="SPU_STATUS",
             index=0,
             statictext=true,
@@ -15056,7 +15374,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPS"},
+                "GPS"
+            },
             id="ST3",
             index=0,
             statictext=true,
@@ -15068,7 +15387,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPS"},
+                "GPS"
+            },
             id="ST5",
             index=0,
             statictext=true,
@@ -15080,7 +15400,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "CDUTEST1"},
+                "CDUTEST1"
+            },
             id="START",
             index=0,
             statictext=true,
@@ -15092,7 +15413,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT",
             index=0,
             statictext=false,
@@ -15104,7 +15426,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT1",
             index=0,
             statictext=false,
@@ -15116,7 +15439,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT10",
             index=0,
             statictext=false,
@@ -15128,7 +15452,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT11",
             index=0,
             statictext=false,
@@ -15140,7 +15465,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT12",
             index=0,
             statictext=false,
@@ -15152,7 +15478,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT13",
             index=0,
             statictext=false,
@@ -15164,7 +15491,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT14",
             index=0,
             statictext=false,
@@ -15176,7 +15504,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT15",
             index=0,
             statictext=false,
@@ -15188,7 +15517,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT16",
             index=0,
             statictext=false,
@@ -15200,7 +15530,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT17",
             index=0,
             statictext=false,
@@ -15212,7 +15543,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT18",
             index=0,
             statictext=false,
@@ -15224,7 +15556,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT19",
             index=0,
             statictext=false,
@@ -15236,7 +15569,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT2",
             index=0,
             statictext=false,
@@ -15248,7 +15582,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT20",
             index=0,
             statictext=false,
@@ -15260,7 +15595,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT21",
             index=0,
             statictext=false,
@@ -15272,7 +15608,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT22",
             index=0,
             statictext=false,
@@ -15284,7 +15621,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT23",
             index=0,
             statictext=false,
@@ -15296,7 +15634,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT24",
             index=0,
             statictext=false,
@@ -15308,7 +15647,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT3",
             index=0,
             statictext=false,
@@ -15320,7 +15660,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT4",
             index=0,
             statictext=false,
@@ -15332,7 +15673,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT5",
             index=0,
             statictext=false,
@@ -15344,7 +15686,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT6",
             index=0,
             statictext=false,
@@ -15356,7 +15699,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT7",
             index=0,
             statictext=false,
@@ -15368,7 +15712,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT8",
             index=0,
             statictext=false,
@@ -15380,7 +15725,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STARTUP_BIT"},
+                "STARTUP_BIT"
+            },
             id="STARTUPBIT9",
             index=0,
             statictext=false,
@@ -15392,7 +15738,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "CDUTEST1"},
+                "CDUTEST1"
+            },
             id="START_SA",
             index=0,
             statictext=false,
@@ -15404,7 +15751,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI2"},
+                "EGI2"
+            },
             id="STATUS",
             index=0,
             statictext=true,
@@ -15416,7 +15764,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI1"},
+                "EGI1"
+            },
             id="STATUS_LINE",
             index=0,
             statictext=true,
@@ -15428,7 +15777,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI1"},
+                "EGI1"
+            },
             id="STATUS_LINE1",
             index=0,
             statictext=true,
@@ -15440,7 +15790,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGI1"},
+                "EGI1"
+            },
             id="STATUS_LINE2",
             index=0,
             statictext=true,
@@ -15453,7 +15804,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "WPTATT",
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="STEER",
             index=0,
             statictext=true,
@@ -15463,7 +15815,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="STEER",
             index=1,
             statictext=true,
@@ -15475,7 +15828,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPMENU"},
+                "WPMENU"
+            },
             id="STEERPOINT",
             index=0,
             statictext=true,
@@ -15487,7 +15841,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="STEERPTIndicator",
             index=0,
             statictext=false,
@@ -15499,7 +15854,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="STEER_PT",
             index=0,
             statictext=true,
@@ -15511,7 +15867,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGITEST"},
+                "EGITEST"
+            },
             id="STOP_MSN",
             index=0,
             statictext=true,
@@ -15523,7 +15880,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "EGITEST"},
+                "EGITEST"
+            },
             id="STOP_SA",
             index=0,
             statictext=false,
@@ -15535,7 +15893,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRBRGRAD",
             index=0,
             statictext=false,
@@ -15547,7 +15906,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRBRGRAD1",
             index=0,
             statictext=false,
@@ -15559,7 +15919,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRBRGRAD2",
             index=0,
             statictext=false,
@@ -15571,7 +15932,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRBRGRAD3",
             index=0,
             statictext=false,
@@ -15583,7 +15945,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRBRGRAD4",
             index=0,
             statictext=false,
@@ -15595,7 +15958,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRBRGRADMode",
             index=0,
             statictext=false,
@@ -15607,7 +15971,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRBRGRADMode1",
             index=0,
             statictext=false,
@@ -15619,7 +15984,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRBRGRADRotary",
             index=0,
             statictext=true,
@@ -15631,7 +15997,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRDIS",
             index=0,
             statictext=true,
@@ -15641,7 +16008,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ACCREJ"},
+                "ACCREJ"
+            },
             id="STRDIS",
             index=1,
             statictext=false,
@@ -15651,7 +16019,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRDIS",
             index=2,
             statictext=false,
@@ -15663,7 +16032,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRDIS1",
             index=0,
             statictext=false,
@@ -15673,7 +16043,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="STRDIS1",
             index=1,
             statictext=false,
@@ -15683,7 +16054,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRDIS1",
             index=2,
             statictext=false,
@@ -15693,7 +16065,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRDIS1",
             index=3,
             statictext=false,
@@ -15705,7 +16078,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRDIS2",
             index=0,
             statictext=false,
@@ -15715,7 +16089,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="STRDIS2",
             index=1,
             statictext=false,
@@ -15725,7 +16100,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRDIS2",
             index=2,
             statictext=false,
@@ -15737,7 +16113,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRDIS3",
             index=0,
             statictext=false,
@@ -15747,7 +16124,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRDIS3",
             index=1,
             statictext=false,
@@ -15759,7 +16137,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="STRDISMH",
             index=0,
             statictext=true,
@@ -15771,7 +16150,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRDMH",
             index=0,
             statictext=true,
@@ -15783,7 +16163,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRDMH1",
             index=0,
             statictext=false,
@@ -15793,7 +16174,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRDMH1",
             index=1,
             statictext=false,
@@ -15805,7 +16187,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRDMH2",
             index=0,
             statictext=false,
@@ -15815,7 +16198,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRDMH2",
             index=1,
             statictext=false,
@@ -15827,7 +16211,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRDMH3",
             index=0,
             statictext=false,
@@ -15837,7 +16222,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRDMH3",
             index=1,
             statictext=false,
@@ -15849,7 +16235,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STREL",
             index=0,
             statictext=true,
@@ -15860,7 +16247,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "ACCREJ",
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STREL",
             index=1,
             statictext=true,
@@ -15872,7 +16260,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STREL1",
             index=0,
             statictext=false,
@@ -15882,7 +16271,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STREL1",
             index=1,
             statictext=false,
@@ -15894,7 +16284,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STREL2",
             index=0,
             statictext=false,
@@ -15904,7 +16295,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STREL2",
             index=1,
             statictext=false,
@@ -15916,7 +16308,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STREL3",
             index=0,
             statictext=false,
@@ -15927,7 +16320,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "ACCREJ",
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STREL3",
             index=1,
             statictext=false,
@@ -15939,7 +16333,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STREL4",
             index=0,
             statictext=false,
@@ -15951,7 +16346,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRGroundSpeed1",
             index=0,
             statictext=false,
@@ -15963,7 +16359,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRIAS1",
             index=0,
             statictext=false,
@@ -15975,7 +16372,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRIdent",
             index=0,
             statictext=false,
@@ -15985,7 +16383,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRIdent",
             index=1,
             statictext=false,
@@ -15998,7 +16397,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "STRINFO",
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRIdent1",
             index=0,
             statictext=false,
@@ -16008,7 +16408,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRIdent1",
             index=1,
             statictext=false,
@@ -16021,7 +16422,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "STRINFO",
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRIdent2",
             index=0,
             statictext=false,
@@ -16033,7 +16435,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRIdent3",
             index=0,
             statictext=false,
@@ -16046,7 +16449,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "STRINFO",
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRIdentEntry",
             index=0,
             statictext=false,
@@ -16058,7 +16462,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="STRMH1",
             index=0,
             statictext=false,
@@ -16070,7 +16475,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="STRMH2",
             index=0,
             statictext=false,
@@ -16083,7 +16489,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "STRINFO",
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRNumber",
             index=0,
             statictext=false,
@@ -16096,7 +16503,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "STRINFO",
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRNumber1",
             index=0,
             statictext=false,
@@ -16108,7 +16516,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRNumber2",
             index=0,
             statictext=false,
@@ -16120,7 +16529,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRNumber3",
             index=0,
             statictext=false,
@@ -16132,7 +16542,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRNumberIncDec",
             index=0,
             statictext=false,
@@ -16144,7 +16555,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRReqGroundSpeed",
             index=0,
             statictext=false,
@@ -16156,7 +16568,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRReqIAS",
             index=0,
             statictext=false,
@@ -16168,7 +16581,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRReqSpeedMode",
             index=0,
             statictext=false,
@@ -16180,7 +16594,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRReqSpeedMode1",
             index=0,
             statictext=false,
@@ -16192,7 +16607,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRReqSpeedMode2",
             index=0,
             statictext=false,
@@ -16204,7 +16620,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRReqSpeedRotary",
             index=0,
             statictext=false,
@@ -16216,7 +16633,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRReqTAS",
             index=0,
             statictext=false,
@@ -16228,7 +16646,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRSpeedMode3",
             index=0,
             statictext=false,
@@ -16240,7 +16659,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRSpeedMode4",
             index=0,
             statictext=false,
@@ -16252,7 +16672,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRSpeedMode5",
             index=0,
             statictext=false,
@@ -16264,7 +16685,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRSpeedMode6",
             index=0,
             statictext=false,
@@ -16276,7 +16698,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRSpeedRotary1",
             index=0,
             statictext=true,
@@ -16288,7 +16711,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTAS1",
             index=0,
             statictext=false,
@@ -16300,7 +16724,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTOT",
             index=0,
             statictext=false,
@@ -16312,7 +16737,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTOT1",
             index=0,
             statictext=false,
@@ -16324,7 +16750,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTOT2",
             index=0,
             statictext=false,
@@ -16336,7 +16763,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTOT3",
             index=0,
             statictext=false,
@@ -16348,7 +16776,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTOT4",
             index=0,
             statictext=false,
@@ -16360,7 +16789,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTTG",
             index=0,
             statictext=true,
@@ -16370,7 +16800,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRTTG",
             index=1,
             statictext=true,
@@ -16382,7 +16813,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTTG1",
             index=0,
             statictext=false,
@@ -16392,7 +16824,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="STRTTG1",
             index=1,
             statictext=false,
@@ -16402,7 +16835,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRTTG1",
             index=2,
             statictext=false,
@@ -16412,7 +16846,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRTTG1",
             index=3,
             statictext=false,
@@ -16424,7 +16859,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTTG2",
             index=0,
             statictext=false,
@@ -16434,7 +16870,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="STRTTG2",
             index=1,
             statictext=false,
@@ -16444,7 +16881,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRTTG2",
             index=2,
             statictext=false,
@@ -16454,7 +16892,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRTTG2",
             index=3,
             statictext=false,
@@ -16466,7 +16905,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTTG3",
             index=0,
             statictext=false,
@@ -16476,7 +16916,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="STRTTG3",
             index=1,
             statictext=false,
@@ -16486,7 +16927,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "UPDATE"},
+                "UPDATE"
+            },
             id="STRTTG3",
             index=2,
             statictext=false,
@@ -16496,7 +16938,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRTTG3",
             index=3,
             statictext=false,
@@ -16508,7 +16951,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTTG4",
             index=0,
             statictext=false,
@@ -16518,7 +16962,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRTTG4",
             index=1,
             statictext=false,
@@ -16530,7 +16975,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRTTG5",
             index=0,
             statictext=false,
@@ -16540,7 +16986,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="STRTTG5",
             index=1,
             statictext=false,
@@ -16552,7 +16999,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRWindDirection1",
             index=0,
             statictext=false,
@@ -16564,7 +17012,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRWindDirection2",
             index=0,
             statictext=false,
@@ -16576,7 +17025,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRWindSpeed1",
             index=0,
             statictext=false,
@@ -16588,7 +17038,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="STRWindSpeed2",
             index=0,
             statictext=false,
@@ -16600,7 +17051,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSSTAT"},
+                "DTSSTAT"
+            },
             id="ST_ST",
             index=0,
             statictext=true,
@@ -16612,7 +17064,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="SUCCESSFUL",
             index=0,
             statictext=true,
@@ -16624,7 +17077,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="SUFKEYS",
             index=0,
             statictext=true,
@@ -16637,7 +17091,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "ALIGN",
-                "ALTALGN"},
+                "ALTALGN"
+            },
             id="T",
             index=0,
             statictext=true,
@@ -16649,7 +17104,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "FLDINFO"},
+                "FLDINFO"
+            },
             id="TAC",
             index=0,
             statictext=true,
@@ -16661,7 +17117,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "OFFSET"},
+                "OFFSET"
+            },
             id="TARGET_MARK",
             index=0,
             statictext=true,
@@ -16673,7 +17130,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="TAS",
             index=0,
             statictext=true,
@@ -16685,7 +17143,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="TAS_ST",
             index=0,
             statictext=false,
@@ -16697,7 +17156,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="TAS_ST1",
             index=0,
             statictext=false,
@@ -16709,7 +17169,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="TAS_VAL",
             index=0,
             statictext=false,
@@ -16721,7 +17182,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="TEMP",
             index=0,
             statictext=true,
@@ -16733,7 +17195,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="TEMP_ST",
             index=0,
             statictext=false,
@@ -16745,7 +17208,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="TEMP_ST1",
             index=0,
             statictext=false,
@@ -16757,7 +17221,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "CADC"},
+                "CADC"
+            },
             id="TEMP_VAL",
             index=0,
             statictext=false,
@@ -16769,7 +17234,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LRUTEST"},
+                "LRUTEST"
+            },
             id="TEST_MODE0",
             index=0,
             statictext=false,
@@ -16781,7 +17247,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LRUTEST"},
+                "LRUTEST"
+            },
             id="TEST_MODE1",
             index=0,
             statictext=false,
@@ -16793,7 +17260,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LRUTEST"},
+                "LRUTEST"
+            },
             id="TEST_MODE2",
             index=0,
             statictext=false,
@@ -16805,7 +17273,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LRUTEST"},
+                "LRUTEST"
+            },
             id="TEST_MODE4",
             index=0,
             statictext=false,
@@ -16817,7 +17286,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LRUTEST"},
+                "LRUTEST"
+            },
             id="TEST_SA",
             index=0,
             statictext=false,
@@ -16829,7 +17299,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LRUTEST"},
+                "LRUTEST"
+            },
             id="TEST_SA1",
             index=0,
             statictext=false,
@@ -16841,7 +17312,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "LRUTEST"},
+                "LRUTEST"
+            },
             id="TEST_SA2",
             index=0,
             statictext=false,
@@ -16853,7 +17325,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="TGTSYM_NEW_WPT",
             index=0,
             statictext=true,
@@ -16865,7 +17338,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "NAV"},
+                "NAV"
+            },
             id="TIME",
             index=0,
             statictext=true,
@@ -16875,7 +17349,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "BITBALL"},
+                "BITBALL"
+            },
             id="TIME",
             index=1,
             statictext=true,
@@ -16885,7 +17360,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "GPS"},
+                "GPS"
+            },
             id="TIME",
             index=2,
             statictext=true,
@@ -16897,7 +17373,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="TOT",
             index=0,
             statictext=true,
@@ -16909,7 +17386,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ANCHOR"},
+                "ANCHOR"
+            },
             id="TTG",
             index=0,
             statictext=true,
@@ -16921,7 +17399,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="TempC",
             index=0,
             statictext=false,
@@ -16933,7 +17412,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="TempF",
             index=0,
             statictext=false,
@@ -16945,7 +17425,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "POSINFO"},
+                "POSINFO"
+            },
             id="TempRotary",
             index=0,
             statictext=true,
@@ -16957,7 +17438,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "NAV"},
+                "NAV"
+            },
             id="UPDATE",
             index=0,
             statictext=true,
@@ -16967,7 +17449,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "INS"},
+                "INS"
+            },
             id="UPDATE",
             index=1,
             statictext=true,
@@ -16979,7 +17462,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT1"},
+                "GPSSTAT1"
+            },
             id="UTC",
             index=0,
             statictext=true,
@@ -16991,7 +17475,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT1"},
+                "GPSSTAT1"
+            },
             id="UTCs",
             index=0,
             statictext=false,
@@ -17003,7 +17488,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "GPSSTAT1"},
+                "GPSSTAT1"
+            },
             id="UTCs1",
             index=0,
             statictext=false,
@@ -17016,7 +17502,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "WPTATT",
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="VANGLE",
             index=0,
             statictext=false,
@@ -17026,7 +17513,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="VANGLE",
             index=1,
             statictext=false,
@@ -17039,7 +17527,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "WPTATT",
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="VANGLEEntry",
             index=0,
             statictext=false,
@@ -17049,7 +17538,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="VANGLEEntry",
             index=1,
             statictext=false,
@@ -17062,7 +17552,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "WPTATT",
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="VANGLEMode",
             index=0,
             statictext=false,
@@ -17072,7 +17563,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="VANGLEMode",
             index=1,
             statictext=false,
@@ -17085,7 +17577,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "WPTATT",
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="VANGLEMode1",
             index=0,
             statictext=false,
@@ -17095,7 +17588,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="VANGLEMode1",
             index=1,
             statictext=false,
@@ -17108,7 +17602,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "WPTATT",
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="VANGLEValue",
             index=0,
             statictext=false,
@@ -17118,7 +17613,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="VANGLEValue",
             index=1,
             statictext=false,
@@ -17130,7 +17626,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "BBCTL"},
+                "BBCTL"
+            },
             id="VIEW1",
             index=0,
             statictext=true,
@@ -17142,7 +17639,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "BBCTL"},
+                "BBCTL"
+            },
             id="VIEW2",
             index=0,
             statictext=true,
@@ -17154,7 +17652,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "BBCTL"},
+                "BBCTL"
+            },
             id="VIEW3",
             index=0,
             statictext=true,
@@ -17166,7 +17665,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "BBCTL"},
+                "BBCTL"
+            },
             id="VIEW4",
             index=0,
             statictext=true,
@@ -17178,7 +17678,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "BBCTL"},
+                "BBCTL"
+            },
             id="VIEW5",
             index=0,
             statictext=true,
@@ -17191,7 +17692,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "WPTATT",
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="VNAV_MODE",
             index=0,
             statictext=true,
@@ -17201,7 +17703,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ATTRIB"},
+                "ATTRIB"
+            },
             id="VNAV_MODE",
             index=1,
             statictext=true,
@@ -17213,7 +17716,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSAS"},
+                "DTSAS"
+            },
             id="VPU",
             index=0,
             statictext=true,
@@ -17225,7 +17729,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "DTSSTAT"},
+                "DTSSTAT"
+            },
             id="VRSN",
             index=0,
             statictext=true,
@@ -17238,7 +17743,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "EGI3",
-                "EGI4"},
+                "EGI4"
+            },
             id="WARCODE",
             index=0,
             statictext=true,
@@ -17251,7 +17757,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "EGI3",
-                "EGI4"},
+                "EGI4"
+            },
             id="WARNING",
             index=0,
             statictext=true,
@@ -17263,7 +17770,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "STRINFO"},
+                "STRINFO"
+            },
             id="WAYPOINT",
             index=0,
             statictext=true,
@@ -17273,7 +17781,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WAYPOINT",
             index=1,
             statictext=true,
@@ -17283,7 +17792,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WPMENU"},
+                "WPMENU"
+            },
             id="WAYPOINT",
             index=2,
             statictext=true,
@@ -17295,7 +17805,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass",
             index=0,
             statictext=false,
@@ -17307,7 +17818,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass1",
             index=0,
             statictext=false,
@@ -17319,7 +17831,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass10",
             index=0,
             statictext=false,
@@ -17331,7 +17844,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass11",
             index=0,
             statictext=false,
@@ -17343,7 +17857,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass12",
             index=0,
             statictext=false,
@@ -17355,7 +17870,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass13",
             index=0,
             statictext=false,
@@ -17367,7 +17883,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass14",
             index=0,
             statictext=false,
@@ -17379,7 +17896,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass15",
             index=0,
             statictext=false,
@@ -17391,7 +17909,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass16",
             index=0,
             statictext=false,
@@ -17403,7 +17922,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass17",
             index=0,
             statictext=false,
@@ -17415,7 +17935,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass18",
             index=0,
             statictext=false,
@@ -17427,7 +17948,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass19",
             index=0,
             statictext=false,
@@ -17439,7 +17961,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass2",
             index=0,
             statictext=false,
@@ -17451,7 +17974,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass20",
             index=0,
             statictext=false,
@@ -17463,7 +17987,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass21",
             index=0,
             statictext=false,
@@ -17475,7 +18000,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass3",
             index=0,
             statictext=false,
@@ -17487,7 +18013,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass4",
             index=0,
             statictext=false,
@@ -17499,7 +18026,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass5",
             index=0,
             statictext=false,
@@ -17511,7 +18039,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass6",
             index=0,
             statictext=false,
@@ -17523,7 +18052,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass7",
             index=0,
             statictext=false,
@@ -17535,7 +18065,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass8",
             index=0,
             statictext=false,
@@ -17547,7 +18078,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTClass9",
             index=0,
             statictext=false,
@@ -17559,7 +18091,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTCoordFormat",
             index=0,
             statictext=false,
@@ -17571,7 +18104,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTCoordFormat1",
             index=0,
             statictext=false,
@@ -17583,7 +18117,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTDATA_ENTRY",
             index=0,
             statictext=false,
@@ -17595,7 +18130,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTDATA_ENTRY1",
             index=0,
             statictext=false,
@@ -17607,7 +18143,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTIdent",
             index=0,
             statictext=false,
@@ -17617,7 +18154,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTIdent",
             index=1,
             statictext=false,
@@ -17630,7 +18168,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "WPINFO",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTIdent1",
             index=0,
             statictext=false,
@@ -17640,7 +18179,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTIdent1",
             index=1,
             statictext=false,
@@ -17652,7 +18192,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WAYPTIdent2",
             index=0,
             statictext=false,
@@ -17666,7 +18207,8 @@ ExportScript.AF.CDUIndicatorData={
             cdu_pages={
                 "ACCREJ",
                 "UPDATE",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTLat",
             index=0,
             statictext=false,
@@ -17680,7 +18222,8 @@ ExportScript.AF.CDUIndicatorData={
             cdu_pages={
                 "ACCREJ",
                 "UPDATE",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTLatUTM",
             index=0,
             statictext=false,
@@ -17694,7 +18237,8 @@ ExportScript.AF.CDUIndicatorData={
             cdu_pages={
                 "ACCREJ",
                 "UPDATE",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTLong",
             index=0,
             statictext=false,
@@ -17708,7 +18252,8 @@ ExportScript.AF.CDUIndicatorData={
             cdu_pages={
                 "ACCREJ",
                 "UPDATE",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTLongMGRS",
             index=0,
             statictext=false,
@@ -17722,7 +18267,8 @@ ExportScript.AF.CDUIndicatorData={
             cdu_pages={
                 "ACCREJ",
                 "UPDATE",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTMGRS",
             index=0,
             statictext=false,
@@ -17734,7 +18280,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTNumber",
             index=0,
             statictext=false,
@@ -17744,7 +18291,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTNumber",
             index=1,
             statictext=false,
@@ -17757,7 +18305,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "WPINFO",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTNumber1",
             index=0,
             statictext=false,
@@ -17767,7 +18316,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTNumber1",
             index=1,
             statictext=false,
@@ -17779,7 +18329,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WAYPTNumber2",
             index=0,
             statictext=false,
@@ -17791,7 +18342,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTScale",
             index=0,
             statictext=false,
@@ -17803,7 +18355,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTScale1",
             index=0,
             statictext=false,
@@ -17815,7 +18368,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTScale2",
             index=0,
             statictext=false,
@@ -17827,7 +18381,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTScale3",
             index=0,
             statictext=false,
@@ -17839,7 +18394,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTScale4",
             index=0,
             statictext=false,
@@ -17851,7 +18407,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTSteer",
             index=0,
             statictext=false,
@@ -17863,7 +18420,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTSteer1",
             index=0,
             statictext=false,
@@ -17875,7 +18433,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTSteer2",
             index=0,
             statictext=false,
@@ -17887,7 +18446,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTSteer4",
             index=0,
             statictext=false,
@@ -17901,7 +18461,8 @@ ExportScript.AF.CDUIndicatorData={
             cdu_pages={
                 "ACCREJ",
                 "UPDATE",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTUTM",
             index=0,
             statictext=false,
@@ -17913,7 +18474,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTVNavMode",
             index=0,
             statictext=false,
@@ -17925,7 +18487,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTVNavMode1",
             index=0,
             statictext=false,
@@ -17937,7 +18500,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPTVNavMode2",
             index=0,
             statictext=false,
@@ -17949,7 +18513,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTWindDirection1",
             index=0,
             statictext=false,
@@ -17961,7 +18526,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTWindDirection2",
             index=0,
             statictext=false,
@@ -17973,7 +18539,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTWindSpeed1",
             index=0,
             statictext=false,
@@ -17985,7 +18552,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPTWindSpeed2",
             index=0,
             statictext=false,
@@ -17997,7 +18565,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPT_CR_FLAG",
             index=0,
             statictext=false,
@@ -18009,7 +18578,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPT_CR_FLAG1",
             index=0,
             statictext=false,
@@ -18021,7 +18591,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPT_DTOT",
             index=0,
             statictext=false,
@@ -18031,7 +18602,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPT_DTOT",
             index=1,
             statictext=false,
@@ -18043,7 +18615,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPT_DTOT1",
             index=0,
             statictext=false,
@@ -18053,7 +18626,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPT_DTOT1",
             index=1,
             statictext=false,
@@ -18065,7 +18639,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPT_DTTG",
             index=0,
             statictext=false,
@@ -18077,7 +18652,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WAYPT_DTTG1",
             index=0,
             statictext=false,
@@ -18089,7 +18665,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPT_EL1",
             index=0,
             statictext=false,
@@ -18101,7 +18678,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPT_EL2",
             index=0,
             statictext=false,
@@ -18113,7 +18691,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPT_EL3",
             index=0,
             statictext=false,
@@ -18126,7 +18705,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="LFT",
             cdu_pages={
                 "WPINFO",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WAYPT_INCR_DECR",
             index=0,
             statictext=true,
@@ -18138,7 +18718,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "ACCREJ"},
+                "ACCREJ"
+            },
             id="WE",
             index=0,
             statictext=true,
@@ -18150,7 +18731,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "ACCREJ"},
+                "ACCREJ"
+            },
             id="WE_ERR",
             index=0,
             statictext=false,
@@ -18162,7 +18744,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="WIND",
             index=0,
             statictext=true,
@@ -18172,7 +18755,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WIND",
             index=1,
             statictext=true,
@@ -18184,7 +18768,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDALT",
             index=0,
             statictext=false,
@@ -18194,7 +18779,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDALT",
             index=1,
             statictext=false,
@@ -18204,7 +18790,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDALT",
             index=2,
             statictext=false,
@@ -18214,7 +18801,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDALT",
             index=3,
             statictext=false,
@@ -18226,7 +18814,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDALT1",
             index=0,
             statictext=false,
@@ -18236,7 +18825,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDALT1",
             index=1,
             statictext=false,
@@ -18246,7 +18836,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDALT1",
             index=2,
             statictext=false,
@@ -18256,7 +18847,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDALT1",
             index=3,
             statictext=false,
@@ -18268,7 +18860,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDALT2",
             index=0,
             statictext=false,
@@ -18278,7 +18871,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDALT2",
             index=1,
             statictext=false,
@@ -18288,7 +18882,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDALT2",
             index=2,
             statictext=false,
@@ -18298,7 +18893,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDALT2",
             index=3,
             statictext=false,
@@ -18310,7 +18906,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDALT3",
             index=0,
             statictext=false,
@@ -18320,7 +18917,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDALT3",
             index=1,
             statictext=false,
@@ -18332,7 +18930,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WINDCLRMODE",
             index=0,
             statictext=false,
@@ -18344,7 +18943,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WINDCLRMODE1",
             index=0,
             statictext=false,
@@ -18356,7 +18956,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WINDCLRMODE2",
             index=0,
             statictext=false,
@@ -18368,7 +18969,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDATA_ENTRY",
             index=0,
             statictext=false,
@@ -18378,7 +18980,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDATA_ENTRY",
             index=1,
             statictext=false,
@@ -18390,7 +18993,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDATA_ENTRY1",
             index=0,
             statictext=false,
@@ -18400,7 +19004,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDATA_ENTRY1",
             index=1,
             statictext=false,
@@ -18412,7 +19017,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDATA_ENTRY2",
             index=0,
             statictext=false,
@@ -18422,7 +19028,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDATA_ENTRY2",
             index=1,
             statictext=false,
@@ -18434,7 +19041,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDATA_ENTRY3",
             index=0,
             statictext=false,
@@ -18444,7 +19052,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDATA_ENTRY3",
             index=1,
             statictext=false,
@@ -18456,7 +19065,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDATA_ENTRY4",
             index=0,
             statictext=false,
@@ -18466,7 +19076,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDATA_ENTRY4",
             index=1,
             statictext=false,
@@ -18478,7 +19089,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDATA_ENTRY5",
             index=0,
             statictext=false,
@@ -18488,7 +19100,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDATA_ENTRY5",
             index=1,
             statictext=false,
@@ -18500,7 +19113,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDATA_ENTRY6",
             index=0,
             statictext=false,
@@ -18512,7 +19126,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDATA_ENTRY7",
             index=0,
             statictext=false,
@@ -18524,7 +19139,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDDIV",
             index=0,
             statictext=false,
@@ -18534,7 +19150,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDIV",
             index=1,
             statictext=false,
@@ -18544,7 +19161,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDIV",
             index=2,
             statictext=false,
@@ -18554,7 +19172,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDIV",
             index=3,
             statictext=false,
@@ -18566,7 +19185,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDDIV1",
             index=0,
             statictext=false,
@@ -18576,7 +19196,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDIV1",
             index=1,
             statictext=false,
@@ -18586,7 +19207,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDIV1",
             index=2,
             statictext=false,
@@ -18596,7 +19218,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDIV1",
             index=3,
             statictext=false,
@@ -18608,7 +19231,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDDIV2",
             index=0,
             statictext=false,
@@ -18618,7 +19242,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDIV2",
             index=1,
             statictext=false,
@@ -18628,7 +19253,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDIV2",
             index=2,
             statictext=false,
@@ -18638,7 +19264,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDIV2",
             index=3,
             statictext=false,
@@ -18650,7 +19277,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDIV3",
             index=0,
             statictext=false,
@@ -18660,7 +19288,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDIV3",
             index=1,
             statictext=false,
@@ -18672,7 +19301,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDDir",
             index=0,
             statictext=false,
@@ -18684,7 +19314,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDDir1",
             index=0,
             statictext=false,
@@ -18696,7 +19327,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDDirSpeed",
             index=0,
             statictext=false,
@@ -18706,7 +19338,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDirSpeed",
             index=1,
             statictext=false,
@@ -18716,7 +19349,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDirSpeed",
             index=2,
             statictext=false,
@@ -18726,7 +19360,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDirSpeed",
             index=3,
             statictext=false,
@@ -18738,7 +19373,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDDirSpeed1",
             index=0,
             statictext=false,
@@ -18748,7 +19384,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDirSpeed1",
             index=1,
             statictext=false,
@@ -18758,7 +19395,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDirSpeed1",
             index=2,
             statictext=false,
@@ -18768,7 +19406,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDirSpeed1",
             index=3,
             statictext=false,
@@ -18780,7 +19419,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDDirSpeed2",
             index=0,
             statictext=false,
@@ -18790,7 +19430,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDirSpeed2",
             index=1,
             statictext=false,
@@ -18800,7 +19441,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDirSpeed2",
             index=2,
             statictext=false,
@@ -18810,7 +19452,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDirSpeed2",
             index=3,
             statictext=false,
@@ -18822,7 +19465,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDDirSpeed3",
             index=0,
             statictext=false,
@@ -18832,7 +19476,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDirSpeed3",
             index=1,
             statictext=false,
@@ -18842,7 +19487,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDirSpeed3",
             index=2,
             statictext=false,
@@ -18852,7 +19498,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDirSpeed3",
             index=3,
             statictext=false,
@@ -18864,7 +19511,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDirSpeed4",
             index=0,
             statictext=false,
@@ -18874,7 +19522,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDirSpeed4",
             index=1,
             statictext=false,
@@ -18884,7 +19533,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDirSpeed4",
             index=2,
             statictext=false,
@@ -18896,7 +19546,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDirSpeed5",
             index=0,
             statictext=false,
@@ -18906,7 +19557,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDDirSpeed5",
             index=1,
             statictext=false,
@@ -18916,7 +19568,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDirSpeed5",
             index=2,
             statictext=false,
@@ -18928,7 +19581,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDirSpeed6",
             index=0,
             statictext=false,
@@ -18938,7 +19592,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDirSpeed6",
             index=1,
             statictext=false,
@@ -18950,7 +19605,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDDirSpeed7",
             index=0,
             statictext=false,
@@ -18960,7 +19616,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDDirSpeed7",
             index=1,
             statictext=false,
@@ -18972,7 +19629,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WINDMODE",
             index=0,
             statictext=true,
@@ -18984,7 +19642,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WINDMODE1",
             index=0,
             statictext=false,
@@ -18996,7 +19655,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WINDMODE2",
             index=0,
             statictext=false,
@@ -19008,7 +19668,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WINDMODE3",
             index=0,
             statictext=false,
@@ -19020,7 +19681,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WINDMODE4",
             index=0,
             statictext=false,
@@ -19032,7 +19694,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDSpeed",
             index=0,
             statictext=false,
@@ -19042,7 +19705,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDSpeed",
             index=1,
             statictext=false,
@@ -19052,7 +19716,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDSpeed",
             index=2,
             statictext=false,
@@ -19062,7 +19727,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDSpeed",
             index=3,
             statictext=false,
@@ -19074,7 +19740,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDSpeed1",
             index=0,
             statictext=false,
@@ -19084,7 +19751,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDSpeed1",
             index=1,
             statictext=false,
@@ -19094,7 +19762,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDSpeed1",
             index=2,
             statictext=false,
@@ -19104,7 +19773,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDSpeed1",
             index=3,
             statictext=false,
@@ -19116,7 +19786,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDSpeed2",
             index=0,
             statictext=false,
@@ -19126,7 +19797,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDSpeed2",
             index=1,
             statictext=false,
@@ -19136,7 +19808,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDSpeed2",
             index=2,
             statictext=false,
@@ -19146,7 +19819,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDSpeed2",
             index=3,
             statictext=false,
@@ -19158,7 +19832,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDSpeed3",
             index=0,
             statictext=false,
@@ -19168,7 +19843,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDSpeed3",
             index=1,
             statictext=false,
@@ -19178,7 +19854,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDSpeed3",
             index=2,
             statictext=false,
@@ -19188,7 +19865,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDSpeed3",
             index=3,
             statictext=false,
@@ -19200,7 +19878,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDSpeed4",
             index=0,
             statictext=false,
@@ -19210,7 +19889,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDSpeed4",
             index=1,
             statictext=false,
@@ -19220,7 +19900,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDSpeed4",
             index=2,
             statictext=false,
@@ -19230,7 +19911,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDSpeed4",
             index=3,
             statictext=false,
@@ -19242,7 +19924,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDSpeed5",
             index=0,
             statictext=false,
@@ -19252,7 +19935,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDSpeed5",
             index=1,
             statictext=false,
@@ -19262,7 +19946,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDSpeed5",
             index=2,
             statictext=false,
@@ -19272,7 +19957,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDSpeed5",
             index=3,
             statictext=false,
@@ -19284,7 +19970,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDSpeed6",
             index=0,
             statictext=false,
@@ -19294,7 +19981,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDSpeed6",
             index=1,
             statictext=false,
@@ -19306,7 +19994,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDSpeed7",
             index=0,
             statictext=false,
@@ -19316,7 +20005,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDSpeed7",
             index=1,
             statictext=false,
@@ -19329,7 +20019,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "WIND",
-                "WNDEDIT"},
+                "WNDEDIT"
+            },
             id="WINDTemp",
             index=0,
             statictext=false,
@@ -19339,7 +20030,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDTemp",
             index=1,
             statictext=false,
@@ -19349,7 +20041,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp",
             index=2,
             statictext=false,
@@ -19359,7 +20052,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDTemp",
             index=3,
             statictext=false,
@@ -19369,7 +20063,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp",
             index=4,
             statictext=false,
@@ -19382,7 +20077,8 @@ ExportScript.AF.CDUIndicatorData={
             alignment="RGHT",
             cdu_pages={
                 "WIND",
-                "WNDEDIT"},
+                "WNDEDIT"
+            },
             id="WINDTemp1",
             index=0,
             statictext=false,
@@ -19392,7 +20088,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDTemp1",
             index=1,
             statictext=false,
@@ -19402,7 +20099,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp1",
             index=2,
             statictext=false,
@@ -19412,7 +20110,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDTemp1",
             index=3,
             statictext=false,
@@ -19422,7 +20121,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp1",
             index=4,
             statictext=false,
@@ -19434,7 +20134,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp10",
             index=0,
             statictext=false,
@@ -19444,7 +20145,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp10",
             index=1,
             statictext=false,
@@ -19456,7 +20158,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp11",
             index=0,
             statictext=false,
@@ -19466,7 +20169,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp11",
             index=1,
             statictext=false,
@@ -19478,7 +20182,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp12",
             index=0,
             statictext=false,
@@ -19490,7 +20195,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDTemp2",
             index=0,
             statictext=false,
@@ -19500,7 +20206,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp2",
             index=1,
             statictext=false,
@@ -19510,7 +20217,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDTemp2",
             index=2,
             statictext=false,
@@ -19520,7 +20228,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp2",
             index=3,
             statictext=false,
@@ -19532,7 +20241,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDTemp3",
             index=0,
             statictext=false,
@@ -19542,7 +20252,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp3",
             index=1,
             statictext=false,
@@ -19552,7 +20263,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDTemp3",
             index=2,
             statictext=false,
@@ -19564,7 +20276,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDTemp4",
             index=0,
             statictext=false,
@@ -19574,7 +20287,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp4",
             index=1,
             statictext=false,
@@ -19584,7 +20298,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDTemp4",
             index=2,
             statictext=false,
@@ -19594,7 +20309,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp4",
             index=3,
             statictext=false,
@@ -19606,7 +20322,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDTemp5",
             index=0,
             statictext=false,
@@ -19616,7 +20333,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp5",
             index=1,
             statictext=false,
@@ -19626,7 +20344,8 @@ ExportScript.AF.CDUIndicatorData={
         {
             alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDTemp5",
             index=2,
             statictext=false,
@@ -19634,9 +20353,10 @@ ExportScript.AF.CDUIndicatorData={
             y=7
         },
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp5",
             index=3,
             statictext=false,
@@ -19646,9 +20366,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WINDTemp6={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDTemp6",
             index=0,
             statictext=false,
@@ -19656,9 +20377,10 @@ ExportScript.AF.CDUIndicatorData={
             y=9
         },
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp6",
             index=1,
             statictext=false,
@@ -19666,9 +20388,10 @@ ExportScript.AF.CDUIndicatorData={
             y=7
         },
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDTemp6",
             index=2,
             statictext=false,
@@ -19676,9 +20399,10 @@ ExportScript.AF.CDUIndicatorData={
             y=9
         },
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp6",
             index=3,
             statictext=false,
@@ -19688,9 +20412,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WINDTemp7={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDTemp7",
             index=0,
             statictext=false,
@@ -19698,9 +20423,10 @@ ExportScript.AF.CDUIndicatorData={
             y=9
         },
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp7",
             index=1,
             statictext=false,
@@ -19708,9 +20434,10 @@ ExportScript.AF.CDUIndicatorData={
             y=7
         },
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDTemp7",
             index=2,
             statictext=false,
@@ -19718,9 +20445,10 @@ ExportScript.AF.CDUIndicatorData={
             y=9
         },
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp7",
             index=3,
             statictext=false,
@@ -19730,9 +20458,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WINDTemp8={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND1"},
+                "WIND1"
+            },
             id="WINDTemp8",
             index=0,
             statictext=false,
@@ -19740,9 +20469,10 @@ ExportScript.AF.CDUIndicatorData={
             y=9
         },
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp8",
             index=1,
             statictext=false,
@@ -19750,9 +20480,10 @@ ExportScript.AF.CDUIndicatorData={
             y=7
         },
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WINDTemp8",
             index=2,
             statictext=false,
@@ -19760,9 +20491,10 @@ ExportScript.AF.CDUIndicatorData={
             y=9
         },
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp8",
             index=3,
             statictext=false,
@@ -19772,9 +20504,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WINDTemp9={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND2"},
+                "WIND2"
+            },
             id="WINDTemp9",
             index=0,
             statictext=false,
@@ -19782,9 +20515,10 @@ ExportScript.AF.CDUIndicatorData={
             y=9
         },
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WNDEDIT2"},
+                "WNDEDIT2"
+            },
             id="WINDTemp9",
             index=1,
             statictext=false,
@@ -19794,9 +20528,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WIND_ALT_TEMP={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WNDEDIT1"},
+                "WNDEDIT1"
+            },
             id="WIND_ALT_TEMP",
             index=0,
             statictext=true,
@@ -19806,10 +20541,11 @@ ExportScript.AF.CDUIndicatorData={
     },
     WND={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
                 "STRINFO",
-                "WAYPT1"},
+                "WAYPT1"
+            },
             id="WND",
             index=0,
             statictext=true,
@@ -19819,10 +20555,11 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDDIV={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
                 "WIND",
-                "WNDEDIT"},
+                "WNDEDIT"
+            },
             id="WNDDIV",
             index=0,
             statictext=false,
@@ -19832,9 +20569,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDEDIT={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WNDEDIT",
             index=0,
             statictext=true,
@@ -19844,9 +20582,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDEDWindDirection1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WNDEDIT"},
+                "WNDEDIT"
+            },
             id="WNDEDWindDirection1",
             index=0,
             statictext=false,
@@ -19856,9 +20595,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDEDWindDirection2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WNDEDIT"},
+                "WNDEDIT"
+            },
             id="WNDEDWindDirection2",
             index=0,
             statictext=false,
@@ -19868,9 +20608,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDEDWindSpeed1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WNDEDIT"},
+                "WNDEDIT"
+            },
             id="WNDEDWindSpeed1",
             index=0,
             statictext=false,
@@ -19880,9 +20621,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDEDWindSpeed2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WNDEDIT"},
+                "WNDEDIT"
+            },
             id="WNDEDWindSpeed2",
             index=0,
             statictext=false,
@@ -19892,9 +20634,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDWindDirection1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WNDWindDirection1",
             index=0,
             statictext=false,
@@ -19904,9 +20647,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDWindDirection2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WNDWindDirection2",
             index=0,
             statictext=false,
@@ -19916,9 +20660,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDWindSpeed1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WNDWindSpeed1",
             index=0,
             statictext=false,
@@ -19928,9 +20673,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WNDWindSpeed2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WIND"},
+                "WIND"
+            },
             id="WNDWindSpeed2",
             index=0,
             statictext=false,
@@ -19940,9 +20686,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPActive={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPActive",
             index=0,
             statictext=false,
@@ -19952,9 +20699,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPActive1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPActive1",
             index=0,
             statictext=false,
@@ -19964,9 +20712,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPActive2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPActive2",
             index=0,
             statictext=false,
@@ -19976,9 +20725,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPActive3={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPActive3",
             index=0,
             statictext=false,
@@ -19988,9 +20738,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPActive4={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPActive4",
             index=0,
             statictext=false,
@@ -20000,9 +20751,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPActive5={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPActive5",
             index=0,
             statictext=false,
@@ -20012,9 +20764,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPActive6={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPActive6",
             index=0,
             statictext=false,
@@ -20024,9 +20777,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPActive7={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPActive7",
             index=0,
             statictext=false,
@@ -20036,9 +20790,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPFPNumber={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPFPNumber",
             index=0,
             statictext=false,
@@ -20048,9 +20803,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPFPNumber1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPFPNumber1",
             index=0,
             statictext=false,
@@ -20060,9 +20816,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPFPNumber2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPFPNumber2",
             index=0,
             statictext=false,
@@ -20072,9 +20829,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPInput={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPInput",
             index=0,
             statictext=false,
@@ -20084,9 +20842,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPInput1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPInput1",
             index=0,
             statictext=false,
@@ -20096,9 +20855,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPInput2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPInput2",
             index=0,
             statictext=false,
@@ -20108,9 +20868,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPN_EVENTS={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="WPN_EVENTS",
             index=0,
             statictext=true,
@@ -20120,9 +20881,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPN_EVENTS1={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="WPN_EVENTS1",
             index=0,
             statictext=false,
@@ -20132,9 +20894,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPName={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPName",
             index=0,
             statictext=false,
@@ -20144,9 +20907,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPName1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPName1",
             index=0,
             statictext=false,
@@ -20156,9 +20920,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPName2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPName2",
             index=0,
             statictext=false,
@@ -20168,9 +20933,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPName3={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPName3",
             index=0,
             statictext=false,
@@ -20180,9 +20946,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPName4={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPName4",
             index=0,
             statictext=false,
@@ -20192,9 +20959,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPName5={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPName5",
             index=0,
             statictext=false,
@@ -20204,9 +20972,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPName6={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPName6",
             index=0,
             statictext=false,
@@ -20216,9 +20985,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPName7={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPName7",
             index=0,
             statictext=false,
@@ -20228,9 +20998,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNewName={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNewName",
             index=0,
             statictext=false,
@@ -20240,9 +21011,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNewName1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNewName1",
             index=0,
             statictext=false,
@@ -20252,9 +21024,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNewName2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNewName2",
             index=0,
             statictext=false,
@@ -20264,9 +21037,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNewName3={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNewName3",
             index=0,
             statictext=false,
@@ -20276,9 +21050,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNewName4={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNewName4",
             index=0,
             statictext=false,
@@ -20288,9 +21063,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNewName5={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNewName5",
             index=0,
             statictext=false,
@@ -20300,9 +21076,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNumber={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNumber",
             index=0,
             statictext=false,
@@ -20312,9 +21089,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNumber1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNumber1",
             index=0,
             statictext=false,
@@ -20324,9 +21102,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNumber2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNumber2",
             index=0,
             statictext=false,
@@ -20336,9 +21115,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNumber3={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNumber3",
             index=0,
             statictext=false,
@@ -20348,9 +21128,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNumber4={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNumber4",
             index=0,
             statictext=false,
@@ -20360,9 +21141,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNumber5={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNumber5",
             index=0,
             statictext=false,
@@ -20372,9 +21154,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNumber6={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNumber6",
             index=0,
             statictext=false,
@@ -20384,9 +21167,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPNumber7={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPNumber7",
             index=0,
             statictext=false,
@@ -20396,10 +21180,11 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPT={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
                 "WPTATT",
-                "WAYPT2"},
+                "WAYPT2"
+            },
             id="WPT",
             index=0,
             statictext=false,
@@ -20409,9 +21194,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPTATT",
             index=0,
             statictext=false,
@@ -20421,9 +21207,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTBranch={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPTATTBranch",
             index=0,
             statictext=false,
@@ -20433,9 +21220,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTBranch1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPTATTBranch1",
             index=0,
             statictext=false,
@@ -20445,9 +21233,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTBranch2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "FPBUILD"},
+                "FPBUILD"
+            },
             id="WPTATTBranch2",
             index=0,
             statictext=false,
@@ -20457,9 +21246,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTScale={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTScale",
             index=0,
             statictext=false,
@@ -20469,9 +21259,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTScale1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTScale1",
             index=0,
             statictext=false,
@@ -20481,9 +21272,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTScale2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTScale2",
             index=0,
             statictext=false,
@@ -20493,9 +21285,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTScale3={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTScale3",
             index=0,
             statictext=false,
@@ -20505,9 +21298,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTScale4={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTScale4",
             index=0,
             statictext=false,
@@ -20517,9 +21311,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTSteer={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTSteer",
             index=0,
             statictext=false,
@@ -20529,9 +21324,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTSteer1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTSteer1",
             index=0,
             statictext=false,
@@ -20541,9 +21337,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTSteer2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTSteer2",
             index=0,
             statictext=false,
@@ -20553,9 +21350,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTSteer4={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTSteer4",
             index=0,
             statictext=false,
@@ -20565,9 +21363,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTVNavMode={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTVNavMode",
             index=0,
             statictext=false,
@@ -20577,9 +21376,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTVNavMode1={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTVNavMode1",
             index=0,
             statictext=false,
@@ -20589,9 +21389,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATTVNavMode2={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATTVNavMode2",
             index=0,
             statictext=false,
@@ -20601,9 +21402,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT_DTOT={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATT_DTOT",
             index=0,
             statictext=false,
@@ -20613,9 +21415,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT_DTOT1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATT_DTOT1",
             index=0,
             statictext=false,
@@ -20625,9 +21428,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT_DTOT_ST={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATT_DTOT_ST",
             index=0,
             statictext=true,
@@ -20637,9 +21441,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT_DTTG={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATT_DTTG",
             index=0,
             statictext=false,
@@ -20649,9 +21454,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT_DTTG1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATT_DTTG1",
             index=0,
             statictext=false,
@@ -20661,9 +21467,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT_DTTG_ST={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATT_DTTG_ST",
             index=0,
             statictext=true,
@@ -20673,9 +21480,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT_FP_Number={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATT_FP_Number",
             index=0,
             statictext=false,
@@ -20685,9 +21493,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT_WPT_Name={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATT_WPT_Name",
             index=0,
             statictext=false,
@@ -20697,9 +21506,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTATT_WPT_Number={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPTATT"},
+                "WPTATT"
+            },
             id="WPTATT_WPT_Number",
             index=0,
             statictext=false,
@@ -20709,9 +21519,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTDIS1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WPTDIS1",
             index=0,
             statictext=false,
@@ -20721,9 +21532,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTDIS2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WPTDIS2",
             index=0,
             statictext=false,
@@ -20733,9 +21545,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTDISMH={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WPTDISMH",
             index=0,
             statictext=true,
@@ -20745,9 +21558,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTMH1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WPTMH1",
             index=0,
             statictext=false,
@@ -20757,9 +21571,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTMH2={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WPTMH2",
             index=0,
             statictext=false,
@@ -20769,9 +21584,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTTTG1={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WPTTTG1",
             index=0,
             statictext=false,
@@ -20781,9 +21597,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTTTG2={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WPTTTG2",
             index=0,
             statictext=false,
@@ -20793,9 +21610,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WPTTTG3={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "WPINFO"},
+                "WPINFO"
+            },
             id="WPTTTG3",
             index=0,
             statictext=false,
@@ -20805,9 +21623,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     WRITE={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "MXLOG"},
+                "MXLOG"
+            },
             id="WRITE",
             index=0,
             statictext=true,
@@ -20817,9 +21636,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     YEAR={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "TIME"},
+                "TIME"
+            },
             id="YEAR",
             index=0,
             statictext=true,
@@ -20829,9 +21649,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     YEAR_DE={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "TIME"},
+                "TIME"
+            },
             id="YEAR_DE",
             index=0,
             statictext=false,
@@ -20841,9 +21662,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     YEAR_TXT={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "TIME"},
+                "TIME"
+            },
             id="YEAR_TXT",
             index=0,
             statictext=false,
@@ -20853,9 +21675,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     YES={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "LASTE"},
+                "LASTE"
+            },
             id="YES",
             index=0,
             statictext=true,
@@ -20865,9 +21688,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     ZEROES1={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "SYS2"},
+                "SYS2"
+            },
             id="ZEROES1",
             index=0,
             statictext=true,
@@ -20877,9 +21701,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     ZEROES2={
         {
-            ALignment="RGHT",
+            alignment="RGHT",
             cdu_pages={
-                "SYS2"},
+                "SYS2"
+            },
             id="ZEROES2",
             index=0,
             statictext=true,
@@ -20889,9 +21714,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     ZEROIZE={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "GPSKEYS"},
+                "GPSKEYS"
+            },
             id="ZEROIZE",
             index=0,
             statictext=true,
@@ -20901,9 +21727,10 @@ ExportScript.AF.CDUIndicatorData={
     },
     pName={
         {
-            ALignment="LFT",
+            alignment="LFT",
             cdu_pages={
-                "GPSSTAT2"},
+                "GPSSTAT2"
+            },
             id="pName",
             index=0,
             statictext=true,
@@ -20943,20 +21770,29 @@ ExportScript.AF.CDUIndicatorData={
 
 -- Unicode UTF-16
 function ExportScript.AF.replaceSymbols(s)
-	s = s:gsub("°",               "0x00B0") --DEGREE		"°"
-	s = s:gsub(string.char(0xB6), "0x00B6") --FILLED		"¶"
+	s = s:gsub(string.char(0xB0), "0x00B0") --DEGREE		"°"
 	s = s:gsub(string.char(0xB1), "0x00B1") --INC_DEC		"±"
-	s = s:gsub("я "             , "0x00B10x0030") --INC_DEC		"±0"
-	s = s:gsub("©"              , "0x00310x2299") --INC_DEC		(1 + Circle with Dot)
 	s = s:gsub(string.char(0xA9), "0x2299") --INC_DEC		(Circle with Dot)
-	s = s:gsub(string.char(0x3A), "0x003A") --Colon		":"
-	s = s:gsub(":"              , "0x003A") --Colon		":"
-	s = s:gsub(string.char(26)  , "0x2192") --Right Arrow "→"
-	s = s:gsub(string.char(27)  , "0x2190") --Left Arrow "←"
-	s = s:gsub("ю"              , "0x2588 ") --Cursor	"█"
-	s = s:gsub(string.char(20)  , "0x2337") --DATA_ENTRY	"⌷"
-	s = s:gsub(string.char(18)  , "0x2195") --UpDown Arrow		"↕"
-	s = s:gsub("*"              , "0x002A") -- Asterisk "*"
+	s = s:gsub(string.char(0x3A), "0x003A") --Colon			":"
+	s = s:gsub(":"              , "0x003A") --Colon			":"
+	s = s:gsub(string.char(0xBB), "0x2192") --Right Arrow 	"→"
+	s = s:gsub(string.char(0xAB), "0x2190") --Left Arrow 	"←"
+	s = s:gsub(string.char(0xB6), "0x2588") --Cursor		"█"
+	s = s:gsub(string.char(0xA1), "0x2337") --DATA_ENTRY	"⌷"
+	s = s:gsub(string.char(0xAE), "0x2195") --UpDown Arrow	"↕"
+	s = s:gsub("*"              , "0x002A") -- Asterisk 	"*"
+	return s
+end
+
+function ExportScript.AF.preReplaceSymbols(s)
+	s = s:gsub(string.char(26), string.char(0xBB)) -- BRANCH_L
+	s = s:gsub(string.char(27), string.char(0xAB)) -- BRANCH_R
+	s = s:gsub(string.char(18), string.char(0xAE)) -- ROTARY
+	s = s:gsub(string.char(20), string.char(0xA1)) -- DATA_ENTRY
+	s = s:gsub("©"            , string.char(0xA9)) -- SYS_ACTION
+	s = s:gsub("°"            , string.char(0xB0)) -- DEGREE
+	s = s:gsub("ю"            , string.char(0xB6)) -- FILLED
+	s = s:gsub("я"            , string.char(0xB1)) -- INC_DEC
 	return s
 end
 
@@ -21013,6 +21849,8 @@ function ExportScript.AF.exportCDU()
 		local candidates = ExportScript.AF.CDUIndicatorData[k]
 		if candidates then
 
+			v = ExportScript.AF.preReplaceSymbols(v) -- make sure that 1 char == 1 byte
+
 			local render_instructions = nil
 			if #candidates == 1 then
 				render_instructions = candidates[1]
@@ -21052,7 +21890,7 @@ function ExportScript.AF.exportCDU()
 	end
 	
 	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('cdu_lines: '..ExportScript.Tools.dump(cdu_lines))
+		ExportScript.Tools.WriteToLog('cdu_lines 1: '..ExportScript.Tools.dump(cdu_lines))
 	end
 	
 	cdu_lines[1] = ExportScript.AF.replaceSymbols(cdu_lines[1])
@@ -21067,7 +21905,7 @@ function ExportScript.AF.exportCDU()
 	cdu_lines[10] = ExportScript.AF.replaceSymbols(cdu_lines[10])
 	
 	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('cdu_lines: '..ExportScript.Tools.dump(cdu_lines))
+		ExportScript.Tools.WriteToLog('cdu_lines 2: '..ExportScript.Tools.dump(cdu_lines))
 	end
 	ExportScript.Tools.SendData(2030, cdu_lines[1])
 	ExportScript.Tools.SendData(2031, cdu_lines[2])

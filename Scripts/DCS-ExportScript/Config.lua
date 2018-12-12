@@ -6,7 +6,7 @@
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
 ExportScript.Config = {}
-ExportScript.Version.Config = "1.1.0"
+ExportScript.Version.Config = "1.2.0"
 
 -- Ikarus a Glass Cockpit Software
 ExportScript.Config.IkarusExport    = true         -- false for not use
@@ -15,7 +15,7 @@ ExportScript.Config.IkarusPort      = 1625         -- Port Ikarus (1625)
 ExportScript.Config.IkarusSeparator = ":"
 
 -- D.A.C. (DCS Arcaze Connector)
-ExportScript.Config.DACExport        = true        -- false for not use
+ExportScript.Config.DACExport        = false        -- true for use
 ExportScript.Config.DAC              = {}
 -- first hardware
 ExportScript.Config.DAC[1]           = {}
@@ -40,4 +40,4 @@ ExportScript.Config.ExportModulePath       = lfs.writedir()..[[Scripts\DCS-Expor
 ExportScript.Config.Debug                  = false
 ExportScript.Config.SocketDebug            = false
 ExportScript.Config.FirstNewDataSend       = true
-ExportScript.Config.FirstNewDataSendCount  = 5
+ExportScript.Config.FirstNewDataSendCount  = 100

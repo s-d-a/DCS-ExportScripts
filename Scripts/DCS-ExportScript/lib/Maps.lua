@@ -13,7 +13,7 @@
 -- Lat2 and Long2 contain the coordinates of the lower right corner.
 --
 
-ExportScript.Version.Maps = "1.1.0"
+ExportScript.Version.Maps = "1.2.0"
 
 -- Maps
 ExportScript.Maps                    = {}

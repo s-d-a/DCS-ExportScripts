@@ -1,6 +1,6 @@
 -- Flaming Cliffs Auxiliary Functons
 
-ExportScript.Version.FC_AuxiliaryFunctions = "1.1.0"
+ExportScript.Version.FC_AuxiliaryFunctions = "1.2.0"
 
 -- Workaround for engine start-up
 ExportScript.AF.LeftEngineOn  = false

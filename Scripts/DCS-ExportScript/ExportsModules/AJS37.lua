@@ -1,7 +1,7 @@
 -- AJS37
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.AJS37 = "1.1.1"
+ExportScript.Version.AJS37 = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

@@ -1,7 +1,7 @@
 -- Su-25T Export
 
 ExportScript.FoundFCModule = true
-ExportScript.Version.Su25T = "1.1.0"
+ExportScript.Version.Su25T = "1.2.0"
 
 -- auxiliary function
 dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")
@@ -19,8 +19,8 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		local lLatitude					= myData.LatLongAlt.Lat									-- LATITUDE
 		local lLongitude				= myData.LatLongAlt.Long								-- LONGITUDE
 
-		local lEngineTempLeft			= LoGetEngineInfo().Temperature.left					-- ENG1 EGT ºC
-		local lEngineTempRight			= LoGetEngineInfo().Temperature.right					-- ENG2 EGT ºC
+		local lEngineTempLeft			= LoGetEngineInfo().Temperature.left					-- ENG1 EGT ?C
+		local lEngineTempRight			= LoGetEngineInfo().Temperature.right					-- ENG2 EGT ?C
 		--[[
 		local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()						-- BAROMETRIC PRESSURE
 		local lAltBar					= LoGetAltitudeAboveSeaLevel()							-- ALTITUDE SEA LEVEL (Meter)

@@ -1,7 +1,7 @@
 -- Bf-109K-4 Kurfürst
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.Bf109K4 = "1.1.0"
+ExportScript.Version.Bf109K4 = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

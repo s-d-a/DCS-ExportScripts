@@ -1,7 +1,7 @@
 -- Mirage M-2000C
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.M2000C = "1.1.1"
+ExportScript.Version.M2000C = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

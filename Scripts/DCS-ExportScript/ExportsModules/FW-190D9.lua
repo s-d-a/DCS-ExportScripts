@@ -1,7 +1,7 @@
 -- FW-190D9 Dora
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.FW190D9 = "1.1.0"
+ExportScript.Version.FW190D9 = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

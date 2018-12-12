@@ -1,7 +1,7 @@
 -- F-15C
 
 ExportScript.FoundFCModule = true
-ExportScript.Version.F15C = "1.1.0"
+ExportScript.Version.F15C = "1.2.0"
 
 -- auxiliary function
 dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")

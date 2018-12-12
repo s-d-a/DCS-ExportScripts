@@ -7,7 +7,7 @@
 -- Main Table
 ExportScript = {}
 ExportScript.Version = {}
-ExportScript.Version.ExportScript = "1.1.0"
+ExportScript.Version.ExportScript = "1.2.0"
 -- Simulation id
 ExportScript.SimID = string.format("%08x*",os.time())
 
@@ -85,7 +85,7 @@ function LuaExportStart()
 end
 
 function LuaExportBeforeNextFrame()
-	if ExportScript.Config.Debug then
+--[[	if ExportScript.Config.Debug then
 		ExportScript.Tools.ProcessInput()
 	else
 		ExportScript.coProcessArguments_BeforeNextFrame = coroutine.create(ExportScript.Tools.ProcessInput)
@@ -95,7 +95,7 @@ function LuaExportBeforeNextFrame()
 	if ExportScript.NoLuaExportBeforeNextFrame == false then
 		ExportScript.Tools.ProcessOutput()
 	end
-	
+]]	
 	-- Chain previously-included export as necessary
 	if PrevExport.LuaExportBeforeNextFrame then
 		PrevExport.LuaExportBeforeNextFrame()
@@ -111,6 +111,30 @@ function LuaExportAfterNextFrame()
 	if PrevExport.LuaExportAfterNextFrame then
 		PrevExport.LuaExportAfterNextFrame()
 	end
+end
+
+function LuaExportActivityNextEvent(t)
+	local tNext = t
+
+-- Put your event code here and increase tNext for the next event
+-- so this function will be called automatically at your custom
+-- model times. 
+-- If tNext == t then the activity will be terminated.
+
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.ProcessInput()
+	else
+		ExportScript.coProcessArguments_BeforeNextFrame = coroutine.create(ExportScript.Tools.ProcessInput)
+		coStatus = coroutine.resume(ExportScript.coProcessArguments_BeforeNextFrame)
+	end
+	
+	if ExportScript.NoLuaExportBeforeNextFrame == false then
+		ExportScript.Tools.ProcessOutput()
+	end
+
+	tNext = tNext + ExportScript.Config.ExportInterval
+
+	return tNext
 end
 
 function LuaExportStop()

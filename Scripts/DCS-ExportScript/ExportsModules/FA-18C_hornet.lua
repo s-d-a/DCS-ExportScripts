@@ -1,7 +1,7 @@
 -- F/A-18C Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.FA18C_hornet = "1.1.1"
+ExportScript.Version.FA18C_hornet = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -491,7 +491,8 @@ ExportScript.ConfigArguments =
 	[515] = "%1d",   -- ECM JETT JETT SEL Button - Push to jettison
 	-- ICMCP
 	[248] = "%.1f",   -- ECM Mode Switch, XMIT/REC/BIT/STBY/OFF {0.0,0.1,0.2,0.3,0.4}
-	[507] = "%1d",   -- NUC WPN Switch, ENABLE/DISABLE (no function)
+	-- Helmet
+	[136] = "%.2f"    -- HMD OFF/BRT Knob {0.0,0.75} in 0.01 Steps
 }
 
 -----------------------------

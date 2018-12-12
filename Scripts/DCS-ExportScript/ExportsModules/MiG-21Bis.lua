@@ -1,7 +1,7 @@
 -- MiG-21Bis Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.MiG21Bis = "1.1.0"
+ExportScript.Version.MiG21Bis = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -304,7 +304,7 @@ ExportScript.ConfigArguments =
 	[159] =   "%.1f", 	-- Fuel Tanks 3rd Group, Fuel Pump
 	[160] =   "%.1f", 	-- Fuel Tanks 1st Group, Fuel Pump
 	[161] =   "%.1f", 	-- Drain Fuel Tank, Fuel Pump
-	[274] =   "%.1f", 	-- Fuel Quantity Set
+	[274] =   "%.2f", 	-- Fuel Quantity Set
 -- ENGINE START DEVICE	
 	[302] =   "%.1f", 	-- APU On/Off
 	[288] =   "%.1f", 	-- Engine Cold / Normal Start
@@ -318,7 +318,7 @@ ExportScript.ConfigArguments =
 	[279] =   "%.1f", 	-- Pitot tube/Periscope/Clock Heat
 	[280] =   "%.1f", 	-- Secondary Pitot Tube Heat
 -- DA-200
-	[261] =   "%.1f", 	-- Variometer Set
+	[261] =   "%.4f", 	-- Variometer Set
 -- ENGINE
 	[308] =   "%.1f", 	-- Anti surge doors - Auto/Manual
 	[300] =   "%.1f", 	-- Afterburner/Maximum Off/On
@@ -333,27 +333,36 @@ ExportScript.ConfigArguments =
 	[157] =   "%.1f", 	-- Main Red Lights default_axis
 	[222] =   "%.1f", 	-- Main White Lights default_axis
 	[194] =   "%.1f", 	-- Navigation Lights Off/Min/Med/Max
-	[323] =   "%.1f", 	-- Landing Lights Off/Taxi/Land
--- LIGHTS WARNING
-	[195] =   "%.1f", 	-- CheckWarningLights11
-	[196] =   "%.1f", 	-- CheckWarningLights21
-	[273] =   "%.1f", 	-- CheckWarningLights31
-	[282] =   "%.1f", 	-- CheckWarningLights41
-	[283] =   "%.1f", 	-- CheckWarningLights51
-	[322] =   "%.1f", 	-- CheckWarningLights61
+	[323] =   "%.2f", 	-- Landing Lights Off/Taxi/Land
+-- LIGHTS WARNING AXIS
+	[195] =   "%.1f", 	-- Set Warning Light Day/Night T4
+	[196] =   "%.1f", 	-- Set Warning Light Day/Night T10
+	[273] =   "%.1f", 	-- Set Warning Light Day/Night T4-2
+	[282] =   "%.1f", 	-- Set Warning Light Day/Night T4-3
+	[283] =   "%.1f", 	-- Set Warning Light Day/Night T10-2
+	[322] =   "%.1f", 	-- Set Warning Light Day/Night PPS
 	[657] =   "%.1f", 	-- SORC
+-- LIGHTS WARNING BUTTONS
+	[369] =   "%.1f", 	-- Check Warning Lights T4
+	[370] =   "%.1f", 	-- Check Warning Lights T10
+	[371] =   "%.1f", 	-- Check Warning Lights T4-2
+	[372] =   "%.1f", 	-- Check Warning Lights T4-3
+	[373] =   "%.1f", 	-- Check Warning Lights T10-2
+	[374] =   "%.1f", 	-- Check Warning Lights PPS
+	[255] =   "%.1f", 	-- SORC
 -- Radio
 	[173] =   "%.1f", 	-- Radio System On/Off
 	[208] =   "%.1f", 	-- Radio / Compass
 	[209] =   "%.1f", 	-- Squelch On/Off
 	[210] =   "%.1f", 	-- Radio Volume
-	[211] =   "%.1f", 	-- Radio Channel
+	[211] =   "%.2f", 	-- Radio Channel
 	[315] =   "%.1f", 	-- Radio PTT
 -- ARK
 	[174] =   "%.1f", 	-- ARK On/Off
 	[198] =   "%.1f", 	-- ARK Sound
 	[212] =   "%.1f", 	-- ARK Change
-	[189] =   "%.1f", 	-- ARK Zone
+	[213] =   "%.1f",   -- ARK 1 - 9 {0.1,0.2,...,0.8,0.9}
+	[189] =   "%.2f", 	-- ARK Zone
 	[197] =   "%.1f", 	-- ARK Mode - Antenna / Compass
 	[254] =   "%.1f", 	-- Marker Far/Near
 -- RSBN
@@ -364,8 +373,8 @@ ExportScript.ConfigArguments =
 	[347] =   "%.1f", 	-- RSBN self-test
 --RSBN Panel
 	[345] =   "%.1f", 	-- RSBN Sound
-	[351] =   "%.1f", 	-- RSBN Navigation
-	[352] =   "%.1f", 	-- PRMG Landing
+	[351] =   "%.2f", 	-- RSBN Navigation
+	[352] =   "%.2f", 	-- PRMG Landing
 	[366] =   "%.1f", 	-- RSBN Reset
 	[367] =   "%.1f", 	-- RSBN Bearing
 	[368] =   "%.1f", 	-- RSBN Distance
@@ -396,7 +405,7 @@ ExportScript.ConfigArguments =
 	[200] =   "%.1f", 	-- SOD IFF On/Off
 	[199] =   "%.1f", 	-- SOD Identify
 	[201] =   "%.1f", 	-- SOD Wave Selector 3/1/2
-	[204] =   "%.1f", 	-- SOD Modes
+	[204] =   "%.2f", 	-- SOD Modes
 -- RADAR
 	[205] =   "%.1f", 	-- Radar Off/Prep/On
 	[206] =   "%.1f", 	-- Low Altitude Off/Comp/On
@@ -433,7 +442,7 @@ ExportScript.ConfigArguments =
 	[237] =   "%.1f", 	-- Emergency Brake
 -- Gears
 	[326] =   "%.1f", 	-- Gear Handle Fixator
-	[327] =   "%.1f", 	-- Gear Up/Neutral/Down
+	[327] =   "%.1f", 	-- Gear Up/Neutral/Down {-1.0,0.0,1.0}
 	[223] =   "%.1f", 	-- Main Gears Emergency Release Handle
 	[281] =   "%.1f", 	-- Nose Gear Emergency Release Handle
 -- Flaps
@@ -451,7 +460,7 @@ ExportScript.ConfigArguments =
 -- KONUS
 	[170] =   "%.1f", 	-- Nosecone On/Off
 	[309] =   "%.1f", 	-- Nosecone Control - Manual/Auto
-	[236] =   "%.1f", 	-- Nosecone manual position controller
+	[236] =   "%.2f", 	-- Nosecone manual position controller
 -- SOPLO
 	[291] =   "%.1f", 	-- Engine Nozzle 2 Position Emergency Control
 --MAIN_HYDRO and BUSTER_HYDRO == == == == == == == == == == == == == == == == == == == TEMPORARY MERGED == == == == == == == == == == == == == == == == == == == == == == 
@@ -460,7 +469,7 @@ ExportScript.ConfigArguments =
 --KPP
 	[177] =   "%.1f", 	-- KPP Main/Emergency
 	[259] =   "%.1f", 	-- KPP Cage
-	[260] =   "%.1f", 	-- KPP Set
+	[260] =   "%.4f", 	-- KPP Set
 --IAS / TAS / KSI (NPP)
 	[178] =   "%.1f", 	-- NPP On/Off
 	[258] =   "%.1f", 	-- NPP Adjust
@@ -531,6 +540,9 @@ ExportScript.ConfigArguments =
 	[292] =   "%.1f", 	-- Cockpit Air Condition Off/Cold/Auto/Warm
 -- SARPP
 	[193] =   "%.1f", 	-- SARPP-12 Flight Data Recorder On/Off
+--avAChS Clock
+	[265] =   "%.1f",   -- Mech clock left lever
+	[264] =   "%.1f",   -- Mech clock left lever
 -- Flight Control
 
 -- Dummy buttons/switches
@@ -540,8 +552,8 @@ ExportScript.ConfigArguments =
 	[635] =   "%.1f", 	-- Electric Bus Nr.1 - Cover
 	[636] =   "%.1f", 	-- Electric Bus Nr.1
 	[637] =   "%.1f", 	-- Electric Bus Nr.2
-	[638] =   "%.1f", 	-- 1.7 Mach Test Button - Cover
-	[639] =   "%.1f", 	-- 1.7 Mach Test Button
+	[638] =   "%.1f", 	-- 1.5 Mach Test Button - Cover
+	[639] =   "%.1f", 	-- 1.5 Mach Test Button
 	[640] =   "%.1f", 	-- BU-45 Buster System Separation
 	[642] =   "%.1f", 	-- SOD Control PBU-1
 	[641] =   "%.1f", 	-- SOD Control PBU-2

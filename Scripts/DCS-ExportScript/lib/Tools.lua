@@ -6,7 +6,7 @@
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
 ExportScript.Tools = {}
-ExportScript.Version.Tools = "1.1.1"
+ExportScript.Version.Tools = "1.2.0"
 
 function ExportScript.Tools.WriteToLog(message)
     if ExportScript.logFile then
@@ -26,7 +26,7 @@ function ExportScript.Tools.createUDPSender()
 	local lcreateUDPSender = ExportScript.socket.protect(function()
 		ExportScript.UDPsender = ExportScript.socket.udp()
 		ExportScript.socket.try(ExportScript.UDPsender:setsockname("*", 0))
-		ExportScript.socket.try(ExportScript.UDPsender:settimeout(.004)) -- set the timeout for reading the socket; 250 fps
+		--ExportScript.socket.try(ExportScript.UDPsender:settimeout(.004)) -- set the timeout for reading the socket; 250 fps
 	end)
 
 	local ln, lerror = lcreateUDPSender()
@@ -45,7 +45,7 @@ function ExportScript.Tools.createUDPListner()
 		local lcreateUDPListner = ExportScript.socket.protect(function()
 			ExportScript.UDPListener = ExportScript.socket.udp()
 			ExportScript.socket.try(ExportScript.UDPListener:setsockname("*", ExportScript.Config.ListenerPort))
-			ExportScript.socket.try(ExportScript.UDPListener:settimeout(.004)) -- set the timeout for reading the socket; 250 fps
+			ExportScript.socket.try(ExportScript.UDPListener:settimeout(.001)) -- set the timeout for reading the socket; 250 fps
 		end)
 
 		local ln, lerror = lcreateUDPListner()
@@ -118,9 +118,9 @@ function ExportScript.Tools.ProcessInput()
 					lDevice = GetDevice(lCommandArgs[1])
 					if ExportScript.FoundDCSModule and type(lDevice) == "table" then
 						lDevice:performClickableAction(lCommandArgs[2],lCommandArgs[3])
-						--if ExportScript.Config.Debug then
+						if ExportScript.Config.Debug then
 							ExportScript.Tools.WriteToLog("performClickableAction for Device: "..lCommandArgs[1]..", ButtonID: "..lCommandArgs[2]..", Value: "..lCommandArgs[3])
-						--end
+						end
 					end
 				elseif lDeviceID == 1000 then
 					-- ExportScript.genericRadio(key, value)
@@ -160,7 +160,7 @@ end
 
 function ExportScript.Tools.ProcessOutput()
     local coStatus
-    local currentTime = LoGetModelTime()
+    --local currentTime = LoGetModelTime()
 
     local lMyInfo = LoGetSelfData()
     if lMyInfo ~= nil then
@@ -177,7 +177,7 @@ function ExportScript.Tools.ProcessOutput()
 
         lDevice:update_arguments()
 
-        if currentTime - ExportScript.lastExportTimeHI > ExportScript.Config.ExportInterval then
+        --if currentTime - ExportScript.lastExportTimeHI > ExportScript.Config.ExportInterval then
             if ExportScript.Config.Debug then
                 ExportScript.Tools.WriteToLog("run hight importance export universally")
                 ExportScript.Tools.ProcessArguments(lDevice, ExportScript.EveryFrameArguments) -- Module arguments as appropriate
@@ -211,6 +211,7 @@ function ExportScript.Tools.ProcessOutput()
                     ExportScript.Tools.ResetChangeValuesDAC()
                 end
                 if ExportScript.Config.IkarusExport then
+				ExportScript.Tools.WriteToLog("reset dcs ikarus")
                     ExportScript.Tools.ResetChangeValues()
                 end
                 ExportScript.FirstNewDataSend = false
@@ -218,10 +219,12 @@ function ExportScript.Tools.ProcessOutput()
                 ExportScript.FirstNewDataSendCount = ExportScript.FirstNewDataSendCount - 1
             end
             
-            ExportScript.lastExportTimeHI = currentTime
-        end
+            --ExportScript.lastExportTimeHI = currentTime
+			ExportScript.lastExportTimeHI = ExportScript.lastExportTimeHI + ExportScript.Config.ExportInterval
+        --end
 
-        if currentTime - ExportScript.lastExportTimeLI > ExportScript.Config.ExportLowTickInterval then
+        --if currentTime - ExportScript.lastExportTimeLI > ExportScript.Config.ExportLowTickInterval then
+		if ExportScript.lastExportTimeHI > ExportScript.Config.ExportLowTickInterval then
             if ExportScript.Config.Debug then
                 ExportScript.Tools.WriteToLog("run low importance export universally")
                 ExportScript.Tools.ProcessArguments(lDevice, ExportScript.Arguments) -- Module arguments as appropriate
@@ -250,7 +253,8 @@ function ExportScript.Tools.ProcessOutput()
                 end
             end
 
-            ExportScript.lastExportTimeLI = currentTime
+            --ExportScript.lastExportTimeLI = currentTime
+			ExportScript.lastExportTimeHI = 0
         end
 
         if ExportScript.Config.IkarusExport then
@@ -266,7 +270,7 @@ function ExportScript.Tools.ProcessOutput()
 
         ExportScript.AF.EventNumber = os.clock() --tonumber(tostring(os.clock()):gsub(".", ""))
 
-        if currentTime - ExportScript.lastExportTimeHI > ExportScript.Config.ExportInterval then
+        --if currentTime - ExportScript.lastExportTimeHI > ExportScript.Config.ExportInterval then
 
             if ExportScript.Config.IkarusExport then
                 if ExportScript.Config.Debug then
@@ -292,6 +296,7 @@ function ExportScript.Tools.ProcessOutput()
                     ExportScript.Tools.ResetChangeValuesDAC()
                 end
                 if ExportScript.Config.IkarusExport then
+				ExportScript.Tools.WriteToLog("reset fc ikarus")
                     ExportScript.Tools.ResetChangeValues()
                 end
                 ExportScript.FirstNewDataSend = false
@@ -299,10 +304,12 @@ function ExportScript.Tools.ProcessOutput()
                 ExportScript.FirstNewDataSendCount = ExportScript.FirstNewDataSendCount - 1
             end
 
-            ExportScript.lastExportTimeHI = currentTime
-        end
+            --ExportScript.lastExportTimeHI = currentTime
+			ExportScript.lastExportTimeHI = ExportScript.lastExportTimeHI + ExportScript.Config.ExportInterval
+        --end
 
-        if currentTime - ExportScript.lastExportTimeLI > ExportScript.Config.ExportLowTickInterval then
+        --if currentTime - ExportScript.lastExportTimeLI > ExportScript.Config.ExportLowTickInterval then
+		if ExportScript.lastExportTimeHI > ExportScript.Config.ExportLowTickInterval then
             if ExportScript.Config.IkarusExport then
                 if ExportScript.Config.Debug then
                     ExportScript.Tools.WriteToLog("run low importance export Ikarus")
@@ -323,7 +330,8 @@ function ExportScript.Tools.ProcessOutput()
                 end
             end
 
-            ExportScript.lastExportTimeLI = currentTime
+            --ExportScript.lastExportTimeLI = currentTime
+			ExportScript.lastExportTimeHI = 0
         end
 
         if ExportScript.Config.IkarusExport then
@@ -670,8 +678,8 @@ function ExportScript.Tools.SelectModule()
 			ExportScript.Tools.WriteToLog(k..": "..v)
 		end
 
-        ExportScript.FirstNewDataSend      = true
-        ExportScript.FirstNewDataSendCount = 5
+        ExportScript.FirstNewDataSend      = ExportScript.Config.FirstNewDataSend 
+        ExportScript.FirstNewDataSendCount = ExportScript.Config.FirstNewDataSendCount
 
         if ExportScript.FoundDCSModule then
             local lCounter = 0
