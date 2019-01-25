@@ -363,10 +363,10 @@ ExportScript.ConfigArguments =
 	[245] = "%1d",     -- PTR-EPP-AC-GEN-PWR-R (Right AC Generator Power)
 	[246] = "%1d",     -- PTR-EPP-BATTERY-PWR (Battery Power)
 	-- ILS
-	[247] = "%1d",     -- PTR-ILSCP-PWR (ILS Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value)
-	[248] = "%0.1f",   -- PTR-ILSCP-PWR (ILS Frequency MHz / Power. Right mouse click to cycle power. Rotate mouse wheel to change frequency value)
-	[249] = "%.3f",    -- PTR-ILSCP-VOL (ILS Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click and hold while moving mouse to adjust volumeILS Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click and hold while moving mouse to adjust)
-	[250] = "%0.1f",   -- PTR-ILSCP-VOL (ILS Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click and hold while moving mouse to adjust volumeILS Frequency kHz / Volume. Rotate mouse wheel to change frequency value. Left or Right click and hold while moving mouse to adjust)
+	[247] = "%1d",     -- PTR-ILSCP-PWR Power
+	[248] = "%0.1f",   -- PTR-ILSCP-PWR ILS Frequency MHz
+	[249] = "%.3f",    -- PTR-ILSCP-VOL ILS Frequency kHz
+	[250] = "%0.1f",   -- PTR-ILSCP-VOL Volume
 	[251] = "%0.1f",   -- ILS_window_wheel_MHz
 	[252] = "%0.1f",   -- ILS_window_wheel_KHz
 	-- TACAN
