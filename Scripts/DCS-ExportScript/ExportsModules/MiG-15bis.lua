@@ -79,11 +79,11 @@ ExportScript.ConfigEveryFrameArguments =
 	[43] = "%.4f",		-- EngineFuelPressure {0.0,100.0} {0.0,1.0}
 	[46] = "%.4f",		-- FuelPressure {0.0,10.0} {0.0,1.0}
 	-- radio compass
-	[238] = "%.4f",		-- ARC5_Band {0.0, 2.0} {0.0, 0.4}
-	[176] = "%.4f",		-- ARC5_TuningMeter
-	[175] = "%.4f",		-- ARC5_Tuning {0.0, 0.2} {0.0, 1.0}
-	[38] = "%.4f",		-- ARC5_Bearing
-	[239] = "%.4f",		-- ARC5_FreqScale {0.0,0.5,1.0,1.5,2.0,2.5,3.0} {0.0,0.0695,0.14,0.2865,0.43,0.7155,1.0}
+	[238] = "%.4f",		-- ARK5_Band {0.0, 2.0} {0.0, 0.4}
+	[176] = "%.4f",		-- ARK5_TuningMeter
+	[175] = "%.4f",		-- ARK5_Tuning {0.0, 0.2} {0.0, 1.0}
+	[38] = "%.4f",		-- ARK5_Bearing
+	[239] = "%.4f",		-- ARK5_FreqScale {0.0,0.5,1.0,1.5,2.0,2.5,3.0} {0.0,0.0695,0.14,0.2865,0.43,0.7155,1.0}
 	-- Radio RSI-6K
 	[235] = "%.4f",		-- RadioAntennaPower
 	[128] = "%.4f",		-- RadioReceiverKnob {0.0, 0.2}{0.0, 1.0}
@@ -115,9 +115,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[124] = "%.f",		-- lamp_AirBrakeExt {-1.0, 1.0}{-1.0, 1.0}
 	-- fire extinguisher system
 	[135] = "%.f",		-- lamp_FireDetected {-1.0, 1.0}{-1.0, 1.0}
-	-- ARC-5
-	[183] = "%.f",		-- lamp_ARC_5 {-1.0, 1.0}{-1.0, 1.0}
-	[218] = "%.f",		-- light_ARC_5_scale {-1.0, 1.0}{-1.0, 1.0}
+	-- ARK-5
+	[183] = "%.f",		-- lamp_ARK_5 {-1.0, 1.0}{-1.0, 1.0}
+	[218] = "%.f",		-- light_ARK_5_scale {-1.0, 1.0}{-1.0, 1.0}
 	-- MRP-48P
 	[54] = "%.f",		-- lamp_Marker {-1.0, 1.0}{-1.0, 1.0}
 	-- Light System
@@ -169,7 +169,7 @@ ExportScript.ConfigArguments =
 	[158] = "%.4f",    -- Radio Switch, ON/OFF
 	[157] = "%.4f",    -- Bombs Switch, ON/OFF
 	[156] = "%.4f",    -- Emergency Drop Switch, ON/OFF
-	[159] = "%.4f",    -- ARC Switch, ON/OFF
+	[159] = "%.4f",    -- ARK Switch, ON/OFF
 	[160] = "%.4f",    -- RV-2 Radio Altimeter Switch, ON/OFF
 	[161] = "%.4f",    -- NR-23 Cannon Switch, ON/OFF
 	[162] = "%.4f",    -- N-37D Cannon Switch, ON/OFF
@@ -249,19 +249,19 @@ ExportScript.ConfigArguments =
 	[102] = "%.4f",    -- ASP-3N Gunsight Brightness Knob (rotary)
 	[201] = "%.4f",    -- ASP-3N Gunsight Target Distance (rotary)
 	[105] = "%.4f",    -- ASP-3N Gunsight Color Filter, ON/OFF
-	-- ARC-5 radio compass
-	[180] = "%.4f",    -- ARC-5 Audio Volume Control (rotary)
-	[177] = "%.4f",    -- ARC-5 Frequency Band Switch
-	[174] = "%.4f",    -- ARC-5 Function Selector Switch, OFF/COMP/ANT./LOOP
-	[178] = "%.4f",    -- ARC-5 LOOP L-R Switch
-	--[] = "%.4f",    -- ARC-5 Tuning Crank (rotary)
-	[181] = "%.4f",    -- ARC-5 Scale Light Control (rotary)
-	[173] = "%.4f",    -- ARC-5 TLG-TLF Switch
-	[182] = "%.4f",    -- ARC-5 Take Control Button
-	[123] = "%.4f",    -- ARC-5 Near/Far NDB Switch
-	[146] = "%.4f",    -- ARC-5 NDB 1 Switch
-	[147] = "%.4f",    -- ARC-5 NDB 2 Switch
-	[148] = "%.4f",    -- ARC-5 NDB 3 Switch
+	-- ARK-5 radio compass
+	[180] = "%.4f",    -- ARK-5 Audio Volume Control (rotary)
+	[177] = "%.4f",    -- ARK-5 Frequency Band Switch
+	[174] = "%.4f",    -- ARK-5 Function Selector Switch, OFF/COMP/ANT./LOOP
+	[178] = "%.4f",    -- ARK-5 LOOP L-R Switch
+	--[] = "%.4f",    -- ARK-5 Tuning Crank (rotary)
+	[181] = "%.4f",    -- ARK-5 Scale Light Control (rotary)
+	[173] = "%.4f",    -- ARK-5 TLG-TLF Switch
+	[182] = "%.4f",    -- ARK-5 Take Control Button
+	[123] = "%.4f",    -- ARK-5 Near/Far NDB Switch
+	[146] = "%.4f",    -- ARK-5 NDB 1 Switch
+	[147] = "%.4f",    -- ARK-5 NDB 2 Switch
+	[148] = "%.4f",    -- ARK-5 NDB 3 Switch
 	-- RSI-6K radio
 	[126] = "%.4f",    -- RSI-6K Audio Volume Control (rotary)
 	[232] = "%.4f",    -- RSI-6K Wave Control (rotary)
@@ -269,7 +269,7 @@ ExportScript.ConfigArguments =
 	[231] = "%.4f",    -- RSI-6K Wave Lock
 	[233] = "%.4f",    -- RSI-6K Antenna Lock
 	[128] = "%.4f",    -- RSI-6K Receiver Tuning (rotary)
-	[140] = "%.4f",    -- RSI-6K Receive/ARC
+	[140] = "%.4f",    -- RSI-6K Receive/ARK
 	[240] = "%.4f",    -- RSI-6K Forced Mode, ON/OFF
 	[202] = "%.4f",    -- Microphone Button
 }
