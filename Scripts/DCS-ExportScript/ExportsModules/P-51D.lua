@@ -1,7 +1,7 @@
--- P-51D Export
+-- P-51D-25-NA Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.P51D = "1.2.0"
+ExportScript.Version.P51D25NA = "1.2.0"
 
 ExportScript.ConfigEveryFrameArguments = 
 { 
@@ -201,17 +201,17 @@ ExportScript.ConfigArguments =
 	[147] = "%.4f",		-- Canopy Hand Crank (rotary)
 	[149] = "%d",		-- Canopy Emergency Release Handle
 	-- AN/ARA-8
-	[152] = "%0.1f",	-- Homing Adapter Mode TRANSMIT/COMM./HOMING
-	[153] = "%d",		-- Homing Adapter Power On/Off
-	[154] = "%d",		-- Homing Adapter's Circuit Breaker
+	--[152] = "%0.1f",	-- Homing Adapter Mode TRANSMIT/COMM./HOMING
+	--[153] = "%d",		-- Homing Adapter Power On/Off
+	--[154] = "%d",		-- Homing Adapter's Circuit Breaker
 	-- SCR-695
-	[139] = "%0.1f",	-- IFF Code Selector Code 1/2/3/4/5/6
-	[140] = "%d",		-- IFF Power On/Off
-	[141] = "%d",		-- IFF TIME/OFF/ON
-	[142] = "%d",		-- IFF Detonator Circuit On/Off
-	[143] = "%d",		-- IFF Distress Signal On/Off
-	[145] = "%d",		-- IFF Detonator Left
-	[146] = "%d",		-- IFF Detonator Right
+	--[139] = "%0.1f",	-- IFF Code Selector Code 1/2/3/4/5/6
+	--[140] = "%d",		-- IFF Power On/Off
+	--[141] = "%d",		-- IFF TIME/OFF/ON
+	--[142] = "%d",		-- IFF Detonator Circuit On/Off
+	--[143] = "%d",		-- IFF Distress Signal On/Off
+	--[145] = "%d",		-- IFF Detonator Left
+	--[146] = "%d",		-- IFF Detonator Right
 	-- Trimmers
 	[91] = "%.4f",		-- Aileron Trim (rotary)
 	[92] = "%.4f",		-- Elevator Trim (rotary)
