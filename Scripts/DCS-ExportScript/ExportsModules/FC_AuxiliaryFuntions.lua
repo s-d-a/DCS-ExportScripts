@@ -1,6 +1,6 @@
 -- Flaming Cliffs Auxiliary Functons
 
-ExportScript.Version.FC_AuxiliaryFunctions = "1.2.0"
+ExportScript.Version.FC_AuxiliaryFunctions = "1.2.1"
 
 -- Workaround for engine start-up
 ExportScript.AF.LeftEngineOn  = false
@@ -626,8 +626,44 @@ function ExportScript.AF.FC_Russian_RadarAltimeter_1000m(warningflag)
     ExportScript.Tools.SendData(28, lDangerRALT_Lamp)
 end
 
--- Barometric Altimeter for SU-25A, SU25-T
+-- Barometric Altimeter for SU-33
 function ExportScript.AF.FC_Russian_BarometricAltimeter_late()
+
+	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
+	local lAltBar					= LoGetAltitudeAboveSeaLevel()		-- ALTITUDE SEA LEVEL (Meter)
+	local lAltBar_kilometer_needle	= 0
+	local lAltBar_meter_needle		= 0
+
+	lAltBar 						= lAltBar - ((9.5 * (760 - lBasicAtmospherePressure)) / 2)	-- 9.5 m per 1mmHg difference
+
+    lBasicAtmospherePressure        = lBasicAtmospherePressure * 1.33322 -- mmHg to hPa
+
+--	if lAltBar > 10000 then
+--		lAltBar_kilometer_needle	= lAltBar / 100000
+--	else
+		lAltBar_kilometer_needle	= lAltBar / 10000
+--	end
+--	if lAltBar > 1000 then
+--		lAltBar_meter_needle		= lAltBar / 1000
+--		lAltBar_meter_needle		= lAltBar_meter_needle - ExportScript.Tools.round(lAltBar_meter_needle, 0, "floor")
+--	else
+		lAltBar_meter_needle		= lAltBar / 1000
+--	end
+	lAltBar							= lAltBar / 1000
+
+	-- AltBar_kilometer_needle {0.0,1.0}
+	-- AltBar_meter_needle {0.0,1.0}
+	-- BasicAtmospherePressure {947, 1080} hPa
+	-- AltBar_kilometer {0, 99} km
+
+    ExportScript.Tools.SendData(30, string.format("%.4f", lAltBar_kilometer_needle))
+    ExportScript.Tools.SendData(31, string.format("%.4f", lAltBar_meter_needle))
+    ExportScript.Tools.SendData(32, string.format("%04d", ExportScript.Tools.round(lBasicAtmospherePressure, 0, "floor")))
+    ExportScript.Tools.SendData(33, string.format("%02d", ExportScript.Tools.round(lAltBar, 0, "floor")))
+end
+
+-- Barometric Altimeter for SU-25A, SU25-T
+function ExportScript.AF.FC_Russian_BarometricAltimeter_late_special()
 
 	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
 	local lAltBar					= LoGetAltitudeAboveSeaLevel()		-- ALTITUDE SEA LEVEL (Meter)
@@ -651,16 +687,16 @@ function ExportScript.AF.FC_Russian_BarometricAltimeter_late()
 
 	-- AltBar_kilometer_needle {0.0,1.0}
 	-- AltBar_meter_needle {0.0,1.0}
-	-- BasicAtmospherePressure {600.0, 800.0}
-	-- AltBar_kilometer {0.0, 99.9}
+	-- BasicAtmospherePressure {600, 780} mm Hg
+	-- AltBar_kilometer {0, 99} km
 
     ExportScript.Tools.SendData(30, string.format("%.4f", lAltBar_kilometer_needle))
     ExportScript.Tools.SendData(31, string.format("%.4f", lAltBar_meter_needle))
-    ExportScript.Tools.SendData(32, string.format("%.4f", lBasicAtmospherePressure))
-    ExportScript.Tools.SendData(33, string.format("%.4f", lAltBar))
+    ExportScript.Tools.SendData(32, string.format("%04d", ExportScript.Tools.round(lBasicAtmospherePressure, 0, "floor")))
+    ExportScript.Tools.SendData(33, string.format("%02d", ExportScript.Tools.round(lAltBar, 0, "floor")))
 end
 
--- Barometric Altimeter for SU-27, SU-33
+-- Barometric Altimeter for SU-27
 function ExportScript.AF.FC_Russian_BarometricAltimeter_20000()
 
 	local lBasicAtmospherePressure	= LoGetBasicAtmospherePressure()	-- BAROMETRIC PRESSURE (mm Hg)
@@ -1266,6 +1302,13 @@ function ExportScript.AF.FC_Russian_AOA_MiG29()
 
 	local lAoA						= LoGetAngleOfAttack()			-- ANGLE OF ATTACK AoA (Radian)
 	local lAccelerationUnits		= LoGetAccelerationUnits().y	-- G-LOAD
+	
+	if ExportScript.AF.TmpAOAMiG29GLoadMin == nil then
+		ExportScript.AF.TmpAOAMiG29GLoadMin = 0
+	end
+	if ExportScript.AF.TmpAOAMiG29GLoadMax == nil then
+		ExportScript.AF.TmpAOAMiG29GLoadMax = 0
+	end
 
 	if lAoA > 0.0 then	-- positive AOA
 		--[[
@@ -1334,9 +1377,18 @@ function ExportScript.AF.FC_Russian_AOA_MiG29()
 		]]
 		lAccelerationUnits = 0.09672619047619047619047619047619 * lAccelerationUnits
 	end
+	
+	if lAccelerationUnits > ExportScript.AF.TmpAOAMiG29GLoadMax then
+		ExportScript.AF.TmpAOAMiG29GLoadMax = lAccelerationUnits
+	end
+		if lAccelerationUnits < ExportScript.AF.TmpAOAMiG29GLoadMin then
+		ExportScript.AF.TmpAOAMiG29GLoadMin = lAccelerationUnits
+	end
 
     ExportScript.Tools.SendData(50, string.format("%.4f", lAoA))
     ExportScript.Tools.SendData(51, string.format("%.4f", lAccelerationUnits))
+	ExportScript.Tools.SendData(52, string.format("%.4f", ExportScript.AF.TmpAOAMiG29GLoadMin))
+	ExportScript.Tools.SendData(53, string.format("%.4f", ExportScript.AF.TmpAOAMiG29GLoadMax))
 end
 
 -- Russian Clock ACS-1 for KA-50, SU-25A, MIG-29A , MIG-29S
@@ -1402,7 +1454,7 @@ function ExportScript.AF.FC_Russian_Clock_late()
     ExportScript.Tools.SendData(55, string.format("%.4f", lCurrentHours))
     ExportScript.Tools.SendData(56, string.format("%.4f", lCurrentMinutes))
     ExportScript.Tools.SendData(57, string.format("%.4f", lCurrentSeconds))
-    ExportScript.Tools.SendData(58, lDefaultNull)   -- red/white flag
+    --ExportScript.Tools.SendData(58, lDefaultNull)   -- red/white flag
     ExportScript.Tools.SendData(59, string.format("%.4f", lFlightTimeHours))
     ExportScript.Tools.SendData(60, string.format("%.4f", lFlightTimeMinutes))
     ExportScript.Tools.SendData(61, string.format("%.4f", lCurrentSeconds))
@@ -1454,6 +1506,29 @@ function ExportScript.AF.FC_Russian_EGT_1000gc(egttemp, exportid)
 
 	-- ExthausGasTemperature {0.0,1.0}
 	ExportScript.Tools.SendData(lExportID, string.format("%.4f", lEGTtemp))
+end
+
+-- US Standby Compass for MiG-29A/S/G
+function ExportScript.AF.FC_Russian_Compass2()
+	local lDefaultNull	= 0.0
+	local lHeading		= math.deg(LoGetSelfData().Heading)			-- HEADING (Radian to Grad)
+	--local lHeading		= math.deg(LoGetMagneticYaw())			-- HEADING (Radian to Grad)
+	--ExportScript.Tools.WriteToLog('lHeading: '..ExportScript.Tools.dump(lHeading))
+	local lPitch		= LoGetSelfData().Pitch			-- Pitch
+	local lBank			= LoGetSelfData().Bank			-- Bank
+
+	if lHeading <= 180 then
+		lHeading = lHeading / 180
+	else
+		lHeading = (lHeading / 180) - 2
+	end
+
+	lPitch	= lPitch / 1.31 -- korrektur der maximal Werte
+	lBank	= lBank / 6.26	-- korrektur der maximal Werte
+
+    ExportScript.Tools.SendData(67, string.format("%.4f", lHeading))	-- heading
+    ExportScript.Tools.SendData(68, string.format("%.4f", lPitch))		-- pitch
+    ExportScript.Tools.SendData(69, string.format("%.4f", lBank))		-- bank
 end
 
 -- Russian Mechanical Device Indicator for SU-25A+T
@@ -1575,7 +1650,7 @@ function ExportScript.AF.FC_Russian_FlareChaff_MiG29(FunctionTyp)
 	end
 	
 	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
-		ExportScript.Tools.SendDataDAC(800, lSnares.chaff + lSnares.flare )
+		ExportScript.Tools.SendData(800, lSnares.chaff + lSnares.flare )
 	end
 end
 
@@ -1587,6 +1662,20 @@ function ExportScript.AF.FuelQuantityIndicator_MiG29(FunctionTyp)
 	if lEngineInfo == nil then
 		return
 	end
+
+	local lPayloadInfo  = LoGetPayloadInfo()
+	local lRange        = 0
+	local lStation5Tank = false
+	local lStation6Tank = false
+	local lStation7Tank = false
+
+	if lEngineInfo ~= nil then
+		lStation5Tank = (lPayloadInfo.Stations[5].CLSID == "{C0FF4842-FBAC-11d5-9190-00A0249B6F00}" and true or false)
+		lStation6Tank = (lPayloadInfo.Stations[6].CLSID == "{C0FF4842-FBAC-11d5-9190-00A0249B6F00}" and true or false)
+		lStation7Tank = (lPayloadInfo.Stations[7].CLSID == "{2BEC576B-CDF5-4B7F-961F-B0FA4312B841}" and true or false)
+	end
+
+	--ExportScript.Tools.WriteToLog('lStation7Tank: '..ExportScript.Tools.dump(lStation7Tank))
 	--ExportScript.Tools.WriteToLog('lEngineInfo: '..ExportScript.Tools.dump(lEngineInfo))
 	--[[
 	[fuel_external] = number: "0"
@@ -1617,89 +1706,88 @@ function ExportScript.AF.FuelQuantityIndicator_MiG29(FunctionTyp)
 	local lTotalFuel = lEngineInfo.fuel_internal + lEngineInfo.fuel_external
 	--ExportScript.Tools.WriteToLog('lTotalFuel: '..ExportScript.Tools.dump(lTotalFuel))
 
-	-- Fuel value correction, difference 3D cockpit gauges and export value
-	-- 3000kg = 2740             1,10
-	-- 2500kg = 2260 <- Lamp 2   1,11
-	-- 1000kg = 890              1,12
-	-- 800kg  = 700 <- Lamp 3    1,14
-	-- 650kg  = 550 <- Lamp 4    1,18
-	if lTotalFuel > 2740 then
-		lTotalFuel = lTotalFuel * 1.1
-	elseif lTotalFuel > 2260 and lTotalFuel < 2740 then
-		lTotalFuel = lTotalFuel * 1.11
-	elseif lTotalFuel > 890 and lTotalFuel < 2260 then
-		lTotalFuel = lTotalFuel * 1.12
-	elseif lTotalFuel > 700 and lTotalFuel < 290 then
-		lTotalFuel = lTotalFuel * 1.14
-	elseif lTotalFuel > 0 and lTotalFuel < 700 then
-		lTotalFuel = lTotalFuel * 1.18
-	end
+	-- Internal Fuel: 3370
+	-- max external Fuel: 2930
+	-- max totak Fuel: 6300
+	-- 1400 Liter center tank = 1163kg, station 7, CLSID {2BEC576B-CDF5-4B7F-961F-B0FA4312B841}
+	-- 1150 Liter tank = 891kg, station 5,6, CLSID {C0FF4842-FBAC-11d5-9190-00A0249B6F00}
+	--lEngineInfo.fuel_external < 1770 -- Tank warning 1
+	--lEngineInfo.fuel_external == 0 -- Tank warning 2
+	--lEngineInfo.fuel_internal < 2500 -- Tank warning 3
+	--lEngineInfo.fuel_internal < 800 -- Tank warning 4
+	--lEngineInfo.fuel_internal < 650 -- Tank warning 5
 
 	if ExportScript.Config.DACExport and lFunctionTyp == "DAC" then
 		ExportScript.Tools.SendDataDAC("300", string.format("%d", ExportScript.Tools.round(((lTotalFuel) / 10), 0, "ceil") * 10) ) -- total fuel in kg
 
-		ExportScript.Tools.SendDataDAC("304", (lTotalFuel < 3800.0 and 1 or 0) ) -- Tank warning 1
-		ExportScript.Tools.SendDataDAC("305", (lTotalFuel < 2550.0 and 1 or 0) ) -- Tank warning 2
-		ExportScript.Tools.SendDataDAC("306", (lTotalFuel < 800.0  and 1 or 0) ) -- Tank warning 3
-		ExportScript.Tools.SendDataDAC("307", (lTotalFuel < 650.0  and 1 or 0) ) -- Tank warning 4
+		if lStation7Tank and (lStation5Tank or lStation6Tank) then
+			ExportScript.Tools.SendDataDAC("304", (lEngineInfo.fuel_external < 1770.0 and 1 or 0) ) -- Tank warning 1
+			ExportScript.Tools.SendDataDAC("305", (lEngineInfo.fuel_external < 1.0 and 1 or 0) ) -- Tank warning 2
+		elseif lStation7Tank and not(lStation5Tank or lStation6Tank) then
+			ExportScript.Tools.SendDataDAC("304", (lEngineInfo.fuel_external < 1.0 and 1 or 0) ) -- Tank warning 1
+			ExportScript.Tools.SendDataDAC("305", 0 ) -- Tank warning 2
+		end
+		ExportScript.Tools.SendDataDAC("306", (lEngineInfo.fuel_internal < 2500.0 and 1 or 0) ) -- Tank warning 3
+		ExportScript.Tools.SendDataDAC("307", (lEngineInfo.fuel_internal < 800.0  and 1 or 0) ) -- Tank warning 4
+		ExportScript.Tools.SendDataDAC("308", (lEngineInfo.fuel_internal < 650.0  and 1 or 0) ) -- Tank warning 5
 	end
 
 	if ExportScript.Config.IkarusExport and lFunctionTyp == "Ikarus" then
-		local lTotalFuel_5_4	= 0
-		local lTotalFuel_4_0	= 0
+		local lTotalFuel_7_5	= 0
+		local lTotalFuel_5_0	= 0
 
-		if lTotalFuel < 5500 then
-			if lTotalFuel > 4000 then
-				--[[
-				y_min = 0.0		-- minimaler Ausgabewert
-				y_max = 1.0		-- maximaler Ausgabewert
-				x_min = 4000	-- minimaler Eingangswert
-				x_max = 5500	-- maximaler Eingangswert
+		if lTotalFuel > 5000 then -- internal and external
+			--[[
+			y_min = 0.0		-- minimaler Ausgabewert
+			y_max = 1.0		-- maximaler Ausgabewert
+			x_min = 5000	-- minimaler Eingangswert
+			x_max = 7500	-- maximaler Eingangswert
 
-				x = 5000		-- aktueller Eingangswert
+			x = 6300		-- aktueller Eingangswert
 
-				d_y = 1			-- Delta Ausgabewerte (y_max - y_min)
-				d_x = 1500		-- Delta Eingangswerte (x_max - x_min)
-				m = 0.00066667	-- Steigung der linearen Funktion (d_y / d_x)
-				n = -2.666685	-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
+			d_y = 1			-- Delta Ausgabewerte (y_max - y_min)
+			d_x = 2500		-- Delta Eingangswerte (x_max - x_min)
+			m = 0.0004		-- Steigung der linearen Funktion (d_y / d_x)
+			n = -2.0		-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
 
-				y = 0.666665	-- Ergebnis (m * x + n)
-				]]
-				lTotalFuel_5_4 = 0.00066667 * lTotalFuel + -2.666685
-			else
-				lTotalFuel_5_4	= 0.0
-			end
+			y = 0.52		-- Ergebnis (m * x + n)
+			]]
+			lTotalFuel_7_5 = 0.0004 * lTotalFuel + -2.0
+			lTotalFuel_5_0 = 1
 		else
-			lTotalFuel_5_4 = 1.0
-		end
-		if lTotalFuel < 4000 then
 			--[[
 			y_min = 0.0		-- minimaler Ausgabewert
 			y_max = 1.0		-- maximaler Ausgabewert
 			x_min = 0		-- minimaler Eingangswert
-			x_max = 4000	-- maximaler Eingangswert
+			x_max = 5000	-- maximaler Eingangswert
 
-			x = 3000		-- aktueller Eingangswert
+			x = 3500		-- aktueller Eingangswert
 
-			d_y = 1.0		-- Delta Ausgabewerte (y_max - y_min)
-			d_x = 4000		-- Delta Eingangswerte (x_max - x_min)
-			m = 0.00025		-- Steigung der linearen Funktion (d_y / d_x)
+			d_y = 1			-- Delta Ausgabewerte (y_max - y_min)
+			d_x = 5000		-- Delta Eingangswerte (x_max - x_min)
+			m = 0.0002		-- Steigung der linearen Funktion (d_y / d_x)
 			n = 0.0			-- Schnittpunkt der Funktion mit y-Achse (y_max - m * x_max)
 
-			y = 0.75		-- Ergebnis (m * x + n)
+			y = 0.52		-- Ergebnis (m * x + n)
 			]]
-			lTotalFuel_4_0 = 0.00025 * lTotalFuel
-		else
-			lTotalFuel_4_0 = 1.0
+			lTotalFuel_5_0 = 0.0002 * lTotalFuel + 0
+			lTotalFuel_7_5 = 0
 		end
 
-		ExportScript.Tools.SendData(301, string.format("%0.4f", lTotalFuel_5_4) )
-		ExportScript.Tools.SendData(302, string.format("%0.4f", lTotalFuel_4_0) )
+		ExportScript.Tools.SendData(301, string.format("%0.4f", lTotalFuel_7_5) )
+		ExportScript.Tools.SendData(302, string.format("%0.4f", lTotalFuel_5_0) )
 
-		ExportScript.Tools.SendData(304, (lTotalFuel < 3800.0 and 1 or 0) ) -- Tank warning 1
-		ExportScript.Tools.SendData(305, (lTotalFuel < 2550.0 and 1 or 0) ) -- Tank warning 2
-		ExportScript.Tools.SendData(306, (lTotalFuel < 800.0  and 1 or 0) ) -- Tank warning 3
-		ExportScript.Tools.SendData(307, (lTotalFuel < 650.0  and 1 or 0) ) -- Tank warning 4
+		if lStation7Tank and (lStation5Tank or lStation6Tank) then
+			ExportScript.Tools.SendData(304, (lEngineInfo.fuel_external < 1770.0 and 1 or 0) ) -- Tank warning 1
+			ExportScript.Tools.SendData(305, (lEngineInfo.fuel_external < 1.0 and 1 or 0) ) -- Tank warning 2
+		elseif lStation7Tank and not(lStation5Tank or lStation6Tank) then
+			ExportScript.Tools.SendData(304, (lEngineInfo.fuel_external < 1.0 and 1 or 0) ) -- Tank warning 1
+			ExportScript.Tools.SendData(305, 0 ) -- Tank warning 2
+		end
+		ExportScript.Tools.SendData(306, (lEngineInfo.fuel_internal < 2500.0 and 1 or 0) ) -- Tank warning 3
+		ExportScript.Tools.SendData(307, (lEngineInfo.fuel_internal < 800.0  and 1 or 0) ) -- Tank warning 4
+		ExportScript.Tools.SendData(308, (lEngineInfo.fuel_internal < 650.0  and 1 or 0) ) -- Tank warning 4
+		ExportScript.Tools.SendData(303, lRange ) -- Range in km
 	end
 end
 
@@ -2133,6 +2221,8 @@ function ExportScript.AF.FC_US_Compass()
 	local lHeading		= math.deg(LoGetSelfData().Heading)			-- HEADING (Radian to Grad)
 	--local lHeading		= math.deg(LoGetMagneticYaw())			-- HEADING (Radian to Grad)
 	--lHeading = 360 - lHeading		-- muss umgerechnet werden??
+	local lPitch		= LoGetSelfData().Pitch			-- Pitch
+	local lBank			= LoGetSelfData().Bank			-- Bank
 
 	--[[
 	y_min = 1.0		-- minimaler Ausgabewert
@@ -2150,9 +2240,9 @@ function ExportScript.AF.FC_US_Compass()
 	]]
 	lHeading = -0.00555555555555555555555555555556 * lHeading + 1.0
 
-    ExportScript.Tools.SendData(31, string.format("%.4f", lHeading))      -- heading
-    ExportScript.Tools.SendData(32, string.format("%.4f", lDefaultNull))  -- pitch
-    ExportScript.Tools.SendData(33, string.format("%.4f", lDefaultNull))  -- bank
+    ExportScript.Tools.SendData(31, string.format("%.4f", lHeading))		-- heading
+    ExportScript.Tools.SendData(32, string.format("%.4f", lDefaultNull))	-- bank
+    ExportScript.Tools.SendData(33, string.format("%.4f", lDefaultNull))	-- pitch
 end
 
 -- US F-15C Exaust Gas Temperature
