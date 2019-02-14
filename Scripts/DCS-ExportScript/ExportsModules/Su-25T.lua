@@ -88,7 +88,7 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 		ExportScript.AF.FC_Russian_RadarAltimeter_1500m(100)
 
 		-- Barometric Altimeter
-		ExportScript.AF.FC_Russian_BarometricAltimeter_late()
+		ExportScript.AF.FC_Russian_BarometricAltimeter_late_special()
 
 		-- Tachometer (RPM)
 		ExportScript.AF.FC_Russian_EngineRPM()
