@@ -24,11 +24,11 @@ Der Export von Daten wird für folgende Module unterstützt:
 - Mirage 2000
 - P-51D 25/30-NA
 - SA342L/M/Mistral
-- SpitfireLFMkIX
+- SpitfireLFMkIX/CW
 - Su-25T
 - TF-51D
 - UH-1H
-- alle Flaming Cliffs Flugzeuge
+- alle Flaming Cliffs Flugzeuge + J-11A
 
 Kompatibel zur DCS World 2.5.4 und BETA Version
 
@@ -57,11 +57,11 @@ Following moduls are supported:
 - Mirage 2000
 - P-51D 25/30-NA
 - SA342L/M/Mistral
-- SpitfireLFMkIX
+- SpitfireLFMkIX/CW
 - Su-25T
 - TF-51D
 - UH-1H
-- all Flaming Cliffs aircrafts
+- all Flaming Cliffs aircrafts + J-11A
 
 Compatible with DCS World 2.5.4 and BETA version
 
