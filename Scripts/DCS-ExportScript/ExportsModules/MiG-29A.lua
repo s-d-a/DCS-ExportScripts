@@ -1,7 +1,7 @@
 -- MiG-29A Export
 
 ExportScript.FoundFCModule = true
-ExportScript.Version.MiG29A = "1.2.0"
+ExportScript.Version.MiG29A = "1.2.1"
 
 -- auxiliary function
 dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")
@@ -105,6 +105,9 @@ function ExportScript.ProcessIkarusFCHighImportanceConfig()
 
 		-- Machmeter
 		ExportScript.AF.FC_Russian_Mach_MiG29()
+
+		-- Magnetic Compass
+		ExportScript.AF.FC_Russian_Compass2()
 	else
 		ExportScript.Tools.WriteToLog("Unknown FC Error, no LoGetSelfData.")
 	end
@@ -145,21 +148,38 @@ function ExportScript.ProcessIkarusFCLowImportanceConfig()
 
 		-- Hydraulic Pressure Right
 		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.right, 240, 86)
+		
+		-- Hydraulic Pressure Left
+		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.left, 240, 87)
+
+		-- Hydraulic Pressure Right
+		ExportScript.AF.FC_OneNeedleGauge(lEngineInfo.HydraulicPressure.right, 240, 89)
 	end
 
 	-- Engine Lamps, Start and Afterburner
 	ExportScript.AF.FC_EngineLamps_MiG29(lFunctionTyp)
 
+	-- Oxygen Pressure Left
+	--ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 89)
+
+	-- Oxygen Pressure Center
+	--ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 90)
+
+	-- Oxygen Pressure Right
+	--ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 91)
+
 	local lMechInfo = LoGetMechInfo()	-- mechanical components,  e.g. Flaps, Wheelbrakes,...
 	if lMechInfo ~= nil then
 		-- Wheelbrakes Hydraulic Pressure Left
-		ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 87)
+		ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 16, 92)
 
 		-- Wheelbrakes Hydraulic Pressure Right
-		ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 240, 88)
+		ExportScript.AF.FC_OneNeedleGauge(lMechInfo.wheelbrakes.value, 16, 93)
 	end
+	
+	ExportScript.AF.FC_Russian_FlareChaff_MiG29(lFunctionTyp)
 
-	--[[
+--[[	
 	local lPayloadInfo = LoGetPayloadInfo()
 	ExportScript.Tools.WriteToLog('lPayloadInfo: '..ExportScript.Tools.dump(lPayloadInfo))
 
