@@ -1,7 +1,7 @@
 -- F/A-18C Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.FA18C_hornet = "1.2.0"
+ExportScript.Version.FA18C_hornet = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -646,10 +646,10 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2029, " ") -- Comm2Display 2 character
 	end
 	
-	local lUHF1Radio = GetDevice(39)
+	local lUHF1Radio = GetDevice(38)
 	ExportScript.Tools.SendData(2030, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF1Radio:get_frequency()/1000000))), 7)
 	
-	local lUHF2Radio = GetDevice(40)
+	local lUHF2Radio = GetDevice(39)
 	ExportScript.Tools.SendData(2031, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF2Radio:get_frequency()/1000000), "7.3", false, 0.005)), 7)
 end
 
