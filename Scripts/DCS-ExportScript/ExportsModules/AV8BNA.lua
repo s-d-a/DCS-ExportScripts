@@ -1,7 +1,7 @@
 -- AV8BNA
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.AV8BNA = "1.2.0"
+ExportScript.Version.AV8BNA = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -122,7 +122,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[268] = "%.4f",	--STAB 2. Number, 3. DRUM
 	[269] = "%.4f",	--H2O 1. Number
 	[270] = "%.4f",	--H2O 2. Number -----3. Number is fix !!----
-	[179] = "%.f",	--H2O CONTROLL LAMP
+	[177] = "%.f",	--FLOW W LAMP
 	[271] = "%.4f",	--NOZZLE POINTER
 	--FUEL PANEL DISPLAY
 	[365] = "%.4f",	--ON/OFF FLAG
@@ -290,6 +290,8 @@ ExportScript.ConfigArguments =
 	[299] = "%.4f",	--Comm 2 Volume Control
 	[300] = "%.4f",	--Comm 1 Channel Selector
 	[301] = "%.4f",	--Comm 2 Channel Selector
+	[178] = "%.4f",	--Comm 1 Channel Show Button
+	[189] = "%.4f",	--Comm 2 Channel Show Button
 	-- ODU Panel
 	[250] = "%1d",	--ODU Option1
 	[251] = "%1d",	--ODU Option2
@@ -1003,7 +1005,6 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2034, string.format("%s", lacnip_line[2]))
 	ExportScript.Tools.SendData(2035, string.format("%s", lacnip_line[3]))
 	ExportScript.Tools.SendData(2036, string.format("%s", lacnip_line[4]))
-	
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
