@@ -291,7 +291,7 @@ ExportScript.ConfigArguments =
 	[300] = "%.4f",	--Comm 1 Channel Selector
 	[301] = "%.4f",	--Comm 2 Channel Selector
 	[178] = "%.4f",	--Comm 1 Channel Show Button
-	[189] = "%.4f",	--Comm 2 Channel Show Button
+	[179] = "%.4f",	--Comm 2 Channel Show Button
 	-- ODU Panel
 	[250] = "%1d",	--ODU Option1
 	[251] = "%1d",	--ODU Option2
