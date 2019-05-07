@@ -1,7 +1,7 @@
 -- L-39C
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.L39C = "1.2.0"
+ExportScript.Version.L39C = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {

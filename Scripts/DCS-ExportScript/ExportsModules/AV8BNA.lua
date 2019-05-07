@@ -198,9 +198,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[354] = "%.4f",	--ALT DIGITAL 2.
 	[353] = "%.4f",	--ALT DIGITAL 3.
 	[356] = "%.4f",	--IN HG 1. NUMBER
-	[357] = "%.4f",	--IN HG 2.
-	[358] = "%.4f",	--IN HG 3.
-	[359] = "%.4f",	--IN HG 4.
+	[357] = "%.4f",	--IN HG 2. NUMBER
+	[358] = "%.4f",	--IN HG 3. NUMBER
+	[359] = "%.4f",	--IN HG 4. NUMBER
 	--AOA
 	[360] = "%.4f",	--AOA FLAG
 	[361] = "%.4f",	--AOA POINTER
@@ -409,7 +409,8 @@ ExportScript.ConfigArguments =
 -- Flights Instruments Panel
 	[364] = "%.4f",	--NAV Course Setting
 	[653] = "%.4f",	--Barometric Pressure Calibration
-	[351] = "%1d",	--Backup ADI Cage/Pitch Adjust Knob
+	[350] = "%1d",	--Backup ADI Cage
+	[351] = "%.4f",	--Backup ADI Pitch Adjust Knob
 -- Miscelaneous Switch Panel
 	[422] = "%1d",	--Video Recorder System Mode Switch
 	[423] = "%1d",	--Video Recorder System Display Selector Switch

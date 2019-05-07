@@ -7,7 +7,7 @@
 -- Main Table
 ExportScript = {}
 ExportScript.Version = {}
-ExportScript.Version.ExportScript = "1.2.0"
+ExportScript.Version.ExportScript = "1.2.1"
 -- Simulation id
 ExportScript.SimID = string.format("%08x*",os.time())
 

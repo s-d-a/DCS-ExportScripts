@@ -6,7 +6,7 @@
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
 ExportScript.Tools = {}
-ExportScript.Version.Tools = "1.2.0"
+ExportScript.Version.Tools = "1.2.1"
 
 function ExportScript.Tools.WriteToLog(message)
     if ExportScript.logFile then

@@ -1,7 +1,7 @@
 -- AJS37
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.AJS37 = "1.2.0"
+ExportScript.Version.AJS37 = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -84,8 +84,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[145] = "%.4f",	-- FuelNeeded {0.0, 1.0} {0.0, 135.0}
 	-- Clock
 	[130] = "%.4f",	-- Hour
-	--[] = "%.4f",	-- Minute
-	[133] = "%.4f",	-- Second
+	[131] = "%.4f",	-- Minute
+	[133] = "%.4f",	-- Second (Arrow)
+	[1333] = "%.4f",	-- Second
 	--
 	[141] = "%.4f",	-- Engine pressure ratio EPR indicator
 	-- INSTRUMENTS Right Panel
@@ -241,12 +242,12 @@ ExportScript.ConfigArguments =
 	[203] = "%1d",	-- Main Electric Power
 	[207] = "%1d",	-- Generator
 	[209] = "%1d",	-- Master Mode Selector
-	[446] = "%1d",	-- "Master Caution Reset
+	[446] = "%1d",	-- Master Caution Reset
 	[323] = "%1d",	-- Slav SI
 	[324] = "%1d",	-- HÖJD CISI
 	--[0] = "%1d",	-- Snabbresning
-	[123] = "%1d",	-- Backup ADI Cage
-	[126] = "%.3f",	-- Backup Altimeter Setting (Axis) {0.0,1.0} in 0.001 steps
+	--[123] = "%1d",	-- Backup ADI Cage
+	--[126] = "%.3f",	-- Backup Altimeter Setting (Axis) {0.0,1.0} in 0.001 steps
 	[311] = "%1d",	-- Pitch Gear Automatic/Landing
 	-- Countermeasure panel
 	[317] = "%.1f",	-- Jammer Operation Mode Selector {0.0,0.1,0.2,0.3,0.4}
@@ -356,7 +357,9 @@ ExportScript.ConfigArguments =
 	[211] = "%.2f",	-- Autopilot yaw correction RENFLYGN (Axis) {0.0,1.0} in 0.01 steps
 	[400] = "%1d",	-- Missile Select Button
 	[399] = "%.3f",	-- Master Volume / Sidewinder Tone (Axis) {0.0,1.0} in 0.001 steps
-	[1201] = "%.1f"	-- Magnetic Declination Correction (Axis) {0.0,1.0} in 0.1 steps
+	[1201] = "%.1f",	-- Magnetic Declination Correction (Axis) {0.0,1.0} in 0.1 steps
+	-- Clock
+	[135] = "%.3f",	-- Clock Setting
 }
 
 -----------------------------

@@ -1,7 +1,7 @@
 -- Ka-50 Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.Ka50 = "1.2.0"
+ExportScript.Version.Ka50 = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -48,6 +48,7 @@ ExportScript.ConfigEveryFrameArguments =
 	-- Barometric Altimeter (VM_15PV)
 	--------------------------------------------------
 	[87]  = "%.4f", 		-- VM_15PV_BALT_thousands {0.0,1.0}
+	[573] = "%.4f", 		-- VM_15PV_BALT_tenths {0.0,1.0}
 	[88]  = "%0.2f", 		-- VM_15PV_BaroPressure {0.0,1.0}
 	[89]  = "%.4f", 		-- VM_15PV_BALT_CommandedAlt {0.0,1.0}
 	-- HSI (PNP-72-16)

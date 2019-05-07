@@ -1,7 +1,7 @@
 -- Mirage M-2000C
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.M2000C = "1.2.0"
+ExportScript.Version.M2000C = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -131,7 +131,7 @@ ExportScript.ConfigEveryFrameArguments =
 -- ADI Standby	
 	[327] = "%.4f",	--pitch
 	[326] = "%.4f",	--bank 
-	[328] = "%.4f",	--adjust
+	[328] = "%.4f",	--adjust / White Silhouette
 	[329] = "%.1f",	--off flag
 
 -- AOA
@@ -381,7 +381,7 @@ ExportScript.ConfigArguments =
 	[208] = "%.1f",	--Gun AG Reticle Selector
 	[209] = "%.1f",	--Gun Target Wingspan Selector
 	[210] = "%.1f",	--HUD Clear Switch
-	[192] = "%.1f",	--Radar Altimeter Minimum Altitude Selector
+	[192] = "%.4f",	--Radar Altimeter Minimum Altitude Selector
 	[213] = "%.1f",	--Radar Interception Switch
 	[214] = "%.1f",	--Radar N Parameter Switch
 	[215] = "%.1f",	--Radar P Parameter Switch
@@ -627,7 +627,7 @@ ExportScript.ConfigArguments =
 	[314] = "%.1f",	--ADI Cage Lever
 	[315] = "%.1f",	--ADI Backlight Switch
 	[325] = "%.1f",	--Backup ADI Cage
-	[328] = "%.1f",	--Backup ADI Pitch Adjust Knob {-1.0,1.0} in 0.1 steps
+	--[328] = "%.4f",	--Backup ADI Pitch Adjust Knob {-1.0,1.0} in 0.1 steps
 -- Center console IFF
 	[383] = "%.1f",	--Ident Power Switch {-1.0,0.0,1.0}
 	[384] = "%.1f",	--Mode-1 Switch
@@ -1132,7 +1132,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
 -- U/VHF Com Preset
 	--[436] = "%.4f",	-- 	Preset display (1-20)
-	local lUVHF_RADIO_PRESET = {[0.00]="1",[0.10]="2",[0.15]="3",[0.20]="4",[0.25]="5",[0.30]="6",[0.35]="7",[0.40]="8",[0.45]="9",[0.50]="10",[0.55]="11",[0.60]="12",[0.65]="13",[0.70]="14",[0.75]="15",[0.80]="16",[0.85]="17",[0.09]="18",[0.95]="19",[1.00]="20"}
+	local lUVHF_RADIO_PRESET = {[0.00]="1",[0.10]="2",[0.15]="3",[0.20]="4",[0.25]="5",[0.30]="6",[0.35]="7",[0.40]="8",[0.45]="9",[0.50]="10",[0.55]="11",[0.60]="12",[0.65]="13",[0.70]="14",[0.75]="15",[0.80]="16",[0.85]="17",[0.90]="18",[0.95]="19",[1.00]="20"}
 	ExportScript.Tools.SendData(436, ExportScript.Tools.DisplayFormat(lUVHF_RADIO_PRESET[tonumber(string.format("%1.2f",mainPanelDevice:get_argument_value(436)))], 2))
 	
 	if ExportScript.Config.Debug then

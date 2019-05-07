@@ -1,7 +1,7 @@
 -- Mi-8MTV2 Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.Mi8MT = "1.2.0"
+ExportScript.Version.Mi8MT = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 { 
@@ -75,7 +75,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[833] = "%.4f",		-- VD_10K_L_100_Ind {0.0, 1.0}
 	[832] = "%.4f",		-- VD_10K_L_10_Ind {0.0, 1.0}
 	[916] = "%.4f",		-- VD_10K_L_Shutter {0.822, 0.75}
-	[21] = "%.4f",		-- VD_10K_L_PRESS {0.0, 1.0}
+	--[21] = "%.4f",		-- VD_10K_L_PRESS {0.0, 1.0}
 	-----
 	[98] = "%.4f",		-- VD_10K_R_100 {0.0, 1.0}
 	[99] = "%.4f",		-- VD_10K_R_10 {0.0, 1.0}
@@ -1005,6 +1005,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(12, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(12)))) -- negate
 	
 	ExportScript.Tools.SendData(91, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(91)))) -- negate
+	
+	--[21] = "%.4f",		-- VD_10K_L_PRESS {0.0, 1.0}
+	ExportScript.Tools.SendData(21, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(21)))) -- negate
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)

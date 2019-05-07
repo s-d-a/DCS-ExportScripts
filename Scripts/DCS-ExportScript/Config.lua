@@ -6,7 +6,7 @@
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
 ExportScript.Config = {}
-ExportScript.Version.Config = "1.2.0"
+ExportScript.Version.Config = "1.2.1"
 
 -- Ikarus a Glass Cockpit Software
 ExportScript.Config.IkarusExport    = true         -- false for not use

@@ -1,7 +1,7 @@
 -- P-51D-30-NA Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.P51D30NA = "1.2.0"
+ExportScript.Version.P51D30NA = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 { 

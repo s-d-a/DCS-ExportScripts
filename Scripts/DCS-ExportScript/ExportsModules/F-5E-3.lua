@@ -1,7 +1,7 @@
 -- F-5E-3
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.F5E3 = "1.2.0"
+ExportScript.Version.F5E3 = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -55,7 +55,7 @@ ExportScript.ConfigEveryFrameArguments =
 	-- AirSpeed/Mach Indicator
 	[8] = "%.4f",	-- Airspeed {0.0, 0.0435, 0.1, 0.318, 0.3745, 0.397, 0.4495, 0.482,  0.54, 0.553, 0.6145, 0.658, 0.668, 0.761, 0.801, 0.877, 0.909, 0.942, 0.972, 1.0} {0.0, 80.0, 100.0, 170.0,  190.0, 200.0, 230.0, 250.0, 290.0, 300.0, 350.0, 390.0, 400.0, 500.0, 550.0, 650.0, 700.0, 750.0, 800.0, 850.0}
 	[178] = "%.4f",	-- MaxAirspeed  {0.0, 0.0435, 0.1, 0.318, 0.3745, 0.397, 0.4495, 0.482,  0.54, 0.553, 0.6145, 0.658, 0.668, 0.761, 0.801, 0.877, 0.909, 0.942, 0.972, 1.0} {0.0, 80.0, 100.0, 170.0,  190.0, 200.0, 230.0, 250.0, 290.0, 300.0, 350.0, 390.0, 400.0, 500.0, 550.0, 650.0, 700.0, 750.0, 800.0, 850.0}
-	[177] = "%.f",	-- SetAirspeed
+	[177] = "%.4f",	-- SetAirspeed
 	[179] = "%.4f",	-- MachIndicator {1.0, 0.957, 0.92, 0.631, 0.386} {0.0, 0.5, 1.0, 1.8, 2.5}
 	-- Vertical Velocity Indicator
 	[24] = "%.4f",	-- Variometer {-1.0, -0.64, -0.5, -0.29, 0.0, 0.29, 0.5, 0.64, 1.0} {-6000.0, -3000.0, -2000.0, -1000.0, 0.0, 1000.0, 2000.0, 3000.0, 6000.0}
@@ -93,7 +93,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[438] = "%.4f",	-- SAI_Pitch {-0.665, -0.581, -0.5, 0.0, 0.5, 0.581, 0.676, 0.735} {-rad_(78.0), -rad_(60.0), -rad_(42.0), 0.0, rad_(42.0), rad_(60.0), rad_(80.0), rad_(92.0)}
 	[439] = "%.4f",	-- SAI_Bank {1.0, -1.0} {-math.pi, math.pi}
 	[440] = "%.4f",	-- SAI_OFF_flag 
-	[443] = "%.4f",	-- SAI_knob_arrow {-1.0, 1.0} {0.0, 1.0}
+	--[443] = "%.4f",	-- SAI_knob_arrow {-1.0, 1.0} {0.0, 1.0}
 	-- Clock
 	[19] = "%.4f",	-- CLOCK_currtime_hours
 	[18] = "%.4f",	-- CLOCK_currtime_minutes
@@ -151,7 +151,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[263] = "%.4f",	-- TACAN_window_wheel.hundreds {0.0, 1.0} {0.0, 10.0}
 	[264] = "%.4f",	-- TACAN_window_wheel.tens {0.0, 1.0} {0.0, 10.0}
 	[265] = "%.4f",	-- TACAN_window_wheel.ones {0.0, 1.0} {0.0, 10.0}
-	[266] = "%.4f",	-- XYwheel
+	--[266] = "%.4f",	-- XYwheel
 	[260] = "%.f",	-- TACAN_test_light
 	-- LAMPS
 	-- Engine Fire Lights
@@ -467,11 +467,11 @@ ExportScript.ConfigArguments =
 	[246] = "%1d",	-- CB LDG-TAXI LAMP PWR, ON/OFF {1.0, 0.0}
 	--UHF Radio AN/ARC-164
 	[300] = "%.2f",	-- AN/ARC-164, UHF Radio Preset Channel Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, ... 0.15, 0.16, 0.17, 0.18, 0.19}
-	[327] = "%.1f",	-- AN/ARC-164, UHF Radio 100 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3}
-	[328] = "%.1f",	-- AN/ARC-164, UHF Radio 10 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
-	[329] = "%.1f",	-- AN/ARC-164, UHF Radio 1 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
-	[330] = "%.1f",	-- AN/ARC-164, UHF Radio 0.1 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
-	[331] = "%.2f",	-- AN/ARC-164, UHF Radio 0.025 MHz Frequency Selector Knob {0.0, 0.25, 0.5, 0.75}
+	--[327] = "%.1f",	-- AN/ARC-164, UHF Radio 100 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3}
+	--[328] = "%.1f",	-- AN/ARC-164, UHF Radio 10 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
+	--[329] = "%.1f",	-- AN/ARC-164, UHF Radio 1 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
+	--[330] = "%.1f",	-- AN/ARC-164, UHF Radio 0.1 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
+	--[331] = "%.2f",	-- AN/ARC-164, UHF Radio 0.025 MHz Frequency Selector Knob {0.0, 0.25, 0.5, 0.75}
 	[307] = "%.1f",	-- AN/ARC-164, UHF Radio Frequency Mode Selector Switch, MANUAL/PRESET/GUARD {0.0, 0.1, 0.2}
 	[311] = "%.1f",	-- AN/ARC-164, UHF Radio Function Selector Switch, OFF/MAIN/BOTH/ADF {0.0, 0.1, 0.2}
 	[310] = "%1d",	-- AN/ARC-164, UHF Radio Tone Button
@@ -510,6 +510,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
+	
+	--[443] = "%.4f",	-- SAI_knob_arrow {-1.0, 1.0} {0.0, 1.0}
+	ExportScript.Tools.SendData(443, ExportScript.Tools.negate(mainPanelDevice:get_argument_value(443)))
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -554,10 +557,60 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2001, lUHFRadio_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(300), 2)])
 	end
 	
+	--[327] = "%.1f",	-- AN/ARC-164, UHF Radio 100 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3}
+	--[328] = "%.1f",	-- AN/ARC-164, UHF Radio 10 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
+	--[329] = "%.1f",	-- AN/ARC-164, UHF Radio 1 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
+	--[330] = "%.1f",	-- AN/ARC-164, UHF Radio 0.1 MHz Frequency Selector Knob {0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
+	--[331] = "%.2f",	-- AN/ARC-164, UHF Radio 0.025 MHz Frequency Selector Knob {0.0, 0.25, 0.5, 0.75}
+	--F5E_UHF
+	--327: 0.0=A, 0.1=3, 0.2=2, 0.3=T
+	--1:   0.0=A, 0.1=T, 0.2=2, 0.3=3
+
+	--328: 0.0=0, 0.1=9, 0.2=8, 0.3=7, 0.4=6, 0.5=5, 0.6=4, 0.7=3, 0.8=2, 0.9=1, 1.0=0
+	--2:   0.0=0, 0.1=1, 0.2=2, 0.3=3, 0.4=4, 0.5=5, 0.6=6, 0.7=7, 0.8=8, 0.9=9, 1.0=0
+
+	--329: 0.0=0, 0.1=9, 0.2=8, 0.3=7, 0.4=6, 0.5=5, 0.6=4, 0.7=3, 0.8=2, 0.9=1, 1.0=0
+	--3:   0.0=0, 0.1=1, 0.2=2, 0.3=3, 0.4=4, 0.5=5, 0.6=6, 0.7=7, 0.8=8, 0.9=9, 1.0=0
+
+	--330: 0.0=0, 0.1=9, 0.2=8, 0.3=7, 0.4=6, 0.5=5, 0.6=4, 0.7=3, 0.8=2, 0.9=1, 1.0=0
+	--4:   0.0=0, 0.1=1, 0.2=2, 0.3=3, 0.4=4, 0.5=5, 0.6=6, 0.7=7, 0.8=8, 0.9=9, 1.0=0
+
+	--331: 0.0=00, 0.25=75, 0.5=50, 0.75=25, 1.0=00
+	--5:   0.0=00, 0.25=25, 0.5=50, 0.75=75
+	
+	local lTmp327 = tonumber(string.format("%0.1f", mainPanelDevice:get_argument_value(327)))
+	local lTmp327_2 = lTmp327
+        if lTmp327 == 0.0 then lTmp327_2 = 0.0
+	elseif lTmp327 == 0.1 then lTmp327_2 = 0.3
+	elseif lTmp327 == 0.2 then lTmp327_2 = 0.2
+	elseif lTmp327 == 0.3 then lTmp327_2 = 0.1
+	else                       lTmp327_2 = lTmp327 end
+	
+	local lTmp328_2 = 1 - mainPanelDevice:get_argument_value(328)
+	local lTmp329_2 = 1 - mainPanelDevice:get_argument_value(329)
+	local lTmp330_2 = 1 - mainPanelDevice:get_argument_value(330)
+	
+	local lTmp331 = mainPanelDevice:get_argument_value(331)
+	local lTmp331_2 = 0
+        if lTmp331 == 0.0  then lTmp331_2 = 0.0
+	elseif lTmp331 == 0.25 then lTmp331_2 = 0.75
+	elseif lTmp331 == 0.5  then lTmp331_2 = 0.5
+	elseif lTmp331 == 0.75 then lTmp331_2 = 0.25
+	else                       lTmp331_2 = lTmp331 end
+	
+	ExportScript.Tools.SendData(327, lTmp327_2)
+	ExportScript.Tools.SendData(328, lTmp328_2)
+	ExportScript.Tools.SendData(329, lTmp329_2)
+	ExportScript.Tools.SendData(330, lTmp330_2)
+	ExportScript.Tools.SendData(331, lTmp331_2)
+
+	
 	-- TACAN Channel
 	-------------------------------------------------
 	ExportScript.Tools.SendData(2002, (string.format("%0.2f", (mainPanelDevice:get_argument_value(263))) == "1.00" and "0" or "1")..ExportScript.Tools.round(mainPanelDevice:get_argument_value(264) * 10, 0)..ExportScript.Tools.round(mainPanelDevice:get_argument_value(265) * 10, 0)..(string.format("%1d", (mainPanelDevice:get_argument_value(266))) == "0" and "X" or "Y"))
-
+	--[266] = "%.4f",	-- XYwheel
+	ExportScript.Tools.SendData(266, mainPanelDevice:get_argument_value(266) == 0 and 0 or 1)
+	
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)

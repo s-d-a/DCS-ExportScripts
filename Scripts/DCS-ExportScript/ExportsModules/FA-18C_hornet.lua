@@ -492,7 +492,10 @@ ExportScript.ConfigArguments =
 	-- ICMCP
 	[248] = "%.1f",   -- ECM Mode Switch, XMIT/REC/BIT/STBY/OFF {0.0,0.1,0.2,0.3,0.4}
 	-- Helmet
-	[136] = "%.2f"    -- HMD OFF/BRT Knob {0.0,0.75} in 0.01 Steps
+	[136] = "%.2f",    -- HMD OFF/BRT Knob {0.0,0.75} in 0.01 Steps
+	-- Targeting Pod, FLIR
+	[439] = "%.1f",    -- FLIR Switch, ON/STBY/OFF {0.0,0.5,1.0}
+	[441] = "%.1f",    -- LTD/R Switch, ARM/SAFE/AFT {0.0,0.5,1.0}
 }
 
 -----------------------------

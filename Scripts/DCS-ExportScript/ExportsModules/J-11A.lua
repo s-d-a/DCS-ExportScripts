@@ -1,7 +1,7 @@
 -- J-11A Export
 
 ExportScript.FoundFCModule = true
-ExportScript.Version.J11A = "1.2.0"
+ExportScript.Version.J11A = "1.2.1"
 
 -- auxiliary function
 dofile(ExportScript.Config.ExportModulePath.."FC_AuxiliaryFuntions.lua")

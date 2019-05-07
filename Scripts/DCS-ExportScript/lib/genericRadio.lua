@@ -5,7 +5,7 @@
 -- Copyright by Michael aka McMicha 2014
 -- Contact dcs2arcaze.micha@farbpigmente.org
 
-ExportScript.Version.genericRadio = "1.2.0"
+ExportScript.Version.genericRadio = "1.2.1"
 
 --[[
 -- Config and execute in function ExportScript.ProcessDACConfigLowImportance()

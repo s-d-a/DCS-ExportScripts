@@ -1,7 +1,7 @@
 -- A-10C
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.A10C = "1.2.0"
+ExportScript.Version.A10C = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -67,6 +67,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[64] = "%.4f",		-- Standby Attitude Indicator bank
 	[65] = "%0.1f",		-- Standby Attitude Indicator warning flag
 	[715] = "%.4f",		-- Standby Attitude Indicator manual pitch adjustment
+	[717] = "%.4f",		-- Standby Attitude Indicator knob arrow
 	-- Engine Gauges
 	[70] = "%.4f",		-- Left Engine Temperature
 	[71] = "%.4f",		-- Left Engine TemperatureUnits
@@ -188,8 +189,6 @@ ExportScript.ConfigEveryFrameArguments =
 	[648] = "%.4f",		-- HydraulicPressureRight {0.0,1.0}
 	-- Flap Indicator
 	[653] = "%.4f",		-- FlapPositionIndicator {0,20} {0,2/3,1}
-	-- CPT MECH
-	[654] = "%1d",		-- PTR-ANTI-SKID (Anti Skid)
 	-- Landing Gear Lamps
 	[659] = "%.f",	-- GEAR_N_SAFE
 	[660] = "%.f",	-- GEAR_L_SAFE
@@ -220,7 +219,17 @@ ExportScript.ConfigArguments =
 	arguments for export in low tick interval
 	based on "clickabledata.lua"
 	]]
-	[22] = "%.3f",     -- AAP ??
+	--Attitude Direction Indicator
+	[22] = "%.4f",     -- ADI Pitch Trim Knob {-.05,0.5} in 01. steps
+	--Horizontal Situation Indicator
+	[45] = "%.4f",     -- HSI Heading Set Knob
+	[44] = "%.4f",     -- HSI Course Set Knob
+	--Standby Attitude Indicator
+	[67] = "%1df",     -- SAI Cage Standby Attitude Indicator. Hold Right Mouse Button and rotate Scroll Wheel to uncage
+	[66] = "%.4f",     -- SAI Cage Standby Attitude Indicator. Hold Right Mouse Button and rotate Scroll Wheel to uncage
+	-- Digital Clock
+	[68] = "%1d",     -- Clock Toggle Clock and Elapsed Time Modes
+	[69] = "%1d",     -- Clock Start, Stop and Reset Elapsed Timer
 	-- Emergency Jettison Button
 	[101] = "%.1f",    -- PTR-EXT-STORES-JETT (mergency Jettison External Stores)
 	-- Fire Extinguishers Panel
@@ -251,7 +260,8 @@ ExportScript.ConfigArguments =
 	[124] = "%1d",     -- PTR-ENGINE-OPER-L (Engine Operate Left)
 	[125] = "%1d",     -- PTR-ENGINE-OPER-R (Engine Operate Right)
 	[126] = "%1d",     -- PTR-APU-START (APU On/Off)
-	[127] = "%.1f",    -- PTR-THROTTLE-FRICTION (Throttle Friction Control)
+	[128] = "%.1f",    -- PTR-THROTTLE-FRICTION (Throttle Friction Control)
+	[652] = "%1d",     -- PTR-TEMS-DATA (TEMS DATA)
 	-- LASTE Control Panel
 	[130] = "%1d",     -- PTR-LCP-RDRALTM (Radar Altimeter Normal/Disabled)
 	[131] = "%.1f",    -- PTR-LCP-AUTOPILOT-ENGAGE (Autopilot Engage/Disengage)
@@ -628,6 +638,8 @@ ExportScript.ConfigArguments =
 	-- CPT MECH
 	[651] = "%.1f",    -- PTR-DOWNLOCK-OVERRIDE (Downlock Override)
 	[716] = "%1d",     -- PNT-LNDGEAR (Landing Gear Lever)
+	[773] = "%1d",     -- PTR-FLAPS (Flap Setting)
+	[654] = "%1d",     -- PTR-ANTI-SKID (Anti Skid)
 	-- Light System Control Panel
 	[655] = "%0.1f",   -- PTR-LIGHTS-LAND (Land Taxi Lights)
 	-- STALL
@@ -650,6 +662,73 @@ ExportScript.ConfigArguments =
 	[782] = "%0.1f",   -- PTR-LVR-PANKY58-1TO5 (Full switch)
 	[783] = "%0.1f",   -- PTR-LVR-PANKY58-MODE (Mode switch)
 	[784] = "%1d",     -- PTR-TMB-PANKY58-POWER (Power switch)
+	-- Armament Ground Safety Override Switch
+	[709] = "%1d",     -- PTR-ARMGS-COVER (Arm Ground Safety Override Cover)
+	[710] = "%1d",     -- PTR-ARMGS-OVERRIDE-SWITCH (Arm Ground Safety Override Switch)
+	--Circuit Breaker Panel CBP
+	[666] = "%1d",     -- PTR-CBP-AILERON-DISC-L (AILERON DISC L)
+	[667] = "%1d",     -- PTR-CBP-AILERON-DISC-R (AILERON DISC R)
+	[668] = "%1d",     -- PTR-CBP-SPS-RUDDER-AUTH-LIM (SPS & RUDDER AUTH LIMIT)
+	[669] = "%1d",     -- PTR-CBP-ELEVATION-DISC-L (ELEVATION DISC L)
+	[670] = "%1d",     -- PTR-CBP-ELEVATION-DISC-R (ELEVATION DISC R)
+	[671] = "%1d",     -- PTR-CBP-AILERON-TAB-L (AILERON TAB L)
+	[672] = "%1d",     -- PTR-CBP-AILERON-TAB-R (AILERON TAB R)
+	[673] = "%1d",     -- PTR-CBP-EMER-FLAP (EMER FLAP)
+	[674] = "%1d",     -- PTR-CBP-EMER-TRIM (EMER TRIM)
+	[675] = "%1d",     -- PTR-CBP-LAND-GEAR (LAND GEAR)
+	[676] = "%1d",     -- PTR-CBP-ENGINE-START-L (ENGINE START L)
+	[677] = "%1d",     -- PTR-CBP-ENGINE-START-R (ENGINE START R)
+	[678] = "%1d",     -- PTR-CBP-APU-CONT (APU CONT)
+	[679] = "%1d",     -- PTR-CBP-ANG-IGNITOR-1 (ENG IGNITOR L/R-1)
+	[680] = "%1d",     -- PTR-CBP-ANG-IGNITOR-2 (ENG IGNITOR L/R-2)
+	[681] = "%1d",     -- PTR-CBP-EMER-FUEL-SHUTOFF-ENG-L (EMER FUEL SHUTOFF ENG L)
+	[682] = "%1d",     -- PTR-CBP-EMER-FUEL-SHUTOFF-ENG-R (EMER FUEL SHUTOFF ENG R)
+	[683] = "%1d",     -- PTR-CBP-DC-FUEL-PUMP (DC FUEL PUMP)
+	[684] = "%1d",     -- PTR-CBP-BLEED-AIR-CONT-L (BLEED AIR CONT L)
+	[685] = "%1d",     -- PTR-CBP-BLEED-AIR-CONT-R (BLEED AIR CONT R)
+	[686] = "%1d",     -- PTR-CBP-EXT-STORES-JETT-1 (EXT STORES JETT 1)
+	[687] = "%1d",     -- PTR-CBP-EXT-STORES-JETT-2 (EXT STORES JETT 2)
+	[688] = "%1d",     -- PTR-CBP-STBY-ATT-IND (STBY ATT IND)
+	[689] = "%1d",     -- PTR-CBP-MASTER-CAUT (MASTER CAUT)
+	[690] = "%1d",     -- PTR-CBP-PITOT-HEAT-AC (PITOT HEAT AC)
+	[691] = "%1d",     -- PTR-CBP-IFF (IFF)
+	[692] = "%1d",     -- PTR-CBP-UHF-COMM (UHF COMM)
+	[693] = "%1d",     -- PTR-CBP-INTER-COMM (INTER COMM)
+	[694] = "%1d",     -- PTR-CBP-GENERATOR-CONT-L (GENERATOR CONT L)
+	[695] = "%1d",     -- PTR-CBP-GENERATOR-CONT-R (GENERATOR CONT R)
+	[696] = "%1d",     -- PTR-CBP-CONVERTER-L (CONVERTER L)
+	[697] = "%1d",     -- PTR-CBP-AUX-ESS-BUS-0A (AUX ESS BUS 0A)
+	[698] = "%1d",     -- PTR-CBP-AUX-ESS-BUS-0B (AUX ESS BUS 0B)
+	[699] = "%1d",     -- PTR-CBP-AUX-ESS-BUS-0C (AUX ESS BUS 0C)
+	[700] = "%1d",     -- PTR-CBP-BATTERY-BUS-TRANS (BATTERY BUS TRANS)
+	[701] = "%1d",     -- PTR-CBP-INVERTER-PWR (INVERTER PWR)
+	[702] = "%1d",     -- PTR-CBP-INVERTER-CONT (INVERTER CONT)
+	[703] = "%1d",     -- PTR-CBP-AUX-ESS-BUS-TIE (AUX ESS BUS TIE)
+	--AAU-34/A
+	[62] = "%1d",     -- PNT-ALT-LEVR-L (Set Pressure)
+	[60] = "%1d",     -- PNT-ALT-LEVR-R (ELECT/PNEU)
+	-- Seat Adjustment Button
+	[770] = "%1d",     -- Seat Height Adjustment up/down
+	-- Arm Seat Handle
+	[787] = "%1d",     -- Extend boarding ladder cover
+	[788] = "%1d",     -- Extend boarding ladder button
+	-- Accelerometer
+	[904] = "%1d",     -- Accelerometer Push to set
+	-- DVADR Remote Control Panel
+	[789] = "%1d",     -- DVADR - Function control toggle switch
+	-- Anti-G suit valve test button
+	[776] = "%1d",     -- Anti-G suit valve test button
+	-- Internal canopy actuator disengage lever
+	[777] = "%1d",     -- Internal canopy actuator disengage lever
+	-- Canopy jettison lever	
+	[785] = "%1d",     -- Canopy jettison lever
+	[786] = "%1d",     -- Canopy Jettison Lever Unlock Button
+	-- Antenna Select Panel	
+	[706] = "%1d",     -- IFF - antenna switch
+	[707] = "%1d",     -- UHF - antenna switch
+	[708] = "%1d",     -- EGI HQ TOD
+	-- RWR
+	[16] = "%.4f",     -- RWR Adjust Display Brightness {0.15, 0.85} in 0.1 steps	
 }
 
 -----------------------------
