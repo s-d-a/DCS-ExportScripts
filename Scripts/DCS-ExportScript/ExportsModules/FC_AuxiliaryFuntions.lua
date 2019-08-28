@@ -2045,27 +2045,35 @@ function ExportScript.AF.FC_US_HSI(distancetoway)
 		[40] = "%0.1f",		-- HSI Power Flag
 		[32] = "%0.1f",		-- HSI Range Flag
 	]]
-	lDistanceToWay = lDistanceToWay * 0.00062136994937697 -- meter to miles
-	--lDistanceToWay = ExportScript.Tools.round(lDistanceToWay / 1000, 1)
+	lDistanceToWay = lDistanceToWay * 0.00053995680345572 -- meter to nautic miles
+
 	local lRangeCounter1 = 0
 	local lRangeCounter2 = 0
 	local lRangeCounter3 = 0
-	if lDistanceToWay > 100 then
-		lRangeCounter1 = ExportScript.Tools.round((lDistanceToWay / 100), 0, "floor") * 0.11
-		lRangeCounter1 = lRangeCounter1 - ExportScript.Tools.round(lRangeCounter1, 0, "floor")
-	end
-	if lDistanceToWay > 10 then
-		if lDistanceToWay > 100 then
-			lRangeCounter2 = (ExportScript.Tools.round((lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
-		else
-			lRangeCounter2 = (lDistanceToWay / 10) * 0.11
-			lRangeCounter2 = lRangeCounter2 - ExportScript.Tools.round(lRangeCounter2, 0, "floor")
-		end
-	end
-	if lDistanceToWay > 10 then
-		lRangeCounter3 = (lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
+	local temp           = 0
+	if lDistanceToWay > 999 then
+		lRangeCounter1 = 0.9
+		lRangeCounter2 = 0.9
+		lRangeCounter3 = 0.9
 	else
-		lRangeCounter3 = lDistanceToWay * 0.11
+		if lDistanceToWay > 100 then
+			lRangeCounter1, temp = math.modf(lDistanceToWay / 100)
+			lRangeCounter1 = lRangeCounter1 / 10
+			lRangeCounter1 = (lRangeCounter1 > 0.9 and 0.9 or lRangeCounter1)
+
+			lRangeCounter2, lRangeCounter3 = math.modf(lDistanceToWay / 10)
+			temp, lRangeCounter2 =  math.modf(lRangeCounter2 / 10)
+			lRangeCounter2 = (lRangeCounter2 > 0.9 and 0.9 or lRangeCounter2)
+			lRangeCounter3 = (lRangeCounter3 > 0.9 and 0.9 or lRangeCounter3)
+		elseif lDistanceToWay > 10 then
+			lRangeCounter2, lRangeCounter3 = math.modf(lDistanceToWay / 10)
+			lRangeCounter2 = lRangeCounter2 / 10
+			lRangeCounter2 = (lRangeCounter2 > 0.9 and 0.9 or lRangeCounter2)
+			lRangeCounter3 = (lRangeCounter3 > 0.9 and 0.9 or lRangeCounter3)
+		else
+			lRangeCounter3 = lDistanceToWay / 10
+			lRangeCounter3 = (lRangeCounter3 > 0.9 and 0.9 or lRangeCounter3)
+		end
 	end
 
 	lHeading = 1.0 - (lHeading / lRadToDCSunsignd)
