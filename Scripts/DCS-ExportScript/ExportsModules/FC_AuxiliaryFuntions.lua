@@ -351,32 +351,28 @@ function ExportScript.AF.FC_Russian_HSI(distancetoway)
 	[116] = "%0.1f", 		-- HSI_range_unavailable_flag{0.0, 1.0}
 	[121] = "%0.1f", 		-- HSI_course_unavailable_flag{0.0, 1.0}
 	]]
+	local lAltCounter = {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
 	lDistanceToWay = ExportScript.Tools.round(lDistanceToWay / 1000, 1)
 	local lDistanceToWayTmp = string.format("%03d", lDistanceToWay)
 	local lRangeCounter1 = 0
 	local lRangeCounter2 = 0
 	local lRangeCounter3 = 0
-	local temp           = 0
-	
-	if lDistanceToWay > 999 then
-		lRangeCounter1 = 1
-		lRangeCounter2 = 1
-		lRangeCounter3 = 1
-	else
+	if lDistanceToWay > 100 then
+		lRangeCounter1 = ExportScript.Tools.round((lDistanceToWay / 100), 0, "floor") * 0.11
+		lRangeCounter1 = lRangeCounter1 - ExportScript.Tools.round(lRangeCounter1, 0, "floor")
+	end
+	if lDistanceToWay > 10 then
 		if lDistanceToWay > 100 then
-			lRangeCounter1, temp = math.modf(lDistanceToWay / 100)
-			lRangeCounter1 = lRangeCounter1 * 0.11
-
-			lRangeCounter2, lRangeCounter3 = math.modf(lDistanceToWay / 10)
-			temp, lRangeCounter2 =  math.modf(lRangeCounter2 * 0.11)
-			lRangeCounter3 = lRangeCounter3 * 0.11
-		elseif lDistanceToWay > 10 then
-			lRangeCounter2, lRangeCounter3 = math.modf(lDistanceToWay / 10)
-			lRangeCounter2 = lRangeCounter2 * 0.11
-			lRangeCounter3 = lRangeCounter3 * 1.1
+			lRangeCounter2 = (ExportScript.Tools.round((lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
 		else
-			lRangeCounter3 = lDistanceToWay * 0.11
+			lRangeCounter2 = (lDistanceToWay / 10) * 0.11
+			lRangeCounter2 = lRangeCounter2 - ExportScript.Tools.round(lRangeCounter2, 0, "floor")
 		end
+	end
+	if lDistanceToWay > 10 then
+		lRangeCounter3 = (lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
+	else
+		lRangeCounter3 = lDistanceToWay * 0.11
 	end
 
 	lHeading = (lHeading / lRadToDCSunsignd)
@@ -402,8 +398,8 @@ function ExportScript.AF.FC_Russian_HSI(distancetoway)
     ExportScript.Tools.SendData(15, lDefaultNull)                                                                       -- KC Flag
     ExportScript.Tools.SendData(16, lDefaultOne)                                                                        -- K Flag
     ExportScript.Tools.SendData(17, lDefaultOne)                                                                        -- L Flag
-    ExportScript.Tools.SendData(18, string.format("%.4f", lRangeCounter1))
-    ExportScript.Tools.SendData(19, string.format("%.4f", lRangeCounter2))
+    ExportScript.Tools.SendData(18, string.format("%.4f", lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 1, 1))]))
+    ExportScript.Tools.SendData(19, string.format("%.4f", lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 2, 2))]))
     ExportScript.Tools.SendData(20, string.format("%.4f", lRangeCounter3))
     ExportScript.Tools.SendData(21, string.format("%.4f", lGlide))
     ExportScript.Tools.SendData(22, string.format("%.4f", lSide))
@@ -460,39 +456,32 @@ end
 function ExportScript.AF.FC_Russian_HSI_Distance_old(distancetoway)
 	local lDistanceToWay	= distancetoway or 999
 	
+	local lAltCounter = {[0] = 0.0, [1] = 0.11, [2] = 0.22, [3] = 0.33, [4] = 0.44, [5] = 0.55, [6] = 0.66, [7] = 0.77, [8] = 0.88, [9] = 0.99}
 	lDistanceToWay = ExportScript.Tools.round(lDistanceToWay / 1000, 1)
-	
+	local lDistanceToWayTmp = string.format("%03d", lDistanceToWay)
 	local lRangeCounter1 = 0
 	local lRangeCounter2 = 0
 	local lRangeCounter3 = 0
-	local temp           = 0
-	if lDistanceToWay > 999 then
-		lRangeCounter1 = 0.9
-		lRangeCounter2 = 0.9
-		lRangeCounter3 = 0.9
-	else
+	if lDistanceToWay > 100 then
+		lRangeCounter1 = ExportScript.Tools.round((lDistanceToWay / 100), 0, "floor") * 0.11
+		lRangeCounter1 = lRangeCounter1 - ExportScript.Tools.round(lRangeCounter1, 0, "floor")
+	end
+	if lDistanceToWay > 10 then
 		if lDistanceToWay > 100 then
-			lRangeCounter1, temp = math.modf(lDistanceToWay / 100)
-			lRangeCounter1 = lRangeCounter1 / 10
-			lRangeCounter1 = (lRangeCounter1 > 0.9 and 0.9 or lRangeCounter1)
-
-			lRangeCounter2, lRangeCounter3 = math.modf(lDistanceToWay / 10)
-			temp, lRangeCounter2 =  math.modf(lRangeCounter2 / 10)
-			lRangeCounter2 = (lRangeCounter2 > 0.9 and 0.9 or lRangeCounter2)
-			lRangeCounter3 = (lRangeCounter3 > 0.9 and 0.9 or lRangeCounter3)
-		elseif lDistanceToWay > 10 then
-			lRangeCounter2, lRangeCounter3 = math.modf(lDistanceToWay / 10)
-			lRangeCounter2 = lRangeCounter2 / 10
-			lRangeCounter2 = (lRangeCounter2 > 0.9 and 0.9 or lRangeCounter2)
-			lRangeCounter3 = (lRangeCounter3 > 0.9 and 0.9 or lRangeCounter3)
+			lRangeCounter2 = (ExportScript.Tools.round((lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
 		else
-			lRangeCounter3 = lDistanceToWay / 10
-			lRangeCounter3 = (lRangeCounter3 > 0.9 and 0.9 or lRangeCounter3)
+			lRangeCounter2 = (lDistanceToWay / 10) * 0.11
+			lRangeCounter2 = lRangeCounter2 - ExportScript.Tools.round(lRangeCounter2, 0, "floor")
 		end
 	end
+	if lDistanceToWay > 10 then
+		lRangeCounter3 = (lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
+	else
+		lRangeCounter3 = lDistanceToWay * 0.11
+	end
 
-    ExportScript.Tools.SendData(18, string.format("%.4f", lRangeCounter1))
-    ExportScript.Tools.SendData(19, string.format("%.4f", lRangeCounter2))
+    ExportScript.Tools.SendData(18, string.format("%.4f", lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 1, 1))]))
+    ExportScript.Tools.SendData(19, string.format("%.4f", lAltCounter[tonumber(string.sub(lDistanceToWayTmp, 2, 2))]))
     ExportScript.Tools.SendData(20, string.format("%.4f", lRangeCounter3))
 end
 
@@ -2056,35 +2045,27 @@ function ExportScript.AF.FC_US_HSI(distancetoway)
 		[40] = "%0.1f",		-- HSI Power Flag
 		[32] = "%0.1f",		-- HSI Range Flag
 	]]
-	lDistanceToWay = lDistanceToWay * 0.00053995680345572 -- meter to nautic miles
-
+	lDistanceToWay = lDistanceToWay * 0.00062136994937697 -- meter to miles
+	--lDistanceToWay = ExportScript.Tools.round(lDistanceToWay / 1000, 1)
 	local lRangeCounter1 = 0
 	local lRangeCounter2 = 0
 	local lRangeCounter3 = 0
-	local temp           = 0
-	if lDistanceToWay > 999 then
-		lRangeCounter1 = 0.9
-		lRangeCounter2 = 0.9
-		lRangeCounter3 = 0.9
-	else
+	if lDistanceToWay > 100 then
+		lRangeCounter1 = ExportScript.Tools.round((lDistanceToWay / 100), 0, "floor") * 0.11
+		lRangeCounter1 = lRangeCounter1 - ExportScript.Tools.round(lRangeCounter1, 0, "floor")
+	end
+	if lDistanceToWay > 10 then
 		if lDistanceToWay > 100 then
-			lRangeCounter1, temp = math.modf(lDistanceToWay / 100)
-			lRangeCounter1 = lRangeCounter1 / 10
-			lRangeCounter1 = (lRangeCounter1 > 0.9 and 0.9 or lRangeCounter1)
-
-			lRangeCounter2, lRangeCounter3 = math.modf(lDistanceToWay / 10)
-			temp, lRangeCounter2 =  math.modf(lRangeCounter2 / 10)
-			lRangeCounter2 = (lRangeCounter2 > 0.9 and 0.9 or lRangeCounter2)
-			lRangeCounter3 = (lRangeCounter3 > 0.9 and 0.9 or lRangeCounter3)
-		elseif lDistanceToWay > 10 then
-			lRangeCounter2, lRangeCounter3 = math.modf(lDistanceToWay / 10)
-			lRangeCounter2 = lRangeCounter2 / 10
-			lRangeCounter2 = (lRangeCounter2 > 0.9 and 0.9 or lRangeCounter2)
-			lRangeCounter3 = (lRangeCounter3 > 0.9 and 0.9 or lRangeCounter3)
+			lRangeCounter2 = (ExportScript.Tools.round((lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 100, 0, "floor") * 100)), 0, "floor") / 10) * 0.11
 		else
-			lRangeCounter3 = lDistanceToWay / 10
-			lRangeCounter3 = (lRangeCounter3 > 0.9 and 0.9 or lRangeCounter3)
+			lRangeCounter2 = (lDistanceToWay / 10) * 0.11
+			lRangeCounter2 = lRangeCounter2 - ExportScript.Tools.round(lRangeCounter2, 0, "floor")
 		end
+	end
+	if lDistanceToWay > 10 then
+		lRangeCounter3 = (lDistanceToWay - (ExportScript.Tools.round(lDistanceToWay / 10, 0, "floor") * 10)) * 0.11
+	else
+		lRangeCounter3 = lDistanceToWay * 0.11
 	end
 
 	lHeading = 1.0 - (lHeading / lRadToDCSunsignd)
@@ -2112,7 +2093,7 @@ function ExportScript.AF.FC_US_HSI(distancetoway)
     ExportScript.Tools.SendData(13, string.format("%.4f", lHSI_Curse))      -- Bearing #2
     ExportScript.Tools.SendData(14, lDefaultNull)
     ExportScript.Tools.SendData(15, string.format("%.4f", lHSI_Curse))
-    ExportScript.Tools.SendData(16, string.format("%.4f", lCourseDeviation))
+	ExportScript.Tools.SendData(16, string.format("%.4f", lCourseDeviation))
     ExportScript.Tools.SendData(17, string.format("%.4f", lRangeCounter1))
     ExportScript.Tools.SendData(18, string.format("%.4f", lRangeCounter2))
     ExportScript.Tools.SendData(19, string.format("%.4f", lRangeCounter3))
