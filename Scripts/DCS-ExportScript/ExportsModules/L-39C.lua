@@ -17,8 +17,8 @@ ExportScript.ConfigEveryFrameArguments =
 	-- Radar altimeter RV-5
 	[58] = "%.4f",		-- RV-5 RALT {0.0, 0.086, 0.439, 0.878, 0.955}{0.0, 20.0, 100.0, 700.0, 800.0}
 	[59] = "%.4f",		-- RV-5 DangerRALT index {0.0, 0.094, 0.48, 0.998}{0.0, 20.0, 100.0, 700.0}
-	[63] = "%.f",		-- RV-5 DangerRALT lamp
 	[62] = "%.4f",		-- RV-5 warning flag
+	[63] = "%.f",		-- RV-5 DangerRALT lamp
 	-- Variometer
 	[74] = "%.4f",		-- Variometer {-1.0, -0.875, -0.775, -0.44, 0.0, 0.44, 0.775, 0.875, 1.0}{-80.0, -50.0, -20.0, -10.0, 0.0, 10.0, 20.0, 50.0, 80.0}
 	[76] = "%.4f",		-- Variometer sideslip {-1.0, 1.0}
@@ -185,8 +185,8 @@ ExportScript.ConfigEveryFrameArguments =
 	-- Radar altimeter RV-5
 	[396] = "%.4f",		-- Backseat - RV-5 RALT {0.0, 0.086, 0.439, 0.878, 0.955}{0.0, 20.0, 100.0, 700.0, 800.0}
 	[397] = "%.4f",		-- Backseat - RV-5 DangerRALT index {0.0, 0.094, 0.48, 0.998}{0.0, 20.0, 100.0, 700.0}
-	[401] = "%.f",		-- Backseat - RV-5 DangerRALT lamp
 	[400] = "%.4f",		-- Backseat - RV-5 warning flag
+	[401] = "%.f",		-- Backseat - RV-5 DangerRALT lamp
 	-- Variometer
 	[416] = "%.4f",		-- Backseat - Variometer {-1.0, -0.875, -0.775, -0.44, 0.0, 0.44, 0.775, 0.875, 1.0}{-80.0, -50.0, -20.0, -10.0, 0.0, 10.0, 20.0, 50.0, 80.0}
 	[418] = "%.4f",		-- Backseat - Variometer sideslip {-1.0, 1.0}
@@ -202,8 +202,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[369] = "%.4f",		-- Backseat - KPP SDU Roll {-1.0, 1.0}
 	[370] = "%.4f",		-- Backseat - KPP SDU Pitch {-1.0, 1.0}
 	-- NPP HSI
-	[378] = "%.4f",		-- Backseat - HSI2 heading {1.0, 0.0}{0.0, math.pi * 2.0}
-	[379] = "%.4f",		-- Backseat - HSI2 commanded course needle {1.0, 0.0}{0.0, math.pi * 2.0}
+	--[378] = "%.4f",		-- Backseat - HSI2 heading {1.0, 0.0}{0.0, math.pi * 2.0}
+	--[379] = "%.4f",		-- Backseat - HSI2 commanded course needle {1.0, 0.0}{0.0, math.pi * 2.0}
 	[380] = "%.4f",		-- Backseat - HSI2 bearing needle {1.0, 0.0}{0.0, math.pi * 2.0}
 	[384] = "%.4f",		-- Backseat - HSI2 Course Deviation Bar {-0.8, 0.8}{-1.0, 1.0}
 	[382] = "%.4f",		-- Backseat - HSI2 Alt Deviation Bar {-0.8, 0.8}{-1.0, 1.0}

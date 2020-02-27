@@ -47,7 +47,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[165] = "%0.1f",	-- ADF_nav2_dec {0,1} 000.X khz {0,1,2,3,4,5,6,7,8,9,0}{0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0}
 	-- ADF Gauge
 	[113] = "%.4f",	-- ADF_Fond Compass rose {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360}{0.0,0.028,0.055,0.084,0.111,0.138,0.166,0.194,0.222,0.249,0.2775,0.305,0.332,0.36,0.388,0.415,0.4434,0.47,0.498,0.526,0.555,0.583,0.611,0.638,0.6665,0.694,0.722,0.75,0.776,0.805,0.833,0.861,0.8885,0.917,0.944,0.972,1.0}
-	[102] = "%.4f",	-- ADF_Aiguille_large Heading Needle large {-360.0,0.0,360.0}{-1.0,0.0,1.0}
+	--[102] = "%.4f",	-- ADF_Aiguille_large Heading Needle large {-360.0,0.0,360.0}{-1.0,0.0,1.0}
 	[103] = "%.4f",	-- ADF_Aiguille_fine Heading Needle fine {-360.0,0.0,360.0}{-1.0,0.0,1.0}
 	[107] = "%.1f",	-- ADF_FlagCAP {0,1}
 	[109] = "%.1f",	-- ADF_FlagBut {0,1}
@@ -406,6 +406,16 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	]]
 	--[97] = "%.f",	-- RAltlamp {0,1}
 	ExportScript.Tools.SendData(97, (mainPanelDevice:get_argument_value(97) > 0.009 and 1 or 0))
+	
+	--[102] = "%.4f",	-- ADF_Aiguille_large Heading Needle large {-360.0,0.0,360.0}{-1.0,0.0,1.0}
+	local ADF_Aiguille_large = mainPanelDevice:get_argument_value(102)
+	if ADF_Aiguille_large ~= 0 then
+		ADF_Aiguille_large = ADF_Aiguille_large + 0.5
+		if ADF_Aiguille_large > 1 then
+			ADF_Aiguille_large = ADF_Aiguille_large - 1.0
+		end
+	end
+	ExportScript.Tools.SendData(102, string.format("%.4f", ADF_Aiguille_large))
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
