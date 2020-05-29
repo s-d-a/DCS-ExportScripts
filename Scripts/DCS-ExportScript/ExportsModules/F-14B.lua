@@ -17,68 +17,95 @@ ExportScript.ConfigEveryFrameArguments =
 	]]
 	
 	-- BEGIN PILOT
+	-- Air Combat Maneuver Panel
+	[1049] = "%1d",		-- ACM Cover, CLOSE/OPEN (0,1)
+	[1048] = "%1d",		-- ACM Jettison
+	[1046] = "%1d",		-- Master Arm Cover, CLOSE/OPEN (0,1)
+	[1047] = "%1d",		-- Master Arm Switch, ON/OFF/TNG (-1,0,1)
+	[16000] = "%.6f",	-- Gun rate, LOW/HIGH (0,1)
+	[9204] = "%1d", 	-- Gun rate HIGH lamp
+	[9205] = "%1d",		-- Gun rate LOW lamp
+	[16001] = "%1d",	-- Sidewinder cool, OFF/ON (0,1)
+	[9206] = "%1d",		-- Sidewinder cool ON lamp
+	[9207] = "%1d",		-- Sidewinder cool OFF lamp
+	[16002] = "%1d",	-- Missile prepare, OFF/ON (0,1)
+	[9208] = "%1d",		-- Missile prepare ON lamp
+	[9209] = "%1d",		-- Missile prepare OFF lamp
+	[16003] = "%1d",	-- Missile mode, NORM/BRSIT (0,1)
+	[9210] = "%1d",		-- Missile mode NORM lamp
+	[9211] = "%1d",		-- Missile mode BRSIT lamp
+	[9199] = "%1d",		-- Master Caution Reset
+	[9200] = "%1d",		-- Master Caution lamp
+	[239] = "%1d",		-- Emergency stores jettison
+	[15014] = "%1d",	-- Right Engine Fire lamp
+	[15015] = "%1d",	-- Left Engine Fire lamp
+	[9201] = "%1d",		-- Hot Trigger lamp
+	[9202] = "%1d",		-- Collision lamp
+	[9203] = "%1d",		-- SEAM Lock lamp
 	-- DISPLAY Panel: Mode
-	[1015] = "%1d", -- HUD Take-Off Mode, OFF/ON (0,1)
-	[1014] = "%1d", -- HUD Cruise Mode, OFF/ON (0,1)
-	[1013] = "%1d", -- HUD Air-to-Air Mode, OFF/ON (0,1)
-	[1012] = "%1d", -- HUD Air-to-Ground Mode, OFF/ON (0,1)
-	[1011] = "%1d", -- HUD Landing Mode, OFF/ON (0,1)
+	[1015] = "%1d",		-- HUD Take-Off Mode, OFF/ON (0,1)
+	[1014] = "%1d",		-- HUD Cruise Mode, OFF/ON (0,1)
+	[1013] = "%1d",		-- HUD Air-to-Air Mode, OFF/ON (0,1)
+	[1012] = "%1d",		-- HUD Air-to-Ground Mode, OFF/ON (0,1)
+	[1011] = "%1d",		-- HUD Landing Mode, OFF/ON (0,1)
 	-- DISPLAY Panel: HUD
-	[1021] = "%1d", -- HUD De-clutter, OFF/ON (0,1)
-	[1020] = "%1d", -- HUD AWL Mode, ACL/ILS (0,1)
+	[1021] = "%1d",		-- HUD De-clutter, OFF/ON (0,1)
+	[1020] = "%1d",		-- HUD AWL Mode, ACL/ILS (0,1)
 	-- DISPLAY Panel: VDI
-	[1019] = "%1d", -- VDI Display Mode, OFF/ON (0,1)
-	[1018] = "%1d", -- VDI Landing Mode, ACL/ILS (0,1)
+	[1019] = "%1d",		-- VDI Display Mode, OFF/ON (0,1)
+	[1018] = "%1d",		-- VDI Landing Mode, ACL/ILS (0,1)
 	-- DISPLAY Panel: HSD
-	[1016] = "%1d", -- HSD Display Mode, TID/TV (0,1)
-	[1017] = "%1d", -- HSD ECM Override, OFF/ORIDE (0,1)
+	[1016] = "%1d",		-- HSD Display Mode, TID/TV (0,1)
+	[1017] = "%1d",		-- HSD ECM Override, OFF/ORIDE (0,1)
 	-- DISPLAY Panel: Power
-	[1010] = "%1d", -- VDI Power, OFF/ON (0,1)
-	[1009] = "%1d", -- HUD Power, OFF/ON (0,1)
-	[1008] = "%1d", -- HSD/ECMD Power, OFF/ON (0,1)
+	[1010] = "%1d",		-- VDI Power, OFF/ON (0,1)
+	[1009] = "%1d",		-- HUD Power, OFF/ON (0,1)
+	[1008] = "%1d",		-- HSD/ECMD Power, OFF/ON (0,1)
 	-- DISPLAY Panel: Navigation Steer Commands
-	[1002] = "%1d", -- Steer CMD TACAN, OFF/ON (0,1)
-	[1003] = "%1d", -- Steer CMD Destination, OFF/ON (0,1)
-	[1004] = "%1d", -- Steer CMD AWL PCD, OFF/ON (0,1)
-	[1005] = "%1d", -- Steer CMD Vector, OFF/ON (0,1)
-	[1006] = "%1d", -- Steer CMD Manual, OFF/ON (0,1)
+	[1002] = "%1d",		-- Steer CMD TACAN, OFF/ON (0,1)
+	[1003] = "%1d",		-- Steer CMD Destination, OFF/ON (0,1)
+	[1004] = "%1d",		-- Steer CMD AWL PCD, OFF/ON (0,1)
+	[1005] = "%1d",		-- Steer CMD Vector, OFF/ON (0,1)
+	[1006] = "%1d",		-- Steer CMD Manual, OFF/ON (0,1)
 	-- DISPLAY Panel: Pitch Ladder Brightness
-    --[1007] = "%.4f", -- HUD Pitch Ladder Brightness, Lev (0,1)
+    [1007] = "%.4f",	-- HUD Pitch Ladder Brightness, Lev (0,1)
 	-- AFCS Control Panel
-	[2109] = "%1d", -- Autopilot - Vector / Automatic Carrier Landing, ACL/OFF/VEC-PCD (-1,0,1)
-	[2110] = "%1d", -- Autopilot - Altitude Hold, OFF/ON (0,1)
-	[2111] = "%1d", -- Autopilot - Heading / Ground Track, GT/OFF/HDG (-1,0,1)
-	[2112] = "%1d", -- Autopilot - Engage, OFF/ON (-2,2)
+	[2109] = "%1d",		-- Autopilot - Vector / Automatic Carrier Landing, ACL/OFF/VEC-PCD (-1,0,1)
+	[2110] = "%1d",		-- Autopilot - Altitude Hold, OFF/ON (0,1)
+	[2111] = "%1d",		-- Autopilot - Heading / Ground Track, GT/OFF/HDG (-1,0,1)
+	[2112] = "%1d",		-- Autopilot - Engage, OFF/ON (-2,2)
 	-- Landing Gear & Hook
-	[326] = "%1d", -- Landing Gear Lever (RB cycle emergency extend), UP/DOWN (0,1)
-	[238] = "%1d", -- Hook Extension Handle (RB cycle emergency mode), UP/DOWN (0,1)
+	[326] = "%1d",		-- Landing Gear Lever (RB cycle emergency extend), UP/DOWN (0,1)
+	[238] = "%1d",		-- Hook Extension Handle (RB cycle emergency mode), UP/DOWN (0,1)
 	-- Fuel System
-	[1073] = "%1d", -- Refuel Probe, RET/EXT-FUS/EXT-ALL (-1,0,1)
+	[1073] = "%1d",		-- Refuel Probe, RET/EXT-FUS/EXT-ALL (-1,0,1)
 	-- Oxygen-Vent Airflow Panel
-	[3190] = "%1d", -- Pilot Oxygen, OFF/ON (0,1)
-	--[] = "%.4f", -- Vent Airflow Dial, Lev (0,1)
+	[3190] = "%1d",		-- Pilot Oxygen, OFF/ON (0,1)
+	--[] = "%.4f",		-- Vent Airflow Dial, Lev (0,1)
 	-- Volume/TACAN Command Panel
-	[2040] = "%.4f", -- ALR-67 Volume, Lev (0,1)
-	[2039] = "%.4f", -- Sidewinder Volume, Lev (0,1)
-	[2038] = "%.4f", -- V/UHF Volume (Pilot), Lev (0,1)	
-	[292] = "%1d", -- TACAN CMD Button, PILOT/RIO (0,1)
+	[2040] = "%.4f",	-- ALR-67 Volume, Lev (0,1)
+	[2039] = "%.4f",	-- Sidewinder Volume, Lev (0,1)
+	[2038] = "%.4f",	-- V/UHF Volume (Pilot), Lev (0,1)	
+	[292] = "%1d",		-- TACAN CMD Button, PILOT/RIO (0,1)
 	-- TACAN Control Panel
-	[2041] = "%.2f", -- TACAN Mode (Pilot), OFF/REC/T-R/A-A/BCN (0,.25,.50,.75,1)
-	[2036] = "%.4f", -- TACAN Volume (Pilot), Lev (0,1)
-	[2042] = "%1d", -- TACAN Mode Normal/Inverse (Pilot), NORMAL/INVERSE (0,1)
-	[2043] = "%1d", -- TACAN Channel X/Y (Pilot), X/Y (0,1)
-	[2115] = "%1d", -- TACAN BIT (Pilot), OFF/ON (0,1)
-	--[] = "%1d" -- TACAN Channel Wheel (Tens) (Pilot), 0-12 (0,12)
-	--[] = "%1d" -- TACAN Channel Lever (Ones) (Pilot), 0-9 (0,9)
+	[2041] = "%.2f",	-- TACAN Mode (Pilot), OFF/REC/T-R/A-A/BCN (0,.25,.50,.75,1)
+	[2036] = "%.4f",	-- TACAN Volume (Pilot), Lev (0,1)
+	[2042] = "%1d",		-- TACAN Mode Normal/Inverse (Pilot), NORMAL/INVERSE (0,1)
+	[2043] = "%1d",		-- TACAN Channel X/Y (Pilot), X/Y (0,1)
+	[2115] = "%1d",		-- TACAN BIT (Pilot), OFF/ON (0,1)
+	[8050] = "%1d",		-- TACAN BIT GO lamp (Pilot)
+	[8051] = "%1d",		-- TACAN BIT NOGO lamp (Pilot)
+	--[] = "%1d"		-- TACAN Channel Wheel (Tens) (Pilot), 0-12 (0,12)
+	--[] = "%1d"		-- TACAN Channel Lever (Ones) (Pilot), 0-9 (0,9)
 	-- ICS Control Panel
-	--[2048] = "%.4f", -- ICS Volume (Pilot), Lev (0,1)
-	[2045] = "%.2f", -- ICS Amplifier Selector (Pilot), B-U/NORM/EMER (0,.50,1)
-	[2044] = "%1d", -- ICS Function Selector (Pilot), COLD-MIC/HOT-MIC,RADIO-OVRD (-1,0,1)
+	[2048] = "%.4f",	-- ICS Volume (Pilot), Lev (0,1)
+	[2045] = "%.2f",	-- ICS Amplifier Selector (Pilot), B-U/NORM/EMER (0,.50,1)
+	[2044] = "%1d",		-- ICS Function Selector (Pilot), COLD-MIC/HOT-MIC,RADIO-OVRD (-1,0,1)
 	-- END PILOT
 	
 	-- BEGIN RIO
 	-- ICS Control Panel
-	[400] = "%.4f" -- ICS Volume (RIO), Lev (0,1)
+	[400] = "%.4f"		-- ICS Volume (RIO), Lev (0,1)
 	-- END RIO
 }
 ExportScript.ConfigArguments = 
