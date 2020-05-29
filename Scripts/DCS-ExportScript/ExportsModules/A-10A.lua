@@ -780,6 +780,8 @@ function ExportScript.AF.MechanicalDevicesIndicator(FunctionTyp)
 		ExportScript.Tools.SendData(501, (lMechInfo.gear.value > 0.85 and 1 or 0) ) -- nose gear
 		ExportScript.Tools.SendData(502, (lMechInfo.gear.value > 0.95 and 1 or 0) ) -- left gear
 		ExportScript.Tools.SendData(503, (lMechInfo.gear.value == 1 and 1 or 0) )   -- right gear
+		
+		ExportScript.Tools.SendData(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0) ) -- speedbreakes on > 0.1 (0 - 1)
 
 		local lFlapsValue	= lMechInfo.flaps.value
 		lFlapsValue = lFlapsValue / 1.6
