@@ -358,6 +358,21 @@ ExportScript.ConfigEveryFrameArguments =
 	[726] = "%.4f",	--	Warnlampen Dimmer
 	[727] = "%.4f",	--	Warnlampen Dimmer (Seitenpanels?)
 
+-- Radio U/VHF Lights	
+	[965] = "%.1f",	--	CLR/VLD Display
+	[966] = "%.4f",	--	?
+	[967] = "%.4f",	-- 	?
+	[968] = "%.4f",	--	?
+	[969] = "%.1f",	--	CONF Display
+	[970] = "%.4f",	--	?
+	[971] = "%.4f",	--	?
+	[972] = "%.1f",	--	LED SQL Display
+	[973] = "%.4f",	--	?
+	[974] = "%.4f",	-- 	LED GR Display
+	[975] = "%.4f",	--	?
+	[976] = "%.4f",	--	?
+	[977] = "%.4f",	--	?
+	[978] = "%.4f",	--	?
 }
 
 ExportScript.ConfigArguments = 
@@ -494,7 +509,7 @@ ExportScript.ConfigArguments =
 	[576] = "%.1f",	--Offset Waypoint/Target
 	[578] = "%.1f",	--INS Update
 	[580] = "%.1f",	--Validate Data Entry
-	[582] = "%.1f",	--Mark Position
+	[582] = "%.4f",	--Mark Position
 	[584] = "%.1f",	--INS Button 1
 	[585] = "%.1f",	--INS Button 2
 	[586] = "%.1f",	--INS Button 3
@@ -573,7 +588,7 @@ ExportScript.ConfigArguments =
 	[432] = "%.1f",	--UHF CDE Switch
 	[433] = "%.1f",	--UHF Mode Switch
 	[434] = "%.1f",	--UHF TEST Switch
-	[435] = "%.1f",	--UHF Knob
+	[435] = "%.2f",	--UHF Knob
 	[437] = "%.1f",	--U/VHF TEST Switch
 	[438] = "%.1f",	--U/VHF E+A2 Switch
 	[439] = "%.1f",	--U/VHF SIL Switch
@@ -582,10 +597,28 @@ ExportScript.ConfigArguments =
 	[442] = "%.1f",	--U/VHF Select 1 MHz
 	[443] = "%.1f",	--U/VHF Select 100 KHz
 	[444] = "%.1f",	--U/VHF Select 25 KHz
-	[445] = "%.1f",	--U/VHF Knob
+	[445] = "%.2f",	--U/VHF Knob
 	[446] = "%.1f",	--U/VHF Mode Switch 1
 	[447] = "%.1f",	--U/VHF Power 5W/25W Switch
 	[448] = "%.1f",	--U/VHF Manual/Preset
+	[950]  = "%.1f",  --  VHF MODE(-0.1, 0, 0.6)
+	[950]  = "%.1f",  --  VHF MODE(0.1, 0, 0.6)
+	[951]  = "%.2f",  --  VHF CH Sel(-0.05, 0, 0.95)
+	[951]  = "%.2f",  --  VHF CH Sel(0.05, 0, 0.95)
+	[952]  = "%1d",  --  VHF MEM/CLR(1, 0, 1)
+	[953]  = "%1d",  --  VHF VLD/XFR(1, 0, 1)
+	[954]  = "%1d",  --  VHF 1/READ(1, 0, 1)
+	[955]  = "%1d",  --  VHF 2/SQL(1, 0, 1)
+	[956]  = "%1d",  --  VHF 3/GR(1, 0, 1)
+	[957]  = "%1d",  --  VHF 4(1, 0, 1)
+	[958]  = "%1d",  --  VHF 5/20/LOW(1, 0, 1)
+	[959]  = "%1d",  --  VHF 6/TONE(1, 0, 1)
+	[960]  = "%1d",  --  VHF 7(1, 0, 1)
+	[961]  = "%1d",  --  VHF 8/TOD(1, 0, 1)
+	[962]  = "%1d",  --  VHF 9/ZERO(1, 0, 1)
+	[963]  = "%1d",  --  VHF 0(1, 0, 1)
+	[964]  = "%1d",  --  VHF CONF(1, 0, 1)
+
 
 -- Navigational Antennas
 	[616] = "%.1f",	--VOR/ILS Frequency Change Whole
