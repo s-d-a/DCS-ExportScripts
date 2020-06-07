@@ -518,16 +518,113 @@ ExportScript.ConfigArguments =
 
 -- Pointed to by ProcessIkarusDCSHighImportance
 function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
-	--[[
-	export in low tick interval to Ikarus
-	Example from A-10C
-	Get Radio Frequencies
-	get data from device
-	local lUHFRadio = GetDevice(54)
-	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
-	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
-	]]
+	-- UFC Displays
+	local lUfcDisplays = list_indication(5)
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog('lUfcDisplays : '..ExportScript.Tools.dump(lUfcDisplays))
+	end
+
+	local to1, to2, from1, from2, lUFC_Chnl1, lUFC_Chnl2, lUFC_Left_Position, lUFC_Right_Position, lUFC_Display = nil, nil, nil, nil, "", "", "", "", ""
+	to1, to2 = lUfcDisplays:find("UFC_DISPLAY")
+	if (to1 ~= nil) then
+		from1, from2 = lUfcDisplays:find("ufc_chnl_1_.%c")
+		if (from2 ~= nill) then
+			to1, to2 = lUfcDisplays:find("%c", from2+2)
+			if (to1 ~= nil) then
+				lUFC_Chnl1 = lUfcDisplays:sub(from2+1, to1-1)
+			end
+		end
+
+		from1, from2 = lUfcDisplays:find("ufc_chnl_2_.%c", to2)
+		if (from2 ~= nill) then
+			to1, to2 = lUfcDisplays:find("%c", from2+2)
+			if (to1 ~= nil) then
+				lUFC_Chnl2 = lUfcDisplays:sub(from2+1, to1-1)
+			end
+		end
+
+		from1, from2 = lUfcDisplays:find("ufc_left_position%c", to2)
+		if (from2 ~= nill) then
+			to1, to2 = lUfcDisplays:find("%c", from2+2)
+			if (to1 ~= nil) then
+				lUFC_Left_Position = lUfcDisplays:sub(from2+1, to1-1)
+			end
+		end
+
+		from1, from2 = lUfcDisplays:find("ufc_right_position%c", to2)
+		if (from2 ~= nill) then
+			if (from2 ~= nil) then
+				lUFC_Right_Position = lUfcDisplays:sub(from2+1)
+				lUFC_Right_Position = lUFC_Right_Position:gsub("%c", "")
+			end
+		end
+	end
+
+	local lRep = 8 - lUFC_Left_Position:len() - lUFC_Right_Position:len()
+
+	lUFC_Display = lUFC_Left_Position..string.rep(" ", lRep)..lUFC_Right_Position
+
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog("lUFC_Chnl1: "..string.format("%s", lUFC_Chnl1)) -- string with max 2 charachters
+		ExportScript.Tools.WriteToLog("lUFC_Chnl2: "..string.format("%s", lUFC_Chnl2)) -- string with max 2 charachters
+		ExportScript.Tools.WriteToLog("lUFC_Left_Position: "..string.format("%s", lUFC_Left_Position))
+		ExportScript.Tools.WriteToLog("lUFC_Right_Position: "..string.format("%s", lUFC_Right_Position))
+		ExportScript.Tools.WriteToLog("lUFC_Display: "..string.format("%s", lUFC_Display)) -- string with max 8 charachters
+	end
+	ExportScript.Tools.SendData(2023, string.format("%s", lUFC_Chnl1)) -- string with max 2 charachters
+	ExportScript.Tools.SendData(2024, string.format("%s", lUFC_Chnl2)) -- string with max 2 charachters
+	ExportScript.Tools.SendData(2025, string.format("%s", lUFC_Display)) -- string with max 8 charachters
+
+	-- ODU Display
+	local lODUDisplays = list_indication(6)
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog('lODUDisplays : '..ExportScript.Tools.dump(lODUDisplays))
+	end
+
+	local to1, to2, from1, from2 = nil, nil, nil, nil
+	local lODU_Text = {"","","","",""}
+	local lODU_select = " "
+
+	to1, to2 = lODUDisplays:find("ODU_DISPLAY")
+	if (to1 ~= nil) then
+		for lIndex = 1, 5, 1 do
+			lODU_select = " "
+
+			from1, from2 = lODUDisplays:find("ODU_Option_"..lIndex.."_Slc%c")
+			if (from2 ~= nill) then
+				to1, to2 = lODUDisplays:find("%c", from2+2)
+				if (to1 ~= nil) then
+					lODU_select = lODUDisplays:sub(from2+1, to1-1)
+					lODU_select = lODU_select:gsub(":", "¦")
+				end
+			end
+
+			from1, from2 = lODUDisplays:find("ODU_Option_"..lIndex.."_Text%c")
+			if (from2 ~= nill) then
+				to1, to2 = lODUDisplays:find("%c", from2+2)
+				if (to1 ~= nil) then
+					lODU_Text[lIndex] = lODUDisplays:sub(from2+1, to1-1)
+				end
+			end
+
+			lODU_Text[lIndex] = lODU_select..lODU_Text[lIndex]
+		end -- for
+	end
+
+	-- string with max 5 characters
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog("lODU_Text1: "..string.format("%s", lODU_Text[1]))
+		ExportScript.Tools.WriteToLog("lODU_Text2: "..string.format("%s", lODU_Text[2]))
+		ExportScript.Tools.WriteToLog("lODU_Text3: "..string.format("%s", lODU_Text[3]))
+		ExportScript.Tools.WriteToLog("lODU_Text4: "..string.format("%s", lODU_Text[4]))
+		ExportScript.Tools.WriteToLog("lODU_Text5: "..string.format("%s", lODU_Text[5]))
+	end
+	ExportScript.Tools.SendData(2026, string.format("%s", lODU_Text[1]))
+	ExportScript.Tools.SendData(2027, string.format("%s", lODU_Text[2]))
+	ExportScript.Tools.SendData(2028, string.format("%s", lODU_Text[3]))
+	ExportScript.Tools.SendData(2029, string.format("%s", lODU_Text[4]))
+	ExportScript.Tools.SendData(2030, string.format("%s", lODU_Text[5]))
+
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -778,113 +875,6 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	
 	--> McMicha
 	
-	-- UFC Displays
-	local lUfcDisplays = list_indication(5)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('lUfcDisplays : '..ExportScript.Tools.dump(lUfcDisplays))
-	end
-
-	local to1, to2, from1, from2, lUFC_Chnl1, lUFC_Chnl2, lUFC_Left_Position, lUFC_Right_Position, lUFC_Display = nil, nil, nil, nil, "", "", "", "", ""
-	to1, to2 = lUfcDisplays:find("UFC_DISPLAY")
-	if (to1 ~= nil) then
-		from1, from2 = lUfcDisplays:find("ufc_chnl_1_.%c")
-		if (from2 ~= nill) then
-			to1, to2 = lUfcDisplays:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lUFC_Chnl1 = lUfcDisplays:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lUfcDisplays:find("ufc_chnl_2_.%c", to2)
-		if (from2 ~= nill) then
-			to1, to2 = lUfcDisplays:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lUFC_Chnl2 = lUfcDisplays:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lUfcDisplays:find("ufc_left_position%c", to2)
-		if (from2 ~= nill) then
-			to1, to2 = lUfcDisplays:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lUFC_Left_Position = lUfcDisplays:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lUfcDisplays:find("ufc_right_position%c", to2)
-		if (from2 ~= nill) then
-			if (from2 ~= nil) then
-				lUFC_Right_Position = lUfcDisplays:sub(from2+1)
-				lUFC_Right_Position = lUFC_Right_Position:gsub("%c", "")
-			end
-		end
-	end
-
-	local lRep = 8 - lUFC_Left_Position:len() - lUFC_Right_Position:len()
-
-	lUFC_Display = lUFC_Left_Position..string.rep(" ", lRep)..lUFC_Right_Position
-
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("lUFC_Chnl1: "..string.format("%s", lUFC_Chnl1)) -- string with max 2 charachters
-		ExportScript.Tools.WriteToLog("lUFC_Chnl2: "..string.format("%s", lUFC_Chnl2)) -- string with max 2 charachters
-		ExportScript.Tools.WriteToLog("lUFC_Left_Position: "..string.format("%s", lUFC_Left_Position))
-		ExportScript.Tools.WriteToLog("lUFC_Right_Position: "..string.format("%s", lUFC_Right_Position))
-		ExportScript.Tools.WriteToLog("lUFC_Display: "..string.format("%s", lUFC_Display)) -- string with max 8 charachters
-	end
-	ExportScript.Tools.SendData(2023, string.format("%s", lUFC_Chnl1)) -- string with max 2 charachters
-	ExportScript.Tools.SendData(2024, string.format("%s", lUFC_Chnl2)) -- string with max 2 charachters
-	ExportScript.Tools.SendData(2025, string.format("%s", lUFC_Display)) -- string with max 8 charachters
-
-	-- ODU Display
-	local lODUDisplays = list_indication(6)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('lODUDisplays : '..ExportScript.Tools.dump(lODUDisplays))
-	end
-
-	local to1, to2, from1, from2 = nil, nil, nil, nil
-	local lODU_Text = {"","","","",""}
-	local lODU_select = " "
-
-	to1, to2 = lODUDisplays:find("ODU_DISPLAY")
-	if (to1 ~= nil) then
-		for lIndex = 1, 5, 1 do
-			lODU_select = " "
-
-			from1, from2 = lODUDisplays:find("ODU_Option_"..lIndex.."_Slc%c")
-			if (from2 ~= nill) then
-				to1, to2 = lODUDisplays:find("%c", from2+2)
-				if (to1 ~= nil) then
-					lODU_select = lODUDisplays:sub(from2+1, to1-1)
-					lODU_select = lODU_select:gsub(":", "¦")
-				end
-			end
-
-			from1, from2 = lODUDisplays:find("ODU_Option_"..lIndex.."_Text%c")
-			if (from2 ~= nill) then
-				to1, to2 = lODUDisplays:find("%c", from2+2)
-				if (to1 ~= nil) then
-					lODU_Text[lIndex] = lODUDisplays:sub(from2+1, to1-1)
-				end
-			end
-
-			lODU_Text[lIndex] = lODU_select..lODU_Text[lIndex]
-		end -- for
-	end
-
-	-- string with max 5 characters
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("lODU_Text1: "..string.format("%s", lODU_Text[1]))
-		ExportScript.Tools.WriteToLog("lODU_Text2: "..string.format("%s", lODU_Text[2]))
-		ExportScript.Tools.WriteToLog("lODU_Text3: "..string.format("%s", lODU_Text[3]))
-		ExportScript.Tools.WriteToLog("lODU_Text4: "..string.format("%s", lODU_Text[4]))
-		ExportScript.Tools.WriteToLog("lODU_Text5: "..string.format("%s", lODU_Text[5]))
-	end
-	ExportScript.Tools.SendData(2026, string.format("%s", lODU_Text[1]))
-	ExportScript.Tools.SendData(2027, string.format("%s", lODU_Text[2]))
-	ExportScript.Tools.SendData(2028, string.format("%s", lODU_Text[3]))
-	ExportScript.Tools.SendData(2029, string.format("%s", lODU_Text[4]))
-	ExportScript.Tools.SendData(2030, string.format("%s", lODU_Text[5]))
-
 	-- UVHF Display
 	local lUVHFDisplay = list_indication(7)
 	if ExportScript.Config.Debug then

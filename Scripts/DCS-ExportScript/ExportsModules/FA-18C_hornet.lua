@@ -1,7 +1,7 @@
 -- F/A-18C Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.FA18C_hornet = "1.2.1"
+ExportScript.Version.FA18C_hornet = "1.3.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -520,6 +520,71 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+
+	-- UFC Displays
+	local lUFCDisplays = ExportScript.Tools.getListIndicatorValue(6)
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog('UFC: '..ExportScript.Tools.dump(lUFCDisplays))
+	end
+	
+	if lUFCDisplays ~= nil and lUFCDisplays.UFC_MainDummy ~= nil then
+		-- ScratchPadString Displays
+		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "_", "-") -- fix weil das ein - sein sollte
+		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "_", "-") -- fix weil das ein - sein sollte
+		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "~", "2") -- fix weil das eine 2 sein sollte
+		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "~", "2") -- fix weil das eine 2 sein sollte
+		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "`", "1") -- fix weil das eine 1 sein sollte
+		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "`", "1") -- fix weil das eine 1 sein sollte
+		ExportScript.Tools.SendData(2020, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString1Display, 2)) -- ScratchPadString1Display 2 character
+		ExportScript.Tools.SendData(2021, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString2Display, 2)) -- ScratchPadString2Display 2 character
+		ExportScript.Tools.SendData(2022, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
+		-- ExportScript.Tools.SendData(2090, ExportScript.Tools.DisplayFormat( lUFCDisplays.UFC_ScratchPadString1Display .. lUFCDisplays.UFC_ScratchPadString2Display, 4)) -- ScratchPadString2Display 2 character
+		-- ExportScript.Tools.SendData(2091, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
+		ExportScript.Tools.SendData(2090, ExportScript.Tools.DisplayFormat( lUFCDisplays.UFC_ScratchPadString1Display .. lUFCDisplays.UFC_ScratchPadString2Display, 4) .. "\n" .. ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadString2Display 2 character
+
+		local lTmpCueing = " "
+		-- Option Displays
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing1 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2023, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay1)) -- OptionDisplay1 5 character
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing2 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2024, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay2)) -- OptionDisplay2 5 character
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing3 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2025, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay3)) -- OptionDisplay3 5 character
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing4 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2026, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay4)) -- OptionDisplay4 5 character
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing5 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2027, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay5)) -- OptionDisplay5 5 character
+
+		-- Comm Displays
+		lUFCDisplays.UFC_Comm1Display = string.gsub(lUFCDisplays.UFC_Comm1Display, "~", "2") -- fix weil das eine 2 sein sollte
+		lUFCDisplays.UFC_Comm2Display = string.gsub(lUFCDisplays.UFC_Comm2Display, "~", "2") -- fix weil das eine 2 sein sollte
+		lUFCDisplays.UFC_Comm1Display = string.gsub(lUFCDisplays.UFC_Comm1Display, "`", "1") -- fix weil das eine 1 sein sollte
+		lUFCDisplays.UFC_Comm2Display = string.gsub(lUFCDisplays.UFC_Comm2Display, "`", "1") -- fix weil das eine 1 sein sollte
+		ExportScript.Tools.SendData(2028, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_Comm1Display, 2)) -- Comm1Display 2 character
+		ExportScript.Tools.SendData(2029, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_Comm2Display, 2)) -- Comm2Display 2 character
+	else
+		-- ScratchPadString Displays
+		ExportScript.Tools.SendData(2020, " ") -- ScratchPadString1Display 2 character
+		ExportScript.Tools.SendData(2021, " ") -- ScratchPadString2Display 2 character
+		ExportScript.Tools.SendData(2022, " ") -- ScratchPadNumberDisplay 7 character
+
+		-- Option Displays
+		ExportScript.Tools.SendData(2023, " ") -- OptionDisplay1 5 character
+		ExportScript.Tools.SendData(2024, " ") -- OptionDisplay2 5 character
+		ExportScript.Tools.SendData(2025, " ") -- OptionDisplay3 5 character
+		ExportScript.Tools.SendData(2026, " ") -- OptionDisplay4 5 character
+		ExportScript.Tools.SendData(2027, " ") -- OptionDisplay5 5 character
+
+		-- Comm Displays
+		ExportScript.Tools.SendData(2028, " ") -- Comm1Display 2 character
+		ExportScript.Tools.SendData(2029, " ") -- Comm2Display 2 character
+	end
+	
+	local lUHF1Radio = GetDevice(38)
+	ExportScript.Tools.SendData(2030, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF1Radio:get_frequency()/1000000))), 7)
+	
+	local lUHF2Radio = GetDevice(39)
+	ExportScript.Tools.SendData(2031, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF2Radio:get_frequency()/1000000), "7.3", false, 0.005)), 7)
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -598,68 +663,6 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		-- Clock 8 character
 		ExportScript.Tools.SendData(2011, " ") -- Clock HH:MM:SS
 	end
-	
-	-- UFC Displays
-	local lUFCDisplays = ExportScript.Tools.getListIndicatorValue(6)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('UFC: '..ExportScript.Tools.dump(lUFCDisplays))
-	end
-	
-	if lUFCDisplays ~= nil and lUFCDisplays.UFC_MainDummy ~= nil then
-		-- ScratchPadString Displays
-		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "_", "-") -- fix weil das ein - sein sollte
-		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "_", "-") -- fix weil das ein - sein sollte
-		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "~", "2") -- fix weil das eine 2 sein sollte
-		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "~", "2") -- fix weil das eine 2 sein sollte
-		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "`", "1") -- fix weil das eine 1 sein sollte
-		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "`", "1") -- fix weil das eine 1 sein sollte
-		ExportScript.Tools.SendData(2020, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString1Display, 2)) -- ScratchPadString1Display 2 character
-		ExportScript.Tools.SendData(2021, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString2Display, 2)) -- ScratchPadString2Display 2 character
-		ExportScript.Tools.SendData(2022, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
-
-		local lTmpCueing = " "
-		-- Option Displays
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing1 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2023, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay1)) -- OptionDisplay1 5 character
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing2 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2024, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay2)) -- OptionDisplay2 5 character
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing3 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2025, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay3)) -- OptionDisplay3 5 character
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing4 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2026, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay4)) -- OptionDisplay4 5 character
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing5 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2027, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay5)) -- OptionDisplay5 5 character
-
-		-- Comm Displays
-		lUFCDisplays.UFC_Comm1Display = string.gsub(lUFCDisplays.UFC_Comm1Display, "~", "2") -- fix weil das eine 2 sein sollte
-		lUFCDisplays.UFC_Comm2Display = string.gsub(lUFCDisplays.UFC_Comm2Display, "~", "2") -- fix weil das eine 2 sein sollte
-		lUFCDisplays.UFC_Comm1Display = string.gsub(lUFCDisplays.UFC_Comm1Display, "`", "1") -- fix weil das eine 1 sein sollte
-		lUFCDisplays.UFC_Comm2Display = string.gsub(lUFCDisplays.UFC_Comm2Display, "`", "1") -- fix weil das eine 1 sein sollte
-		ExportScript.Tools.SendData(2028, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_Comm1Display, 2)) -- Comm1Display 2 character
-		ExportScript.Tools.SendData(2029, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_Comm2Display, 2)) -- Comm2Display 2 character
-	else
-		-- ScratchPadString Displays
-		ExportScript.Tools.SendData(2020, " ") -- ScratchPadString1Display 2 character
-		ExportScript.Tools.SendData(2021, " ") -- ScratchPadString2Display 2 character
-		ExportScript.Tools.SendData(2022, " ") -- ScratchPadNumberDisplay 7 character
-
-		-- Option Displays
-		ExportScript.Tools.SendData(2023, " ") -- OptionDisplay1 5 character
-		ExportScript.Tools.SendData(2024, " ") -- OptionDisplay2 5 character
-		ExportScript.Tools.SendData(2025, " ") -- OptionDisplay3 5 character
-		ExportScript.Tools.SendData(2026, " ") -- OptionDisplay4 5 character
-		ExportScript.Tools.SendData(2027, " ") -- OptionDisplay5 5 character
-
-		-- Comm Displays
-		ExportScript.Tools.SendData(2028, " ") -- Comm1Display 2 character
-		ExportScript.Tools.SendData(2029, " ") -- Comm2Display 2 character
-	end
-	
-	local lUHF1Radio = GetDevice(38)
-	ExportScript.Tools.SendData(2030, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF1Radio:get_frequency()/1000000))), 7)
-	
-	local lUHF2Radio = GetDevice(39)
-	ExportScript.Tools.SendData(2031, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF2Radio:get_frequency()/1000000), "7.3", false, 0.005)), 7)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
