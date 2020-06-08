@@ -585,6 +585,27 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	local lUHF2Radio = GetDevice(39)
 	ExportScript.Tools.SendData(2031, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF2Radio:get_frequency()/1000000), "7.3", false, 0.005)), 7)
+
+	local lEngineFuelClock = ExportScript.Tools.getListIndicatorValue(5)
+	if lEngineFuelClock ~= nil and lEngineFuelClock.txt_RPM_R ~= nil then
+		-- Engine informations 3 character
+		ExportScript.Tools.SendData(2000, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_R, 3)) -- right RPM
+		ExportScript.Tools.SendData(2001, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_L, 3)) -- left RPM
+		ExportScript.Tools.SendData(2004, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_R, 3)) -- right Fuel flow
+		ExportScript.Tools.SendData(2005, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_L, 3)) -- left Fuel flow
+
+		ExportScript.Tools.SendData(2010, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_BINGO, 6)) -- BINGO 
+	else
+		-- Engine informations 3 character
+		ExportScript.Tools.SendData(2000, " ") -- right RPM
+		ExportScript.Tools.SendData(2001, " ") -- left RPM
+		ExportScript.Tools.SendData(2004, " ") -- right Fuel flow
+		ExportScript.Tools.SendData(2005, " ") -- left Fuel flow
+		
+		-- Fuel informations 6 character
+		ExportScript.Tools.SendData(2010, " ") -- BINGO 
+	end
+
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -628,37 +649,27 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
 	if lEngineFuelClock ~= nil and lEngineFuelClock.txt_RPM_R ~= nil then
 		-- Engine informations 3 character
-		ExportScript.Tools.SendData(2000, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_R, 3)) -- right RPM
-		ExportScript.Tools.SendData(2001, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_L, 3)) -- left RPM
 		ExportScript.Tools.SendData(2002, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_TEMP_R, 3)) -- right TEMP
 		ExportScript.Tools.SendData(2003, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_TEMP_L, 3)) -- left TEMP
-		ExportScript.Tools.SendData(2004, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_R, 3)) -- right Fuel flow
-		ExportScript.Tools.SendData(2005, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_L, 3)) -- left Fuel flow
 		ExportScript.Tools.SendData(2006, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_OilPress_R, 3)) -- right OilPress
 		ExportScript.Tools.SendData(2007, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_OilPress_L, 3)) -- left OilPress
 		
 		-- Fuel informations 6 character
 		ExportScript.Tools.SendData(2008, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FUEL_UP, 6)) -- up Fuel
 		ExportScript.Tools.SendData(2009, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FUEL_DOWN, 6)) -- down Fuel
-		ExportScript.Tools.SendData(2010, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_BINGO, 6)) -- BINGO 
 		
 		-- Clock 8 character
 		ExportScript.Tools.SendData(2011, ExportScript.Tools.DisplayFormat(string.format("%s¦%s¦%s", lEngineFuelClock.txt_CLOCK_H, lEngineFuelClock.txt_CLOCK_M, lEngineFuelClock.txt_CLOCK_S), 8)) -- Clock HH:MM:SS
 	else
 		-- Engine informations 3 character
-		ExportScript.Tools.SendData(2000, " ") -- right RPM
-		ExportScript.Tools.SendData(2001, " ") -- left RPM
 		ExportScript.Tools.SendData(2002, " ") -- right TEMP
 		ExportScript.Tools.SendData(2003, " ") -- left TEMP
-		ExportScript.Tools.SendData(2004, " ") -- right Fuel flow
-		ExportScript.Tools.SendData(2005, " ") -- left Fuel flow
 		ExportScript.Tools.SendData(2006, " ") -- right OilPress
 		ExportScript.Tools.SendData(2007, " ") -- left OilPress
 		
 		-- Fuel informations 6 character
 		ExportScript.Tools.SendData(2008, " ") -- up Fuel
 		ExportScript.Tools.SendData(2009, " ") -- down Fuel
-		ExportScript.Tools.SendData(2010, " ") -- BINGO 
 		
 		-- Clock 8 character
 		ExportScript.Tools.SendData(2011, " ") -- Clock HH:MM:SS
