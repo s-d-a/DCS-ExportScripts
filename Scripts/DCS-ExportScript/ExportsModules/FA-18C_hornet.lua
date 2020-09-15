@@ -540,7 +540,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2022, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
 		-- ExportScript.Tools.SendData(2090, ExportScript.Tools.DisplayFormat( lUFCDisplays.UFC_ScratchPadString1Display .. lUFCDisplays.UFC_ScratchPadString2Display, 4)) -- ScratchPadString2Display 2 character
 		-- ExportScript.Tools.SendData(2091, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
-		ExportScript.Tools.SendData(2090, ExportScript.Tools.DisplayFormat( lUFCDisplays.UFC_ScratchPadString1Display .. lUFCDisplays.UFC_ScratchPadString2Display, 4) .. "\n" .. ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadString2Display 2 character
+		ExportScript.Tools.SendData(2090, ExportScript.Tools.DisplayFormat( lUFCDisplays.UFC_ScratchPadString1Display .. lUFCDisplays.UFC_ScratchPadString2Display, 4) .. "\n" .. ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadString2Display all characters
 
 		local lTmpCueing = " "
 		-- Option Displays
@@ -567,6 +567,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2020, " ") -- ScratchPadString1Display 2 character
 		ExportScript.Tools.SendData(2021, " ") -- ScratchPadString2Display 2 character
 		ExportScript.Tools.SendData(2022, " ") -- ScratchPadNumberDisplay 7 character
+		ExportScript.Tools.SendData(2090, " ") -- ScratchPadString2Display all characters		
 
 		-- Option Displays
 		ExportScript.Tools.SendData(2023, " ") -- OptionDisplay1 5 character
