@@ -34,7 +34,7 @@ ExportScript.Config.ListenerPort     = 26027        -- Listener Port for D.A.C.
 
 -- Other
 ExportScript.Config.ExportInterval         = 0.05	-- export evry 0.05 secounds
-ExportScript.Config.ExportLowTickInterval  = 0.5	-- export evry 0.5 secounds
+ExportScript.Config.ExportLowTickInterval  = 0.1	-- export evry 0.1 secounds
 ExportScript.Config.LogPath                = lfs.writedir()..[[Logs\Export.log]]
 ExportScript.Config.ExportModulePath       = lfs.writedir()..[[Scripts\DCS-ExportScript\ExportsModules\]]
 ExportScript.Config.Debug                  = false
