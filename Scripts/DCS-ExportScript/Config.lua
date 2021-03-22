@@ -11,7 +11,7 @@ ExportScript.Version.Config = "1.2.1"
 -- Ikarus a Glass Cockpit Software
 ExportScript.Config.IkarusExport    = true         -- false for not use
 ExportScript.Config.IkarusHost      = "127.0.0.1"  -- IP for Ikarus
-ExportScript.Config.IkarusPort      = 1625         -- Port Ikarus (1625)
+ExportScript.Config.IkarusPort      = 1725         -- Port Ikarus (1625)
 ExportScript.Config.IkarusSeparator = ":"
 
 -- D.A.C. (DCS Arcaze Connector)
