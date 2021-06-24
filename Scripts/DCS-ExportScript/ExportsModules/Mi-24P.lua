@@ -17,9 +17,9 @@ ExportScript.ConfigEveryFrameArguments =
 	based of "mainpanel_init.lua"
 	Example (http://www.lua.org/manual/5.1/manual.html#pdf-string.format)
 	[DeviceID] = "Format"
-	  [4] = "%.4f",  <- floating-point number with 4 digits after point
-	 [19] = "%0.1f", <- floating-point number with 1 digit after point
-	[129] = "%1d",   <- decimal number
+	  [4] = "%.4f",  <- floating-point number with 4 digits after point '0.0000'
+	 [19] = "%0.1f", <- floating-point number with 1 digit after point '0.5'
+	[129] = "%1d",   <- decimal number '1'
 	  [5] = "%.f",   <- floating point number rounded to a decimal number
 ]]
 
@@ -142,6 +142,27 @@ ExportScript.ConfigEveryFrameArguments =
 	[562] = "%.4f",			--	UFC Selected Weapon 5
 	[563] = "%.4f",			--	UFC Selected Weapon 6
 	
+	
+	
+	[754] = "%.4f",			-- Operator door light
+	[760] = "%.4f",			-- Operator Green light above door light
+	[767] = "%.4f",			-- Operator Green light right of door light
+	
+	
+	
+	[776] = "%.4f",			-- Operator airspeed needle
+	[777] = "%.4f",			-- Operator adi lower left flag
+	[778] = "%.4f",			-- Operator adi upper left flag
+	[779] = "%.4f",			-- Operator adi upper right flag
+	[780] = "%.4f",			-- Operator adi pitch
+	[781] = "%.4f",			-- Operator adi lower right flag
+	[783] = "%.4f",			-- Operator adi roll
+	[784] = "%.4f",			-- Operator adi ball -1 to 1
+	[785] = "%.4f",			-- Operator adi FD left/right
+	[785] = "%.4f",			-- Operator adi FD up/down
+	
+	[789] = "%.4f",			-- Operator altimeter small hand 0 to 1
+	
 	[817] = "%.4f",			--	Doppler system on light
 	
 	[823] = "%.4f",			--	Emergency Gear Panel 1
@@ -151,11 +172,22 @@ ExportScript.ConfigEveryFrameArguments =
 	[831] = "%.4f",			--	Doppler Hover Flag Light
 	
 	[881] = "%.4f",			--	Overhead Light white
+	
+	[957] = "%.4f",			--	Operator Black box first Light COMP ON
+	[958] = "%.4f",			--	Operator Black box 2 Light LNCHR OFF
+	[959] = "%.4f",			--	Operator Black box 3 Light CHECK
+	[960] = "%.4f",			--	Operator Black box 4 Light READY
+	[961] = "%.4f",			--	Operator Black box 5 Light MSL ON LNCHR
+	[962] = "%.4f",			--	Operator Black box 6 Light LAUNCH APPRVL
+	
+	[966] = "%.4f",			--	Snars Flares Left desp light
+	[967] = "%.4f",			--	Snars Flares right desp light
+	
 	[976] = "%.4f",			--	Overhead Light Red
 	
 	[975] = "%.4f",			--	doppler left/right green light
 	
-	[977] = "%.4f",			--	Map Light
+	[977] = "%0.1f",			--	Map Light
 	
 	[991] = "%.4f",			--	RWR Red Light 1
 	[992] = "%.4f",			--	RWR Red Light 2
@@ -227,8 +259,10 @@ ExportScript.ConfigEveryFrameArguments =
 	[949] = "%.4f",			--	Standby ADI pitch
 	[950] = "%.4f",			--	Standby ADI roll
 	
+	[973] = "%.4f",			--	Operator Windshield Wiper
 	[974] = "%.4f",			--	Seat gone at 1
 	
+	[988] = "%.4f",			--	Operator Altimeter Big hand
 
 	-- Anti Ice
 	[109] = "%1d",		--	AntiIce AUTO/MANUAL	ROTOR-DEICER-AUTO-MAN-PTR
@@ -270,33 +304,34 @@ ExportScript.ConfigEveryFrameArguments =
 	[325] = "%.4f",		--	ARC-U2 switcher Lâ€“RAMKA-P	ARC-U2-FRAME-PTR
 	[326] = "%.4f",		--	ARC-U2 switcher sensitivity B-M	ARC-U2-SENS-PTR
 	[327] = "%.4f",		--	ARC-U2 switcher COMPASS R-852â€“RADIOLINKâ€“COMPASS R-828	ARC-U2-COMPASS-CONNECT-PTR
+	
 	-- ASO 2V
-	[1008] = "%.4f",	--	Interval	ASO2V-INTERV-PTR
-	[965] = "%.4f",		--	Serie	ASO2V-SERIES-PTR
-	[968] = "%.4f",		--	Launch Snars	ASO2V-RESET-PTR
-	[969] = "%.4f",		--	Left Side	ASO2V-LEFT-PTR
-	[970] = "%.4f",		--	Right Side	ASO2V-RIGHT-PTR
-	[971] = "%.4f",		--	Set I/II/III	ASO2V-SETS-PTR
-	[847] = "%.4f",		--	Pilot Launch Snars	ASO-ON-PTR
+	[1008] = "%0.1f",	--	Interval	ASO2V-INTERV-PTR
+	[965] = "%0.1f",	--	Serie	ASO2V-SERIES-PTR
+	[968] = "%0.1f",	--	Launch Snars	ASO2V-RESET-PTR
+	[969] = "%0.1f",	--	Left Side	ASO2V-LEFT-PTR
+	[970] = "%0.1f",	--	Right Side	ASO2V-RIGHT-PTR
+	[971] = "%0.1f",	--	Set I/II/III	ASO2V-SETS-PTR
+	[847] = "%0.1f",	--	Pilot Launch Snars	ASO-ON-PTR
 	
 	-- ASP 17V
-	[553] = "%.4f",		--	Sight mode MANUAL/AUTO	SIGHT-MAN-AUTO-PTR
-	[554] = "%.4f",		--	Sight mode SYNC/ASYNC	SIGHT-SYNC-UNSYNC-PTR
-	[515] = "%.4f",		--	Sight distance MANUAL/AUTO	WEAP-DIST-MAN-AUTO-PTR
-	[552] = "%.4f",		--	Sight Range Adjustment	WEAP-SIGHT-DIST-PTR
-	[556] = "%.4f",		--	Sight Crosshair Vertical Adjustment	SIGHT-VERT-KNOB-PTR
-	[566] = "%.4f",		--	Sight Crosshair Horizontal Adjustment	SIGHT-HOR-KNOB-PTR
-	[528] = "%.4f",		--	Sight Resrt Crosshair	WEAP-SIGHT-RESET-PTR
-	[557] = "%.4f",		--	Sight Base and Range Adjustment	SIGHT-BASE-KNOB-PTR
-	[570] = "%.4f",		--	Sight Control	SIGHT-CONTROL-PTR
-	[567] = "%.4f",		--	Sight Grid Brightness Adjustment	SIGHT-GRID-BRIGHNTNESS-KNOB-PTR
-	[564] = "%.4f",		--	Sight Crosshair Brightness Adjustment	SIGHT-CROSSHAIR-BRIGHNTNESS-KNOB-PTR
-	[569] = "%.4f",		--	Sight Grid Lamp MAIN/BACKUP	SIGHT-GRID-BACKUP-PTR
-	[568] = "%.4f",		--	Sight Crosshair Lamp MAIN/BACKUP	SIGHT-CROSSHAIR-BACKUP-PTR
-	[529] = "%.4f",		--	Sight Power ON/OFF	WEAP-SIGHT-ON-PFF-PTR
-	[761] = "%.4f",		--	USR power	WEAP-DISTR-POWER-OP-PTR
-	[762] = "%.4f",		--	USR check	WEAP-DISTR-CONTROL-OP-PTR
-	[1006] = "%.4f",	--	Sight reflector control	ILS-ADJUST-HANDLE-PTR
+	[553] = "%0.1f",	--	Sight mode MANUAL/AUTO	SIGHT-MAN-AUTO-PTR
+	[554] = "%0.1f",	--	Sight mode SYNC/ASYNC	SIGHT-SYNC-UNSYNC-PTR
+	[515] = "%0.1f",	--	Sight distance MANUAL/AUTO	WEAP-DIST-MAN-AUTO-PTR
+	[552] = "%0.1f",	--	Sight Range Adjustment	WEAP-SIGHT-DIST-PTR
+	[556] = "%0.1f",	--	Sight Crosshair Vertical Adjustment	SIGHT-VERT-KNOB-PTR
+	[566] = "%0.1f",	--	Sight Crosshair Horizontal Adjustment	SIGHT-HOR-KNOB-PTR
+	[528] = "%0.1f",	--	Sight Resrt Crosshair	WEAP-SIGHT-RESET-PTR
+	[557] = "%0.1f",	--	Sight Base and Range Adjustment	SIGHT-BASE-KNOB-PTR
+	[570] = "%0.1f",	--	Sight Control	SIGHT-CONTROL-PTR
+	[567] = "%0.1f",	--	Sight Grid Brightness Adjustment	SIGHT-GRID-BRIGHNTNESS-KNOB-PTR
+	[564] = "%0.1f",	--	Sight Crosshair Brightness Adjustment	SIGHT-CROSSHAIR-BRIGHNTNESS-KNOB-PTR
+	[569] = "%0.1f",	--	Sight Grid Lamp MAIN/BACKUP	SIGHT-GRID-BACKUP-PTR
+	[568] = "%0.1f",	--	Sight Crosshair Lamp MAIN/BACKUP	SIGHT-CROSSHAIR-BACKUP-PTR
+	[529] = "%0.1f",	--	Sight Power ON/OFF	WEAP-SIGHT-ON-PFF-PTR
+	[761] = "%0.1f",	--	USR power	WEAP-DISTR-POWER-OP-PTR
+	[762] = "%0.1f",	--	USR check	WEAP-DISTR-CONTROL-OP-PTR
+	[1006] = "%0.1f",	--	Sight reflector control	ILS-ADJUST-HANDLE-PTR
 	
 	-- Autopilot
 	[243] = "%0.1f",	--	Autopilot K Channel ON	SAU-K-ON-PTR
@@ -322,14 +357,17 @@ ExportScript.ConfigEveryFrameArguments =
 	[268] = "%.4f",		--	Autopilot Speed Stabilization ON	SAU-SPEED-ON-PTR
 	[269] = "%.4f",		--	Autopilot Speed Stabilization OFF	SAU-SPEED-OFF-PTR
 	[267] = "%.4f",		--	Buttons Lighting BRIGHT/DIM	SAU-BRIGHT-DIM-PTR
+	
 	[788] = "%.4f",		--	Operator Baro Pressure Knob	ALTIMETER-KNOB-OP-PTR
 	[18] = "%.4f",		--	Baro Pressure Knob	ALTIMETER-KNOB-PTR
+	
 	[687] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-OP-PTR
 	[694] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-OP-PTR
 	[57] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-PTR
 	[58] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-PTR
 	[59] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-PTR
 	[60] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-PTR
+	
 	[232] = "%.4f",		--	Gear Lever	LANDING-GEAR-PTR
 	[228] = "%.4f",		--	Gear Lever Lock	LANDING-GEAR-LOCK-PTR
 	[224] = "%.4f",		--	Gear Indication Lights ON/OFF	LANDING-GEAR-LIGHTS-PTR
@@ -337,6 +375,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[677] = "%.4f",		--	Operator Gear Switch	LANDING-GEAR-OP-PTR
 	[676] = "%.4f",		--	Operator Gear Switch Cover	LANDING-GEAR-OP-COVER-PTR
 	[827] = "%.4f",		--	Emeregency Gear Lever	LANDING-GEAR-EMER-PTR
+	
 	[763] = "%.4f",		--	Heating DUAS	DUAS-V-HEATING-OP-PTR
 	[672] = "%.4f",		--	Clock Heating Switch	CLOCK-HEATING-OP-PTR
 	[384] = "%.4f",		--	Window Sprayer Button	WIPER-SPRINKLER-PTR
@@ -399,8 +438,10 @@ ExportScript.ConfigEveryFrameArguments =
 	[97] = "%.4f",		--	Inverter PO-750A Cover	INV115-COVER-PTR
 	[99] = "%.4f",		--	Inverter PT-125Ts Cover	INV36-COVER-PTR
 	[70] = "%.4f",		--	Network to Batteries cover	NET-TO-BATT-COVER-PTR
+	
 	[601] = "%.4f",		--	All Left CBs ON	CB-FRAME-LEFT-1-PTR
 	[632] = "%.4f",		--	All Right CBs ON	CB-FRAME-RIGHT-1-PTR
+	
 	[602] = "%.4f",		--	CB Control Force Grad	CB-RIGHT-CONTROL-FORCE-MECHANISM-PTR
 	[603] = "%.4f",		--	CB Collective Lever Lock	CB-RIGHT-CONTROL-CLUTCH-PTR
 	[604] = "%.4f",		--	CB Temperature Control Left Governor RPM	CB-RIGHT-ENGINE-TEMP-ADJUST-LEFT-PTR
@@ -460,6 +501,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[598] = "%.4f",		--	CB Beacon Light	CB-LEFT-BEACON-PTR
 	[599] = "%.4f",		--	CB Landing Light Control	CB-LEFT-HEADLIGHT-CONTROL-PTR
 	[600] = "%.4f",		--	CB Main Attitude Indicator	CB-LEFT-PILOTING-DEVICE-PTR
+	
 	[0] = "%.4f",		--	Collective (LMB press	COLLECTIVE-CORR-PTR
 	[5] = "%.4f",		--	Left Engine Throttle	RRUD-LEFT-PTR
 	[4] = "%.4f",		--	Right Engine Throttle	RRUD-RIGHT-PTR
@@ -568,13 +610,14 @@ ExportScript.ConfigEveryFrameArguments =
 	[931] = "%.4f",		--	Checking	SHTV-CHECK-PTR
 	[875] = "%.4f",		--	High K	SHTV-HIGH-K-PTR
 	[932] = "%.4f",		--	Lamps Check	SHTV-LAMP-CHECK-PTR
-	[775] = "%.4f",		--	Sight Doors	WEAP-MISSILES-SIGHT-HEATING-OP-PTR
-	[871] = "%.4f",		--	Zoom In-Out	OP-SIGHT-SCOPE-PTR
-	[872] = "%.4f",		--	Orange Filter	OP-SIGHT-ORANGE-PTR
-	[873] = "%.4f",		--	Laser Filter	OP-SIGHT-ANTILASER-PTR
-	[884] = "%.4f",		--	Backlight	PK-LIGHT-PTR
-	[890] = "%.4f",		--	Sight Heating	PK-HEATING-PTR
+	[775] = "%0.1f",		--	Sight Doors	WEAP-MISSILES-SIGHT-HEATING-OP-PTR
+	[871] = "%0.1f",	--	Zoom In-Out	OP-SIGHT-SCOPE-PTR
+	[872] = "%0.1f",		--	Orange Filter	OP-SIGHT-ORANGE-PTR
+	[873] = "%0.1f",		--	Laser Filter	OP-SIGHT-ANTILASER-PTR
+	[884] = "%0.1f",		--	Backlight	PK-LIGHT-PTR
+	[890] = "%0.1f",		--	Sight Heating	PK-HEATING-PTR
 	[0] = "%.4f",		--	Push to Park/Unpark Operators Stick	PTR-STICK-STOW-1026
+	
 	[334] = "%.4f",		--	IFF Transponder Mode Selector Switch	DEV6201-CODE-PTR
 	[336] = "%.4f",		--	IFF Transponder Device Selector Switch	DEV6201-MAIN-BACKUP-PTR
 	[332] = "%.4f",		--	IFF Transponder Device Mode Switch	DEV6201-NOT-USED-PTR
@@ -583,6 +626,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[330] = "%.4f",		--	IFF Transponder Disaster Switch Cover	DEV6201-SOS-COVER-PTR
 	[331] = "%.4f",		--	IFF Transponder Disaster Switch	DEV6201-SOS-PTR
 	[383] = "%.4f",		--	IFF Transponder Power Switch	DEV6201-POWER-PTR
+	
 	[682] = "%.4f",		--	Operator Cabin Lighting Switch	LTG-COCKPIT-OP-PTR
 	[356] = "%.4f",		--	Pilot Cabin Lighting Switch	LTG-COCKPIT-PTR
 	[354] = "%.4f",		--	Cargo Lighting Switch	LTG-WHITE-PTR
@@ -600,6 +644,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[1013] = "%.4f",	--	Transformer 1 Group Of Red Lights Left And Operator Panel	RED-LTG1-OP-PTR
 	[1014] = "%.4f",	--	Transformer 2 Group Of Red Lights Left And Operator Panel	RED-LTG2-OP-PTR
 	[149] = "%.4f",		--	Builtin Red Lights Transformer	RED-LTG3-PTR
+	
 	[438] = "%.4f",		--	Jadro-1I Mode OFF/AM/OM	JADRO-MODULATION-PTR
 	[437] = "%.4f",		--	Jadro-1I Frequency	JADRO-001-PTR
 	[436] = "%.4f",		--	Jadro-1I Frequency	JADRO-01-PTR
@@ -610,20 +655,21 @@ ExportScript.ConfigEveryFrameArguments =
 	[421] = "%.4f",		--	Jadro-1I Squelch	JADRO-PSH-PTR
 	[423] = "%.4f",		--	Jadro-1I Test	JADRO-CONTROL-PTR
 	[374] = "%.4f",		--	Jadro-1I ON/OFF	JADRO-ON-OFF-PTR
+	
 	[647] = "%.4f",		--	KM-2 set magnetic declination 	KM2-KNOB-PTR
 	[645] = "%.4f",		--	KM-2 Test button	KM2-CONTR-BUTTON-PTR
-	[985] = "%.4f",		--	Map Scale Selector	MAPDISPLAY-SCALE-PTR
+	[985] = "%0.1f",		--	Map Scale Selector	MAPDISPLAY-SCALE-PTR
 	[291] = "%.4f",		--	Set the vertical position of the helicopter on the Map 	MAPDISPLAY-VERT-PTR
 	[983] = "%.4f",		--	Set the horizontall position of the helicopter on the Map 	MAPDISPLAY-HOR-PTR
-	[984] = "%.4f",		--	Map Power ON/OFF	MAPDISPLAY-POWER-PTR
+	[984] = "%0.1f",		--	Map Power ON/OFF	MAPDISPLAY-POWER-PTR
 	[192] = "%.4f",		--	Map Highlight  BRIGHT/OFF/DIM	MAP-LIGHT-PTR
 	[10] = "%.4f",		--	Cage Gyro 1	GYRO1-CAGE-PTR
 	[369] = "%.4f",		--	Gyro 1 Power	MGV1-POWER-PTR
 	[14] = "%.4f",		--	Cage Gyro 2	GYRO2-CAGE-PTR
 	[701] = "%.4f",		--	Cage Gyro 2	GYRO-CAGE-OP-PTR
 	[368] = "%.4f",		--	Gyro 2 Power	MGV2-POWER-PTR
-	[12] = "%.4f",		--	Gyrovertical Switch	GYRO-SEL-PTR
-	[759] = "%.4f",		--	ADI Switch	PKP-POWER-OP-PTR
+	[12] = "%0.1f",		--	Gyrovertical Switch	GYRO-SEL-PTR
+	[759] = "%0.1f",		--	ADI Switch	PKP-POWER-OP-PTR
 	[782] = "%.4f",		--	Pitch Trim Knob	PKP-INIT-PITCH-KNOB-OP-PTR
 	[787] = "%.4f",		--	Test ADI Button	PKP-TEST-OP-PTR
 	[941] = "%.4f",		--	Pitch Trim Knob	PKP-INIT-PITCH-KNOB-PTR
@@ -631,8 +677,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[30] = "%.4f",		--	Radar altimeter adjust and test	RADAR-ALTIMETER-KNOB-PTR
 	[31] = "%.4f",		--	Radar altimeter adjust and test	RADAR-ALTIMETER-KNOB-PTR
 	[372] = "%.4f",		--	RV-5 ON/OFF	RAD-ALT-ON-OFF-PTR
-	[843] = "%.4f",		--	Mode Switch	RMI-KUR-2-OP-PTR
-	[26] = "%.4f",		--	Mode Switch	RMI-KUR-2-PTR
+	[843] = "%0.1f",		--	Mode Switch	RMI-KUR-2-OP-PTR
+	[26] = "%0.1f",		--	Mode Switch	RMI-KUR-2-PTR
 	[518] = "%.4f",		--	R-852 Channel Select	R852-CHANNEL-PTR
 	[517] = "%.4f",		--	R-852 Volume	R852-VOLUME-KNOB-PTR
 	[375] = "%.4f",		--	R-863 ON/OFF	R863-ON-OFF-PTR
@@ -690,18 +736,18 @@ ExportScript.ConfigEveryFrameArguments =
 	[522] = "%.4f",		--	Reload Left Gondola	WEAP-127-LEFT-RELOAD-PTR
 	[527] = "%.4f",		--	Reload Right Gondola	WEAP-127-RIGHT-RELOAD-PTR
 	[530] = "%.4f",		--	Weapon Camera ON/OFF	WEAP-SIGHT-CONTROL-ON-OFF-PTR
-	[523] = "%.4f",		--	Select Weapon	WEAP-SELECT-KNOB-PTR
+	[523] = "%0.1f",		--	Select Weapon Pilot	WEAP-SELECT-KNOB-PTR
 	[531] = "%.4f",		--	Select Rockets LEFT/BOTH/RIGHT	WEAP-ROCKET-SELECT-PTR
-	[551] = "%.4f",		--	Weapon Control ON/OFF	WEAP-ON-OFF-PTR
-	[550] = "%.4f",		--	Cannon Fire Rate SLOW/FAST	WEAP-CANNON-PACE-PTR
+	[551] = "%0.1f",		--	Weapon Control ON/OFF	WEAP-ON-OFF-PTR
+	[550] = "%0.1f",		--	Cannon Fire Rate SLOW/FAST	WEAP-CANNON-PACE-PTR
 	[549] = "%.4f",		--	Reload Cannon	WEAP-NPU-RELOAD-PTR
 	[547] = "%.4f",		--	Stop container	WEAP-KMG-INTERRUPT-PTR
-	[546] = "%.4f",		--	Explosion on Jettison ON/OFF	WEAP-JETTISON-EXPLOSION-PTR
-	[545] = "%.4f",		--	Explosion on Jettison Cover	WEAP-JETTISON-EXPLOSION-COVER-PTR
-	[542] = "%.4f",		--	Jettison Pylons ON/OFF	WEAP-JETTISON-SPECIAL-PTR
-	[541] = "%.4f",		--	Jettison Pylons Cover	WEAP-JETTISON-SPECIAL-COVER-PTR
-	[538] = "%.4f",		--	Jettison Launcher ON/OFF	WEAP-JETTISON-LAUNCHER-PTR
-	[537] = "%.4f",		--	Jettison Launcher Cover	WEAP-JETTISON-LAUNCHER-COVER-PTR
+	[546] = "%0.1f",		--	Explosion on Jettison ON/OFF	WEAP-JETTISON-EXPLOSION-PTR
+	[545] = "%0.1f",		--	Explosion on Jettison Cover	WEAP-JETTISON-EXPLOSION-COVER-PTR
+	[542] = "%0.1f",		--	Jettison Pylons ON/OFF	WEAP-JETTISON-SPECIAL-PTR
+	[541] = "%0.1f",		--	Jettison Pylons Cover	WEAP-JETTISON-SPECIAL-COVER-PTR
+	[538] = "%0.1f",		--	Jettison Launcher ON/OFF	WEAP-JETTISON-LAUNCHER-PTR
+	[537] = "%0.1f",		--	Jettison Launcher Cover	WEAP-JETTISON-LAUNCHER-COVER-PTR
 	[536] = "%.4f",		--	Arm Rockets	WEAP-PUS-ENGAGEMENT-PTR
 	[673] = "%.4f",		--	Main Weapon Safe Switch	ARMAMENT-POWER-OP-PTR
 	[187] = "%.4f",		--	Fire Weapons	OP-STICK-RS-PTR
@@ -710,22 +756,22 @@ ExportScript.ConfigEveryFrameArguments =
 	[715] = "%.4f",		--	Explosion on Jettison	WEAP-JETTISON-EXPLOSION-OP-PTR
 	[142] = "%.4f",		--	Emergency Jettison	WEAP-JETTISON-OP-PTR
 	[770] = "%.4f",		--	Burst Length SHORT/MED/LONG	WEAP-BURST-LENGTH-OP-PTR
-	[709] = "%.4f",		--	Select Weapon	WEAP-SELECT-KNOB-OP-PTR
-	[773] = "%.4f",		--	Missiles Power	WEAP-MISSILES-POWER-OP-PTR
-	[955] = "%.4f",		--	SCHO Power	SHSCHO-POWER-PTR
+	[709] = "%0.1f",	--	Select Weapon Operator	WEAP-SELECT-KNOB-OP-PTR
+	[773] = "%0.1f",		--	Missiles Power	WEAP-MISSILES-POWER-OP-PTR
+	[955] = "%0.1f",		--	SCHO Power	SHSCHO-POWER-PTR
 	[768] = "%.4f",		--	Release Check PU	WEAP-JETTISON-TEST-OP-PTR
-	[765] = "%.4f",		--	Jettison Launcher ON/OFF	WEAP-JETTISON-SPECIAL-OP-PTR
+	[765] = "%0.1f",		--	Jettison Launcher ON/OFF	WEAP-JETTISON-SPECIAL-OP-PTR
 	[700] = "%.4f",		--	Bombs/Blocks Mode	WEAP-BOMBS-BLOCKS-OP-PTR
-	[882] = "%.4f",		--	Radiation Reset	OP-AIM-RESET-RAD-PTR
+	[882] = "%0.1f",		--	Radiation Reset	OP-AIM-RESET-RAD-PTR
 	[956] = "%.4f",		--	SCHO Lamps Check	SHSCHO-CHECK-PTR
 	[772] = "%.4f",		--	Cannon Fire Rate SLOW/FAST	WEAP-CANNON-PACE-OP-PTR
-	[963] = "%.4f",		--	Select Station	SHSCHO-KNOB-PTR
+	[963] = "%0.1f",		--	Select Station	SHSCHO-KNOB-PTR
 	[769] = "%.4f",		--	Reload Cannon	WEAP-NPU-RELOAD-OP-PTR
-	[712] = "%.4f",		--	Weapon Control Cover	WEAP-PRIORITY-OP-COVER-PTR
-	[714] = "%.4f",		--	Explosion on Jettison Cover	WEAP-JETTISON-EXPLOSION-OP-COVER-PTR
-	[141] = "%.4f",		--	Emergency Jettison Cover	WEAP-JETTISON-OP-COVER-PTR
-	[699] = "%.4f",		--	Bombs/Blocks Mode Cover	WEAP-BOMBS-BLOCKS-OP-COVER-PTR
-	[764] = "%.4f",		--	Jettison Launcher Cover	WEAP-JETTISON-SPECIAL-OP-COVER-PTR
+	[712] = "%0.1f",		--	Weapon Control Cover	WEAP-PRIORITY-OP-COVER-PTR
+	[714] = "%0.1f",		--	Explosion on Jettison Cover	WEAP-JETTISON-EXPLOSION-OP-COVER-PTR
+	[141] = "%0.1f",		--	Emergency Jettison Cover	WEAP-JETTISON-OP-COVER-PTR
+	[699] = "%0.1f",		--	Bombs/Blocks Mode Cover	WEAP-BOMBS-BLOCKS-OP-COVER-PTR
+	[764] = "%0.1f",		--	Jettison Launcher Cover	WEAP-JETTISON-SPECIAL-OP-COVER-PTR
 	[711] = "%.4f",		--	Start container	WEAP-KMG-COMMENCE-OP-PTR
 	[710] = "%.4f"		--	Stop container	WEAP-KMG-INTERRUPT-OP-PTR
 
