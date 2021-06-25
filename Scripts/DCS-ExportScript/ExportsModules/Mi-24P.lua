@@ -400,19 +400,47 @@ ExportScript.ConfigEveryFrameArguments =
 	[974] = "%.4f",		--	Hide Stick toggle	PTR-STICK-HIDE-974
 	[671] = "%.4f",		--	Autopilot Trimmer for yourself 	CONTROL-TRIMMER-OP-PTR
 	[670] = "%.4f",		--	Autopilot Trimmer for yourself Switch Cover	CONTROL-TRIMMER-OP-COVER-PTR
-	[371] = "%.4f",		--	DISS-15D ON/OFF	DISS-ON-OFF-PTR
-	[370] = "%.4f",		--	Airspeed to DISS ON/OFF	DVS-DISS-PTR
-	[818] = "%.4f",		--	DISS coordinates OFF	PTR-DISS-BTN-OFF
-	[819] = "%.4f",		--	DISS coordinates ON	PTR-DISS-BTN-ON
-	[815] = "%.4f",		--	DISS decrease map angle	PTR-DISS-BTN-MINUS
-	[816] = "%.4f",		--	DISS increase map angle	PTR-DISS-BTN-PLUS
-	[809] = "%.4f",		--	DISS decrease path	PTR-DISS-BTN-N
-	[810] = "%.4f",		--	DISS increase path	PTR-DISS-BTN-V
-	[803] = "%.4f",		--	DISS decrease deviation	PTR-DISS-BTN-TOLE
-	[804] = "%.4f",		--	DISS increase deviation	PTR-DISS-BTN-TORI
-	[797] = "%.4f",		--	DISS Mode WORK/CHECK	DRIFT-R-K-PTR
-	[798] = "%.4f",		--	DISS Mode LAND/SEA	DRIFT-S-M-PTR
-	[826] = "%.4f",		--	DISS select mode IDK/IDK/IDK/MEM/OPER	DISS-SELECTOR-KNOB-PTR
+	
+	-- DISS
+	[371] = "%0.1f",	--	DISS-15D ON/OFF	DISS-ON-OFF-PTR
+	[370] = "%0.1f",	--	Airspeed to DISS ON/OFF	DVS-DISS-PTR
+	[818] = "%0.1f",	--	DISS coordinates OFF	PTR-DISS-BTN-OFF
+	[819] = "%0.1f",	--	DISS coordinates ON	PTR-DISS-BTN-ON
+	[815] = "%0.1f",	--	DISS decrease map angle	PTR-DISS-BTN-MINUS
+	[816] = "%0.1f",	--	DISS increase map angle	PTR-DISS-BTN-PLUS
+	[809] = "%0.1f",	--	DISS decrease path	PTR-DISS-BTN-N
+	[810] = "%0.1f",	--	DISS increase path	PTR-DISS-BTN-V
+	[803] = "%0.1f",	--	DISS decrease deviation	PTR-DISS-BTN-TOLE
+	[804] = "%0.1f",	--	DISS increase deviation	PTR-DISS-BTN-TORI
+	[797] = "%0.1f",	--	DISS Mode WORK/CHECK	DRIFT-R-K-PTR
+	[798] = "%0.1f",	--	DISS Mode LAND/SEA	DRIFT-S-M-PTR
+	[826] = "%0.1f",	--	DISS select mode IDK/IDK/IDK/MEM/OPER	DISS-SELECTOR-KNOB-PTR
+	
+	-- DISS (these are 0 to 1)
+	[799] = "%.4f",		--  Lateral Deviation 1st digit
+	[800] = "%.4f",		--  Lateral Deviation 2st digit
+	[801] = "%.4f",		--  Lateral Deviation 3st digit
+	[802] = "%0.1f",	--  Lateral Left/Right
+	[805] = "%0.1f",	--  Distance Forward/Back
+	[806] = "%0.1f",	--  Distance KM 1st digit
+	[807] = "%0.1f",	--  Distance KM 2st digit
+	[808] = "%0.1f",	--  Distance KM 3st digit
+	[811] = "%.4f",		--  Course Angle 1st digit
+	[812] = "%.4f",		--  Course Angle 2st digit
+	[813] = "%.4f",		--  Course Angle 3st digit
+	[814] = "%.4f",		--  Course Angle 4st digit
+	[817] = "%.4f",		--  TURN ON Light
+	[823] = "%.4f",		--  DISS Select Mode OPER Light
+	[824] = "%.4f",		--  DISS Select Mode M Light
+	[825] = "%.4f",		--  DISS Select Mode D Light
+	[827] = "%.4f",		--  DISS Select Mode TEST Light
+	
+	
+	
+	
+	
+	
+	
 	[133] = "%.4f",		--	Cabin Unseal Switch	CABIN-DEPRESS-PTR
 	[134] = "%.4f",		--	Blowdown Conditioning Switch	AC-MODE-PTR
 	[143] = "%.4f",		--	Filter Switch	AC-FILTER-PTR
@@ -809,6 +837,103 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 ]]
+
+	------------------------------------------------------------------------------------------------------
+	------------------------------------------------------------------------------------------------------
+	-- The additive value should have been 5, but weird things were happening when it was added to 0
+	local courseAngleDigit1 = math.floor((mainPanelDevice:get_argument_value(811) * 10) + 0.0)
+	courseAngleDigit1 = string.format("%1d" , courseAngleDigit1)
+	
+	local courseAngleDigit2 = math.floor((mainPanelDevice:get_argument_value(812) * 10) + 0.0)
+	courseAngleDigit2 = string.format("%1d" , courseAngleDigit2)
+	
+	local courseAngleDigit3 = math.floor((mainPanelDevice:get_argument_value(813) * 10) + 0.0)
+	courseAngleDigit3 = string.format("%1d" , courseAngleDigit3)
+	
+	local courseAngleDigit4 = math.floor((mainPanelDevice:get_argument_value(814) * 10) + 0.0)
+	courseAngleDigit4 = string.format("%1d" , courseAngleDigit4)
+	
+	if courseAngleDigit1 == "10" then
+		courseAngleDigit1 = "0"
+	end
+	if courseAngleDigit2 == "10" then
+		courseAngleDigit2 = "0"
+	end
+	if courseAngleDigit3 == "10" then
+		courseAngleDigit3 = "0"
+	end
+	if courseAngleDigit4 == "10" then
+		courseAngleDigit4 = "9"
+	end
+
+	-- combine the digits into a single string
+	courseAngleFull = string.format(courseAngleDigit1 .. courseAngleDigit2 .. courseAngleDigit3 .. "." .. courseAngleDigit4)
+	
+	-- Pick a number to contain the information
+	ExportScript.Tools.SendData(3000, courseAngleFull)
+	
+	------------------------------------------------------------------------------------------------------
+	------------------------------------------------------------------------------------------------------
+	-- The additive value should have been 5, but weird things were happening when it was added to 0
+	local distanceKmDigit1 = math.floor((mainPanelDevice:get_argument_value(806) * 10) + 0.0)
+	distanceKmDigit1 = string.format("%1d" , distanceKmDigit1)
+	
+	local distanceKmDigit2 = math.floor((mainPanelDevice:get_argument_value(807) * 10) + 0.0)
+	distanceKmDigit2 = string.format("%1d" , distanceKmDigit2)
+	
+	local distanceKmDigit3 =(mainPanelDevice:get_argument_value(808) * 10) 
+	distanceKmDigit3 = string.format("%.1f" , distanceKmDigit3)
+	
+	if distanceKmDigit1 == "10" then
+		distanceKmDigit1 = "0"
+	end
+	if distanceKmDigit2 == "10" then
+		distanceKmDigit2 = "0"
+	end
+	--weird things were happening like the numbers going 049.9 -> 040.0 -> 050.0
+	--so I made the replacement digit 9.9 instead of the old value of 0.0
+	if distanceKmDigit3 == "10.0" then
+		distanceKmDigit3 = "9.9"
+	end
+
+	-- combine the digits into a single string
+	distanceKmFull = string.format(distanceKmDigit1 .. distanceKmDigit2 .. distanceKmDigit3)
+	
+	-- Pick a number to contain the information
+	ExportScript.Tools.SendData(3001, distanceKmFull)
+	
+	------------------------------------------------------------------------------------------------------
+	------------------------------------------------------------------------------------------------------
+	
+	-- The additive value should have been 5, but weird things were happening when it was added to 0
+	local lateralDeviationDigit1 = math.floor((mainPanelDevice:get_argument_value(799) * 10) + 0.0)
+	lateralDeviationDigit1 = string.format("%1d" , lateralDeviationDigit1)
+	
+	local lateralDeviationDigit2 = math.floor((mainPanelDevice:get_argument_value(800) * 10) + 0.0)
+	lateralDeviationDigit2 = string.format("%1d" , lateralDeviationDigit2)
+	
+	local lateralDeviationDigit3 =(mainPanelDevice:get_argument_value(801) * 10) 
+	lateralDeviationDigit3 = string.format("%.1f" , lateralDeviationDigit3)
+	
+	if lateralDeviationDigit1 == "10" then
+		lateralDeviationDigit1 = "0"
+	end
+	if lateralDeviationDigit2 == "10" then
+		lateralDeviationDigit2 = "0"
+	end
+	--weird things were happening like the numbers going 049.9 -> 040.0 -> 050.0
+	--so I made the replacement digit 9.9 instead of the old value of 0.0
+	if lateralDeviationDigit3 == "10.0" then
+		lateralDeviationDigit3 = "9.9"
+	end
+
+	-- combine the digits into a single string
+	lateralDeviationFull = string.format(lateralDeviationDigit1 .. lateralDeviationDigit2 .. lateralDeviationDigit3)
+	
+	-- Pick a number to contain the information
+	ExportScript.Tools.SendData(3002, lateralDeviationFull)
+	
+	
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -823,6 +948,42 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
 	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 ]]
+	------------------------------------------------------------------------------------------------------
+	-- The additive value should have been 5, but weird things were happening when it was added to 0
+	local courseAngleDigit1 = math.floor((mainPanelDevice:get_argument_value(811) * 10) + 0.4)
+	courseAngleDigit1 = string.format("%1d" , courseAngleDigit1)
+	
+	local courseAngleDigit2 = math.floor((mainPanelDevice:get_argument_value(812) * 10) + 0.4)
+	courseAngleDigit2 = string.format("%1d" , courseAngleDigit2)
+	
+	local courseAngleDigit3 = math.floor((mainPanelDevice:get_argument_value(813) * 10) + 0.4)
+	courseAngleDigit3 = string.format("%1d" , courseAngleDigit3)
+	
+	local courseAngleDigit4 = math.floor((mainPanelDevice:get_argument_value(814) * 10) + 0.4)
+	courseAngleDigit4 = string.format("%1d" , courseAngleDigit4)
+
+	-- combine the digits into a single string
+	courseAngleFull = string.format(courseAngleDigit1 .. courseAngleDigit2 .. courseAngleDigit3 .. "." .. courseAngleDigit4)
+	
+	-- Pick a number to contain the information
+	ExportScript.Tools.SendData(3000, courseAngleFull)
+	------------------------------------------------------------------------------------------------------
+	
+	-- The additive value should have been 5, but weird things were happening when it was added to 0
+	local distanceKmDigit1 = math.floor((mainPanelDevice:get_argument_value(806) * 10) + 0.4)
+	distanceKmDigit1 = string.format("%1d" , distanceKmDigit1)
+	
+	local distanceKmDigit2 = math.floor((mainPanelDevice:get_argument_value(807) * 10) + 0.4)
+	distanceKmDigit2 = string.format("%1d" , distanceKmDigit2)
+	
+	local distanceKmDigit3 = math.floor((mainPanelDevice:get_argument_value(808) * 10) + 0.4)
+	distanceKmDigit3 = string.format("%1d" , distanceKmDigit3)
+
+	-- combine the digits into a single string
+	distanceKmFull = string.format(distanceKmDigit1 .. distanceKmDigit2 .. distanceKmDigit3)
+	
+	-- Pick a number to contain the information
+	ExportScript.Tools.SendData(3001, distanceKmFull)
 end
 
 -----------------------------------------------------
@@ -842,6 +1003,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 ]]
+	
+	
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -878,6 +1041,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 ]]
+
 end
 
 -----------------------------
