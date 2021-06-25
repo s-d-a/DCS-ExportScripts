@@ -39,35 +39,41 @@ ExportScript.ConfigEveryFrameArguments =
 	[94] = "%.4f",			--	Far Right Lower Panel Light
 	
 	--about 150-174 is the caution panel left to right, top to bottom range 0 to 1
-	[150] = "%.4f",			--	Cauton Panel
-	[151] = "%.4f",			--	Cauton Panel
-	[152] = "%.4f",			--	Cauton Panel
-	[153] = "%.4f",			--	Cauton Panel
-	[154] = "%.4f",			--	Cauton Panel
-	[155] = "%.4f",			--	Cauton Panel
-	[156] = "%.4f",			--	Cauton Panel
-	[157] = "%.4f",			--	Cauton Panel
-	[158] = "%.4f",			--	Cauton Panel
-	[159] = "%.4f",			--	Cauton Panel
+	[150] = "%.4f",			--	Cauton Panel ICING
+	[151] = "%.4f",			--	Cauton Panel FIRE
+	[152] = "%.4f",			--	Cauton Panel TANK 1 120 LITERS REMAIN
+	[153] = "%.4f",			--	Cauton Panel TANK 2 120 LITERS REMAIN
+	[154] = "%.4f",			--	Cauton Panel MAIN G/B LOW OIL PRESS
+	[155] = "%.4f",			--	Cauton Panel ATTENETION TO ELECT CONT PLANE
+	[156] = "%.4f",			--	Cauton Panel Anti-Ice Auto Test
+	[157] = "%.4f",			--	Cauton Panel Limit Maneuver
+	[158] = "%.4f",			--	Cauton Panel Chips in GRBX
 	
-	[160] = "%.4f",			--	Cauton Panel
-	[161] = "%.4f",			--	Cauton Panel
-	[162] = "%.4f",			--	Cauton Panel
-	[163] = "%.4f",			--	Cauton Panel
-	[164] = "%.4f",			--	Cauton Panel
-	[165] = "%.4f",			--	Cauton Panel
-	[166] = "%.4f",			--	Cauton Panel
-	[167] = "%.4f",			--	Cauton Panel
-	[168] = "%.4f",			--	Cauton Panel
-	[169] = "%.4f",			--	Cauton Panel
+	[159] = "%.4f",			--	Cauton Panel LH ENG High Vibration
+	[160] = "%.4f",			--	Cauton Panel RH ENG High Vibration
+	[161] = "%.4f",			--	Cauton Panel LH ENG High TEMP
+	[162] = "%.4f",			--	Cauton Panel RH ENG High TEMP
 	
-	[170] = "%.4f",			--	Cauton Panel
-	[171] = "%.4f",			--	Cauton Panel
-	[172] = "%.4f",			--	Cauton Panel
-	[173] = "%.4f",			--	Cauton Panel
-	[174] = "%.4f",			--	Cauton Panel
+	[163] = "%.4f",			--	Cauton Panel ANTI ICE FAIL
+	[164] = "%.4f",			--	Cauton Panel HIGH CABIN PRESS
+	[165] = "%.4f",			--	Cauton Panel HIGH PEDAL PUSH RATE
 	
-	[177] = "%.4f",			--	Cauton Panel Light near red switch
+	[166] = "%.4f",			--	Cauton Panel SHUT DOEN LH ENG
+	[167] = "%.4f",			--	Cauton Panel SHUT DOEN RH ENG
+	[168] = "%.4f",			--	Cauton Panel CHIPS IN LH ENG
+	[169] = "%.4f",			--	Cauton Panel CHIPS IN RH ENG
+	
+	[170] = "%.4f",			--	Cauton Panel SELECT STBY CODE
+	[171] = "%.4f",			--	Cauton Panel XPDR FAIL
+	[172] = "%.4f",			--	Cauton Panel HIGH CABIN PRESS
+	
+	[173] = "%.4f",			--	Cauton Panel SPEED HOLD
+	[174] = "%.4f",			--	Cauton Panel MAP LIMIT
+	
+	[175] = "%.4f",			--	Cauton Panel LH ENG DUST PROT ON
+	[176] = "%.4f",			--	Cauton Panel RH ENG DUST PROT ON
+	
+	[177] = "%.4f",			--	Cauton Panel CONTROL TO OPERATOR
 	
 	[197] = "%.4f",			--	Right quarter panel light
 	[200] = "%.4f",			--	Right quarter panel light
@@ -749,10 +755,10 @@ ExportScript.ConfigEveryFrameArguments =
 	[538] = "%0.1f",		--	Jettison Launcher ON/OFF	WEAP-JETTISON-LAUNCHER-PTR
 	[537] = "%0.1f",		--	Jettison Launcher Cover	WEAP-JETTISON-LAUNCHER-COVER-PTR
 	[536] = "%.4f",		--	Arm Rockets	WEAP-PUS-ENGAGEMENT-PTR
-	[673] = "%.4f",		--	Main Weapon Safe Switch	ARMAMENT-POWER-OP-PTR
+	[673] = "%0.1f",		--	Main Weapon Safe Switch	ARMAMENT-POWER-OP-PTR
 	[187] = "%.4f",		--	Fire Weapons	OP-STICK-RS-PTR
 	[853] = "%.4f",		--	Fire Weapons Cover	OP-STICK-RS-COVER-PTR
-	[713] = "%.4f",		--	Weapon Control	WEAP-PRIORITY-OP-PTR
+	[713] = "%0.1f",		--	Weapon Control	WEAP-PRIORITY-OP-PTR
 	[715] = "%.4f",		--	Explosion on Jettison	WEAP-JETTISON-EXPLOSION-OP-PTR
 	[142] = "%.4f",		--	Emergency Jettison	WEAP-JETTISON-OP-PTR
 	[770] = "%.4f",		--	Burst Length SHORT/MED/LONG	WEAP-BURST-LENGTH-OP-PTR
