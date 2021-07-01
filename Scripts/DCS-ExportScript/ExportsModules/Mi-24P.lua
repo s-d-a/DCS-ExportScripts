@@ -1,5 +1,6 @@
 -- Mi-24P Export
 
+-- DCS Version 2.7.3.8494
 -- TODO:
 -- Split the devices into headered sections
 -- Make sure the numbers are formated correctly
@@ -142,19 +143,15 @@ ExportScript.ConfigEveryFrameArguments =
 	
 	[584] = "%.4f",			--	Weapon Panel Left Bottom Light
 	
-	[559] = "%.4f",			--	UFC Selected Weapon 1
-	[560] = "%.4f",			--	UFC Selected Weapon 2
-	[561] = "%.4f",			--	UFC Selected Weapon 4
-	[562] = "%.4f",			--	UFC Selected Weapon 5
-	[563] = "%.4f",			--	UFC Selected Weapon 6
-	
-	
+	[559] = "%0.1f",		--	UFC Selected Weapon 1
+	[560] = "%0.1f",		--	UFC Selected Weapon 2
+	[561] = "%0.1f",		--	UFC Selected Weapon 4
+	[562] = "%0.1f",		--	UFC Selected Weapon 5
+	[563] = "%0.1f",		--	UFC Selected Weapon 6
 	
 	[754] = "%.4f",			-- Operator door light
 	[760] = "%.4f",			-- Operator Green light above door light
 	[767] = "%.4f",			-- Operator Green light right of door light
-	
-	
 	
 	[776] = "%.4f",			-- Operator airspeed needle
 	[777] = "%.4f",			-- Operator adi lower left flag
@@ -283,24 +280,28 @@ ExportScript.ConfigEveryFrameArguments =
 	[634] = "%.4f",		--	ARC-15 Volume	ARC-OP-VOLUME-PTR
 	[635] = "%.4f",		--	ARC-15 TLF/TLG	ARC-OP-MODULATED-PTR
 	[638] = "%.4f",		--	ARC-15 mode OFF/COMPASS/ANT/FRAME	ARC-OP-MODE-PTR
+	
 	[639] = "%.4f",		--	ARC-15 Left Frequency	ARC-OP-CH2-OUT-KNOB
 	[640] = "%.4f",		--	ARC-15 Left Frequency	ARC-OP-CH2-CENTER-PTR
 	[641] = "%.4f",		--	ARC-15 Left Frequency	ARC-OP-CH2-IN-PTR
 	[642] = "%.4f",		--	ARC-15 Right Frequency	ARC-OP-CH1-OUT-KNOB
 	[643] = "%.4f",		--	ARC-15 Right Frequency	ARC-OP-CH1-CENTER-PTR
 	[644] = "%.4f",		--	ARC-15 Right Frequency	ARC-OP-CH1-IN-PTR
+	
 	[633] = "%.4f",		--	ARC-15 Loop Button	ARC-OP-FRAME-PTR
 	[637] = "%.4f",		--	ARC-15 1/2	ARC-OP-CHANNEL-PTR
 	[636] = "%.4f",		--	ARC-15 Control Button	ARC-OP-AUTH-PTR
 	[459] = "%.4f",		--	ARC-15 Volume	ARC-VOLUME-PTR
 	[460] = "%.4f",		--	ARC-15 TLF/TLG	ARC-MODULATED-PTR
-	[463] = "%.4f",		--	ARC-15 mode OFF/COMPASS/ANT/FRAME	ARC-MODE-PTR
-	[464] = "%.4f",		--	ARC-15 Left Frequency	ARC-CH2-OUT-KNOB
-	[465] = "%.4f",		--	ARC-15 Left Frequency	ARC-CH2-CENTER-PTR
-	[466] = "%.4f",		--	ARC-15 Left Frequency	ARC-CH2-IN-PTR
-	[467] = "%.4f",		--	ARC-15 Right Frequency	ARC-CH1-OUT-KNOB
-	[468] = "%.4f",		--	ARC-15 Right Frequency	ARC-CH1-CENTER-PTR
-	[469] = "%.4f",		--	ARC-15 Right Frequency	ARC-CH1-IN-PTR
+	[463] = "%.4f",		--	ARC-15 mode OFF/COMPASS/ANT/FRAME	ARC-MODE-PTR 0.0000=OFF,0.1150=COMP,0.2300=ANT.,0.3450=LOOP
+	
+	[467] = "%.4f",		--	ARC-15 Left Frequency	ARC-CH1-OUT-KNOB 
+	[468] = "%.4f",		--	ARC-15 Left Frequency	ARC-CH1-CENTER-PTR
+	[469] = "%.4f",		--	ARC-15 Left Frequency	ARC-CH1-IN-PTR 
+	[464] = "%.4f",		--	ARC-15 Right Frequency	ARC-CH2-OUT-KNOB
+	[465] = "%.4f",		--	ARC-15 Right Frequency	ARC-CH2-CENTER-PTR
+	[466] = "%.4f",		--	ARC-15 Right Frequency	ARC-CH2-IN-PTR
+	
 	[458] = "%.4f",		--	ARC-15 Loop Button	ARC-FRAME-PTR
 	[462] = "%.4f",		--	ARC-15 1/2	ARC-CHANNEL-PTR
 	[461] = "%.4f",		--	ARC-15 Control Button	ARC-AUTH-PTR
@@ -314,7 +315,7 @@ ExportScript.ConfigEveryFrameArguments =
 	-- ASO 2V
 	[1008] = "%0.1f",	--	Interval	ASO2V-INTERV-PTR
 	[965] = "%0.1f",	--	Serie	ASO2V-SERIES-PTR
-	[968] = "%0.1f",	--	Launch Snars	ASO2V-RESET-PTR
+	[968] = "%0.1f",	--	Launch Coountermeasures	ASO2V-RESET-PTR
 	[969] = "%0.1f",	--	Left Side	ASO2V-LEFT-PTR
 	[970] = "%0.1f",	--	Right Side	ASO2V-RIGHT-PTR
 	[971] = "%0.1f",	--	Set I/II/III	ASO2V-SETS-PTR
@@ -435,12 +436,6 @@ ExportScript.ConfigEveryFrameArguments =
 	[825] = "%.4f",		--  DISS Select Mode D Light
 	[827] = "%.4f",		--  DISS Select Mode TEST Light
 	
-	
-	
-	
-	
-	
-	
 	[133] = "%.4f",		--	Cabin Unseal Switch	CABIN-DEPRESS-PTR
 	[134] = "%.4f",		--	Blowdown Conditioning Switch	AC-MODE-PTR
 	[143] = "%.4f",		--	Filter Switch	AC-FILTER-PTR
@@ -537,6 +532,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[600] = "%.4f",		--	CB Main Attitude Indicator	CB-LEFT-PILOTING-DEVICE-PTR
 	
 	[0] = "%.4f",		--	Collective (LMB press	COLLECTIVE-CORR-PTR
+	[1] = "%.4f",		--	Cyclic Left/Right
+	[2] = "%.4f",		--	Cyclic Forward/Aft
+	[3] = "%.4f",		--	Collective Up/Down
 	[5] = "%.4f",		--	Left Engine Throttle	RRUD-LEFT-PTR
 	[4] = "%.4f",		--	Right Engine Throttle	RRUD-RIGHT-PTR
 	[6] = "%.4f",		--	Left Engine Stop	ENG-BRAKE-LEFT-PTR
@@ -679,16 +677,16 @@ ExportScript.ConfigEveryFrameArguments =
 	[1014] = "%.4f",	--	Transformer 2 Group Of Red Lights Left And Operator Panel	RED-LTG2-OP-PTR
 	[149] = "%.4f",		--	Builtin Red Lights Transformer	RED-LTG3-PTR
 	
-	[438] = "%.4f",		--	Jadro-1I Mode OFF/AM/OM	JADRO-MODULATION-PTR
-	[437] = "%.4f",		--	Jadro-1I Frequency	JADRO-001-PTR
-	[436] = "%.4f",		--	Jadro-1I Frequency	JADRO-01-PTR
-	[429] = "%.4f",		--	Jadro-1I Frequency	JADRO-1-PTR
-	[428] = "%.4f",		--	Jadro-1I Frequency	JADRO-10-PTR
-	[427] = "%.4f",		--	Jadro-1I Frequency	JADRO-100-PTR
-	[426] = "%.4f",		--	Jadro-1I Volume	JADRO-VOLUME-PTR
-	[421] = "%.4f",		--	Jadro-1I Squelch	JADRO-PSH-PTR
-	[423] = "%.4f",		--	Jadro-1I Test	JADRO-CONTROL-PTR
-	[374] = "%.4f",		--	Jadro-1I ON/OFF	JADRO-ON-OFF-PTR
+	[438] = "%0.1f",		--	Jadro-1I Mode OFF/AM/OM	JADRO-MODULATION-PTR
+	[437] = "%0.1f",		--	Jadro-1I Frequency	JADRO-001-PTR
+	[436] = "%0.1f",		--	Jadro-1I Frequency	JADRO-01-PTR
+	[429] = "%0.1f",		--	Jadro-1I Frequency	JADRO-1-PTR
+	[428] = "%0.1f",		--	Jadro-1I Frequency	JADRO-10-PTR
+	[427] = "%0.1f",		--	Jadro-1I Frequency	JADRO-100-PTR
+	[426] = "%0.1f",		--	Jadro-1I Volume	JADRO-VOLUME-PTR
+	[421] = "%0.1f",		--	Jadro-1I Squelch	JADRO-PSH-PTR
+	[423] = "%0.1f",		--	Jadro-1I Test	JADRO-CONTROL-PTR
+	[374] = "%0.1f",		--	Jadro-1I ON/OFF	JADRO-ON-OFF-PTR
 	
 	[647] = "%.4f",		--	KM-2 set magnetic declination 	KM2-KNOB-PTR
 	[645] = "%.4f",		--	KM-2 Test button	KM2-CONTR-BUTTON-PTR
@@ -711,7 +709,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[30] = "%.4f",		--	Radar altimeter adjust and test	RADAR-ALTIMETER-KNOB-PTR
 	[31] = "%.4f",		--	Radar altimeter adjust and test	RADAR-ALTIMETER-KNOB-PTR
 	[372] = "%.4f",		--	RV-5 ON/OFF	RAD-ALT-ON-OFF-PTR
-	[843] = "%0.1f",		--	Mode Switch	RMI-KUR-2-OP-PTR
+	[843] = "%0.1f",	--	Mode Switch	ZK_ARK_U005
 	[26] = "%0.1f",		--	Mode Switch	RMI-KUR-2-PTR
 	[518] = "%.4f",		--	R-852 Channel Select	R852-CHANNEL-PTR
 	[517] = "%.4f",		--	R-852 Volume	R852-VOLUME-KNOB-PTR
@@ -733,16 +731,16 @@ ExportScript.ConfigEveryFrameArguments =
 	[347] = "%.4f",		--	Signal Flares Cassette 1 Launch White Button	FLARE-TOP-WHITE-PTR
 	[346] = "%.4f",		--	Signal Flares Cassette 1 Launch Yellow Button	FLARE-TOP-YELLOW-PTR
 	[352] = "%.4f",		--	Signal Flares Cassette 2 Power Switch	FLARE-BOTTOM-POWER-PTR
-	[349] = "%.4f",		--	Signal Flares Cassette 2 Launch Green Button	FLARE-BOTTOM-GREEN-PTR
-	[348] = "%.4f",		--	Signal Flares Cassette 2 Launch Red Button	FLARE-BOTTOM-RED-PTR - FIX! labeled wrong in DCS
-	[351] = "%.4f",		--	Signal Flares Cassette 2 Launch White Button	FLARE-BOTTOM-WHITE-PTR
-	[350] = "%.4f",		--	Signal Flares Cassette 2 Launch Yellow Button	FLARE-BOTTOM-YELLOW-PTR
+	[350] = "%.4f",		--	Signal Flares Cassette 2 Launch Green Button	FLARE-BOTTOM-GREEN-PTR
+	[351] = "%.4f",		--	Signal Flares Cassette 2 Launch Red Button	FLARE-BOTTOM-RED-PTR - FIX! labeled wrong in DCS
+	[348] = "%.4f",		--	Signal Flares Cassette 2 Launch White Button	FLARE-BOTTOM-WHITE-PTR
+	[349] = "%.4f",		--	Signal Flares Cassette 2 Launch Yellow Button	FLARE-BOTTOM-YELLOW-PTR
 	[366] = "%.4f",		--	RWR Power	SIRENA-POWER-PTR
 	[365] = "%.4f",		--	RWR Signal	SIRENA-SIGNAL-PTR
 	[989] = "%.4f",		--	RWR DAY/NIGHT	MAPDISPLAY-VERT-PTR001
 	[990] = "%.4f",		--	Check RWR	GFORCE-RESET-PTR001
 	[275] = "%.4f",		--	SPUU OFF (that's a button but acts like a switch)	SPUU-OFF-PTR
-	[276] = "%.4f",		--	Autopilot Route Azimuth	SPUU-KNOB-PTR
+	[276] = "%.4f",		--	SPUU Adjustment Knob 	SPUU-KNOB-PTR
 	[277] = "%.4f",		--	SPUU Control Switch P/NONE/T	SPUU-CONTROL-PTR
 	[270] = "%.4f",		--	SPUU Power ON/OFF	SPUU-ON-OFF-PTR
 	[457] = "%.4f",		--	SPU-8 Volume Knob	SPU8-VOLUME-PTR
@@ -766,12 +764,12 @@ ExportScript.ConfigEveryFrameArguments =
 	[361] = "%.4f",		--	RI-65 Repeat Button	SPEECH-REPEAT-PTR
 	[741] = "%.4f",		--	Fire Weapons	STICK-RS-PTR
 	[740] = "%.4f",		--	Fire Weapons Cover	STICK-RS-COVER-PTR
-	[521] = "%.4f",		--	Burst Length SHORT/MED/LONG	WEAP-BURST-LENGTH-PTR
+	[521] = "%0.1f",		--	Burst Length SHORT/MED/LONG	WEAP-BURST-LENGTH-PTR
 	[522] = "%.4f",		--	Reload Left Gondola	WEAP-127-LEFT-RELOAD-PTR
 	[527] = "%.4f",		--	Reload Right Gondola	WEAP-127-RIGHT-RELOAD-PTR
-	[530] = "%.4f",		--	Weapon Camera ON/OFF	WEAP-SIGHT-CONTROL-ON-OFF-PTR
+	[530] = "%0.1f",		--	Weapon Camera ON/OFF	WEAP-SIGHT-CONTROL-ON-OFF-PTR
 	[523] = "%0.1f",		--	Select Weapon Pilot	WEAP-SELECT-KNOB-PTR
-	[531] = "%.4f",		--	Select Rockets LEFT/BOTH/RIGHT	WEAP-ROCKET-SELECT-PTR
+	[531] = "%0.1f",		--	Select Rockets LEFT/BOTH/RIGHT	WEAP-ROCKET-SELECT-PTR
 	[551] = "%0.1f",		--	Weapon Control ON/OFF	WEAP-ON-OFF-PTR
 	[550] = "%0.1f",		--	Cannon Fire Rate SLOW/FAST	WEAP-CANNON-PACE-PTR
 	[549] = "%.4f",		--	Reload Cannon	WEAP-NPU-RELOAD-PTR
@@ -788,27 +786,54 @@ ExportScript.ConfigEveryFrameArguments =
 	[853] = "%.4f",		--	Fire Weapons Cover	OP-STICK-RS-COVER-PTR
 	[713] = "%0.1f",		--	Weapon Control	WEAP-PRIORITY-OP-PTR
 	[715] = "%.4f",		--	Explosion on Jettison	WEAP-JETTISON-EXPLOSION-OP-PTR
-	[142] = "%.4f",		--	Emergency Jettison	WEAP-JETTISON-OP-PTR
-	[770] = "%.4f",		--	Burst Length SHORT/MED/LONG	WEAP-BURST-LENGTH-OP-PTR
+	[142] = "%0.1f",		--	Emergency Jettison	WEAP-JETTISON-OP-PTR
+	[770] = "%0.1f",	--	Burst Length SHORT/MED/LONG	WEAP-BURST-LENGTH-OP-PTR
 	[709] = "%0.1f",	--	Select Weapon Operator	WEAP-SELECT-KNOB-OP-PTR
 	[773] = "%0.1f",		--	Missiles Power	WEAP-MISSILES-POWER-OP-PTR
 	[955] = "%0.1f",		--	SCHO Power	SHSCHO-POWER-PTR
 	[768] = "%.4f",		--	Release Check PU	WEAP-JETTISON-TEST-OP-PTR
 	[765] = "%0.1f",		--	Jettison Launcher ON/OFF	WEAP-JETTISON-SPECIAL-OP-PTR
-	[700] = "%.4f",		--	Bombs/Blocks Mode	WEAP-BOMBS-BLOCKS-OP-PTR
+	[700] = "%0.1f",		--	Bombs/Blocks Mode	WEAP-BOMBS-BLOCKS-OP-PTR
 	[882] = "%0.1f",		--	Radiation Reset	OP-AIM-RESET-RAD-PTR
 	[956] = "%.4f",		--	SCHO Lamps Check	SHSCHO-CHECK-PTR
-	[772] = "%.4f",		--	Cannon Fire Rate SLOW/FAST	WEAP-CANNON-PACE-OP-PTR
+	[772] = "%0.1f",	--	Cannon Fire Rate SLOW/FAST	WEAP-CANNON-PACE-OP-PTR
 	[963] = "%0.1f",		--	Select Station	SHSCHO-KNOB-PTR
 	[769] = "%.4f",		--	Reload Cannon	WEAP-NPU-RELOAD-OP-PTR
-	[712] = "%0.1f",		--	Weapon Control Cover	WEAP-PRIORITY-OP-COVER-PTR
-	[714] = "%0.1f",		--	Explosion on Jettison Cover	WEAP-JETTISON-EXPLOSION-OP-COVER-PTR
-	[141] = "%0.1f",		--	Emergency Jettison Cover	WEAP-JETTISON-OP-COVER-PTR
-	[699] = "%0.1f",		--	Bombs/Blocks Mode Cover	WEAP-BOMBS-BLOCKS-OP-COVER-PTR
-	[764] = "%0.1f",		--	Jettison Launcher Cover	WEAP-JETTISON-SPECIAL-OP-COVER-PTR
-	[711] = "%.4f",		--	Start container	WEAP-KMG-COMMENCE-OP-PTR
-	[710] = "%.4f"		--	Stop container	WEAP-KMG-INTERRUPT-OP-PTR
-
+	[712] = "%0.1f",	--	Weapon Control Cover	WEAP-PRIORITY-OP-COVER-PTR
+	[714] = "%0.1f",	--	Explosion on Jettison Cover	WEAP-JETTISON-EXPLOSION-OP-COVER-PTR
+	[141] = "%0.1f",	--	Emergency Jettison Cover	WEAP-JETTISON-OP-COVER-PTR
+	[699] = "%0.1f",	--	Bombs/Blocks Mode Cover	WEAP-BOMBS-BLOCKS-OP-COVER-PTR
+	[764] = "%0.1f",	--	Jettison Launcher Cover	WEAP-JETTISON-SPECIAL-OP-COVER-PTR
+	[711] = "%0.1f",	--	Start container	WEAP-KMG-COMMENCE-OP-PTR
+	[710] = "%0.1f",	--	Stop container	WEAP-KMG-INTERRUPT-OP-PTR
+	
+	-- Ammo Counters 0 to 1
+	[716] = "%.4f",		--  Counter 1 1st two digits roller 0 to 19
+	[717] = "%.4f",		--  Counter 1 2nd two digits roller 0 to 95 via 5 
+	[718] = "%0.1f",	--  Counter 1 Red Light
+	[719] = "%.4f",		--	Counter Adjustment 1  ROUNDS-KNOB-1
+	
+	[720] = "%.4f",		--  Counter 2 1st two digits roller 0 to 19
+	[721] = "%.4f",		--  Counter 2 2nd two digits roller 0 to 95 via 5 
+	[722] = "%0.1f",	--  Counter 2 Red Light
+	[723] = "%.4f",		--	Counter Adjustment 2  ROUNDS-KNOB-2
+	
+	[724] = "%.4f",		--  Counter 3 1st two digits roller 0 to 19
+	[725] = "%.4f",		--  Counter 3 2nd two digits roller 0 to 95 via 5 
+	[726] = "%0.1f",	--  Counter 3 Red Light
+	[727] = "%.4f",		--	Counter Adjustment 3  ROUNDS-KNOB-3
+	
+	[728] = "%.4f",		--  Counter 4 1st two digits roller 0 to 19
+	[729] = "%.4f",		--  Counter 4 2nd two digits roller 0 to 95 via 5 
+	[730] = "%0.1f",	--  Counter 4 Red Light
+	[731] = "%.4f",		--	Counter Adjustment 4  ROUNDS-KNOB-4
+	
+	[732] = "%.4f",		--  Counter 5 1st two digits roller 0 to 19
+	[733] = "%.4f",		--  Counter 5 2nd two digits roller 0 to 95 via 5 
+	[734] = "%0.1f",	--  Counter 5 Red Light
+	[735] = "%.4f",		--	Counter Adjustment 5  ROUNDS-KNOB-5
+	
+	[739] = "%0.1f"		--	Trim Hat
 }
 ExportScript.ConfigArguments = 
 {
@@ -838,8 +863,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 ]]
 
-	------------------------------------------------------------------------------------------------------
-	------------------------------------------------------------------------------------------------------
+	---------------------------------------------------
+	---------Get DISS Angle Readout--------------------
+	---------------------------------------------------
 	-- The additive value should have been 5, but weird things were happening when it was added to 0
 	local courseAngleDigit1 = math.floor((mainPanelDevice:get_argument_value(811) * 10) + 0.0)
 	courseAngleDigit1 = string.format("%1d" , courseAngleDigit1)
@@ -872,8 +898,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	-- Pick a number to contain the information
 	ExportScript.Tools.SendData(3000, courseAngleFull)
 	
-	------------------------------------------------------------------------------------------------------
-	------------------------------------------------------------------------------------------------------
+	---------------------------------------------------
+	---------Get DISS Distance Readout-----------------
+	---------------------------------------------------
 	-- The additive value should have been 5, but weird things were happening when it was added to 0
 	local distanceKmDigit1 = math.floor((mainPanelDevice:get_argument_value(806) * 10) + 0.0)
 	distanceKmDigit1 = string.format("%1d" , distanceKmDigit1)
@@ -902,8 +929,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	-- Pick a number to contain the information
 	ExportScript.Tools.SendData(3001, distanceKmFull)
 	
-	------------------------------------------------------------------------------------------------------
-	------------------------------------------------------------------------------------------------------
+	---------------------------------------------------
+	---------Get DISS Deviation Readout----------------
+	---------------------------------------------------
 	
 	-- The additive value should have been 5, but weird things were happening when it was added to 0
 	local lateralDeviationDigit1 = math.floor((mainPanelDevice:get_argument_value(799) * 10) + 0.0)
@@ -934,6 +962,109 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3002, lateralDeviationFull)
 	
 	
+	---------------------------------------------------
+	---------Get number for 1st ammo counter-----------
+	---------------------------------------------------
+	
+	local ammoCounter1_digit12 = (mainPanelDevice:get_argument_value(716) / 0.0526) * 1 -- This gets the raw number, eg 0.1234 and then uses the multiplier to change it to the appropiate number
+	ammoCounter1_digit12 = string.format("%.1d" , ammoCounter1_digit12) -- Trims the number
+	-- If the number is a single digit, add a leading zero
+	if #ammoCounter1_digit12 == 1 then
+		ammoCounter1_digit12 = string.format("0" .. ammoCounter1_digit12)
+	end
+	
+	local ammoCounter1_digit34 = (mainPanelDevice:get_argument_value(717) / 0.0526) * 5-- The 5 is for the different roller scale
+	ammoCounter1_digit34 = string.format("%.1d" , ammoCounter1_digit34)
+	if #ammoCounter1_digit34 == 1 then
+		ammoCounter1_digit34 = string.format("0" .. ammoCounter1_digit34)
+	end
+	ExportScript.Tools.SendData(3011, "12,7x4\n" .. ammoCounter1_digit12 .. ammoCounter1_digit34)
+	
+	
+	---------------------------------------------------
+	---------Get number for 2nd ammo counter-----------
+	---------------------------------------------------
+	
+	local ammoCounter2_digit12 = (mainPanelDevice:get_argument_value(720) / 0.0526) * 1
+	ammoCounter2_digit12 = string.format("%.1d" , ammoCounter2_digit12)
+
+	if #ammoCounter2_digit12 == 1 then
+		ammoCounter2_digit12 = string.format("0" .. ammoCounter2_digit12)
+	end
+	
+	local ammoCounter2_digit34 = (mainPanelDevice:get_argument_value(721) / 0.0526) * 5
+	ammoCounter2_digit34 = string.format("%.1d" , ammoCounter2_digit34)
+	if #ammoCounter2_digit34 == 1 then
+		ammoCounter2_digit34 = string.format("0" .. ammoCounter2_digit34)
+	end
+	ExportScript.Tools.SendData(3012, "12,7x5\n" .. ammoCounter2_digit12 .. ammoCounter2_digit34)
+	
+	
+	---------------------------------------------------
+	---------Get number for 3rd ammo counter-----------
+	---------------------------------------------------
+	
+	local ammoCounter3_digit12 = (mainPanelDevice:get_argument_value(724) / 0.0526) * 1
+	ammoCounter3_digit12 = string.format("%.1d" , ammoCounter3_digit12)
+	
+	if #ammoCounter3_digit12 == 1 then
+		ammoCounter3_digit12 = string.format("0" .. ammoCounter3_digit12)
+	end
+	
+	local ammoCounter3_digit34 = (mainPanelDevice:get_argument_value(725) / 0.0526) * 5
+	ammoCounter3_digit34 = string.format("%.1d" , ammoCounter3_digit34)
+	if #ammoCounter3_digit34 == 1 then
+		ammoCounter3_digit34 = string.format("0" .. ammoCounter3_digit34)
+	end
+	ExportScript.Tools.SendData(3013, "30x2\n" .. ammoCounter3_digit12 .. ammoCounter3_digit34)
+	
+	
+	---------------------------------------------------
+	---------Get number for 4th ammo counter-----------
+	---------------------------------------------------
+	
+	local ammoCounter4_digit12 = (mainPanelDevice:get_argument_value(728) / 0.0526) * 1
+	ammoCounter4_digit12 = string.format("%.1d" , ammoCounter4_digit12)
+	
+	if #ammoCounter4_digit12 == 1 then
+		ammoCounter4_digit12 = string.format("0" .. ammoCounter4_digit12)
+	end
+	
+	local ammoCounter4_digit34 = (mainPanelDevice:get_argument_value(729) / 0.0526) * 5
+	ammoCounter4_digit34 = string.format("%.1d" , ammoCounter4_digit34)
+	if #ammoCounter4_digit34 == 1 then
+		ammoCounter4_digit34 = string.format("0" .. ammoCounter4_digit34)
+	end
+	ExportScript.Tools.SendData(3014, "12,7x5\n" .. ammoCounter4_digit12 .. ammoCounter4_digit34)
+	
+	
+	---------------------------------------------------
+	---------Get number for 5th ammo counter-----------
+	---------------------------------------------------
+	--this one is optimized
+	--TODO: optimize the other 4
+	
+	local ammoCounter5_digit12 =  string.format("%.2d" ,(mainPanelDevice:get_argument_value(732) / 0.0526) * 1) -- 0.0526 is the multiplier
+	local ammoCounter5_digit34 = string.format("%.2d" ,(mainPanelDevice:get_argument_value(733) / 0.0526) * 5)
+
+	ExportScript.Tools.SendData(3015, "12,7x4\n" .. ammoCounter5_digit12 .. ammoCounter5_digit34)
+	
+	---------------------------------------
+	-----Get ARC-15 Freqs (pilot)----------
+	---------------------------------------
+	
+	local arc15Pilot_freq1digit1 = string.format("%.1d" ,(mainPanelDevice:get_argument_value(467) / 0.0588))
+	local arc15Pilot_freq1digit2 = string.format("%.1d" ,(mainPanelDevice:get_argument_value(468) / 0.1111) + 0.1) -- the 0.1 is for rounding
+	local arc15Pilot_freq1digit3 =  string.format("%0.1f" ,(mainPanelDevice:get_argument_value(469) * 10))
+
+	ExportScript.Tools.SendData(3020, "ARC CH2\n" .. arc15Pilot_freq1digit1 .. arc15Pilot_freq1digit2 .. arc15Pilot_freq1digit3)
+	
+	local arc15Pilot_freq2digit1 = string.format("%.1d" ,(mainPanelDevice:get_argument_value(464) / 0.0588))
+	local arc15Pilot_freq2digit2 = string.format("%.1d" ,(mainPanelDevice:get_argument_value(465) / 0.1111) + 0.1) -- the 0.1 is for rounding
+	local arc15Pilot_freq2digit3 =  string.format("%0.1f" ,(mainPanelDevice:get_argument_value(466) * 10))
+
+	ExportScript.Tools.SendData(3021, "ARC CH1\n" .. arc15Pilot_freq2digit1 .. arc15Pilot_freq2digit2 .. arc15Pilot_freq2digit3)
+	
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -948,42 +1079,7 @@ function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
 	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 ]]
-	------------------------------------------------------------------------------------------------------
-	-- The additive value should have been 5, but weird things were happening when it was added to 0
-	local courseAngleDigit1 = math.floor((mainPanelDevice:get_argument_value(811) * 10) + 0.4)
-	courseAngleDigit1 = string.format("%1d" , courseAngleDigit1)
 	
-	local courseAngleDigit2 = math.floor((mainPanelDevice:get_argument_value(812) * 10) + 0.4)
-	courseAngleDigit2 = string.format("%1d" , courseAngleDigit2)
-	
-	local courseAngleDigit3 = math.floor((mainPanelDevice:get_argument_value(813) * 10) + 0.4)
-	courseAngleDigit3 = string.format("%1d" , courseAngleDigit3)
-	
-	local courseAngleDigit4 = math.floor((mainPanelDevice:get_argument_value(814) * 10) + 0.4)
-	courseAngleDigit4 = string.format("%1d" , courseAngleDigit4)
-
-	-- combine the digits into a single string
-	courseAngleFull = string.format(courseAngleDigit1 .. courseAngleDigit2 .. courseAngleDigit3 .. "." .. courseAngleDigit4)
-	
-	-- Pick a number to contain the information
-	ExportScript.Tools.SendData(3000, courseAngleFull)
-	------------------------------------------------------------------------------------------------------
-	
-	-- The additive value should have been 5, but weird things were happening when it was added to 0
-	local distanceKmDigit1 = math.floor((mainPanelDevice:get_argument_value(806) * 10) + 0.4)
-	distanceKmDigit1 = string.format("%1d" , distanceKmDigit1)
-	
-	local distanceKmDigit2 = math.floor((mainPanelDevice:get_argument_value(807) * 10) + 0.4)
-	distanceKmDigit2 = string.format("%1d" , distanceKmDigit2)
-	
-	local distanceKmDigit3 = math.floor((mainPanelDevice:get_argument_value(808) * 10) + 0.4)
-	distanceKmDigit3 = string.format("%1d" , distanceKmDigit3)
-
-	-- combine the digits into a single string
-	distanceKmFull = string.format(distanceKmDigit1 .. distanceKmDigit2 .. distanceKmDigit3)
-	
-	-- Pick a number to contain the information
-	ExportScript.Tools.SendData(3001, distanceKmFull)
 end
 
 -----------------------------------------------------
