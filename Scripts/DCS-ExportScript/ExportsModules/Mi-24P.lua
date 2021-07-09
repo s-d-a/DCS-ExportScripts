@@ -4,9 +4,7 @@
 -- TODO:
 -- Split the devices into headered sections
 -- Make sure the numbers are formated correctly
--- Split the [DevoceID]s into their proper ConfigEveryFrameArguments vs ConfigArguments
--- Test
--- Make some cool functions
+-- Split the [DeviceID]s into their proper ConfigEveryFrameArguments vs ConfigArguments
 
 ExportScript.FoundDCSModule = true
 ExportScript.Version.Mi24P = "1.2.1"
@@ -315,7 +313,7 @@ ExportScript.ConfigEveryFrameArguments =
 	-- ASO 2V
 	[1008] = "%0.1f",	--	Interval	ASO2V-INTERV-PTR
 	[965] = "%0.1f",	--	Serie	ASO2V-SERIES-PTR
-	[968] = "%0.1f",	--	Launch Coountermeasures	ASO2V-RESET-PTR
+	[968] = "%0.1f",	--	Launch Countermeasures	ASO2V-RESET-PTR
 	[969] = "%0.1f",	--	Left Side	ASO2V-LEFT-PTR
 	[970] = "%0.1f",	--	Right Side	ASO2V-RIGHT-PTR
 	[971] = "%0.1f",	--	Set I/II/III	ASO2V-SETS-PTR
@@ -1065,6 +1063,20 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 
 	ExportScript.Tools.SendData(3021, "ARC CH1\n" .. arc15Pilot_freq2digit1 .. arc15Pilot_freq2digit2 .. arc15Pilot_freq2digit3)
 	
+	
+	-------------------------------------
+	-----Hind Flare and Chaff Counts-----
+	-------------------------------------
+	
+	local hindKneeboardInfo = ExportScript.Tools.split(list_indication(8), "%c")--this contains the formated table of the kneeboard
+	
+	local txt_FLARES_Count = hindKneeboardInfo[18]
+	local txt_CHAFFS_Count = hindKneeboardInfo[24]
+	
+	ExportScript.Tools.SendData(3022, string.format(txt_FLARES_Count))
+	ExportScript.Tools.SendData(3023, string.format(txt_CHAFFS_Count))
+	ExportScript.Tools.SendData(3024, string.format("FLARE\n" .. txt_FLARES_Count))
+	ExportScript.Tools.SendData(3025, string.format("CHAFF\n" .. txt_CHAFFS_Count))
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
