@@ -6,6 +6,15 @@
 -- Make sure the numbers are formated correctly
 -- Split the [DeviceID]s into their proper ConfigEveryFrameArguments vs ConfigArguments
 
+-- Ideas
+-- Altimeter warning 284?
+-- Airspeed Warning
+-- Course Readout
+-- Course over ground readout
+-- VRS Warining. Airspeed 50, VSI 3-5, and 
+-- Airspeed Red Out at 350 kmph [790]
+
+
 ExportScript.FoundDCSModule = true
 ExportScript.Version.Mi24P = "1.2.1"
 
@@ -22,6 +31,18 @@ ExportScript.ConfigEveryFrameArguments =
 	  [5] = "%.f",   <- floating point number rounded to a decimal number
 ]]
 
+	-- Random Unsorted
+	
+	[19] = "%.4f",			--	Pilot Altimeter Thousands 0 = 0, 0.5 = 500, 1.0 = 0
+	[20] = "%.4f",			--	Pilot Altimeter Hundreds 0 = 0, 0.5 = 500, 1.0 = 0
+	[25] = "%.4f",			--	Pilot HSI 0 = 0, 0.5 = 180, 1.0 = 360
+	[27] = "%.4f",			--	Pilot HSI Needle 2 0 = 0, 0.5 = 180, 1.0 = 360
+	[28] = "%.4f",			--	Pilot HSI Needle 1 0 = 0, 0.5 = 180, 1.0 = 360
+	[40] = "%.4f",			--	Pilot ENG 1 RPM 0 = 0%, 0.5 = 180, 1.0 = 110%
+	[41] = "%.4f",			--	Pilot ENG 2 RPM 0 = 0%, 0.5 = 180, 1.0 = 110%
+	[42] = "%.4f",			--	Pilot ROTOR 1 RPM 0 = 0%, 0.5 = 180, 1.0 = 110%
+	[95] = "%.4f",			--	Pilot VSI Needle -1 = -30, 1 = 30
+	
 	-- Lights
 	[11] = "%.4f",			--	Left Gyro Light
 	[13] = "%.4f",			--	Right Gyro Light
@@ -103,7 +124,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[279] = "%.4f",			--	1st SAS On Light Brightness	
 	[280] = "%.4f",			--	2st SAS Off Light Brightness
 	[281] = "%.4f",			--	2st SAS On Light Brightness	
-	[284] = "%.4f",			--	Altimeter Yellow button Brightness
+	[284] = "%.4f",			--	Radar Altimeter Yellow button Brightness
 	[291] = "%.4f",			--	yellow warning above the gyro red warnings
 	
 	[293] = "%.4f",			--	3st SAS Off Light Brightness
@@ -205,8 +226,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[27] = "%.4f",			--	HSI Course Needle 0 to 1
 	[28] = "%.4f",			--	Navaid Bearing Needle 0 to 1
 	
-	[32] = "%.4f",			--	Rad Alt needle 0 to 1
-	[33] = "%.4f",			--	Rad Alt bug 0 to 1
+	[32] = "%.4f",			--	Radar Altimeter needle 0 to 1
+	[33] = "%.4f",			--	Radar Altimeter bug 0 to 1
 	[36] = "%.4f",			--	Blade pitch needle 0 to 1
 	
 	[37] = "%.4f",			--	Engine Left Power 0 to 1
@@ -243,7 +264,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[190] = "%.4f",			--	Right quarterpanel Engene Needles
 	
 	[525] = "%.4f",			--	Fuel Indficator needle
-	[790] = "%.4f",			--	Altimeter Indficator needle -1 to 1. to almost goes around twice
+	[790] = "%.4f",			--	Airspeed Indficator needle -1 to 1. to almost goes around twice
 	[791] = "%.4f",			--	Drift Left/Right needle
 	
 	[828] = "%.4f",			--	Doppler Hover Altitude
@@ -365,6 +386,7 @@ ExportScript.ConfigEveryFrameArguments =
 	
 	[788] = "%.4f",		--	Operator Baro Pressure Knob	ALTIMETER-KNOB-OP-PTR
 	[18] = "%.4f",		--	Baro Pressure Knob	ALTIMETER-KNOB-PTR
+	[21] = "%.4f",		--	Baro Pressure Kollsman Window 0 = 670, 1 = 790
 	
 	[687] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-OP-PTR
 	[694] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-OP-PTR
@@ -1077,6 +1099,203 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3023, string.format(txt_CHAFFS_Count))
 	ExportScript.Tools.SendData(3024, string.format("FLARE\n" .. txt_FLARES_Count))
 	ExportScript.Tools.SendData(3025, string.format("CHAFF\n" .. txt_CHAFFS_Count))
+	
+	-------------------
+	-----Hind mike-----
+	-------------------
+	
+	-- Aka (Streamdeck Elevation Navigation Pressure Altimeter Instrument) SENPAI
+	-- Aka (STANDARD UNIT GRAPHICAL OVERLAY INTERPRETATION) SUGOI
+	-- Aka (Local Elevation and Weather Dataconverter) LEWD
+	-- Aka (Metric Imperial Navigation Automated System Aid Nonsense) MINA-SAN
+	
+	--[[
+	Goal: Create a "universal" profile that displays the following for every module with
+	minimal or no Stream Deck reconfiguration. Contains 4 tiles with three conversions each.
+	- Pressure
+		- inHg
+		- Millibars
+		- mmHg
+	- Altitude (MSL)
+		- feet
+		- meters
+		- kilometers
+	- Altitude (AGL)
+		- feet
+		- meters
+		- kilometers
+	- Airspeed
+		- Knots
+		- kilometers per hr
+		- Mach (airframe dependent)
+	]]
+	
+	----------------------------
+	-- Get Hind Pressure Info --
+	----------------------------
+	
+	-- Necessary info
+	-- [21] = "%.4f",		--	Baro Pressure Kollsman Window 0 = 670, 1 = 790
+	
+	--[[
+	range is 120 units
+	magic formula is =(value*120)+670
+	0 		= 680
+	0.5000	= 
+	1 		= 790
+	]]
+	local pressure_mi24p_mmHg = (mainPanelDevice:get_argument_value(21) * 110) + 680 -- mmHg
+	pressure_mi24p_mmHg_display = string.format("%.f", pressure_mi24p_mmHg)
+	pressure_mi24p_mmHg_displayWorded = string.format(pressure_mi24p_mmHg_display .. " mmHg")
+	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_mmHg_display))
+	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_mmHg_displayWorded))
+	
+	-- Convert to inHg
+	local pressure_mi24p_inhg = pressure_mi24p_mmHg/25.4
+	pressure_mi24p_inhg_display = string.format("%0.2f", pressure_mi24p_inhg)
+	pressure_mi24p_inhg_displayWorded = string.format(pressure_mi24p_inhg_display .. " inHg")
+	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_inhg_display))
+	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_inhg_displayWorded))
+	
+	-- Convert to Millibar
+	local pressure_mi24p_mbar = pressure_mi24p_mmHg * 1.3333
+	pressure_mi24p_mbar_display = string.format("%.f", pressure_mi24p_mbar)
+	pressure_mi24p_mbar_displayWorded = string.format(pressure_mi24p_mbar_display .. " mbar")
+	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_mbar_display))
+	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_mbar_displayWorded))
+	
+	-- Combined
+	ExportScript.Tools.SendData(44224, string.format("Pressure\n" .. 
+													pressure_mi24p_mmHg_displayWorded .. "\n" ..
+													pressure_mi24p_inhg_displayWorded .. "\n" ..
+													pressure_mi24p_mbar_displayWorded))
+	
+	
+	
+	
+	----------------------------------
+	-- Get Hind Altitude (MSL) Info --
+	----------------------------------
+	
+	-- Necessary info
+	-- [19] = "%.4f",			--	Pilot Altimeter Thousands 0 = 0, 0.5 = 500, 1.0 = 0
+	--[[
+	thous:
+	0 = 0.0000
+	0.5 = 5000
+	1.0 = 0.0000
+	]]
+	
+	local altMsl_mi24p_meters = string.format ( "%1d", (mainPanelDevice:get_argument_value(19) * 10000)) -- consider changing to every 10s of meters
+	
+	altMsl_mi24p_meters_displayWorded = string.format(altMsl_mi24p_meters .. " m")
+	-- ExportScript.Tools.SendData(xxxxx, string.format(altMsl_mi24p_meters))
+	-- ExportScript.Tools.SendData(xxxxx, string.format(altMsl_mi24p_meters_displayWorded))
+	
+	altMsl_mi24p_feet = string.format("%.f", altMsl_mi24p_meters * 3.281)
+	altMsl_mi24p_feet_displayWorded = string.format(altMsl_mi24p_feet .. " ft")
+	-- ExportScript.Tools.SendData(xxxxx, string.format(altMsl_mi24p_feet_displayWorded))
+	
+	altMsl_mi24p_km = string.format("%.2f", altMsl_mi24p_meters / 1000)
+	altMsl_mi24p_km_displayWorded = string.format(altMsl_mi24p_km .. " km")
+	-- ExportScript.Tools.SendData(xxxxx, string.format(altMsl_mi24p_km_displayWorded))
+	
+	ExportScript.Tools.SendData(44225, string.format("Alt (MSL)\n" .. 
+													altMsl_mi24p_meters_displayWorded .. "\n" ..
+													altMsl_mi24p_feet_displayWorded .. "\n" ..
+													altMsl_mi24p_km_displayWorded))
+	
+	
+	----------------------------------
+	-- Get Hind Altitude (AGL) Info --
+	----------------------------------
+	
+	-- Necessary info
+	-- [32] = "%.4f",			--	Radar Altimeter needle 0 to 1
+	
+	local altAgl_mi24p_meters = (mainPanelDevice:get_argument_value(32))
+	
+	--the following gets the true value of the rad alt
+	--the equations were calculated using and excel sheet and observation
+	if altAgl_mi24p_meters < 0.4480 then
+		altAgl_mi24p_meters = (224.58 * (altAgl_mi24p_meters)) - 0.5546
+	else
+		altAgl_mi24p_meters = (1360.5 * (altAgl_mi24p_meters)) - 508.8
+	end
+	
+	local altAgl_mi24p_meters_display = string.format("%.f",altAgl_mi24p_meters)
+	local altAgl_mi24p_meters_displayWorded = string.format(altAgl_mi24p_meters_display .. " m")
+	
+	-- ExportScript.Tools.SendData(xxxxx, string.format(altAgl_mi24p_meters_displayWorded))
+	
+	-- Feet
+	local altAgl_mi24p_feet = altAgl_mi24p_meters * 3.281
+	local altAgl_mi24p_feet_display = string.format("%.f",altAgl_mi24p_feet)
+	local altAgl_mi24p_feet_displayWorded = string.format(altAgl_mi24p_feet_display .. " ft")
+	-- ExportScript.Tools.SendData(xxxxx, string.format(altAgl_mi24p_feet_displayWorded))
+	
+	-- Km
+	local altAgl_mi24p_km = altAgl_mi24p_meters / 1000
+	local altAgl_mi24p_km_display = string.format("%.2f",altAgl_mi24p_km)
+	local altAgl_mi24p_km_displayWorded = string.format(altAgl_mi24p_km_display .. " km")
+	-- ExportScript.Tools.SendData(xxxxx, string.format(altAgl_mi24p_km_displayWorded))
+	
+	-- ExportScript.Tools.SendData(44250, string.format(altAgl_mi24p_meters_display))
+	-- ExportScript.Tools.SendData(44251, string.format(altAgl_mi24p_meters_displayWorded))
+	-- ExportScript.Tools.SendData(44252, string.format("%.3f",mainPanelDevice:get_argument_value(32)))
+	
+	ExportScript.Tools.SendData(44226, string.format("Alt (AGL)\n" .. 
+													altAgl_mi24p_meters_displayWorded .. "\n" ..
+													altAgl_mi24p_feet_displayWorded .. "\n" ..
+													altAgl_mi24p_km_displayWorded))
+	
+	----------------------------
+	-- Get Hind Airspeed Info --
+	----------------------------
+	
+	--[[
+	0.030 = 50 kmph
+	change at = 100
+	change at = 400
+	0.989 = 450
+	]]
+	
+	local airspeed_mi24p_kmph = (mainPanelDevice:get_argument_value(790))
+	
+	local airspeed_mi24p_kmph_display = airspeed_mi24p_kmph
+	
+	if airspeed_mi24p_kmph < 0.112 then
+		airspeed_mi24p_kmph_display = (609.76 * airspeed_mi24p_kmph)  + 31.707
+	else
+		airspeed_mi24p_kmph_display = (427.28 * airspeed_mi24p_kmph) + 51.842
+	end
+	-- Really weird stuff happens above about 400. but that shouldnt be a problem, right?
+	-- you could maybe make an equation at 0.8435 with (427.28 * airspeed_mi24p_kmph) + 31.842, maybe
+	airspeed_mi24p_kmph_display = string.format("%.f",airspeed_mi24p_kmph_display)
+	
+	local airspeed_mi24p_kmph_displayWorded = string.format(airspeed_mi24p_kmph_display .. " km/h")
+	
+	--ExportScript.Tools.SendData(44228, string.format(airspeed_mi24p_kmph_displayWorded))
+	
+	local airspeed_mi24p_kts_display = string.format("%.f",airspeed_mi24p_kmph_display / 1.852)
+	local airspeed_mi24p_kts_displayWorded = string.format(airspeed_mi24p_kts_display .. " kts")
+	--ExportScript.Tools.SendData(44228, string.format(airspeed_mi24p_kts_displayWorded))
+	
+	--No mach for this aircraft
+	
+	ExportScript.Tools.SendData(44227, string.format("Airspeed\n" .. 
+													airspeed_mi24p_kmph_displayWorded .. "\n" ..
+													airspeed_mi24p_kts_displayWorded .. "\n" .. 
+													" "))
+	
+	--Extras
+	-- Image change for airspeed
+	ExportScript.Tools.SendData(44228, string.format("%.f",airspeed_mi24p_kmph_display)) 
+	
+	-- Image change for radar altimeter
+	-- [284] = "%.4f",			--	Altimeter Yellow button Brightness
+	ExportScript.Tools.SendData(44229, string.format("%.2f",mainPanelDevice:get_argument_value(284))) 
+	
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
