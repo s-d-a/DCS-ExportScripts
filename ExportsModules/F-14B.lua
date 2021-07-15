@@ -429,7 +429,7 @@ ExportScript.ConfigEveryFrameArguments =
 		[0]  =  "%.4f",   -- V/UHF 2 TEST button displays 888.888 if good
 		[0]  =  "%.4f",   -- V/UHF 2 BRT controls display brightness
 		
-		[353]  =  "%0.1f",   -- VHF/UHF ARC-182 Freq Mode (Something|Something|GUARD|PRESET|Something|Something) -- Bailey
+		[353]  =  "%0.1f",   -- VHF/UHF ARC-182 Freq Mode (UHF GUARD|V/UHF|V/UHF GUARD|PRESET|V/UHF|LOAD?) -- Bailey
 
 		-- Bearing Distance Heading Indicator BDHI
 		[0]  =  "%.4f",   -- No. 2 Bearing Pointer magnetic course to TACAN station
@@ -1028,7 +1028,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	-- end A10
 
 	-----------------------------------
-	-----Get F14 Radio Frequencies-----
+	-----Get F14 Radio Frequencies----- Bailey
 	-----------------------------------
 	
 	-----UHF-----

@@ -241,7 +241,7 @@ ExportScript.ConfigArguments =
 	[208] = "%1d",	-- Restart
 	[203] = "%1d",	-- Main Electric Power
 	[207] = "%1d",	-- Generator
-	[209] = "%1d",	-- Master Mode Selector
+	[209] = "%0.1f",-- Master Mode Selector Bailey
 	[446] = "%1d",	-- Master Caution Reset
 	[323] = "%1d",	-- Slav SI
 	[324] = "%1d",	-- HÖJD CISI
@@ -420,6 +420,9 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	local lKHz = string.sub(string.format("%0.3f", string.format("%.3f", lFR22Radio:get_frequency()/1000000) - lMHz), 3)
 	ExportScript.Tools.SendData(2501, lMHz) -- slice frequency MHz
 	ExportScript.Tools.SendData(2502, lKHz) -- slice frequency KHz
+	
+	local TotalMhz = string.format(lMHz .. ".".. lKHz)
+	ExportScript.Tools.SendData(2503, TotalMhz) -- Total Frequency Bailey
 
 	-- 1,2,3 Lamps
 	--[405] = "%.1f",	-- Afterburner zone indicator 0.0=off, >= 0.3=1, >= 0.6=2, >= 0.9=3
@@ -431,7 +434,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2512, 1) -- Afterburner 3
 	elseif lAfterburnerZoneIndicator >= 0.6 then
 		ExportScript.Tools.SendData(2510, 1)
-		ExportScript.Tools.SendData(2511, 2)
+		ExportScript.Tools.SendData(2511, 1)--ExportScript.Tools.SendDataDAC(2511, 2)
 		ExportScript.Tools.SendData(2512, 0)
 	elseif lAfterburnerZoneIndicator >= 0.3 then
 		ExportScript.Tools.SendData(2510, 1)
@@ -446,6 +449,13 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- Cockpit Light
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {392, 393, 394})
 	-- Panel Lights, Flood Lights, Instrument Lights
+	
+	--AoA in Units Bailey
+	local AoaUnitValue = 30 * mainPanelDevice:get_argument_value(120)
+	AoaUnitValue = string.format("%0.1f", AoaUnitValue)
+	AoaUnitValue= string.format("AoA" .. "\n" .. AoaUnitValue)
+	ExportScript.Tools.SendData(2520, AoaUnitValue) -- AoA in Units
+	
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -468,6 +478,9 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	local lKHz = string.sub(string.format("%0.3f", string.format("%.3f", lFR22Radio:get_frequency()/1000000) - lMHz), 3)
 	ExportScript.Tools.SendData(2501, lMHz) -- slice frequency MHz
 	ExportScript.Tools.SendData(2502, lKHz) -- slice frequency KHz
+	
+	local TotalMhz = string.format(lMHz .. ".".. lKHz)
+	ExportScript.Tools.SendData(2503, TotalMhz) -- Total Frequency Bailey
 
 	-- 1,2,3 Lamps
 	--[405] = "%.1f",	-- Afterburner zone indicator 0.0=off, >= 0.3=1, >= 0.6=2, >= 0.9=3
@@ -479,7 +492,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendDataDAC(2512, 1) -- Afterburner 3
 	elseif lAfterburnerZoneIndicator >= 0.6 then
 		ExportScript.Tools.SendDataDAC(2510, 1)
-		ExportScript.Tools.SendDataDAC(2511, 2)
+		ExportScript.Tools.SendDataDAC(2511, 1)--ExportScript.Tools.SendDataDAC(2511, 2)
 		ExportScript.Tools.SendDataDAC(2512, 0)
 	elseif lAfterburnerZoneIndicator >= 0.3 then
 		ExportScript.Tools.SendDataDAC(2510, 1)
@@ -490,6 +503,12 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendDataDAC(2511, 0)
 		ExportScript.Tools.SendDataDAC(2512, 0)
 	end
+	
+	--AoA in Units Bailey
+	local AoaUnitValue = 30 * mainPanelDevice:get_argument_value(120)
+	AoaUnitValue = string.format("%0.1f", AoaUnitValue)
+	AoaUnitValue= string.format("AoA" .. "\n" .. AoaUnitValue)
+	ExportScript.Tools.SendData(2520, AoaUnitValue) -- AoA in Units
 
 	--=====================================================================================
 	--[[

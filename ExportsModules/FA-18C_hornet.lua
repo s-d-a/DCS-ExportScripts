@@ -34,7 +34,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[242] = "%.4f",   -- HydIndBrake {0.0, 1000.0, 2000.0, 3000.0, 4000.0, 5000.0}{0.0, 0.036, 0.338, 0.636, 0.924, 1.0}
 	-- Gear Interface
 	[228] = "%.4f",   -- EmergGearDownHandle
-	[240] = "%.4f",   -- EmergParkBrakeHandle
+	-- [240] = "%.4f",   -- EmergParkBrakeHandle delete
 	-- Instruments --------------------------
     -- Standby Pressure Altimeter AAU-52/A
 	[218] = "%.4f",   -- Altimeter_100_footPtr {0.0, 1000.0} {0.0, 1.0}

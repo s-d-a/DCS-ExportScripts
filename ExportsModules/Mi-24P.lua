@@ -883,6 +883,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 ]]
 
+	
+	
 	---------------------------------------------------
 	---------Get DISS Angle Readout--------------------
 	---------------------------------------------------
@@ -918,9 +920,11 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	-- Pick a number to contain the information
 	ExportScript.Tools.SendData(3000, courseAngleFull)
 	
+	
 	---------------------------------------------------
 	---------Get DISS Distance Readout-----------------
 	---------------------------------------------------
+	
 	-- The additive value should have been 5, but weird things were happening when it was added to 0
 	local distanceKmDigit1 = math.floor((mainPanelDevice:get_argument_value(806) * 10) + 0.0)
 	distanceKmDigit1 = string.format("%1d" , distanceKmDigit1)
@@ -948,6 +952,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	-- Pick a number to contain the information
 	ExportScript.Tools.SendData(3001, distanceKmFull)
+	
 	
 	---------------------------------------------------
 	---------Get DISS Deviation Readout----------------
@@ -982,9 +987,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3002, lateralDeviationFull)
 	
 	
-	---------------------------------------------------
-	---------Get number for 1st ammo counter-----------
-	---------------------------------------------------
+	----------------------------------
+	---------Ammo Counter 1-----------
+	----------------------------------
 	
 	local ammoCounter1_digit12 = (mainPanelDevice:get_argument_value(716) / 0.0526) * 1 -- This gets the raw number, eg 0.1234 and then uses the multiplier to change it to the appropiate number
 	ammoCounter1_digit12 = string.format("%.1d" , ammoCounter1_digit12) -- Trims the number
@@ -1001,9 +1006,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3011, "12,7x4\n" .. ammoCounter1_digit12 .. ammoCounter1_digit34)
 	
 	
-	---------------------------------------------------
-	---------Get number for 2nd ammo counter-----------
-	---------------------------------------------------
+	----------------------------------
+	---------Ammo Counter 2-----------
+	----------------------------------
 	
 	local ammoCounter2_digit12 = (mainPanelDevice:get_argument_value(720) / 0.0526) * 1
 	ammoCounter2_digit12 = string.format("%.1d" , ammoCounter2_digit12)
@@ -1020,9 +1025,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3012, "12,7x5\n" .. ammoCounter2_digit12 .. ammoCounter2_digit34)
 	
 	
-	---------------------------------------------------
-	---------Get number for 3rd ammo counter-----------
-	---------------------------------------------------
+	----------------------------------
+	---------Ammo Counter 3-----------
+	----------------------------------
 	
 	local ammoCounter3_digit12 = (mainPanelDevice:get_argument_value(724) / 0.0526) * 1
 	ammoCounter3_digit12 = string.format("%.1d" , ammoCounter3_digit12)
@@ -1039,9 +1044,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3013, "30x2\n" .. ammoCounter3_digit12 .. ammoCounter3_digit34)
 	
 	
-	---------------------------------------------------
-	---------Get number for 4th ammo counter-----------
-	---------------------------------------------------
+	----------------------------------
+	---------Ammo Counter 4-----------
+	----------------------------------
 	
 	local ammoCounter4_digit12 = (mainPanelDevice:get_argument_value(728) / 0.0526) * 1
 	ammoCounter4_digit12 = string.format("%.1d" , ammoCounter4_digit12)
@@ -1058,16 +1063,17 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3014, "12,7x5\n" .. ammoCounter4_digit12 .. ammoCounter4_digit34)
 	
 	
-	---------------------------------------------------
-	---------Get number for 5th ammo counter-----------
-	---------------------------------------------------
+	----------------------------------
+	---------Ammo Counter 5-----------
+	----------------------------------
 	--this one is optimized
-	--TODO: optimize the other 4
+	--TODO: optimize the other 4, maybe
 	
 	local ammoCounter5_digit12 =  string.format("%.2d" ,(mainPanelDevice:get_argument_value(732) / 0.0526) * 1) -- 0.0526 is the multiplier
 	local ammoCounter5_digit34 = string.format("%.2d" ,(mainPanelDevice:get_argument_value(733) / 0.0526) * 5)
 
 	ExportScript.Tools.SendData(3015, "12,7x4\n" .. ammoCounter5_digit12 .. ammoCounter5_digit34)
+	
 	
 	---------------------------------------
 	-----Get ARC-15 Freqs (pilot)----------
@@ -1100,16 +1106,16 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3024, string.format("FLARE\n" .. txt_FLARES_Count))
 	ExportScript.Tools.SendData(3025, string.format("CHAFF\n" .. txt_CHAFFS_Count))
 	
+	
 	-------------------
 	-----Hind mike-----
 	-------------------
-	
+	--[[
 	-- Aka (Streamdeck Elevation Navigation Pressure Altimeter Instrument) SENPAI
 	-- Aka (STANDARD UNIT GRAPHICAL OVERLAY INTERPRETATION) SUGOI
 	-- Aka (Local Elevation and Weather Dataconverter) LEWD
 	-- Aka (Metric Imperial Navigation Automated System Aid Nonsense) MINA-SAN
 	
-	--[[
 	Goal: Create a "universal" profile that displays the following for every module with
 	minimal or no Stream Deck reconfiguration. Contains 4 tiles with three conversions each.
 	- Pressure
@@ -1128,49 +1134,39 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		- Knots
 		- kilometers per hr
 		- Mach (airframe dependent)
+		
+	-- Export number format
+	44224 = Pressure readouts
+	44225 = Pressure readout color change
+	44226 = Alt(msl) readouts
+	44227 = Alt(msl) readout color change
+	44228 = Alt(agl) readouts
+	44229 = Alt(agl) readout color change
+	44230 = airspeed readouts
+	44231 = airspeed readout color change
 	]]
+	
 	
 	----------------------------
 	-- Get Hind Pressure Info --
 	----------------------------
 	
 	-- Necessary info
-	-- [21] = "%.4f",		--	Baro Pressure Kollsman Window 0 = 670, 1 = 790
+	-- [21] = "%.4f",		--	Baro Pressure Kollsman Window 0 = 680, 1 = 790
+
 	
-	--[[
-	range is 120 units
-	magic formula is =(value*120)+670
-	0 		= 680
-	0.5000	= 
-	1 		= 790
-	]]
-	local pressure_mi24p_mmHg = (mainPanelDevice:get_argument_value(21) * 110) + 680 -- mmHg
-	pressure_mi24p_mmHg_display = string.format("%.f", pressure_mi24p_mmHg)
-	pressure_mi24p_mmHg_displayWorded = string.format(pressure_mi24p_mmHg_display .. " mmHg")
-	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_mmHg_display))
-	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_mmHg_displayWorded))
+	local pressure_mi24p_mmHg = (mainPanelDevice:get_argument_value(21) * 110) + 680 -- Default is mmHg
+	pressure_mi24p_mmHg = string.format("%.f", pressure_mi24p_mmHg)
 	
-	-- Convert to inHg
-	local pressure_mi24p_inhg = pressure_mi24p_mmHg/25.4
-	pressure_mi24p_inhg_display = string.format("%0.2f", pressure_mi24p_inhg)
-	pressure_mi24p_inhg_displayWorded = string.format(pressure_mi24p_inhg_display .. " inHg")
-	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_inhg_display))
-	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_inhg_displayWorded))
+	local pressure_mi24p_inhg = string.format("%0.2f",pressure_mi24p_mmHg/25.4) -- Convert to inHg
 	
-	-- Convert to Millibar
-	local pressure_mi24p_mbar = pressure_mi24p_mmHg * 1.3333
-	pressure_mi24p_mbar_display = string.format("%.f", pressure_mi24p_mbar)
-	pressure_mi24p_mbar_displayWorded = string.format(pressure_mi24p_mbar_display .. " mbar")
-	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_mbar_display))
-	-- ExportScript.Tools.SendData(xxxxx, string.format(pressure_mi24p_mbar_displayWorded))
+	local pressure_mi24p_mbar = string.format("%.f",pressure_mi24p_mmHg * 1.3333) -- Convert to Millibar
 	
 	-- Combined
 	ExportScript.Tools.SendData(44224, string.format("Pressure\n" .. 
-													pressure_mi24p_mmHg_displayWorded .. "\n" ..
-													pressure_mi24p_inhg_displayWorded .. "\n" ..
-													pressure_mi24p_mbar_displayWorded))
-	
-	
+													pressure_mi24p_mmHg .. " mmHg" .. "\n" ..
+													pressure_mi24p_inhg .. " inHg" .. "\n" ..
+													pressure_mi24p_mbar .. " mbar"))
 	
 	
 	----------------------------------
@@ -1179,31 +1175,19 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	-- Necessary info
 	-- [19] = "%.4f",			--	Pilot Altimeter Thousands 0 = 0, 0.5 = 500, 1.0 = 0
-	--[[
-	thous:
-	0 = 0.0000
-	0.5 = 5000
-	1.0 = 0.0000
-	]]
 	
+	-- Default is meters
 	local altMsl_mi24p_meters = string.format ( "%1d", (mainPanelDevice:get_argument_value(19) * 10000)) -- consider changing to every 10s of meters
 	
-	altMsl_mi24p_meters_displayWorded = string.format(altMsl_mi24p_meters .. " m")
-	-- ExportScript.Tools.SendData(xxxxx, string.format(altMsl_mi24p_meters))
-	-- ExportScript.Tools.SendData(xxxxx, string.format(altMsl_mi24p_meters_displayWorded))
+	local altMsl_mi24p_feet = string.format("%.f", altMsl_mi24p_meters * 3.281) -- Convert to feet
 	
-	altMsl_mi24p_feet = string.format("%.f", altMsl_mi24p_meters * 3.281)
-	altMsl_mi24p_feet_displayWorded = string.format(altMsl_mi24p_feet .. " ft")
-	-- ExportScript.Tools.SendData(xxxxx, string.format(altMsl_mi24p_feet_displayWorded))
-	
-	altMsl_mi24p_km = string.format("%.2f", altMsl_mi24p_meters / 1000)
-	altMsl_mi24p_km_displayWorded = string.format(altMsl_mi24p_km .. " km")
-	-- ExportScript.Tools.SendData(xxxxx, string.format(altMsl_mi24p_km_displayWorded))
-	
-	ExportScript.Tools.SendData(44225, string.format("Alt (MSL)\n" .. 
-													altMsl_mi24p_meters_displayWorded .. "\n" ..
-													altMsl_mi24p_feet_displayWorded .. "\n" ..
-													altMsl_mi24p_km_displayWorded))
+	local altMsl_mi24p_km = string.format("%.2f", altMsl_mi24p_meters / 1000) -- Convert to km
+
+	-- Combined
+	ExportScript.Tools.SendData(44226, string.format("Alt (MSL)\n" .. 
+													altMsl_mi24p_meters .. " m" .. "\n" ..
+													altMsl_mi24p_feet .. " ft" .. "\n" ..
+													altMsl_mi24p_km .. " km"))
 	
 	
 	----------------------------------
@@ -1223,31 +1207,18 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		altAgl_mi24p_meters = (1360.5 * (altAgl_mi24p_meters)) - 508.8
 	end
 	
-	local altAgl_mi24p_meters_display = string.format("%.f",altAgl_mi24p_meters)
-	local altAgl_mi24p_meters_displayWorded = string.format(altAgl_mi24p_meters_display .. " m")
+	local altAgl_mi24p_meters_display = string.format("%.f",altAgl_mi24p_meters) -- Meters
 	
-	-- ExportScript.Tools.SendData(xxxxx, string.format(altAgl_mi24p_meters_displayWorded))
+	local altAgl_mi24p_feet = string.format("%.f", altAgl_mi24p_meters * 3.281) -- Feet
 	
-	-- Feet
-	local altAgl_mi24p_feet = altAgl_mi24p_meters * 3.281
-	local altAgl_mi24p_feet_display = string.format("%.f",altAgl_mi24p_feet)
-	local altAgl_mi24p_feet_displayWorded = string.format(altAgl_mi24p_feet_display .. " ft")
-	-- ExportScript.Tools.SendData(xxxxx, string.format(altAgl_mi24p_feet_displayWorded))
+	local altAgl_mi24p_km = string.format("%.2f",altAgl_mi24p_meters / 1000) -- Km
 	
-	-- Km
-	local altAgl_mi24p_km = altAgl_mi24p_meters / 1000
-	local altAgl_mi24p_km_display = string.format("%.2f",altAgl_mi24p_km)
-	local altAgl_mi24p_km_displayWorded = string.format(altAgl_mi24p_km_display .. " km")
-	-- ExportScript.Tools.SendData(xxxxx, string.format(altAgl_mi24p_km_displayWorded))
+	-- Combined
+	ExportScript.Tools.SendData(44228, string.format("Alt (AGL)\n" .. 
+													altAgl_mi24p_meters_display .. " m" .. "\n" ..
+													altAgl_mi24p_feet .. " ft" .. "\n" ..
+													altAgl_mi24p_km .. " km"))
 	
-	-- ExportScript.Tools.SendData(44250, string.format(altAgl_mi24p_meters_display))
-	-- ExportScript.Tools.SendData(44251, string.format(altAgl_mi24p_meters_displayWorded))
-	-- ExportScript.Tools.SendData(44252, string.format("%.3f",mainPanelDevice:get_argument_value(32)))
-	
-	ExportScript.Tools.SendData(44226, string.format("Alt (AGL)\n" .. 
-													altAgl_mi24p_meters_displayWorded .. "\n" ..
-													altAgl_mi24p_feet_displayWorded .. "\n" ..
-													altAgl_mi24p_km_displayWorded))
 	
 	----------------------------
 	-- Get Hind Airspeed Info --
@@ -1260,7 +1231,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	0.989 = 450
 	]]
 	
-	local airspeed_mi24p_kmph = (mainPanelDevice:get_argument_value(790))
+	local airspeed_mi24p_kmph = mainPanelDevice:get_argument_value(790)
 	
 	local airspeed_mi24p_kmph_display = airspeed_mi24p_kmph
 	
@@ -1271,30 +1242,41 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	end
 	-- Really weird stuff happens above about 400. but that shouldnt be a problem, right?
 	-- you could maybe make an equation at 0.8435 with (427.28 * airspeed_mi24p_kmph) + 31.842, maybe
-	airspeed_mi24p_kmph_display = string.format("%.f",airspeed_mi24p_kmph_display)
+	airspeed_mi24p_kmph_display = string.format("%.f",airspeed_mi24p_kmph_display) -- kmph
 	
-	local airspeed_mi24p_kmph_displayWorded = string.format(airspeed_mi24p_kmph_display .. " km/h")
-	
-	--ExportScript.Tools.SendData(44228, string.format(airspeed_mi24p_kmph_displayWorded))
-	
-	local airspeed_mi24p_kts_display = string.format("%.f",airspeed_mi24p_kmph_display / 1.852)
-	local airspeed_mi24p_kts_displayWorded = string.format(airspeed_mi24p_kts_display .. " kts")
-	--ExportScript.Tools.SendData(44228, string.format(airspeed_mi24p_kts_displayWorded))
+	local airspeed_mi24p_kts_display = string.format("%.f",airspeed_mi24p_kmph_display / 1.852) -- kts
 	
 	--No mach for this aircraft
 	
-	ExportScript.Tools.SendData(44227, string.format("Airspeed\n" .. 
-													airspeed_mi24p_kmph_displayWorded .. "\n" ..
-													airspeed_mi24p_kts_displayWorded .. "\n" .. 
-													" "))
+	-- Combined
+	ExportScript.Tools.SendData(44230, string.format("Airspeed\n" .. 
+													airspeed_mi24p_kmph_display .. " km/h" .. "\n" ..
+													airspeed_mi24p_kts_display .. " kts" .. "\n" .. 
+													" ")) -- empty space for formating
 	
-	--Extras
-	-- Image change for airspeed
-	ExportScript.Tools.SendData(44228, string.format("%.f",airspeed_mi24p_kmph_display)) 
+	
+	---------------
+	--mike Extras--
+	---------------
+	
+	-- Image change for airspeed overspeed
+	if mainPanelDevice:get_argument_value(790) > 0.676 then
+		ExportScript.Tools.SendData(44231, "1") 
+	else
+		ExportScript.Tools.SendData(44231, "0") 
+	end
 	
 	-- Image change for radar altimeter
 	-- [284] = "%.4f",			--	Altimeter Yellow button Brightness
-	ExportScript.Tools.SendData(44229, string.format("%.2f",mainPanelDevice:get_argument_value(284))) 
+	if mainPanelDevice:get_argument_value(284) > 0.9 then
+		ExportScript.Tools.SendData(44229, "1")
+	else
+		ExportScript.Tools.SendData(44229, "0")
+	end
+	
+	-------------------------
+	----- Hind mike END -----
+	-------------------------
 	
 end
 
