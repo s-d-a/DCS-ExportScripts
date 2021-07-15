@@ -1,11 +1,9 @@
-# English
+# DCS-ExportScripts Mods
 ---
 
-This is based off of DCS-ExportScripts (https://github.com/s-d-a/DCS-ExportScripts/wiki)
+This is based off of DCS-ExportScripts (https://github.com/s-d-a/DCS-ExportScripts/wiki). The main purpose is to make customized exports for DCS-Interface (https://github.com/charlestytler/streamdeck-dcs-interface) for use with an Elgato Stream Deck 
 
-This is an universally insertable export script for DCS. It allows for the simultaneous export of data at virtual cockpit software and I/O hardware.
-
-Following modules have been modified:
+Following module export luas have been modified:
 - AJS37
   - corrected afterburner export
 - F/A-18C Hornet
