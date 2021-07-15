@@ -27,6 +27,8 @@ Following module export luas have been modified:
     - DCS IDs 3022 - 3025
   - added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument)
     - DCS IDs 44224 - 44231
+  - added VRS Detection
+    - DCS ID 3030  
 
 More info about SENPAI (https://forums.eagle.ru/topic/273399-stream-deck-altimeter-setting-in-inhg-and-hpa/?tab=comments#comment-4724094)
 
