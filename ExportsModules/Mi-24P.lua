@@ -7,12 +7,9 @@
 -- Split the [DeviceID]s into their proper ConfigEveryFrameArguments vs ConfigArguments
 
 -- Ideas
--- Altimeter warning 284?
--- Airspeed Warning
 -- Course Readout
 -- Course over ground readout
 -- VRS Warining. Airspeed 50, VSI 3-5, and 
--- Airspeed Red Out at 350 kmph [790]
 
 
 ExportScript.FoundDCSModule = true
@@ -1278,6 +1275,56 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	----- Hind mike END -----
 	-------------------------
 	
+	
+	------------------------------
+	----- Hind VRS Detection -----
+	------------------------------
+	
+	-- VRS Warining. Airspeed <50 kmph, VSI > 3-5, and radar altitude < 100 or something 
+	-- Consider making these detection values user-friendly on the DCS-Interface side for easy editing
+	
+	local indicator1 -- vsi
+	local indicator2 -- airspeed
+	--local indicator3 -- radar alt
+	
+	-- airspeed
+	-- 0.112 is 100
+	-- 0.030 is 50
+	if mainPanelDevice:get_argument_value(790) < 0.112 then
+		indicator1 = 1 
+	else
+		indicator1 = 0 
+	end
+	
+	-- vsi
+	-- -0.134 = -3
+	-- -0.179 = -4
+	-- -0.228 = -5
+	if mainPanelDevice:get_argument_value(95) < -0.134 then
+		indicator2 = 1
+	else
+		indicator2 = 0
+	end
+	
+	--[[
+	-- radar altimeter
+	--if you can, maybe implement the VRS indcator with the altimeter flag too 
+	-- incase the altitude of the player is super high
+	-- 0.224 = 50
+	-- 0.448 = 100
+	if mainPanelDevice:get_argument_value(32) < 0.224 then
+		indicator3 = 1 
+		ExportScript.Tools.SendData(3033, "1") 
+	else
+		indicator3 = 0 
+		ExportScript.Tools.SendData(3033, "0") 
+	end
+	]]
+	if indicator1 == 1 and indicator2 == 1 then
+		ExportScript.Tools.SendData(3030, "1") 
+	else
+		ExportScript.Tools.SendData(3030, "0") 
+	end
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
