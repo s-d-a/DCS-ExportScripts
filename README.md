@@ -28,6 +28,8 @@ Following module export luas have been modified:
   - added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument)
     - DCS IDs 44224 - 44231
 
+More info about SENPAI (https://forums.eagle.ru/topic/273399-stream-deck-altimeter-setting-in-inhg-and-hpa/?tab=comments#comment-4724094)
+
 Compatible with DCS World 2.7.3.8494
 
 # Wiki
