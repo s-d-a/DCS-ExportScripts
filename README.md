@@ -12,6 +12,8 @@ Following module export luas have been modified:
   - added radio freq text output 
     - DCS IDs 60000 - 60007
 - F-16C
+  - Added Flare and Chaff Count Readouts
+    - DCS IDs 3000 - 3006
   - added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument) (WIP)
     - DCS IDs 44224 - 44231
 - JF-17
