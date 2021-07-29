@@ -1095,13 +1095,35 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	local hindKneeboardInfo = ExportScript.Tools.split(list_indication(8), "%c")--this contains the formated table of the kneeboard
 	
-	local txt_FLARES_Count = hindKneeboardInfo[18]
-	local txt_CHAFFS_Count = hindKneeboardInfo[24]
+	-- Old way of getting the values. Was hardcoded and could break of DCS updates
+	--local txt_FLARES_Count = hindKneeboardInfo[15] -- original 18
+	--local txt_CHAFFS_Count = hindKneeboardInfo[21] -- original 24
+	
+	-- New way of detecting the counts, borrowed from Wizard and the F16
+	local txt_FLARES_Count
+	 
+	for k,v in pairs(hindKneeboardInfo) do
+		if v == "txt_FLARES_Count" then
+			txt_FLARES_Count = hindKneeboardInfo[k+1]
+		end
+	end
+	
+	
+	local txt_CHAFFS_Count
+	 
+	for k,v in pairs(hindKneeboardInfo) do
+		if v == "txt_CHAFFS_Count" then
+			txt_CHAFFS_Count = hindKneeboardInfo[k+1]
+		end
+	end
 	
 	ExportScript.Tools.SendData(3022, string.format(txt_FLARES_Count))
 	ExportScript.Tools.SendData(3023, string.format(txt_CHAFFS_Count))
 	ExportScript.Tools.SendData(3024, string.format("FLARE\n" .. txt_FLARES_Count))
 	ExportScript.Tools.SendData(3025, string.format("CHAFF\n" .. txt_CHAFFS_Count))
+	
+	
+	
 	
 	
 	-------------------
