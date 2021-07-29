@@ -12,6 +12,8 @@ Following module export luas have been modified:
   - added radio freq text output 
     - DCS IDs 60000 - 60007
 - F-16C
+  - Added Flare and Chaff Count Readouts
+    - DCS IDs 3000 - 3006
   - added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument) (WIP)
     - DCS IDs 44224 - 44231
 - JF-17
@@ -27,6 +29,8 @@ Following module export luas have been modified:
     - DCS IDs 3022 - 3025
   - added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument)
     - DCS IDs 44224 - 44231
+  - added VRS Detection
+    - DCS ID 3030  
 
 More info about SENPAI (https://forums.eagle.ru/topic/273399-stream-deck-altimeter-setting-in-inhg-and-hpa/?tab=comments#comment-4724094)
 
