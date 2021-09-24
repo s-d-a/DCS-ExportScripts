@@ -31,8 +31,8 @@ Following module export luas have been modified:
     - DCS IDs 44224 - 44231
   - added VRS Detection
     - DCS ID 3030  
- - Mosquito FB MkVI
-  - Mosquito FB MkVI
+- Mosquito FB MkVI
+  - Added Mosquito FB MkVI
 
 More info about SENPAI (https://forums.eagle.ru/topic/273399-stream-deck-altimeter-setting-in-inhg-and-hpa/?tab=comments#comment-4724094)
 
