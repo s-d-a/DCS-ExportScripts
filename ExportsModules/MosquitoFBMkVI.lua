@@ -9,6 +9,7 @@ See the bottom of the file for notes.
 Tiles and unique exports will be enabled after testing.
 *****DISCLAIMER*****
 --]]
+
 ExportScript.FoundDCSModule = true
 ExportScript.Version.MosquitoFBMkVI = "1.2.1"
 
@@ -25,269 +26,226 @@ ExportScript.ConfigEveryFrameArguments =
 	  [5] = "%.f",   <- floating point number rounded to a decimal number
 	]]
 	
-	--[5] = "%.4f", --unused
-	[6] = "%.4f", --Trim needle, -1,0,1
-	[7] = "%.4f", --Beam volume approach switch, 0,1
-	[10] = "%.4f", --Left side flat knob, 0,1
-	[11] = "%.4f", --Left side turney thing, 0,1
-	[12] = "%.4f", --Left side turney thing 2, 0,1
-	[13] = "%.4f", --unknown
-	[29] = "%.4f", --Nautical Compass Fwd Aft axis, -1,0,1
-	[30] = "%.4f", --Nautical Compass Left Right axis, -1,0,1
-	[31] = "%.4f", --Nautical Compass Rotate axis, 0,1
-	[37] = "%.4f", --Channel A Radio indicator, 0,1
-	[38] = "%.4f", --Channel B Radio indicator, 0,1
-	[39] = "%.4f", --Channel C Radio indicator, 0,1
-	[40] = "%.4f", --Channel D Radio indicator, 0,1
-	[41] = "%.4f", --Receive/transmit indicator 0,1
-	[45] = "%.4f", --Boost cut-out Fwd Aft, 0,1
-	[46] = "%.4f", --Boost cut-out rotate, 0,1
-	[47] = "%.4f", --Compass needle 1, 0,1
-	[48] = "%.4f", --Compass needle 2, 0,1
-	[49] = "%.4f", --unknown
-	[50] = "%.4f", --Engine Left RPM 1000s, 0,1
-	[51] = "%.4f", --Engine Left RPM 100s, 0,1
-	[52] = "%.4f", --Engine Right RPM 1000s, 0,1
-	[53] = "%.4f", --Engine Right RPM 100s, 0,1
-	[54] = "%.4f", --Engine Left Boost, 0,1
-	[55] = "%.4f", --Engine Right Boost, 0,1
-	[56] = "%.4f", --Engine Left Oil Temp, 0,1
-	[57] = "%.4f", --Engine Right Oil Temp, 0,1
-	[58] = "%.4f", --Engine Left Oil Pressure, 0,1
-	[59] = "%.4f", --Engine Right Oil Pressure, 0,1
-	[60] = "%.4f", --Engine Left Rad Temp, 0,1
-	[61] = "%.4f", --Engine Right Rad Temp, 0,1
-	[62] = "%.4f", --Landing Light Rho Left, 0,1
-	[63] = "%.4f", --Landing Light Rho Right, 0,1
-	[64] = "%.4f", --Airspeed Needle, 0,1
-	[65] = "%.4f", --ADI Roll, -1,0,1
-	[66] = "%.4f", --ADI Pitch, -1,0,1
-	[67] = "%.4f", --Vertical Speed Indicator, -1,0,1
-	[68] = "%.4f", --Altimeter Needle Medium, 0,1
-	[69] = "%.4f", --Altimeter Needle Large, 0,1
-	[70] = "%.4f", --Altimeter Needle Small, 0,1
-	[71] = "%.4f", --Altimeter Baro Kollsman window, 0, 1
-	[73] = "%.4f", --Direction Indicator, 0,1
-	[75] = "%.4f", --Slide Slip Indicator, -1,0,1
-	[76] = "%.4f", --Turn Indicator, -1,0,1
-	[77] = "%.4f", --Gear under carrage up light left, 0,1
-	[78] = "%.4f", --Gear under carrage down light left, 0,1
-	[79] = "%.4f", --Gear under carrage up light right, 0,1
-	[80] = "%.4f", --Gear under carrage down light right, 0,1
-	[81] = "%.4f", --Flap position indicator, 0,1 
-	[82] = "%.4f", --Oxygen flow indicator pilot, 0,1
-	[83] = "%.4f", --Oxygen supply available indicator pilot, 0,1
-	[84] = "%.4f", --The knob between the two above???
-	[85] = "%.4f", --Brake supply indicator, 0,1
-	[86] = "%.4f", --Left Brake supply indicator, 0,1
-	[87] = "%.4f", --Right Brake supply indicator, 0,1
-	[88] = "%.4f", --Beacon tracking needle left side, -1,1
-	[89] = "%.4f", --Beacon tracking needle right side, -1,1
-	[90] = "%.4f", --Cloudy knob, 0,1
-	[91] = "%.4f", --Cloudy switch, 0,1
-	[92] = "%.4f", --Fuel Inner Tanks Left, 0,1 
-	[93] = "%.4f", --Fuel Inner Tanks Right, 0,1
-	[94] = "%.4f", --Fuel Center Tanks No10, 0,1
-	[95] = "%.4f", --Fuel Center Tanks No12, 0,1
-	[96] = "%.4f", --Fuel Jettison Tanks Left, 0,1
-	[97] = "%.4f", --Fuel Jettison Tanks Right, 0,1
-	[98] = "%.4f", --Clock Hand hours, 0,1
-	[99] = "%.4f", --Clock Hand minutes, 0,1
-	[100] = "%.4f", --Clock Hand seconds, 0,1
-	[101] = "%.4f", --Clock start/stop press, 0,1
-	[102] = "%.4f", --Clock start/stop twist, 0,1
-	[103] = "%.4f", --Voltimeter, 0,1
-	[104] = "%.4f", --unknown
-	[105] = "%.4f", --unknown
-	[106] = "%.4f", --unknown
-	--[109] = "%.4f", --unused
-	[110] = "%.4f", --Rudder trim hand knob needle, -1,0,1 
-	--[111] = "%.4f", --unused
-	[115] = "%.4f", --Bomb Doors Lever, -1,1
-	[116] = "%.4f", --Gear Under carriage lever, -1,1
-	[118] = "%.4f", --Flap lever, -1,1
-	[119] = "%.4f", --Flap lever guard, 0,1
-	[122] = "%.4f", --Aileron Trim Needle, -1,0,1 
-	[123] = "%.4f", --Aileron Trim Handle, 0,1 
-	[137] = "%.4f", --Airscrew Feathering Button Left, 0,1 
-	[138] = "%.4f", --Airscrew Feathering Button Right, 0,1 
-	--[139] = "%.4f", --unused
-	--[140] = "%.4f", --unused
-	--[141] = "%.4f", --unused
-	--[142] = "%.4f", --unused
-	[146] = "%.4f", --Weapon Panel Tab, 0,1 
-	[147] = "%.4f", --Weapon Panel Cover, 0,1 
-	[154] = "%.4f", --Weapon Fuse Release Knob, 0,1 
-	[155] = "%.4f", --Oxygen flow indicator copilot, 0,1
-	[156] = "%.4f", --Oxygen supply available indicator copilot, 0,1
-	[177] = "%.4f", --Voltimeter Light, 0,1
-	--[179] = "%.4f", --unused
-	--[180] = "%.4f", --unused
-	--[181] = "%.4f", --unused
-	--[182] = "%.4f", --unused
-	--[183] = "%.4f", --unused
-	--[184] = "%.4f", --unused
-	--[185] = "%.4f", --unused
-	--[186] = "%.4f", --unused
-	[187] = "%.4f", --The knob between the two oxygen above???
-	--[248] = "%.4f", --unused
-	[201] = "%.4f", --unknown
-	[205] = "%.4f", --Master oscillating tuning condenser (Range 3 - M/F frequency), 0,1
-	[206] = "%.4f", --Master oscillating tuning condenser (Range 2 - H/F frequency), 0,1
-	[207] = "%.4f", --Master oscillating tuning condenser (Range 1 - H/F frequency), 0,1
-	[208] = "%.4f", --Output tuning condenser blue, 0,1
-	[209] = "%.4f", --Output tuning condenser red, 0,1
-	[210] = "%.4f", --Master oscillator dial left yellow, 0,1
-	[211] = "%.4f", --Master oscillator dial left red, 0,1
-	[212] = "%.4f", --Master oscillator dial left blue, 0,1
-	[213] = "%.4f", --Master oscillator dial right blue, 0,1
-	[214] = "%.4f", --Master oscillator dial right red, 0,1
-	[215] = "%.4f", --Frequency range switch, 0,1
-	[216] = "%.4f", --Tap switch blue, 0,1
-	[217] = "%.4f", --Tap switch red, 0,1
-	[218] = "%.4f", --Master switch, 0,1
-	[219] = "%.4f", --Anode tap switch, 0,1
-	[220] = "%.4f", --Tap switch yellow, 0,1
-	[221] = "%.4f", --Output tuning control yellow, 0,1
-	[222] = "%.4f", --Vernier adjustment switch top, -1,1
-	[223] = "%.4f", --Vernier adjustment switch bottom, -1,1
-	[224] = "%.4f", --Antenna mode switch, -1,1
-	[225] = "%.4f", --Meter balance, -1,1
-	[226] = "%.4f", --Filter switch, 0,1
-	[227] = "%.4f", --Meter amplitude, 0,1
-	[228] = "%.4f", --Setting tuning indicator lamp, 0,1
-	[229] = "%.4f", --Volume control, 0,1
-	[230] = "%.4f", --Heterodyne switch, 0,1
-	[231] = "%.4f", --Frequency range switch, 0,1
-	[232] = "%.4f", --Frequency Needle, 0,1
-	[233] = "%.4f", --Frequency fine tuning knob, 0,1
-	[234] = "%.4f", --Frequency tuning knob, 0,1
-	[235] = "%.4f", --Meter deflection sensitivity switch, 0,1
-	[236] = "%.4f", --Aural sense switch, -1,1
-	[237] = "%.4f", --Meter frequency switch, 0,1
-	[238] = "%.4f", --Master selector switch, 0,1
-	[239] = "%.4f", --Tuning Indicator Brightness, 0,1
-	[240] = "%.4f", --swivel antenna, 0,1
-	[241] = "%.4f", --swivel antenna clamp, 0,1
-	[242] = "%.4f", --Stick Pitch, -1,1
-	[243] = "%.4f", --Stick Roll, -1,1
-	[247] = "%.4f", --Stick Brake Lever, 0,1
-	[249] = "%.4f", --Rudder Pedals, -1,1
-	[250] = "%.4f", --Window Left, 0,1
-	--[251] = "%.4f", --unused
-	[252] = "%.4f", --Window Right, 0,1
-	--[253] = "%.4f", --unused
-	[255] = "%.4f", --Exit Door, 0,1
-	[258] = "%.4f", --unknown
-	[259] = "%.4f", --Note Card Knob, 0,1 ???
-	[260] = "%.4f", --unknown
-	[261] = "%.4f", --unknown
-	--[262] = "%.4f", --unused
-	--[263] = "%.4f", --unused
-	--[264] = "%.4f", --unused
-	--[265] = "%.4f", --unused
-	--[266] = "%.4f", --unused
-	--[267] = "%.4f", --unused
-	--[268] = "%.4f", --unused
-	[269] = "%.4f", --Compass Light, 0,1
-	[270] = "%.4f", --Dashboard Light Left, 0,1
-	[271] = "%.4f", --Dashboard Light Center, 0,1
-	[272] = "%.4f", --unknown
-	[273] = "%.4f", --unknown
-	[274] = "%.4f", --unknown
-	[275] = "%.4f", --unknown
-	[276] = "%.4f", --unknown
-	[277] = "%.4f", --Fuel Pressure Warning Light Left Engine, 0,1
-	[278] = "%.4f", --Fuel Pressure Warning Light Right Engine, 0,1
-	--[279] = "%.4f", --unused
-	--[280] = "%.4f", --unused
-	[281] = "%.4f", --Long Range Pump Pressure Low Light, 0,1
-	[283] = "%.4f", --Bomb Doors Open Light, 0,1
-	--[285] = "%.4f", --unused
-	--[286] = "%.4f", --unused
-	[287] = "%.4f", --unknown
-	--[289] = "%.4f", --unused
-	[290] = "%.4f", --Stick Brake Spring, 0,1 
-	--[291] = "%.4f", --unused
-	--[292] = "%.4f", --unused
-	[295] = "%.4f", --unknown
-	[296] = "%.4f", --Dashboard Light Twist Center, 0,1
-	[297] = "%.4f", --Some light. Maybe instrument lights???
-	--[298] = "%.4f", --unused
-	[299] = "%.4f", --Dashboard Light Strong Left, 0,1
-	[300] = "%.4f", --Dashboard Light Right, 0,1
-	[301] = "%.4f", --unknown
-	[305] = "%.4f", --unknown
-	[306] = "%.4f", --unknown
-	[308] = "%.4f", --unknown
-	[309] = "%.4f", --Rudder Trim Knob, 0,1
-	--[310] = "%.4f", --unused
-	--[311] = "%.4f", --unused
-	[313] = "%.4f", --unknown
-	[314] = "%.4f", --Air Temperature Needle, -1,0,1
-	--[315] = "%.4f", --unused
-	--[316] = "%.4f", --unused
-	--[317] = "%.4f", --unused
-	--[318] = "%.4f", --unused
-	--[319] = "%.4f", --unused
-	--[320] = "%.4f", --unused
-	--[321] = "%.4f", --unused
-	--[322] = "%.4f", --unused
-	[325] = "%.4f", --Dashboard Light Red Left, 0,1
-	[326] = "%.4f", --Dashboard Light Red Center, 0,1
-	--[327] = "%.4f", --unused
-	--[328] = "%.4f", --unused
-	--[329] = "%.4f", --unused
-	--[330] = "%.4f", --unused
-	[331] = "%.4f", --Some Stick pipe that goes from the door to the pilot chair, 0,1 ???
-	--[332] = "%.4f", --unused
-	[334] = "%.4f", --unknown
-	--[335] = "%.4f", --unused
-	[336] = "%.4f", --Some Stick pipe that goes from the door to the pilot chair, 0,1 ???
-	[337] = "%.4f", --unknown
-	[338] = "%.4f", --unknown
-	[339] = "%.4f", --unknown
-	[340] = "%.4f", --unknown
-	[341] = "%.4f", --unknown
-	--[342] = "%.4f", --unused
-	[343] = "%.4f", --Maybe a red light, 0,1
-	[344] = "%.4f", --Maybe a green light, 0,1
-	[345] = "%.4f", --Maybe a red light, 0,1
-	[346] = "%.4f", --Maybe a green light, 0,1
-	[347] = "%.4f", --unknown
-	[348] = "%.4f", --unknown
-	[349] = "%.4f", --unknown
-	[350] = "%.4f", --unknown
-	[351] = "%.4f", --unknown
-	--[352] = "%.4f", --unused
-	--[353] = "%.4f", --unused
-	--[354] = "%.4f", --unused
-	--[355] = "%.4f", --unused
-	--[356] = "%.4f", --unused
-	--[357] = "%.4f", --unused
-	--[358] = "%.4f", --unused
-	--[359] = "%.4f", --unused
-	--[360] = "%.4f", --unused
-	--[361] = "%.4f", --unused
-	--[362] = "%.4f", --unused
-	[365] = "%.4f", --unknown
-	--[366] = "%.4f", --unused
-	--[367] = "%.4f", --unused
-	--[368] = "%.4f", --unused
-	--[369] = "%.4f", --unused
-	[370] = "%.4f", --unknown
-	[371] = "%.4f", --unknown
-	--[372] = "%.4f", --unused
-	[373] = "%.4f", --unknown
-	--[374] = "%.4f", --unused
-	[375] = "%.4f", --Clock Timer hours, 0,1
-	[376] = "%.4f", --Clock Timer minutes, 0,1
-	[377] = "%.4f", --unknown
-	[378] = "%.4f", --unknown
-	[379] = "%.4f", --unknown
-	[380] = "%.4f", --unknown
-	[381] = "%.4f", --Voltimeter warning light cover, 0,1
-	[382] = "%.4f", --Voltimeter warning glare, 0,1
+	[6] = "%.4f", -- Tail Trim Needle, {-1.0,1.0}
+	[7] = "%.4f", -- Beam volume approach switch, {0.0, 1.0}
+	[10] = "%.4f", -- Left side flat knob, {0.0, 1.0} ???
+	[11] = "%.4f", -- Left side turney thing {0.0, 1.0} ???
+	[12] = "%.4f", -- Left side turney thing 2 {0.0, 1.0} ???
+	[13] = "%.4f", -- unknown ???
+	[29] = "%.4f", -- Magnetic Compass Fwd/Aft axis {-1.0, 1.0}
+	[30] = "%.4f", -- Magnetic Compass Left/Right axis {-1.0, 1.0}
+	[31] = "%.4f", -- Magnetic Compass Rotate axis {0.0, 1.0}
+	
+	-- Radio Control Unit
+	[37] = "%.4f", -- Channel A Selected channel indicator {0.0, 1.0}
+	[38] = "%.4f", -- Channel B Selected channel indicator {0.0, 1.0}
+	[39] = "%.4f", -- Channel C Selected channel indicator {0.0, 1.0}
+	[40] = "%.4f", -- Channel D Selected channel indicator {0.0, 1.0}
+	[41] = "%.4f", -- Receive/transmit indicator 0,1
+	
+	[45] = "%.4f", -- Boost cut-out Fwd/Aft {0.0, 1.0}
+	[46] = "%.4f", -- Boost cut-out Rotate {0.0, 1.0}
+	[47] = "%.4f", -- R.I. Compass Repeater Needle 1 {0.0, 1.0}
+	[48] = "%.4f", -- R.I. Compass Repeater Needle 2 {0.0, 1.0}
+	[49] = "%.4f", -- unknown ???
+	
+	-- Engine Instruments
+	[50] = "%.4f", -- Engine Tachometer Left RPM 1000s {0.0, 1.0}
+	[51] = "%.4f", -- Engine Tachometer Left RPM 100s {0.0, 1.0}
+	[52] = "%.4f", -- Engine Tachometer Right RPM 1000s {0.0, 1.0}
+	[53] = "%.4f", -- Engine Tachometer Right RPM 100s {0.0, 1.0}
+	[54] = "%.4f", -- Engine Left Boost Guage {0.0, 1.0}
+	[55] = "%.4f", -- Engine Right Boost Guage {0.0, 1.0}
+	[56] = "%.4f", -- Engine Left Oil Temperature Indicator {0.0, 1.0}
+	[57] = "%.4f", -- Engine Right Oil Temperature Indicator {0.0, 1.0}
+	[58] = "%.4f", -- Engine Left Oil Pressure Indicator {0.0, 1.0}
+	[59] = "%.4f", -- Engine Right Oil Pressure Indicator {0.0, 1.0}
+	[60] = "%.4f", -- Engine Left Radiator Coolant Temperature Indicator {0.0, 1.0}
+	[61] = "%.4f", -- Engine Right Radiator Coolant Temperature Indicator {0.0, 1.0}
+	[62] = "%.4f", -- Landing Light Switch Left {0.0, 1.0}
+	[63] = "%.4f", -- Landing Light Switch Right {0.0, 1.0}
+	[64] = "%.4f", -- Airspeed Indicator (ASI) Needle {0.0, 1.0}
+	
+	[65] = "%.4f", -- Artificial Horizon Roll {-1.0, 1.0}
+	[66] = "%.4f", -- Artificial Horizon Pitch {-1.0, 1.0}
+	[67] = "%.4f", -- Vertical Speed Indicator {-1.0, 1.0}
+	[68] = "%.4f", -- Altimeter Needle Medium {0.0, 1.0}
+	[69] = "%.4f", -- Altimeter Needle Large {0.0, 1.0}
+	[70] = "%.4f", -- Altimeter Needle Small {0.0, 1.0}
+	[71] = "%.4f", -- Altimeter Barometer Kollsman window, 0, 1
+	[73] = "%.4f", -- Direction Indicator {0.0, 1.0}
+	[75] = "%.4f", -- Side Slip Indicator {-1.0, 1.0}
+	[76] = "%.4f", -- Turn Indicator {-1.0, 1.0}
+	
+	[77] = "%.4f", -- Landing Gear Under Carrage Up light left {0.0, 1.0}
+	[78] = "%.4f", -- Landing Gear Under Carrage Down light left {0.0, 1.0}
+	[79] = "%.4f", -- Landing Gear Under Carrage Up light right {0.0, 1.0}
+	[80] = "%.4f", -- Landing Gear Under Carrage Down light right {0.0, 1.0}
+	[81] = "%.4f", -- Flap position indicator {0.0, 1.0} 
+	[82] = "%.4f", -- Oxygen flow rate indicator pilot {0.0, 1.0}
+	[83] = "%.4f", -- Oxygen supply available indicator pilot {0.0, 1.0}
+	[84] = "%.4f", -- The knob between the two above ???
+	[85] = "%.4f", -- Pneumatic indicator {0.0, 1.0}
+	[86] = "%.4f", -- Left Pneumatic Brake indicator {0.0, 1.0}
+	[87] = "%.4f", -- Right Pneumatic Brake indicator {0.0, 1.0}
+	[88] = "%.4f", -- Beacon tracking needle left side {-1.0, 1.0}
+	[89] = "%.4f", -- Beacon tracking needle right side {-1.0, 1.0}
+	[90] = "%.4f", -- Cloudy knob {0.0, 1.0}
+	[91] = "%.4f", -- Cloudy switch {0.0, 1.0}
+	[92] = "%.4f", -- Fuel Inner Tanks Left {0.0, 1.0} 
+	[93] = "%.4f", -- Fuel Inner Tanks Right {0.0, 1.0}
+	[94] = "%.4f", -- Fuel Center Tanks No10 {0.0, 1.0}
+	[95] = "%.4f", -- Fuel Center Tanks No12 {0.0, 1.0}
+	[96] = "%.4f", -- Fuel Outer Tanks Left {0.0, 1.0}
+	[97] = "%.4f", -- Fuel Outer Tanks Right {0.0, 1.0}
+	[98] = "%.4f", -- Clock Needle hours {0.0, 1.0}
+	[99] = "%.4f", -- Clock Needle minutes {0.0, 1.0}
+	[100] = "%.4f", -- Clock Needle seconds {0.0, 1.0}
+	[101] = "%.4f", -- Clock start/stop press {0.0, 1.0}
+	[102] = "%.4f", -- Clock start/stop twist {0.0, 1.0}
+	[103] = "%.4f", -- Voltimeter {0.0, 1.0}
+	[104] = "%.4f", -- unknown ???
+	[105] = "%.4f", -- unknown ???
+	[106] = "%.4f", -- unknown ???
+	[110] = "%.4f", -- Rudder trim hand knob needle {-1.0, 1.0} 
+	[115] = "%.4f", -- Bomb Doors Lever {-1.0, 1.0}
+	[116] = "%.4f", -- Landing Gear Under carriage lever {-1.0, 1.0}
+	[118] = "%.4f", -- Flap lever {-1.0, 1.0}
+	[119] = "%.4f", -- Flap lever guard {0.0, 1.0}
+	[122] = "%.4f", -- Aileron Trim Needle {-1.0, 1.0} 
+	[123] = "%.4f", -- Aileron Trim Handle {0.0, 1.0} 
+	[137] = "%.4f", -- Airscrew Feathering Button Left {0.0, 1.0} 
+	[138] = "%.4f", -- Airscrew Feathering Button Right {0.0, 1.0} 
+	[146] = "%.4f", -- Weapon Bomb panel protective cover Tab {0.0, 1.0} 
+	[147] = "%.4f", -- Weapon Bomb panel protective cover {0.0, 1.0} 
+	[154] = "%.4f", -- Weapon Bomb Fuse Release Knob {0.0, 1.0} 
+	[155] = "%.4f", -- Oxygen flow rate indicator copilot {0.0, 1.0}
+	[156] = "%.4f", -- Oxygen supply available indicator copilot {0.0, 1.0}
+	[177] = "%.4f", -- Voltimeter Light {0.0, 1.0}
+	[187] = "%.4f", -- The knob between the two oxygen above???
+	[201] = "%.4f", -- unknown ???
+	
+	-- T.1154 radio on the left, R.1155 radio on the right
+	[205] = "%.4f", -- Master oscillating tuning condenser (Range 3 - M/F frequency) {0.0, 1.0}
+	[206] = "%.4f", -- Master oscillating tuning condenser (Range 2 - H/F frequency) {0.0, 1.0}
+	[207] = "%.4f", -- Master oscillating tuning condenser (Range 1 - H/F frequency) {0.0, 1.0}
+	[208] = "%.4f", -- Output tuning condenser blue {0.0, 1.0}
+	[209] = "%.4f", -- Output tuning condenser red {0.0, 1.0}
+	[210] = "%.4f", -- Master oscillator dial left yellow {0.0, 1.0}
+	[211] = "%.4f", -- Master oscillator dial left red {0.0, 1.0}
+	[212] = "%.4f", -- Master oscillator dial left blue {0.0, 1.0}
+	[213] = "%.4f", -- Master oscillator dial right blue {0.0, 1.0}
+	[214] = "%.4f", -- Master oscillator dial right red {0.0, 1.0}
+	[215] = "%.4f", -- Frequency range switch {0.0, 1.0}
+	[216] = "%.4f", -- Tap switch blue {0.0, 1.0}
+	[217] = "%.4f", -- Tap switch red {0.0, 1.0}
+	[218] = "%.4f", -- Transmitter T.1154 Master switch {0.0, 1.0}
+	[219] = "%.4f", -- Anode tap switch {0.0, 1.0}
+	[220] = "%.4f", -- Tap switch yellow {0.0, 1.0}
+	[221] = "%.4f", -- Output tuning control yellow {0.0, 1.0}
+	[222] = "%.4f", -- Vernier adjustment switch top {-1.0, 1.0}
+	[223] = "%.4f", -- Vernier adjustment switch bottom {-1.0, 1.0}
+	[224] = "%.4f", -- Antenna mode switch {-1.0, 1.0}
+	[225] = "%.4f", -- Meter balance {-1.0, 1.0}
+	[226] = "%.4f", -- Filter switch {0.0, 1.0}
+	[227] = "%.4f", -- Meter amplitude {0.0, 1.0}
+	[228] = "%.4f", -- Setting tuning indicator lamp {0.0, 1.0}
+	[229] = "%.4f", -- Receiver R.1155 Volume control {0.0, 1.0}
+	[230] = "%.4f", -- Heterodyne switch {0.0, 1.0}
+	[231] = "%.4f", -- Frequency range switch {0.0, 1.0}
+	[232] = "%.4f", -- Frequency Needle {0.0, 1.0}
+	[233] = "%.4f", -- Frequency fine tuning knob {0.0, 1.0}
+	[234] = "%.4f", -- Frequency tuning knob {0.0, 1.0}
+	[235] = "%.4f", -- Meter deflection sensitivity switch {0.0, 1.0}
+	[236] = "%.4f", -- Aural sense switch {-1.0, 1.0}
+	[237] = "%.4f", -- Meter frequency switch {0.0, 1.0}
+	[238] = "%.4f", -- Master selector switch {0.0, 1.0}
+	[239] = "%.4f", -- Tuning Indicator Brightness {0.0, 1.0}
+	[240] = "%.4f", -- Swivel antenna {0.0, 1.0}
+	[241] = "%.4f", -- Swivel antenna lock clamp {0.0, 1.0}
+	
+	-- Flight Controls
+	[242] = "%.4f", -- Stick Pitch {-1.0, 1.0}
+	[243] = "%.4f", -- Stick Roll {-1.0, 1.0}
+	[247] = "%.4f", -- Stick Brake Lever {0.0, 1.0}
+	[249] = "%.4f", -- Rudder Pedals {-1.0, 1.0}
+	
+	[250] = "%.4f", -- Window Left {0.0, 1.0}
+	[252] = "%.4f", -- Window Right {0.0, 1.0}
+	[255] = "%.4f", -- Exit Door {0.0, 1.0}
+	
+	[258] = "%.4f", -- unknown ???
+	[259] = "%.4f", -- Note Card Knob {0.0, 1.0} ???
+	[260] = "%.4f", -- unknown ???
+	[261] = "%.4f", -- unknown ???
+	[269] = "%.4f", -- Compass Light {0.0, 1.0}
+	[270] = "%.4f", -- Dashboard Light Left {0.0, 1.0}
+	[271] = "%.4f", -- Dashboard Light Center {0.0, 1.0}
+	[272] = "%.4f", -- unknown ???
+	[273] = "%.4f", -- unknown ???
+	[274] = "%.4f", -- unknown ???
+	[275] = "%.4f", -- unknown ???
+	[276] = "%.4f", -- unknown ???
+	[277] = "%.4f", -- Fuel Pressure Warning Light Left Engine {0.0, 1.0}
+	[278] = "%.4f", -- Fuel Pressure Warning Light Right Engine {0.0, 1.0}
+	[281] = "%.4f", -- Long Range Pump Pressure Low Light {0.0, 1.0}
+	[283] = "%.4f", -- Bomb Doors Open Light {0.0, 1.0}
+	[287] = "%.4f", -- unknown ???
+
+	[290] = "%.4f", -- Stick Brake Spring {0.0, 1.0} 
+	[295] = "%.4f", -- unknown ???
+	[296] = "%.4f", -- Dashboard Light Twist Center {0.0, 1.0}
+	[297] = "%.4f", -- Some light. Maybe instrument lights ???
+	[299] = "%.4f", -- Dashboard Light Strong Left {0.0, 1.0}
+	[300] = "%.4f", -- Dashboard Light Right {0.0, 1.0}
+	[301] = "%.4f", -- unknown ???
+	[305] = "%.4f", -- unknown ???
+	[306] = "%.4f", -- unknown ???
+	[308] = "%.4f", -- unknown ???
+	[309] = "%.4f", -- Rudder Trim Knob {0.0, 1.0}
+
+	[313] = "%.4f", -- unknown ???
+	[314] = "%.4f", -- Air temperature gauge Needle {-1.0, 1.0}
+
+	[325] = "%.4f", -- Dashboard Light Red Left {0.0, 1.0}
+	[326] = "%.4f", -- Dashboard Light Red Center {0.0, 1.0}
+
+	[331] = "%.4f", -- Some Stick pipe that goes from the door to the pilot chair {0.0, 1.0} ???
+
+	[334] = "%.4f", -- unknown ???
+
+	[336] = "%.4f", -- Some other Stick pipe that goes from the door to the pilot chair {0.0, 1.0} ???
+	[337] = "%.4f", -- unknown ???
+	[338] = "%.4f", -- unknown ???
+	[339] = "%.4f", -- unknown ???
+	[340] = "%.4f", -- unknown ???
+	[341] = "%.4f", -- unknown ???
+
+	[343] = "%.4f", -- Maybe a red light {0.0, 1.0} ???
+	[344] = "%.4f", -- Maybe a green light {0.0, 1.0} ???
+	[345] = "%.4f", -- Maybe a red light {0.0, 1.0} ???
+	[346] = "%.4f", -- Maybe a green light {0.0, 1.0} ???
+	[347] = "%.4f", -- unknown ???
+	[348] = "%.4f", -- unknown ???
+	[349] = "%.4f", -- unknown ???
+	[350] = "%.4f", -- unknown ???
+	[351] = "%.4f", -- unknown ???
+
+	[365] = "%.4f", -- unknown ???
+
+	[370] = "%.4f", -- unknown ???
+	[371] = "%.4f", -- unknown ???
+
+	[373] = "%.4f", -- unknown ???
+
+	[375] = "%.4f", -- Clock Timer hours {0.0, 1.0}
+	[376] = "%.4f", -- Clock Timer minutes {0.0, 1.0}
+	[377] = "%.4f", -- unknown ???
+	[378] = "%.4f", -- unknown ???
+	[379] = "%.4f", -- unknown ???
+	[380] = "%.4f", -- unknown ???
+	[381] = "%.4f", -- Voltimeter warning light cover {0.0, 1.0}
+	[382] = "%.4f", -- Voltimeter warning glare {0.0, 1.0}
 }
 ExportScript.ConfigArguments = 
 {
@@ -1252,7 +1210,10 @@ function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
 end
 
 --[[
-Ideas for implementation:
+------------------------------
+-- Ideas for implementation --
+------------------------------
+
 [
 -Aircraft Startup Page
 -Basic readout and instrument readouts such as airspeed
@@ -1272,7 +1233,10 @@ Ideas for implementation:
 		-this contains the formated table of the kneeboard of the hind"
 ]
 
-List of exports:
+---------------------
+-- List of exports --
+---------------------
+
 [
 3000	-	value	-	dial_airspeed
 3001	-	value	-	dial_directionIndicator
@@ -1353,8 +1317,11 @@ List of exports:
 4018	-	tile	-	
 4019	-	tile	-	
 ]
-		
-Ideas for "Tiles":
+
+-----------------------
+-- Ideas for "Tiles" --
+-----------------------
+
 [
 -------------   ------------- 
 | Engine L	|	| Engine R	|
