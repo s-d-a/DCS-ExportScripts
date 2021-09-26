@@ -36,9 +36,9 @@ Following module export luas have been modified. Applicable DCS-ExportScrips ID 
   - Added (is) oxygen supply level red zone (2008)
   - Added (is) either oxygen in emergency mode (2009)
   - Added RPM and Boost Tile (3000)
-  - Added Compass and Directional Gyro Tile (3000)
-  - Added Oxygen Tile (3000)
-  - Added Channel and Freq Tile (3000)
+  - Added Compass and Directional Gyro Tile (3001)
+  - Added Oxygen Tile (3002)
+  - Added Channel and Freq Tile (3003)
 
 More info about SENPAI (https://forums.eagle.ru/topic/273399-stream-deck-altimeter-setting-in-inhg-and-hpa/?tab=comments#comment-4724094)
 
