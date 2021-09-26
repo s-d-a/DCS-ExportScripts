@@ -1,5 +1,14 @@
 -- Module Name Export
-
+--[[
+*****DISCLAIMER*****
+I do not have the ability to test this lua file.
+There is a significant chance this file may not work due to typos.
+Please report any bugs, conflicts, or fixes on the github.
+https://github.com/asherao/DCS-ExportScripts
+See the bottom of the file for notes.
+Tiles and unique exports will be enabled after testing.
+*****DISCLAIMER*****
+--]]
 ExportScript.FoundDCSModule = true
 ExportScript.Version.MosquitoFBMkVI = "1.2.1"
 
@@ -66,8 +75,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[79] = "%.4f", --Gear under carrage up light right, 0,1
 	[80] = "%.4f", --Gear under carrage down light right, 0,1
 	[81] = "%.4f", --Flap position indicator, 0,1 
-	[82] = "%.4f", --Oxygen flow indicator, 0,1
-	[83] = "%.4f", --Oxygen supply available indicator, 0,1
+	[82] = "%.4f", --Oxygen flow indicator pilot, 0,1
+	[83] = "%.4f", --Oxygen supply available indicator pilot, 0,1
 	[84] = "%.4f", --The knob between the two above???
 	[85] = "%.4f", --Brake supply indicator, 0,1
 	[86] = "%.4f", --Left Brake supply indicator, 0,1
@@ -78,8 +87,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[91] = "%.4f", --Cloudy switch, 0,1
 	[92] = "%.4f", --Fuel Inner Tanks Left, 0,1 
 	[93] = "%.4f", --Fuel Inner Tanks Right, 0,1
-	[94] = "%.4f", --Fuel Center Tanks Left, 0,1
-	[95] = "%.4f", --Fuel Center Tanks Right, 0,1
+	[94] = "%.4f", --Fuel Center Tanks No10, 0,1
+	[95] = "%.4f", --Fuel Center Tanks No12, 0,1
 	[96] = "%.4f", --Fuel Jettison Tanks Left, 0,1
 	[97] = "%.4f", --Fuel Jettison Tanks Right, 0,1
 	[98] = "%.4f", --Clock Hand hours, 0,1
@@ -109,8 +118,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[146] = "%.4f", --Weapon Panel Tab, 0,1 
 	[147] = "%.4f", --Weapon Panel Cover, 0,1 
 	[154] = "%.4f", --Weapon Fuse Release Knob, 0,1 
-	[155] = "%.4f", --Oxygen flow indicator, 0,1
-	[156] = "%.4f", --Oxygen supply available indicator, 0,1
+	[155] = "%.4f", --Oxygen flow indicator copilot, 0,1
+	[156] = "%.4f", --Oxygen supply available indicator copilot, 0,1
 	[177] = "%.4f", --Voltimeter Light, 0,1
 	--[179] = "%.4f", --unused
 	--[180] = "%.4f", --unused
@@ -498,6 +507,524 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
+	
+	--[[ Tiles
+	ExportScript.engLeftRpmTile(mainPanelDevice)
+	ExportScript.engLeftOilTile(mainPanelDevice)
+	ExportScript.engRightRpmTile(mainPanelDevice)
+	ExportScript.engRightOilTile(mainPanelDevice)
+	ExportScript.oxygenTile(mainPanelDevice)
+	ExportScript.BrakesTile(mainPanelDevice)
+	ExportScript.trimTile(mainPanelDevice)
+	ExportScript.fuelInnerTile(mainPanelDevice)
+	ExportScript.fuelCenterTile(mainPanelDevice)
+	ExportScript.fuelOuterTile(mainPanelDevice)
+	ExportScript.airTempTile(mainPanelDevice)
+	ExportScript.gearUpTile(mainPanelDevice)
+	ExportScript.gearDownTile(mainPanelDevice)
+	ExportScript.altBaroVsiTile(mainPanelDevice)
+	ExportScript.navigation1Tile(mainPanelDevice)
+	ExportScript.navigation2Tile(mainPanelDevice)
+	ExportScript.radio1Tile(mainPanelDevice)
+	ExportScript.radio2Tile(mainPanelDevice)
+	ExportScript.gunnerSightTile(mainPanelDevice)
+	--]]
+	
+	
+	--[[
+	----------------------------------------------
+	---------Display: Airspeed--------------------
+	----------------------------------------------
+	local dial_airspeed = math.floor((mainPanelDevice:get_argument_value(64) * 1000) --thanks ED
+	ExportScript.Tools.SendData(3000, dial_airspeed)
+	
+	----------------------------------------------
+	---------Display: Altitude--------------------
+	----------------------------------------------
+	
+	
+	
+	----------------------------------------------
+	---------Display: Heading Repeater--------------------
+	----------------------------------------------
+	
+	local dial_directionIndicator = math.floor((mainPanelDevice:get_argument_value(73) * 360)
+	ExportScript.Tools.SendData(3001, dial_directionIndicator)
+	
+	----------------------------------------------
+	---------Display: Side Slip--------------------
+	----------------------------------------------
+	
+	--values less than 0 are L, more than 0 are R. max is 100
+	local dial_slideSlip = math.floor((mainPanelDevice:get_argument_value(75) * 100)
+	ExportScript.Tools.SendData(3002, dial_slideSlip)
+	
+	----------------------------------------------
+	---------Display: Turn Indicator--------------------
+	----------------------------------------------
+	
+	--values less than 0 are L, more than 0 are R. max is 100
+	local dial_turnIndicator = math.floor((mainPanelDevice:get_argument_value(76) * 100)
+	ExportScript.Tools.SendData(3003, dial_turnIndicator)
+	
+	----------------------------------------------
+	---------Display: Vertical Speed Indicator--------------------
+	----------------------------------------------
+	
+	local dial_verticalSpeedIndicator = math.floor((mainPanelDevice:get_argument_value(67) * 4000)
+	ExportScript.Tools.SendData(3019, dial_verticalSpeedIndicator)
+	
+	
+	----------------------------------------------
+	---------Display: Sight Range Indication--------------------
+	----------------------------------------------
+	
+	local dial_sightRangeRaw = math.floor(mainPanelDevice:get_argument_value(107))
+	
+	local dial_sightRange = math.floor((dial_sightRangeRaw * dial_sightRangeRaw * dial_sightRangeRaw * -86.173)
+										+ (dial_sightRangeRaw * dial_sightRangeRaw * 189.45)
+										+ (dial_sightRangeRaw * 296.8)
+										+ 100.14)
+	ExportScript.Tools.SendData(3020, dial_sightRange)
+	
+	----------------------------------------------
+	---------Display: Sight Wingspan--------------------
+	----------------------------------------------
+	
+	local dial_sightWingspan = math.floor(mainPanelDevice:get_argument_value(108)
+	
+	if dial_sightWingspan < 0.438302 then
+		dial_sightWingspan = math.floor((dial_sightWingspan * -91.992) + 100.57)
+	else
+		dial_sightWingspan = math.floor((dial_sightWingspan * -44.083) + 79.331)
+	end
+	
+	ExportScript.Tools.SendData(3021, dial_sightWingspan)
+	
+	----------------------------------------------
+	---------Display: RPM--------------------
+	----------------------------------------------
+	
+	--there are two needles per dial
+	--maybe just have to track first needle (nope)
+	
+	----------------------------------------------
+	---------Display: Boost--------------------
+	----------------------------------------------
+	
+	
+	local dial_boostLeftRaw = math.floor(mainPanelDevice:get_argument_value(54))
+	
+	local dial_boostLeft = math.floor((dial_boostLeftRaw * dial_boostLeftRaw * 8.9154)
+										+ (dial_boostLeftRaw * 23.095)
+										- 7.357)
+	ExportScript.Tools.SendData(3022, dial_boostLeft)
+	
+	local dial_boostRightRaw = math.floor(mainPanelDevice:get_argument_value(55))
+	
+	local dial_boostRight = math.floor((dial_boostRightRaw * dial_boostRightRaw * 8.9154)
+										+ (dial_boostRightRaw * 23.095)
+										- 7.357)
+	ExportScript.Tools.SendData(3023, dial_boostRight)
+	
+	
+	----------------------------------------------
+	---------Display: Oil Temp--------------------
+	----------------------------------------------
+	
+	local dial_oilTempRight = math.floor((mainPanelDevice:get_argument_value(57) * 100)
+	ExportScript.Tools.SendData(3004, dial_oilTempRight)
+	
+	local dial_oilTempLeft = math.floor((mainPanelDevice:get_argument_value(56) * 100)
+	ExportScript.Tools.SendData(3005, dial_oilTempLeft)
+	
+	
+	----------------------------------------------
+	---------Display: Oil Pressure--------------------
+	----------------------------------------------
+	
+	local dial_oilPressRight = math.floor((mainPanelDevice:get_argument_value(58) * 150)
+	ExportScript.Tools.SendData(3006, dial_oilPressRight)
+	
+	local dial_oilPressLeft = math.floor((mainPanelDevice:get_argument_value(59) * 150)
+	ExportScript.Tools.SendData(3007, dial_oilPressLeft)
+	
+	----------------------------------------------
+	---------Display: Compass Heading--------------------
+	----------------------------------------------
+	
+	local dial_compass = math.floor((mainPanelDevice:get_argument_value(31) * 360)
+	if dial_compass == 0 then
+		dial_compass = 360
+		dial_compass = string.format("0" .. dial_compass)
+	end
+	
+	if #dial_compass == 1 then
+		dial_compass = string.format("00" .. dial_compass)
+	elseif #dial_compass == 2 then
+		dial_compass = string.format("0" .. dial_compass)
+	end
+	
+	ExportScript.Tools.SendData(3008, dial_compass)
+	
+	
+	local dial_compassNeedle1 = math.floor((mainPanelDevice:get_argument_value(47) * 360)
+	
+	if dial_compassNeedle1 == 0 then
+		dial_compassNeedle1 = 360
+		dial_compassNeedle1 = string.format("0" .. dial_compassNeedle1)
+	end
+	
+	if #dial_compassNeedle1 == 1 then
+		dial_compassNeedle1 = string.format("00" .. dial_compassNeedle1)
+	elseif #dial_compassNeedle1 == 2 then
+		dial_compassNeedle1 = string.format("0" .. dial_compassNeedle1)
+	end
+	
+	ExportScript.Tools.SendData(3012, dial_compassNeedle1)
+	
+	
+	local dial_compassNeedle2 = math.floor((mainPanelDevice:get_argument_value(48) * 360)
+	
+	if dial_compassNeedle2 == 0 then
+		dial_compassNeedle2 = 360
+		dial_compassNeedle2 = string.format("0" .. dial_compassNeedle2)
+	end
+	
+	if #dial_compassNeedle2 == 1 then
+		dial_compassNeedle2 = string.format("00" .. dial_compassNeedle2)
+	elseif #dial_compassNeedle2 == 2 then
+		dial_compassNeedle2 = string.format("0" .. dial_compassNeedle2)
+	end
+	
+	ExportScript.Tools.SendData(3013, dial_compassNeedle2)
+	
+	----------------------------------------------
+	---------Display: Clock--------------------
+	----------------------------------------------
+	
+	--maybe later... or never
+	
+	----------------------------------------------
+	---------Display: Gear Up and Down------------
+	----------------------------------------------
+	
+	local light_gearRedUpLeft = math.floor((mainPanelDevice:get_argument_value(77)) --red up left
+	local light_gearGreenDownLeft = math.floor((mainPanelDevice:get_argument_value(78)) --green down left
+	local light_gearRedUpRight = math.floor((mainPanelDevice:get_argument_value(79)) --red up right
+	local light_gearGreenDownRight = math.floor((mainPanelDevice:get_argument_value(80)) --green down right
+	
+	local gearIsUp
+	local gearIsDown
+	
+	if light_gearRedUpLeft == 1 && light_gearRedUpRight == 1 then
+		gearIsUp = 1
+	else
+		gearIsUp = 0
+	end
+		
+	if light_gearGreenDownLeft == 1 && light_gearGreenDownRight == 1 then
+		gearIsDown = 1
+	else
+		gearIsDown = 0
+	end
+	
+	ExportScript.Tools.SendData(3009, gearIsUp)
+	ExportScript.Tools.SendData(3010, gearIsDown)
+	
+	
+	
+	----------------------------------------------
+	---------Display: Flaps--------------------
+	----------------------------------------------
+	
+	local dial_flapIndicator = math.floor((mainPanelDevice:get_argument_value(81) * 100)
+	
+	if dial_flapIndicator > 70 then
+	dial_flapIndicator = 70
+	ExportScript.Tools.SendData(3011, dial_flapIndicator)
+	
+	----------------------------------------------
+	---------Display: Nav Direction Indicator--------------------
+	----------------------------------------------
+	
+	--this is the loop thing behind the navigators head
+	
+	----------------------------------------------
+	---------Display: Oxygen supply available--------------------
+	----------------------------------------------
+	
+	
+	local dial_oxygenFlowRatePilot = math.floor((mainPanelDevice:get_argument_value(82) * 100)
+	ExportScript.Tools.SendData(3014, dial_oxygenFlowRatePilot)
+	
+	--numbers above 40 are "EMERGENCY"
+	local isDial_oxygenFlowRatePilotEmergency
+	if dial_oxygenFlowRatePilot > 40 then
+		isDial_oxygenFlowRatePilotEmergency = 1
+	else
+		isDial_oxygenFlowRatePilotEmergency = 0
+	end
+	ExportScript.Tools.SendData(3015, isDial_oxygenFlowRatePilotEmergency)
+	
+	
+	local dial_oxygenSupplyPilotRaw = math.floor(mainPanelDevice:get_argument_value(83))
+	
+	local dial_oxygenSupplyPilot = math.floor((dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * 87.118)
+										- (dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * 228.16)
+										+ (dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * 189.84)
+										+ (dial_oxygenSupplyPilotRaw * 51.237)
+										- 0.0026)
+	ExportScript.Tools.SendData(3024, dial_oxygenSupplyPilot)
+	
+	--numbers below 12.5 (1/8 on the dial) are red zone
+	local isDial_oxygenSupplyPilotRedZone
+	if dial_oxygenSupplyPilot < 12.5 then
+		isDial_oxygenSupplyPilotRedZone = 1
+	else
+		isDial_oxygenSupplyPilotRedZone = 0
+	end
+	
+	
+	
+	
+	local dial_oxygenFlowRateCopilot = math.floor((mainPanelDevice:get_argument_value(155) * 100)
+	ExportScript.Tools.SendData(3016, dial_oxygenFlowRateCopilot)
+	
+	--numbers above 40 are "EMERGENCY"
+	local isDial_oxygenFlowRateCopilotEmergency
+	if dial_oxygenFlowRateCopilot > 40 then
+		isDial_oxygenFlowRateCopilotEmergency = 1
+	else
+		isDial_oxygenFlowRateCopilotEmergency = 0
+	end
+	ExportScript.Tools.SendData(3017, isDial_oxygenFlowRateCopilotEmergency)
+	
+	
+	local dial_oxygenSupplyCopilotRaw = math.floor(mainPanelDevice:get_argument_value(156))
+	
+	local dial_oxygenSupplyCopilot = math.floor((dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * 87.118)
+										- (dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * 228.16)
+										+ (dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * 189.84)
+										+ (dial_oxygenSupplyCopilotRaw * 51.237)
+										- 0.0026)
+	ExportScript.Tools.SendData(3024, dial_oxygenSupplyCopilot)
+	
+	--numbers below 12.5 (1/8 on the dial) are red zone
+	local isDial_oxygenSupplyCopilotRedZone
+	if dial_oxygenSupplyCopilot < 12.5 then
+		isDial_oxygenSupplyCopilotRedZone = 1
+	else
+		isDial_oxygenSupplyCopilotRedZone = 0
+	end
+	
+	----------------------------------------------
+	---------Display: Fuel Inner Tank--------------------
+	----------------------------------------------
+	
+	--local dial_fuelInnerLeft = math.floor((mainPanelDevice:get_argument_value(92) * X)
+	--ExportScript.Tools.SendData(3017, dial_fuelInnerLeft)
+	--noted in calculator
+	
+	local dial_fuelInnerTankLeftRaw = math.floor(mainPanelDevice:get_argument_value(92))
+	
+	local dial_fuelInnerTankLeft = math.floor(
+										+ (1084.9 * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw)
+										- (2252.4 * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw)
+										+ (1590.9 * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw)
+										- (377.05 * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw)
+										+ (128.21 * dial_fuelInnerTankLeftRaw)
+										- 0.1146)
+										
+	--consider making flags for these that can be set by the user
+	if dial_fuelInnerTankLeft < 0 then
+		dial_fuelInnerTankLeft = 0
+	end
+	
+	if dial_fuelInnerTankLeft < 146 then
+		dial_fuelInnerTankLeft = 146
+	end
+	
+	ExportScript.Tools.SendData(3025, dial_fuelInnerTankLeft)
+	
+	
+	
+	local dial_fuelInnerTankRightRaw = math.floor(mainPanelDevice:get_argument_value(93))
+	
+	local dial_fuelInnerTankRight = math.floor(
+										(1084.9 * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw)
+										- (2252.4 * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw)
+										+ (1590.9 * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw)
+										- (377.05 * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw)
+										+ (128.21 * dial_fuelInnerTankRightRaw)
+										- 0.1146)
+										
+	--consider making flags for these that can be set by the user
+	if dial_fuelInnerTankRight < 0 then
+		dial_fuelInnerTankRight = 0
+	end
+	
+	if dial_fuelInnerTankRight < 146 then
+		dial_fuelInnerTankRight = 146
+	end
+	
+	ExportScript.Tools.SendData(3026, dial_fuelInnerTankRight)
+	
+	
+	
+	----------------------------------------------
+	---------Display: Fuel Center tanks--------------------
+	----------------------------------------------
+	
+	--note that the formulas are different for both of these
+
+	
+	local dial_centerTankNo10Raw = math.floor(mainPanelDevice:get_argument_value(94))
+	
+	local dial_centerTankNo10 = math.floor(
+										(-88.166 * dial_centerTankNo10Raw * dial_centerTankNo10Raw * dial_centerTankNo10Raw * dial_centerTankNo10Raw)
+										+ (203.91 * dial_centerTankNo10Raw * dial_centerTankNo10Raw * dial_centerTankNo10Raw)
+										- (150.81 * dial_centerTankNo10Raw * dial_centerTankNo10Raw)
+										+ (94.58 * dial_centerTankNo10Raw)
+										+ 0.0185)
+										
+	--consider making flags for these that can be set by the user
+	if dial_centerTankNo10 < 0 then
+		dial_centerTankNo10 = 0
+	end
+	
+	if dial_centerTankNo10 < 53 then
+		dial_centerTankNo10 = 53
+	end
+	
+	ExportScript.Tools.SendData(3027, dial_centerTankNo10)
+	
+
+
+	local dial_centerTankNo12Raw = math.floor(mainPanelDevice:get_argument_value(95))
+	
+	local dial_centerTankNo12 = math.floor(
+										  (533.91 * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw)
+										- (1189.9 * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw)
+										+ (941.77 * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw)
+										- (290.11 * dial_centerTankNo12Raw * dial_centerTankNo12Raw)
+										+ (81.317 * dial_centerTankNo12Raw)
+										- 0.0347)
+										
+	--consider making flags for these that can be set by the user
+	if dial_centerTankNo12 < 0 then
+		dial_centerTankNo12 = 0
+	end
+	
+	if dial_centerTankNo12 < 63 then
+		dial_centerTankNo12 = 63
+	end
+	
+	ExportScript.Tools.SendData(3028, dial_centerTankNo12)
+	
+	
+	
+	
+	----------------------------------------------
+	---------Display: Fuel outer tanks--------------------
+	----------------------------------------------
+	
+
+	--[96] and [97]
+	
+	local dial_outerTankLeftRaw = math.floor(mainPanelDevice:get_argument_value(96))
+	local dial_outerTankLeft
+	if dial_outerTankLeftRaw < 0.7699 then
+	dial_outerTankLeft = math.floor(
+										  (64.393 * dial_o uterTankLeftRaw * dial_outerTankLeftRaw * dial_outerTankLeftRaw)
+										- (90.401 * dial_outerTankLeftRaw * dial_outerTankLeftRaw)
+										+ (83.39 * dial_outerTankLeftRaw)
+										+ 0.0365)
+	else
+	dial_outerTankLeft = math.floor(
+										  (135.71 * dial_outerTankLeftRaw)
+										- 64.485)
+	end
+	
+	--consider making flags for these that can be set by the user
+	if dial_outerTankLeft < 0 then
+		dial_outerTankLeft = 0
+	end
+	
+	if dial_outerTankLeft < 59 then
+		dial_outerTankLeft = 59
+	end
+	
+	ExportScript.Tools.SendData(3029, dial_outerTankLeft)
+	
+	
+	local dial_outerTankRightRaw = math.floor(mainPanelDevice:get_argument_value(97))
+	local dial_outerTankRight
+	if dial_outerTankRightRaw < 0.7699 then
+	dial_outerTankRight = math.floor(
+										  (64.393 * dial_o uterTankRightRaw * dial_outerTankRightRaw * dial_outerTankRightRaw)
+										- (90.401 * dial_outerTankRightRaw * dial_outerTankRightRaw)
+										+ (83.39 * dial_outerTankRightRaw)
+										+ 0.0365)
+	else
+	dial_outerTankRight = math.floor(
+										  (135.71 * dial_outerTankRightRaw)
+										- 64.485)
+	end
+	
+	--consider making flags for these that can be set by the user
+	if dial_outerTankRight < 0 then
+		dial_outerTankRight = 0
+	end
+	
+	if dial_outerTankRight < 59 then
+		dial_outerTankRight = 59
+	end
+	
+	ExportScript.Tools.SendData(3030, dial_outerTankRight)
+	
+	
+	
+	
+	
+	----------------------------------------------
+	---------Display: air temperature--------------------
+	----------------------------------------------
+	
+	local dial_airTemp = math.floor((mainPanelDevice:get_argument_value(314) * 100)
+	ExportScript.Tools.SendData(3018, dial_airTemp)
+	
+	----------------------------------------------
+	---------Display: Radio Selection--------------------
+	----------------------------------------------
+	
+	
+	
+	----------------------------------------------
+	---------Display: Copilot needle freq reading--------------------
+	----------------------------------------------
+	
+	
+	
+	----------------------------------------------
+	---------Airspeed Alert--------------------
+	----------------------------------------------
+	
+	--the chart for the limits is in the manual
+	
+	----------------------------------------------
+	---------Optimal Engine settings Helper--------------------
+	----------------------------------------------
+	
+	--the chart for the limits is in the manual
+	
+	
+	----------------------------------------------
+	---------Boost Limits--------------------
+	----------------------------------------------
+	
+	--the chart for the limits is in the manual
+	--]]
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -572,3 +1099,373 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+--[[ Tiles
+
+--this is the basic format. you will still need fine tune everything
+function ExportScript.engLeftRpmTile(mainPanelDevice) --boost is [54], rpm is []
+	
+	local guage_rpm = math.floor(mainPanelDevice:get_argument_value(37) * 10000)
+	
+	local dial_boostLeftRaw = math.floor(mainPanelDevice:get_argument_value(39) * 1)
+	
+	local dial_boostLeft = math.floor(dial_boostLeftRaw * 24)
+	
+	ExportScript.Tools.SendData(3000, string.format("Eng L" .. "\n" 
+													.. "RPM  ".. guage_rpm .. "\n"
+													.. "Boost  ".. dial_boostLeft .. "\n"))
+end
+
+function ExportScript.engLeftOilTile(mainPanelDevice)
+end
+
+function ExportScript.engRightRpmTile(mainPanelDevice)
+end
+
+function ExportScript.engRightOilTile(mainPanelDevice)
+end
+
+
+function ExportScript.oxygenTile(mainPanelDevice)
+	local dial_oxygenFlowRatePilot = math.floor(mainPanelDevice:get_argument_value(82) * 100)
+	ExportScript.Tools.SendData(3014, dial_oxygenFlowRatePilot)
+	
+	--numbers above 40 are "EMERGENCY"
+	
+	local isDial_oxygenFlowRatePilotEmergency
+	if dial_oxygenFlowRatePilot > 40 then
+		isDial_oxygenFlowRatePilotEmergency = 1
+	else
+		isDial_oxygenFlowRatePilotEmergency = 0
+	end
+	ExportScript.Tools.SendData(3015, isDial_oxygenFlowRatePilotEmergency)
+	
+	
+	local dial_oxygenSupplyPilotRaw = mainPanelDevice:get_argument_value(83)
+	
+	local dial_oxygenSupplyPilot = (
+										
+                          (87.118 * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw)
+                        - (228.16 * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw)
+                        + (189.84 * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw)
+                        + (51.237 * dial_oxygenSupplyPilotRaw)
+                        - 0.0026)	
+						
+	dial_oxygenSupplyPilot = round(dial_oxygenSupplyPilot, 0)		
+						
+	ExportScript.Tools.SendData(3024, dial_oxygenSupplyPilot)
+	
+	--numbers below 12.5 (1/8 on the dial) are red zone
+	local isDial_oxygenSupplyPilotRedZone
+	if dial_oxygenSupplyPilot < 12.5 then
+		isDial_oxygenSupplyPilotRedZone = 1
+	else
+		isDial_oxygenSupplyPilotRedZone = 0
+	end
+	ExportScript.Tools.SendData(3031, isDial_oxygenSupplyPilotRedZone)
+	
+	local oxygenTile_output = string.format("Oxygen" .. "\n" 
+											.. "PLT Flow  ".. dial_oxygenFlowRatePilot .. "\n"
+											.. "PLT Supply  ".. dial_oxygenSupplyPilot .. "\n")
+	
+	ExportScript.Tools.SendData(3032, oxygenTile_output)
+	
+	local isPilotOxygenEmergency
+	if isDial_oxygenSupplyPilotRedZone == 1 or isDial_oxygenFlowRatePilotEmergency == 1 then
+		isPilotOxygenEmergency = 1
+	else
+		isPilotOxygenEmergency = 0
+	end
+	
+	ExportScript.Tools.SendData(3033, isPilotOxygenEmergency)
+	
+end
+
+function ExportScript.BrakesTile(mainPanelDevice)
+end
+
+function ExportScript.trimTile(mainPanelDevice)
+end
+
+function ExportScript.fuelInnerTile(mainPanelDevice)
+end
+
+function ExportScript.fuelCenterTile(mainPanelDevice)
+end
+
+function ExportScript.fuelOuterTile(mainPanelDevice)
+end
+
+function ExportScript.airTempTile(mainPanelDevice)
+end
+
+function ExportScript.gearUpTile(mainPanelDevice)
+end
+
+function ExportScript.gearDownTile(mainPanelDevice)
+end
+
+function ExportScript.altBaroVsiTile(mainPanelDevice)
+end
+
+function ExportScript.navigation1Tile(mainPanelDevice)
+end
+
+function ExportScript.navigation2Tile(mainPanelDevice)
+end
+
+function ExportScript.radio1Tile(mainPanelDevice)
+--look at the spitfire for clues
+end
+
+function ExportScript.radio2Tile(mainPanelDevice)
+
+end
+
+function ExportScript.gunnerSightTile(mainPanelDevice)
+--wingspan is in ft in the aircraft
+end
+
+	--]]
+
+function ExportScript.displayAccel(mainPanelDevice)
+end
+
+
+--[[Scratch pad for linear interpolation
+
+if incomingNumber < 0 then
+	incomingNumber = 0
+elseif incomingNumber < 0.1366 then --incoming number is 
+	x1 = 0 = argument number 1
+	y1 = 0 = guage number 1
+	x2 = incomingNumber
+	x3 = 0.13366 = argument number 2
+	y3 = 10 = guage number 2
+	solution = (((incomingNumber - x1) * (y3 - y1) ) /  (x3 - x1))   + y1
+
+--]]
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+--[[
+Ideas for implementation:
+[
+-Aircraft Startup Page
+-Basic readout and instrument readouts such as airspeed
+-Readout for the currently selected copilot frequency
+-Airspeed tile with color changes for limits 
+-Tile for optimal settings based on aircraft weight and altitude
+-A way for the copilot to use the streamdeck to dial freqs
+-set gunner sight via different aircraft (focus on the ones in DCS)
+	-maybe have the tile react to what the user is doing ingame,
+	-as the user scrolls the wheel, the names of the different aircraft
+	-appear on the dial
+-gear up and down indicators
+-overheat for engine instruments indicator
+	-maybe have one tile that can display multiple things
+-remember that you can get interesting things using
+	-"local hindKneeboardInfo = ExportScript.Tools.split(list_indication(8), "%c")
+		-this contains the formated table of the kneeboard of the hind"
+]
+
+List of exports:
+[
+3000	-	value	-	dial_airspeed
+3001	-	value	-	dial_directionIndicator
+3002	-	value	-	dial_slideSlip
+3003	-	value	-	dial_turnIndicator
+3004	-	value	-	dial_oilTempRight
+3005	-	value	-	dial_oilTempLeft
+3006	-	value	-	dial_oilPressRight
+3007	-	value	-	dial_oilPressLeft
+3008	-	value	-	dial_compass
+3009	-	value	-	gearIsUp
+3010	-	value	-	gearIsDown
+3011	-	value	-	dial_flapIndicator
+3012	-	value	-	dial_compassNeedle1
+3013	-	value	-	dial_compassNeedle2
+3014	-	value	-	dial_oxygenFlowRatePilot
+3015	-	value	-	isDial_oxygenFlowRatePilotEmergency
+3016	-	value	-	dial_oxygenFlowRateCopilot
+3017	-	value	-	isDial_oxygenFlowRateCopilotEmergency
+3018	-	value	-	dial_airTemp
+3019	-	value	-	dial_verticalSpeedIndicator
+3020	-	value	-	dial_sightRange
+3021	-	value	-	dial_sightWingspan
+3022	-	value	-	dial_boostLeft
+3023	-	value	-	dial_boostRight
+3024	-	value	-	dial_oxygenSupplyPilot
+3025	-	value	-	dial_fuelInnerTankLeft
+3026	-	value	-	dial_fuelInnerTankRight
+3027	-	value	-	dial_centerTankNo10
+3028	-	value	-	dial_centerTankNo12
+3029	-	value	-	dial_outerTankLeft
+3030	-	value	-	dial_outerTankRight
+3031	-	value	-	
+3032	-	value	-	
+3033	-	value	-	
+3034	-	value	-	
+3035	-	value	-	
+3036	-	value	-	
+3037	-	value	-	
+3038	-	value	-	
+3039	-	value	-	
+3040	-	value	-	
+3041	-	value	-	
+3042	-	value	-	
+3043	-	value	-	
+3044	-	value	-	
+3045	-	value	-	
+3046	-	value	-	
+3047	-	value	-	
+3048	-	value	-	
+3049	-	value	-	
+3050	-	value	-	
+3051	-	value	-	
+3052	-	value	-	
+3053	-	value	-	
+3054	-	value	-	
+3055	-	value	-	
+3056	-	value	-	
+
+4000	-	tile	-	
+4001	-	tile	-	
+4002	-	tile	-	
+4003	-	tile	-	
+4004	-	tile	-	
+4005	-	tile	-	
+4006	-	tile	-	
+4007	-	tile	-	
+4008	-	tile	-	
+4009	-	tile	-	
+4010	-	tile	-	
+4011	-	tile	-	
+4012	-	tile	-	
+4013	-	tile	-	
+4014	-	tile	-	
+4015	-	tile	-	
+4016	-	tile	-	
+4017	-	tile	-	
+4018	-	tile	-	
+4019	-	tile	-	
+]
+		
+Ideas for "Tiles":
+[
+-------------   ------------- 
+| Engine L	|	| Engine R	|
+| RPM: XXX	|	| RPM: XXX	|
+| Boost: XX	|	| Boost: XX	|
+-------------	------------- 
+
+--------------   -------------- 
+|  Engine L	 |	|  Engine R	 |
+| Oil T: XXX |	| Oil T: XXX |
+| Oil P: XXX |	| Oil P: XXX |
+| Rad T: XXX |	| Rad T: XXX |
+--------------	-------------- 
+
+------------------- 
+|     Oxygen      |
+| PLT Flow: XXX   |
+| PLT Supply: XX  |
+| CPLT Flow: XXX  |
+| CPLT Supply: XX |
+------------------- 
+
+------------------ 
+|     Brakes     |
+| Supply: XXX    |
+| Port: XX       |
+| Starboard: XXX |
+------------------ 
+
+--------------------
+|       Trim       |
+| Aileron: L XX%   |
+| Elevator: R XX%  |
+| Rudder: Centered |
+--------------------
+
+-------------------
+|    Fuel Inner   |
+| Port: XX.X      |
+| Starboard: XX.X |
+| Total: XX.X     |
+-------------------
+
+---------------
+| Fuel Center |
+| No10: XX.X  |
+| No12: XX.X  |
+| Total: XX.X |
+---------------
+
+-------------------
+|    Fuel Outer   |
+| Port: XX.X      |
+| Starboard: XX.X |
+| Total: XX.X     |
+-------------------
+
+------------
+| Air Temp |
+|   XXoC   |
+------------
+
+--------------
+| Alt: XXXX  |
+| Baro: XXXX |
+| VSI: XXXX  |
+--------------
+
+-----------------
+|  NAVIGATION1  |
+| Repeater: XXX |
+| Needle 1: XXX |
+| Needle 2: XXX |
+-----------------
+
+-----------------
+|  NAVIGATION2  |
+| Compass: XXX  |
+| Repeater: XXX |
+| Director: XXX |
+-----------------
+
+-------------
+|  Radio 1  |
+| Channel A |
+-------------
+
+----------------
+|   Radio 2    |
+| Band: Yellow |
+| Freq: XXXXX  |
+----------------
+
+-----------------
+|    Gear UP    |
+| PIC       PIC |
+| Under Carrage |
+----------------
+
+-----------------
+| Under Carrage |
+| PIC       PIC |
+|  Gear DOWN    |
+-----------------
+
+-------------------
+|   Gunner Sight  |
+| Range: XXX      |
+| Wingspan: XXX   |
+| Ideal: NameAcft |
+-------------------
+]
+
+]]--
