@@ -47,6 +47,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[46] = "%.4f", -- Boost cut-out Rotate {0.0, 1.0}
 	[47] = "%.4f", -- R.I. Compass Repeater Needle 1 {0.0, 1.0}
 	[48] = "%.4f", -- R.I. Compass Repeater Needle 2 {0.0, 1.0}
+	
 	[49] = "%.4f", -- unknown ???
 	
 	-- Engine Instruments
@@ -104,9 +105,11 @@ ExportScript.ConfigEveryFrameArguments =
 	[101] = "%.4f", -- Clock start/stop press {0.0, 1.0}
 	[102] = "%.4f", -- Clock start/stop twist {0.0, 1.0}
 	[103] = "%.4f", -- Voltimeter {0.0, 1.0}
+	
 	[104] = "%.4f", -- unknown ???
 	[105] = "%.4f", -- unknown ???
 	[106] = "%.4f", -- unknown ???
+	
 	[110] = "%.4f", -- Rudder trim hand knob needle {-1.0, 1.0} 
 	[115] = "%.4f", -- Bomb Doors Lever {-1.0, 1.0}
 	[116] = "%.4f", -- Landing Gear Under carriage lever {-1.0, 1.0}
@@ -123,6 +126,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[156] = "%.4f", -- Oxygen supply available indicator copilot {0.0, 1.0}
 	[177] = "%.4f", -- Voltimeter Light {0.0, 1.0}
 	[187] = "%.4f", -- The knob between the two oxygen above???
+	
 	[201] = "%.4f", -- unknown ???
 	
 	-- T.1154 radio on the left, R.1155 radio on the right
@@ -203,18 +207,17 @@ ExportScript.ConfigEveryFrameArguments =
 	[306] = "%.4f", -- unknown ???
 	[308] = "%.4f", -- unknown ???
 	[309] = "%.4f", -- Rudder Trim Knob {0.0, 1.0}
-
 	[313] = "%.4f", -- unknown ???
+	
 	[314] = "%.4f", -- Air temperature gauge Needle {-1.0, 1.0}
 
 	[325] = "%.4f", -- Dashboard Light Red Left {0.0, 1.0}
 	[326] = "%.4f", -- Dashboard Light Red Center {0.0, 1.0}
 
 	[331] = "%.4f", -- Some Stick pipe that goes from the door to the pilot chair {0.0, 1.0} ???
-
 	[334] = "%.4f", -- unknown ???
-
 	[336] = "%.4f", -- Some other Stick pipe that goes from the door to the pilot chair {0.0, 1.0} ???
+	
 	[337] = "%.4f", -- unknown ???
 	[338] = "%.4f", -- unknown ???
 	[339] = "%.4f", -- unknown ???
@@ -225,25 +228,25 @@ ExportScript.ConfigEveryFrameArguments =
 	[344] = "%.4f", -- Maybe a green light {0.0, 1.0} ???
 	[345] = "%.4f", -- Maybe a red light {0.0, 1.0} ???
 	[346] = "%.4f", -- Maybe a green light {0.0, 1.0} ???
+	
 	[347] = "%.4f", -- unknown ???
 	[348] = "%.4f", -- unknown ???
 	[349] = "%.4f", -- unknown ???
 	[350] = "%.4f", -- unknown ???
 	[351] = "%.4f", -- unknown ???
-
 	[365] = "%.4f", -- unknown ???
-
 	[370] = "%.4f", -- unknown ???
 	[371] = "%.4f", -- unknown ???
-
 	[373] = "%.4f", -- unknown ???
 
 	[375] = "%.4f", -- Clock Timer hours {0.0, 1.0}
 	[376] = "%.4f", -- Clock Timer minutes {0.0, 1.0}
+	
 	[377] = "%.4f", -- unknown ???
 	[378] = "%.4f", -- unknown ???
 	[379] = "%.4f", -- unknown ???
 	[380] = "%.4f", -- unknown ???
+	
 	[381] = "%.4f", -- Voltimeter warning light cover {0.0, 1.0}
 	[382] = "%.4f", -- Voltimeter warning glare {0.0, 1.0}
 }
@@ -287,13 +290,9 @@ ExportScript.ConfigArguments =
 	[125] = "%.1f", --PORT_1,TUMB,125,-1,0,1,Cockpit.Generic.magneto_port0
 	[125] = "%.1f", --PORT_1,TUMB,125,1,0,1,Cockpit.Generic.magneto_port0
 	[126] = "%.1f", --PORT_2,TUMB,126,-1,0,1,Cockpit.Generic.magneto_port1
-	[126] = "%.1f", --PORT_2,TUMB,126,1,0,1,Cockpit.Generic.magneto_port1
 	[127] = "%.1f", --STBD_1,TUMB,127,-1,0,1,Cockpit.Generic.magneto_stbd0
-	[127] = "%.1f", --STBD_1,TUMB,127,1,0,1,Cockpit.Generic.magneto_stbd0
 	[128] = "%.1f", --STBD_2,TUMB,128,-1,0,1,Cockpit.Generic.magneto_stbd1
-	[128] = "%.1f", --STBD_2,TUMB,128,1,0,1,Cockpit.Generic.magneto_stbd1
 	[124] = "%.1f", --MASTER_SWITCH,TUMB,124,-1,0,1,Cockpit.Mosquito.master_switch
-	[124] = "%.1f", --MASTER_SWITCH,TUMB,124,1,0,1,Cockpit.Mosquito.master_switch
 	[20] = "%.1f", --THROTTLE_CONTROLE_L_TRIGER,LEV,20,1,0,1,Throttle
 	[21] = "%.1f", --THROTTLE_CONTROL_R_TRIGER,LEV,21,1,0,1,Throttle
 	[18] = "%.1f", --THROTTLE_TRANSIT_L,NULL,18,-0,0,1,Throttle
@@ -305,35 +304,22 @@ ExportScript.ConfigArguments =
 	[22] = "%.1f", --PROPELLER_CONTROL_L,NULL,22,-0,0,1,Cockpit.SpitfireLFMkIX.pitch
 	[23] = "%.1f", --PROPELLER_CONTROL_R,NULL,23,-0,0,1,Cockpit.SpitfireLFMkIX.pitch
 	[292] = "%.1f", --BOOST_ CUT-OUT,BTN,292,1,0,1,Cockpit.Mosquito.boost_cutoff
-	[292] = "%.1f", --BOOST_ CUT-OUT,BTN,292,1,0,1,Cockpit.Mosquito.boost_cutoff
 	[197] = "%.1f", --OIL_DILUTION_LEFT,BTN,197,1,0,1,Cockpit.Mosquito.port_oil_dilution_button
 	[197] = "%.1f", --OIL_DILUTION_LEFT,BTN,197,1,0,1,Cockpit.Mosquito.port_oil_dilution_button
-	[198] = "%.1f", --OIL_DILUTION_RIGHT,BTN,198,1,0,1,Cockpit.Mosquito.stbd_oil_dilution_button
 	[198] = "%.1f", --OIL_DILUTION_RIGHT,BTN,198,1,0,1,Cockpit.Mosquito.stbd_oil_dilution_button
 	[129] = "%.1f", --STARTER_COVER_LEFT,TUMB,129,-1,0,1,Cockpit.Mosquito.port_starter_switch_cover
 	[129] = "%.1f", --STARTER_COVER_LEFT,TUMB,129,1,0,1,Cockpit.Mosquito.port_starter_switch_cover
 	[131] = "%.1f", --STARTER_LEFT,BTN,131,1,0,1,Cockpit.Mosquito.port_starter_switch
-	[131] = "%.1f", --STARTER_LEFT,BTN,131,1,0,1,Cockpit.Mosquito.port_starter_switch
 	[130] = "%.1f", --STARTER_COVER_RIGHT,TUMB,130,-1,0,1,Cockpit.Mosquito.stbd_starter_switch_cover
-	[130] = "%.1f", --STARTER_COVER_RIGHT,TUMB,130,1,0,1,Cockpit.Mosquito.stbd_starter_switch_cover
-	[132] = "%.1f", --STARTER_RIGHT,BTN,132,1,0,1,Cockpit.Mosquito.stbd_starter_switch
 	[132] = "%.1f", --STARTER_RIGHT,BTN,132,1,0,1,Cockpit.Mosquito.stbd_starter_switch
 	[133] = "%.1f", --BOOSTER_COVER_LEFT,TUMB,133,-1,0,1,Cockpit.Mosquito.port_booster_switch_cover
-	[133] = "%.1f", --BOOSTER_COVER_LEFT,TUMB,133,1,0,1,Cockpit.Mosquito.port_booster_switch_cover
-	[135] = "%.1f", --BOOSTER_LEFT,BTN,135,1,0,1,Cockpit.Mosquito.port_booster_switch
 	[135] = "%.1f", --BOOSTER_LEFT,BTN,135,1,0,1,Cockpit.Mosquito.port_booster_switch
 	[134] = "%.1f", --BOOSTER_COVER_RIGHT,TUMB,134,-1,0,1,Cockpit.Mosquito.stbd_booster_switch_cover
-	[134] = "%.1f", --BOOSTER_COVER_RIGHT,TUMB,134,1,0,1,Cockpit.Mosquito.stbd_booster_switch_cover
-	[136] = "%.1f", --BOOSTER_RIGHT,BTN,136,1,0,1,Cockpit.Mosquito.stbd_booster_switch
 	[136] = "%.1f", --BOOSTER_RIGHT,BTN,136,1,0,1,Cockpit.Mosquito.stbd_booster_switch
 	[192] = "%.3f", --CUT-OUT_PORT,TUMB,192,-1,0,1,Cockpit.Mosquito.port_engine_cutout_handle
-	[192] = "%.1f", --CUT-OUT_PORT,TUMB,192,1,0,1,Cockpit.Mosquito.port_engine_cutout_handle
-	[193] = "%.1f", --FUEL_COCKS_LEFT,TUMB,193,-1,-1,1,Cockpit.Mosquito.port_fuel_cock
 	[193] = "%.1f", --FUEL_COCKS_LEFT,TUMB,193,1,-1,1,Cockpit.Mosquito.port_fuel_cock
 	[194] = "%.1f", --FUEL_COCKS_RIGHT,TUMB,194,-1,-1,1,Cockpit.Mosquito.stbd_fuel_cock
-	[194] = "%.1f", --FUEL_COCKS_RIGHT,TUMB,194,1,-1,1,Cockpit.Mosquito.stbd_fuel_cock
 	[195] = "%.1f", --TRANSFER_COCK,TUMB,195,-1,0,1,Cockpit.Mosquito.transfer_cock
-	[195] = "%.1f", --TRANSFER_COCK,TUMB,195,1,0,1,Cockpit.Mosquito.transfer_cock
 	[354] = "%.1f", --AIRSCREW_LH,BTN,354,1,0,1,Cockpit.Mosquito.port_airscrew_feathering_switch
 	[355] = "%.1f", --AIRSCREW_RH,BTN,355,1,0,1,Cockpit.Mosquito.stbd_airscrew_feathering_switch
 	[27] = "%.1f", --MIXTURE,TUMB,27,-1,0,1,Cockpit.Generic.mix
@@ -493,7 +479,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	----------------------------------------------
 	---------Display: Airspeed--------------------
 	----------------------------------------------
-	local dial_airspeed = math.floor((mainPanelDevice:get_argument_value(64) * 1000) --thanks ED
+	local dial_airspeed = math.floor(mainPanelDevice:get_argument_value(64) * 1000) --thanks ED
 	ExportScript.Tools.SendData(3000, dial_airspeed)
 	
 	----------------------------------------------
@@ -506,7 +492,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	---------Display: Heading Repeater--------------------
 	----------------------------------------------
 	
-	local dial_directionIndicator = math.floor((mainPanelDevice:get_argument_value(73) * 360)
+	local dial_directionIndicator = math.floor(mainPanelDevice:get_argument_value(73) * 360)
 	ExportScript.Tools.SendData(3001, dial_directionIndicator)
 	
 	----------------------------------------------
@@ -514,7 +500,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	----------------------------------------------
 	
 	--values less than 0 are L, more than 0 are R. max is 100
-	local dial_slideSlip = math.floor((mainPanelDevice:get_argument_value(75) * 100)
+	local dial_slideSlip = math.floor(mainPanelDevice:get_argument_value(75) * 100)
 	ExportScript.Tools.SendData(3002, dial_slideSlip)
 	
 	----------------------------------------------
@@ -522,14 +508,14 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	----------------------------------------------
 	
 	--values less than 0 are L, more than 0 are R. max is 100
-	local dial_turnIndicator = math.floor((mainPanelDevice:get_argument_value(76) * 100)
+	local dial_turnIndicator = math.floor(mainPanelDevice:get_argument_value(76) * 100)
 	ExportScript.Tools.SendData(3003, dial_turnIndicator)
 	
 	----------------------------------------------
 	---------Display: Vertical Speed Indicator--------------------
 	----------------------------------------------
 	
-	local dial_verticalSpeedIndicator = math.floor((mainPanelDevice:get_argument_value(67) * 4000)
+	local dial_verticalSpeedIndicator = math.floor(mainPanelDevice:get_argument_value(67) * 4000)
 	ExportScript.Tools.SendData(3019, dial_verticalSpeedIndicator)
 	
 	
@@ -590,7 +576,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	---------Display: Oil Temp--------------------
 	----------------------------------------------
 	
-	local dial_oilTempRight = math.floor((mainPanelDevice:get_argument_value(57) * 100)
+	local dial_oilTempRight = math.floor(mainPanelDevice:get_argument_value(57) * 100)
 	ExportScript.Tools.SendData(3004, dial_oilTempRight)
 	
 	local dial_oilTempLeft = math.floor((mainPanelDevice:get_argument_value(56) * 100)
@@ -601,7 +587,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	---------Display: Oil Pressure--------------------
 	----------------------------------------------
 	
-	local dial_oilPressRight = math.floor((mainPanelDevice:get_argument_value(58) * 150)
+	local dial_oilPressRight = math.floor(mainPanelDevice:get_argument_value(58) * 150)
 	ExportScript.Tools.SendData(3006, dial_oilPressRight)
 	
 	local dial_oilPressLeft = math.floor((mainPanelDevice:get_argument_value(59) * 150)
@@ -611,7 +597,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	---------Display: Compass Heading--------------------
 	----------------------------------------------
 	
-	local dial_compass = math.floor((mainPanelDevice:get_argument_value(31) * 360)
+	local dial_compass = math.floor(mainPanelDevice:get_argument_value(31) * 360)
 	if dial_compass == 0 then
 		dial_compass = 360
 		dial_compass = string.format("0" .. dial_compass)
@@ -626,7 +612,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3008, dial_compass)
 	
 	
-	local dial_compassNeedle1 = math.floor((mainPanelDevice:get_argument_value(47) * 360)
+	local dial_compassNeedle1 = math.floor(mainPanelDevice:get_argument_value(47) * 360)
 	
 	if dial_compassNeedle1 == 0 then
 		dial_compassNeedle1 = 360
@@ -642,7 +628,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3012, dial_compassNeedle1)
 	
 	
-	local dial_compassNeedle2 = math.floor((mainPanelDevice:get_argument_value(48) * 360)
+	local dial_compassNeedle2 = math.floor(mainPanelDevice:get_argument_value(48) * 360)
 	
 	if dial_compassNeedle2 == 0 then
 		dial_compassNeedle2 = 360
@@ -667,10 +653,10 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	---------Display: Gear Up and Down------------
 	----------------------------------------------
 	
-	local light_gearRedUpLeft = math.floor((mainPanelDevice:get_argument_value(77)) --red up left
-	local light_gearGreenDownLeft = math.floor((mainPanelDevice:get_argument_value(78)) --green down left
-	local light_gearRedUpRight = math.floor((mainPanelDevice:get_argument_value(79)) --red up right
-	local light_gearGreenDownRight = math.floor((mainPanelDevice:get_argument_value(80)) --green down right
+	local light_gearRedUpLeft = math.floor(mainPanelDevice:get_argument_value(77)) --red up left
+	local light_gearGreenDownLeft = math.floor(mainPanelDevice:get_argument_value(78)) --green down left
+	local light_gearRedUpRight = math.floor(mainPanelDevice:get_argument_value(79)) --red up right
+	local light_gearGreenDownRight = math.floor(mainPanelDevice:get_argument_value(80)) --green down right
 	
 	local gearIsUp
 	local gearIsDown
@@ -696,7 +682,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	---------Display: Flaps--------------------
 	----------------------------------------------
 	
-	local dial_flapIndicator = math.floor((mainPanelDevice:get_argument_value(81) * 100)
+	local dial_flapIndicator = math.floor(mainPanelDevice:get_argument_value(81) * 100)
 	
 	if dial_flapIndicator > 70 then
 	dial_flapIndicator = 70
@@ -713,7 +699,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	----------------------------------------------
 	
 	
-	local dial_oxygenFlowRatePilot = math.floor((mainPanelDevice:get_argument_value(82) * 100)
+	local dial_oxygenFlowRatePilot = math.floor(mainPanelDevice:get_argument_value(82) * 100)
 	ExportScript.Tools.SendData(3014, dial_oxygenFlowRatePilot)
 	
 	--numbers above 40 are "EMERGENCY"
@@ -746,7 +732,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	
 	
-	local dial_oxygenFlowRateCopilot = math.floor((mainPanelDevice:get_argument_value(155) * 100)
+	local dial_oxygenFlowRateCopilot = math.floor(mainPanelDevice:get_argument_value(155) * 100)
 	ExportScript.Tools.SendData(3016, dial_oxygenFlowRateCopilot)
 	
 	--numbers above 40 are "EMERGENCY"
@@ -780,7 +766,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	---------Display: Fuel Inner Tank--------------------
 	----------------------------------------------
 	
-	--local dial_fuelInnerLeft = math.floor((mainPanelDevice:get_argument_value(92) * X)
+	--local dial_fuelInnerLeft = math.floor(mainPanelDevice:get_argument_value(92) * X)
 	--ExportScript.Tools.SendData(3017, dial_fuelInnerLeft)
 	--noted in calculator
 	
