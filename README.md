@@ -53,9 +53,11 @@ Following module export luas have been modified. Applicable DCS-ExportScripts ID
   - Added Best Climb Power Tile (3009)
   - Added Gun Sight Solution Tile (3010)
  
-    ![2021-09-28 03_04_23-Stream Deck](https://user-images.githubusercontent.com/15984377/134961372-176c7606-8588-4948-9929-0ea3c69eee6d.jpg)
+## Spitfire Media
+---
+   ![2021-09-28 03_04_23-Stream Deck](https://user-images.githubusercontent.com/15984377/134961372-176c7606-8588-4948-9929-0ea3c69eee6d.jpg)
 
-    ![SpitfireGunnerHintDemo05](https://user-images.githubusercontent.com/15984377/134962944-d6440294-2378-4093-9997-36e033360e7e.gif)
+   ![SpitfireGunnerHintDemo05](https://user-images.githubusercontent.com/15984377/134962944-d6440294-2378-4093-9997-36e033360e7e.gif)
 
 
 More info about SENPAI (https://forums.eagle.ru/topic/273399-stream-deck-altimeter-setting-in-inhg-and-hpa/?tab=comments#comment-4724094)
