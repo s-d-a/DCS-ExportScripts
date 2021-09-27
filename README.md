@@ -37,11 +37,26 @@ Following module export luas have been modified. Applicable DCS-ExportScripts ID
   - Added (is) either oxygen in emergency mode (2009)
   - Added Altimeter Altitude (2010)
   - Added Altimeter Pressure setting (2011)
+  - Added Efficient Climb Airspeed (2012)
+  - Added Gun Wingspan (2013)
+  - Added Gun Range (2014)
+  - Added Optimal Target Aircraft Wingspan (2015)
   - Added RPM and Boost Tile (3000)
   - Added Compass and Directional Gyro Tile (3001)
   - Added Oxygen Tile (3002)
   - Added Channel and Freq Tile (3003)
   - Added Altimeter Tile (3004)
+  - Added Best Takeoff Power Tile (3005)
+  - Added Best Combat Power Tile (3006)
+  - Added Best Nominal Power Tile (3007)
+  - Added Best Crusing Power Tile (3008)
+  - Added Best Climb Power Tile (3009)
+  - Added Gun Sight Solution Tile (3010)
+ 
+    ![2021-09-28 03_04_23-Stream Deck](https://user-images.githubusercontent.com/15984377/134961372-176c7606-8588-4948-9929-0ea3c69eee6d.jpg)
+
+    ![SpitfireGunnerHintDemo05](https://user-images.githubusercontent.com/15984377/134962944-d6440294-2378-4093-9997-36e033360e7e.gif)
+
 
 More info about SENPAI (https://forums.eagle.ru/topic/273399-stream-deck-altimeter-setting-in-inhg-and-hpa/?tab=comments#comment-4724094)
 
