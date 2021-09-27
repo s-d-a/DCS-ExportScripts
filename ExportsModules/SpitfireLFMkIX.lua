@@ -16,6 +16,12 @@
 2009 - isPilotOxygenEmergency (either oxygen goes emergency)
 2010 - Altimeter Altitude
 2011 - Altimiter Pressure setting
+2012 - Efficient Climb Airspeed
+2013 - Gun Wingspan
+2014 - Gun Range
+2015 - Optimal Target Aircraft Wingspan
+
+
 
 
 3000 - RPM and Boost Tile
@@ -23,6 +29,14 @@
 3002 - Oxygen Tile
 3003 - Channel and Freq Tile
 3004 - Altimeter Tile
+3005 - Best Takeoff Tile
+3006 - Best Combat Tile
+3007 - Best Nominal Tile
+3008 - Best Crusing Tile
+3009 - Best Climb Tile
+3010 - Gun Sight Solution Tile
+
+
 --]]
 
 ExportScript.FoundDCSModule = true
@@ -82,7 +96,7 @@ ExportScript.ConfigEveryFrameArguments =
 	--[62] = "%.4f",	--  ???
 	--[63] = "%.4f",	--  ???
 	--[59] = "%.4f",	--  ???
-	--[45] = "%.4f"	-- GUNSIGHT_RANGE ???
+	--[45] = "%.4f"	-- ???
 }
 ExportScript.ConfigArguments = 
 {
@@ -191,6 +205,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.VhfRadioTile(mainPanelDevice)
 	ExportScript.navigation1Tile(mainPanelDevice)
 	ExportScript.altimeterTile(mainPanelDevice)
+	ExportScript.BestPowerTiles(mainPanelDevice)
+	ExportScript.bestClimb(mainPanelDevice)
+	ExportScript.gunnerTile(mainPanelDevice)
 	
 end
 
@@ -308,7 +325,7 @@ function ExportScript.engLeftRpmTile(mainPanelDevice) --boost is [39], rpm is [3
 	
 	local dial_boostLeft = math.floor(dial_boostLeftRaw * 24)
 	
-	ExportScript.Tools.SendData(3000, string.format("Eng L" .. "\n" 
+	ExportScript.Tools.SendData(3000, string.format("Eng" .. "\n" 
 													.. "RPM  ".. guage_rpm .. "\n"
 													.. "Boost  ".. dial_boostLeft .. "\n"))
 end
@@ -352,9 +369,9 @@ function ExportScript.oxygenTile(mainPanelDevice)
 	end
 	ExportScript.Tools.SendData(2008, isDial_oxygenSupplyPilotRedZone)
 	
-	local oxygenTile_output = string.format("Oxygen" .. "\n" 
-											.. "PLT Flow  ".. dial_oxygenFlowRatePilot .. "\n"
-											.. "PLT Amt.  ".. dial_oxygenSupplyPilot .. "\n")
+	local oxygenTile_output = string.format("Oxy PLT" .. "\n" 
+											.. "Flow  ".. dial_oxygenFlowRatePilot .. "k ft\n"
+											.. "Amt.  ".. dial_oxygenSupplyPilot .. "\n")
 	
 	ExportScript.Tools.SendData(3002, oxygenTile_output)
 	
@@ -450,6 +467,10 @@ function ExportScript.altimeterTile(mainPanelDevice)
 	local dial_altimeter_tenThousands = math.floor(mainPanelDevice:get_argument_value(28) * 100000)
 	local altitude = dial_altimeter_tenThousands
 	altitude = round(altitude,-1)
+	if altitude > 60000 then
+		altitude = altitude - 100000
+	end
+	
 	altitude = format_int(altitude)
 	
 	local dial_altimeterPressure = round((mainPanelDevice:get_argument_value(29) * 250) + 800,0)
@@ -461,11 +482,101 @@ function ExportScript.altimeterTile(mainPanelDevice)
 	end
 	
 
-	ExportScript.Tools.SendData(2010, "Altitude:" .. "\n" .. altitude .. "ft")
+	ExportScript.Tools.SendData(2010, "Altimeter" .. "\n" .. altitude .. "ft")
 	ExportScript.Tools.SendData(2011, "Pressure" .. "\n" ..dial_altimeterPressure .. " mbar")
-	ExportScript.Tools.SendData(3004, altitude .. " ft" .. "\n" .. dial_altimeterPressure .. " mbar")--mbar == hpa. really!
+	ExportScript.Tools.SendData(3004, "Altitude\n" .. altitude .. " ft" .. "\n" .. dial_altimeterPressure .. " mbar")--mbar == hpa. really!
 
 end
+
+function ExportScript.BestPowerTiles(mainPanelDevice)
+	ExportScript.Tools.SendData(3005, "Takeoff 5" .. "\n" .. "RPM 3000\nBoost 12\nAlt 305")
+	ExportScript.Tools.SendData(3006, "Combat 5" .. "\n" .. "RPM 3000\nBoost 18\nAlt 5.5/16.2")
+	ExportScript.Tools.SendData(3007, "Nominal 60" .. "\n" .. "RPM 2850\nBoost 12\nAlt 9/19")
+	ExportScript.Tools.SendData(3008, "Cruse" .. "\n" .. "RPM 2650\nBoost 7\nAlt 12/20.7")
+end
+
+function ExportScript.bestClimb(mainPanelDevice)
+	
+	local dial_altimeter_tenThousands = math.floor(mainPanelDevice:get_argument_value(28) * 100000)--altitude
+	local efficientAirspeed
+	if dial_altimeter_tenThousands < 12000 then
+		efficientAirspeed = 185
+	elseif dial_altimeter_tenThousands < 15000 then
+		efficientAirspeed = 180	
+	elseif dial_altimeter_tenThousands < 20000 then
+		efficientAirspeed = 170	
+	elseif dial_altimeter_tenThousands < 25000 then
+		efficientAirspeed = 160	
+	elseif dial_altimeter_tenThousands < 30000 then
+		efficientAirspeed = 150	
+	elseif dial_altimeter_tenThousands < 33000 then
+		efficientAirspeed = 140	
+	elseif dial_altimeter_tenThousands < 37000 then
+		efficientAirspeed = 130	
+	elseif dial_altimeter_tenThousands < 40000 then
+		efficientAirspeed = 120	
+	else
+		efficientAirspeed = 110	
+	end
+	ExportScript.Tools.SendData(3009, "Climb" .. "\n" .. "RPM 2650\nBoost 7\n" .. efficientAirspeed .. " mph")
+	ExportScript.Tools.SendData(2012, "Efficient\nClimb\n" .. efficientAirspeed .. " mph")
+end
+
+function ExportScript.gunnerTile(mainPanelDevice)
+	local dial_gunnerWingspan = mainPanelDevice:get_argument_value(78)
+	dial_gunnerWingspan = (-75.229 * dial_gunnerWingspan) + 100.51
+	dial_gunnerWingspan = round(dial_gunnerWingspan,0)
+	ExportScript.Tools.SendData(2013, "Gun\nWingspan\n" .. dial_gunnerWingspan .. " ft")
+	
+	local dial_gunnerRange = mainPanelDevice:get_argument_value(77)
+	dial_gunnerRange = (301.1 * dial_gunnerRange * dial_gunnerRange) 
+						+ (243.06 * dial_gunnerRange)
+						+ (149.68)
+	dial_gunnerRange = round(dial_gunnerRange,-1)
+	ExportScript.Tools.SendData(2014, "Gun\nRange\n" .. dial_gunnerRange .. " ft")
+	
+	--Wingspan in feet
+	local v1_wingspanFt = 19
+	local I16_wingspanFt = 30
+	local BF109_wingspanFt = 32
+	local Fw190_wingspanFt = 34
+	local spitfire_wingspanFt = 32
+	local P40P51_wingspanFt = 51
+	local P47_wingspanFt =  41
+	local mosquito_wingspanFt =  54
+	local B17G_wingspanFt =  104
+	
+	local optimalTargetWidthName
+	
+	if dial_gunnerWingspan >= (v1_wingspanFt - 1) and dial_gunnerWingspan <= (v1_wingspanFt + 1) then
+		optimalTargetWidthName = "V1"
+	elseif dial_gunnerWingspan >= (I16_wingspanFt - 1) and dial_gunnerWingspan <= (I16_wingspanFt + 1) then
+		optimalTargetWidthName = "I-16"
+	elseif dial_gunnerWingspan >= (BF109_wingspanFt - 1) and dial_gunnerWingspan <= (BF109_wingspanFt + 1) then
+		optimalTargetWidthName = "BF109"
+	elseif dial_gunnerWingspan >= (Fw190_wingspanFt - 1) and dial_gunnerWingspan <= (Fw190_wingspanFt + 1) then
+		optimalTargetWidthName = "Fw109"
+	elseif dial_gunnerWingspan >= (spitfire_wingspanFt - 1) and dial_gunnerWingspan <= (spitfire_wingspanFt + 1) then
+		optimalTargetWidthName = "Spitfire"
+	elseif dial_gunnerWingspan >= (P40P51_wingspanFt - 1) and dial_gunnerWingspan <= (P40P51_wingspanFt + 1) then
+		optimalTargetWidthName = "P-40/51"
+	elseif dial_gunnerWingspan >= (P47_wingspanFt - 1) and dial_gunnerWingspan <= (P47_wingspanFt + 1) then
+		optimalTargetWidthName = "P-47"
+	elseif dial_gunnerWingspan >= (mosquito_wingspanFt - 1) and dial_gunnerWingspan <= (mosquito_wingspanFt + 1) then
+		optimalTargetWidthName = "Mossie"
+	elseif dial_gunnerWingspan >= (B17G_wingspanFt - 1) and dial_gunnerWingspan <= (B17G_wingspanFt + 1) then
+		optimalTargetWidthName = "B-17G"
+	else
+		optimalTargetWidthName = "Tgt - N/A"
+	end
+
+	ExportScript.Tools.SendData(2015, "Optimal\nTarget\n" .. optimalTargetWidthName)
+	
+	ExportScript.Tools.SendData(3010, "Gun Sight\nRng " .. dial_gunnerRange .. " ft\n" .. 
+										"Base " .. dial_gunnerWingspan .. " ft\n" ..
+										"" .. optimalTargetWidthName)
+end
+
 
 -----------------------
 -- General Functions --
