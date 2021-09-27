@@ -14,11 +14,15 @@
 2007 - dial_oxygenSupplyPilot
 2008 - isDial_oxygenSupplyPilotRedZone
 2009 - isPilotOxygenEmergency (either oxygen goes emergency)
+2010 - Altimeter Altitude
+2011 - Altimiter Pressure setting
+
 
 3000 - RPM and Boost Tile
 3001 - Compass and Directional Gyro Tile
 3002 - Oxygen Tile
 3003 - Channel and Freq Tile
+3004 - Altimeter Tile
 --]]
 
 ExportScript.FoundDCSModule = true
@@ -186,6 +190,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.oxygenTile(mainPanelDevice)
 	ExportScript.VhfRadioTile(mainPanelDevice)
 	ExportScript.navigation1Tile(mainPanelDevice)
+	ExportScript.altimeterTile(mainPanelDevice)
 	
 end
 
@@ -298,7 +303,8 @@ function ExportScript.engLeftRpmTile(mainPanelDevice) --boost is [39], rpm is [3
 	
 	local guage_rpm = math.floor(mainPanelDevice:get_argument_value(37) * 10000)
 	
-	local dial_boostLeftRaw = math.floor(mainPanelDevice:get_argument_value(39) * 1)
+	local dial_boostLeftRaw = math.floor(mainPanelDevice:get_argument_value(39) * 1)--experemental
+	
 	
 	local dial_boostLeft = math.floor(dial_boostLeftRaw * 24)
 	
@@ -431,14 +437,53 @@ function ExportScript.navigation1Tile(mainPanelDevice) -- [73]
 	end
 	ExportScript.Tools.SendData(2004, dial_directionalGyro)
 	
-	
 	ExportScript.Tools.SendData(3001, string.format("Comp " .. dial_compass .. "\n"  
 												.. "Gyro " .. dial_directionalGyro))
-	
 end
+
+
+function ExportScript.altimeterTile(mainPanelDevice)
+	--[26] = "%.4f", 	-- Altimeter gauge Hundreds {0.0, 1.0}{0.0, 10.0}
+	--[27] = "%.4f", 	-- Altimeter gauge Thousands {0.0, 1.0}{0.0, 10.0}
+	--[28] = "%.4f", 	-- Altimeter gauge Tens Thousands {0.0, 1.0}{0.0, 10.0}
+	--[29] = "%.4f", 	-- Altimeter gauge Pressure {0.0, 1.0}{800.0, 1050.0}
+	local dial_altimeter_tenThousands = math.floor(mainPanelDevice:get_argument_value(28) * 100000)
+	local altitude = dial_altimeter_tenThousands
+	altitude = round(altitude,-1)
+	altitude = format_int(altitude)
+	
+	local dial_altimeterPressure = round((mainPanelDevice:get_argument_value(29) * 250) + 800,0)
+	
+	if string.find(dial_altimeterPressure, ".") then
+		--the dot was there, dont do anything
+	else --the dot is not there, so add it
+		dial_altimeterPressure = string.format(dial_altimeterPressure .. ".0")
+	end
+	
+
+	ExportScript.Tools.SendData(2010, "Altitude:" .. "\n" .. altitude .. "ft")
+	ExportScript.Tools.SendData(2011, "Pressure" .. "\n" ..dial_altimeterPressure .. " mbar")
+	ExportScript.Tools.SendData(3004, altitude .. " ft" .. "\n" .. dial_altimeterPressure .. " mbar")--mbar == hpa. really!
+
+end
+
+-----------------------
+-- General Functions --
+-----------------------
 
 function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
   local mult = 10^(numDecimalPlaces or 0)
   return math.floor(num * mult + 0.5) / mult
 end
 
+function format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
+
+  local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+
+  -- reverse the int-string and append a comma to all blocks of 3 digits
+  int = int:reverse():gsub("(%d%d%d)", "%1,")
+
+  -- reverse the int-string back remove an optional comma and put the 
+  -- optional minus and fractional part back
+  return minus .. int:reverse():gsub("^,", "") .. fraction
+end
