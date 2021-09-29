@@ -1,16 +1,15 @@
 -- Mi-24P Export
 
+--[[
 -- DCS Version 2.7.3.8494
 -- TODO:
 -- Split the devices into headered sections
--- Make sure the numbers are formated correctly
 -- Split the [DeviceID]s into their proper ConfigEveryFrameArguments vs ConfigArguments
 
 -- Ideas
 -- Course Readout
 -- Course over ground readout
--- VRS Warining. Airspeed 50, VSI 3-5, and 
-
+]]--
 
 ExportScript.FoundDCSModule = true
 ExportScript.Version.Mi24P = "1.2.1"
@@ -29,268 +28,348 @@ ExportScript.ConfigEveryFrameArguments =
 ]]
 
 	-- Random Unsorted
-	
-	[19] = "%.4f",			--	Pilot Altimeter Thousands 0 = 0, 0.5 = 500, 1.0 = 0
-	[20] = "%.4f",			--	Pilot Altimeter Hundreds 0 = 0, 0.5 = 500, 1.0 = 0
-	[25] = "%.4f",			--	Pilot HSI 0 = 0, 0.5 = 180, 1.0 = 360
-	[27] = "%.4f",			--	Pilot HSI Needle 2 0 = 0, 0.5 = 180, 1.0 = 360
-	[28] = "%.4f",			--	Pilot HSI Needle 1 0 = 0, 0.5 = 180, 1.0 = 360
-	[40] = "%.4f",			--	Pilot ENG 1 RPM 0 = 0%, 0.5 = 180, 1.0 = 110%
-	[41] = "%.4f",			--	Pilot ENG 2 RPM 0 = 0%, 0.5 = 180, 1.0 = 110%
-	[42] = "%.4f",			--	Pilot ROTOR 1 RPM 0 = 0%, 0.5 = 180, 1.0 = 110%
-	[95] = "%.4f",			--	Pilot VSI Needle -1 = -30, 1 = 30
+	[19] = "%.4f",		--	Pilot Altimeter Thousands 0 = 0, 0.5 = 500, 1.0 = 0
+	[20] = "%.4f",		--	Pilot Altimeter Hundreds 0 = 0, 0.5 = 500, 1.0 = 0
+	[25] = "%.4f",		--	Pilot HSI 0 = 0, 0.5 = 180, 1.0 = 360
+	[27] = "%.4f",		--	Pilot HSI Needle 2 0 = 0, 0.5 = 180, 1.0 = 360
+	[28] = "%.4f",		--	Pilot HSI Needle 1 0 = 0, 0.5 = 180, 1.0 = 360
+	[40] = "%.4f",		--	Pilot ENG 1 RPM 0 = 0%, 0.5 = 180, 1.0 = 110%
+	[41] = "%.4f",		--	Pilot ENG 2 RPM 0 = 0%, 0.5 = 180, 1.0 = 110%
+	[42] = "%.4f",		--	Pilot ROTOR 1 RPM 0 = 0%, 0.5 = 180, 1.0 = 110%
+	[95] = "%.4f",		--	Pilot VSI Needle -1 = -30, 1 = 30
 	
 	-- Lights
-	[11] = "%.4f",			--	Left Gyro Light
-	[13] = "%.4f",			--	Right Gyro Light
+	[11] = "%.4f",		--	Left Gyro Light
+	[13] = "%.4f",		--	Right Gyro Light
 	
-	[63] = "%.4f",			--	Far Right Lower Panel Upper Light 1
-	[64] = "%.4f",			--	Far Right Lower Panel Upper Light 2
-	[72] = "%.4f",			--	Far Right Lower Panel Middle Light
+	[63] = "%.4f",		--	Far Right Lower Panel Upper Light 1
+	[64] = "%.4f",		--	Far Right Lower Panel Upper Light 2
+	[72] = "%.4f",		--	Far Right Lower Panel Middle Light
 	
-	[79] = "%.4f",			--	Far Right Lower Panel Light
-	[81] = "%.4f",			--	Far Right Lower Panel Light
-	[82] = "%.4f",			--	Far Right Lower Panel Light
-	[84] = "%.4f",			--	Far Right Lower Panel Light
-	[86] = "%.4f",			--	Far Right Lower Panel Light
-	[94] = "%.4f",			--	Far Right Lower Panel Light
+	[79] = "%.4f",		--	Far Right Lower Panel Light
+	[81] = "%.4f",		--	Far Right Lower Panel Light
+	[82] = "%.4f",		--	Far Right Lower Panel Light
+	[84] = "%.4f",		--	Far Right Lower Panel Light
+	[86] = "%.4f",		--	Far Right Lower Panel Light
+	[94] = "%.4f",		--	Far Right Lower Panel Light
 	
 	--about 150-174 is the caution panel left to right, top to bottom range 0 to 1
-	[150] = "%.4f",			--	Cauton Panel ICING
-	[151] = "%.4f",			--	Cauton Panel FIRE
-	[152] = "%.4f",			--	Cauton Panel TANK 1 120 LITERS REMAIN
-	[153] = "%.4f",			--	Cauton Panel TANK 2 120 LITERS REMAIN
-	[154] = "%.4f",			--	Cauton Panel MAIN G/B LOW OIL PRESS
-	[155] = "%.4f",			--	Cauton Panel ATTENETION TO ELECT CONT PLANE
-	[156] = "%.4f",			--	Cauton Panel Anti-Ice Auto Test
-	[157] = "%.4f",			--	Cauton Panel Limit Maneuver
-	[158] = "%.4f",			--	Cauton Panel Chips in GRBX
+	[150] = "%.4f",		--	Cauton Panel ICING
+	[151] = "%.4f",		--	Cauton Panel FIRE
+	[152] = "%.4f",		--	Cauton Panel TANK 1 120 LITERS REMAIN
+	[153] = "%.4f",		--	Cauton Panel TANK 2 120 LITERS REMAIN
+	[154] = "%.4f",		--	Cauton Panel MAIN G/B LOW OIL PRESS
+	[155] = "%.4f",		--	Cauton Panel ATTENETION TO ELECT CONT PLANE
+	[156] = "%.4f",		--	Cauton Panel Anti-Ice Auto Test
+	[157] = "%.4f",		--	Cauton Panel Limit Maneuver
+	[158] = "%.4f",		--	Cauton Panel Chips in GRBX
 	
-	[159] = "%.4f",			--	Cauton Panel LH ENG High Vibration
-	[160] = "%.4f",			--	Cauton Panel RH ENG High Vibration
-	[161] = "%.4f",			--	Cauton Panel LH ENG High TEMP
-	[162] = "%.4f",			--	Cauton Panel RH ENG High TEMP
+	[159] = "%.4f",		--	Cauton Panel LH ENG High Vibration
+	[160] = "%.4f",		--	Cauton Panel RH ENG High Vibration
+	[161] = "%.4f",		--	Cauton Panel LH ENG High TEMP
+	[162] = "%.4f",		--	Cauton Panel RH ENG High TEMP
 	
-	[163] = "%.4f",			--	Cauton Panel ANTI ICE FAIL
-	[164] = "%.4f",			--	Cauton Panel HIGH CABIN PRESS
-	[165] = "%.4f",			--	Cauton Panel HIGH PEDAL PUSH RATE
+	[163] = "%.4f",		--	Cauton Panel ANTI ICE FAIL
+	[164] = "%.4f",		--	Cauton Panel HIGH CABIN PRESS
+	[165] = "%.4f",		--	Cauton Panel HIGH PEDAL PUSH RATE
 	
-	[166] = "%.4f",			--	Cauton Panel SHUT DOEN LH ENG
-	[167] = "%.4f",			--	Cauton Panel SHUT DOEN RH ENG
-	[168] = "%.4f",			--	Cauton Panel CHIPS IN LH ENG
-	[169] = "%.4f",			--	Cauton Panel CHIPS IN RH ENG
+	[166] = "%.4f",		--	Cauton Panel SHUT DOEN LH ENG
+	[167] = "%.4f",		--	Cauton Panel SHUT DOEN RH ENG
+	[168] = "%.4f",		--	Cauton Panel CHIPS IN LH ENG
+	[169] = "%.4f",		--	Cauton Panel CHIPS IN RH ENG
 	
-	[170] = "%.4f",			--	Cauton Panel SELECT STBY CODE
-	[171] = "%.4f",			--	Cauton Panel XPDR FAIL
-	[172] = "%.4f",			--	Cauton Panel HIGH CABIN PRESS
+	[170] = "%.4f",		--	Cauton Panel SELECT STBY CODE
+	[171] = "%.4f",		--	Cauton Panel XPDR FAIL
+	[172] = "%.4f",		--	Cauton Panel HIGH CABIN PRESS
 	
-	[173] = "%.4f",			--	Cauton Panel SPEED HOLD
-	[174] = "%.4f",			--	Cauton Panel MAP LIMIT
+	[173] = "%.4f",		--	Cauton Panel SPEED HOLD
+	[174] = "%.4f",		--	Cauton Panel MAP LIMIT
 	
-	[175] = "%.4f",			--	Cauton Panel LH ENG DUST PROT ON
-	[176] = "%.4f",			--	Cauton Panel RH ENG DUST PROT ON
+	[175] = "%.4f",		--	Cauton Panel LH ENG DUST PROT ON
+	[176] = "%.4f",		--	Cauton Panel RH ENG DUST PROT ON
 	
-	[177] = "%.4f",			--	Cauton Panel CONTROL TO OPERATOR
+	[177] = "%.4f",		--	Cauton Panel CONTROL TO OPERATOR
 	
-	[197] = "%.4f",			--	Right quarter panel light
-	[200] = "%.4f",			--	Right quarter panel light
-	[201] = "%.4f",			--	Right quarter panel light
-	[202] = "%.4f",			--	Right quarter panel light
-	[203] = "%.4f",			--	Right quarter panel light
-	[204] = "%.4f",			--	Right quarter panel light
-	[205] = "%.4f",			--	Right quarter panel light
-	[206] = "%.4f",			--	Right quarter panel light
+	[197] = "%.4f",		--	Right quarter panel light
+	[200] = "%.4f",		--	Right quarter panel light
+	[201] = "%.4f",		--	Right quarter panel light
+	[202] = "%.4f",		--	Right quarter panel light
+	[203] = "%.4f",		--	Right quarter panel light
+	[204] = "%.4f",		--	Right quarter panel light
+	[205] = "%.4f",		--	Right quarter panel light
+	[206] = "%.4f",		--	Right quarter panel light
 	
-	[209] = "%.4f",			--	Left quarter panel light
-	[210] = "%.4f",			--	Left quarter panel light
-	[211] = "%.4f",			--	Left quarter panel light
-	[212] = "%.4f",			--	Left quarter panel light
+	[209] = "%.4f",		--	Left quarter panel light
+	[210] = "%.4f",		--	Left quarter panel light
+	[211] = "%.4f",		--	Left quarter panel light
+	[212] = "%.4f",		--	Left quarter panel light
 	
-	[220] = "%.4f",			--	Left quarter panel light
-	[221] = "%.4f",			--	Left quarter panel light
-	[222] = "%.4f",			--	Left quarter panel light
+	[220] = "%.4f",		--	Left quarter panel light
+	[221] = "%.4f",		--	Left quarter panel light
+	[222] = "%.4f",		--	Left quarter panel light
 	
-	[225] = "%.4f",			--	Landing Light Up Left Brightness
-	[226] = "%.4f",			--	Landing Light Up Center Brightness
-	[227] = "%.4f",			--	Landing Light Up Right Brightness
-	[229] = "%.4f",			--	Landing Light Down Left Brightness
-	[230] = "%.4f",			--	Landing Light Down Center Brightness
-	[231] = "%.4f",			--	Landing Light Down Right Brightness
+	[225] = "%.4f",		--	Landing Light Up Left Brightness
+	[226] = "%.4f",		--	Landing Light Up Center Brightness
+	[227] = "%.4f",		--	Landing Light Up Right Brightness
+	[229] = "%.4f",		--	Landing Light Down Left Brightness
+	[230] = "%.4f",		--	Landing Light Down Center Brightness
+	[231] = "%.4f",		--	Landing Light Down Right Brightness
 	
-	[278] = "%.4f",			--	1st SAS Off Light Brightness
-	[279] = "%.4f",			--	1st SAS On Light Brightness	
-	[280] = "%.4f",			--	2st SAS Off Light Brightness
-	[281] = "%.4f",			--	2st SAS On Light Brightness	
-	[284] = "%.4f",			--	Radar Altimeter Yellow button Brightness
-	[291] = "%.4f",			--	yellow warning above the gyro red warnings
+	[278] = "%.4f",		--	1st SAS Off Light Brightness
+	[279] = "%.4f",		--	1st SAS On Light Brightness	
+	[280] = "%.4f",		--	2st SAS Off Light Brightness
+	[281] = "%.4f",		--	2st SAS On Light Brightness	
+	[284] = "%.4f",		--	Radar Altimeter Yellow button Brightness
+	[291] = "%.4f",		--	yellow warning above the gyro red warnings
 	
-	[293] = "%.4f",			--	3st SAS Off Light Brightness
-	[294] = "%.4f",			--	3st SAS On Light Brightness	
-	[295] = "%.4f",			--	4st SAS Off Light Brightness
-	[296] = "%.4f",			--	4st SAS On Light Brightness	
-	[297] = "%.4f",			--	Hover Mode Light
-	[298] = "%.4f",			--	hover/route mode off light
-	[299] = "%.4f",			--	route mode light
-	[302] = "%.4f",			--	weird ap button/switch light
-	[303] = "%.4f",			--	Altitude Mode Red
-	[304] = "%.4f",			--	Altitude Mode Green
+	[293] = "%.4f",		--	3st SAS Off Light Brightness
+	[294] = "%.4f",		--	3st SAS On Light Brightness	
+	[295] = "%.4f",		--	4st SAS Off Light Brightness
+	[296] = "%.4f",		--	4st SAS On Light Brightness	
+	[297] = "%.4f",		--	Hover Mode Light
+	[298] = "%.4f",		--	hover/route mode off light
+	[299] = "%.4f",		--	route mode light
+	[302] = "%.4f",		--	weird ap button/switch light
+	[303] = "%.4f",		--	Altitude Mode Red
+	[304] = "%.4f",		--	Altitude Mode Green
 	
-	[323] = "%.4f",			--	Left Mirror On at 1
+	[323] = "%.4f",		--	Left Mirror On at 1
 	
-	[338] = "%.4f",			--	Far Left Panel Light 1
-	[390] = "%.4f",			--	Far Left Panel Light 2
-	[391] = "%.4f",			--	Far Left Panel Light 3
-	[393] = "%.4f",			--	Far Left Panel Light 4
+	[338] = "%.4f",		--	Far Left Panel Light 1
+	[390] = "%.4f",		--	Far Left Panel Light 2
+	[391] = "%.4f",		--	Far Left Panel Light 3
+	[393] = "%.4f",		--	Far Left Panel Light 4
 	-- more far left lights up to 410
 	
 	-- [470] to [481] are all left side wall lights
 	
-	[508] = "%.4f",			--	R-828 Left Knee green light
+	[508] = "%.4f",		--	R-828 Left Knee green light
 	
-	[532] = "%.4f",			--	Weapon Panel Right 4pack 1
-	[533] = "%.4f",			--	Weapon Panel Right 4pack 2
-	[534] = "%.4f",			--	Weapon Panel Right 4pack 3
-	[535] = "%.4f",			--	Weapon Panel Right 4pack 4
+	[532] = "%.4f",		--	Weapon Panel Right 4pack 1
+	[533] = "%.4f",		--	Weapon Panel Right 4pack 2
+	[534] = "%.4f",		--	Weapon Panel Right 4pack 3
+	[535] = "%.4f",		--	Weapon Panel Right 4pack 4
 	
-	[539] = "%.4f",			--	Weapon Panel Station Indicator 4
-	[540] = "%.4f",			--	Weapon Panel Station Indicator 3
-	[543] = "%.4f",			--	Weapon Panel Station Indicator 2
-	[544] = "%.4f",			--	Weapon Panel Station Indicator 1
+	[539] = "%.4f",		--	Weapon Panel Station Indicator 4
+	[540] = "%.4f",		--	Weapon Panel Station Indicator 3
+	[543] = "%.4f",		--	Weapon Panel Station Indicator 2
+	[544] = "%.4f",		--	Weapon Panel Station Indicator 1
 	
-	[584] = "%.4f",			--	Weapon Panel Left Bottom Light
+	[584] = "%.4f",		--	Weapon Panel Left Bottom Light
 	
-	[559] = "%0.1f",		--	UFC Selected Weapon 1
-	[560] = "%0.1f",		--	UFC Selected Weapon 2
-	[561] = "%0.1f",		--	UFC Selected Weapon 4
-	[562] = "%0.1f",		--	UFC Selected Weapon 5
-	[563] = "%0.1f",		--	UFC Selected Weapon 6
+	[559] = "%0.1f",	--	UFC Selected Weapon 1
+	[560] = "%0.1f",	--	UFC Selected Weapon 2
+	[561] = "%0.1f",	--	UFC Selected Weapon 4
+	[562] = "%0.1f",	--	UFC Selected Weapon 5
+	[563] = "%0.1f",	--	UFC Selected Weapon 6
 	
-	[754] = "%.4f",			-- Operator door light
-	[760] = "%.4f",			-- Operator Green light above door light
-	[767] = "%.4f",			-- Operator Green light right of door light
+	[754] = "%.4f",		-- Operator door light
+	[760] = "%.4f",		-- Operator Green light above door light
+	[767] = "%.4f",		-- Operator Green light right of door light
 	
-	[776] = "%.4f",			-- Operator airspeed needle
-	[777] = "%.4f",			-- Operator adi lower left flag
-	[778] = "%.4f",			-- Operator adi upper left flag
-	[779] = "%.4f",			-- Operator adi upper right flag
-	[780] = "%.4f",			-- Operator adi pitch
-	[781] = "%.4f",			-- Operator adi lower right flag
-	[783] = "%.4f",			-- Operator adi roll
-	[784] = "%.4f",			-- Operator adi ball -1 to 1
-	[785] = "%.4f",			-- Operator adi FD left/right
-	[785] = "%.4f",			-- Operator adi FD up/down
+	[776] = "%.4f",		-- Operator airspeed needle
+	[777] = "%.4f",		-- Operator adi lower left flag
+	[778] = "%.4f",		-- Operator adi upper left flag
+	[779] = "%.4f",		-- Operator adi upper right flag
+	[780] = "%.4f",		-- Operator adi pitch
+	[781] = "%.4f",		-- Operator adi lower right flag
+	[783] = "%.4f",		-- Operator adi roll
+	[784] = "%.4f",		-- Operator adi ball -1 to 1
+	[785] = "%.4f",		-- Operator adi FD left/right
+	[785] = "%.4f",		-- Operator adi FD up/down
 	
-	[789] = "%.4f",			-- Operator altimeter small hand 0 to 1
+	[789] = "%.4f",		-- Operator altimeter small hand 0 to 1
 	
-	[817] = "%.4f",			--	Doppler system on light
+	[817] = "%.4f",		--	Doppler system on light
 	
-	[823] = "%.4f",			--	Emergency Gear Panel 1
-	[824] = "%.4f",			--	Emergency Gear Panel 2
-	[825] = "%.4f",			--	Emergency Gear Panel 3
+	[823] = "%.4f",		--	Emergency Gear Panel 1
+	[824] = "%.4f",		--	Emergency Gear Panel 2
+	[825] = "%.4f",		--	Emergency Gear Panel 3
 	
-	[831] = "%.4f",			--	Doppler Hover Flag Light
+	[831] = "%.4f",		--	Doppler Hover Flag Light
 	
-	[881] = "%.4f",			--	Overhead Light white
+	[881] = "%.4f",		--	Overhead Light white
 	
-	[957] = "%.4f",			--	Operator Black box first Light COMP ON
-	[958] = "%.4f",			--	Operator Black box 2 Light LNCHR OFF
-	[959] = "%.4f",			--	Operator Black box 3 Light CHECK
-	[960] = "%.4f",			--	Operator Black box 4 Light READY
-	[961] = "%.4f",			--	Operator Black box 5 Light MSL ON LNCHR
-	[962] = "%.4f",			--	Operator Black box 6 Light LAUNCH APPRVL
 	
-	[966] = "%.4f",			--	Snars Flares Left desp light
-	[967] = "%.4f",			--	Snars Flares right desp light
 	
-	[976] = "%.4f",			--	Overhead Light Red
+	[966] = "%.4f",		--	Snars Flares Left desp light
+	[967] = "%.4f",		--	Snars Flares right desp light
 	
-	[975] = "%.4f",			--	doppler left/right green light
+	[976] = "%.4f",		--	Overhead Light Red
 	
-	[977] = "%0.1f",			--	Map Light
+	[975] = "%.4f",		--	doppler left/right green light
 	
-	[991] = "%.4f",			--	RWR Red Light 1
-	[992] = "%.4f",			--	RWR Red Light 2
-	[993] = "%.4f",			--	RWR Red Light 3
-	[994] = "%.4f",			--	RWR Red Light 4
+	[977] = "%0.1f",		--	Map Light
 	
-	[995] = "%.4f",			--	RWR White Light 1
-	[996] = "%.4f",			--	RWR White Light 2
-	[997] = "%.4f",			--	RWR White Light 3
-	[998] = "%.4f",			--	RWR White Light 4
+	[991] = "%.4f",		--	RWR Red Light 1
+	[992] = "%.4f",		--	RWR Red Light 2
+	[993] = "%.4f",		--	RWR Red Light 3
+	[994] = "%.4f",		--	RWR Red Light 4
+	
+	[995] = "%.4f",		--	RWR White Light 1
+	[996] = "%.4f",		--	RWR White Light 2
+	[997] = "%.4f",		--	RWR White Light 3
+	[998] = "%.4f",		--	RWR White Light 4
 	
 	-- Not lights
-	[17] = "%.4f",			--	G Meter Needle
-	[27] = "%.4f",			--	HSI Course Needle 0 to 1
-	[28] = "%.4f",			--	Navaid Bearing Needle 0 to 1
+	[17] = "%.4f",		--	G Meter Needle
+	[27] = "%.4f",		--	HSI Course Needle 0 to 1
+	[28] = "%.4f",		--	Navaid Bearing Needle 0 to 1
 	
-	[32] = "%.4f",			--	Radar Altimeter needle 0 to 1
-	[33] = "%.4f",			--	Radar Altimeter bug 0 to 1
-	[36] = "%.4f",			--	Blade pitch needle 0 to 1
+	[32] = "%.4f",		--	Radar Altimeter needle 0 to 1
+	[33] = "%.4f",		--	Radar Altimeter bug 0 to 1
+	[36] = "%.4f",		--	Blade pitch needle 0 to 1
 	
-	[37] = "%.4f",			--	Engine Left Power 0 to 1
-	[38] = "%.4f",			--	Engine Right Power 0 to 1
-	[39] = "%.4f",			--	Engine Power Meter 0 to 1
+	[37] = "%.4f",		--	Engine Left Power 0 to 1
+	[38] = "%.4f",		--	Engine Right Power 0 to 1
+	[39] = "%.4f",		--	Engine Power Meter 0 to 1
 	
-	[37] = "%.4f",			--	Engine 1 Power Needle 0 to 1
-	[38] = "%.4f",			--	Engine 2 Power Needle 0 to 1
+	[37] = "%.4f",		--	Engine 1 Power Needle 0 to 1
+	[38] = "%.4f",		--	Engine 2 Power Needle 0 to 1
 	
-	[42] = "%.4f",			--	Engine 1 Torque Needle 0 to 1
+	[42] = "%.4f",		--	Engine 1 Torque Needle 0 to 1
 	
-	[43] = "%.4f",			--	Engine Temp Needle 1 0 to 1
-	[44] = "%.4f",			--	Engine Temp Needle 2 0 to 1
-	[45] = "%.4f",			--	Engine Temp Needle 3 0 to 1
-	[46] = "%.4f",			--	Engine Temp Needle 4 0 to 1
+	[43] = "%.4f",		--	Engine Temp Needle 1 0 to 1
+	[44] = "%.4f",		--	Engine Temp Needle 2 0 to 1
+	[45] = "%.4f",		--	Engine Temp Needle 3 0 to 1
+	[46] = "%.4f",		--	Engine Temp Needle 4 0 to 1
 	
-	[49] = "%.4f",			--	Clock Hands 1
-	[50] = "%.4f",			--	Clock Hands 2
-	[51] = "%.4f",			--	Clock Hands 3
-	[52] = "%.4f",			--	Clock Hands 4
-	[53] = "%.4f",			--	Clock Hands 5
-	[54] = "%.4f",			--	Clock Hands 6
-	[55] = "%.4f",			--	Clock Hands 7
+	[49] = "%.4f",		--	Clock Hands 1
+	[50] = "%.4f",		--	Clock Hands 2
+	[51] = "%.4f",		--	Clock Hands 3
+	[52] = "%.4f",		--	Clock Hands 4
+	[53] = "%.4f",		--	Clock Hands 5
+	[54] = "%.4f",		--	Clock Hands 6
+	[55] = "%.4f",		--	Clock Hands 7
 	
-	[179] = "%.4f",			--	Right quarterpanel Engene Needles
-	[180] = "%.4f",			--	Right quarterpanel Engene Needles
-	[181] = "%.4f",			--	Right quarterpanel Engene Needles
-	[182] = "%.4f",			--	Right quarterpanel Engene Needles
-	[183] = "%.4f",			--	Right quarterpanel Engene Needles
-	[184] = "%.4f",			--	Right quarterpanel Engene Needles
-	[185] = "%.4f",			--	Right quarterpanel Engene Needles
-	[186] = "%.4f",			--	Right quarterpanel Engene Needles
-	[188] = "%.4f",			--	Right quarterpanel Engene Needles
-	[190] = "%.4f",			--	Right quarterpanel Engene Needles
+	[179] = "%.4f",		--	Right quarterpanel Engene Needles
+	[180] = "%.4f",		--	Right quarterpanel Engene Needles
+	[181] = "%.4f",		--	Right quarterpanel Engene Needles
+	[182] = "%.4f",		--	Right quarterpanel Engene Needles
+	[183] = "%.4f",		--	Right quarterpanel Engene Needles
+	[184] = "%.4f",		--	Right quarterpanel Engene Needles
+	[185] = "%.4f",		--	Right quarterpanel Engene Needles
+	[186] = "%.4f",		--	Right quarterpanel Engene Needles
+	[188] = "%.4f",		--	Right quarterpanel Engene Needles
+	[190] = "%.4f",		--	Right quarterpanel Engene Needles
 	
-	[525] = "%.4f",			--	Fuel Indficator needle
-	[790] = "%.4f",			--	Airspeed Indficator needle -1 to 1. to almost goes around twice
-	[791] = "%.4f",			--	Drift Left/Right needle
+	[525] = "%.4f",		--	Fuel Indficator needle
+	[790] = "%.4f",		--	Airspeed Indficator needle -1 to 1. to almost goes around twice
+	[791] = "%.4f",		--	Drift Left/Right needle
 	
-	[828] = "%.4f",			--	Doppler Hover Altitude
-	[829] = "%.4f",			--	Doppler Hover Left/Right
-	[830] = "%.4f",			--	Doppler Hover Up/Down
+	[828] = "%.4f",		--	Doppler Hover Altitude
+	[829] = "%.4f",		--	Doppler Hover Left/Right
+	[830] = "%.4f",		--	Doppler Hover Up/Down
 	
-	[939] = "%.4f",			--	Main ADI pitch
-	[940] = "%.4f",			--	Main ADI right flag
-	[942] = "%.4f",			--	Main ADI roll
-	[943] = "%.4f",			--	Main ADI ball
-	[945] = "%.4f",			--	Main ADI pokey thing
+	[939] = "%.4f",		--	Main ADI pitch
+	[940] = "%.4f",		--	Main ADI right flag
+	[942] = "%.4f",		--	Main ADI roll
+	[943] = "%.4f",		--	Main ADI ball
+	[945] = "%.4f",		--	Main ADI pokey thing
 	
-	[948] = "%.4f",			--	Standby ADI top flag
-	[949] = "%.4f",			--	Standby ADI pitch
-	[950] = "%.4f",			--	Standby ADI roll
+	[948] = "%.4f",		--	Standby ADI top flag
+	[949] = "%.4f",		--	Standby ADI pitch
+	[950] = "%.4f",		--	Standby ADI roll
 	
-	[973] = "%.4f",			--	Operator Windshield Wiper
-	[974] = "%.4f",			--	Seat gone at 1
+	[973] = "%.4f",		--	Operator Windshield Wiper
+	[974] = "%.4f",		--	Seat gone at 1
 	
-	[988] = "%.4f",			--	Operator Altimeter Big hand
+	[988] = "%.4f",		--	Operator Altimeter Big hand
+	
+	
+	[788] = "%.4f",		--	Operator Baro Pressure Knob	ALTIMETER-KNOB-OP-PTR
+	[18] = "%.4f",		--	Baro Pressure Knob	ALTIMETER-KNOB-PTR
+	[21] = "%.4f",		--	Baro Pressure Kollsman Window 0 = 670, 1 = 790
+	
+	[687] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-OP-PTR
+	[694] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-OP-PTR
+	[57] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-PTR
+	[58] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-PTR
+	[59] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-PTR
+	[60] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-PTR
+	
+	[0] = "%.4f",		--	Collective (LMB press	COLLECTIVE-CORR-PTR
+	[1] = "%.4f",		--	Cyclic Left/Right
+	[2] = "%.4f",		--	Cyclic Forward/Aft
+	[3] = "%.4f",		--	Collective Up/Down
+	[5] = "%.4f",		--	Left Engine Throttle	RRUD-LEFT-PTR
+	[4] = "%.4f",		--	Right Engine Throttle	RRUD-RIGHT-PTR
+	[6] = "%.4f",		--	Left Engine Stop	ENG-BRAKE-LEFT-PTR
+	[7] = "%.4f",		--	Right Engine Stop	ENG-BRAKE-RIGHT-PTR
+	[745] = "%.4f",		--	Rotor Brake	ROTOR-BRAKE-PTR
+	
+	
+	
+	-- Ammo Counters 0 to 1
+	[716] = "%.4f",		--  Counter 1 1st two digits roller 0 to 19
+	[717] = "%.4f",		--  Counter 1 2nd two digits roller 0 to 95 via 5 
+	[718] = "%0.1f",	--  Counter 1 Red Light
+	[719] = "%.4f",		--	Counter Adjustment 1  ROUNDS-KNOB-1
+	
+	[720] = "%.4f",		--  Counter 2 1st two digits roller 0 to 19
+	[721] = "%.4f",		--  Counter 2 2nd two digits roller 0 to 95 via 5 
+	[722] = "%0.1f",	--  Counter 2 Red Light
+	[723] = "%.4f",		--	Counter Adjustment 2  ROUNDS-KNOB-2
+	
+	[724] = "%.4f",		--  Counter 3 1st two digits roller 0 to 19
+	[725] = "%.4f",		--  Counter 3 2nd two digits roller 0 to 95 via 5 
+	[726] = "%0.1f",	--  Counter 3 Red Light
+	[727] = "%.4f",		--	Counter Adjustment 3  ROUNDS-KNOB-3
+	
+	[728] = "%.4f",		--  Counter 4 1st two digits roller 0 to 19
+	[729] = "%.4f",		--  Counter 4 2nd two digits roller 0 to 95 via 5 
+	[730] = "%0.1f",	--  Counter 4 Red Light
+	[731] = "%.4f",		--	Counter Adjustment 4  ROUNDS-KNOB-4
+	
+	[732] = "%.4f",		--  Counter 5 1st two digits roller 0 to 19
+	[733] = "%.4f",		--  Counter 5 2nd two digits roller 0 to 95 via 5 
+	[734] = "%0.1f",	--  Counter 5 Red Light
+	[735] = "%.4f",		--	Counter Adjustment 5  ROUNDS-KNOB-5
+	
+	
+}
+ExportScript.ConfigArguments = 
+{
+	--[[
+	arguments for export in low tick interval
+	based on "clickabledata.lua"
+	
+	--TODO: The switches and buttons should be here.
+]]
 
-	-- Anti Ice
-	[109] = "%1d",		--	AntiIce AUTO/MANUAL	ROTOR-DEICER-AUTO-MAN-PTR
-	[110] = "%1d",		--	AntiIce OFF	ROTOR-DEICER-OFF-PTR
-	[113] = "%1d",		--	Left Engine AntiIce ON/OFF	LEFT-ENG-HEATING-PTR
-	[112] = "%1d",		--	Right Engine AntiIce ON/OFF	RIGHT-ENG-HEATING-PTR
-	[111] = "%.4f",		--	Windshield Antiice LOW/OFF/HIGH	WINDSHIELD-DEICER-PTR
-	[675] = "%.4f",		--	Windshield Antiice LOW/OFF/HIGH	WINDSHIELD-DEICER-OP-PTR
-	[114] = "%.4f",		--	AC Voltmeter knob	DEICER-KNOB-PTR
+	-- DISS (these are 0 to 1)
+	[799] = "%.4f",		--  Lateral Deviation 1st digit
+	[800] = "%.4f",		--  Lateral Deviation 2st digit
+	[801] = "%.4f",		--  Lateral Deviation 3st digit
+	[802] = "%0.1f",	--  Lateral Left/Right
+	[805] = "%0.1f",	--  Distance Forward/Back
+	[806] = "%0.1f",	--  Distance KM 1st digit
+	[807] = "%0.1f",	--  Distance KM 2st digit
+	[808] = "%0.1f",	--  Distance KM 3st digit
+	[811] = "%.4f",		--  Course Angle 1st digit
+	[812] = "%.4f",		--  Course Angle 2st digit
+	[813] = "%.4f",		--  Course Angle 3st digit
+	[814] = "%.4f",		--  Course Angle 4st digit
+	[817] = "%.4f",		--  TURN ON Light
+	[823] = "%.4f",		--  DISS Select Mode OPER Light
+	[824] = "%.4f",		--  DISS Select Mode M Light
+	[825] = "%.4f",		--  DISS Select Mode D Light
+	[827] = "%.4f",		--  DISS Select Mode TEST Light
+	
+	-- DISS
+	[371] = "%0.1f",	--	DISS-15D ON/OFF	DISS-ON-OFF-PTR
+	[370] = "%0.1f",	--	Airspeed to DISS ON/OFF	DVS-DISS-PTR
+	[818] = "%0.1f",	--	DISS coordinates OFF	PTR-DISS-BTN-OFF
+	[819] = "%0.1f",	--	DISS coordinates ON	PTR-DISS-BTN-ON
+	[815] = "%0.1f",	--	DISS decrease map angle	PTR-DISS-BTN-MINUS
+	[816] = "%0.1f",	--	DISS increase map angle	PTR-DISS-BTN-PLUS
+	[809] = "%0.1f",	--	DISS decrease path	PTR-DISS-BTN-N
+	[810] = "%0.1f",	--	DISS increase path	PTR-DISS-BTN-V
+	[803] = "%0.1f",	--	DISS decrease deviation	PTR-DISS-BTN-TOLE
+	[804] = "%0.1f",	--	DISS increase deviation	PTR-DISS-BTN-TORI
+	[797] = "%0.1f",	--	DISS Mode WORK/CHECK	DRIFT-R-K-PTR
+	[798] = "%0.1f",	--	DISS Mode LAND/SEA	DRIFT-S-M-PTR
+	[826] = "%0.1f",	--	DISS select mode IDK/IDK/IDK/MEM/OPER	DISS-SELECTOR-KNOB-PTR
 	
 	-- ARC 15 Panel
 	[634] = "%.4f",		--	ARC-15 Volume	ARC-OP-VOLUME-PTR
@@ -321,6 +400,31 @@ ExportScript.ConfigEveryFrameArguments =
 	[458] = "%.4f",		--	ARC-15 Loop Button	ARC-FRAME-PTR
 	[462] = "%.4f",		--	ARC-15 1/2	ARC-CHANNEL-PTR
 	[461] = "%.4f",		--	ARC-15 Control Button	ARC-AUTH-PTR
+	
+	-- Autopilot
+	[243] = "%0.1f",	--	Autopilot K Channel ON	SAU-K-ON-PTR
+	[242] = "%0.1f",	--	Autopilot K Channel OFF	SAU-K-OFF-PTR
+	[237] = "%0.1f",	--	Autopilot H Channel ON	SAU-H-ON-PTR
+	[236] = "%0.1f",	--	Autopilot H Channel OFF	SAU-H-OFF-PTR
+	[249] = "%0.1f",	--	Autopilot T Channel ON	SAU-T-ON-PTR
+	[248] = "%0.1f",	--	Autopilot T Channel OFF	SAU-T-OFF-PTR
+	[255] = "%0.1f",	--	Autopilot B Channel ON	SAU-B-ON-PTR
+	[254] = "%.4f",		--	Autopilot B Channel OFF	SAU-B-OFF-PTR
+	[253] = "%.4f",		--	Autopilot Altitude Control	SAU-B-SWITCH-PTR
+	[240] = "%.4f",		--	Autopilot K Channel Delta Correction	SAU-K-KNOB-PTR
+	[234] = "%.4f",		--	Autopilot H Channel Delta Correction	SAU-H-KNOB-PTR
+	[246] = "%.4f",		--	Autopilot T Channel Delta Correction	SAU-T-KNOB-PTR
+	[742] = "%.4f",		--	Autopilot Trimmer Button	STICK-TRIMMER-PTR
+	[855] = "%.4f",		--	Autopilot Trimmer Button	OP-STICK-TRIMMER-PTR
+	[262] = "%.4f",		--	Autopilot Route Azimuth	SAU-AZ-PTR
+	[258] = "%.4f",		--	Autopilot Altitude Mode ON	SAU-HEIGHT-ON-PTR
+	[257] = "%.4f",		--	Autopilot Altitude Mode OFF	SAU-HEIGHT-OFF-PTR
+	[259] = "%.4f",		--	Autopilot Hover Mode ON	SAU-HOVER-ON-PTR
+	[261] = "%.4f",		--	Autopilot Route Mode ON	SAU-ROUTE-ON-PTR
+	[260] = "%.4f",		--	Autopilot Route and Hover Modes OFF	SAU-HOVER-ROUTE-OFF-PTR
+	[268] = "%.4f",		--	Autopilot Speed Stabilization ON	SAU-SPEED-ON-PTR
+	[269] = "%.4f",		--	Autopilot Speed Stabilization OFF	SAU-SPEED-OFF-PTR
+	[267] = "%.4f",		--	Buttons Lighting BRIGHT/DIM	SAU-BRIGHT-DIM-PTR
 	
 	-- ARC U2
 	[324] = "%.4f",		--	ARC-U2 switcher On/Off	ARC-U2-ON-OFF-PTR
@@ -356,134 +460,31 @@ ExportScript.ConfigEveryFrameArguments =
 	[762] = "%0.1f",	--	USR check	WEAP-DISTR-CONTROL-OP-PTR
 	[1006] = "%0.1f",	--	Sight reflector control	ILS-ADJUST-HANDLE-PTR
 	
-	-- Autopilot
-	[243] = "%0.1f",	--	Autopilot K Channel ON	SAU-K-ON-PTR
-	[242] = "%0.1f",	--	Autopilot K Channel OFF	SAU-K-OFF-PTR
-	[237] = "%0.1f",	--	Autopilot H Channel ON	SAU-H-ON-PTR
-	[236] = "%0.1f",	--	Autopilot H Channel OFF	SAU-H-OFF-PTR
-	[249] = "%0.1f",	--	Autopilot T Channel ON	SAU-T-ON-PTR
-	[248] = "%0.1f",	--	Autopilot T Channel OFF	SAU-T-OFF-PTR
-	[255] = "%0.1f",	--	Autopilot B Channel ON	SAU-B-ON-PTR
-	[254] = "%.4f",		--	Autopilot B Channel OFF	SAU-B-OFF-PTR
-	[253] = "%.4f",		--	Autopilot Altitude Control	SAU-B-SWITCH-PTR
-	[240] = "%.4f",		--	Autopilot K Channel Delta Correction	SAU-K-KNOB-PTR
-	[234] = "%.4f",		--	Autopilot H Channel Delta Correction	SAU-H-KNOB-PTR
-	[246] = "%.4f",		--	Autopilot T Channel Delta Correction	SAU-T-KNOB-PTR
-	[742] = "%.4f",		--	Autopilot Trimmer Button	STICK-TRIMMER-PTR
-	[855] = "%.4f",		--	Autopilot Trimmer Button	OP-STICK-TRIMMER-PTR
-	[262] = "%.4f",		--	Autopilot Route Azimuth	SAU-AZ-PTR
-	[258] = "%.4f",		--	Autopilot Altitude Mode ON	SAU-HEIGHT-ON-PTR
-	[257] = "%.4f",		--	Autopilot Altitude Mode OFF	SAU-HEIGHT-OFF-PTR
-	[259] = "%.4f",		--	Autopilot Hover Mode ON	SAU-HOVER-ON-PTR
-	[261] = "%.4f",		--	Autopilot Route Mode ON	SAU-ROUTE-ON-PTR
-	[260] = "%.4f",		--	Autopilot Route and Hover Modes OFF	SAU-HOVER-ROUTE-OFF-PTR
-	[268] = "%.4f",		--	Autopilot Speed Stabilization ON	SAU-SPEED-ON-PTR
-	[269] = "%.4f",		--	Autopilot Speed Stabilization OFF	SAU-SPEED-OFF-PTR
-	[267] = "%.4f",		--	Buttons Lighting BRIGHT/DIM	SAU-BRIGHT-DIM-PTR
+	-- Jadro-1I
+	[438] = "%0.1f",	--	Jadro-1I Mode OFF/AM/OM	JADRO-MODULATION-PTR
+	[437] = "%0.1f",	--	Jadro-1I Frequency	JADRO-001-PTR
+	[436] = "%0.1f",	--	Jadro-1I Frequency	JADRO-01-PTR
+	[429] = "%0.1f",	--	Jadro-1I Frequency	JADRO-1-PTR
+	[428] = "%0.1f",	--	Jadro-1I Frequency	JADRO-10-PTR
+	[427] = "%0.1f",	--	Jadro-1I Frequency	JADRO-100-PTR
+	[426] = "%0.1f",	--	Jadro-1I Volume	JADRO-VOLUME-PTR
+	[421] = "%0.1f",	--	Jadro-1I Squelch	JADRO-PSH-PTR
+	[423] = "%0.1f",	--	Jadro-1I Test	JADRO-CONTROL-PTR
+	[374] = "%0.1f",	--	Jadro-1I ON/OFF	JADRO-ON-OFF-PTR
 	
-	[788] = "%.4f",		--	Operator Baro Pressure Knob	ALTIMETER-KNOB-OP-PTR
-	[18] = "%.4f",		--	Baro Pressure Knob	ALTIMETER-KNOB-PTR
-	[21] = "%.4f",		--	Baro Pressure Kollsman Window 0 = 670, 1 = 790
+	[739] = "%0.1f",	--	Trim Hat
 	
-	[687] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-OP-PTR
-	[694] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-OP-PTR
-	[57] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-PTR
-	[58] = "%.4f",		--	Mech clock left lever	CLOCK-LEFT-PTR
-	[59] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-PTR
-	[60] = "%.4f",		--	Mech clock right lever	CLOCK-RIGHT-PTR
-	
-	[232] = "%.4f",		--	Gear Lever	LANDING-GEAR-PTR
-	[228] = "%.4f",		--	Gear Lever Lock	LANDING-GEAR-LOCK-PTR
-	[224] = "%.4f",		--	Gear Indication Lights ON/OFF	LANDING-GEAR-LIGHTS-PTR
-	[223] = "%.4f",		--	Gear Indication Lights Cover UP/DOWN	LANDING-GEAR-LIGHTS-COVER-PTR
-	[677] = "%.4f",		--	Operator Gear Switch	LANDING-GEAR-OP-PTR
-	[676] = "%.4f",		--	Operator Gear Switch Cover	LANDING-GEAR-OP-COVER-PTR
-	[827] = "%.4f",		--	Emeregency Gear Lever	LANDING-GEAR-EMER-PTR
-	
-	[763] = "%.4f",		--	Heating DUAS	DUAS-V-HEATING-OP-PTR
-	[672] = "%.4f",		--	Clock Heating Switch	CLOCK-HEATING-OP-PTR
-	[384] = "%.4f",		--	Window Sprayer Button	WIPER-SPRINKLER-PTR
-	[680] = "%.4f",		--	Operator Window Sprayer Button	WIPER-SPRINKLER-OP-PTR
-	[8] = "%.4f",		--	Pilot Door Safety Lock	CANOPY-HANDLE-PTR
-	[189] = "%.4f",		--	Pilot Door Safety Lock Button	CANOPY-HANDLE-SAFETY-PTR
-	[848] = "%.4f",		--	Operator Lock Canopy	CANOPY-HANDLE-OP-PTR
-	[418] = "%.4f",		--	Windscreen Wiper Control Switch	WIPER-MODE-PTR-START
-	[674] = "%.4f",		--	Windscreen Wiper Control Switch	WIPER-MODE-OP-PTR-START
-	[420] = "%.4f",		--	Pilot Fan	FAN-PTR
-	[665] = "%.4f",		--	Operator Fan	FAN-OP-PTR
-	[737] = "%.4f",		--	Wheel Brakes Handle	STICK-BRAKE-PTR
-	[736] = "%.4f",		--	Parking Brake Handle	STICK-BRAKE-FIX-PTR
-	[753] = "%.4f",		--	friction clutch of the collective	COLLECTIVE-FRICT-PTR
-	[0] = "%.4f",		--	Cockpit Fan - Touch	EASTER_OP
-	[974] = "%.4f",		--	Hide Stick toggle	PTR-STICK-HIDE-974
-	[671] = "%.4f",		--	Autopilot Trimmer for yourself 	CONTROL-TRIMMER-OP-PTR
-	[670] = "%.4f",		--	Autopilot Trimmer for yourself Switch Cover	CONTROL-TRIMMER-OP-COVER-PTR
-	
-	-- DISS
-	[371] = "%0.1f",	--	DISS-15D ON/OFF	DISS-ON-OFF-PTR
-	[370] = "%0.1f",	--	Airspeed to DISS ON/OFF	DVS-DISS-PTR
-	[818] = "%0.1f",	--	DISS coordinates OFF	PTR-DISS-BTN-OFF
-	[819] = "%0.1f",	--	DISS coordinates ON	PTR-DISS-BTN-ON
-	[815] = "%0.1f",	--	DISS decrease map angle	PTR-DISS-BTN-MINUS
-	[816] = "%0.1f",	--	DISS increase map angle	PTR-DISS-BTN-PLUS
-	[809] = "%0.1f",	--	DISS decrease path	PTR-DISS-BTN-N
-	[810] = "%0.1f",	--	DISS increase path	PTR-DISS-BTN-V
-	[803] = "%0.1f",	--	DISS decrease deviation	PTR-DISS-BTN-TOLE
-	[804] = "%0.1f",	--	DISS increase deviation	PTR-DISS-BTN-TORI
-	[797] = "%0.1f",	--	DISS Mode WORK/CHECK	DRIFT-R-K-PTR
-	[798] = "%0.1f",	--	DISS Mode LAND/SEA	DRIFT-S-M-PTR
-	[826] = "%0.1f",	--	DISS select mode IDK/IDK/IDK/MEM/OPER	DISS-SELECTOR-KNOB-PTR
-	
-	-- DISS (these are 0 to 1)
-	[799] = "%.4f",		--  Lateral Deviation 1st digit
-	[800] = "%.4f",		--  Lateral Deviation 2st digit
-	[801] = "%.4f",		--  Lateral Deviation 3st digit
-	[802] = "%0.1f",	--  Lateral Left/Right
-	[805] = "%0.1f",	--  Distance Forward/Back
-	[806] = "%0.1f",	--  Distance KM 1st digit
-	[807] = "%0.1f",	--  Distance KM 2st digit
-	[808] = "%0.1f",	--  Distance KM 3st digit
-	[811] = "%.4f",		--  Course Angle 1st digit
-	[812] = "%.4f",		--  Course Angle 2st digit
-	[813] = "%.4f",		--  Course Angle 3st digit
-	[814] = "%.4f",		--  Course Angle 4st digit
-	[817] = "%.4f",		--  TURN ON Light
-	[823] = "%.4f",		--  DISS Select Mode OPER Light
-	[824] = "%.4f",		--  DISS Select Mode M Light
-	[825] = "%.4f",		--  DISS Select Mode D Light
-	[827] = "%.4f",		--  DISS Select Mode TEST Light
-	
-	[133] = "%.4f",		--	Cabin Unseal Switch	CABIN-DEPRESS-PTR
-	[134] = "%.4f",		--	Blowdown Conditioning Switch	AC-MODE-PTR
-	[143] = "%.4f",		--	Filter Switch	AC-FILTER-PTR
-	[144] = "%.4f",		--	Heating Switch	AC-HEATER1-MODE-PTR
-	[145] = "%.4f",		--	Automatic Hot Cold Switch	AC-HEATER2-MODE-PTR
-	[146] = "%.4f",		--	Temperature Selector	AC-TEMP-KNOB-PTR
-	[774] = "%.4f",		--	Sight Fan	WEAP-MISSILES-SIGHT-FAN-OP-PTR
-	[516] = "%.4f",		--	Sealing	CABIN-PRESS-VALVE-PTR
-	[87] = "%.4f",		--	AC Ground Power	GROUND-AC-PTR
-	[101] = "%.4f",		--	Left Generator switch	GEN-LEFT-PTR
-	[80] = "%.4f",		--	Right Generator switch	GEN-RIGHT-PTR
-	[83] = "%.4f",		--	AC Transformer 115v	TRANS115-PTR
-	[85] = "%.4f",		--	AC Transformer 36v	TRANS36-PTR
-	[89] = "%.4f",		--	AC Ground Check	GROUND-RECT-PTR
-	[98] = "%.4f",		--	Inverter PO-750A	INV115-PTR
-	[100] = "%.4f",		--	Inverter PT-125Ts	INV36-PTR
-	[91] = "%.4f",		--	AC Voltmeter knob	VOLT-AC-KNOB-PTR
-	[196] = "%.4f",		--	DIM Transformer switch	TRANS-DIM-PTR
-	[73] = "%.4f",		--	DC Ground Power	GROUND-DC-PTR
-	[75] = "%.4f",		--	Left Battery switch	BATT-LEFT-PTR
-	[61] = "%.4f",		--	Right Battery switch	BATT-RIGHT-PTR
-	[62] = "%.4f",		--	Left Rectifier switch	RECT-LEFT-PTR
-	[65] = "%.4f",		--	Right Rectifier switch	RECT-RIGHT-PTR
-	[66] = "%.4f",		--	APU Generator switch	STARTER-GEN-PTR
-	[74] = "%.4f",		--	Battery Heating	BATT-HEATING-PTR
-	[71] = "%.4f",		--	Network to Batteries	NET-TO-BATT-PTR
-	[69] = "%.4f",		--	DC Voltmeter knob	VOLT-DC-KNOB-PTR
-	[88] = "%.4f",		--	AC Ground Check Cover	GROUND-RECT-COVER-PTR
-	[97] = "%.4f",		--	Inverter PO-750A Cover	INV115-COVER-PTR
-	[99] = "%.4f",		--	Inverter PT-125Ts Cover	INV36-COVER-PTR
-	[70] = "%.4f",		--	Network to Batteries cover	NET-TO-BATT-COVER-PTR
+	-- Cassette
+	[343] = "%.4f",		--	Signal Flares Cassette 1 Power Switch	FLARE-TOP-POWER-PTR
+	[345] = "%.4f",		--	Signal Flares Cassette 1 Launch Green Button	FLARE-TOP-GREEN-PTR
+	[344] = "%.4f",		--	Signal Flares Cassette 1 Launch Red Button	FLARE-TOP-RED-PTR
+	[347] = "%.4f",		--	Signal Flares Cassette 1 Launch White Button	FLARE-TOP-WHITE-PTR
+	[346] = "%.4f",		--	Signal Flares Cassette 1 Launch Yellow Button	FLARE-TOP-YELLOW-PTR
+	[352] = "%.4f",		--	Signal Flares Cassette 2 Power Switch	FLARE-BOTTOM-POWER-PTR
+	[350] = "%.4f",		--	Signal Flares Cassette 2 Launch Green Button	FLARE-BOTTOM-GREEN-PTR
+	[351] = "%.4f",		--	Signal Flares Cassette 2 Launch Red Button	FLARE-BOTTOM-RED-PTR - FIX! labeled wrong in DCS
+	[348] = "%.4f",		--	Signal Flares Cassette 2 Launch White Button	FLARE-BOTTOM-WHITE-PTR
+	[349] = "%.4f",		--	Signal Flares Cassette 2 Launch Yellow Button	FLARE-BOTTOM-YELLOW-PTR
 	
 	[601] = "%.4f",		--	All Left CBs ON	CB-FRAME-LEFT-1-PTR
 	[632] = "%.4f",		--	All Right CBs ON	CB-FRAME-RIGHT-1-PTR
@@ -548,15 +549,45 @@ ExportScript.ConfigEveryFrameArguments =
 	[599] = "%.4f",		--	CB Landing Light Control	CB-LEFT-HEADLIGHT-CONTROL-PTR
 	[600] = "%.4f",		--	CB Main Attitude Indicator	CB-LEFT-PILOTING-DEVICE-PTR
 	
-	[0] = "%.4f",		--	Collective (LMB press	COLLECTIVE-CORR-PTR
-	[1] = "%.4f",		--	Cyclic Left/Right
-	[2] = "%.4f",		--	Cyclic Forward/Aft
-	[3] = "%.4f",		--	Collective Up/Down
-	[5] = "%.4f",		--	Left Engine Throttle	RRUD-LEFT-PTR
-	[4] = "%.4f",		--	Right Engine Throttle	RRUD-RIGHT-PTR
-	[6] = "%.4f",		--	Left Engine Stop	ENG-BRAKE-LEFT-PTR
-	[7] = "%.4f",		--	Right Engine Stop	ENG-BRAKE-RIGHT-PTR
-	[745] = "%.4f",		--	Rotor Brake	ROTOR-BRAKE-PTR
+	[957] = "%.4f",			--	Operator Black box first Light COMP ON
+	[958] = "%.4f",			--	Operator Black box 2 Light LNCHR OFF
+	[959] = "%.4f",			--	Operator Black box 3 Light CHECK
+	[960] = "%.4f",			--	Operator Black box 4 Light READY
+	[961] = "%.4f",			--	Operator Black box 5 Light MSL ON LNCHR
+	[962] = "%.4f",			--	Operator Black box 6 Light LAUNCH APPRVL
+	
+	[133] = "%.4f",		--	Cabin Unseal Switch	CABIN-DEPRESS-PTR
+	[134] = "%.4f",		--	Blowdown Conditioning Switch	AC-MODE-PTR
+	[143] = "%.4f",		--	Filter Switch	AC-FILTER-PTR
+	[144] = "%.4f",		--	Heating Switch	AC-HEATER1-MODE-PTR
+	[145] = "%.4f",		--	Automatic Hot Cold Switch	AC-HEATER2-MODE-PTR
+	[146] = "%.4f",		--	Temperature Selector	AC-TEMP-KNOB-PTR
+	[774] = "%.4f",		--	Sight Fan	WEAP-MISSILES-SIGHT-FAN-OP-PTR
+	[516] = "%.4f",		--	Sealing	CABIN-PRESS-VALVE-PTR
+	[87] = "%.4f",		--	AC Ground Power	GROUND-AC-PTR
+	[101] = "%.4f",		--	Left Generator switch	GEN-LEFT-PTR
+	[80] = "%.4f",		--	Right Generator switch	GEN-RIGHT-PTR
+	[83] = "%.4f",		--	AC Transformer 115v	TRANS115-PTR
+	[85] = "%.4f",		--	AC Transformer 36v	TRANS36-PTR
+	[89] = "%.4f",		--	AC Ground Check	GROUND-RECT-PTR
+	[98] = "%.4f",		--	Inverter PO-750A	INV115-PTR
+	[100] = "%.4f",		--	Inverter PT-125Ts	INV36-PTR
+	[91] = "%.4f",		--	AC Voltmeter knob	VOLT-AC-KNOB-PTR
+	[196] = "%.4f",		--	DIM Transformer switch	TRANS-DIM-PTR
+	[73] = "%.4f",		--	DC Ground Power	GROUND-DC-PTR
+	[75] = "%.4f",		--	Left Battery switch	BATT-LEFT-PTR
+	[61] = "%.4f",		--	Right Battery switch	BATT-RIGHT-PTR
+	[62] = "%.4f",		--	Left Rectifier switch	RECT-LEFT-PTR
+	[65] = "%.4f",		--	Right Rectifier switch	RECT-RIGHT-PTR
+	[66] = "%.4f",		--	APU Generator switch	STARTER-GEN-PTR
+	[74] = "%.4f",		--	Battery Heating	BATT-HEATING-PTR
+	[71] = "%.4f",		--	Network to Batteries	NET-TO-BATT-PTR
+	[69] = "%.4f",		--	DC Voltmeter knob	VOLT-DC-KNOB-PTR
+	[88] = "%.4f",		--	AC Ground Check Cover	GROUND-RECT-COVER-PTR
+	[97] = "%.4f",		--	Inverter PO-750A Cover	INV115-COVER-PTR
+	[99] = "%.4f",		--	Inverter PT-125Ts Cover	INV36-COVER-PTR
+	[70] = "%.4f",		--	Network to Batteries cover	NET-TO-BATT-COVER-PTR
+	
 	[307] = "%.4f",		--	APU Start	APU-START-PTR
 	[311] = "%.4f",		--	APU Stop	APU-STOP-PTR
 	[313] = "%.4f",		--	APU Launch Method START/CRANK/FALSE	APU-FALSE-CRANK-START-PTR
@@ -568,7 +599,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[796] = "%.4f",		--	Antidust ON/OFF	DEDUST-OFF-PTR
 	[514] = "%.4f",		--	Antidust ON Cover	DEDUST-OFF-COVER-PTR
 	[194] = "%.4f",		--	Engine Termometer control COLD	ENG-TEMP-SENSOR-CONTROL-COLD-PTR
-	[0] = "%.4f",		--	Collective (LMB press	OP-COLL-THROTTLE-PTR
+	
 	[337] = "%.4f",		--	Eucalypt-M24 Channel Select	EUCAL-CHANNEL-PTR
 	[339] = "%.4f",		--	Eucalypt-M24 Volume	EUCAL-VOLUME-PTR
 	[340] = "%.4f",		--	Eucalypt-M24 ASU	EUCAL-ASY-PTR
@@ -627,6 +658,81 @@ ExportScript.ConfigEveryFrameArguments =
 	[451] = "%.4f",		--	Greben' mode SETUP/OPER	GREBEN-SETUP-PTR
 	[858] = "%.4f",		--	Course setter	RMI-COURSE-KNOB-PTR
 	[947] = "%.4f",		--	Accelerometer Reset Button - Push to reset	GFORCE-RESET-PTR
+	
+	[647] = "%.4f",		--	KM-2 set magnetic declination 	KM2-KNOB-PTR
+	[645] = "%.4f",		--	KM-2 Test button	KM2-CONTR-BUTTON-PTR
+	[985] = "%0.1f",	--	Map Scale Selector	MAPDISPLAY-SCALE-PTR
+	[291] = "%.4f",		--	Set the vertical position of the helicopter on the Map 	MAPDISPLAY-VERT-PTR
+	[983] = "%.4f",		--	Set the horizontall position of the helicopter on the Map 	MAPDISPLAY-HOR-PTR
+	[984] = "%0.1f",	--	Map Power ON/OFF	MAPDISPLAY-POWER-PTR
+	[192] = "%.4f",		--	Map Highlight  BRIGHT/OFF/DIM	MAP-LIGHT-PTR
+	[10] = "%.4f",		--	Cage Gyro 1	GYRO1-CAGE-PTR
+	[369] = "%.4f",		--	Gyro 1 Power	MGV1-POWER-PTR
+	[14] = "%.4f",		--	Cage Gyro 2	GYRO2-CAGE-PTR
+	[701] = "%.4f",		--	Cage Gyro 2	GYRO-CAGE-OP-PTR
+	[368] = "%.4f",		--	Gyro 2 Power	MGV2-POWER-PTR
+	[12] = "%0.1f",		--	Gyrovertical Switch	GYRO-SEL-PTR
+	[759] = "%0.1f",	--	ADI Switch	PKP-POWER-OP-PTR
+	[782] = "%.4f",		--	Pitch Trim Knob	PKP-INIT-PITCH-KNOB-OP-PTR
+	[787] = "%.4f",		--	Test ADI Button	PKP-TEST-OP-PTR
+	[941] = "%.4f",		--	Pitch Trim Knob	PKP-INIT-PITCH-KNOB-PTR
+	[946] = "%.4f",		--	Test ADI Button	PKP-TEST-PTR
+	[30] = "%.4f",		--	Radar altimeter adjust and test	RADAR-ALTIMETER-KNOB-PTR
+	[31] = "%.4f",		--	Radar altimeter adjust and test	RADAR-ALTIMETER-KNOB-PTR
+	[372] = "%.4f",		--	RV-5 ON/OFF	RAD-ALT-ON-OFF-PTR
+	[843] = "%0.1f",	--	Mode Switch	ZK_ARK_U005
+	[26] = "%0.1f",		--	Mode Switch	RMI-KUR-2-PTR
+	[518] = "%.4f",		--	R-852 Channel Select	R852-CHANNEL-PTR
+	[517] = "%.4f",		--	R-852 Volume	R852-VOLUME-KNOB-PTR
+	[375] = "%.4f",		--	R-863 ON/OFF	R863-ON-OFF-PTR
+	[506] = "%.4f",		--	R-863 FM/AM	R863-MODULATION-PTR
+	[513] = "%.4f",		--	R-863 Channel Select	R863-CHANNEL-PTR
+	[510] = "%.4f",		--	R-863 Squelch ON/OFF	R863-PSH-PTR
+	[511] = "%.4f",		--	R-863 Volume	R863-VOLUME-KNOB-PTR
+	[507] = "%.4f",		--	R-863 Emergency Receiver ON/OFF	R863-AP-PTR
+	[509] = "%.4f",		--	R-863 ARC-UD ON/OFF	R863-RK-PTR
+	[378] = "%.4f",		--	Recorder MC 61 Power Switch	RECORDER-POWER-PTR
+	[1007] = "%.4f",	--	Recorder MC 61 AUTO/WORK	RECORDER-MODE-PTR
+	[381] = "%.4f",		--	Recorder MC 61 Brightness Knob	RECORDER-LTG-KNOB-PTR
+	[1012] = "%.4f",	--	Laryngophone Switch	RECORDER-SOURCE-PTR
+	[357] = "%.4f",		--	SARPP-12 Mode Switch	SARPP-MAN-AUTO-OFF-PTR
+	
+	-- Anti Ice
+	[109] = "%1d",		--	AntiIce AUTO/MANUAL	ROTOR-DEICER-AUTO-MAN-PTR
+	[110] = "%1d",		--	AntiIce OFF	ROTOR-DEICER-OFF-PTR
+	[113] = "%1d",		--	Left Engine AntiIce ON/OFF	LEFT-ENG-HEATING-PTR
+	[112] = "%1d",		--	Right Engine AntiIce ON/OFF	RIGHT-ENG-HEATING-PTR
+	[111] = "%.4f",		--	Windshield Antiice LOW/OFF/HIGH	WINDSHIELD-DEICER-PTR
+	[675] = "%.4f",		--	Windshield Antiice LOW/OFF/HIGH	WINDSHIELD-DEICER-OP-PTR
+	[114] = "%.4f",		--	AC Voltmeter knob	DEICER-KNOB-PTR
+	
+	[334] = "%.4f",		--	IFF Transponder Mode Selector Switch	DEV6201-CODE-PTR
+	[336] = "%.4f",		--	IFF Transponder Device Selector Switch	DEV6201-MAIN-BACKUP-PTR
+	[332] = "%.4f",		--	IFF Transponder Device Mode Switch	DEV6201-NOT-USED-PTR
+	[328] = "%.4f",		--	IFF Transponder Erase Button Cover	DEV6201-ERASE-COVER-PTR
+	[329] = "%.4f",		--	IFF Transponder Erase Button - Push to erase	DEV6201-ERASE-PTR
+	[330] = "%.4f",		--	IFF Transponder Disaster Switch Cover	DEV6201-SOS-COVER-PTR
+	[331] = "%.4f",		--	IFF Transponder Disaster Switch	DEV6201-SOS-PTR
+	[383] = "%.4f",		--	IFF Transponder Power Switch	DEV6201-POWER-PTR
+	
+	[682] = "%.4f",		--	Operator Cabin Lighting Switch	LTG-COCKPIT-OP-PTR
+	[356] = "%.4f",		--	Pilot Cabin Lighting Switch	LTG-COCKPIT-PTR
+	[354] = "%.4f",		--	Cargo Lighting Switch	LTG-WHITE-PTR
+	[353] = "%.4f",		--	Cargo Lighting Switch Cover	LTG-WHITE-COVER-PTR
+	[355] = "%.4f",		--	Cargo Lighting Switch	LTG-CARGO-PTR
+	[363] = "%.4f",		--	Test Warning Lights Button	LAMP-CONTROL-PTR
+	[681] = "%.4f",		--	Test Warning Lights Button	LAMP-CONTROL-OP-PTR
+	[362] = "%.4f",		--	Day-Night Switch	DAY-NIGHT-PTR
+	[364] = "%.4f",		--	Blinker Switch	FLASHER-PTR
+	[148] = "%.4f",		--	Transformer 1 Group Of Red Lights Right And Pilot Panel	RED-LTG1-PTR
+	[147] = "%.4f",		--	Transformer 2 Group Of Red Lights Right And Pilot Panel	RED-LTG2-PTR
+	[822] = "%.4f",		--	Armament Panel Red Lights Switch	AUX-LTG-PTR
+	[820] = "%.4f",		--	Transformer 1 Group Of Red Lights Left Pilot Panel	RED-LTG4-PTR
+	[503] = "%.4f",		--	Transformer 2 Group Of Red Lights Left Pilot Panel	RED-LTG5-PTR
+	[1013] = "%.4f",	--	Transformer 1 Group Of Red Lights Left And Operator Panel	RED-LTG1-OP-PTR
+	[1014] = "%.4f",	--	Transformer 2 Group Of Red Lights Left And Operator Panel	RED-LTG2-OP-PTR
+	[149] = "%.4f",		--	Builtin Red Lights Transformer	RED-LTG3-PTR
+	
 	[865] = "%.4f",		--	Engage Stick	OP-COLL-ENGAGE-PTR
 	[859] = "%.4f",		--	Disengage Stick	OP-STICK-DISENGAGE-PTR
 	[857] = "%.4f",		--	Disengage Stick Cover	OP-STICK-DISENGAGE-COVER-PTR
@@ -659,99 +765,14 @@ ExportScript.ConfigEveryFrameArguments =
 	[931] = "%.4f",		--	Checking	SHTV-CHECK-PTR
 	[875] = "%.4f",		--	High K	SHTV-HIGH-K-PTR
 	[932] = "%.4f",		--	Lamps Check	SHTV-LAMP-CHECK-PTR
-	[775] = "%0.1f",		--	Sight Doors	WEAP-MISSILES-SIGHT-HEATING-OP-PTR
+	[775] = "%0.1f",	--	Sight Doors	WEAP-MISSILES-SIGHT-HEATING-OP-PTR
 	[871] = "%0.1f",	--	Zoom In-Out	OP-SIGHT-SCOPE-PTR
-	[872] = "%0.1f",		--	Orange Filter	OP-SIGHT-ORANGE-PTR
-	[873] = "%0.1f",		--	Laser Filter	OP-SIGHT-ANTILASER-PTR
-	[884] = "%0.1f",		--	Backlight	PK-LIGHT-PTR
-	[890] = "%0.1f",		--	Sight Heating	PK-HEATING-PTR
+	[872] = "%0.1f",	--	Orange Filter	OP-SIGHT-ORANGE-PTR
+	[873] = "%0.1f",	--	Laser Filter	OP-SIGHT-ANTILASER-PTR
+	[884] = "%0.1f",	--	Backlight	PK-LIGHT-PTR
+	[890] = "%0.1f",	--	Sight Heating	PK-HEATING-PTR
 	[0] = "%.4f",		--	Push to Park/Unpark Operators Stick	PTR-STICK-STOW-1026
 	
-	[334] = "%.4f",		--	IFF Transponder Mode Selector Switch	DEV6201-CODE-PTR
-	[336] = "%.4f",		--	IFF Transponder Device Selector Switch	DEV6201-MAIN-BACKUP-PTR
-	[332] = "%.4f",		--	IFF Transponder Device Mode Switch	DEV6201-NOT-USED-PTR
-	[328] = "%.4f",		--	IFF Transponder Erase Button Cover	DEV6201-ERASE-COVER-PTR
-	[329] = "%.4f",		--	IFF Transponder Erase Button - Push to erase	DEV6201-ERASE-PTR
-	[330] = "%.4f",		--	IFF Transponder Disaster Switch Cover	DEV6201-SOS-COVER-PTR
-	[331] = "%.4f",		--	IFF Transponder Disaster Switch	DEV6201-SOS-PTR
-	[383] = "%.4f",		--	IFF Transponder Power Switch	DEV6201-POWER-PTR
-	
-	[682] = "%.4f",		--	Operator Cabin Lighting Switch	LTG-COCKPIT-OP-PTR
-	[356] = "%.4f",		--	Pilot Cabin Lighting Switch	LTG-COCKPIT-PTR
-	[354] = "%.4f",		--	Cargo Lighting Switch	LTG-WHITE-PTR
-	[353] = "%.4f",		--	Cargo Lighting Switch Cover	LTG-WHITE-COVER-PTR
-	[355] = "%.4f",		--	Cargo Lighting Switch	LTG-CARGO-PTR
-	[363] = "%.4f",		--	Test Warning Lights Button	LAMP-CONTROL-PTR
-	[681] = "%.4f",		--	Test Warning Lights Button	LAMP-CONTROL-OP-PTR
-	[362] = "%.4f",		--	Day-Night Switch	DAY-NIGHT-PTR
-	[364] = "%.4f",		--	Blinker Switch	FLASHER-PTR
-	[148] = "%.4f",		--	Transformer 1 Group Of Red Lights Right And Pilot Panel	RED-LTG1-PTR
-	[147] = "%.4f",		--	Transformer 2 Group Of Red Lights Right And Pilot Panel	RED-LTG2-PTR
-	[822] = "%.4f",		--	Armament Panel Red Lights Switch	AUX-LTG-PTR
-	[820] = "%.4f",		--	Transformer 1 Group Of Red Lights Left Pilot Panel	RED-LTG4-PTR
-	[503] = "%.4f",		--	Transformer 2 Group Of Red Lights Left Pilot Panel	RED-LTG5-PTR
-	[1013] = "%.4f",	--	Transformer 1 Group Of Red Lights Left And Operator Panel	RED-LTG1-OP-PTR
-	[1014] = "%.4f",	--	Transformer 2 Group Of Red Lights Left And Operator Panel	RED-LTG2-OP-PTR
-	[149] = "%.4f",		--	Builtin Red Lights Transformer	RED-LTG3-PTR
-	
-	[438] = "%0.1f",		--	Jadro-1I Mode OFF/AM/OM	JADRO-MODULATION-PTR
-	[437] = "%0.1f",		--	Jadro-1I Frequency	JADRO-001-PTR
-	[436] = "%0.1f",		--	Jadro-1I Frequency	JADRO-01-PTR
-	[429] = "%0.1f",		--	Jadro-1I Frequency	JADRO-1-PTR
-	[428] = "%0.1f",		--	Jadro-1I Frequency	JADRO-10-PTR
-	[427] = "%0.1f",		--	Jadro-1I Frequency	JADRO-100-PTR
-	[426] = "%0.1f",		--	Jadro-1I Volume	JADRO-VOLUME-PTR
-	[421] = "%0.1f",		--	Jadro-1I Squelch	JADRO-PSH-PTR
-	[423] = "%0.1f",		--	Jadro-1I Test	JADRO-CONTROL-PTR
-	[374] = "%0.1f",		--	Jadro-1I ON/OFF	JADRO-ON-OFF-PTR
-	
-	[647] = "%.4f",		--	KM-2 set magnetic declination 	KM2-KNOB-PTR
-	[645] = "%.4f",		--	KM-2 Test button	KM2-CONTR-BUTTON-PTR
-	[985] = "%0.1f",		--	Map Scale Selector	MAPDISPLAY-SCALE-PTR
-	[291] = "%.4f",		--	Set the vertical position of the helicopter on the Map 	MAPDISPLAY-VERT-PTR
-	[983] = "%.4f",		--	Set the horizontall position of the helicopter on the Map 	MAPDISPLAY-HOR-PTR
-	[984] = "%0.1f",		--	Map Power ON/OFF	MAPDISPLAY-POWER-PTR
-	[192] = "%.4f",		--	Map Highlight  BRIGHT/OFF/DIM	MAP-LIGHT-PTR
-	[10] = "%.4f",		--	Cage Gyro 1	GYRO1-CAGE-PTR
-	[369] = "%.4f",		--	Gyro 1 Power	MGV1-POWER-PTR
-	[14] = "%.4f",		--	Cage Gyro 2	GYRO2-CAGE-PTR
-	[701] = "%.4f",		--	Cage Gyro 2	GYRO-CAGE-OP-PTR
-	[368] = "%.4f",		--	Gyro 2 Power	MGV2-POWER-PTR
-	[12] = "%0.1f",		--	Gyrovertical Switch	GYRO-SEL-PTR
-	[759] = "%0.1f",		--	ADI Switch	PKP-POWER-OP-PTR
-	[782] = "%.4f",		--	Pitch Trim Knob	PKP-INIT-PITCH-KNOB-OP-PTR
-	[787] = "%.4f",		--	Test ADI Button	PKP-TEST-OP-PTR
-	[941] = "%.4f",		--	Pitch Trim Knob	PKP-INIT-PITCH-KNOB-PTR
-	[946] = "%.4f",		--	Test ADI Button	PKP-TEST-PTR
-	[30] = "%.4f",		--	Radar altimeter adjust and test	RADAR-ALTIMETER-KNOB-PTR
-	[31] = "%.4f",		--	Radar altimeter adjust and test	RADAR-ALTIMETER-KNOB-PTR
-	[372] = "%.4f",		--	RV-5 ON/OFF	RAD-ALT-ON-OFF-PTR
-	[843] = "%0.1f",	--	Mode Switch	ZK_ARK_U005
-	[26] = "%0.1f",		--	Mode Switch	RMI-KUR-2-PTR
-	[518] = "%.4f",		--	R-852 Channel Select	R852-CHANNEL-PTR
-	[517] = "%.4f",		--	R-852 Volume	R852-VOLUME-KNOB-PTR
-	[375] = "%.4f",		--	R-863 ON/OFF	R863-ON-OFF-PTR
-	[506] = "%.4f",		--	R-863 FM/AM	R863-MODULATION-PTR
-	[513] = "%.4f",		--	R-863 Channel Select	R863-CHANNEL-PTR
-	[510] = "%.4f",		--	R-863 Squelch ON/OFF	R863-PSH-PTR
-	[511] = "%.4f",		--	R-863 Volume	R863-VOLUME-KNOB-PTR
-	[507] = "%.4f",		--	R-863 Emergency Receiver ON/OFF	R863-AP-PTR
-	[509] = "%.4f",		--	R-863 ARC-UD ON/OFF	R863-RK-PTR
-	[378] = "%.4f",		--	Recorder MC 61 Power Switch	RECORDER-POWER-PTR
-	[1007] = "%.4f",		--	Recorder MC 61 AUTO/WORK	RECORDER-MODE-PTR
-	[381] = "%.4f",		--	Recorder MC 61 Brightness Knob	RECORDER-LTG-KNOB-PTR
-	[1012] = "%.4f",		--	Laryngophone Switch	RECORDER-SOURCE-PTR
-	[357] = "%.4f",		--	SARPP-12 Mode Switch	SARPP-MAN-AUTO-OFF-PTR
-	[343] = "%.4f",		--	Signal Flares Cassette 1 Power Switch	FLARE-TOP-POWER-PTR
-	[345] = "%.4f",		--	Signal Flares Cassette 1 Launch Green Button	FLARE-TOP-GREEN-PTR
-	[344] = "%.4f",		--	Signal Flares Cassette 1 Launch Red Button	FLARE-TOP-RED-PTR
-	[347] = "%.4f",		--	Signal Flares Cassette 1 Launch White Button	FLARE-TOP-WHITE-PTR
-	[346] = "%.4f",		--	Signal Flares Cassette 1 Launch Yellow Button	FLARE-TOP-YELLOW-PTR
-	[352] = "%.4f",		--	Signal Flares Cassette 2 Power Switch	FLARE-BOTTOM-POWER-PTR
-	[350] = "%.4f",		--	Signal Flares Cassette 2 Launch Green Button	FLARE-BOTTOM-GREEN-PTR
-	[351] = "%.4f",		--	Signal Flares Cassette 2 Launch Red Button	FLARE-BOTTOM-RED-PTR - FIX! labeled wrong in DCS
-	[348] = "%.4f",		--	Signal Flares Cassette 2 Launch White Button	FLARE-BOTTOM-WHITE-PTR
-	[349] = "%.4f",		--	Signal Flares Cassette 2 Launch Yellow Button	FLARE-BOTTOM-YELLOW-PTR
 	[366] = "%.4f",		--	RWR Power	SIRENA-POWER-PTR
 	[365] = "%.4f",		--	RWR Signal	SIRENA-SIGNAL-PTR
 	[989] = "%.4f",		--	RWR DAY/NIGHT	MAPDISPLAY-VERT-PTR001
@@ -781,40 +802,40 @@ ExportScript.ConfigEveryFrameArguments =
 	[361] = "%.4f",		--	RI-65 Repeat Button	SPEECH-REPEAT-PTR
 	[741] = "%.4f",		--	Fire Weapons	STICK-RS-PTR
 	[740] = "%.4f",		--	Fire Weapons Cover	STICK-RS-COVER-PTR
-	[521] = "%0.1f",		--	Burst Length SHORT/MED/LONG	WEAP-BURST-LENGTH-PTR
+	[521] = "%0.1f",	--	Burst Length SHORT/MED/LONG	WEAP-BURST-LENGTH-PTR
 	[522] = "%.4f",		--	Reload Left Gondola	WEAP-127-LEFT-RELOAD-PTR
 	[527] = "%.4f",		--	Reload Right Gondola	WEAP-127-RIGHT-RELOAD-PTR
-	[530] = "%0.1f",		--	Weapon Camera ON/OFF	WEAP-SIGHT-CONTROL-ON-OFF-PTR
-	[523] = "%0.1f",		--	Select Weapon Pilot	WEAP-SELECT-KNOB-PTR
-	[531] = "%0.1f",		--	Select Rockets LEFT/BOTH/RIGHT	WEAP-ROCKET-SELECT-PTR
-	[551] = "%0.1f",		--	Weapon Control ON/OFF	WEAP-ON-OFF-PTR
-	[550] = "%0.1f",		--	Cannon Fire Rate SLOW/FAST	WEAP-CANNON-PACE-PTR
+	[530] = "%0.1f",	--	Weapon Camera ON/OFF	WEAP-SIGHT-CONTROL-ON-OFF-PTR
+	[523] = "%0.1f",	--	Select Weapon Pilot	WEAP-SELECT-KNOB-PTR
+	[531] = "%0.1f",	--	Select Rockets LEFT/BOTH/RIGHT	WEAP-ROCKET-SELECT-PTR
+	[551] = "%0.1f",	--	Weapon Control ON/OFF	WEAP-ON-OFF-PTR
+	[550] = "%0.1f",	--	Cannon Fire Rate SLOW/FAST	WEAP-CANNON-PACE-PTR
 	[549] = "%.4f",		--	Reload Cannon	WEAP-NPU-RELOAD-PTR
 	[547] = "%.4f",		--	Stop container	WEAP-KMG-INTERRUPT-PTR
-	[546] = "%0.1f",		--	Explosion on Jettison ON/OFF	WEAP-JETTISON-EXPLOSION-PTR
-	[545] = "%0.1f",		--	Explosion on Jettison Cover	WEAP-JETTISON-EXPLOSION-COVER-PTR
-	[542] = "%0.1f",		--	Jettison Pylons ON/OFF	WEAP-JETTISON-SPECIAL-PTR
-	[541] = "%0.1f",		--	Jettison Pylons Cover	WEAP-JETTISON-SPECIAL-COVER-PTR
-	[538] = "%0.1f",		--	Jettison Launcher ON/OFF	WEAP-JETTISON-LAUNCHER-PTR
-	[537] = "%0.1f",		--	Jettison Launcher Cover	WEAP-JETTISON-LAUNCHER-COVER-PTR
+	[546] = "%0.1f",	--	Explosion on Jettison ON/OFF	WEAP-JETTISON-EXPLOSION-PTR
+	[545] = "%0.1f",	--	Explosion on Jettison Cover	WEAP-JETTISON-EXPLOSION-COVER-PTR
+	[542] = "%0.1f",	--	Jettison Pylons ON/OFF	WEAP-JETTISON-SPECIAL-PTR
+	[541] = "%0.1f",	--	Jettison Pylons Cover	WEAP-JETTISON-SPECIAL-COVER-PTR
+	[538] = "%0.1f",	--	Jettison Launcher ON/OFF	WEAP-JETTISON-LAUNCHER-PTR
+	[537] = "%0.1f",	--	Jettison Launcher Cover	WEAP-JETTISON-LAUNCHER-COVER-PTR
 	[536] = "%.4f",		--	Arm Rockets	WEAP-PUS-ENGAGEMENT-PTR
-	[673] = "%0.1f",		--	Main Weapon Safe Switch	ARMAMENT-POWER-OP-PTR
+	[673] = "%0.1f",	--	Main Weapon Safe Switch	ARMAMENT-POWER-OP-PTR
 	[187] = "%.4f",		--	Fire Weapons	OP-STICK-RS-PTR
 	[853] = "%.4f",		--	Fire Weapons Cover	OP-STICK-RS-COVER-PTR
-	[713] = "%0.1f",		--	Weapon Control	WEAP-PRIORITY-OP-PTR
+	[713] = "%0.1f",	--	Weapon Control	WEAP-PRIORITY-OP-PTR
 	[715] = "%.4f",		--	Explosion on Jettison	WEAP-JETTISON-EXPLOSION-OP-PTR
-	[142] = "%0.1f",		--	Emergency Jettison	WEAP-JETTISON-OP-PTR
+	[142] = "%0.1f",	--	Emergency Jettison	WEAP-JETTISON-OP-PTR
 	[770] = "%0.1f",	--	Burst Length SHORT/MED/LONG	WEAP-BURST-LENGTH-OP-PTR
 	[709] = "%0.1f",	--	Select Weapon Operator	WEAP-SELECT-KNOB-OP-PTR
-	[773] = "%0.1f",		--	Missiles Power	WEAP-MISSILES-POWER-OP-PTR
-	[955] = "%0.1f",		--	SCHO Power	SHSCHO-POWER-PTR
+	[773] = "%0.1f",	--	Missiles Power	WEAP-MISSILES-POWER-OP-PTR
+	[955] = "%0.1f",	--	SCHO Power	SHSCHO-POWER-PTR
 	[768] = "%.4f",		--	Release Check PU	WEAP-JETTISON-TEST-OP-PTR
-	[765] = "%0.1f",		--	Jettison Launcher ON/OFF	WEAP-JETTISON-SPECIAL-OP-PTR
-	[700] = "%0.1f",		--	Bombs/Blocks Mode	WEAP-BOMBS-BLOCKS-OP-PTR
-	[882] = "%0.1f",		--	Radiation Reset	OP-AIM-RESET-RAD-PTR
+	[765] = "%0.1f",	--	Jettison Launcher ON/OFF	WEAP-JETTISON-SPECIAL-OP-PTR
+	[700] = "%0.1f",	--	Bombs/Blocks Mode	WEAP-BOMBS-BLOCKS-OP-PTR
+	[882] = "%0.1f",	--	Radiation Reset	OP-AIM-RESET-RAD-PTR
 	[956] = "%.4f",		--	SCHO Lamps Check	SHSCHO-CHECK-PTR
 	[772] = "%0.1f",	--	Cannon Fire Rate SLOW/FAST	WEAP-CANNON-PACE-OP-PTR
-	[963] = "%0.1f",		--	Select Station	SHSCHO-KNOB-PTR
+	[963] = "%0.1f",	--	Select Station	SHSCHO-KNOB-PTR
 	[769] = "%.4f",		--	Reload Cannon	WEAP-NPU-RELOAD-OP-PTR
 	[712] = "%0.1f",	--	Weapon Control Cover	WEAP-PRIORITY-OP-COVER-PTR
 	[714] = "%0.1f",	--	Explosion on Jettison Cover	WEAP-JETTISON-EXPLOSION-OP-COVER-PTR
@@ -824,42 +845,34 @@ ExportScript.ConfigEveryFrameArguments =
 	[711] = "%0.1f",	--	Start container	WEAP-KMG-COMMENCE-OP-PTR
 	[710] = "%0.1f",	--	Stop container	WEAP-KMG-INTERRUPT-OP-PTR
 	
-	-- Ammo Counters 0 to 1
-	[716] = "%.4f",		--  Counter 1 1st two digits roller 0 to 19
-	[717] = "%.4f",		--  Counter 1 2nd two digits roller 0 to 95 via 5 
-	[718] = "%0.1f",	--  Counter 1 Red Light
-	[719] = "%.4f",		--	Counter Adjustment 1  ROUNDS-KNOB-1
+	[232] = "%.4f",		--	Gear Lever	LANDING-GEAR-PTR
+	[228] = "%.4f",		--	Gear Lever Lock	LANDING-GEAR-LOCK-PTR
+	[224] = "%.4f",		--	Gear Indication Lights ON/OFF	LANDING-GEAR-LIGHTS-PTR
+	[223] = "%.4f",		--	Gear Indication Lights Cover UP/DOWN	LANDING-GEAR-LIGHTS-COVER-PTR
+	[677] = "%.4f",		--	Operator Gear Switch	LANDING-GEAR-OP-PTR
+	[676] = "%.4f",		--	Operator Gear Switch Cover	LANDING-GEAR-OP-COVER-PTR
+	[827] = "%.4f",		--	Emeregency Gear Lever	LANDING-GEAR-EMER-PTR
 	
-	[720] = "%.4f",		--  Counter 2 1st two digits roller 0 to 19
-	[721] = "%.4f",		--  Counter 2 2nd two digits roller 0 to 95 via 5 
-	[722] = "%0.1f",	--  Counter 2 Red Light
-	[723] = "%.4f",		--	Counter Adjustment 2  ROUNDS-KNOB-2
-	
-	[724] = "%.4f",		--  Counter 3 1st two digits roller 0 to 19
-	[725] = "%.4f",		--  Counter 3 2nd two digits roller 0 to 95 via 5 
-	[726] = "%0.1f",	--  Counter 3 Red Light
-	[727] = "%.4f",		--	Counter Adjustment 3  ROUNDS-KNOB-3
-	
-	[728] = "%.4f",		--  Counter 4 1st two digits roller 0 to 19
-	[729] = "%.4f",		--  Counter 4 2nd two digits roller 0 to 95 via 5 
-	[730] = "%0.1f",	--  Counter 4 Red Light
-	[731] = "%.4f",		--	Counter Adjustment 4  ROUNDS-KNOB-4
-	
-	[732] = "%.4f",		--  Counter 5 1st two digits roller 0 to 19
-	[733] = "%.4f",		--  Counter 5 2nd two digits roller 0 to 95 via 5 
-	[734] = "%0.1f",	--  Counter 5 Red Light
-	[735] = "%.4f",		--	Counter Adjustment 5  ROUNDS-KNOB-5
-	
-	[739] = "%0.1f"		--	Trim Hat
-}
-ExportScript.ConfigArguments = 
-{
+	[763] = "%.4f",		--	Heating DUAS	DUAS-V-HEATING-OP-PTR
+	[672] = "%.4f",		--	Clock Heating Switch	CLOCK-HEATING-OP-PTR
+	[384] = "%.4f",		--	Window Sprayer Button	WIPER-SPRINKLER-PTR
+	[680] = "%.4f",		--	Operator Window Sprayer Button	WIPER-SPRINKLER-OP-PTR
+	[8] = "%.4f",		--	Pilot Door Safety Lock	CANOPY-HANDLE-PTR
+	[189] = "%.4f",		--	Pilot Door Safety Lock Button	CANOPY-HANDLE-SAFETY-PTR
+	[848] = "%.4f",		--	Operator Lock Canopy	CANOPY-HANDLE-OP-PTR
+	[418] = "%.4f",		--	Windscreen Wiper Control Switch	WIPER-MODE-PTR-START
+	[674] = "%.4f",		--	Windscreen Wiper Control Switch	WIPER-MODE-OP-PTR-START
+	[420] = "%.4f",		--	Pilot Fan	FAN-PTR
+	[665] = "%.4f",		--	Operator Fan	FAN-OP-PTR
+	[737] = "%.4f",		--	Wheel Brakes Handle	STICK-BRAKE-PTR
+	[736] = "%.4f",		--	Parking Brake Handle	STICK-BRAKE-FIX-PTR
+	[753] = "%.4f",		--	friction clutch of the collective	COLLECTIVE-FRICT-PTR
+	[0] = "%.4f",		--	Cockpit Fan - Touch	EASTER_OP
+	[974] = "%.4f",		--	Hide Stick toggle	PTR-STICK-HIDE-974
+	[671] = "%.4f",		--	Autopilot Trimmer for yourself 	CONTROL-TRIMMER-OP-PTR
+	[670] = "%.4f",		--	Autopilot Trimmer for yourself Switch Cover	CONTROL-TRIMMER-OP-COVER-PTR
 	--[[
-	arguments for export in low tick interval
-	based on "clickabledata.lua"
-]]
-	
-
+	]]--
 }
 
 -----------------------------
@@ -1121,9 +1134,6 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3023, string.format(txt_CHAFFS_Count))
 	ExportScript.Tools.SendData(3024, string.format("FLARE\n" .. txt_FLARES_Count))
 	ExportScript.Tools.SendData(3025, string.format("CHAFF\n" .. txt_CHAFFS_Count))
-	
-	
-	
 	
 	
 	-------------------
@@ -1403,7 +1413,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
 	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
 	
-	-- list_indication get tehe value of cockpit displays
+	-- list_indication get the value of cockpit displays
 	local ltmp1 = 0
 	for ltmp2 = 0, 20, 1 do
 		ltmp1 = list_indication(ltmp2)
@@ -1425,3 +1435,4 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+--TODO: Relocate functions to here
