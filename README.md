@@ -28,32 +28,7 @@ Following module export luas have been modified. Applicable DCS-ExportScripts ID
   - Added Mosquito FB MkVI
   - Removed duplicate exports
 - Spitfire LF MkIX
-  - Modified Radio Freq (2000)
-  - Modified radio channel (2001)
-  - Added compass (2003)
-  - Added dorectional gyro (2004)
-  - Added Oxygen Flow Rate Pilot (2005)
-  - added (is) Oxygen Flow Rate Pilot Emergency (2006)
-  - Added oxygen supply level (2007)
-  - Added (is) oxygen supply level red zone (2008)
-  - Added (is) either oxygen in emergency mode (2009)
-  - Added Altimeter Altitude (2010)
-  - Added Altimeter Pressure setting (2011)
-  - Added Efficient Climb Airspeed (2012)
-  - Added Gun Wingspan (2013)
-  - Added Gun Range (2014)
-  - Added Optimal Target Aircraft Wingspan (2015)
-  - Added RPM and Boost Tile (3000)
-  - Added Compass and Directional Gyro Tile (3001)
-  - Added Oxygen Tile (3002)
-  - Added Channel and Freq Tile (3003)
-  - Added Altimeter Tile (3004)
-  - Added Best Takeoff Power Tile (3005)
-  - Added Best Combat Power Tile (3006)
-  - Added Best Nominal Power Tile (3007)
-  - Added Best Crusing Power Tile (3008)
-  - Added Best Climb Power Tile (3009)
-  - Added Gun Sight Solution Tile (3010)
+  - Read Wiki for IDs
  
 ## Spitfire Media
 ---
