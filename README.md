@@ -36,4 +36,6 @@ Compatible with DCS World 2.7.6.13133
 
 # Wiki
 ---
-[DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deutsch and English)
+- https://github.com/asherao/DCS-ExportScripts/wiki
+- [DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deutsch and English)
+
