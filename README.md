@@ -1,5 +1,7 @@
-# Bailey's DCS-ExportScripts Library
+# Community DCS-ExportScripts Library
 ---
+
+See forums post here: https://forums.eagle.ru/topic/283178-dcs-exportscripts-for-stream-deck-community-github-library/
 
 This is based off of DCS-ExportScripts (https://github.com/s-d-a/DCS-ExportScripts/wiki). The main purpose is to make customized exports for DCS-Interface (https://github.com/charlestytler/streamdeck-dcs-interface) for use with an Elgato Stream Deck 
 
