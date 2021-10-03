@@ -27,8 +27,9 @@ Following module export luas have been modified. Applicable DCS-ExportScripts ID
 - Mosquito FB MkVI
   - Added Mosquito FB MkVI
   - Removed duplicate exports
+  - Read Wiki for Export IDs (https://github.com/asherao/DCS-ExportScripts/wiki/MosquitoFBMkVI)
 - Spitfire LF MkIX
-  - Read Wiki for IDs
+  - Read Wiki for Export IDs (https://github.com/asherao/DCS-ExportScripts/wiki/Spitfire-LF-MkIX)
 
 More info about SENPAI (https://forums.eagle.ru/topic/273399-stream-deck-altimeter-setting-in-inhg-and-hpa/?tab=comments#comment-4724094)
 
