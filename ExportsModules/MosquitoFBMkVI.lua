@@ -2,7 +2,7 @@
 --[[
 *****DISCLAIMER*****
 I do not have the ability to test this lua file.
-There is a significant chance this file may not work due to typos.
+There is a significant chance this file may not work due to work in progress.
 Please report any bugs, conflicts, or fixes on the github.
 https://github.com/asherao/DCS-ExportScripts
 See the bottom of the file for notes.
@@ -85,7 +85,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[81] = "%.4f", -- Flap position indicator {0.0, 1.0} 
 	[82] = "%.4f", -- Oxygen flow rate indicator pilot {0.0, 1.0}
 	[83] = "%.4f", -- Oxygen supply available indicator pilot {0.0, 1.0}
-	[84] = "%.4f", -- The knob between the two above ???
+	[84] = "%.4f", -- Oxygen valve pilot
 	[85] = "%.4f", -- Pneumatic indicator {0.0, 1.0}
 	[86] = "%.4f", -- Left Pneumatic Brake indicator {0.0, 1.0}
 	[87] = "%.4f", -- Right Pneumatic Brake indicator {0.0, 1.0}
@@ -125,7 +125,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[155] = "%.4f", -- Oxygen flow rate indicator copilot {0.0, 1.0}
 	[156] = "%.4f", -- Oxygen supply available indicator copilot {0.0, 1.0}
 	[177] = "%.4f", -- Voltimeter Light {0.0, 1.0}
-	[187] = "%.4f", -- The knob between the two oxygen above???
+	[187] = "%.4f", -- Oxygen valve copilot
 	
 	[201] = "%.4f", -- unknown ???
 	
@@ -140,7 +140,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[212] = "%.4f", -- Master oscillator dial left blue {0.0, 1.0}
 	[213] = "%.4f", -- Master oscillator dial right blue {0.0, 1.0}
 	[214] = "%.4f", -- Master oscillator dial right red {0.0, 1.0}
-	[215] = "%.4f", -- Frequency range switch {0.0, 1.0}
+	[215] = "%0.1f", -- Frequency range selector switch {0.0, 1.0} (0.0, 0.1,0.2)
 	[216] = "%.4f", -- Tap switch blue {0.0, 1.0}
 	[217] = "%.4f", -- Tap switch red {0.0, 1.0}
 	[218] = "%.4f", -- Transmitter T.1154 Master switch {0.0, 1.0}
@@ -156,7 +156,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[228] = "%.4f", -- Setting tuning indicator lamp {0.0, 1.0}
 	[229] = "%.4f", -- Receiver R.1155 Volume control {0.0, 1.0}
 	[230] = "%.4f", -- Heterodyne switch {0.0, 1.0}
-	[231] = "%.4f", -- Frequency range switch {0.0, 1.0}
+	[231] = "%0.1f", -- Frequency range selector switch {0.0, 1.0} (0.0, 0.1,0.2,0.3,0.4)
 	[232] = "%.4f", -- Frequency Needle {0.0, 1.0}
 	[233] = "%.4f", -- Frequency fine tuning knob {0.0, 1.0}
 	[234] = "%.4f", -- Frequency tuning knob {0.0, 1.0}
@@ -248,7 +248,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[380] = "%.4f", -- unknown ???
 	
 	[381] = "%.4f", -- Voltimeter warning light cover {0.0, 1.0}
-	[382] = "%.4f", -- Voltimeter warning glare {0.0, 1.0}
+	[382] = "%.4f" -- Voltimeter warning glare {0.0, 1.0}
 }
 ExportScript.ConfigArguments = 
 {
@@ -431,7 +431,7 @@ ExportScript.ConfigArguments =
 	[150] = "%.1f", --3067,FUSELAGE_BOMBS_3,TUMB,150,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_3_switch
 	[151] = "%.1f", --3069,FUSELAGE_BOMBS_4,TUMB,151,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_4_switch
 	[152] = "%.1f", --3071,ALL_BOMBS_NOSE,TUMB,152,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_nose_fusing_switch
-	[153] = "%.1f", --3073,ALL_BOMBS_TAIL,TUMB,153,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_tail_fusing_switch
+	[153] = "%.1f" --3073,ALL_BOMBS_TAIL,TUMB,153,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_tail_fusing_switch
 }
 
 -----------------------------
@@ -452,28 +452,13 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 	
-	--[[ Tiles
-	ExportScript.engLeftRpmTile(mainPanelDevice)
-	ExportScript.engLeftOilTile(mainPanelDevice)
-	ExportScript.engRightRpmTile(mainPanelDevice)
-	ExportScript.engRightOilTile(mainPanelDevice)
-	ExportScript.oxygenTile(mainPanelDevice)
-	ExportScript.BrakesTile(mainPanelDevice)
-	ExportScript.trimTile(mainPanelDevice)
-	ExportScript.fuelInnerTile(mainPanelDevice)
-	ExportScript.fuelCenterTile(mainPanelDevice)
-	ExportScript.fuelOuterTile(mainPanelDevice)
-	ExportScript.airTempTile(mainPanelDevice)
-	ExportScript.gearUpTile(mainPanelDevice)
-	ExportScript.gearDownTile(mainPanelDevice)
-	ExportScript.altBaroVsiTile(mainPanelDevice)
-	ExportScript.navigation1Tile(mainPanelDevice)
-	ExportScript.navigation2Tile(mainPanelDevice)
-	ExportScript.radio1Tile(mainPanelDevice)
-	ExportScript.radio2Tile(mainPanelDevice)
-	ExportScript.gunnerSightTile(mainPanelDevice)
-	--]]
 	
+	ExportScript.engineInstruments(mainPanelDevice)
+	ExportScript.gunnerTile(mainPanelDevice)
+	ExportScript.fuelTanksTiles(mainPanelDevice)
+	ExportScript.VhfRadioTile(mainPanelDevice)
+	ExportScript.CrazyRadioTile(mainPanelDevice)
+	ExportScript.PilotRadioTile(mainPanelDevice)
 	
 	--[[
 	----------------------------------------------
@@ -481,12 +466,6 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	----------------------------------------------
 	local dial_airspeed = math.floor(mainPanelDevice:get_argument_value(64) * 1000) --thanks ED
 	ExportScript.Tools.SendData(3000, dial_airspeed)
-	
-	----------------------------------------------
-	---------Display: Altitude--------------------
-	----------------------------------------------
-	
-	
 	
 	----------------------------------------------
 	---------Display: Heading Repeater--------------------
@@ -518,80 +497,6 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	local dial_verticalSpeedIndicator = math.floor(mainPanelDevice:get_argument_value(67) * 4000)
 	ExportScript.Tools.SendData(3019, dial_verticalSpeedIndicator)
 	
-	
-	----------------------------------------------
-	---------Display: Sight Range Indication--------------------
-	----------------------------------------------
-	
-	local dial_sightRangeRaw = math.floor(mainPanelDevice:get_argument_value(107))
-	
-	local dial_sightRange = math.floor((dial_sightRangeRaw * dial_sightRangeRaw * dial_sightRangeRaw * -86.173)
-										+ (dial_sightRangeRaw * dial_sightRangeRaw * 189.45)
-										+ (dial_sightRangeRaw * 296.8)
-										+ 100.14)
-	ExportScript.Tools.SendData(3020, dial_sightRange)
-	
-	----------------------------------------------
-	---------Display: Sight Wingspan--------------------
-	----------------------------------------------
-	
-	local dial_sightWingspan = math.floor(mainPanelDevice:get_argument_value(108)
-	
-	if dial_sightWingspan < 0.438302 then
-		dial_sightWingspan = math.floor((dial_sightWingspan * -91.992) + 100.57)
-	else
-		dial_sightWingspan = math.floor((dial_sightWingspan * -44.083) + 79.331)
-	end
-	
-	ExportScript.Tools.SendData(3021, dial_sightWingspan)
-	
-	----------------------------------------------
-	---------Display: RPM--------------------
-	----------------------------------------------
-	
-	--there are two needles per dial
-	--maybe just have to track first needle (nope)
-	
-	----------------------------------------------
-	---------Display: Boost--------------------
-	----------------------------------------------
-	
-	
-	local dial_boostLeftRaw = math.floor(mainPanelDevice:get_argument_value(54))
-	
-	local dial_boostLeft = math.floor((dial_boostLeftRaw * dial_boostLeftRaw * 8.9154)
-										+ (dial_boostLeftRaw * 23.095)
-										- 7.357)
-	ExportScript.Tools.SendData(3022, dial_boostLeft)
-	
-	local dial_boostRightRaw = math.floor(mainPanelDevice:get_argument_value(55))
-	
-	local dial_boostRight = math.floor((dial_boostRightRaw * dial_boostRightRaw * 8.9154)
-										+ (dial_boostRightRaw * 23.095)
-										- 7.357)
-	ExportScript.Tools.SendData(3023, dial_boostRight)
-	
-	
-	----------------------------------------------
-	---------Display: Oil Temp--------------------
-	----------------------------------------------
-	
-	local dial_oilTempRight = math.floor(mainPanelDevice:get_argument_value(57) * 100)
-	ExportScript.Tools.SendData(3004, dial_oilTempRight)
-	
-	local dial_oilTempLeft = math.floor((mainPanelDevice:get_argument_value(56) * 100)
-	ExportScript.Tools.SendData(3005, dial_oilTempLeft)
-	
-	
-	----------------------------------------------
-	---------Display: Oil Pressure--------------------
-	----------------------------------------------
-	
-	local dial_oilPressRight = math.floor(mainPanelDevice:get_argument_value(58) * 150)
-	ExportScript.Tools.SendData(3006, dial_oilPressRight)
-	
-	local dial_oilPressLeft = math.floor((mainPanelDevice:get_argument_value(59) * 150)
-	ExportScript.Tools.SendData(3007, dial_oilPressLeft)
 	
 	----------------------------------------------
 	---------Display: Compass Heading--------------------
@@ -643,11 +548,6 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	ExportScript.Tools.SendData(3013, dial_compassNeedle2)
 	
-	----------------------------------------------
-	---------Display: Clock--------------------
-	----------------------------------------------
-	
-	--maybe later... or never
 	
 	----------------------------------------------
 	---------Display: Gear Up and Down------------
@@ -687,12 +587,6 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	if dial_flapIndicator > 70 then
 	dial_flapIndicator = 70
 	ExportScript.Tools.SendData(3011, dial_flapIndicator)
-	
-	----------------------------------------------
-	---------Display: Nav Direction Indicator--------------------
-	----------------------------------------------
-	
-	--this is the loop thing behind the navigators head
 	
 	----------------------------------------------
 	---------Display: Oxygen supply available--------------------
@@ -928,9 +822,6 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(3030, dial_outerTankRight)
 	
 	
-	
-	
-	
 	----------------------------------------------
 	---------Display: air temperature--------------------
 	----------------------------------------------
@@ -938,37 +829,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	local dial_airTemp = math.floor((mainPanelDevice:get_argument_value(314) * 100)
 	ExportScript.Tools.SendData(3018, dial_airTemp)
 	
-	----------------------------------------------
-	---------Display: Radio Selection--------------------
-	----------------------------------------------
-	
-	
-	
-	----------------------------------------------
-	---------Display: Copilot needle freq reading--------------------
-	----------------------------------------------
-	
-	
-	
-	----------------------------------------------
-	---------Airspeed Alert--------------------
-	----------------------------------------------
-	
-	--the chart for the limits is in the manual
-	
-	----------------------------------------------
-	---------Optimal Engine settings Helper--------------------
-	----------------------------------------------
-	
-	--the chart for the limits is in the manual
-	
-	
-	----------------------------------------------
-	---------Boost Limits--------------------
-	----------------------------------------------
-	
-	--the chart for the limits is in the manual
-	--]]
+]]--
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -1043,6 +904,391 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+function ExportScript.engineInstruments(mainPanelDevice)
+
+-----------------------------
+-- Left Engine Instruments --
+-----------------------------
+
+	local guage_rpmLeft = math.floor(mainPanelDevice:get_argument_value(50) * 5000)
+	guage_rpmLeft = format_int(round(guage_rpmLeft,-1))
+	ExportScript.Tools.SendData(3000, guage_rpmLeft) --raw rpm value
+	
+	local guage_boostLeft_x = {0.0,0.052,0.142,0.289,0.425,0.547,0.662,0.776,0.887,0.983,1.0}--remove osme decimal places plz
+	local guage_boostLeft_y = {-7.0,-6.0,-4.0,0.0,4.0,8.0,12.0,16.0,20.0,24.0,25.0}
+	local guage_boostLeft =  ExportScript.Linearize(mainPanelDevice:get_argument_value(54), guage_boostLeft_x, guage_boostLeft_y)
+	guage_boostLeft = round(guage_boostLeft,1)
+	ExportScript.Tools.SendData(3001, guage_boostLeft)--TODO. always show the 0 at the end of a solid number
+	
+	local guage_oilTempLeft = math.floor(mainPanelDevice:get_argument_value(56) * 100)
+	ExportScript.Tools.SendData(3002, guage_oilTempLeft) --raw oil temp value
+	
+	local guage_oilPresLeft = math.floor(mainPanelDevice:get_argument_value(58) * 150)
+	ExportScript.Tools.SendData(3003, guage_oilPresLeft) --raw oil pressure value
+	
+	local guage_radTempLeft_x = {0.0,0.078,0.203,0.287,0.391,0.496,0.652,0.80,1.0}--remove osme decimal places plz
+	local guage_radTempLeft_y = {40,60,80,90,100,110,120,130,140}
+	local guage_radTempLeft =  ExportScript.Linearize(mainPanelDevice:get_argument_value(60), guage_radTempLeft_x, guage_radTempLeft_y)
+	guage_radTempLeft = round(guage_radTempLeft,0)
+	ExportScript.Tools.SendData(3004, guage_radTempLeft)
+	
+	ExportScript.Tools.SendData(4000, "ENG L\n" .. 
+										"RPM " .. guage_rpmLeft .. "\n" ..
+										"Boost " .. guage_boostLeft)
+										
+	ExportScript.Tools.SendData(4001, "Oil T " .. guage_oilTempLeft .. "\n" .. 
+										"Oil P " .. guage_oilPresLeft .. "\n" ..
+										"Rad T " .. guage_radTempLeft)
+										
+------------------------------
+-- Right Engine Instruments --
+------------------------------
+
+	local guage_rpmRight = math.floor(mainPanelDevice:get_argument_value(52) * 5000)
+	guage_rpmRight = format_int(round(guage_rpmRight, -1))
+	ExportScript.Tools.SendData(3005, guage_rpmRight) --raw rpm value
+	
+	local guage_boostRight_x = {0.0,0.052,0.142,0.289,0.425,0.547,0.662,0.776,0.887,0.983,1.0}--remove osme decimal places plz
+	local guage_boostRight_y = {-7.0,-6.0,-4.0,0.0,4.0,8.0,12.0,16.0,20.0,24.0,25.0}
+	local guage_boostRight =  ExportScript.Linearize(mainPanelDevice:get_argument_value(55), guage_boostRight_x, guage_boostRight_y)
+	guage_boostRight = round(guage_boostRight,1)
+	ExportScript.Tools.SendData(3006, guage_boostRight)--TODO. always show the 0 at the end of a solid number
+	
+	local guage_oilTempRight = math.floor(mainPanelDevice:get_argument_value(57) * 100)
+	ExportScript.Tools.SendData(3007, guage_oilTempRight) --raw oil temp value
+	
+	local guage_oilPresRight = math.floor(mainPanelDevice:get_argument_value(59) * 150)
+	ExportScript.Tools.SendData(3008, guage_oilPresRight) --raw oil pressure value
+	
+	local guage_radTempRight_x = {0.0,0.078,0.203,0.287,0.391,0.496,0.652,0.80,1.0}--remove osme decimal places plz
+	local guage_radTempRight_y = {40,60,80,90,100,110,120,130,140}
+	local guage_radTempRight =  ExportScript.Linearize(mainPanelDevice:get_argument_value(61), guage_radTempRight_x, guage_radTempRight_y)
+	guage_radTempRight = round(guage_radTempRight,0)
+	ExportScript.Tools.SendData(3009, guage_radTempRight)
+	
+	ExportScript.Tools.SendData(4002, "ENG R\n" .. 
+										"RPM " .. guage_rpmRight .. "\n" ..
+										"Boost " .. guage_boostRight)
+										
+	ExportScript.Tools.SendData(4003, "Oil T " .. guage_oilTempRight .. "\n" .. 
+										"Oil P " .. guage_oilPresRight .. "\n" ..
+										"Rad T " .. guage_radTempRight)
+
+end
+
+
+
+function ExportScript.gunnerTile(mainPanelDevice)
+	--[107] = "%.1f", --3045,GUNSIGHT_RANGE,LEV,107,0,0,1,Cockpit.SpitfireLFMkIX.gun_sight_range
+	--[108] = "%.1f", --3048,GUNSIGHT_BASE,LEV,108,0,0,1,Cockpit.SpitfireLFMkIX.gun_sight_span	
+	
+	local gunSightRange_x = {0.0,0.288,0.537,0.764,1.0}--remove osme decimal places plz
+	local gunSightRange_y = {100.0,200.0,300.0,400.0,500.0}
+	local gunSightRange =  ExportScript.Linearize(mainPanelDevice:get_argument_value(107), gunSightRange_x, gunSightRange_y)
+	gunSightRange = round(gunSightRange,0)
+	ExportScript.Tools.SendData(3010, gunSightRange)
+	
+	local gunSightSpan_x = {0.0,0.113,0.224,0.336,0.438,0.663,0.9,1.0}--remove some decimal places plz
+	local gunSightSpan_y = {100.0,90.0,80.0,70.0,60.0,50.0,40.0,35.0}
+	local gunSightSpan =  ExportScript.Linearize(mainPanelDevice:get_argument_value(108), gunSightSpan_x, gunSightSpan_y)
+	gunSightSpan = round(gunSightSpan,0)
+	ExportScript.Tools.SendData(3011, gunSightSpan)
+	
+	
+	--Wingspan in feet
+	local v1_wingspanFt = 19
+	local I16_wingspanFt = 30
+	local BF109_wingspanFt = 32
+	local Fw190_wingspanFt = 34
+	local spitfire_wingspanFt = 32
+	local P40P51_wingspanFt = 51
+	local P47_wingspanFt =  41
+	local mosquito_wingspanFt =  54
+	local B17G_wingspanFt =  104
+	
+	local optimalTargetWidthName
+	
+	if gunSightSpan >= (v1_wingspanFt - 1) and gunSightSpan <= (v1_wingspanFt + 1) then
+		optimalTargetWidthName = "V1"
+	elseif gunSightSpan >= (I16_wingspanFt - 1) and gunSightSpan <= (I16_wingspanFt + 1) then
+		optimalTargetWidthName = "I-16"
+	elseif gunSightSpan >= (BF109_wingspanFt - 1) and gunSightSpan <= (BF109_wingspanFt + 1) then
+		optimalTargetWidthName = "BF109"
+	elseif gunSightSpan >= (Fw190_wingspanFt - 1) and gunSightSpan <= (Fw190_wingspanFt + 1) then
+		optimalTargetWidthName = "Fw109"
+	elseif gunSightSpan >= (spitfire_wingspanFt - 1) and gunSightSpan <= (spitfire_wingspanFt + 1) then
+		optimalTargetWidthName = "Spitfire"
+	elseif gunSightSpan >= (P40P51_wingspanFt - 1) and gunSightSpan <= (P40P51_wingspanFt + 1) then
+		optimalTargetWidthName = "P-40/51"
+	elseif gunSightSpan >= (P47_wingspanFt - 1) and gunSightSpan <= (P47_wingspanFt + 1) then
+		optimalTargetWidthName = "P-47"
+	elseif gunSightSpan >= (mosquito_wingspanFt - 1) and gunSightSpan <= (mosquito_wingspanFt + 1) then
+		optimalTargetWidthName = "Mossie"
+	elseif gunSightSpan >= (B17G_wingspanFt - 1) and gunSightSpan <= (B17G_wingspanFt + 1) then
+		optimalTargetWidthName = "B-17G"
+	else
+		optimalTargetWidthName = "Tgt - N/A"
+	end
+
+	ExportScript.Tools.SendData(3012, "Optimal\nTarget\n" .. optimalTargetWidthName)
+	
+	ExportScript.Tools.SendData(4004, "Gun Sight\nRng " .. gunSightRange .. " YA\n" .. "Base " .. gunSightSpan .. " ft\n" .. optimalTargetWidthName)
+
+end
+
+function ExportScript.fuelTanksTiles(mainPanelDevice)
+
+----------------
+-- Inner Fuel --
+----------------
+	local fuelInnerTankLeft_x = {0.0,0.1,0.2,0.355098,0.492801,0.623399,0.740702,0.859403,0.938302}
+	local fuelInnerTankLeft_y = {0.0,10.0,20.0,40.0,60.0,80.0,100.0,120.0,146.0}
+	local fuelInnerTankLeft =  ExportScript.Linearize(mainPanelDevice:get_argument_value(92), fuelInnerTankLeft_x, fuelInnerTankLeft_y)
+	fuelInnerTankLeft = round(fuelInnerTankLeft,0)
+	ExportScript.Tools.SendData(3013, fuelInnerTankLeft)
+
+	local fuelInnerTankRight_x = {0.0,0.1,0.2,0.355098,0.492801,0.623399,0.740702,0.859403,0.938302}
+	local fuelInnerTankRight_y = {0.0,10.0,20.0,40.0,60.0,80.0,100.0,120.0,146.0}
+	local fuelInnerTankRight =  ExportScript.Linearize(mainPanelDevice:get_argument_value(93), fuelInnerTankRight_x, fuelInnerTankRight_y)
+	fuelInnerTankRight = round(fuelInnerTankRight,0)
+	ExportScript.Tools.SendData(3014, fuelInnerTankRight)
+	
+	local fuelInnerTankTotal = fuelInnerTankRight + fuelInnerTankLeft
+	ExportScript.Tools.SendData(3015, fuelInnerTankTotal)
+	
+	ExportScript.Tools.SendData(4005, "Fuel Inner\n" .. "PORT " .. fuelInnerTankLeft .. "\n" ..
+										"STBD " .. fuelInnerTankRight .. "\n" ..
+										"Total " .. fuelInnerTankTotal)
+										
+-----------------
+-- Center Fuel --
+----------------- 
+--You can enduce false reading with negitive Gs for testing
+
+	local fuelCenterTankNo10_x = {0,0.1262,0.309701,0.506199,0.682902,0.8871}
+	local fuelCenterTankNo10_y = {0.0,10.0,20.0,30.0,40.0,53.0}
+	local fuelCenterTankNo10 =  ExportScript.Linearize(mainPanelDevice:get_argument_value(94), fuelCenterTankNo10_x, fuelCenterTankNo10_y)
+	fuelCenterTankNo10 = round(fuelCenterTankNo10,0)
+	ExportScript.Tools.SendData(3016, fuelCenterTankNo10)
+	
+	local fuelCenterTankNo12_x = {0,0.0808,0.189,0.377599,0.5304,0.669502,0.8124,0.9264}
+	local fuelCenterTankNo12_y = {0.0,5.0,10.0,20.0,30.0,40.0,50.0,63.0}
+
+	local fuelCenterTankNo12 =  ExportScript.Linearize(mainPanelDevice:get_argument_value(95), fuelCenterTankNo12_x, fuelCenterTankNo12_y)
+	fuelCenterTankNo12 = round(fuelCenterTankNo12,0)
+	ExportScript.Tools.SendData(3017, fuelCenterTankNo12)
+	
+	local fuelCenterTankTotal = fuelCenterTankNo10 + fuelCenterTankNo12
+	ExportScript.Tools.SendData(3018, fuelCenterTankTotal)
+	
+	ExportScript.Tools.SendData(4006, "Fuel Center\n" .. "No10 " .. fuelCenterTankNo10 .. "\n" ..
+										"No12 " .. fuelCenterTankNo12 .. "\n" ..
+										"Total " .. fuelCenterTankTotal)
+										
+-----------------------
+-- Outer Tanks Fuel --
+-----------------------			
+
+	local fuelOuterTankLeft_x = {0.0,0.1366,0.332098,0.566099,0.7699,0.909902}
+	local fuelOuterTankLeft_y = {0.0,10.0,20.0,30.0,40.0,59.0}
+	local fuelOuterTankLeft =  ExportScript.Linearize(mainPanelDevice:get_argument_value(96), fuelOuterTankLeft_x, fuelOuterTankLeft_y)
+	fuelOuterTankLeft = round(fuelOuterTankLeft, 0)
+	ExportScript.Tools.SendData(3019, fuelOuterTankLeft)
+	
+	local fuelOuterTankRight_x = {0.0,0.1366,0.332098,0.566099,0.7699,0.909902}
+	local fuelOuterTankRight_y = {0.0,10.0,20.0,30.0,40.0,59.0}
+	local fuelOuterTankRight =  ExportScript.Linearize(mainPanelDevice:get_argument_value(97), fuelOuterTankRight_x, fuelOuterTankRight_y)
+	fuelOuterTankRight = round(fuelOuterTankRight, 0)
+	ExportScript.Tools.SendData(3020, fuelOuterTankRight)
+	
+	local fuelOuterTankTotal = fuelOuterTankRight + fuelOuterTankLeft
+	ExportScript.Tools.SendData(3021, fuelOuterTankTotal)
+	
+	ExportScript.Tools.SendData(4007, "Fuel Outer\n" .. "PORT " .. fuelOuterTankLeft .. "\n" ..
+										"STBD " .. fuelOuterTankRight .. "\n" ..
+										"Total " .. fuelOuterTankTotal)
+										
+----------------
+-- Total Fuel --
+----------------											
+	
+	local fuelAircraftTotal = fuelInnerTankTotal + fuelCenterTankTotal + fuelOuterTankTotal
+	ExportScript.Tools.SendData(3022, fuelAircraftTotal)
+	ExportScript.Tools.SendData(4008, "Fuel Tot "  .. fuelAircraftTotal ..  "\n"  ..
+										"Inner " .. fuelInnerTankTotal .. "\n" ..
+										"Center " .. fuelCenterTankTotal .. "\n" ..
+										"Outer " .. fuelOuterTankTotal)									
+
+end
+
+
+
+
+function ExportScript.PilotRadioTile(mainPanelDevice)
+-- VHF_Radio
+	local lVHF_Radio = GetDevice(24)
+	local VhfRadioFreq
+	if lVHF_Radio:is_on() then
+		ExportScript.Tools.SendData(3025, string.format("%7.3f", lVHF_Radio:get_frequency()/1000000))
+		VhfRadioFreq = ExportScript.Tools.RoundFreqeuncy(lVHF_Radio:get_frequency()/1000000)
+		ExportScript.Tools.SendData(3025, VhfRadioFreq)
+	else
+		ExportScript.Tools.SendData(3025, "       ")
+	end
+
+	
+	--[32] = "%.1f", --3001,RCTRL_OFF,BTN,32,1,0,1,Cockpit.SpitfireLFMkIX.radio_0
+	--[33] = "%.1f", --3002,RCTRL_A,BTN,33,1,0,1,Cockpit.SpitfireLFMkIX.radio_a
+	--[34] = "%.1f", --3003,RCTRL_B,BTN,34,1,0,1,Cockpit.SpitfireLFMkIX.radio_b
+	--[35] = "%.1f", --3004,RCTRL_C,BTN,35,1,0,1,Cockpit.SpitfireLFMkIX.radio_c
+	--[36] = "%.1f", --3005,RCTRL_D,BTN,36,1,0,1,Cockpit.SpitfireLFMkIX.radio_d
+	
+	local lVHF_Radio_PRESET = ""
+	if mainPanelDevice:get_argument_value(33) > 0.8 then   
+		lVHF_Radio_PRESET = "A"
+	elseif mainPanelDevice:get_argument_value(34) > 0.8 then   
+		lVHF_Radio_PRESET = "B"
+	elseif mainPanelDevice:get_argument_value(35) > 0.8 then   
+		lVHF_Radio_PRESET = "C"
+	elseif mainPanelDevice:get_argument_value(36) > 0.8 then   
+		lVHF_Radio_PRESET = "D"
+	else
+		lVHF_Radio_PRESET = ""
+	end
+	ExportScript.Tools.SendData(3026, lVHF_Radio_PRESET)
+	
+	ExportScript.Tools.SendData(4018, string.format("Radio " .. lVHF_Radio_PRESET .. "\n"  .. VhfRadioFreq))
+	
+end
+
+
+
+function ExportScript.CrazyRadioTile(mainPanelDevice)
+
+	--this contains the formated table of the rear radio presets
+	local mossie_list_indication_1 = ExportScript.Tools.split(list_indication(1), "%c")
+	
+	local preset_A
+	local preset_B
+	local preset_C
+	local preset_D
+	local preset_E
+	local preset_F
+	local preset_G
+	--local preset_H
+	--local preset_I
+	local preset_J
+	local preset_K
+	local preset_L
+	local preset_M
+	local preset_N
+	--local preset_O
+	local preset_P
+	local preset_Q
+	--local preset_R
+	local preset_S
+	local preset_T
+	local preset_U
+	local preset_V
+	local preset_W
+	local preset_X
+	local preset_Y
+	--local preset_Z
+							
+	array_listOfPresetCallers = {"FRQ_0_0", "FRQ_0_1" ,"FRQ_0_2" ,"FRQ_0_3","FRQ_0_4","FRQ_0_5","FRQ_0_6" ,
+							"FRQ_1_0","FRQ_1_1","FRQ_1_2","FRQ_1_3","FRQ_1_4","FRQ_1_5","FRQ_1_6" ,
+							"FRQ_2_0","FRQ_2_1","FRQ_2_2","FRQ_2_3","FRQ_2_4","FRQ_2_5","FRQ_2_6"}	
+
+	array_listOfPresets = {preset_A, preset_B ,preset_C ,preset_D ,preset_E ,preset_F ,preset_G ,
+							preset_J ,preset_K ,preset_L ,preset_M ,preset_N ,preset_P ,preset_Q ,
+							preset_S ,preset_T ,preset_U ,preset_V ,preset_W ,preset_X ,preset_Y}
+
+	
+	for i = 1,#array_listOfPresetCallers,1 do
+		for k,v in pairs(mossie_list_indication_1) do
+			if v == array_listOfPresetCallers[i] then
+				array_listOfPresets[i] = mossie_list_indication_1[k+1]
+			end
+		end
+	end 
+	
+	ExportScript.Tools.SendData(4011, "Blue Radio\n" ..
+										"A " .. array_listOfPresets[1] .. "\n" ..
+										"B " .. array_listOfPresets[2] .. "\n" ..
+										"C " .. array_listOfPresets[3] .. "\n")
+										
+										
+	ExportScript.Tools.SendData(4012, "D " .. array_listOfPresets[4] .. "\n" ..
+										"E " .. array_listOfPresets[5] .. "\n" ..
+										"F " .. array_listOfPresets[6] .. "\n" ..
+										"G " .. array_listOfPresets[7] .. "\n")	
+										
+	ExportScript.Tools.SendData(4013, "Red Radio\n" ..
+										"J " .. array_listOfPresets[8] .. "\n" ..
+										"K " .. array_listOfPresets[9] .. "\n" ..
+										"L " .. array_listOfPresets[10] .. "\n")
+										
+										
+	ExportScript.Tools.SendData(4014, "M " .. array_listOfPresets[11] .. "\n" ..
+										"N " .. array_listOfPresets[12] .. "\n" ..
+										"P " .. array_listOfPresets[13] .. "\n" ..
+										"Q " .. array_listOfPresets[14] .. "\n")	
+
+	ExportScript.Tools.SendData(4015, "Yellow Radio\n" ..
+										"S " .. array_listOfPresets[15] .. "\n" ..
+										"T " .. array_listOfPresets[16] .. "\n" ..
+										"U " .. array_listOfPresets[17] .. "\n")
+										
+										
+	ExportScript.Tools.SendData(4016, "V " .. array_listOfPresets[18] .. "\n" ..
+										"W " .. array_listOfPresets[19] .. "\n" ..
+										"X " .. array_listOfPresets[20] .. "\n" ..
+										"Y " .. array_listOfPresets[21] .. "\n")										
+end
+
+function ExportScript.VhfRadioTile(mainPanelDevice) --https://streamable.com/nnjgpt
+--TODO find a way to always show three digits
+--TODO assign actual number to these exports
+
+		--ExportScript.Tools.SendData(3051, GetDevice(27):get_frequency()) -- receiver raw
+		local switchPosition_R1155 = mainPanelDevice:get_argument_value(231)
+		local R1155_freq
+		
+		if switchPosition_R1155 < 0.05 then -- black/blue band
+			R1155_freq = (GetDevice(27):get_frequency())/1000000
+		elseif switchPosition_R1155 < 0.15 then -- blue/red band
+			R1155_freq = (GetDevice(27):get_frequency())/1000000
+		elseif switchPosition_R1155 < 0.25 then -- black1 band
+			R1155_freq = (GetDevice(27):get_frequency())/10000
+		elseif switchPosition_R1155 < 0.35 then -- yellow band
+			R1155_freq = (GetDevice(27):get_frequency())/1000
+		else --switchPosition_R1155 < 0.45 then -- black2 band
+			R1155_freq = (GetDevice(27):get_frequency())/1000
+		end
+		
+		R1155_freq = round(R1155_freq,3)
+		ExportScript.Tools.SendData(3023, R1155_freq) -- receiver
+		
+		
+		--ExportScript.Tools.SendData(3050, GetDevice(26):get_frequency()) -- transmitter raw
+		local switchPosition_T1154 = mainPanelDevice:get_argument_value(215)
+		local T1154_freq
+		
+		if switchPosition_T1154 <= 0.05 then
+			T1154_freq = (GetDevice(26):get_frequency())/1000000
+		elseif switchPosition_T1154 <= 0.15 then
+			T1154_freq = (GetDevice(26):get_frequency())/1000000
+		else
+			T1154_freq = (GetDevice(26):get_frequency())/1000
+		end
+		
+		T1154_freq = round(T1154_freq,3)
+		ExportScript.Tools.SendData(3024, T1154_freq) -- transmitter
+		
+		ExportScript.Tools.SendData(4017, "R1155 \n" ..  R1155_freq .. "\n"
+											.. "T1154 \n" .. T1154_freq )
+end
 
 --[[ Tiles
 
@@ -1131,7 +1377,7 @@ end
 function ExportScript.trimTile(mainPanelDevice)
 end
 
-function ExportScript.fuelInnerTile(mainPanelDevice)
+function ExportScript.fuelTanksTiles(mainPanelDevice)
 end
 
 function ExportScript.fuelCenterTile(mainPanelDevice)
@@ -1170,13 +1416,13 @@ function ExportScript.gunnerSightTile(mainPanelDevice)
 --wingspan is in ft in the aircraft
 end
 
-	--]]
-
-function ExportScript.displayAccel(mainPanelDevice)
-end
+	]]--
 
 
---[[Scratch pad for linear interpolation
+
+
+--[[
+Scratch pad for linear interpolation
 
 if incomingNumber < 0 then
 	incomingNumber = 0
@@ -1188,12 +1434,7 @@ elseif incomingNumber < 0.1366 then --incoming number is
 	y3 = 10 = guage number 2
 	solution = (((incomingNumber - x1) * (y3 - y1) ) /  (x3 - x1))   + y1
 
---]]
-
-function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
-  local mult = 10^(numDecimalPlaces or 0)
-  return math.floor(num * mult + 0.5) / mult
-end
+]]--
 
 --[[
 ------------------------------
@@ -1217,110 +1458,60 @@ end
 -remember that you can get interesting things using
 	-"local hindKneeboardInfo = ExportScript.Tools.split(list_indication(8), "%c")
 		-this contains the formated table of the kneeboard of the hind"
-]
-
----------------------
--- List of exports --
----------------------
-
-[
-3000	-	value	-	dial_airspeed
-3001	-	value	-	dial_directionIndicator
-3002	-	value	-	dial_slideSlip
-3003	-	value	-	dial_turnIndicator
-3004	-	value	-	dial_oilTempRight
-3005	-	value	-	dial_oilTempLeft
-3006	-	value	-	dial_oilPressRight
-3007	-	value	-	dial_oilPressLeft
-3008	-	value	-	dial_compass
-3009	-	value	-	gearIsUp
-3010	-	value	-	gearIsDown
-3011	-	value	-	dial_flapIndicator
-3012	-	value	-	dial_compassNeedle1
-3013	-	value	-	dial_compassNeedle2
-3014	-	value	-	dial_oxygenFlowRatePilot
-3015	-	value	-	isDial_oxygenFlowRatePilotEmergency
-3016	-	value	-	dial_oxygenFlowRateCopilot
-3017	-	value	-	isDial_oxygenFlowRateCopilotEmergency
-3018	-	value	-	dial_airTemp
-3019	-	value	-	dial_verticalSpeedIndicator
-3020	-	value	-	dial_sightRange
-3021	-	value	-	dial_sightWingspan
-3022	-	value	-	dial_boostLeft
-3023	-	value	-	dial_boostRight
-3024	-	value	-	dial_oxygenSupplyPilot
-3025	-	value	-	dial_fuelInnerTankLeft
-3026	-	value	-	dial_fuelInnerTankRight
-3027	-	value	-	dial_centerTankNo10
-3028	-	value	-	dial_centerTankNo12
-3029	-	value	-	dial_outerTankLeft
-3030	-	value	-	dial_outerTankRight
-3031	-	value	-	
-3032	-	value	-	
-3033	-	value	-	
-3034	-	value	-	
-3035	-	value	-	
-3036	-	value	-	
-3037	-	value	-	
-3038	-	value	-	
-3039	-	value	-	
-3040	-	value	-	
-3041	-	value	-	
-3042	-	value	-	
-3043	-	value	-	
-3044	-	value	-	
-3045	-	value	-	
-3046	-	value	-	
-3047	-	value	-	
-3048	-	value	-	
-3049	-	value	-	
-3050	-	value	-	
-3051	-	value	-	
-3052	-	value	-	
-3053	-	value	-	
-3054	-	value	-	
-3055	-	value	-	
-3056	-	value	-	
-
-4000	-	tile	-	
-4001	-	tile	-	
-4002	-	tile	-	
-4003	-	tile	-	
-4004	-	tile	-	
-4005	-	tile	-	
-4006	-	tile	-	
-4007	-	tile	-	
-4008	-	tile	-	
-4009	-	tile	-	
-4010	-	tile	-	
-4011	-	tile	-	
-4012	-	tile	-	
-4013	-	tile	-	
-4014	-	tile	-	
-4015	-	tile	-	
-4016	-	tile	-	
-4017	-	tile	-	
-4018	-	tile	-	
-4019	-	tile	-	
-]
 
 -----------------------
 -- Ideas for "Tiles" --
 -----------------------
 
-[
--------------   ------------- 
-| Engine L	|	| Engine R	|
-| RPM: XXX	|	| RPM: XXX	|
-| Boost: XX	|	| Boost: XX	|
--------------	------------- 
+-------------
+|  Radio 1  |
+| Channel A |
+------------- complete.
 
---------------   -------------- 
-|  Engine L	 |	|  Engine R	 |
-| Oil T: XXX |	| Oil T: XXX |
-| Oil P: XXX |	| Oil P: XXX |
-| Rad T: XXX |	| Rad T: XXX |
---------------	-------------- 
+------------------
+|     Status     |
+| BOMB BAY: XXXX |
+| GEAR: XXX      |
+| FLAPS: XX      |
+------------------
+
+----------------
+|   Radio 2    |
+| Band: Yellow |
+| Freq: XXXXX  |
+---------------- Complete.
+
+-----------------
+|    Gear UP    |
+| PIC       PIC |
+| Under Carrage |
+----------------
+
+-----------------
+| Under Carrage |
+| PIC       PIC |
+|  Gear DOWN    |
+-----------------
+
+--------------
+| Alt: XXXX  |
+| Baro: XXXX |
+| VSI: XXXX  |
+--------------
+
+-----------------
+|  NAVIGATION1  |
+| Repeater: XXX |
+| Needle 1: XXX |
+| Needle 2: XXX |
+-----------------
+
+-----------------
+|  NAVIGATION2  |
+| Compass: XXX  |
+| Repeater: XXX |
+| Director: XXX |
+-----------------
 
 ------------------- 
 |     Oxygen      |
@@ -1344,81 +1535,94 @@ end
 | Rudder: Centered |
 --------------------
 
+------------
+| Air Temp |
+|   XXoC   |
+------------
+
+-------------   ------------- 
+| Engine L	|	| Engine R	|
+| RPM: XXX	|	| RPM: XXX	|
+| Boost: XX	|	| Boost: XX	|
+-------------	------------- Complete. 3000 and 3002
+
+--------------   -------------
+|  Engine L	 |	|  Engine R	 |
+| Oil T: XXX |	| Oil T: XXX |
+| Oil P: XXX |	| Oil P: XXX |
+| Rad T: XXX |	| Rad T: XXX |
+--------------	--------------  Complete. 3001 and 3003
+
 -------------------
 |    Fuel Inner   |
 | Port: XX.X      |
 | Starboard: XX.X |
 | Total: XX.X     |
--------------------
+------------------- Complete. 4005
 
 ---------------
 | Fuel Center |
 | No10: XX.X  |
 | No12: XX.X  |
 | Total: XX.X |
----------------
+--------------- Complete. 4006
 
 -------------------
 |    Fuel Outer   |
 | Port: XX.X      |
 | Starboard: XX.X |
 | Total: XX.X     |
--------------------
+------------------- Complete. 4007
 
-------------
-| Air Temp |
-|   XXoC   |
-------------
-
---------------
-| Alt: XXXX  |
-| Baro: XXXX |
-| VSI: XXXX  |
---------------
-
------------------
-|  NAVIGATION1  |
-| Repeater: XXX |
-| Needle 1: XXX |
-| Needle 2: XXX |
------------------
-
------------------
-|  NAVIGATION2  |
-| Compass: XXX  |
-| Repeater: XXX |
-| Director: XXX |
------------------
-
--------------
-|  Radio 1  |
-| Channel A |
--------------
-
-----------------
-|   Radio 2    |
-| Band: Yellow |
-| Freq: XXXXX  |
-----------------
-
------------------
-|    Gear UP    |
-| PIC       PIC |
-| Under Carrage |
-----------------
-
------------------
-| Under Carrage |
-| PIC       PIC |
-|  Gear DOWN    |
------------------
+------------------
+| Fuel Total XXX |
+| Inner: XX.X    |
+| Center: XX.X   |
+| Outer: XX.X    |
+------------------ Complete. 4008
 
 -------------------
 |   Gunner Sight  |
 | Range: XXX      |
 | Wingspan: XXX   |
 | Ideal: NameAcft |
--------------------
-]
+------------------- Complete. 4004
 
 ]]--
+
+------------------------------
+-- General Helper Functions --
+------------------------------
+
+function ExportScript.Linearize(current_value, raw_tab, final_tab)
+  -- (c) scoobie
+  if current_value <= raw_tab[1] then
+    return final_tab[1] 
+  end
+  for index, value in pairs(raw_tab) do
+    if current_value <= value then
+      local ft = final_tab[index]
+      local rt = raw_tab[index]
+      return (current_value - rt) * (ft - final_tab[index - 1]) / (rt - raw_tab[index - 1]) + ft
+    end
+  end
+  -- we shouldn't be here, so something went wrong - return arbitrary max. final value, maybe the user will notice the problem:
+  return final_tab[#final_tab]
+end
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+function format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
+
+  local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+
+  -- reverse the int-string and append a comma to all blocks of 3 digits
+  int = int:reverse():gsub("(%d%d%d)", "%1,")
+
+  -- reverse the int-string back remove an optional comma and put the 
+  -- optional minus and fractional part back
+  return minus .. int:reverse():gsub("^,", "") .. fraction
+end

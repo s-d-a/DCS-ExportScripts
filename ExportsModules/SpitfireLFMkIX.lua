@@ -20,8 +20,10 @@
 2013 - Gun Wingspan
 2014 - Gun Range
 2015 - Optimal Target Aircraft Wingspan
-
-
+2016 - (is) gear lamp down on
+2017 - (is) gear lamp up on
+2018 - Elevator Trim readout
+2019 - Rudder Trim Readout
 
 
 3000 - RPM and Boost Tile
@@ -35,7 +37,7 @@
 3008 - Best Crusing Tile
 3009 - Best Climb Tile
 3010 - Gun Sight Solution Tile
-
+3011 - Trim Tile
 
 --]]
 
@@ -176,10 +178,20 @@ ExportScript.ConfigArguments =
 	[100] = "%1d",	-- Fuel Cock
 	[98] = "%1d",	-- Droptank Cock
 	[99] = "%1d",	-- Droptank Release Handle
+	
+	[165] = "%1d",	-- Pilot ON/OFF. 0 to 1. 1 and 0 are OFF
+	
+	[95] = "%1d",	-- Gear Handle Fore/Aft
+	[96] = "%1d",	-- Gear Handle Left/Right
+	[97] = "%1d",	-- Gear UP/DOWN roller
+	
 	-- Canopy Controls
 	[149] = "%1d",	-- Cockpit Open/Close Control
 	[140] = "%1d",	-- Cockpit Jettison Pull Ball
 	[147] = "%1d"	-- Cockpit Side Door Open/Close Control
+	
+	
+	
 }
 
 -----------------------------
@@ -200,6 +212,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 	
+	
+	ExportScript.gearLamp(mainPanelDevice) -- for some reason this does not work at the bottom of this list
 	ExportScript.engLeftRpmTile(mainPanelDevice)
 	ExportScript.oxygenTile(mainPanelDevice)
 	ExportScript.VhfRadioTile(mainPanelDevice)
@@ -208,6 +222,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.BestPowerTiles(mainPanelDevice)
 	ExportScript.bestClimb(mainPanelDevice)
 	ExportScript.gunnerTile(mainPanelDevice)
+	ExportScript.radioButtonSelection(mainPanelDevice)
+	ExportScript.trimReadouts(mainPanelDevice)
 	
 end
 
@@ -316,14 +332,64 @@ end
 --     Custom functions    --
 -----------------------------
 
+function ExportScript.trimReadouts(mainPanelDevice) --TODO Not working
+	--[145] = "%.2f",	-- Elevator Trim Wheel (Axis) {-1.0, 1.0} in 0.01 Steps
+	--[146] = "%.1f",	-- Rudder Trim Wheel (Axis) {-1.0, 1.0} in 0.1 Steps
+	
+	local trimElevatorRaw = mainPanelDevice:get_argument_value(145)	
+	local trimElevatorDirection
+	local trimElevatorDirectionShorthand
+	trimElevatorAmt = round(trimElevatorRaw * 100,0)
+	
+	
+	if trimElevatorAmt > 1 then  --trim is positive, which is nose down
+		trimElevatorDirection = "DOWN"
+		trimElevatorDirectionShorthand = "D"
+	elseif trimElevatorAmt < -1 then --trim is negative, which is nose up
+		trimElevatorDirection = "UP"
+		trimElevatorDirectionShorthand = "U"
+	else --trim is basically neutral
+		trimElevatorDirection = " "
+	end
+	
+	trimElevatorAmt = math.abs(trimElevatorAmt)
+	ExportScript.Tools.SendData(2018, "ELVTR TRM\n" .. trimElevatorAmt .. "% " .. trimElevatorDirection)
+	
+	
+	local trimRudderRaw = mainPanelDevice:get_argument_value(146)
+	local trimRudderDirection
+	local trimRudderDirectionShortHand
+	trimRudderAmt = round(trimRudderRaw * 100,0)
+	
+	
+	if trimRudderAmt > 1 then  --trim is positive, which is stbd
+		trimRudderDirection = "STBD"
+		trimRudderDirectionShortHand = "S"
+	elseif trimRudderAmt < -1 then --trim is negative, which is port
+		trimRudderDirection = "PORT"
+		trimRudderDirectionShortHand = "P"
+	else --trim is basically neutral
+		trimRudderDirection = " "
+	end
+	
+	trimRudderAmt = math.abs(trimRudderAmt)
+	ExportScript.Tools.SendData(2019, "RDR TRM\n" .. trimRudderAmt .. "% " .. trimRudderDirection)
+	
+	--for some reason this does not pop up unless you use trim? TODO investigate
+	ExportScript.Tools.SendData(3011, "TRIM" .. "\n" ..
+										"ELVTR " .. trimElevatorAmt .. "% " .. trimElevatorDirectionShorthand .. "\n" .. 
+										"RDR  " .. trimRudderAmt .. "% " .. trimRudderDirectionShortHand)
+	
+end
+
 function ExportScript.engLeftRpmTile(mainPanelDevice) --boost is [39], rpm is [37]
 	
 	local guage_rpm = math.floor(mainPanelDevice:get_argument_value(37) * 10000)
 	
-	local dial_boostLeftRaw = math.floor(mainPanelDevice:get_argument_value(39) * 1)--experemental
+	local dial_boostRaw = math.floor(mainPanelDevice:get_argument_value(39))--experemental
 	
 	
-	local dial_boostLeft = math.floor(dial_boostLeftRaw * 24)
+	local dial_boostLeft = math.floor(dial_boostRaw * 24)
 	
 	ExportScript.Tools.SendData(3000, string.format("Eng" .. "\n" 
 													.. "RPM  ".. guage_rpm .. "\n"
@@ -576,6 +642,39 @@ function ExportScript.gunnerTile(mainPanelDevice)
 										"Base " .. dial_gunnerWingspan .. " ft\n" ..
 										"" .. optimalTargetWidthName)
 end
+
+
+
+
+function ExportScript.gearLamp(mainPanelDevice)
+	--[49] = "%1d",	-- Gear Lamp Down
+	--[48] = "%1d",	-- Gear Lamp Up
+	
+	local gearLampDown = mainPanelDevice:get_argument_value(49)
+	local gearLampUp = mainPanelDevice:get_argument_value(48)
+	
+	local isgearLampDownLightOn
+	local isgearLampUpLightOn
+	
+	
+	if gearLampDown == 1 then 
+		isgearLampDownLightOn = 1
+	else
+		isgearLampDownLightOn = 0
+	end
+	
+	if gearLampUp == 1 then 
+		isgearLampUpLightOn = 1
+	else
+		isgearLampUpLightOn = 0
+	end
+	
+	
+	ExportScript.Tools.SendData(2016, isgearLampDownLightOn)
+	ExportScript.Tools.SendData(2017, isgearLampUpLightOn)
+end
+
+
 
 
 -----------------------
