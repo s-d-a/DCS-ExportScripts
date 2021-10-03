@@ -1123,9 +1123,50 @@ function ExportScript.fuelTanksTiles(mainPanelDevice)
 end
 
 
+function ExportScript.VhfRadioTile(mainPanelDevice) --https://streamable.com/nnjgpt
+--TODO find a way to always show three digits
+--TODO assign actual number to these exports
 
+		--ExportScript.Tools.SendData(3051, GetDevice(27):get_frequency()) -- receiver raw
+		local switchPosition_R1155 = mainPanelDevice:get_argument_value(231)
+		local R1155_freq
+		
+		if switchPosition_R1155 < 0.05 then -- black/blue band
+			R1155_freq = (GetDevice(27):get_frequency())/1000000
+		elseif switchPosition_R1155 < 0.15 then -- blue/red band
+			R1155_freq = (GetDevice(27):get_frequency())/1000000
+		elseif switchPosition_R1155 < 0.25 then -- black1 band
+			R1155_freq = (GetDevice(27):get_frequency())/10000
+		elseif switchPosition_R1155 < 0.35 then -- yellow band
+			R1155_freq = (GetDevice(27):get_frequency())/1000
+		else --switchPosition_R1155 < 0.45 then -- black2 band
+			R1155_freq = (GetDevice(27):get_frequency())/1000
+		end
+		
+		R1155_freq = round(R1155_freq,3)
+		ExportScript.Tools.SendData(3023, R1155_freq) -- receiver
+		
+		
+		--ExportScript.Tools.SendData(3050, GetDevice(26):get_frequency()) -- transmitter raw
+		local switchPosition_T1154 = mainPanelDevice:get_argument_value(215)
+		local T1154_freq
+		
+		if switchPosition_T1154 <= 0.05 then
+			T1154_freq = (GetDevice(26):get_frequency())/1000000
+		elseif switchPosition_T1154 <= 0.15 then
+			T1154_freq = (GetDevice(26):get_frequency())/1000000
+		else
+			T1154_freq = (GetDevice(26):get_frequency())/1000
+		end
+		
+		T1154_freq = round(T1154_freq,3)
+		ExportScript.Tools.SendData(3024, T1154_freq) -- transmitter
+		
+		ExportScript.Tools.SendData(4016, "R1155 \n" ..  R1155_freq .. "\n"
+											.. "T1154 \n" .. T1154_freq )
+end
 
-function ExportScript.PilotRadioTile(mainPanelDevice)
+function ExportScript.PilotRadioTile(mainPanelDevice) --TODO: When the radio is off, print OFF
 -- VHF_Radio
 	local lVHF_Radio = GetDevice(24)
 	local VhfRadioFreq
@@ -1158,7 +1199,7 @@ function ExportScript.PilotRadioTile(mainPanelDevice)
 	end
 	ExportScript.Tools.SendData(3026, lVHF_Radio_PRESET)
 	
-	ExportScript.Tools.SendData(4018, string.format("Radio " .. lVHF_Radio_PRESET .. "\n"  .. VhfRadioFreq))
+	ExportScript.Tools.SendData(4009, string.format("Radio " .. lVHF_Radio_PRESET .. "\n"  .. VhfRadioFreq))
 	
 end
 
@@ -1213,82 +1254,42 @@ function ExportScript.CrazyRadioTile(mainPanelDevice)
 		end
 	end 
 	
-	ExportScript.Tools.SendData(4011, "Blue Radio\n" ..
+	ExportScript.Tools.SendData(4010, "Blue Radio\n" ..
 										"A " .. array_listOfPresets[1] .. "\n" ..
 										"B " .. array_listOfPresets[2] .. "\n" ..
 										"C " .. array_listOfPresets[3] .. "\n")
 										
 										
-	ExportScript.Tools.SendData(4012, "D " .. array_listOfPresets[4] .. "\n" ..
+	ExportScript.Tools.SendData(4011, "D " .. array_listOfPresets[4] .. "\n" ..
 										"E " .. array_listOfPresets[5] .. "\n" ..
 										"F " .. array_listOfPresets[6] .. "\n" ..
 										"G " .. array_listOfPresets[7] .. "\n")	
 										
-	ExportScript.Tools.SendData(4013, "Red Radio\n" ..
+	ExportScript.Tools.SendData(4012, "Red Radio\n" ..
 										"J " .. array_listOfPresets[8] .. "\n" ..
 										"K " .. array_listOfPresets[9] .. "\n" ..
 										"L " .. array_listOfPresets[10] .. "\n")
 										
 										
-	ExportScript.Tools.SendData(4014, "M " .. array_listOfPresets[11] .. "\n" ..
+	ExportScript.Tools.SendData(4013, "M " .. array_listOfPresets[11] .. "\n" ..
 										"N " .. array_listOfPresets[12] .. "\n" ..
 										"P " .. array_listOfPresets[13] .. "\n" ..
 										"Q " .. array_listOfPresets[14] .. "\n")	
 
-	ExportScript.Tools.SendData(4015, "Yellow Radio\n" ..
+	--TODO condider taking out 0s after the decimal
+	ExportScript.Tools.SendData(4014, "Yellow Radio\n" ..
 										"S " .. array_listOfPresets[15] .. "\n" ..
 										"T " .. array_listOfPresets[16] .. "\n" ..
 										"U " .. array_listOfPresets[17] .. "\n")
 										
 										
-	ExportScript.Tools.SendData(4016, "V " .. array_listOfPresets[18] .. "\n" ..
+	ExportScript.Tools.SendData(4015, "V " .. array_listOfPresets[18] .. "\n" ..
 										"W " .. array_listOfPresets[19] .. "\n" ..
 										"X " .. array_listOfPresets[20] .. "\n" ..
 										"Y " .. array_listOfPresets[21] .. "\n")										
 end
 
-function ExportScript.VhfRadioTile(mainPanelDevice) --https://streamable.com/nnjgpt
---TODO find a way to always show three digits
---TODO assign actual number to these exports
 
-		--ExportScript.Tools.SendData(3051, GetDevice(27):get_frequency()) -- receiver raw
-		local switchPosition_R1155 = mainPanelDevice:get_argument_value(231)
-		local R1155_freq
-		
-		if switchPosition_R1155 < 0.05 then -- black/blue band
-			R1155_freq = (GetDevice(27):get_frequency())/1000000
-		elseif switchPosition_R1155 < 0.15 then -- blue/red band
-			R1155_freq = (GetDevice(27):get_frequency())/1000000
-		elseif switchPosition_R1155 < 0.25 then -- black1 band
-			R1155_freq = (GetDevice(27):get_frequency())/10000
-		elseif switchPosition_R1155 < 0.35 then -- yellow band
-			R1155_freq = (GetDevice(27):get_frequency())/1000
-		else --switchPosition_R1155 < 0.45 then -- black2 band
-			R1155_freq = (GetDevice(27):get_frequency())/1000
-		end
-		
-		R1155_freq = round(R1155_freq,3)
-		ExportScript.Tools.SendData(3023, R1155_freq) -- receiver
-		
-		
-		--ExportScript.Tools.SendData(3050, GetDevice(26):get_frequency()) -- transmitter raw
-		local switchPosition_T1154 = mainPanelDevice:get_argument_value(215)
-		local T1154_freq
-		
-		if switchPosition_T1154 <= 0.05 then
-			T1154_freq = (GetDevice(26):get_frequency())/1000000
-		elseif switchPosition_T1154 <= 0.15 then
-			T1154_freq = (GetDevice(26):get_frequency())/1000000
-		else
-			T1154_freq = (GetDevice(26):get_frequency())/1000
-		end
-		
-		T1154_freq = round(T1154_freq,3)
-		ExportScript.Tools.SendData(3024, T1154_freq) -- transmitter
-		
-		ExportScript.Tools.SendData(4017, "R1155 \n" ..  R1155_freq .. "\n"
-											.. "T1154 \n" .. T1154_freq )
-end
 
 --[[ Tiles
 

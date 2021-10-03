@@ -1,997 +1,2091 @@
---[[  
-  ,d                                                          ,d     	
-  88                                                          88     	
-MM88MMM ,adPPYba,  88,dPYba,,adPYba,   ,adPPYba, ,adPPYYba, MM88MMM  	
-  88   a8"     "8a 88P'   "88"    "8a a8"     "" ""     `Y8   88     	
-  88   8b       d8 88      88      88 8b         ,adPPPPP88   88     	
-  88,  "8a,   ,a8" 88      88      88 "8a,   ,aa 88,    ,88   88,    	
-  "Y888 `"YbbdP"'  88      88      88  `"Ybbd8"' `"8bbdP"Y8   "Y888   F-14B Tomcat Export Script DCS World	
-___________________________________________________________________________________________________________________________________________________
-▀▀▀█  version: 0.11  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+-- F-14B Tomacat
 
-Created by: nosaMtrevoC of ED Forums (dt1)  
-
-If you find any errors/ommissions or have any questions in general and for updates, please see this thread on ED Forums:
-https://forums.eagle.ru/showthread.php?p=4387597#post4387597
-
-For use with DCS-ExportScripts plugin https://github.com/charlestytler/streamdeck-dcs-interface (Awesome work)
-Special ID's for ctytler's Stream Deck plugin (requires ExportScripts) at https://github.com/charlestytler/streamdeck-dcs-interface (Also Awesome)
-
-
-___________________________________________________________________________________________________________________________________________________
-▀▀▀█  ŦЋānk Ȳōū  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-
-Thanks GunSlingerAUS & Phoenix FR of ED Forums for providing me with the F-14 Module to make this possible, it was a nice jester (sic).
-
-Testers (if you would like to help make this better, please see: https://forums.eagle.ru/showthread.php?p=4387597#post4387597 for more info)
-
-[TESTER]____________________ [Description]_________________________________________________________________________________________________________
-Arbil						 Approach Indexer Lights, ACM Panel gauges and lights for full ACM
-Chacal IX					 ACM Panel Testing
-
-___________________________________________________________________________________________________________________________________________________
-▀▀▀█  Changelog  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-
-Version 0.11 - Matched most of the missing ID's, fixed error in ACM Panel (Chacal IX)
-Version 0.10 - Matched many more ID's (not tested) for panels: A6b/A6c/A7, Created All Graphic Icons for panel A6a ACM Panel, App. Indexer Icons
-			   Custom Station Weap. Flags output for ACM, ACM Switch, Master Arm Switch, Gun Rate Code, code for SW Cool/MSL Prep/MODE stp switch
-			   testing ACM Panel items on Stream deck and creating profiles, Triple Indicator code and icons, Master Caution Button/Light,
-			   L & R Fire Lights, Slip/Ball Indicator Gauge, fill icons for stream deck, testing, A6a ACM Panel completed w/StmDeck Prof. & Icons
-Version 0.09 - Created 298 conifg Arguments and documentation for all pilot panels Left: A1a/A1b/A2/A4/A5/A6a/A6b/A6c/A6d/A7/A8/A10/A11a/A11b/12
-			   Formatting, Matched most DCS ID's (not tested) for panels: A1a/A1b/A2/A6a
-Version 0.08 - Formatting, Arresting Hook handle/emerg.Handle/Light, Gun Ammun. Counter knob, gun rounds counter
-Version 0.07 - Create tape function for vertical tape displays, created engine RPM Tape and BG Icon, EIG Eng. Temp on A3, EIG Fuel Flow on A3
-Version 0.06 - 2 Hydraulic Press. Gauges on A3 (51023 & 51063), added Engine Nozzle Tape A3, engine oil press. gauge
-Version 0.05 - Formatting, Added Bingo Knob, Accelerometer Reset, Clock Wind, Clock Start/Stop/Reset, fixed error in Timer, A9 Panel Complete
-Version 0.04 - More formatting, added Aft&L/Fwd&R fuselage fuel info, added Accelerometer gauge, added clock and timer gauge, Added Cockpit Refs.
-Version 0.03 - Organization of Cockpit and RIO areas in this file for organizational purposes (ease of use)
-Version 0.02 - Added formatted fuel output for location A9
-Version 0.01 - Initial Layout and formatting of .lua file along with organization outside this file of all functions ID's calls etc..
-
-[Currently working on]_____________________________________________________________________________________________________________________________
-Pilot Cockpit config arguments
-
-[To-Do]
-Fuel Warning indicators (example low fuel / Bingo fuel) for multi-gauge and fuel gauges
-Background images for EIG TIT and FF tapes
-Problem with Title string not showing in ExportScript.dualTapeString()
-Installation instructions
-	VS Code
-	copy .lua to proper directory
-	load and test script (with special id for testing)
-	how-to display a stream deck gauge (custom id) background image in folder and font size
-	how to setup a button or switch for a panel
-
-
-___________________________________________________________________________________________________________________________________________________
-▀▀▀█  Formatted for Stream Deck  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-
-Extra ID's created for nice formatted output on Stream Deck See ID Guide Below:
-
-[ID]______ [Ref]__ [Description]__________________________ [Status]_______ [Output e.g.]___________________________________________________________
-
-51057		A3		EIG - Engine RPM L & R tape 			working			NOTE: need "F-14B_A3_RPM.png" included as background (shows vert. tape)
-51059		A3		EIG - Engine Exhaust Temperature		working			NOTE: need "F-14B_A3_TIT.png" included as background (shows vert. tape)
-51061		A3		EIG - Fuel flow tape 		 			working			NOTE: need "F-14B_A3_FF.png" included as background (shows vert. tape)
-51023		A3		Hydraulic Pressure Gauge and Flags 1 	working			
-51063		A3		Hydraulic Pressure Gauge and Flags 2 	working			
-51065		A3		Engine Oil Pressure Gauges 				working			L 42 psi | Eng. Oil | R 42 psi
-51068		A3		Engine Nozzle position gauge (tape) 	working			(shows a graphical vertical tape)
----------------------------------------------------------------------------------------------------------------------------------------------------
-			A4		Radar Altimiter w/Bug & Flag & inHg						█  In Development  █
-			A4		Servopneumatic Altimiter 								█  TODO  █
----------------------------------------------------------------------------------------------------------------------------------------------------
-51047		A6a		Master Arm 3 way switch 				working			outputs a graphical 3 way switch to be used with included icons (font9)
-56501		A6a		Slip/Ball Indicator 					working			outputs slip and ball gauge
-59201		A6a		ACM seam/coll./hot trig light 			working			outputs masks to show/hide triple warning light in one button
-59204		A6a		Gun Rate HIGH|LOW Light 				working			outputs 1 or 0 to monitor HIGH|LOW Gun Rate light (usually two IDs)
-59206		A6a		SW Cool Light ON|OFF 					working			outputs 1 or 0 to monitor light (usually two IDs)
-59208		A6a		MSL Prep Light ON|OFF 					working			outputs 1 or 0 to monitor light (usually two IDs)
-59210		A6a		MSL Mode Light NORM|BRSIT 				working			outputs 1 or 0 to monitor light (usually two IDs)
-59221		A6a		Station Status Flag 1A 					working			BLACK|WHITE|CHECKBOARD status flag (set font size to 6 on Str.Deck)
-59222		A6a		Station Status Flag 1B 					working			BLACK|WHITE|CHECKBOARD status flag (set font size to 6 on Str.Deck)
-59223		A6a		Station Status Flag 3					working			BLACK|WHITE|CHECKBOARD status flag (set font size to 6 on Str.Deck)
-59224		A6a		Station Status Flag 4					working			BLACK|WHITE|CHECKBOARD status flag (set font size to 6 on Str.Deck)
-59225		A6a		Station Status Flag 5 					working			BLACK|WHITE|CHECKBOARD status flag (set font size to 6 on Str.Deck)
-59226		A6a		Station Status Flag 6 					working			BLACK|WHITE|CHECKBOARD status flag (set font size to 6 on Str.Deck)
-59227		A6a		Station Status Flag 8B 					working			BLACK|WHITE|CHECKBOARD status flag (set font size to 6 on Str.Deck)
-59228		A6a		Station Status Flag 8A 					working			BLACK|WHITE|CHECKBOARD status flag (set font size to 6 on Str.Deck)
----------------------------------------------------------------------------------------------------------------------------------------------------
-50110		A9		Accelerometer Gauge +/- G & current G 	working			5 G | 1 G | -2G
-51096		A9		Clock and Timer Gauge 					working			Clock | 10 15 | Timer | 4 23 21
-51054		A9		Aft & L-left feed & aft fuselage Thanks working			AFT & L | 6500 | LBS
-51055		A9		Fwd & R-right feed & fwd fuselage tanks working			FWD & R | 6500 | LBS
-56000		A9		Left Fuel Gauge in lbs 					working			4000 lbs
-56004		A9		Right Fuel Gauge in lbs 				working			4000 lbs
-56010		A9		Total Fuel Gauge in lbs 				working			15200 lbs
-56020		A9		Bingo Fuel Guage in lbs 				working			04000 lbs
-56024		A9		Multi Fuel Guage Custom					working			Shows all relevant fuel output totals in a single stream deck button
----------------------------------------------------------------------------------------------------------------------------------------------------
-54060		A10		Gun Rounds Ammunition Counter 			working			ROUNDS | 670
----------------------------------------------------------------------------------------------------------------------------------------------------
-52117		B7		RIO Total Fuel Gauge in lbs				working			15000 lbs
-
-
-
-___________________________________________________________________________________________________________________________________________________
-▀▀▀█  Stream Deck References  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-
-The following references (with a picture) can be found (as of June 15, 2020) in Chapter 2 (Cockpit Overview) first 2 pages (pg10 and pg11) of 
-the F-14B manual. This manual is located in the C:\Program Files\Eagle Dynamics\DCS World OpenBeta\Mods\aircraft\F14\Docs Directory as a .pdf
-Can also be found in the official thread for this script at: https://forums.eagle.ru/showthread.php?p=4387597#post4387597
-
-Anywhere the following Descriptors can be found, they refer to this table in that portion of the manual
-e.g. [A9] Pilot-Right Knee Panel describes A as Pilot Cockpit (instead of B RIO Cockpit) and 9 in the table on pg 10 (also below) which is the Right
-Knee Panel where the fuel and accelerometer and clock are.
-
-		 ________________________________________________________________________________________________________
-		|																										 |
-		| [Ref]_ [Position]_ [Description]__________________| [Ref]_ [Position]_ [Description]___________________|
-		| 													|													 |
-		|  A1 	  Pilot 		Left Side Console			|  B1 	  RIO 		  Left Side Console				 |
-		|  A2 	  Pilot 		Left Vertical Console		|  B2 	  RIO 		  Left Vertical Console			 |
-		|  A3 	  Pilot 		Left Knee Panel 			|  B3 	  RIO 		  Left Instrument Panel 		 |
-		|  A4 	  Pilot 		Left Instrument Panel 		|  B4 	  RIO 		  Center Panel 					 |
-		|  A5 	  Pilot 		Left Windshield Frame 		|  B5 	  RIO 		  Center Console 				 |
-		|  A6 	  Pilot 		Center Panel 				|  B6 	  RIO 		  Left and Right Footwells 		 |
-		|  A7 	  Pilot 		Right Windshield Frame 		|  B7 	  RIO 		  Right Instrument Panel 		 |
-		|  A8 	  Pilot 		Right Instrument Panel 		|  B8 	  RIO 		  Right Knee Panel 				 |
-		|  A9 	  Pilot 		Right Knee Panel 			|  B9 	  RIO 		  Right Vertical Console 		 |
-		|  A10	  Pilot 		Right Vertical Console	 	|  B10 	  RIO 		  Right Side Console 			 |
-		|  A11	  Pilot 		Right Side Console 			|  B11 	  RIO 		  Canopy Control Handle 		 |
-		|  A12	  Pilot 		Canopy Control Handle 		|													 |
-		|___________________________________________________|____________________________________________________|
-
-
-Description Guide:__________________________________________________________________________________________________________________________________
-[BUTTON ID: 3043 / DEVICE ID: 26] - Clock Timer Start/Stop/Reset Button - {28.1, 31.0}{0.0, 1.0}
-Button ID: Used in Stream Deck "Button ID:"
-Device ID: Used in Stream Deck "Device ID" Note: this is not DCS ID
-- Description of button -
-{min gauge value, max gauge value}{stored/variable min value, stored/variable max value}
-
-
-]]
 ExportScript.FoundDCSModule = true
 ExportScript.Version.F14 = "1.2.1"
 
-ExportScript.ConfigEveryFrameArguments =
+ExportScript.ConfigEveryFrameArguments = 
 {
 	--[[
+	every frames arguments
+	based of "mainpanel_init.lua"
+	Example (http://www.lua.org/manual/5.1/manual.html#pdf-string.format)
 	[DeviceID] = "Format"
-	  [4]   = "%.4f",  <- floating-point number with 4 digits after point
-	  [19]  = "%0.1f", <- floating-point number with 1 digit after point
-	  [129] = "%1d",   <- decimal number
-	  [5]   = "%.f",   <- floating point number rounded to a decimal number
+	  [4] = "%.4f",  <- floating-point number with 4 digits after point
+	 [19] = "%0.1f", <- floating-point number with 1 digit after point
+	[129] = "%1d",   <- decimal number
+	  [5] = "%.f",   <- floating point number rounded to a decimal number
 	]]
--- PILOT COCKPIT ------------------------------------------------------------------------------
-
-	-- [NEEDS TESTING] ------------------------------------------------------------------------
-
-
-	-- [END NEEDS TESTING] --------------------------------------------------------------------
-
-
-	-- [In Development / Testing] -------------------------------------------------------------
-
--- A1a
-		-- Volume/TACAN Command Panel
-		[2040]  =  "%.4f",   -- ALR-67 Knob controls audio volume to pilot
-		[2039]  =  "%.4f",   -- SW knob volume of sidewinder audio tone to pilot
-		[2038]  =  "%.4f",   -- V/UHF 2 knob audio from AN/ARC-182 to pilot
-		[0]  =  "%.4f",   -- TACAN CMD switch sets crew member in command of Tacan
-
-		-- ICS Control Panel
-		[2048]  =  "%.4f",   -- VOL knob from RIO to pilot
-		[2045]  =  "%.4f",   -- AMP selection knob (B/U|NORM|EMER)
-		[2044]  =  "%.4f",   -- ICS switch (RADIO OVERRIDE|HOT MIC|COLD MIC)
-
-		-- AFCS Control Panel
-		[2106]  =  "%.4f",   -- PITCH switch enables stability augmentation
-		[2107]  =  "%.4f",   -- ROLL switch enables stability augmentation
-		[2108]  =  "%.4f",   -- YAW switch enables stability augmentation
-		[2109]  =  "%.4f",   -- VEC/PCD/ACL switch (VEC/PCD|OFF|ACL)
-		[2110]  =  "%.4f",   -- ALT switch (ON|OFF)
-		[2111]  =  "%.4f",   -- HDG switch (HDG|OFF|GT)
-		[2112]  =  "%.4f",   -- ENGAGE switch (ENGAGE|OFF)
-
-		-- ASYM Limiter/Engine Mode Select
-		[16006] =  "%.4f",   -- ASYM LIMITER switch (ON|OFF)
-		[16005] =  "%.4f",   -- ASYM LIMITER cover
-		[16007]  =  "%.4f",   -- L ENG MODE SELECT (PRI|SEC)
-		[16008]  =  "%.4f",   -- R ENG MODE SELECT (PRI|SEC)
-
-		[0]  =  "%.4f",   -- Target Designate swith to designate ground targ. on HUD (up/down/forward designate)
-
-		-- Inlet Ramps/Throttle Control Panel
-		[2104]  =  "%.4f",   -- THROTTLE MODE (AUTO|BOOST|MAN)
-		[2103]  =  "%.4f",   -- THROTTLE TEMP (HOT|NORM|COLD)
-		[2100]  =  "%.4f",   -- L INLET RAMP (STOW|AUTO)
-		[2101]  =  "%.4f",   -- R INLET RAMP (STOW|AUTO)
-		[2102]  =  "%.4f",   -- ENG CRANK (L|R)
-		[0]  =  "%.4f",   -- BACK UP IGNITION (ON|NORM)
-		[0]  =  "%.4f",   -- RUDDER TRIM (L|R)
-
-
-
-
--- A1b
-		-- Oxygen Vent Airflow Control Panel
-		[0]  =  "%.4f",   -- VENT AIRFLOW dial
-		[8114]  =  "%.4f",   -- OXYGEN switch (ON|OFF)
-
-		-- TACAN Control Panel
-		[8888]  =  "%.4f",   -- Dual rotary switch Outer Dial
-		[8889]  =  "%.4f",   -- Dual rotary switch Inner Dial
-		[0]  =  "%.4f",   -- TACAN channel 3 digit
-		[8050]  =  "%.4f",   -- Status Go
-		[8051]  =  "%.4f",   -- Status NO-GO
-		[2115]  =  "%.4f",   -- BIT button initiating TACAN BIT
-		[2043]  =  "%.4f",   -- NORMAL MODE switche (X|Y)
-		[2036]  =  "%.4f",   -- VOL knob for TACAN audio to pilot
-		[2041]  =  "%.4f",   -- MODE konb (OFF|REC|T/R|A/A|BCN)
-		[2042]  =  "%.4f",   -- MODE (NORMAL|INVERSE)
-
-		-- UHF 1 (AN/ARC-159) Radio
-		[2031]  =  "%.4f",   -- VOL knob controls radio to pilot vol.
-		[2035]  =  "%.4f",   -- SQL switch squelch (ON|OFF)
-		[2030]  =  "%.4f",   -- Freq. Select Switch 1
-		[2029]  =  "%.4f",   -- Freq. Select Switch 2
-		[2028]  =  "%.4f",   -- Freq. Select Switch 3
-		[2026]  =  "%.4f",   -- Freq. Select Switch 4
-		[0]  =  "%.4f",   -- FREQ/(CHAN) display ??? (maybe the switch values above???)
-		[8115]  =  "%.4f",   -- READ button
-		[2027]  =  "%.4f",   -- BRT knob display brightness
-		[16009] =  "%.4f",   -- LOAD button
-		[2034]  =  "%.4f",   -- Function selector knob (ADF|BOTH|MAIN|OFF)
-		[2032]  =  "%.4f",   -- CHAN SEL knob selects preset channels
-		[2033]  =  "%.4f",   -- Mode selector knob (GUARD|MANUAL|PRESET)
-		[16010] =  "%.4f",   -- TONE button transmits tone on freq.
-
-		-- Throttle Buttons
-		[0]  =  "%.4f",   -- Speed Brake switch (EXT|RET)
-		[0]  =  "%.4f",   -- Wing Sweep switch (AUTO|FWD|AFT|BOMB)
-		[0]  =  "%.4f",   -- PLM button lockon
-		[0]  =  "%.4f",   -- CAGE/SEAM button lockon
-		[0]  =  "%.4f",   -- Exterior Light switch (ON|OFF)
-		[0]  =  "%.4f",   -- ICS PIT switch (ICS|BOTH|UHF1|UHF2)
-
-
-
-
--- A2
-		-- Fuel Management Panel
-		[1076]  =  "%.4f",   -- QTY SEL Switch (FEED|WING|EXT)
-		[1095]  =  "%.4f",   -- Select Fuel Feed to engines (FWD|NORM|AFT)
-		[1094]  =  "%.4f",   -- Fuel feed cover
-		[1001]  =  "%.4f",   -- WING/EXT Transfer (ORIDE|AUTO|OFF)
-		[15002] =  "%.4f",   -- Refueling Probe Indicator Light
-		[1074]  =  "%.4f",   -- Fuel Dump Switch (OFF|DUMP)
-		[1073]  =  "%.4f",   -- Refuel Probe Switch (ALL EXTD|FUS EXTD|RET)
-		[1072]  =  "%.4f",   -- Anti skid spoiler bk switch (BOTH|OFF|SPOILER BK)
-		[1071]  =  "%.4f",   -- MASTER RESET button resets CADC failure
-
-		-- Control surface position indicator
-		[0]  =  "%.4f",   -- L SPOILER DN-Down/flush | Up-Arrow-Above wing | Down-Arrow-Below Wing 8315-8322
-		[0]  =  "%.4f",   -- C SPOILER DN-Down/flush | Up-Arrow-Above wing | Down-Arrow-Below Wing
-		[0]  =  "%.4f",   -- R SPOILER DN-Down/flush | Up-Arrow-Above wing | Down-Arrow-Below Wing
-		[1092]  =  "%.4f",   -- RUDDER position indicators Left
-		[1093]  =  "%.4f",   -- RUDDER position indicators Right
-		[1090]  =  "%.4f",   -- HORIZ. STAB. Position indicator Left
-		[1091]  =  "%.4f",   -- HORIZ. STAB. Position indicator Right
-
-		-- Landing Gear Control Panel
-		[326]   =  "%.4f",   -- Landing Gear Handle (UP|DOWN)
-		[16015] =  "%.4f",   -- Landing Gear Emer. Extension
-		[631]   =  "%.4f",   -- HYD ISOL (FLT|T.O.LDG)
-		[999]   =  "%.4f",   -- Transition Light
-		[0]  =  "%.4f",   -- EMERG STORES button (illuminates when pressed)
-		[0]  =  "%.4f",   -- EMERG STORES light ???
-		[1075]  =  "%.4f",   -- NOSE STRUT switch (EXTD|OFF|KNEEL)
-		[237]   =  "%.4f",   -- Brake Pull Handle
-		[2049]  =  "%.4f",   -- EJECT CMD Indicator (PILOT|MCO)
-
-		-- Wheels-Flaps Pisition Indicator
-		[8302]  =  "%.4f",   -- Left Landing Gear Indicator
-		[8305]  =  "%.4f",   -- Right Landing Gear Indicator
-		[8301]  =  "%.4f",   -- Nose Landing Gear Indicator
-		[0]  =  "%.4f",   -- SPD BK Indicator
-		[8310]  =  "%.4f",   -- Slats Indicator
-		[8311]  =  "%.4f",   -- Flaps Indicator
-
-
-
-
-
--- A4
-		-- Radar Altimiter
-		[103]   =  "%.4f",  -- Radar Altimeter needle
-		[308]   =  "%.4f",  -- Radar Altimeter Control Knob
-		[2123]  =  "%.4f",  -- Radar Altimeter Bug
-		[2124]  =  "%.4f",  -- Radar Altimeter OFF Flag
-		[4154]  =  "%.4f",	-- Radar Altimeter Bug
-		[16020] =  "%.4f",  -- Radar Altimeter Knob Push
-		[19108] =  "%.4f",  -- Radar Altimeter Test Light
-
-		-- Servopneumatic Altimeter
-		[0]  =  "%.4f",   -- Altimeter readout 112/262/300-304
-		[104]   =  "%.4f",   -- Altimeter Baro readout
-		[306]   =  "%.4f",   -- Baroset knob sets local press. in in.Hg
-		[0]  =  "%.4f",   -- Local barometric pressure (Kollsman Window)
-		[307]   =  "%.4f",   -- Mode switch
-
-		-- Airspeed Mach Indicator
-		[0]  =  "%.4f",   -- Airspeed dial ???
-		[0]  =  "%.4f",   -- Indicated airspeed scale (outer) ???
-		[0]  =  "%.4f",   -- Indicated airspeed scale (inner) ???
-		[0]  =  "%.4f",   -- Mach number scale ???
-		[0]  =  "%.4f",   -- Indicated airspeed index pointer ???
-		[0]  =  "%.4f",   -- Mach Number index pointer ???
-		[0]  =  "%.4f",   -- Safe Mach number index pointer ???
-		[0]  =  "%.4f",   -- Index knob pushed in ???
-		[0]  =  "%.4f",   -- Index knob pulled out ???
-
-		[0]  =  "%.4f",   -- Vertical Velocity Indicator
-		[0]  =  "%.4f",   -- Left Engine Fuel Shutoff Handle
-		[0]  =  "%.4f",   -- Angle of Attack Indicator
-
-
-
-
-
--- A5
-		[9356]  =  "%.4f",   -- LEFT Eng. Stall Indicator
-
-		[9350]  =  "%.4f",   -- WHEELS warning
-		[9351]  =  "%.4f",   -- BRAKES warning - antiskid or brake fail / parking break
-		[9352]  =  "%.4f",   -- ACLS/AP - ACLS or AP disengaged
-		[9353]  =  "%.4f",   -- NWS ENGA - nosewheel steering engaged
-		[9354]  =  "%.4f",   -- AUTO THROT - disengagement of auto throttle
-
-
-
-
-
-
--- 6b
-		-- Vertical Display Indicator (VDI)
-		[1037]  =  "%.4f",   -- HUD Brightness Control
-		[1036]  =  "%.4f",   -- VDI Brightness Control
-		[1038]  =  "%.4f",   -- VDI Contrast Control
-		[1033]  =  "%.4f",   -- FILTER Handle when pulled inserts filter for night ops
-		[1034]  =  "%.4f",   -- HUD Trim control for pitch lines
-		[1035]  =  "%.4f",   -- VDI Trim adjustment of pitch lines on VDI
-
-		-- VDI Caution Lights (also check 2222 id range if below not working)
-		[9360]  =  "%.4f",   -- ADJ A/C Advisory light indicating other aircraft close to own traffic pattern.
-		[9361]  =  "%.4f",   -- LANDING	CHK Advisory light indicating carrier has a channel
-		[9362]  =  "%.4f",   -- ACL	READY indicating CATCC has aquired aircraft
-		[9363]  =  "%.4f",   -- A/P	CPLR indicating CATCC is ready to control aircraft.
-		[9364]  =  "%.4f",   -- CMD	CONTROL	aircraft is under data link control for landing.
-		[9365]  =  "%.4f",   -- 10 SECONDS waypoint and carrier motion info
-		[9366]  =  "%.4f",   -- TILT no data link command received for the last 2 sec
-		[9367]  =  "%.4f",   -- VOICE - CATCC not ready for ACL
-		[9368]  =  "%.4f",   -- AUTO Throttle
-		[9369]  =  "%.4f",   -- A/P REF autopilot selected but not engaged.
-		[15070] =  "%.4f",   -- WAVEOFF	Warning light indicating waveoff commanded. 2222/15070
-		[15071] =  "%.4f",   -- WING SWEEP failure in both wing-sweep channels
-		[15072] =  "%.4f",   -- REDUCE SPEED flap retraction failure
-		[15073] =  "%.4f",   -- ALT	LOW	Non functional, light on radar altimeter is used instead
-
-
-
-
--- 6c
-		-- Horizontal Situation Display Indicator (HSD)
-		[1043]  =  "%.4f",   -- BRT controls HSD Brightness
-		[1039]  =  "%.4f",   -- HDG controls heading reference bug in TACAN mode
-		[1040]  =  "%.4f",   -- CRS controls cour in MAN and TACAN mode
-		[1041]  =  "%.4f",   -- TEST allows reset of HSD
-		
-		[0]  =  "%.4f",   -- BIT indicator failure in HSD (shows flags ???)
-		[0]  =  "%.4f",   -- Bit Indicator knob ???
-
-
-
-
--- 6d
-		-- Center Panel at bottom
-		[0]  =  "%.4f",   -- Cabin Pressure Altimeter in 1,000 foot increments (0-50,000') 935|2210
-		[0]  =  "%.4f",   -- Emerg. Brake Press. Indicator Park (2150-3000 psi green / red is 1900-2150 psi) 999|9260
-		[0]  =  "%.4f",   -- Emerg. Aux Press. Indicator Park (2150-3000 psi green / red is 1900-2150 psi) 9261
-
-
-
-
--- A7
-		[9355]  =  "%.4f",   -- Right Eng. STALL
-
-		-- ECM Warning Lights
-		[9357]  =  "%.4f",   -- SAM - steady when lock from SAM / Flashes when missle launch
-		[9358]  =  "%.4f",   -- AAA - steady when lock from AAA / Flashes on missle launch
-		[9359]  =  "%.4f",   -- AI - steady when lock from airborne radar
-
-		[15097] =  "%.4f",   -- Standby Compass
-
-
-
-
--- A8
-		[0]  =  "%.4f",   -- Wing Sweep Indicator 404|405|507|508|2001|2002 flags: 15091-15095
-		[0]  =  "%.4f",   -- Right Engine Fuel Shutoff Handle
-		[0]  =  "%.4f",   -- Standby Attitude Indicator ??
-
-		-- UHF/VHF Remote Indicators
-		[0]  =  "%.4f",   -- UHF 1 frequency display
-		[0]  =  "%.4f",   -- UHF 1 TEST button displays 888.888 if good
-		[0]  =  "%.4f",   -- UHF 1 DIM controls display brightness
-		[0]  =  "%.4f",   -- V/UHF 2 frequency display
-		[0]  =  "%.4f",   -- V/UHF 2 TEST button displays 888.888 if good
-		[0]  =  "%.4f",   -- V/UHF 2 BRT controls display brightness
-		
-		[353]  =  "%0.1f",   -- VHF/UHF ARC-182 Freq Mode (UHF GUARD|V/UHF|V/UHF GUARD|PRESET|V/UHF|LOAD?) -- Bailey
-
-		-- Bearing Distance Heading Indicator BDHI
-		[0]  =  "%.4f",   -- No. 2 Bearing Pointer magnetic course to TACAN station
-		[0]  =  "%.4f",   -- Compass Rose magnetic heading
-		[0]  =  "%.4f",   -- No. 1 bearing pointer magnetic course to UHF/ADF station
-		[0]  =  "%.4f",   -- Distance Counter in nautical miles
-
-		-- ALR-67 Indicator
-		[0]  =  "%.4f",   -- INT knob intensity brightness
-
-		[224]   =  "%.4f",   -- Canopy Jettison Handle
-
-
-
-
-
--- A10
-		-- Displays Control Panel
-			-- Steering Commands Selectors
-			[1002]  =  "%.4f",   -- TACAN - Selects TACAN as steering command source
-			[1003]  =  "%.4f",   -- DEST - Selects RIO set waypoint as steering command source
-			[1004]  =  "%.4f",   -- AWL/PCD - All weather landing/prec. course direction
-			[1005]  =  "%.4f",   -- VEC - Vector, selects data link deviation steering as source
-			[1006]  =  "%.4f",   -- MAN - Manual, selects manually selected course and heading
-
-			-- Mode Selectors
-			[1015]  =  "%.4f",   -- T.O. Takeoff mode
-			[1014]  =  "%.4f",   -- CRUISE mode
-			[1013]  =  "%.4f",   -- A/A Air-to-Air mode
-			[1012]  =  "%.4f",   -- A/G Air-to-Ground mode
-			[1011]  =  "%.4f",   -- LDG Landing Mode
-
-			-- HUD
-			[1021]  =  "%.4f",   -- DeClutter Mode for HUD (ON|OFF)
-			[1020]  =  "%.4f",   -- Which AWL to display on HUD Switch (ILS|ACL)
-
-			-- VDI
-			[1019]  =  "%.4f",   -- TV Displays video from TCS or LANTIRN or NORM (TV|NORM)
-			[1018]  =  "%.4f",   -- Which AWL to display on VDI (ILS|ACL)
-
-			-- HSD
-			[1016]  =  "%.4f",   -- HSD Mode (NAV|TID) nav display or TID repeats RIO TID Info
-			[1017]  =  "%.4f",   -- ECM (ORIDE|OFF) [NOT USED/MODELED]
-
-			-- Power Switches
-			[1010]  =  "%.4f",   -- VDI (ON|OFF)
-			[1009]  =  "%.4f",   -- HUD (ON|OFF)
-			[1008]  =  "%.4f",   -- HSD/ECMD (ON|OFF)
-
-			-- Pitch LAD BRT Knob
-			[1007]  =  "%.4f",   -- Controls brightness of pitch ladder on HUD
-		-- END Displays Control Panel
-
-		-- gun elevation lead in mils
-		[2270]  =  "%.4f",   -- Hundreds Counter in mils for the manual A/A and A/G gun modes. Limits are -263 and +87 mils
-		[2271]  =  "%.4f",   -- Tens Counter in mils for the manual A/A and A/G gun modes. Limits are -263 and +87 mils
-		[2272]  =  "%.4f",   -- Ones Counter in mils for the manual A/A and A/G gun modes. Limits are -263 and +87 mils
-		[2273]  =  "%.4f",   -- Knob adjust counter
-
-
-
-
--- 11a
-		-- Spoiler Failure Override
-		[902]   =  "%.4f",   -- Inboard spoiler override (ORIDE|NORM) COVER
-		[903]   =  "%.4f",   -- Outboard spoiler override (ORIDE|NORM) COVER
-		[908]   =  "%.4f",   -- Inboard spoiler override (ORIDE|NORM)
-		[907]   =  "%.4f",   -- Outboard spoiler override (ORIDE|NORM)
-
-		-- Caution Advisory Indicator
-		[15037] =  "%.1f",   -- PITCH STAB 1 - inoperative pitch channel
-		[15040] =  "%.1f",   -- PITCH STAB 2 - inoperative pitch channel
-		[15039] =  "%.1f",   -- ROLL STAB 1 - inoperative roll channel
-		[15056] =  "%.1f",   -- ROLL STAB 2 - inoperative roll channel
-		[15025] =  "%.1f",   -- YAW STAB OP - one inoperative yaw channel
-		[15026] =  "%.1f",   -- YAW STAB OUT - two inoperative yaw channels
-		[15031] =  "%.1f",   -- EMERG JETT - caution activation of emerg stores jett button
-		[15050] =  "%.1f",   -- LADDER - boarding ladder not correctly stowed
-		[15052] =  "%.1f",   -- INLET ICE - accumulation of ice on ice detector in L eng.
-		[15046] =  "%.1f",   -- FLAP - failure in flap system or flaps down & speed > 225k
-		[15047] =  "%.1f",   -- HZ TAIL AUTH - failure of lateral tail auth. actuator
-		[15053] =  "%.1f",   -- RUDDER AUTH - failure of rudder auth. actuator
-		[15057] =  "%.1f",   -- SPOILERS - spoiler sys failure
-		[15041] =  "%.1f",   -- AUTO PILOT - A/P failure
-		[15054] =  "%.1f",   -- Left INLET - AICS programmer and/or system failure
-		[15051] =  "%.1f",   -- Right INLET - AICS programmer and/or system failure
-		[15048] =  "%.1f",   -- OIL PRESS - left or right engine oil press. < 11psi
-		[15038] =  "%.1f",   -- BLEED DUCT - high temp air leak in engine comp.
-		[15049] =  "%.1f",   -- LEFT RAMPS - ramps not locked in pos.
-		[15044] =  "%.1f",   -- RIGHT RAMPS - ramps not locked in pos.
-		[15063] =  "%.1f",   -- START VALVE - starter solenoid air valve is open
-		[15061] =  "%.1f",   -- LEFT ENG SEC - engin AFTC is in secondary mode
-		[15064] =  "%.1f",   -- RIGHT ENG SEC - engin AFTC is in secondary mode
-		[15016] =  "%.1f",   -- LEFT GEN - respective engine generator inoperative
-		[15020] =  "%.1f",   -- RIGHT GEN - respective engine generator inoperative
-		[15027] =  "%.1f",   -- CANOPY - canopy is not own and locked
-		[15033] =  "%.1f",   -- BINGO - aircraft fuel qty at or below set bingo
-		[15017] =  "%.1f",   -- LEFT OIL HOT - respective eng. oil is too hot
-		[15022] =  "%.1f",   -- RIGHT OIL HOT - respective eng. oil is too hot
-		[15028] =  "%.1f",   -- CADC - air data computer failure
-		[15034] =  "%.1f",   -- HYD PRESS - press. in either engine hyd. < 2,100 psi
-		[15018] =  "%.1f",   -- LEFT FUEL PRESS - press. < 9 psi in respective fuel pump
-		[15021] =  "%.1f",   -- RIGHT FUEL PRESS - press. < 9 psi in respective fuel pump
-		[15029] =  "%.1f",   -- LEFT FUEL LOW - fuel < 1000 lbs in aft and left tank
-		[15035] =  "%.1f",   -- RIGHT FUEL LOW - fuel < 1000 lbs in fwd and righ tank
-		[15023] =  "%.1f",   -- WING SWEEP - failure of a single channel in wing sweep
-		[15062] =  "%.1f",   -- RATS - RATS enabled
-		[15058] =  "%.1f",   -- TRANS/RECT - transformer rectifier failure
-		[15036] =  "%.1f",   -- MACH TRIM - failure in Mach trim actuator
-		[15030] =  "%.1f",   -- WSHLD HOT - central windshield overheat
-		[15045] =  "%.1f",   -- LAUNCH BAR - weight on wheels
-		[15060] =  "%.1f",   -- INTEG TRIM - trim failure
-		[15055] =  "%.1f",   -- AHRS - unreliable attitude or hdg info from AHRS
-		[15019] =  "%.1f",   -- ENG FIRE EXT - low press. in fire extenguisher
-		[15024] =  "%.1f",   -- AUX FIRE EXT - low press. in Aux. fire ext.
-
-		-- Master Generator Control Panel
-		[937]   =  "%.4f",   -- LEFT MASTER GEN switch (NORM|OFF/RESET|TEST)
-		[936]   =  "%.4f",   -- RIGHT MASTER GEN switch (NORM|OFF/RESET|TEST)
-		[927]   =  "%.4f",   -- EMERG switch (EMERG|NORM|OFF/RESET) COVER
-		[926]   =  "%.4f",   -- EMERG switch (EMERG|NORM|OFF/RESET)
-
-		-- Air Condition Control Panel
-		[940]   =  "%.4f",   -- TEMP switch (AUTO|MAN)
-		[939]   =  "%.4f",   -- CABIN PRESS switch (NORM|DUMP)
-		[938]   =  "%.4f",   -- RAM AIR switch (INCR|DECR)
-		[929]   =  "%.4f",   -- AIR SOURCE selection (RAM)
-		[930]   =  "%.4f",   -- AIR SOURCE selection (L ENG.)
-		[931]   =  "%.4f",   -- AIR SOURCE selection (R ENG.)
-		[932]   =  "%.4f",   -- AIR SOURCE selection BOTH ENG.)
-		[933]   =  "%.4f",   -- AIR SOURCE selection (OFF)
-		[950]   =  "%.4f",   -- TEMP thumbwheel (1-14 COOL-WARM)
-
-		-- External Environmental Control Panel
-		[942]   =  "%.4f",   -- WIND SHIELD switch (AIR|OFF)
-		[941]   =  "%.4f",   -- ANTI-ICE switch (ORIDE|AUTO|OFF)
-
-		-- Hydraulic Transfer Pump Switch
-		[630]   =  "%.4f",   -- Transfer Pump switch cover
-		[629]   =  "%.4f",   -- HYD TRANSFER PUMP switch (NORMAL|SHUTOFF)
-
-
-
-
-
--- 11b
-		-- Compass Control Panel
-		[0]  =  "%.4f",   -- SYNC Indicator 2221?
-		[906]   =  "%.4f",   -- N-S Switch hemisphere (N|S)
-		[909]   =  "%.4f",   -- Lat Knob (0-90)
-		[1026]  =  "%.4f",   -- Lat Knob (0-90)
-		[905]   =  "%.4f",   -- Mode Switch AHRS Hdg Info (COMP|SLAVED|DG)
-		[904]   =  "%.4f",   -- HDG Knob
-		[16014] =  "%.4f",   -- HDG Button
-
-		-- ARA-63 Control Panel
-		[912]   =  "%.4f",   -- Channel Selector (1 of 20 available ICLS channels)
-		[911]   =  "%.4f",   -- BIT button
-		[910]   =  "%.4f",   -- Power Switch (ON|OFF)
-		[910]   =  "%.4f",   -- Power ON Light for ARA-63 (taken from power on/off switch)
-
-		-- Master Light Control Panel
-		[923]   =  "%.4f",   -- ANTI COLLISION switch (ON|OFF)
-		[919]   =  "%.4f",   -- POSITION switch (FLASH|STEADY)
-		[916]   =  "%.4f",   -- TAIL POSITION switch (DIM|OFF|BRT)
-		[913]   =  "%.4f",   -- WING POSITION switch (DIM|OFF|BRT)
-		[15005] =  "%.4f",   -- ACM thumbwheel Lights Dimmer (0-OFF|1-14 DIM-BRT)
-		[15006] =  "%.4f",   -- INDEXER thumbwheel Lights Dimmer (0-OFF|1-14 DIM-BRT)
-		[15007] =  "%.4f",   -- INSTRUMENT thumbwheel Lights Dimmer (0-OFF|1-14 DIM-BRT)
-		[15008] =  "%.4f",   -- CONSOLE thumbwheel Lights Dimmer (0-OFF|1-14 DIM-BRT)
-		[15009] =  "%.4f",   -- FORMATION thumbwheel Lights Dimmer (0-OFF|1-14 DIM-BRT)
-		[915]   =  "%.4f",   -- HOOK BYPASS (FIELD|CARRIER)
-		[918]   =  "%.4f",   -- TAXI lights switch (ON|OFF)
-		[921]   =  "%.4f",   -- WHITE FLOOD switch (OFF|DIM|BRT)
-		[924]   =  "%.4f",   -- RED FLOOD switch (DIM|MED|BRT)
-
-		-- Master Test Panel
-		[934]   =  "%.4f",   -- MASTER TEST SELECTOR (OFF|LTS|FIRE DET/EXT|INST|OBC|EMERG GEN|MACH LEV|WG SWP|FLT GR DN|FLT GR UP|D/L RAD|STICK SW)
-		[15098] =  "%.4f",   -- MASTER TEST SELECTOR Knob Push
-		[15010] =  "%.4f",   -- GO light - light used in test to indicate go/no-go conditions of that system
-		[15011] =  "%.4f",   -- NO-GO light - light used in test to indicate go/no-go conditions of that system
-		[928]   =  "%.4f",   -- EMERG FLT HYD (HIGH|LOW|AUTO(LOW))
-		[615]   =  "%.4f",   -- EMERG FLT HYD switch cover
-
-		-- Canopy Defog/Cabin Air Lever
-		[0]  =  "%.4f",   -- CABIN AIR
-		[0]  =  "%.4f",   -- CANOPY DEFOG
-
-
-
-
--- 12
-		[0]  =  "%.4f",   -- Canopy Control Handle (BOOST|CLOSE|HOLD|OPEN|AUX OPEN)
-
-
-	-- [END In Development] -------------------------------------------------------------------
-	-- ###################################################################################################################################################################
-	-- ###################################################################################################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-	-- [A1 Pilot - Left Side Console] ---------------------------------------------------------
-	-- [END A1] -------------------------------------------------------------------------------
 	
-	-- [A2 Pilot - Left Vertical Console] -----------------------------------------------------
-	-- [END A2] -------------------------------------------------------------------------------
+	--Lamps
+[10]  =  "%.1f",   --      RADAR DDD WCS PSRCH 
+[11]  =  "%.1f",   --      RADAR DDD_WCS TWSMAN 
+[12]  =  "%.1f",   --      RADAR DDD WCS TWSAUTO 
+[13]  =  "%.1f",   --      RADAR_DDD_WCS_RWS 
+[14]  =  "%.1f",   --      RADAR_DDD_WCS_PDSRCH 
+[15]  =  "%.1f",   --      RADAR_DDD_WCS_PSTT 
+[9916]  =  "%.1f",   --      RADAR_DDD_WCS_PDSTT 
+[17]  =  "%.1f",   --      RADAR_DDD_display_IFF 
+[18]  =  "%.1f",   --      RADAR_DDD_display_IR 
+[19]  =  "%.1f",   --      RADAR_DDD_display_radar 
+[20]  =  "%.1f",   --      RADAR_IR_gain 
+[21]  =  "%.1f",   --      RADAR_IR_volume 
+[22]  =  "%.1f",   --      RADAR_IR_threshold 
+[23]  =  "%.1f",   --      RADAR_DDD_bright 
+[24]  =  "%.1f",   --      RADAR_DDD_pulse_vid 
+[25]  =  "%.1f",   --      RADAR_DDD_erase 
+[26]  =  "%.1f",   --      RADAR_DDD_pulse_gain 
+[27]  =  "%.1f",   --      RADAR_ACM_thresh 
+[28]  =  "%.1f",   --      RADAR_jamjet 
+[29]  =  "%.1f",   --      RADAR_PD_thresh_clutter 
+[30]  =  "%.1f",   --      RADAR_PD_thresh_clear 
 
-	-- [A3 Pilot - Left Knee Panel] -----------------------------------------------------------
+[31]  =  "%.1f",   --      VDI_Light_Color 
+[32]  =  "%.1f",   --      HUD_Light_Color 
 
-		-- Electronic Instrument Group
-		[1057]  =  "%.4f",   -- Engine RPM Left																									[STREAM DECK FORMAT: 51057]
-		[1058]  =  "%.4f",   -- Engine RPM Right																								[STREAM DECK FORMAT: 51057]
-		[1059]  =  "%.4f",   -- Engine TIT (Exhaust Gas Temp) Left																				[STREAM DECK FORMAT: 51059]
-		[1060]  =  "%.4f",   -- Engine TIT (Exhaust Gas Temp) Right																				[STREAM DECK FORMAT: 51059]
-		[1061]  =  "%.4f",   -- Engine Fuel Flow Left																							[STREAM DECK FORMAT: 51061]
-		[1062]  =  "%.4f",   -- Engine Fuel Flow Right																							[STREAM DECK FORMAT: 51061]
+[33]  =  "%.1f",   --      HIDE_Stick 
 
-		-- Hydraulic Pressure Indicator
-		[1063]  =  "%.4f",   -- HYD_FlightHydraulicSystemPressure																				[STREAM DECK FORMAT: 51023 OR 51063]
-		[1064]  =  "%.4f",   -- HYD_CombinedHydraulicSystemPressure																				[STREAM DECK FORMAT: 51023 OR 51063]
+[9945]  =  "%.1f",   --      DATA_ADF_Switch 
 
-		-- Engine Oil Pressure Gauges
-		[1065]  =  "%.4f",   -- Right Engine Oil Pressure																						[STREAM DECK FORMAT: 51065]
-		[1066]  =  "%.4f",   -- Left Engine Oil Pressure																						[STREAM DECK FORMAT: 51065]
+[403]  =  "%.1f",   --      INT_CANOPY_Open 
+[404]  =  "%.1f",   --      Pilot_Seat_Safety 
+[405]  =  "%.1f",   --      RIO_UHF_REMOTE_TEST 
+[406]  =  "%.1f",   --      RIO_UHF_REMOTE_DIM 
+[407]  =  "%.1f",   --      HCU_POWER_RESET_LIGHT 
+[408]  =  "%.1f",   --      HCU_WCS_POWER_LIGHT 
+[409]  =  "%.1f",   --      HCU_IR_STBY_LIGHT 
+[410]  =  "%.1f",   --      RIO_LOD 
+[411]  =  "%.1f",   --      PILOT_LOD 
+[412]  =  "%.1f",   --      COMP_IND_SYNC_NEEDLE 
+[413]  =  "%.1f",   --      DATALINK_ON_OFF_SW 
 
-		-- Engine Exhaust Nozzle Position
-		[1067]  =  "%.1f",   -- Right Nozzle																									[STREAM DECK FORMAT: 51068]
-		[1068]  =  "%.1f",   -- Left Nozzle																										[STREAM DECK FORMAT: 51068]
+[414]  =  "%.1f",   --      TACAN_NFO_RIO_INDICATOR 
 
-	-- [END A3] -------------------------------------------------------------------------------
+[1800]  =  "%.1f",   --      PILOT_FloodLights 
+[1801]  =  "%.1f",   --      PILOT_PanelLights 
+[1802]  =  "%.1f",   --      PILOT_InstrumentLights 
+[1803]  =  "%.1f",   --      PILOT_WhiteFloodLights 
 
-	-- [A4 Pilot - Left Instrument Panel] -----------------------------------------------------
+[1804]  =  "%.1f",   --  RIO_FloodLights 
+[1805]  =  "%.1f",   --      RIO_PanelLights 
+[1806]  =  "%.1f",   --      RIO_InstrumentLights 
+[1807]  =  "%.1f",   --      RIO_WhiteFloodLights 
 
-	-- [END A4] -------------------------------------------------------------------------------
-	
-	-- [A5 Pilot - Left Windshield Frame] -----------------------------------------------------
+[1808]  =  "%.1f",   --      PILOT_Cockpit_LeanForward 
+[1809]  =  "%.1f",   --      PILOT_Cockpit_LeanLeftRight 
 
-		-- Approach Indexer
-		[3760]  =  "%d",   	 -- Approach Indexer AOA Slow green light 	 	- {0, 1}{0, 1}
-		[3761]  =  "%d",   	 -- Approach Indexer AOA optimum yellow light 	- {0, 1}{0, 1}
-		[3762]  =  "%d",   	 -- Approach Indexer AOA fast red light 		- {0, 1}{0, 1}
+[1810]  =  "%.1f",   --      RIO_Cockpit_LeanForward 
+[1811]  =  "%.1f",   --      RIO_Cockpit_LeanLeftRight 
 
-	-- [END A5] -------------------------------------------------------------------------------
+[1812]  =  "%.1f",   --      CCM_SPL 
+[1813]  =  "%.1f",   --      CCM_ALT_DIFF 
+[1814]  =  "%.1f",   --      CCM_VGS 
 
-	-- [A6a Pilot - Center Panel] -------------------------------------------------------------
+[6501]  =  "%.1f",   --      ACM_TurnIndicator 
+[6500]  =  "%.1f",   --      ACM_SlipBall 
 
-		-- ACM Switch
-		[1049]  =  "%d",   	 -- ACM Switch Cover actives the ACM mode 		- {0, 1}{0, 1}														[BUTTON ID:3133  / DEVICE ID:55 ]
-		[1048]  =  "%d",   	 -- ACM JETT button jettison stores 			- {0, 1}{0, 1}														[BUTTON ID:3138  / DEVICE ID:55 ]
+[6502]  =  "%.1f",   --      COMPASSBALL_ROTATE 
+[6503]  =  "%.1f",   --      COMPASSBALL_ROTATE_VERTICAL 
 
-		-- Master Arm Switch
-		[1046]  =  "%d",   	 -- MASTER ARM cover 							- {0, 1}{0, 1}														[BUTTON ID:3135  / DEVICE ID:55 ]
-		[1047]  =  "%d",   	 -- MASTER ARM switch (OFF|ON|TNG) 				- {-1, 1}{-1, 1}													[BUTTON ID:3136  / DEVICE ID:55 ]
+[8000]  =  "%.1f",   --      MIRROR_Shake_FrontTop 
+[8001]  =  "%.1f",   --      MIRROR_Shake_FrontLeft 
+[8002]  =  "%.1f",   --      MIRROR_Shake_FrontRight 
 
-		-- Turn and Slip Indicator 6a  (Not sure how to do this at the moment)
-		[6500]  =  "%.4f",   -- Slip Ball
-		[6501]  =  "%.4f",   -- Turn Indicator
+[15012]  =  "%.1f",   --      SPOILER_FLR_ORIDE_Left 
+[15013]  =  "%.1f",   --      SPOILER_FLR_ORIDE_Right 
 
-		-- Master Caution light
-		[9200]  =  "%d",	 -- MASTER CAUTION Light - flashes 				- {0, 1}{0, 1}
-
-	-- [END A6a] ------------------------------------------------------------------------------
-
-	-- [A6b Pilot - Center Panel] -------------------------------------------------------------
-	-- [END A6b] ------------------------------------------------------------------------------
-
-	-- [A6c Pilot - Center Panel] -------------------------------------------------------------
-	-- [END A6c] ------------------------------------------------------------------------------
-
-	-- [A6d Pilot - Center Panel] -------------------------------------------------------------
-	-- [END A6d] ------------------------------------------------------------------------------
-
-	-- [A7 Pilot - Right Windshield Frame] ----------------------------------------------------
-	-- [END A7] -------------------------------------------------------------------------------
-
-	-- [A8 Pilot - Right Instrument Panel] ----------------------------------------------------
-	-- [END A8] -------------------------------------------------------------------------------
-
-	-- [A9 Pilot - Right Knee Panel] ----------------------------------------------------------
-
-		-- FUS & FEED tapes Shows fuel qty in fuselage tanks
-		[1054]  =  "%.4f",   -- Left feed and aft fuselage tanks 																				[STREAM DECK FORMAT: 51054]
-		[1055]  =  "%.4f",   -- Right feed and forward fuselage tanks 																			[STREAM DECK FORMAT: 51055]
-
-		-- Total Left Fuel Qty (main fuel guage at bottom left)
-		[6000]  =  "%.1f",   -- FUEL_LFuelDial1k 																								[STREAM DECK FORMAT: 56000]
-		[6001]  =  "%.1f",   -- FUEL_LFuelDial100 																								[STREAM DECK FORMAT: 56000]
-		[6002]  =  "%.1f",   -- FUEL_LFuelDial10 																								[STREAM DECK FORMAT: 56000]
-		[6003]  =  "%.1f",   -- FUEL_LFuelDial1 																								[STREAM DECK FORMAT: 56000]
-
-		-- Total Right Fuel Qty (main fuel guage at bottom right)
-		[6004]  =  "%.1f",   -- FUEL_RFuelDial1k 																								[STREAM DECK FORMAT: 56004]
-		[6005]  =  "%.1f",   -- FUEL_RFuelDial100 																								[STREAM DECK FORMAT: 56004]
-		[6006]  =  "%.1f",   -- FUEL_RFuelDial10 																								[STREAM DECK FORMAT: 56004]
-		[6007]  =  "%.1f",   -- FUEL_RFuelDial1 																								[STREAM DECK FORMAT: 56004]
-
-		-- Total Fuel Qty in all aircraft tanks (main fuel guage in center shows "Fuel 15000 Qty")
-		[6010]  =  "%.1f",   -- FUEL_TotalFuel10k 																								[STREAM DECK FORMAT: 56010]
-		[6011]  =  "%.1f",   -- FUEL_TotalFuel1k 																								[STREAM DECK FORMAT: 56010]
-		[6012]  =  "%.1f",   -- FUEL_TotalFuel100 																								[STREAM DECK FORMAT: 56010]
-		[6013]  =  "%.1f",   -- FUEL_TotalFuel10 																								[STREAM DECK FORMAT: 56010]
-		[6014]  =  "%.1f",   -- FUEL_TotalFuel1 																								[STREAM DECK FORMAT: 56010]
-
-		-- Currently set BINGO fuel quantity (main fuel guage in center at top shows "Bingo 4000")
-		[6020]  =  "%.1f",   -- FUEL_BingoFuel10k 																								[STREAM DECK FORMAT: 56020]
-		[6021]  =  "%.1f",   -- FUEL_BingoFuel1k 																								[STREAM DECK FORMAT: 56020]
-		[6022]  =  "%.1f",   -- FUEL_BingoFuel100 																								[STREAM DECK FORMAT: 56020]
-		[6023]  =  "%.1f",   -- FUEL_BingoFuel10 																								[STREAM DECK FORMAT: 56020]
-		[6024]  =  "%.1f",   -- FUEL_BingoFuel1 																								[STREAM DECK FORMAT: 56020]
-
-		-- Accelerometer (3 needles)
-		[110]   =  "%.4f",   -- Needle   - Current G (+10 to -6)																				[STREAM DECK FORMAT: 50110]
-		[15076] =  "%.4f",   -- Needle 2 - Max Postive G pulled (max 10)																		[STREAM DECK FORMAT: 50110]
-		[15077] =  "%.4f",   -- Needle 3 - Max Negative G Pulled (max -6)																		[STREAM DECK FORMAT: 50110]
-
-	-- [END A9] -------------------------------------------------------------------------------
-
-	-- [A10 Pilot - Right Vertical Console] ---------------------------------------------------
-
-		-- Gun Ammunition Rounds Counter
-		[4060]  =  "%.1f",   -- Gun Ammunition Rounds Counter Hundreds																			[STREAM DECK FORMAT: 54060]
-		[4061]  =  "%.1f",   -- Gun Ammunition Rounds Counter Tens																				[STREAM DECK FORMAT: 54060]
-		[4062]  =  "%.1f",   -- Gun Ammunition Rounds Counter Ones 																				[F-14 DOESN'T DISPLAY]
-
-	-- [END A10] ------------------------------------------------------------------------------
-
-	-- [A11 Pilot - Right Side Console] -------------------------------------------------------
-	-- [END A11] ------------------------------------------------------------------------------
-
-	-- [A12 Pilot - Canopy Control Handle] ----------------------------------------------------
-	-- [END A12] ------------------------------------------------------------------------------
--- END PILOT COCKPIT --------------------------------------------------------------------------
+[15014]  =  "%.1f",   --      Light_RFIRE 
+[15015]  =  "%.1f",   --      Light_LFIRE 
 
 
--- RIO OFFICER COCKPIT ------------------------------------------------------------------------
-	-- [B1 RIO - Left Side Console] -----------------------------------------------------------
-	-- [END B1] -------------------------------------------------------------------------------
-	
-	-- [B2 RIO - Left Vertical Console] -------------------------------------------------------
-	-- [END B2] -------------------------------------------------------------------------------
 
-	-- [B3 RIO - Left Instrument Panel] -------------------------------------------------------
-	-- [END B3] -------------------------------------------------------------------------------
+[1044]  =  "%.1f",   --      Fire_Ext_Handle_Right 
+[15081]  =  "%.1f",   --      Fire_Ext_Handle_Left 
+[15082]  =  "%.1f",   --      Fire_Ext_Button_Right 
+[15083]  =  "%.1f",   --      Fire_Ext_Button_Left 
 
-	-- [B4 RIO - Center Panel] ----------------------------------------------------------------
-	-- [END B4] -------------------------------------------------------------------------------
 
-	-- [B5 RIO - Center Console] --------------------------------------------------------------
-	-- [END B5] -------------------------------------------------------------------------------
+[34]  =  "%.1f",   --      RADAR_DDD_aspect 
+[35]  =  "%.1f",   --      RADAR_DDD_Vc_scale 
+[36]  =  "%.1f",   --      RADAR_DDD_tgts 
+[37]  =  "%.1f",   --      RADAR_DDD_MLC 
+[38]  =  "%.1f",   --      RADAR_DDD_AGC 
+[3900]  =  "%.1f",   --      RADAR_DDD_paramp 
+[40]  =  "%.1f",   --      RADAR_DDD_range_5 
+[41]  =  "%.1f",   --      RADAR_DDD_range_10 
+[42]  =  "%.1f",   --      RADAR_DDD_range_20 
+[43]  =  "%.1f",   --      RADAR_DDD_range_50 
+[44]  =  "%.1f",   --      RADAR_DDD_range_100 
+[45]  =  "%.1f",   --      RADAR_DDD_range_200 
 
-	-- [B6 RIO - Left and Right Footwells] ----------------------------------------------------
-	-- [END B6] -------------------------------------------------------------------------------
+[48]  =  "%.1f",   --      TID_bright 
+[49]  =  "%.1f",   --      TID_contrast 
 
-	-- [B7 RIO - Right Instrument Panel] ------------------------------------------------------
+[52]  =  "%.1f",   --      TID_CLSN 
+[53]  =  "%.1f",   --      TID_trackhold 
 
-		-- Total RIO Fuel Qty (Radar Officer Fuel Dial)
-		[2117]  =  "%.1f",   -- FUEL_TotalFuelRIO10k (10's of thousands in decimal 0.1 = 10,000 lbs)											[STREAM DECK FORMAT: 56010]
-		[2118]  =  "%.1f",   -- FUEL_TotalFuelRIO1k  (thousands of lbs in decimal 0.4 = 1,000 lbs)												[STREAM DECK FORMAT: 56010]
-		[2119]  =  "%.1f",   -- FUEL_TotalFuelRIO100 (hundreds of lbs in decimal 0.3 = 300 lbs)													[STREAM DECK FORMAT: 56010]
-		[2120]  =  "%.1f",   -- FUEL_TotalFuelRIO10  (ten lbs of fuel in decimal 0.7 = 70 lbs)													[F-14 DOESN'T DISPLAY TENS OF LBS]
-		[2135]  =  "%.1f",   -- FUEL_TotalFuelRIO1 (lbs of fuel in decimal 0.2 = 2 lbs)															[F-14 DOESN'T DISPLAY]
+[54]  =  "%.1f",   --      PEDALS_Yaw 
+[55]  =  "%.1f",   --      PEDALS_Brake_Left 
 
-	-- [END B7] -------------------------------------------------------------------------------
+[58]  =  "%.1f",   --      WEAP_Elec_Fuse 
+[59]  =  "%.4f",   --      WEAP_Type_Wheel 
 
-	-- [B8 RIO - Right Knee Panel] ------------------------------------------------------------
-	-- [END B1] -------------------------------------------------------------------------------
-	
-	-- [B9 RIO - Right Vertical Console] ------------------------------------------------------
-	-- [END B2] -------------------------------------------------------------------------------
+[60]  =  "%.1f",   --      WEAP_Bomb_SinglePairs 
+[61]  =  "%.1f",   --      WEAP_Bomb_StepRipple 
+[62]  =  "%.1f",   --      WEAP_AG_Gun 
+[63]  =  "%.1f",   --      WEAP_Mech_Fuse 
+[64]  =  "%.1f",   --      WEAP_Jett_Station6 
+[65]  =  "%.1f",   --      WEAP_Jett_Station3 
+[66]  =  "%.1f",   --      WEAP_Jett_RackWeapons 
+[67]  =  "%.1f",   --      WEAP_Jett_RightTank 
+[68]  =  "%.1f",   --      WEAP_Jett_Station1 
+[69]  =  "%.1f",   --      WEAP_Jett_Station4 
+[70]  =  "%.1f",   --      WEAP_Jett_Station5 
+[71]  =  "%.1f",   --      WEAP_Jett_Station8 
+[72]  =  "%.1f",   --      WEAP_MSL_SPD_Gate 
+[73]  =  "%.1f",   --      WEAP_Jett_LeftTank 
+[74]  =  "%.1f",   --      WEAP_AA_Launch 
+[75]  =  "%.1f",   --      WEAP_Missile_Option 
 
-	-- [B10 RIO - Right Side Console] ---------------------------------------------------------
-	-- [END B3] -------------------------------------------------------------------------------
+[78]  =  "%.1f",   --      WEAP_Selective_Jett 
+[79]  =  "%.5f",   --      RADAR_elevation_bars_knob 
+[80]  =  "%.5f",   --      RADAR_azimuth_scan_knob 
+[81]  =  "%.1f",   --      RADAR_elevation_center_knob 
+[82]  =  "%.1f",   --      RADAR_azimuth_center_knob 
+[83]  =  "%.1f",   --      RADAR_stab_switch 
+[84]  =  "%.1f",   --      RADAR_VSL_switch 
 
-	-- [B11 RIO - Canopy Control Handle] ------------------------------------------------------
-	-- [END B4] -------------------------------------------------------------------------------
--- END RIO OFFICER COCKPIT --------------------------------------------------------------------
+[87]  =  "%.1f",   --      TCS_ACQ_switch 
+[88]  =  "%.1f",   --      TCS_FOV_button 
+[89]  =  "%.1f",   --      TCS_Slave_switch 
+[90]  =  "%.1f",   --      RECORD_power 
+[91]  =  "%.1f",   --      RECORD_mode 
+[92]  =  "%.1f",   --      RECORD_standby_lamp 
+[93]  =  "%.1f",   --      RECORD_rec_lamp 
+[94]  =  "%.1f",   --      RECORD_endoftape_lamp 
+[95]  =  "%.1f",   --      LIQUID_cooling_switch 
+[96]  =  "%.1f",   --      BEACON_power_switch 
+
+[98]  =  "%.1f",   --      CAP_category 
+
+
+[104]  =  "%.1f",   --      ALTI_NeedleBaro 
+[20104]  =  "%.1f",   --      RIOALTI_NeedleBaro 
+
+[106]  =  "%.1f",   --      VSI_needle 
+
+[228]  =  "%.1f",   --  ACCEL_Reset 
+[110]  =  "%.1f",   --      ACCEL_AccelerometerNeedle 
+[15076]  =  "%.1f",   --      ACCEL_AccelerometerNeedle2 
+[15077]  =  "%.1f",   --      ACCEL_AccelerometerNeedle3 
+
+[15078]  =  "%.1f",   --      HOOK_EmergencyDown 
+
+[15079]  =  "%.1f",   --      HSI_Flag_NukeThing 
+
+[112]  =  "%.1f",   --      ALTI_ThousandsL 
+
+[117]  =  "%.1f",   --      BEACON_ACLS_test_button 
+[118]  =  "%.1f",   --      BEACON_mode_knob 
+
+[20112]  =  "%.1f",   --      RIOALTI_ThousandsL 
+
+[123]  =  "%.1f",   --      CAP_button5  -- note: 4 and 5 are swapped
+[124]  =  "%.1f",   --      CAP_button4 
+[125]  =  "%.1f",   --      CAP_button3 
+[126]  =  "%.1f",   --      CAP_button2 
+[127]  =  "%.1f",   --      CAP_button1 
+[128]  =  "%.1f",   --      CAP_tng_nbr 
+[129]  =  "%.1f",   --      CAP_button10 
+[130]  =  "%.1f",   --      CAP_button9 
+[131]  =  "%.1f",   --      CAP_button8 
+[132]  =  "%.1f",   --      CAP_button7 
+[133]  =  "%.1f",   --      CAP_button6 
+[134]  =  "%.1f",   --      CAP_program_restart 
+
+[136]  =  "%.1f",   --      CAP_LONG_6 
+[137]  =  "%.1f",   --      CAP_LAT_1 
+[138]  =  "%.1f",   --      CAP_NBR_2 
+[139]  =  "%.1f",   --      CAP_7 
+[140]  =  "%.1f",   --      CAP_HDG_8 
+[141]  =  "%.1f",   --      CAP_SPD_3 
+[143]  =  "%.1f",   --      CAP_ALT_4 
+[142]  =  "%.1f",   --      CAP_9 
+[144]  =  "%.1f",   --      CAP_BRG_0 
+[145]  =  "%.1f",   --      CAP_RNG_5 
+[146]  =  "%.1f",   --      CAP_NE 
+[147]  =  "%.1f",   --      CAP_SW 
+[148]  =  "%.1f",   --      CAP_clear 
+[149]  =  "%.1f",   --      CAP_enter 
+
+
+
+[156]  =  "%.1f",   --      ECMD_Override_SW 
+[168]  =  "%.1f",   --      ECMD_Corr_SW 
+[189]  =  "%.1f",   --      ECMD_Mode_SW 
+[190]  =  "%.1f",   --      ECMD_Data_ADF_SW 
+
+[2023]  =  "%.1f",   --      ECMD_Knob_Brightness 
+[2024]  =  "%.1f",   --      ECMD_Btn_Test 
+
+
+[151]  =  "%.1f",   --      DECM_Mode_Knob 
+[9950]  =  "%.1f",   --      DECM_Vol_Knob 
+
+
+[174]  =  "%.1f",   --      RCP45_Power_SW 
+[173]  =  "%.1f",   --      RCP45_AAA_Mode_SW 
+
+
+
+[175]  =  "%.1f",   --      DATALINK_Antenna 
+[176]  =  "%.1f",   --      DATALINK_Reply 
+[177]  =  "%.1f",   --      DATALINK_Cains 
+[191]  =  "%.1f",   --      DATALINK_antijam 
+[196]  =  "%.1f",   --      DATALINK_freq_10s 
+[195]  =  "%.1f",   --      DATALINK_freq_1s 
+[197]  =  "%.1f",   --      DATALINK_freq_tenths 
+
+[161]  =  "%.1f",   --      IFF_audiolight_switch 
+[162]  =  "%.1f",   --      IFF_M1_switch 
+[163]  =  "%.1f",   --      IFF_M2_switch 
+[164]  =  "%.1f",   --      IFF_M3A_switch 
+[165]  =  "%.1f",   --      IFF_MC_switch 
+[166]  =  "%.1f",   --      IFF_RAD_switch 
+[167]  =  "%.1f",   --      IFF_ident_switch 
+[181]  =  "%.1f",   --      IFF_M4_switch 
+[183]  =  "%.1f",   --      IFF_code_knob 
+[184]  =  "%.1f",   --      IFF_master_knob 
+[185]  =  "%.1f",   --      IFF_test_button 
+[186]  =  "%.1f",   --      IFF_reply_button 
+
+[2262]  =  "%.1f",   --      IFF_M3code_1s 
+[2261]  =  "%.1f",   --      IFF_M3code_10s 
+[198]  =  "%.1f",   --      IFF_M3code_100s 
+[199]  =  "%.1f",   --      IFF_M3code_1000s 
+[200]  =  "%.1f",   --      IFF_M1code_1s 
+[201]  =  "%.1f",   --      IFF_M1code_10s 
+    -- see also RIO_IFF_TEST_LIGHT and RIO_IFF_REPLY_LIGHT
+
+    -- ALR-67 RWR Control Panel
+[16011]  =  "%.1f",   --  RWR_Brightness_Pilot 
+[376]  =  "%.1f",   --  RWR_Brightness_RIO 
+
+    -- CMDS ALE-39
+[390]  =  "%.1f",   --      CMDS_Master_Mode_SW 
+[389]  =  "%.1f",   --      CMDS_Chaff_Oper_SW 
+[388]  =  "%.1f",   --      CMDS_Flare_Oper_SW 
+[387]  =  "%.1f",   --  CMDS_Jammer_Oper_SW 
+[391]  =  "%.1f",   --      CMDS_Flare_Salvo_SW 
+[398]  =  "%.1f",   --      CMDS_Flare_Mode_SW 
+
+[392]  =  "%.1f",   --  CMDS_Chaff_Counter_Roller_10 
+[393]  =  "%.1f",   --  CMDS_Chaff_Counter_Roller_1 
+[394]  =  "%.1f",   --  CMDS_Flare_Counter_Roller_10 
+[395]  =  "%.1f",   --  CMDS_Flare_Counter_Roller_1 
+[396]  =  "%.1f",   --  CMDS_Jammer_Counter_Roller_10 
+[397]  =  "%.1f",   --  CMDS_Jammer_Counter_Roller_1 
+
+[386]  =  "%.1f",   --  CMDS_Chaff_Counter_Control 
+[385]  =  "%.1f",   --  CMDS_Flare_Counter_Control 
+[399]  =  "%.1f",   --  CMDS_Jammer_Counter_Control 
+
+[206]  =  "%.1f",   --      CMDS_L10_Wheel 
+[207]  =  "%.1f",   --      CMDS_L20_Wheel 
+[209]  =  "%.1f",   --      CMDS_R10_Wheel 
+[208]  =  "%.1f",   --      CMDS_R20_Wheel 
+
+[211]  =  "%.1f",   --  CMDS_JAMR_Intv_1 
+[212]  =  "%.1f",   --  CMDS_JAMR_Intv_10 
+[213]  =  "%.1f",   --  CMDS_JAMR_Intv_100 
+[204]  =  "%.1f",   --  CMDS_JAMR_Qty 
+
+[216]  =  "%.1f",   --  CMDS_Programmer_Reset 
+
+[214]  =  "%.1f",   --      CMDS_Chaff_Burst_Qty_Wheel 
+[215]  =  "%.1f",   --      CMDS_Chaff_Burst_Intv_Wheel 
+[203]  =  "%.1f",   --      CMDS_Chaff_Salvo_Qty_Wheel 
+[202]  =  "%.1f",   --      CMDS_Chaff_Salvo_Intv_Wheel 
+
+[205]  =  "%.1f",   --      CMDS_Flare_Qty_Wheel 
+[210]  =  "%.1f",   --      CMDS_Flare_Intv_Wheel 
+
+[999]  =  "%.1f",   --  CMDS_RIO_Left_Grip_Hat 
+[999]  =  "%.1f",   --  CMDS_RIO_Right_Grip_Hat 
+
+[222]  =  "%.1f",   --      DATALINK_addr_hi 
+[223]  =  "%.1f",   --      DATALINK_addr_lo 
+
+[225]  =  "%.1f",   --      FLAP_Lever 
+[226]  =  "%.1f",   --      TID_NON_ATTK 
+
+[229]  =  "%.1f",   --      STICK_Weaponselect 
+[230]  =  "%.1f",   --      STICK_Weaponselectbutton 
+[231]  =  "%.1f",   --      STICK_Hatswitch 
+[232]  =  "%.1f",   --      STICK_RightRed
+[233]  =  "%.1f",   --      STICK_Wheel_Rotate 
+[234]  =  "%.1f",   --      STICK_Wheel_Push 
+[235]  =  "%.1f",   --      STICK_Button_Left 
+[236]  =  "%.1f",   --      STICK_Button_RedBehind 
+[240]  =  "%.1f",   --      STICK_Lever 
+[241]  =  "%.1f",   --      STICK_Trigger 
+
+[237]  =  "%.1f",   --      BRAKE_ParkingBrake 
+[238]  =  "%.1f",   --      HOOK_Handle 
+[239]  =  "%.1f",   --      WEAP_Emer_Jettison 
+
+[39]  =  "%.1f",   --      BODY_Pilot_Left_Right 
+[99]  =  "%.1f",   --      BODY_Pilot_Up_Down 
+[1600]  =  "%.1f",   --      BODY_Pilot_Salute 
+[1700]  =  "%.1f",   --      BODY_Pilot 
+
+[1701]  =  "%.1f",   --      BODY_RIO 
+[1601]  =  "%.1f",   --  BODY_RIO_Lean_And_Grab 
+[1603]  =  "%.1f",   --      BODY_RIO_Hold_On 
+[1605]  =  "%.1f",   --      BODY_RIO_Right_Left 
+[1607]  =  "%.1f",   --      BODY_RIO_Up_Down 
+
+
+[2129]  =  "%.1f",   --      AIRSPD_Needle 
+[2128]  =  "%.1f",   --      AIRSPD_Inner 
+[2125]  =  "%.1f",   --      AIRSPD_Bug1 
+[2126]  =  "%.1f",   --      AIRSPD_Bug2 
+[2127]  =  "%.1f",   --      AIRSPD_KnobPush 
+[310]  =  "%.1f",   --      AIRSPD_Knob 
+
+[250]  =  "%.1f",   --  AIRSPD_Needle_RIO 
+[251]  =  "%.1f",   --      AIRSPD_Inner_RIO 
+[252]  =  "%.1f",   --      AIRSPD_Bug1_RIO 
+[253]  =  "%.1f",   --      AIRSPD_Bug2_RIO 
+[254]  =  "%.1f",   --      AIRSPD_KnobPush_RIO 
+[255]  =  "%.1f",   --      AIRSPD_Knob_RIO 
+
+[290]  =  "%.1f",   --      PILOT_TACAN_Indicator_PLT 
+[291]  =  "%.1f",   --      PILOT_TACAN_Indicator_NFO 
+[292]  =  "%.1f",   --      PILOT_TACAN_Button 
+
+[934]  =  "%.1f",   --      BIT_Selector 
+[923]  =  "%.1f",   --      --BIT_SelectorPush  --temp for testing
+
+[152]  =  "%.1f",   --      ACM_Light_Intensity 
+[153]  =  "%.1f",   --      INDEXER_Light_Intensity 
+
+[103]  =  "%.1f",   --      ALTI_NeedleRadar 
+[19107]  =  "%.1f",   --      ALTI_Radar_WarningLight 
+[19108]  =  "%.1f",   --      ALTI_Radar_TestLight 
+[2124]  =  "%.1f",   --      ALTI_Radar_OffFlag 
+[2123]  =  "%.1f",   --      ALTI_Radar_Bug 
+[308]  =  "%.1f",   --      ALTI_Radar_Knob 
+[16020]  =  "%.1f",   --      ALTI_Radar_KnobPush 
+[16021]  =  "%.1f",   --      Brake_Pedal_Left 
+
+[262]  =  "%.1f",   --      ALTI_ThousandsR 
+[300]  =  "%.1f",   --      ALTI_HundredsWhite 
+[301]  =  "%.1f",   --      ALTI_HundredsSmall1 
+[302]  =  "%.1f",   --      ALTI_HundredsSmall2 
+[303]  =  "%.1f",   --      ALTI_HundredsSmall3 
+[304]  =  "%.1f",   --      ALTI_HundredsSmall4 
+[305]  =  "%.1f",   --      ALTI_STDBYcard 
+[306]  =  "%.1f",   --      ALTI_LeftKnob 
+[307]  =  "%.1f",   --      ALTI_RightKnob 
+
+
+
+[20262]  =  "%.1f",   --      RIOALTI_ThousandsR 
+[20300]  =  "%.1f",   --      RIOALTI_HundredsWhite 
+[20301]  =  "%.1f",   --      RIOALTI_HundredsSmall1 
+[20302]  =  "%.1f",   --      RIOALTI_HundredsSmall2 
+[20303]  =  "%.1f",   --      RIOALTI_HundredsSmall3 
+[20304]  =  "%.1f",   --      RIOALTI_HundredsSmall4 
+[20305]  =  "%.1f",   --      RIOALTI_STDBYcard 
+[20306]  =  "%.1f",   --      RIOALTI_LeftKnob 
+[20307]  =  "%.1f",   --      RIOALTI_RightKnob 
+
+
+
+
+
+[310]  =  "%.1f",   --      Mach_MeterKnob 
+
+[317]  =  "%.1f",   --      WINGSWEEP_EmergencySweepCover 
+
+[326]  =  "%.1f",   --      GEAR_Handle 
+[16015]  =  "%.1f",   --      GEAR_HandleEmergency 
+[1075]  =  "%.1f",   --      GEAR_Strut 
+
+[384]  =  "%.1f",   --      WINGSWEEP_EmergencySweepLever 
+
+[623]  =  "%.1f",   --      HYD_PRESS 
+[1064]  =  "%.1f",   --      HYD_CombinedHydraulicSystemPressure 
+[1063]  =  "%.1f",   --      HYD_FlightHydraulicSystemPressure 
+[629]  =  "%.1f",   --      HYD_TRANSFER_PUMP_Switch 
+[630]  =  "%.1f",   --      HYD_TRANSFER_PUMP_SwitchCover 
+[631]  =  "%.1f",   --      HYD_ISOLATION_Switch 
+[928]  =  "%.1f",   --      HYD_EMERGENCY_FLT_Switch 
+[615]  =  "%.1f",   --      HYD_EMERGENCY_FLT_SwitchCover 
+[632]  =  "%.1f",   --      HYD_EMERG_PUMP 
+
+
+
+
+
+[2]  =  "%.1f",   --      STICK_Pitch 
+[1]  =  "%.1f",   --      STICK_Roll 
+
+[19109]  =  "%.1f",   --      BDHI_CompassRing_Pilot 
+[19105]  =  "%.1f",   --      BDHI_CompassFlag_Pilot 
+[19106]  =  "%.1f",   --      BDHI_CompassRoller_Pilot 
+[699]  =  "%.1f",   --      BDHI_NeedleTCN_Pilot 
+[700]  =  "%.1f",   --      BDHI_NeedleADF_Pilot 
+
+[701]  =  "%.1f",   --      PILOT_JETT_Light 
+
+[702]  =  "%.1f",   --      BDHI_PILOT_Roller1 
+[703]  =  "%.1f",   --      BDHI_PILOT_Roller2 
+[704]  =  "%.1f",   --      BDHI_PILOT_Roller3 
+
+[705]  =  "%.1f",   --      BDHI_RIO_Roller1 
+[706]  =  "%.1f",   --      BDHI_RIO_Roller2 
+[707]  =  "%.1f",   --      BDHI_RIO_Roller3 
+
+
+
+
+
+[29109]  =  "%.1f",   --      BDHI_CompassRing_RIO 
+[29105]  =  "%.1f",   --      BDHI_CompassFlag_RIO 
+[29106]  =  "%.1f",   --      BDHI_CompassRoller_RIO 
+[20699]  =  "%.1f",   --      BDHI_NeedleTCN_RIO 
+[20700]  =  "%.1f",   --      BDHI_NeedleADF_RIO 
+
+[15016]  =  "%.1f",   --      WARN_LGen 
+[15017]  =  "%.1f",   --      WARN_LOilHot 
+[15018]  =  "%.1f",   --      WARN_LFuelPress 
+[15019]  =  "%.1f",   --      WARN_EngFireExt 
+[15020]  =  "%.1f",   --      WARN_RGen 
+[15021]  =  "%.1f",   --      WARN_RFuelPress 
+[15022]  =  "%.1f",   --      WARN_ROilHot 
+[15023]  =  "%.1f",   --      WARN_WingSweep 
+[15024]  =  "%.1f",   --      WARN_AuxFireExt 
+[15025]  =  "%.1f",   --      WARN_YawStabOp 
+[15026]  =  "%.1f",   --      WARN_YawStabOut 
+[15027]  =  "%.1f",   --      WARN_Canopy 
+[15028]  =  "%.1f",   --      WARN_CADC 
+[15029]  =  "%.1f",   --      WARN_LFuelLow 
+[15030]  =  "%.1f",   --      WARN_WShieldHot 
+[15031]  =  "%.1f",   --      WARN_EmergJett 
+[15032]  =  "%.1f",   --      WARN_OxyLow 
+[15033]  =  "%.1f",   --      WARN_Bingo 
+[15034]  =  "%.1f",   --      WARN_HydPress 
+[15035]  =  "%.1f",   --      WARN_RFuelLow 
+[15036]  =  "%.1f",   --      WARN_MachTrim 
+[15037]  =  "%.1f",   --      WARN_PitchStab1 
+[15038]  =  "%.1f",   --      WARN_BleedDirty 
+[15039]  =  "%.1f",   --      WARN_RollStab1 
+[15040]  =  "%.1f",   --      WARN_PitchStab2 
+[15041]  =  "%.1f",   --      WARN_AutoPilot 
+[15042]  =  "%.1f",   --      WARN_LOvspValve 
+[15043]  =  "%.1f",   --      WARN_ROvspValve 
+[15044]  =  "%.1f",   --      WARN_RRamp 
+[15045]  =  "%.1f",   --      WARN_LaunchBar 
+[15046]  =  "%.1f",   --      WARN_Flap 
+[15047]  =  "%.1f",   --      WARN_HzTailAuth 
+[15048]  =  "%.1f",   --      WARN_OilPress 
+[15049]  =  "%.1f",   --      WARN_LRamp 
+[15050]  =  "%.1f",   --      WARN_Ladder 
+[15051]  =  "%.1f",   --      WARN_RInlet 
+[15052]  =  "%.1f",   --      WARN_InletIce 
+[15053]  =  "%.1f",   --      WARN_RudderAuth 
+[15054]  =  "%.1f",   --      WARN_LInlet 
+[15055]  =  "%.1f",   --      WARN_ANRS 
+[15056]  =  "%.1f",   --      WARN_RollStab2 
+[15057]  =  "%.1f",   --      WARN_Spoilers 
+[15058]  =  "%.1f",   --      WARN_TransRect 
+[15059]  =  "%.1f",   --      WARN_ReduceSpeed 
+[15060]  =  "%.1f",   --      WARN_InterTrim 
+[15061]  =  "%.1f",   --      WARN_LEngSec 
+[15062]  =  "%.1f",   --      WARN_Rats 
+[15063]  =  "%.1f",   --      WARN_StartValve 
+[15064]  =  "%.1f",   --      WARN_REngSec 
+
+
+
+
+
+
+
+
+[752]  =  "%.1f",   --      ENGINE_RightThrottle 
+[753]  =  "%.1f",   --      ENGINE_LeftThrottle 
+
+[902]  =  "%.1f",   --      SPOIL_Inboard_Override_Cover 
+[903]  =  "%.1f",   --      SPOIL_Outboard_Override_Cover 
+[907]  =  "%.1f",   --      SPOIL_Outboard_Override 
+[908]  =  "%.1f",   --      SPOIL_Inboard_Override 
+
+[16014]  =  "%.1f",   --  AHRS_HDG_PushButton 
+[904]  =  "%.1f",   --  AHRS_HDG_Rotate 
+[905]  =  "%.1f",   --  AHRS_ModeSwitch 
+[906]  =  "%.1f",   --  AHRS_NorthSouth 
+[909]  =  "%.1f",   --  AHRS_LatCorrection 
+[1026]  =  "%.1f",   --  AHRS_LatCorrectionDial 
+
+[915]  =  "%.1f",   --      AoA_HookBypass 
+
+[918]  =  "%.1f",   --      LIGHT_Taxi 
+[924]  =  "%.1f",   --      LIGHT_RedFloodSwitch 
+[921]  =  "%.1f",   --      LIGHT_WhiteFloodSwitch 
+[913]  =  "%.1f",   --      LIGHTS_PositionWings 
+[916]  =  "%.1f",   --      LIGHTS_PositionTail 
+[919]  =  "%.1f",   --      LIGHTS_PositionFlash 
+[923]  =  "%.1f",   --      LIGHTS_AntiCol 
+
+[194]  =  "%.1f",   --  LIGHT_RedFloodSwitch_RIO 
+[159]  =  "%.1f",   --      LIGHT_WhiteFloodSwitch_RIO 
+
+
+[926]  =  "%.1f",   --      ELEC_EMERG_GEN_Switch 
+[936]  =  "%.1f",   --      ELEC_MASTER_GEN_RightSwitch 
+[937]  =  "%.1f",   --      ELEC_MASTER_GEN_LeftSwitch 
+
+[9260]  =  "%.1f",   --      Brake_Pressure_Left 
+[9261]  =  "%.1f",   --      Brake_Pressure_Right 
+
+[941]  =  "%.1f",   --      ENGINE_Probe_Anti_Ice 
+[942]  =  "%.1f",   --      WINDSHIELD_AIR 
+[950]  =  "%.1f",   --      TEMPERATURE 
+[938]  =  "%.1f",   --      RAMAIR 
+[940]  =  "%.1f",   --      TEMPMANAUTO 
+
+[927]  =  "%.1f",   --      ELEC_EMERG_GEN_SwitchCover 
+[56]  =  "%.1f",   --      PEDALS_Brake_Right 
+[999]  =  "%.1f",   --      GEAR_WheelsWarningLight 
+[999]  =  "%.1f",   --      ELEC_R_GEN_CautionLight 
+[999]  =  "%.1f",   --      BRAKE_PressureGauge 
+[999]  =  "%.1f",   --      ELEC_TRANS_RECT_AdvisoryLight 
+[999]  =  "%.1f",   --      GEAR_TransitionLight 
+[999]  =  "%.1f",   --      ELEC_L_GEN_CautionLight 
+
+[2273]  =  "%.1f",   --      WEAP_Gun_Elevation_PlusMinus 
+
+[1001]  =  "%.1f",   --      FUELSYSTEM_WingExt_Trans 
+
+[1002]  =  "%.1f",   --      NAV_Btn_Steer_TCN 
+[1003]  =  "%.1f",   --      NAV_Btn_Steer_DEST 
+[1004]  =  "%.1f",   --      NAV_Btn_Steer_AWL_PCD 
+[1005]  =  "%.1f",   --      NAV_Btn_Steer_VEC 
+[1006]  =  "%.1f",   --      NAV_Btn_Steer_MAN 
+
+[1007]  =  "%.1f",   --      DISP_HUD_pitch_bright 
+[1008]  =  "%.1f",   --      DISP_HSD_ECMD_power 
+[1009]  =  "%.1f",   --      DISP_HUD_power 
+[1010]  =  "%.1f",   --      DISP_VDI_power 
+[1011]  =  "%.1f",   --      DISP_mode_landing 
+[1012]  =  "%.1f",   --      DISP_mode_air2ground 
+[1013]  =  "%.1f",   --      DISP_mode_air2air 
+[1014]  =  "%.1f",   --      DISP_mode_cruise 
+[1015]  =  "%.1f",   --      DISP_mode_takeoff 
+
+--[1016]  =  "%.1f",   --      HSD_Display_Mode_Cycle 
+[1017]  =  "%.1f",   --      HSD_ECM_Override 
+
+[1018]  =  "%.1f",   --      DISP_VDI_landing_mode 
+--[1019]  =  "%.1f",   --      DISP_VDI_display_mode 
+[1020]  =  "%.1f",   --      DISP_HUD_AWL_mode 
+--[1021]  =  "%.1f",   --      DISP_HUD_declutter 
+
+[1022]  =  "%.1f",   --      WEAP_Gun_Ammo_adjust 
+
+[1023]  =  "%.1f",   --      HYD_SPOIL_FLAG 
+[1024]  =  "%.1f",   --      HYD_EMER_HI_FLAG 
+[1025]  =  "%.1f",   --      HYD_EMER_LO_FLAG 
+
+[1026]  =  "%.1f",   --      COMP_DIAL 
+
+[1031]  =  "%.1f",   --      RADIO_UHF_Remote_DISP_BRT_Pilot 
+[1030]  =  "%.1f",   --      RADIO_VHF_Remote_DISP_BRT_Pilot 
+
+[1071]  =  "%.1f",   --  MASTER_Reset 
+
+[19100]  =  "%.1f",   --      STDBYADI_off 
+[19101]  =  "%.1f",   --      STDBYADI_trim 
+
+[6155]  =  "%.1f",   --      STDBYADI_RIO_uncage 
+[6156]  =  "%.1f",   --      STDBYADI_RIO_trim 
+[19900]  =  "%.1f",   --      STDBYADI_RIO_off 
+[3333]  =  "%.1f",   --      STDBYADI_RIO_Pitch 
+[19901]  =  "%.1f",   --      STDBYADI_RIO_Roll 
+
+
+
+
+[1033]  =  "%.1f",   --      VDIG_VDI_handle 
+[1034]  =  "%.1f",   --      VDIG_HUD_trim 
+[1035]  =  "%.1f",   --      VDIG_VSDI_trim 
+[1036]  =  "%.1f",   --      VDIG_VSDI_bright 
+[1037]  =  "%.1f",   --      VDIG_HUD_bright 
+[1038]  =  "%.1f",   --      VDIG_VDI_contrast 
+
+[1039]  =  "%.1f",   --      HSD_Knob_Heading 
+[1040]  =  "%.1f",   --      HSD_Knob_Course 
+[1041]  =  "%.1f",   --      HSD_Test 
+[1043]  =  "%.1f",   --      HSD_Knob_Brightness 
+
+[1044]  =  "%.1f",   --      FUELSYSTEM_Shutoff_R 
+
+[1046]  =  "%.1f",   --      WEAP_Master_Arm_Cover 
+[1047]  =  "%.1f",   --      WEAP_Master_Arm 
+[1048]  =  "%.1f",   --      WEAP_ACM_Jettison 
+[1049]  =  "%.1f",   --      WEAP_ACM_Cover 
+
+[1050]  =  "%.1f",   --      FUELSYSTEM_Bingo_Knob 
+
+[1051]  =  "%.1f",   --      CLOCK_Wind 
+[1000]  =  "%.1f",   --      CLOCK_Timer 
+
+[1052]  =  "%.1f",   --      CLOCK_RIO_WIND 
+[1053]  =  "%.1f",   --      CLOCK_RIO_TIMER 
+
+[1054]  =  "%.1f",   --      FUEL_AftL 
+[1055]  =  "%.1f",   --      FUEL_FwdR 
+
+[1057]  =  "%.1f",   --      ENGINE_RpmL 
+[1058]  =  "%.1f",   --      ENGINE_RpmR 
+[1059]  =  "%.1f",   --      ENGINE_TitL 
+[1060]  =  "%.1f",   --      ENGINE_TitR 
+[1061]  =  "%.1f",   --      ENGINE_FfL 
+[1062]  =  "%.1f",   --      ENGINE_FFR 
+[1065]  =  "%.1f",   --      ENGINE_OilPressureR 
+[1066]  =  "%.1f",   --      ENGINE_OilPressureL 
+[1067]  =  "%.1f",   --      ENGINE_NozzleR 
+[1068]  =  "%.1f",   --      ENGINE_NozzleL 
+
+[1069]  =  "%.1f",   --      SEL_JETT_GUARD 
+
+
+
+[15005]  =  "%.1f",   --      LIGHTS_ACM 
+[15006]  =  "%.1f",   --      LIGHTS_INDEXER 
+[15007]  =  "%.1f",   --      LIGHTS_INSTRUMENT 
+[15008]  =  "%.1f",   --      LIGHTS_CONSOLE 
+[15009]  =  "%.1f",   --      LIGHTS_FORMATION 
+
+[193]  =  "%.1f",   --  LIGHTS_INSTRUMENT_RIO 
+[192]  =  "%.1f",   --      LIGHTS_CONSOLE_RIO 
+
+[15010]  =  "%.1f",   --      MASTER_TEST_Go 
+[15011]  =  "%.1f",   --      MASTER_TEST_NoGo 
+
+[1070]  =  "%.1f",   --      FUELSYSTEM_Shutoff_L 
+
+[1072]  =  "%.1f",   --      BRAKE_AntiSkidAndSpoilerBrake 
+
+[1073]  =  "%.1f",   --      FUELSYSTEM_Refuel_Probe 
+[1074]  =  "%.1f",   --      FUELSYSTEM_Dump 
+[1076]  =  "%.1f",   --      FUELSYSTEM_Fuel_Qty_Sel 
+
+[4150]  =  "%.1f",   --      RIO_CLOCK_Hours 
+[4151]  =  "%.1f",   --      RIO_CLOCK_Minutes 
+[4152]  =  "%.1f",   --      RIO_CLOCK_TimerSeconds 
+[4153]  =  "%.1f",   --      RIO_CLOCK_Timer 
+
+[4154]  =  "%.1f",   --      RADAR_Altimeter_Bug 
+
+[1096]  =  "%.1f",   --      CLOCK_Hours 
+[1097]  =  "%.1f",   --      CLOCK_Minutes 
+[1098]  =  "%.1f",   --      CLOCK_TimerSeconds 
+[1099]  =  "%.1f",   --      CLOCK_Timer 
+
+[1094]  =  "%.1f",   --      FUELSYSTEM_Fuel_Feed_Cover 
+[1095]  =  "%.1f",   --      FUELSYSTEM_Fuel_Feed 
+
+[2000]  =  "%.1f",   --      CLOCK_TimerMinutes 
+
+[2047]  =  "%.1f",   --  SWEEP_MinimumIndex 
+[2001]  =  "%.1f",   --      SWEEP_Commanded 
+[2002]  =  "%.1f",   --      SWEEP_Position 
+[2003]  =  "%.1f",   --      AoA_slider 
+
+[1117]  =  "%.1f",   --      TID_DATA_LINK 
+[1116]  =  "%.1f",   --      TID_SYM_ELEM 
+[1115]  =  "%.1f",   --      TID_ALT_NUM 
+[1118]  =  "%.1f",   --      TID_JAM_STROBE 
+[2004]  =  "%.1f",   --      TID_RID_DSBL  -- doesn't seem to work
+[2005]  =  "%.5f",   --      TID_mode_knob 
+[2006]  =  "%.1f",   --      TID_range_knob 
+
+[50]  =  "%.1f",   --      TID_nav_mode 
+[51]  =  "%.1f",   --      TID_dest_mode 
+
+[2007]  =  "%.1f",   --      HCU_IR_TV 
+[2008]  =  "%.1f",   --      HCU_RDR 
+[2009]  =  "%.1f",   --      HCU_DDD_cursor 
+[2010]  =  "%.1f",   --      HCU_TID_cursor 
+[2011]  =  "%.1f",   --      HCU_TVIR_enable 
+[2012]  =  "%.1f",   --      HCU_WCS_enable 
+[2013]  =  "%.1f",   --      HCU_POWER_RESET_BUTTON 
+[2014]  =  "%.1f",   --      HCU_LIGHT_TEST_BUTTON 
+
+[2016]  =  "%.1f",   --      ACLS_TEST_LIGHT 
+
+[2031]  =  "%.1f",   --      RADIO_UHF_VOL_Pilot 
+[383]  =  "%.1f",   --      RADIO_UHF_VOL_RIO 
+[2035]  =  "%.1f",   --      RADIO_UHF_SQL_Pilot 
+[2030]  =  "%.1f",   --      RADIO_UHF_FREQ_HUNDRED_TEN_Pilot 
+[2029]  =  "%.1f",   --      RADIO_UHF_FREQ_UNIT_Pilot 
+[2028]  =  "%.1f",   --      RADIO_UHF_FREQ_TEHTH_Pilot 
+[2026]  =  "%.1f",   --      RADIO_UHF_FREQ_HUNDREDTH_Pilot 
+[2027]  =  "%.1f",   --      RADIO_UHF_BRT_Pilot 
+[2034]  =  "%.1f",   --      RADIO_UHF_FUNC_Pilot 
+[2032]  =  "%.1f",   --      RADIO_UHF_CHAN_Pilot 
+[2033]  =  "%.1f",   --      RADIO_UHF_FREQ_MODE_Pilot 
+[8115]  =  "%.1f",   --  RADIO_UHF_READ_Pilot 
+[16009]  =  "%.1f",   --  RADIO_UHF_LOAD_Pilot 
+[16010]  =  "%.1f",   --  RADIO_UHF_TONE_Pilot 
+
+[350]  =  "%.1f",   --      RADIO_VHF_VOL_RIO 
+[2038]  =  "%.1f",   --  RADIO_VHF_VOL_PILOT 
+[351]  =  "%.1f",   --      RADIO_VHF_SQL_RIO 
+[354]  =  "%.1f",   --      RADIO_VHF_FREQ_HUNDRED_TEN_RIO 
+[355]  =  "%.1f",   --      RADIO_VHF_FREQ_UNIT_RIO 
+[356]  =  "%.1f",   --      RADIO_VHF_FREQ_TEHTH_RIO 
+[357]  =  "%.1f",   --      RADIO_VHF_FREQ_HUNDREDTH_RIO 
+[360]  =  "%.1f",   --      RADIO_VHF_BRT_RIO 
+[358]  =  "%.1f",   --      RADIO_VHF_FUNC_RIO 
+[352]  =  "%.1f",   --      RADIO_VHF_CHAN_RIO 
+[353]  =  "%.1f",   --      RADIO_VHF_FREQ_MODE_RIO 
+[359]  =  "%.1f",   --      RADIO_VHF_FM_AM_RIO 
+[106]  =  "%.1f",   --      --RADIO_VHF_TOD_RIO 
+[100]  =  "%.1f",   --      --RADIO_VHF_NORM_AJ_RIO 
+
+
+
+[2040]  =  "%.1f",   --  RADIO_ICS_Vol_ALR45 
+[2039]  =  "%.1f",   --  RADIO_ICS_Vol_ALR50 
+[2040]  =  "%.1f",   --  RADIO_ICS_Vol_ALR67_Pilot 
+[2039]  =  "%.1f",   --  RADIO_ICS_Vol_Sidewinder 
+
+[2048]  =  "%.1f",   --      RADIO_ICS_Vol_Pilot 
+[2045]  =  "%.1f",   --      RADIO_ICS_Ampl_Pilot 
+[2044]  =  "%.1f",   --      RADIO_ICS_Func_Pilot 
+
+[8109]  =  "%.1f",   --  RADIO_ICS_HotMic_Pilot 
+
+[400]  =  "%.1f",   --  RADIO_ICS_Vol_RIO 
+[401]  =  "%.1f",   --      RADIO_ICS_Ampl_RIO 
+[402]  =  "%.1f",   --      RADIO_ICS_Func_RIO 
+
+[490]  =  "%.1f",   --      TID_STBY_LIGHT 
+[491]  =  "%.1f",   --      TID_READY_LIGHT 
+
+[492]  =  "%.1f",   --      RIO_LAUNCH_LIGHT 
+
+[493]  =  "%.1f",   --      DECM_LIGHT 
+
+[494]  =  "%.1f",   --      CANOPY_VISIBILITY_INT 
+
+[495]  =  "%.1f",   --      RIO_Ejection_Seat_Visibility 
+
+
+
+[116]  =  "%.1f",   --  RADIO_KY28_POWER_MODE 
+[115]  =  "%.1f",   --  RADIO_KY28_RADIO_SELECTOR 
+[361]  =  "%.1f",   --  RADIO_KY28_ZEROIZE 
+[150]  =  "%.1f",   --  RADIO_KY28_ZEROIZE_COVER 
+
+[2049]  =  "%.1f",   --      EJECT_CMD_Lever 
+
+[2100]  =  "%.1f",   --      INLET_RAMPS_LeftSwitch 
+[2101]  =  "%.1f",   --      INLET_RAMPS_RightSwitch 
+
+[2102]  =  "%.1f",   --      ENGINE_Crank 
+[2103]  =  "%.1f",   --      ENGINE_Throttle_Temp 
+[2104]  =  "%.1f",   --      ENGINE_Throttle_Mode 
+[2105]  =  "%.1f",   --      ENGINE_Air_Start 
+
+--[2106]  =  "%.1f",   --      AFCS_Stability_Pitch 
+--[2107]  =  "%.1f",   --      AFCS_Stability_Roll 
+--[2108]  =  "%.1f",   --      AFCS_Stability_Yaw 
+
+--[2109]  =  "%.1f",   --      AP_Vector 
+--[2110]  =  "%.1f",   --      AP_Altitude 
+--[2111]  =  "%.1f",   --      AP_Heading 
+--[2112]  =  "%.1f",   --      AP_Engage 
+[2113]  =  "%.1f",   --      TID_LAUNCH_ZONE 
+[2114]  =  "%.1f",   --      TID_VEL_VECTOR 
+
+[2114]  =  "%.1f",   --      --Pilot Stdby ADI Pullout (Cage) 
+[2115]  =  "%.1f",   --      --RIO Stdby ADI Twist 
+[2116]  =  "%.1f",   --      --RIO Stdby ADI pullout 
+
+[8114]  =  "%.1f",   --      ENVIRO_PilotOxygenOn 
+[119]  =  "%.1f",   --  ENVIRO_RIOOxygenOn 
+[939]  =  "%.1f",   --  ENVIRO_CabinPressureDump 
+[929]  =  "%.1f",   --  ENVIRO_AirSourceRam 
+[933]  =  "%.1f",   --  ENVIRO_AirSourceOff 
+[930]  =  "%.1f",   --  ENVIRO_AirSourceLEng 
+[931]  =  "%.1f",   --  ENVIRO_AirSourceREng 
+[932]  =  "%.1f",   --      ENVIRO_AirSourceBoth 
+[935]  =  "%.1f",   --      ENVIRO_CabinPressureNeedle 
+[2999]  =  "%.1f",   --      ENVIRO_LiquidOxygen_OFF_Flag 
+
+[910]  =  "%.1f",   --      ARA63_Power_Switch 
+[911]  =  "%.1f",   --      ARA63_BIT_Btn 
+[912]  =  "%.1f",   --      ARA63_Chnl_Knob 
+
+
+[135]  =  "%.1f",   --      TACAN_CMD_Btn_RIO 
+
+[2022]  =  "%.1f",   --      WEAP_ATTK_Mode 
+
+
+[2199]  =  "%.1f",   --      rAnnunc_OXYLOW 
+[2200]  =  "%.1f",   --      rAnnunc_MCAUT 
+[2201]  =  "%.1f",   --      rAnnunc_IFF 
+[2202]  =  "%.1f",   --      rAnnunc_RCV 
+[2203]  =  "%.1f",   --      rAnnunc_XMIT 
+[2204]  =  "%.1f",   --      rAnnunc_SAM 
+[2205]  =  "%.1f",   --      rAnnunc_AAA 
+[2206]  =  "%.1f",   --      rAnnunc_CW 
+[2208]  =  "%.1f",   --      rAnnunc_AI 
+
+[2209]  =  "%.1f",   --      rAnnunc_CDHOT 
+[2210]  =  "%.1f",   --      rAnnunc_CABINPRESS 
+[2211]  =  "%.1f",   --      rAnnunc_FUELLOW 
+[2212]  =  "%.1f",   --      rAnnunc_CANOPY 
+[2213]  =  "%.1f",   --      rAnnunc_FUZEHV 
+[2214]  =  "%.1f",   --      rAnnunc_RDRENABLED 
+[2215]  =  "%.1f",   --      rAnnunc_COOLINGAIR 
+[2216]  =  "%.1f",   --      rAnnunc_MSLCOND 
+[2217]  =  "%.1f",   --      rAnnunc_AWG9COND 
+[2218]  =  "%.1f",   --      rAnnunc_NAVCOMP 
+[2219]  =  "%.1f",   --      rAnnunc_FILMLOW 
+[2220]  =  "%.1f",   --      rAnnunc_IMU 
+[2221]  =  "%.1f",   --      rAnnunc_AHRS 
+
+[2222]  =  "%.1f",   --      rAnnunc_WAVEOFF 
+[2223]  =  "%.1f",   --      rAnnunc_LANDCHK 
+[2224]  =  "%.1f",   --      rAnnunc_ACLBEAC 
+[2225]  =  "%.1f",   --      rAnnunc_ACLRDY 
+[2226]  =  "%.1f",   --      rAnnunc_APCPLR 
+[2227]  =  "%.1f",   --      rAnnunc_10SEC 
+[2228]  =  "%.1f",   --      rAnnunc_ADJAC 
+[2229]  =  "%.1f",   --      rAnnunc_VOICE 
+[2230]  =  "%.1f",   --      rAnnunc_TILT 
+[2231]  =  "%.1f",   --      rAnnunc_CMDCHG 
+[2232]  =  "%.1f",   --      rAnnunc_ALTCHG 
+[2233]  =  "%.1f",   --      rAnnunc_MONALT 
+[2234]  =  "%.1f",   --      rAnnunc_MANUAL 
+[2235]  =  "%.1f",   --      rAnnunc_SPDCHG 
+[2236]  =  "%.1f",   --      rAnnunc_MONSPD 
+[2237]  =  "%.1f",   --      rAnnunc_CMDCTRL 
+[2238]  =  "%.1f",   --      rAnnunc_CHGCHN 
+[2239]  =  "%.1f",   --      rAnnunc_HDGCHN 
+[2240]  =  "%.1f",   --      rAnnunc_CANCRPY 
+[2241]  =  "%.1f",   --      rAnnunc_FWDVEC 
+[2242]  =  "%.1f",   --      rAnnunc_AFTVEC 
+[2243]  =  "%.1f",   --      rAnnunc_COIVEC 
+[2244]  =  "%.1f",   --      rAnnunc_NOMSG 
+[2245]  =  "%.1f",   --      rAnnunc_TOWAYPT 
+[2246]  =  "%.1f",   --      rAnnunc_HANDOVER 
+[2247]  =  "%.1f",   --      rAnnunc_ORBIT 
+[2248]  =  "%.1f",   --      rAnnunc_CHALNGE 
+[2249]  =  "%.1f",   --      rAnnunc_ARM1 
+[2250]  =  "%.1f",   --      rAnnunc_ARM2 
+[2251]  =  "%.1f",   --      rAnnunc_ARM3 
+[2252]  =  "%.1f",   --      rAnnunc_NOTCMD 
+[2253]  =  "%.1f",   --      rAnnunc_FRELAN 
+[2254]  =  "%.1f",   --      rAnnunc_DISGAGE 
+[2255]  =  "%.1f",   --      rAnnunc_ABORT 
+[2256]  =  "%.1f",   --      rAnnunc_BEACON 
+[2257]  =  "%.1f",   --      rAnnunc_BEACDUB 
+[2258]  =  "%.1f",   --      rAnnunc_DROP 
+[2259]  =  "%.1f",   --      rAnnunc_BEACOFF 
+[2260]  =  "%.1f",   --      rAnnunc_RETBASE 
+
+
+
+
+[2036]  =  "%.1f",   --      TACAN_Knob_Vol_Pilot 
+[2041]  =  "%.1f",   --      TACAN_Knob_Func_Pilot 
+[2042]  =  "%.1f",   --      TACAN_Mode_Norm_Inv_Pilot 
+[2043]  =  "%.1f",   --      TACAN_Mode_X_Y_Pilot 
+[2115]  =  "%.1f",   --      TACAN_Btn_BIT_Pilot 
+
+[375]  =  "%.1f",   --      TACAN_Knob_Vol_RIO 
+[374]  =  "%.1f",   --      TACAN_Knob_Func_RIO 
+[373]  =  "%.1f",   --      TACAN_Mode_Norm_Inv_RIO 
+[372]  =  "%.1f",   --      TACAN_Mode_X_Y_RIO 
+[371]  =  "%.1f",   --      TACAN_Btn_BIT_RIO 
+
+[380]  =  "%.1f",   --      RIO_UHF_UPR_LWR 
+[381]  =  "%.1f",   --      RADIO_ICS_XMTR_SEL_RIO 
+[382]  =  "%.1f",   --      RIO_KY_MODE 
+
+
+[2121]  =  "%.1f",   --      RADAR_Elevation_arrow 
+[2122]  =  "%.1f",   --      TCS_Elevation_arrow 
+[2117]  =  "%.4f",   --      FUEL_TotalFuelRIO10k 
+[2118]  =  "%.1f",   --      FUEL_TotalFuelRIO1k 
+[2119]  =  "%.1f",   --      FUEL_TotalFuelRIO100 
+[2120]  =  "%.1f",   --      FUEL_TotalFuelRIO10 
+[2135]  =  "%.1f",   --      FUEL_TotalFuelRIO1 
+
+[2136]  =  "%.1f",   --      ALR67_RIO_RWR_DISPLAY_TYPE 
+[2137]  =  "%.1f",   --      ALR67_RIO_RWR_MODE 
+[2138]  =  "%.1f",   --      ALR67_RIO_RWR_VOL 
+[2139]  =  "%.1f",   --      ALR67_RIO_RWR_PWR 
+[2140]  =  "%.1f",   --      ALR67_RIO_RWR_TEST 
+
+[3001]  =  "%.1f",   --      STDBYADI_Pitch 
+[3002]  =  "%.1f",   --      STDBYADI_Roll 
+
+[3450]  =  "%.1f",   --      TID_Light 
+
+[3760]  =  "%.1f",   --      AOA_Slow 
+[3761]  =  "%.1f",   --      AOA_Optimum 
+[3762]  =  "%.1f",   --      AOA_Fast 
+
+[4001]  =  "%.1f",   --  CockpitRandomArg1 
+[4002]  =  "%.1f",   --  CockpitRandomArg2 
+[4003]  =  "%.1f",   --  CockpitRandomArg3 
+[4004]  =  "%.1f",   --  CockpitRandomArg4 
+[4005]  =  "%.1f",   --  CockpitRandomArg5 
+
+[4060]  =  "%.1f",   --      AMMO_Hundreds 
+[4061]  =  "%.1f",   --      AMMO_Tens 
+[4062]  =  "%.1f",   --      AMMO_Ones 
+[2270]  =  "%.1f",   --      WEAP_Gun_lead_Hundreds 
+[2271]  =  "%.1f",   --      WEAP_Gun_lead_Tens 
+[2272]  =  "%.1f",   --      WEAP_Gun_lead_Ones 
+
+
+[5550]  =  "%.1f",   --      CAP_light_CLEAR 
+[5551]  =  "%.1f",   --      CAP_light_SW 
+[5552]  =  "%.1f",   --      CAP_light_NE 
+[5553]  =  "%.1f",   --      CAP_light_ENTER 
+[5554]  =  "%.1f",   --      CAP_light_1 
+[5555]  =  "%.1f",   --      CAP_light_2 
+[5556]  =  "%.1f",   --      CAP_light_3 
+[5557]  =  "%.1f",   --      CAP_light_4 
+[5558]  =  "%.1f",   --      CAP_light_5 
+[5559]  =  "%.1f",   --      CAP_light_6 
+[5560]  =  "%.1f",   --      CAP_light_7 
+[5561]  =  "%.1f",   --      CAP_light_8 
+[5562]  =  "%.1f",   --      CAP_light_9 
+[5563]  =  "%.1f",   --      CAP_light_0 
+[5564]  =  "%.1f",   --      CAP_light_msg_btn6 
+[5565]  =  "%.1f",   --      CAP_light_msg_btn7 
+[5566]  =  "%.1f",   --      CAP_light_msg_btn8 
+[5567]  =  "%.1f",   --      CAP_light_msg_btn9 
+[5568]  =  "%.1f",   --      CAP_light_msg_btn1 
+[5569]  =  "%.1f",   --      CAP_light_msg_btn2 
+[5570]  =  "%.1f",   --      CAP_light_msg_btn3 
+[5571]  =  "%.1f",   --      CAP_light_msg_btn4 
+[5572]  =  "%.1f",   --      CAP_light_msg_btn5 
+[5573]  =  "%.1f",   --      CAP_light_TNG_NBR 
+[5574]  =  "%.1f",   --      CAP_light_PGM_RESTART 
+
+[5590]  =  "%.1f",   --      CAP_light_msg_btn10 
+
+[6000]  =  "%.1f",   --      FUEL_LFuelDial1k 
+[6001]  =  "%.1f",   --      FUEL_LFuelDial100 
+[6002]  =  "%.1f",   --      FUEL_LFuelDial10 
+[6003]  =  "%.1f",   --      FUEL_LFuelDial1 
+[6004]  =  "%.1f",   --      FUEL_RFuelDial1k 
+[6005]  =  "%.1f",   --      FUEL_RFuelDial100 
+[6006]  =  "%.1f",   --      FUEL_RFuelDial10 
+[6007]  =  "%.1f",   --      FUEL_RFuelDial1 
+[6010]  =  "%.4f",   --      FUEL_TotalFuel10k 
+[6011]  =  "%.1f",   --      FUEL_TotalFuel1k 
+[6012]  =  "%.1f",   --      FUEL_TotalFuel100 
+[6013]  =  "%.1f",   --      FUEL_TotalFuel10 
+[6014]  =  "%.1f",   --      FUEL_TotalFuel1 
+[6020]  =  "%.4f",   --      FUEL_BingoFuel10k 
+[6021]  =  "%.1f",   --      FUEL_BingoFuel1k 
+[6022]  =  "%.1f",   --      FUEL_BingoFuel100 
+[6023]  =  "%.1f",   --      FUEL_BingoFuel10 
+[6024]  =  "%.1f",   --      FUEL_BingoFuel1 
+
+[1032]  =  "%.1f",   --      STDBY_ADI_Push 
+[1042]  =  "%.1f",   --      STDBY_ADI_Twist 
+
+
+
+[6100]  =  "%.1f",   --      DDD_range_roller 
+[6101]  =  "%.1f",   --      TID_readout_src_roller 
+[6102]  =  "%.1f",   --      DDD_radar_mode 
+[6103]  =  "%.1f",   --      TID_steering_roller 
+
+[6111]  =  "%.1f",   --      DDD_mode_light_rdr 
+[6112]  =  "%.1f",   --      DDD_mode_light_ir 
+[6113]  =  "%.1f",   --      DDD_mode_light_iff 
+[6114]  =  "%.1f",   --      DDD_mode_light_pdstt 
+[6115]  =  "%.1f",   --      DDD_mode_light_pstt 
+[6116]  =  "%.1f",   --      DDD_mode_light_pdsearch 
+[6117]  =  "%.1f",   --      DDD_mode_light_rws 
+[6118]  =  "%.1f",   --      DDD_mode_light_tws_auto 
+[6119]  =  "%.1f",   --      DDD_mode_light_tws_man 
+[6120]  =  "%.1f",   --      DDD_mode_light_psearch 
+[6121]  =  "%.1f",   --      CCM_mode_light_spl 
+[6122]  =  "%.1f",   --      CCM_mode_light_altoff 
+[6123]  =  "%.1f",   --      CCM_mode_light_vgs 
+
+[6125]  =  "%.1f",   --      TID_trackhold_light 
+[6126]  =  "%.1f",   --      TID_CLSN_light 
+[6127]  =  "%.1f",   --      TID_option_light_riddsbl 
+[6128]  =  "%.1f",   --      TID_option_light_altnum 
+[6129]  =  "%.1f",   --      TID_option_light_symelem 
+[6130]  =  "%.1f",   --      TID_option_light_datalink 
+[6131]  =  "%.1f",   --      TID_option_light_jam 
+[6132]  =  "%.1f",   --      TID_option_light_nonattk 
+[6133]  =  "%.1f",   --      TID_option_light_LZ 
+[6134]  =  "%.1f",   --      TID_option_light_velvec 
+[6135]  =  "%.1f",   --      HCU_mode_light_TVIR 
+[6136]  =  "%.1f",   --      HCU_mode_light_RDR 
+[6137]  =  "%.1f",   --      HCU_mode_light_DDD 
+[6138]  =  "%.1f",   --      HCU_mode_light_TID 
+
+[8050]  =  "%.1f",   --      TACAN_LIGHT_GO_Pilot 
+[8051]  =  "%.1f",   --      TACAN_LIGHT_NOGO_Pilot 
+
+[8052]  =  "%.1f",   --      RIO_IFF_TEST_LIGHT 
+[8053]  =  "%.1f",   --      RIO_IFF_REPLY_LIGHT 
+
+[8300]  =  "%.1f",   --      NOSEGEAR_OffFlag 
+[8301]  =  "%.1f",   --      NOSEGEAR_Indicator 
+
+[8302]  =  "%.1f",   --      L_GEAR_Indicator 
+[8303]  =  "%.1f",   --      L_GEAR_OffFlag 
+
+[8304]  =  "%.1f",   --      R_GEAR_OffFlag 
+[8305]  =  "%.1f",   --      R_GEAR_Indicator 
+
+[15001]  =  "%.1f",   --      Landing_Gear_Light 
+[15002]  =  "%.1f",   --      Refuel_probe_light 
+[15004]  =  "%.1f",   --      UHF_Test_Button_Pilot 
+[15003]  =  "%.1f",   --      VHF_Test_Button_Pilot 
+
+[15090]  =  "%.1f",   --      Hook_Light 
+
+[15091]  =  "%.1f",   --      Wingsweep_Flag_OFF 
+[15092]  =  "%.1f",   --      Wingsweep_Flag_AUTO 
+[15093]  =  "%.1f",   --      Wingsweep_Flag_MAN 
+[15094]  =  "%.1f",   --      Wingsweep_Flag_EMER 
+[15095]  =  "%.1f",   --      Wingsweep_Flag_OVER 
+
+[15096]  =  "%.1f",   --      Wingsweep_Lever_Popout 
+
+[15097]  =  "%.1f",   --      Stdby_Compass_Roll 
+[15098]  =  "%.1f",   --      Master_test_knob_push 
+
+
+[8306]  =  "%.1f",   --      SPDBRK_OffFlag 
+[8307]  =  "%.1f",   --      SPDBRK_In_and_Partial 
+[8308]  =  "%.1f",   --      SPDBRK_Full 
+
+[8309]  =  "%.1f",   --      SLATS_OffFlag 
+[8310]  =  "%.1f",   --      SLATS_Indicator 
+
+[8311]  =  "%.1f",   --      FLAPS_Indicator 
+
+[8315]  =  "%.1f",   --      SPOILER_DN_OuterLeft 
+[8316]  =  "%.1f",   --      SPOILER_DN_InnerLeft 
+[8317]  =  "%.1f",   --      SPOILER_DN_InnerRight 
+[8318]  =  "%.1f",   --      SPOILER_DN_OuterRight 
+[8319]  =  "%.1f",   --      SPOILER_Indicator_OuterLeft 
+[8320]  =  "%.1f",   --      SPOILER_Indicator_InnerLeft 
+[8321]  =  "%.1f",   --      SPOILER_Indicator_OuterRight 
+[8322]  =  "%.1f",   --      SPOILER_Indicator_InnterRight 
+
+[1090]  =  "%.1f",   --      STABILATOR_Indicator_Left 
+[1091]  =  "%.1f",   --      STABILATOR_Indicator_Right 
+
+[1092]  =  "%.1f",   --      RUDDER_Indicator_Left 
+[1093]  =  "%.1f",   --      RUDDER_Indicator_Right 
+
+--[[
+[8888]  =  "%.1f",   --      TACAN_Dial_Outer_Pilot 
+[8889]  =  "%.1f",   --      TACAN_Dial_Inner_Pilot 
+[8890]  =  "%.1f",   --      TACAN_Dial_Inner_RIO 
+[8891]  =  "%.1f",   --      TACAN_Dial_Outer_RIO 
+]]
+[8892]  =  "%.1f",   --      TACAN_LIGHT_NOGO_RIO 
+[8893]  =  "%.1f",   --      TACAN_LIGHT_GO_RIO 
+
+[9199]  =  "%.1f",   --      WEAP_Master_Caution_Button 
+
+[9200]  =  "%.1f",   --      WEAP_Master_Caution 
+[9201]  =  "%.1f",   --      WEAP_Hot_Trig 
+[9202]  =  "%.1f",   --      WEAP_Collision 
+[9203]  =  "%.1f",   --      WEAP_SEAM_lock 
+[9204]  =  "%.1f",   --      WEAP_gunrate_high 
+[9205]  =  "%.1f",   --      WEAP_gunrate_low 
+[9206]  =  "%.1f",   --      WEAP_SW_Cool_on 
+[9207]  =  "%.1f",   --      WEAP_SW_Cool_off 
+[9208]  =  "%.1f",   --      WEAP_MSL_Prep_on 
+[9209]  =  "%.1f",   --      WEAP_MSL_Prep_off 
+[9210]  =  "%.1f",   --      WEAP_MSL_Mode_norm 
+[9211]  =  "%.1f",   --      WEAP_MSL_Mode_boresight 
+[9221]  =  "%.2f",   --      WEAP_store_1a 
+[9222]  =  "%.2f",   --      WEAP_store_1b 
+[9223]  =  "%.2f",   --      WEAP_store_3 
+[9224]  =  "%.2f",   --      WEAP_store_4 
+[9225]  =  "%.2f",   --      WEAP_store_5 
+[9226]  =  "%.2f",   --      WEAP_store_6 
+[9227]  =  "%.2f",   --      WEAP_store_8b 
+[9228]  =  "%.2f",   --      WEAP_store_8a 
+[16000]  =  "%.1f",   --      WEAP_GunRateButton 
+[16001]  =  "%.1f",   --      WEAP_SWCoolButton 
+[16002]  =  "%.1f",   --      WEAP_MSLPrepButton 
+[16003]  =  "%.1f",   --      WEAP_ModeSTPButton 
+
+[16004]  =  "%.1f",   --      AOA_Indicator_OFF_Flag 
+
+[16005]  =  "%.1f",   --      ASYM_Limiter_Flipcover 
+[16006]  =  "%.1f",   --      ASYM_Limiter_Switch 
+
+[16007]  =  "%.1f",   --      ENG_Mode_L 
+[16008]  =  "%.1f",   --      ENG_Mode_R 
+
+[16012]  =  "%.1f",   --      VDI_Realtime_Light 
+[16013]  =  "%.1f",   --      HUD_Realtime_Light 
+
+[260]  =  "%.1f",   --  DDD_Realtime_Light 
+[3450]  =  "%.1f",   --      TID_Realtime_Light 
+
+[16015]  =  "%.1f",   --      Gear_emergency_down 
+
+[16016]  =  "%.1f",   --      RECORD_Knob_Reset 
+
+
+[9360]  =  "%.1f",   --      ADV_ADJAC 
+[9361]  =  "%.1f",   --  ADV_LandingChk 
+[9362]  =  "%.1f",   --  ADV_ACLReady 
+[9363]  =  "%.1f",   --  ADV_APCPLR 
+[9364]  =  "%.1f",   --  ADV_CMDControl 
+[9365]  =  "%.1f",   --  ADV_TenSeconds 
+[9366]  =  "%.1f",   --  ADV_TILT 
+[9367]  =  "%.1f",   --  ADV_Voice 
+[9368]  =  "%.1f",   --  ADV_AutoThrottle 
+[9369]  =  "%.1f",   --      ADV_APRef 
+
+
+
+[15070]  =  "%.1f",   --      LIGHT_WAVE_OFF 
+[15071]  =  "%.1f",   --      LIGHT_WING_SWEEP 
+[15072]  =  "%.1f",   --      LIGHT_REDUCESPD 
+[15073]  =  "%.1f",   --      LIGHT_ALTLOW 
+
+
+[9350]  =  "%.1f",   --  HUD_Wheels 
+[9351]  =  "%.1f",   --  HUD_Brakes 
+[9352]  =  "%.1f",   --  HUD_ACLAP 
+[9353]  =  "%.1f",   --  HUD_NWSEnga 
+[9354]  =  "%.1f",   --      HUD_AutoThrottle 
+
+[9355]  =  "%.1f",   --      HUD_RStall 
+[9356]  =  "%.1f",   --      HUD_LStall 
+
+[9357]  =  "%.1f",   --      HUD_SAM 
+[9358]  =  "%.1f",   --      HUD_AAA 
+[9359]  =  "%.1f",   --      HUD_AI  
+
+
+
+[9960]  =  "%.1f",   --      WEAP_Interval_10s 
+[9961]  =  "%.1f",   --      WEAP_Interval_100s 
+[9962]  =  "%.1f",   --      WEAP_Quantity_10s 
+[9963]  =  "%.1f",   --      WEAP_Quantity_1s 
+[9964]  =  "%.1f",   --      WEAP_Next_launch 
+
+[11500]  =  "%.1f",   --      HCU_joystick_rightleft 
+[11501]  =  "%.1f",   --      HCU_joystick_backfore 
+
+[11503]  =  "%.1f",   --      DDD_ANT_TRK_light 
+[11504]  =  "%.1f",   --      DDD_RDROT_light 
+[11505]  =  "%.1f",   --      DDD_JAT_light 
+[11506]  =  "%.1f",   --      DDD_IROT_light 
+
+[11600]  =  "%.1f",   --      RECORD_minutes_hi 
+[11601]  =  "%.1f",   --      RECORD_minutes_med 
+[11602]  =  "%.1f",   --      RECORD_minutes_low 
+
+[224]  =  "%.1f",   --      CANOPY_Jettison 
+[122]  =  "%.1f",   --  RIO_STORAGE_BOX 
+
+
+[497]  =  "%.1f",   --      GEAR_LaunchBarAbort 
+[496]  =  "%.1f",   --      GEAR_LaunchBarAbortCover 
+
+[498]  =  "%.1f",   --      RIO_SEAT_SAFETY 
+
+[666]  =  "%.1f",   --  LANTIRN_Panel_Visibility 
+
+[667]  =  "%.1f",   --      LANTIRN_RotaryKnob 
+[668]  =  "%.1f",   --      LANTIRN_Laser 
+[669]  =  "%.1f",   --      LANTIRN_MODE 
+[670]  =  "%.1f",   --      LANTIRN_Video 
+[671]  =  "%.1f",   --      LANTIRN_Button 
+
+[672]  =  "%.1f",   --      LANTIRN_RedButton 
+
+[673]  =  "%.1f",   --      LANTIRN_OPERSTBY 
+[674]  =  "%.1f",   --      LANTIRN_IMUGPS 
+[675]  =  "%.1f",   --      LANTIRN_LGPFLIR 
+[676]  =  "%.1f",   --      LANTIRN_MUXEGU 
+[677]  =  "%.1f",   --      LANTIRN_LASERSERVO 
+[678]  =  "%.1f",   --      LANTIRN_FLIRTCS 
+[679]  =  "%.1f",   --      LANTIRN_IBIT 
+[680]  =  "%.1f",   --      LANTIRN_LASERARMED 
+
+[38]  =  "%.1f",   --  CANOPY_Open 
+
+[404]  =  "%.1f",   --      WINGS_LeftSweep 
+
+[1022]  =  "%.1f",   --      CONTROL_LeftOuterSlats 
+[509]  =  "%.1f",   --      CONTROL_LeftRudder 
+
+
+[25]  =  "%.1f",   --      GEARHOOK_Hook 
+[1305]  =  "%.1f",   --      GEARHOOK_Visual 
+
+[28]  =  "%.1f",   --  ENGINE_RightAB_Dummy 
+[435]  =  "%.1f",   --      ENGINE_RightAB 
+[500]  =  "%.1f",   --  ENGINE_RightAB_Stage4 
+[29]  =  "%.1f",   --  ENGINE_LeftAB_Dummy 
+[436]  =  "%.1f",   --      ENGINE_LeftAB 
+[501]  =  "%.1f",   --  ENGINE_LeftAB_Stage4 
+[434]  =  "%.1f",   --      ENGINE_LeftNozzle 
+[433]  =  "%.1f",   --      ENGINE_RightNozzle 
+[5353]  =  "%.1f",   --      ENGINE_LeftFan 
+[5352]  =  "%.1f",   --      ENGINE_RightFan 
+
+[85]  =  "%.1f",   --      GEARHOOK_LaunchBar 
+
+[400]  =  "%.1f",   --      CONTROL_TopSpeedBrake 
+[401]  =  "%.1f",   --      CONTROL_BottomLeftSpeedBrake 
+[402]  =  "%.1f",   --      CONTROL_BottomRightSpeedBrake 
+
+[405]  =  "%.1f",   --      WINGS_RightSweep 
+[507]  =  "%.1f",   --      WINGS_LeftOverSweep 
+[508]  =  "%.1f",   --      WINGS_RightOverSweep 
+
+[450]  =  "%.1f",   --      CONTROL_LeftStabilator 
+[406]  =  "%.1f",   --      CONTROL_RightStabilator 
+
+[1609]  =  "%.1f",   --      AICS_LeftRamp1  --500
+[1610]  =  "%.1f",   --      AICS_LeftRamp2  --501
+[1611]  =  "%.1f",   --      AICS_RightRamp1  --502
+[1612]  =  "%.1f",   --      AICS_RightRamp2  --503
+
+[600]  =  "%.1f",   --      WEAP_Front_Phoenix_rails 
+[601]  =  "%.1f",   --      WEAP_Front_Phoenix_left_plug 
+[602]  =  "%.1f",   --      WEAP_Front_Phoenix_right_plug 
+[603]  =  "%.1f",   --      WEAP_Rear_Phoenix_left_plug 
+[604]  =  "%.1f",   --      WEAP_Rear_Phoenix_right_plug 
+[605]  =  "%.1f",   --      WEAP_Rear_Phoenix_rails 
+[606]  =  "%.1f",   --      WEAP_LANTIRN 
+[607]  =  "%.1f",   --      WEAP_LANTIRN_Rotate1 
+[608]  =  "%.1f",   --      WEAP_LANTIRN_Rotate2 
+
+[999]  =  "%.1f",   --      FUEL_FuelDumpTorchHor 
+[999]  =  "%.1f",   --      FUEL_FuelDumpTorchVert 
+[22]  =  "%.1f",   --      FUEL_FuelProbe 
+[999]  =  "%.1f",   --      FUEL_FuelDump 
+[999]  =  "%.1f",   --      FUEL_FuelDumpTorch 
+
+[999]  =  "%.1f",   --      CONTROL_LeftInnerSlats 
+[999]  =  "%.1f",   --      CONTROL_RightInnerSlats 
+[1004]  =  "%.1f",   --      CONTROL_LeftAuxFlaps 
+[1001]  =  "%.1f",   --      CONTROL_LeftMainFlaps 
+[1003]  =  "%.1f",   --      CONTROL_RightMainFlaps 
+[1002]  =  "%.1f",   --      CONTROL_RightAuxFlaps 
+
+[1500]  =  "%.1f",   --      WINGS_LeftFlex 
+[1501]  =  "%.1f",   --      WINGS_RightFlex 
+
+[1010]  =  "%.1f",   --      CONTROL_LeftOuterSpoiler 
+[1011]  =  "%.1f",   --      CONTROL_LeftInnerSpoiler 
+[1012]  =  "%.1f",   --      CONTROL_RightInnerSpoiler 
+[1013]  =  "%.1f",   --      CONTROL_RightOuterSpoiler 
+[1020]  =  "%.1f",   --      CONTROL_RightRudder 
+--[1021]  =  "%.1f",   --      CONTROL_RightOuterSlats 
+
+[6000]  =  "%.1f",   --  PILOT_Left_Right 
+[6001]  =  "%.1f",   --      PILOT_Up_Down 
+[1600]  =  "%.1f",   --      PILOT_Salute 
+[6002]  =  "%.1f",   --      PILOT_LeanSideways 
+
+[1601]  =  "%.1f",   --      RIO_Lean_And_Grab 
+[1603]  =  "%.1f",   --      RIO_Hold_On 
+[1605]  =  "%.1f",   --      RIO_Right_Left 
+[1607]  =  "%.1f",   --      RIO_Up_Down 
+[6003]  =  "%.1f",   --      RIO_LeanSideways 
+[6004]  =  "%.1f",   --      RIO_LeanForward 
+
+[1608]  =  "%.1f",   --      DDD_Lamp 
+
+[1614]  =  "%.1f",   --      PILOT_Lean_Forward 
+[1615]  =  "%.1f",   --      PILOT_Lean_Back 
+
+[16]  =  "%.1f",   --  DUMMY_LeftElevator 
+[15]  =  "%.1f",   --  DUMMY_RightElevator 
+[12]  =  "%.1f",   --  DUMMY_LeftAileron 
+[11]  =  "%.1f",   --      DUMMY_RightAileron 
+
+[3600]  =  "%.1f",   --      Sync1 
+[3601]  =  "%.1f",   --      Sync2 
+[3602]  =  "%.1f",   --      Sync3 
+[3603]  =  "%.1f",   --      Sync4 
+
+[51]  =  "%.1f",   --  LIGHTS_Taxi 
+[200]  =  "%.1f",   --  LIGHTS_Formation 
+[84]  =  "%.1f",   --  LIGHTS_Approach 
+[609]  =  "%.1f",   --  LIGHTS_Approach_Bright_Dim_Switch 
+[610]  =  "%.1f",   --  LIGHTS_Fuel_Probe 
+[611]  =  "%.1f",   --  LIGHTS_Position_Wing 
+[612]  =  "%.1f",   --  LIGHTS_Position_Glove 
+[613]  =  "%.1f",   --  LIGHTS_Position_Tail 
+[620]  =  "%.1f",   --  LIGHTS_Anticollision 
+[614]  =  "%.1f",   --  LIGHTS_Anticollision_Bottom 
+[615]  =  "%.1f",   --  LIGHTS_External_Dummy 
+[621]  =  "%.1f",   --  LIGHTS_Disable_Ext 
+[625]  =  "%.1f",   --  LIGHTS_External_Dummy2 
+
+[626]  =  "%.1f",   --  RIO_Right_Left_Dummy 
+[627]  =  "%.1f",   --  RIO_Up_Down_Dummy 
+ 
+
 }
-
-
 ExportScript.ConfigArguments = 
 {
-	-- arguments for export in low tick interval
-
--- PILOT COCKPIT ------------------------------------------------------------------------------
-	-- [A1 Pilot - Left Side Console] ---------------------------------------------------------
-	-- [END A1] -------------------------------------------------------------------------------
-	
-	-- [A2 Pilot - Left Vertical Console] -----------------------------------------------------
-	-- [END A2] -------------------------------------------------------------------------------
-
-	-- [A3 Pilot - Left Knee Panel] -----------------------------------------------------------
-
-		-- Hydraulic Pressure Indicator Flags
-		[1023]  =  "%d",     -- Pressure availability to the spoilers flag 	- {0, 1}{0, 1}														[STREAM DECK FORMAT: 51023 OR 51063]
-		[1024]  =  "%d",     -- Emer. Flight hyd. pump operating on High 	- {0, 1}{0, 1} 														[STREAM DECK FORMAT: 51023 OR 51063]
-		[1025]  =  "%d",     -- Emer. Flight hyd. pump operating on LOW 	- {0, 1}{0, 1} 														[STREAM DECK FORMAT: 51023 OR 51063]
-
-	-- [END A3] -------------------------------------------------------------------------------
-
-	-- [A4 Pilot - Left Instrument Panel] -----------------------------------------------------
-	-- [END A4] -------------------------------------------------------------------------------
-	
-	-- [A5 Pilot - Left Windshield Frame] -----------------------------------------------------
-	-- [END A5] -------------------------------------------------------------------------------
-
-	-- [A6a Pilot - Center Panel] -------------------------------------------------------------
-
-		-- Master Caution Button (light in high tik)
-		[9199]  =  "%d",	 -- MASTER CAUTION Button - press to reset 		- {0, 1}{0, 1}														[BUTTON ID:3056  / DEVICE ID:34 ]
-
-		-- Triple Indicator Lights
-		[9203]  =  "%d",   	 -- SEAM LOCK light - sidewinder acquisition in progress..
-		[9202]  =  "%d",   	 -- COLLISION light - collision steering has been selected
-		[9201]  =  "%d",     -- HOT TRIG light - when lit trigger will release a weapon
-
-		-- Gun Rate Switch and Lights
-		[9204]  =  "%d",   	 -- GUN RATE light HIGH (HIGH|LOW) 				- {0, 1}{0, 1}
-		[9205]  =  "%d",   	 -- GUN RATE light LOW (HIGH|LOW) 				- {0, 1}{0, 1}
-		[16000] =  "%d",   	 -- GUN RATE switch (HIGH|LOW) 					- {0, 1}{0, 1}														[BUTTON ID:3130  / DEVICE ID:55 ]
-
-		-- Sidewinder Cooling
-		[9206]  =  "%d",   	 -- SW COOL Switch light On 					- {0, 1}{0, 1}
-		[9207]  =  "%d",   	 -- SW COOL Switch light Off					- {0, 1}{0, 1}
-		[16001] =  "%d",   	 -- SW COOL switch (ON|OFF)						- {0, 1}{0, 1}														[BUTTON ID:3139  / DEVICE ID:55 ]
-
-		-- MSL Preperation Switch
-		[9208]  =  "%d",   	 -- MSL PREP switch light On					- {0, 1}{0, 1}
-		[9209]  =  "%d",   	 -- MSL PREP switch light Off					- {0, 1}{0, 1}
-		[16002] =  "%d",   	 -- MSL PREP switch (ON|OFF)					- {0, 1}{0, 1}														[BUTTON ID:3140  / DEVICE ID:55 ]
-
-		-- MSL Mode Switch
-		[9210]  =  "%d",   	 -- MSL Mode switch light Norm					- {0, 1}{0, 1}
-		[9211]  =  "%d",   	 -- MSL Mode switch light Boresight				- {0, 1}{0, 1}
-		[16003] =  "%d",   	 -- MSL Mode switch (NORM|BRSIT)				- {0, 1}{0, 1}														[BUTTON ID:3141  / DEVICE ID:55 ]
-
-		-- Weapon Station Status Flags
-		[9221]  =  "%.2f",   -- Station Status Flag 1A (OFF|WHITE|CHECK)	- {0, 1}{0, 1}
-		[9222]  =  "%.2f",   -- Station Status Flag 1B (OFF|WHITE|CHECK) 	- {0, 1}{0, 1}
-		[9223]  =  "%.2f",   -- Station Status Flag 3 (OFF|WHITE|CHECK) 	- {0, 1}{0, 1}
-		[9224]  =  "%.2f",   -- Station Status Flag 4 (OFF|WHITE|CHECK) 	- {0, 1}{0, 1}
-		[9225]  =  "%.2f",   -- Station Status Flag 5 (OFF|WHITE|CHECK) 	- {0, 1}{0, 1}
-		[9226]  =  "%.2f",   -- Station Status Flag 6 (OFF|WHITE|CHECK) 	- {0, 1}{0, 1}
-		[9227]  =  "%.2f",   -- Station Status Flag 8B (OFF|WHITE|CHECK) 	- {0, 1}{0, 1}
-		[9228]  =  "%.2f",   -- Station Status Flag 8A (OFF|WHITE|CHECK) 	- {0, 1}{0, 1}
-
-		-- Engine Fire Lights
-		[15014] =  "%d",	 -- Left Engine FIRE Light 						- {0, 1}{0, 1}
-		[15015] =  "%d",	 -- Right Engine FIRE Light 					- {0, 1}{0, 1}
-
-	-- [END A6a] ------------------------------------------------------------------------------
-
-	-- [A6b Pilot - Center Panel] -------------------------------------------------------------
-	-- [END A6b] ------------------------------------------------------------------------------
-
-	-- [A6c Pilot - Center Panel] -------------------------------------------------------------
-	-- [END A6c] ------------------------------------------------------------------------------
-
-	-- [A6d Pilot - Center Panel] -------------------------------------------------------------
-	-- [END A6d] ------------------------------------------------------------------------------
-
-	-- [A7 Pilot - Right Windshield Frame] ----------------------------------------------------
-	-- [END A7] -------------------------------------------------------------------------------
-
-	-- [A8 Pilot - Right Instrument Panel] ----------------------------------------------------
-	-- [END A8] -------------------------------------------------------------------------------
-
-	-- [A9 Pilot - Right Knee Panel] ----------------------------------------------------------
-
-		-- Accelerometer
-		[228]   =  "%.4f",   -- Accelerometer Reset knob 					- {0, 1}{0, 1} 														[BUTTON ID: 3488 / DEVICE ID: 24]
-
-		-- Bingo Set Knob
-		[1050]  =  "%.4f",   -- Knob used to set BINGO fuel Qty 			- +/- 1 per step is 100 lbs of fuel									[BUTTON ID: 3069 / DEVICE ID: 20]
-
-		-- Clock and Timer
-		[1051]  =  "%.4f",   -- Clock Timer wind 							- +/- 0.06 per step is 1 Minute 									[BUTTON ID: 3042 / DEVICE ID: 26]
-		[1096]  =  "%.4f",   -- Clock Hours 								- {0, 12}{0.0000, 1.0000} e.g. 0.5000 * 12 = 6pm					[STREAM DECK FORMAT: 51096]
-		[1097]  =  "%.4f",   -- Clock Minutes 								- {0, 60}{0.0000, 1.0000} e.g. 0.5000 * 60 = 30 Minutes 			[STREAM DECK FORMAT: 51096]
-		[1098]  =  "%.4f",   -- Clock Timer Seconds 						- {0, 60}{0.0000, 1.0000} e.g. 0.5000 * 60 = 30 Seconds 			[STREAM DECK FORMAT: 51096]
-		[1099]  =  "%d",     -- Clock Timer Start/Stop/Reset Button 		- {0, 1}{0, 1}														[BUTTON ID: 3043 / DEVICE ID: 26]
-		[2000]  =  "%.4f",   -- Clock Timer Minutes 						- {0, 60}{0.0000, 1.0000} e.g. 0.5000 * 60 = 30 Minutes 			[STREAM DECK FORMAT: 51096]
-
-	-- [END A9] -------------------------------------------------------------------------------
-
-	-- [A10 Pilot - Right Vertical Console] ---------------------------------------------------
-
-		-- Arresting Hook
-		[238]   =  "%d",  	 -- HOOK_Handle Arresting hook handle down/up 	- {0, 1}{0, 1}														[BUTTON ID: 3021 / DEVICE ID: 17]
-		[15078] =  "%d",  	 -- HOOK_EmergencyDown Emergency release 		- {0, 1}{0, 1}														[BUTTON ID: 3022 / DEVICE ID: 17]
-		[15090] =  "%d",  	 -- Hook_Light Arresting Hook Light 			- {0, 1}{0, 1}														[LIGHT/LAMP]
-
-		-- Gun Rounds and Knob
-		[1022]  =  "%.4f",   -- Gun Ammunition Counter Adj. Knob 			- {0, 1}{increase or decrease by 0.1 to inc/dec. by 10 rounds}		[BUTTON ID: 3132 / DEVICE ID: 55]
-
-	-- [END A10] ------------------------------------------------------------------------------
-
-	-- [A11a Pilot - Right Side Console] ------------------------------------------------------
-	-- [END A11a] -----------------------------------------------------------------------------
-
-	-- [A11b Pilot - Right Side Console] ------------------------------------------------------
-
-		-- HUD Video Control Panel (Not Implemented in DCS)
-		--[0]  =  "%.4f",   -- HUD CAM(E)RA switch (TRG|NORMAL|OFF|RUN)
-		--[0]  =  "%.4f",   -- VTR Power (ON|OFF)
-		--[0]  =  "%.4f",   -- VTR (RECORD|STANDBY)
-
-	-- [END A11b] -----------------------------------------------------------------------------
-
-
-	-- [A12 Pilot - Canopy Control Handle] ----------------------------------------------------
-	-- [END A12] ------------------------------------------------------------------------------
--- END PILOT COCKPIT --------------------------------------------------------------------------
-
-
-
-
--- RIO OFFICER COCKPIT ------------------------------------------------------------------------
-	-- [B1 RIO - Left Side Console] -----------------------------------------------------------
-	-- [END B1] -------------------------------------------------------------------------------
-
-	-- [B2 RIO - Left Vertical Console] -------------------------------------------------------
-	-- [END B2] -------------------------------------------------------------------------------
-
-	-- [B3 RIO - Left Instrument Panel] -------------------------------------------------------
-	-- [END B3] -------------------------------------------------------------------------------
-
-	-- [B4 RIO - Center Panel] ----------------------------------------------------------------
-	-- [END B4] -------------------------------------------------------------------------------
-
-	-- [B5 RIO - Center Console] --------------------------------------------------------------
-	-- [END B5] -------------------------------------------------------------------------------
-
-	-- [B6 RIO - Left and Right Footwells] ----------------------------------------------------
-	-- [END B6] -------------------------------------------------------------------------------
-
-	-- [B7 RIO - Right Instrument Panel] ------------------------------------------------------
-	-- [END B7] -------------------------------------------------------------------------------
-
-	-- [B8 RIO - Right Knee Panel] ------------------------------------------------------------
-	-- [END B1] -------------------------------------------------------------------------------
-
-	-- [B9 RIO - Right Vertical Console] ------------------------------------------------------
-	-- [END B2] -------------------------------------------------------------------------------
-
-	-- [B10 RIO - Right Side Console] ---------------------------------------------------------
-	-- [END B3] -------------------------------------------------------------------------------
-
-	-- [B11 RIO - Canopy Control Handle] ------------------------------------------------------
-	-- [END B4] -------------------------------------------------------------------------------
--- END RIO OFFICER COCKPIT --------------------------------------------------------------------
-
+	--[[
+	arguments for export in low tick interval
+	based on "clickabledata.lua"
+	]]
+[15082] = "%1d",   -- Fire Ext Bottle - Right, (1, 0, 1)
+[15083] = "%1d",   -- Fire Ext Bottle - Left, (1, 0, 1)
+--   ACCELEROMETER(24)
+[228] = "%1d",   -- Accelerometer Reset, (1, 0, 1)
+--   AFCS(21)
+[2112] = "%1d",   -- Autopilot - Engage, (-2, -1, 1) Shold be -2 and 2 -Bailey
+[2106] = "%1d",   -- AFCS Stability Augmentation - Pitch, (-1, 0, 1)
+[2107] = "%1d",   -- AFCS Stability Augmentation - Roll, (-1, 0, 1)
+[2108] = "%1d",   -- AFCS Stability Augmentation - Yaw, (-1, 0, 1)
+[2109] = "%1d",   -- Autopilot - Vector / Automatic Carrier Landing, (-1, -1, 1)
+[2110] = "%1d",   -- Autopilot - Altitude Hold, (-1, 0, 1)
+[2111] = "%1d",   -- Autopilot - Heading / Ground Track, (-1, -1, 1)
+--[2106] = "%1d",   -- AFCS Stability Augmentation - Pitch, (1, 0, 1)
+--[2107] = "%1d",   -- AFCS Stability Augmentation - Roll, (1, 0, 1)
+--[2108] = "%1d",   -- AFCS Stability Augmentation - Yaw, (1, 0, 1)
+--[2109] = "%1d",   -- Autopilot - Vector / Automatic Carrier Landing, (1, -1, 1)
+--[2110] = "%1d",   -- Autopilot - Altitude Hold, (1, 0, 1)
+--[2111] = "%1d",   -- Autopilot - Heading / Ground Track, (1, -1, 1)
+--[2112] = "%1d",   -- Autopilot - Engage, (2, -1, 1)
+--   AHRS(51)
+[905] = "%1d",   -- Compass Mode, (-1, -1, 1)
+[906] = "%1d",   -- Compass N-S Hemisphere, (-1, 0, 1)
+[909] = "%1d",   -- Compass LAT Correction, (0, 0, 1)
+[904] = "%1d",   -- Compass HDG Slave Knob/nPush (Left Mouse Button) and rotate (Right Mouse Button), (1, -1, 1)
+[905] = "%1d",   -- Compass Mode, (1, -1, 1)
+[906] = "%1d",   -- Compass N-S Hemisphere, (1, 0, 1)
+[16014] = "%1d",   -- Compass HDG Slave Knob/nPush (Left Mouse Button) and rotate (Right Mouse Button), (1, 0, 1)
+--   AICS(13)
+[2100] = "%1d",   -- Stow Inlet Ramps Left Switch, (-1, 0, 1)
+[2101] = "%1d",   -- Stow Inlet Ramps Right Switch, (-1, 0, 1)
+[2100] = "%1d",   -- Stow Inlet Ramps Left Switch, (1, 0, 1)
+[2101] = "%1d",   -- Stow Inlet Ramps Right Switch, (1, 0, 1)
+--   AOASYSTEM(25)
+[915] = "%1d",   -- Hook Bypass, (-1, 0, 1)
+[915] = "%1d",   -- Hook Bypass, (1, 0, 1)
+[15006] = "%.4f",   -- AoA Indexer Light Intensity, (0.125, 0, 1)
+[15006] = "%.4f",   -- AoA Indexer Light Intensity, (-0.125, 0, 1)
+--   ARC159(3)
+[2026] = "%1d",   -- UHF ARC-159 0.025MHz, (-1, -1, 0)
+[2028] = "%1d",   -- UHF ARC-159 0.1MHz, (-1, -1, 0)
+[2029] = "%1d",   -- UHF ARC-159 1MHz, (-1, -1, 0)
+[2030] = "%1d",   -- UHF ARC-159 100MHz & 10MHz, (-1, -1, 0)
+[2035] = "%1d",   -- UHF ARC-159 Squelch Switch, (-1, 0, 1)
+[383] = "%1d",   -- UHF ARC-159 Volume RIO, (0, 0, 1)
+[2027] = "%1d",   -- UHF ARC-159 Display Brightness, (0, 0, 1)
+[2031] = "%1d",   -- UHF ARC-159 Volume Pilot, (0, 0, 1)
+[405] = "%1d",   -- UHF Radio Remote Display Test, (1, 0, 1)
+[406] = "%1d",   -- UHF Radio Remote Display Brightness, (1, 0, 1)
+[1031] = "%1d",   -- UHF Radio Remote Display Brightness, (1, 0, 1)
+[2026] = "%1d",   -- UHF ARC-159 0.025MHz, (1, 1, 0)
+[2028] = "%1d",   -- UHF ARC-159 0.1MHz, (1, 1, 0)
+[2029] = "%1d",   -- UHF ARC-159 1MHz, (1, 1, 0)
+[2030] = "%1d",   -- UHF ARC-159 100MHz & 10MHz, (1, 1, 0)
+[2035] = "%1d",   -- UHF ARC-159 Squelch Switch, (1, 0, 1)
+[8115] = "%1d",   -- UHF ARC-159 Read, (1, 0, 1)
+[15004] = "%1d",   -- UHF Radio Remote Display Test, (1, 0, 1)
+[16009] = "%1d",   -- UHF ARC-159 Load, (1, 0, 1)
+[16010] = "%1d",   -- UHF ARC-159 Tone, (1, 0, 1)
+[2032] = "%.4f",   -- UHF ARC-159 Preset Channel Selector, (0.0833333333, 0, 0.9166666663)
+[2032] = "%.4f",   -- UHF ARC-159 Preset Channel Selector, (-0.0833333333, 0, 0.9166666663)
+[2034] = "%.4f",   -- UHF ARC-159 Function, (0.333333, 0, 0.999999)
+[2034] = "%.4f",   -- UHF ARC-159 Function, (-0.333333, 0, 0.999999)
+[2033] = "%.1f",   -- UHF ARC-159 Freq Mode, (0.5, 0, 1)
+[2033] = "%.1f",   -- UHF ARC-159 Freq Mode, (-0.5, 0, 1)
+--   ARC182(4)
+[351] = "%1d",   -- VHF/UHF ARC-182 Squelch Switch, (-1, 0, 1)
+[354] = "%1d",   -- VHF/UHF ARC-182 100MHz & 10MHz, (-1, -1, 0)
+[355] = "%1d",   -- VHF/UHF ARC-182 1MHz, (-1, -1, 0)
+[356] = "%1d",   -- VHF/UHF ARC-182 0.1MHz, (-1, -1, 0)
+[357] = "%1d",   -- VHF/UHF ARC-182 0.025MHz, (-1, -1, 0)
+[359] = "%1d",   -- VHF/UHF ARC-182 FM/AM Switch, (-1, 0, 1)
+[350] = "%1d",   -- VHF/UHF ARC-182 Volume RIO, (0, 0, 1)
+[360] = "%1d",   -- VHF/UHF ARC-182 Display Brightness, (0, 0, 1)
+[2038] = "%1d",   -- VHF/UHF ARC-182 Volume Pilot, (0, 0, 1)
+[351] = "%1d",   -- VHF/UHF ARC-182 Squelch Switch, (1, 0, 1)
+[354] = "%1d",   -- VHF/UHF ARC-182 100MHz & 10MHz, (1, 1, 0)
+[355] = "%1d",   -- VHF/UHF ARC-182 1MHz, (1, 1, 0)
+[356] = "%1d",   -- VHF/UHF ARC-182 0.1MHz, (1, 1, 0)
+[357] = "%1d",   -- VHF/UHF ARC-182 0.025MHz, (1, 1, 0)
+[359] = "%1d",   -- VHF/UHF ARC-182 FM/AM Switch, (1, 0, 1)
+[1030] = "%1d",   -- VHF/UHF Radio Remote Display Brightness, (1, 0, 1)
+[15003] = "%1d",   -- VHF/UHF Radio Remote Display Test, (1, 0, 1)
+[352] = "%.4f",   -- VHF/UHF ARC-182 Preset Channel Selector, (0.0833333333, 0, 0.9166666663)
+[352] = "%.4f",   -- VHF/UHF ARC-182 Preset Channel Selector, (-0.0833333333, 0, 0.9166666663)
+[353] = "%.1f",   -- VHF/UHF ARC-182 Freq Mode, (0.2, 0, 1)
+[353] = "%.1f",   -- VHF/UHF ARC-182 Freq Mode, (-0.2, 0, 1)
+[358] = "%.2f",   -- VHF/UHF ARC-182 MODE, (0.25, 0, 1)
+[358] = "%.2f",   -- VHF/UHF ARC-182 MODE, (-0.25, 0, 1)
+--   BAROALTIMETER(28)
+[307] = "%1d",   -- Altimeter Mode Switch, (-1, -1, 0)
+[20307] = "%1d",   -- Altimeter Mode Switch, (-1, -1, 0)
+[306] = "%1d",   -- Altimeter Pressure Setting, (0, 0, 1)
+[20306] = "%1d",   -- Altimeter Pressure Setting, (0, 0, 1)
+[307] = "%1d",   -- Altimeter Mode Switch, (1, 1, 0)
+[20307] = "%1d",   -- Altimeter Mode Switch, (1, 1, 0)
+--   BITPANEL(10)
+[15098] = "%1d",   -- Master Test Selector (LB to rotate, (1, 0, 1)
+[934] = "%.4f",   -- Master Test Selector (LB to rotate, (0.090909090909091, 0, 0.90909090909091)
+--   CADC(22)
+[1071] = "%1d",   -- MASTER RESET, (1, 0, 1)
+--   CAP(23)
+[123] = "%1d",   -- CAP btn 5, (1, 0, 1)
+[124] = "%1d",   -- CAP btn 4, (1, 0, 1)
+[125] = "%1d",   -- CAP btn 3, (1, 0, 1)
+[126] = "%1d",   -- CAP btn 2, (1, 0, 1)
+[127] = "%1d",   -- CAP btn 1, (1, 0, 1)
+[128] = "%1d",   -- CAP TNG NBR, (1, 0, 1)
+[129] = "%1d",   -- CAP btn 10, (1, 0, 1)
+[130] = "%1d",   -- CAP btn 9, (1, 0, 1)
+[131] = "%1d",   -- CAP btn 8, (1, 0, 1)
+[132] = "%1d",   -- CAP btn 7, (1, 0, 1)
+[133] = "%1d",   -- CAP btn 6, (1, 0, 1)
+[134] = "%1d",   -- CAP PGM RSTRT, (1, 0, 1)
+[136] = "%1d",   -- CAP LONG 6, (1, 0, 1)
+[137] = "%1d",   -- CAP LAT 1, (1, 0, 1)
+[138] = "%1d",   -- CAP NBR 2, (1, 0, 1)
+[139] = "%1d",   -- CAP 7, (1, 0, 1)
+[140] = "%1d",   -- CAP HDG 8, (1, 0, 1)
+[141] = "%1d",   -- CAP SPD 3, (1, 0, 1)
+[142] = "%1d",   -- CAP 9, (1, 0, 1)
+[143] = "%1d",   -- CAP ALT 4, (1, 0, 1)
+[144] = "%1d",   -- CAP BRG 0, (1, 0, 1)
+[145] = "%1d",   -- CAP RNG 5, (1, 0, 1)
+[146] = "%1d",   -- CAP N+E, (1, 0, 1)
+[147] = "%1d",   -- CAP S-W, (1, 0, 1)
+[148] = "%1d",   -- CAP clear, (1, 0, 1)
+[149] = "%1d",   -- CAP enter, (1, 0, 1)
+[98] = "%.1f",   -- CAP category, (0.2, 0, 1)
+[98] = "%.1f",   -- CAP category, (-0.2, 0, 1)
+--   CLOCK(26)
+[1099] = "%1d",   -- Clock Timer Start/Stop/Reset, (1, 0, 1)
+[4153] = "%1d",   -- Clock Timer Start/Stop/Reset, (1, 0, 1)
+[1051] = "%.1f",   -- Clock Wind, (0.5, 0, 1)
+--[] = "%.1f",   -- Clock Wind, (0.5, 0, 1)
+--   COCKPITMECHANICS(11)
+[119] = "%1d",   -- RIO Oxygen On, (-1, 0, 1)
+[159] = "%1d",   -- White Flood Light, (-1, -1, 1)
+[194] = "%1d",   -- Red Flood Light, (-1, -1, 1)
+[913] = "%1d",   -- Position Lights Wing, (-1, -1, 1)
+[916] = "%1d",   -- Position Lights Tail, (-1, -1, 1)
+[918] = "%1d",   -- Taxi Light, (-1, 0, 1)
+[919] = "%1d",   -- Position Lights Flash, (-1, 0, 1)
+[921] = "%1d",   -- White Flood Light, (-1, -1, 1)
+[923] = "%1d",   -- Anti-Collision Lights, (-1, 0, 1)
+[924] = "%1d",   -- Red Flood Light, (-1, -1, 1)
+[929] = "%1d",   -- Air Source Ram, (-1, 0, 1)
+[930] = "%1d",   -- Air Source Left Engine, (-1, 0, 1)
+[931] = "%1d",   -- Air Source Right Engine, (-1, 0, 1)
+[932] = "%1d",   -- Air Source Both Engines, (-1, 0, 1)
+[933] = "%1d",   -- Air Source Off, (-1, 0, 1)
+[938] = "%1d",   -- Ram Air, (-1, 0, 1)
+[939] = "%1d",   -- Cabin Pressure Dump, (-1, 0, 1)
+[940] = "%1d",   -- Temp Auto / Man, (-1, 0, 1)
+[942] = "%1d",   -- Wind Shield Air, (-1, -1, 1)
+[8114] = "%1d",   -- Pilot Oxygen On, (-1, 0, 1)
+[122] = "%1d",   -- Storage, (0, 0, 1)
+[224] = "%1d",   -- Canopy Jettison, (0, 0, 1)
+[224] = "%1d",   -- Canopy Jettison, (0, 0, 1)
+[404] = "%1d",   -- Ejection Seat Safety, (0, 0, 1)
+[498] = "%1d",   -- Ejection Seat Safety, (0, 0, 1)
+[2049] = "%1d",   -- Ejection CMD Lever, (0, 0, 1)
+[119] = "%1d",   -- RIO Oxygen On, (1, 0, 1)
+[122] = "%1d",   -- Storage, (1, 0, 1)
+[159] = "%1d",   -- White Flood Light, (1, -1, 1)
+[194] = "%1d",   -- Red Flood Light, (1, -1, 1)
+[224] = "%1d",   -- Canopy Jettison, (1, 0, 1)
+[224] = "%1d",   -- Canopy Jettison, (1, 0, 1)
+[404] = "%1d",   -- Ejection Seat Safety, (1, 0, 1)
+[498] = "%1d",   -- Ejection Seat Safety, (1, 0, 1)
+[913] = "%1d",   -- Position Lights Wing, (1, -1, 1)
+[916] = "%1d",   -- Position Lights Tail, (1, -1, 1)
+[918] = "%1d",   -- Taxi Light, (1, 0, 1)
+[919] = "%1d",   -- Position Lights Flash, (1, 0, 1)
+[921] = "%1d",   -- White Flood Light, (1, -1, 1)
+[923] = "%1d",   -- Anti-Collision Lights, (1, 0, 1)
+[924] = "%1d",   -- Red Flood Light, (1, -1, 1)
+[929] = "%1d",   -- Air Source Ram, (1, 0, 1)
+[930] = "%1d",   -- Air Source Left Engine, (1, 0, 1)
+[931] = "%1d",   -- Air Source Right Engine, (1, 0, 1)
+[932] = "%1d",   -- Air Source Both Engines, (1, 0, 1)
+[933] = "%1d",   -- Air Source Off, (1, 0, 1)
+[938] = "%1d",   -- Ram Air, (1, 0, 1)
+[939] = "%1d",   -- Cabin Pressure Dump, (1, 0, 1)
+[940] = "%1d",   -- Temp Auto / Man, (1, 0, 1)
+[942] = "%1d",   -- Wind Shield Air, (1, -1, 1)
+[2049] = "%1d",   -- Ejection CMD Lever, (1, 0, 1)
+[8114] = "%1d",   -- Pilot Oxygen On, (1, 0, 1)
+[192] = "%.4f",   -- Console Light Intensity, (0.125, 0, 1)
+[193] = "%.4f",   -- Instrument Light Intensity, (0.125, 0, 1)
+[950] = "%.4f",   -- Temperature, (0.125, 0, 1)
+[15005] = "%.4f",   -- ACM Panel Light Intensity, (0.125, 0, 1)
+[15007] = "%.4f",   -- Instrument Light Intensity, (0.125, 0, 1)
+[15008] = "%.4f",   -- Console Light Intensity, (0.125, 0, 1)
+[15009] = "%.4f",   -- Formation Light Intensity, (0.125, 0, 1)
+[192] = "%.4f",   -- Console Light Intensity, (-0.125, 0, 1)
+[193] = "%.4f",   -- Instrument Light Intensity, (-0.125, 0, 1)
+[950] = "%.4f",   -- Temperature, (-0.125, 0, 1)
+[15005] = "%.4f",   -- ACM Panel Light Intensity, (-0.125, 0, 1)
+[15007] = "%.4f",   -- Instrument Light Intensity, (-0.125, 0, 1)
+[15008] = "%.4f",   -- Console Light Intensity, (-0.125, 0, 1)
+[15009] = "%.4f",   -- Formation Light Intensity, (-0.125, 0, 1)
+--   COUNTERMEASURES(5)
+[387] = "%1d",   -- AN/ALE-37 Jammer Dispense, (-1, -1, 0)
+[388] = "%1d",   -- AN/ALE-37 Flare Dispense, (-1, -1, 0)
+[389] = "%1d",   -- AN/ALE-37 Chaff Dispense, (-1, -1, 0)
+[390] = "%1d",   -- AN/ALE-37 Power/Mode, (-1, -1, 1)
+[398] = "%1d",   -- AN/ALE-37 Flare Mode, (-1, -1, 1)
+[216] = "%1d",   -- AN/ALE-37 Programmer Reset, (1, 0, 1)
+[385] = "%1d",   -- AN/ALE-37 Flare Counter, (1, 0, 1)
+[386] = "%1d",   -- AN/ALE-37 Chaff Counter, (1, 0, 1)
+[387] = "%1d",   -- AN/ALE-37 Jammer Dispense, (1, 1, 0)
+[388] = "%1d",   -- AN/ALE-37 Flare Dispense, (1, 1, 0)
+[389] = "%1d",   -- AN/ALE-37 Chaff Dispense, (1, 1, 0)
+[390] = "%1d",   -- AN/ALE-37 Power/Mode, (1, -1, 1)
+[391] = "%1d",   -- AN/ALE-37 Flare Salvo, (1, 0, 1)
+[398] = "%1d",   -- AN/ALE-37 Flare Mode, (1, -1, 1)
+[399] = "%1d",   -- AN/ALE-37 Jammer Counter, (1, 0, 1)
+[211] = "%.4f",   -- AN/ALE-37 Jammer Interval Units, (0.11111111111111, 0, 1)
+[212] = "%.4f",   -- AN/ALE-37 Jammer Interval Tens, (0.11111111111111, 0, 1)
+[213] = "%.4f",   -- AN/ALE-37 Jammer Interval Hundreds, (0.11111111111111, 0, 1)
+[211] = "%.4f",   -- AN/ALE-37 Jammer Interval Units, (-0.11111111111111, 0, 1)
+[212] = "%.4f",   -- AN/ALE-37 Jammer Interval Tens, (-0.11111111111111, 0, 1)
+[213] = "%.4f",   -- AN/ALE-37 Jammer Interval Hundreds, (-0.11111111111111, 0, 1)
+[203] = "%.4f",   -- AN/ALE-37 Chaff Salvo Quantity, (0.16666666666667, 0, 1)
+[203] = "%.4f",   -- AN/ALE-37 Chaff Salvo Quantity, (-0.16666666666667, 0, 1)
+[205] = "%.1f",   -- AN/ALE-37 Flare Quantity, (0.2, 0, 1)
+[214] = "%.1f",   -- AN/ALE-37 Chaff Burst Quantity, (0.2, 0, 1)
+[215] = "%.1f",   -- AN/ALE-37 Chaff Burst Interval, (0.2, 0, 1)
+[205] = "%.1f",   -- AN/ALE-37 Flare Quantity, (-0.2, 0, 1)
+[214] = "%.1f",   -- AN/ALE-37 Chaff Burst Quantity, (-0.2, 0, 1)
+[215] = "%.1f",   -- AN/ALE-37 Chaff Burst Interval, (-0.2, 0, 1)
+[202] = "%.2f",   -- AN/ALE-37 Chaff Salvo Interval, (0.25, 0, 1)
+[210] = "%.2f",   -- AN/ALE-37 Flare Interval, (0.25, 0, 1)
+[202] = "%.2f",   -- AN/ALE-37 Chaff Salvo Interval, (-0.25, 0, 1)
+[210] = "%.2f",   -- AN/ALE-37 Flare Interval, (-0.25, 0, 1)
+[204] = "%.4f",   -- AN/ALE-37 Jammer Quantity, (0.33333333333333, 0, 1)
+[204] = "%.4f",   -- AN/ALE-37 Jammer Quantity, (-0.33333333333333, 0, 1)
+[206] = "%.1f",   -- AN/ALE-37 L10 Load Type, (0.5, 0, 1)
+[207] = "%.1f",   -- AN/ALE-37 L20 Load Type, (0.5, 0, 1)
+[208] = "%.1f",   -- AN/ALE-37 R20 Load Type, (0.5, 0, 1)
+[209] = "%.1f",   -- AN/ALE-37 R10 Load Type, (0.5, 0, 1)
+[206] = "%.1f",   -- AN/ALE-37 L10 Load Type, (-0.5, 0, 1)
+[207] = "%.1f",   -- AN/ALE-37 L20 Load Type, (-0.5, 0, 1)
+[208] = "%.1f",   -- AN/ALE-37 R20 Load Type, (-0.5, 0, 1)
+[209] = "%.1f",   -- AN/ALE-37 R10 Load Type, (-0.5, 0, 1)
+--   DATALINK(52)
+[96] = "%1d",   -- Beacon Power, (-1, -1, 1)
+[175] = "%1d",   -- Datalink Antenna (no function), (-1, 0, 1)
+[176] = "%1d",   -- Datalink Reply (no function), (-1, 0, 1)
+[177] = "%1d",   -- Datalink CAINS/TAC, (-1, 0, 1)
+[191] = "%1d",   -- Datalink Antijam (no function), (-1, -1, 1)
+[413] = "%1d",   -- Datalink Power, (-1, -1, 1)
+[96] = "%1d",   -- Beacon Power, (1, -1, 1)
+[117] = "%1d",   -- ACLS test, (1, 0, 1)
+[175] = "%1d",   -- Datalink Antenna (no function), (1, 0, 1)
+[176] = "%1d",   -- Datalink Reply (no function), (1, 0, 1)
+[177] = "%1d",   -- Datalink CAINS/TAC, (1, 0, 1)
+[191] = "%1d",   -- Datalink Antijam (no function), (1, -1, 1)
+[413] = "%1d",   -- Datalink Power, (1, -1, 1)
+[195] = "%.4f",   -- Datalink freq 1MHz, (0.11111111111111, 0, 1)
+[196] = "%.4f",   -- Datalink freq 10MHz, (0.11111111111111, 0, 1)
+[197] = "%.4f",   -- Datalink freq 100kHz, (0.11111111111111, 0, 1)
+[222] = "%.4f",   -- Datalink address high, (0.11111111111111, 0, 1)
+[223] = "%.4f",   -- Datalink address low, (0.11111111111111, 0, 1)
+[195] = "%.4f",   -- Datalink freq 1MHz, (-0.11111111111111, 0, 1)
+[196] = "%.4f",   -- Datalink freq 10MHz, (-0.11111111111111, 0, 1)
+[197] = "%.4f",   -- Datalink freq 100kHz, (-0.11111111111111, 0, 1)
+[222] = "%.4f",   -- Datalink address high, (-0.11111111111111, 0, 1)
+[223] = "%.4f",   -- Datalink address low, (-0.11111111111111, 0, 1)
+[118] = "%.4f",   -- Beacon mode, (0.166667, 0, 1.000002)
+[118] = "%.4f",   -- Beacon mode, (-0.166667, 0, 1.000002)
+--   DECM(53)
+[9950] = "%1d",   -- DECM ALQ-100 Volume, (0, 0, 1)
+[151] = "%.1f",   -- DECM ALQ-100 Power/Mode, (0.2, 0, 1)
+[151] = "%.1f",   -- DECM ALQ-100 Power/Mode, (-0.2, 0, 1)
+--   ECMD(44)
+[2023] = "%1d",   -- ECMD Brightness, (0, 0, 1)
+[2024] = "%1d",   -- ECMD Test, (1, 0, 1)
+--   ELECTRICS(14)
+[902] = "%1d",   -- Inboard Spoiler Override Cover, (-1, 0, 1)
+[903] = "%1d",   -- Outboard Spoiler Override Cover, (-1, 0, 1)
+[907] = "%1d",   -- Outboard Spoiler Override, (-1, 0, 1)
+[908] = "%1d",   -- Inboard Spoiler Override, (-1, 0, 1)
+[926] = "%1d",   -- Emergency Generator Switch, (-1, 0, 1)
+[927] = "%1d",   -- Emergency Generator Switch Cover, (-1, 0, 1)
+[936] = "%1d",   -- Right Generator Switch, (-1, -1, 1)
+[937] = "%1d",   -- Left Generator Switch, (-1, -1, 1)
+[902] = "%1d",   -- Inboard Spoiler Override Cover, (1, 0, 1)
+[903] = "%1d",   -- Outboard Spoiler Override Cover, (1, 0, 1)
+[907] = "%1d",   -- Outboard Spoiler Override, (1, 0, 1)
+[908] = "%1d",   -- Inboard Spoiler Override, (1, 0, 1)
+[926] = "%1d",   -- Emergency Generator Switch, (1, 0, 1)
+[927] = "%1d",   -- Emergency Generator Switch Cover, (1, 0, 1)
+[936] = "%1d",   -- Right Generator Switch, (1, -1, 1)
+[937] = "%1d",   -- Left Generator Switch, (1, -1, 1)
+--   ENGINE(19)
+[941] = "%1d",   -- Engine/Probe Anti-Ice, (-1, -1, 1)
+[2102] = "%1d",   -- Engine Crank, (-1, -1, 1)
+[2103] = "%1d",   -- Throttle Temp, (-1, -1, 1)
+[2104] = "%1d",   -- Throttle Mode, (-1, -1, 1)
+[2105] = "%1d",   -- Engine Airstart, (-1, 0, 1)
+[12300] = "%1d",   -- Left Engine Fuel Cutoff, (-1, 0, 1)
+[12301] = "%1d",   -- Right Engine Fuel Cutoff, (-1, 0, 1)
+[16005] = "%1d",   -- Asymmetric Thrust Limiter Cover, (-1, 0, 1)
+[16006] = "%1d",   -- Asymmetric Thrust Limiter, (-1, 0, 1)
+[16007] = "%1d",   -- Left Engine Mode, (-1, 0, 1)
+[16008] = "%1d",   -- Right Engine Mode, (-1, 0, 1)
+[941] = "%1d",   -- Engine/Probe Anti-Ice, (1, -1, 1)
+[2102] = "%1d",   -- Engine Crank, (1, -1, 1)
+[2103] = "%1d",   -- Throttle Temp, (1, -1, 1)
+[2104] = "%1d",   -- Throttle Mode, (1, -1, 1)
+[2105] = "%1d",   -- Engine Airstart, (1, 0, 1)
+[12300] = "%1d",   -- Left Engine Fuel Cutoff, (1, 0, 1)
+[12301] = "%1d",   -- Right Engine Fuel Cutoff, (1, 0, 1)
+[16005] = "%1d",   -- Asymmetric Thrust Limiter Cover, (1, 0, 1)
+[16006] = "%1d",   -- Asymmetric Thrust Limiter, (1, 0, 1)
+[16007] = "%1d",   -- Left Engine Mode, (1, 0, 1)
+[16008] = "%1d",   -- Right Engine Mode, (1, 0, 1)
+--   FLAPS(18)
+[225] = "%1d",   -- Flaps Lever, (1, 0, 1)
+--   FUELSYSTEM(20)
+[1001] = "%1d",   -- Wing/Ext Trans, (-1, -1, 1)
+[1073] = "%1d",   -- Refuel Probe, (-1, -1, 1)
+[1074] = "%1d",   -- Fuel Dump, (-1, 0, 1)
+[1076] = "%1d",   -- Fuel Quantity Selector, (-1, -1, 0)
+[1094] = "%1d",   -- Fuel Feed Cover, (-1, 0, 1)
+[1095] = "%1d",   -- Fuel Feed, (-1, -1, 1)
+[1044] = "%1d",   -- Fuel Shutoff - Right, (0, 0, 1)
+[15081] = "%1d",   -- Fuel Shutoff - Left, (0, 0, 1)
+[1001] = "%1d",   -- Wing/Ext Trans, (1, -1, 1)
+[1044] = "%1d",   -- Fuel Shutoff - Right, (1, 0, 1)
+[1050] = "%1d",   -- BINGO Fuel Level Knob, (1, 0, 1)
+[1073] = "%1d",   -- Refuel Probe, (1, -1, 1)
+[1074] = "%1d",   -- Fuel Dump, (1, 0, 1)
+[1076] = "%1d",   -- Fuel Quantity Selector, (1, 1, 0)
+[1094] = "%1d",   -- Fuel Feed Cover, (1, 0, 1)
+[1095] = "%1d",   -- Fuel Feed, (1, -1, 1)
+[15081] = "%1d",   -- Fuel Shutoff - Left, (1, 0, 1)
+--   GEARHOOK(17)
+[496] = "%1d",   -- Launch Bar Abort Switch Cover, (-1, 0, 1)
+[1072] = "%1d",   -- Anti-Skid Spoiler BK Switch, (-1, -1, 1)
+[1075] = "%1d",   -- Nose Strut Compression Switch, (-1, -1, 0)
+[237] = "%1d",   -- Parking Brake Handle, (0, 0, 1)
+[237] = "%1d",   -- Parking Brake Handle, (1, 0, 1)
+[238] = "%1d",   -- Hook Extension Handle (RB cycle emergency mode), (1, 0, 1)
+[326] = "%1d",   -- Landing Gear Lever (RB emergency extend), (1, 0, 1)
+[496] = "%1d",   -- Launch Bar Abort Switch Cover, (1, 0, 1)
+[497] = "%1d",   -- Launch Bar Abort, (1, 0, 1)
+[1072] = "%1d",   -- Anti-Skid Spoiler BK Switch, (1, -1, 1)
+[1075] = "%1d",   -- Nose Strut Compression Switch, (1, 1, 0)
+[15078] = "%1d",   -- Hook Extension Handle (RB cycle emergency mode), (1, 0, 1)
+[16015] = "%1d",   -- Landing Gear Lever (RB emergency extend), (1, 0, 1)
+--   HCU(58)
+[2007] = "%1d",   -- HCU TCS mode, (-1, 0, 1)
+[2008] = "%1d",   -- HCU radar mode, (-1, 0, 1)
+[2009] = "%1d",   -- HCU DDD mode, (-1, 0, 1)
+[2010] = "%1d",   -- HCU TID mode, (-1, 0, 1)
+[2007] = "%1d",   -- HCU TCS mode, (1, 0, 1)
+[2008] = "%1d",   -- HCU radar mode, (1, 0, 1)
+[2009] = "%1d",   -- HCU DDD mode, (1, 0, 1)
+[2010] = "%1d",   -- HCU TID mode, (1, 0, 1)
+--   HSD(41)
+[1008] = "%1d",   -- HSD/ECMD Power On/Off, (-1, 0, 1)
+[1016] = "%1d",   -- HSD Display Mode, (-1, 0, 1)
+[1017] = "%1d",   -- HSD ECM Override, (-1, 0, 1)
+[1039] = "%1d",   -- HSD Selected Heading, (0, 0, 1)
+[1040] = "%1d",   -- HSD Selected Course, (0, 0, 1)
+[1043] = "%1d",   -- HSD Brightness, (0, 0, 1)
+[1008] = "%1d",   -- HSD/ECMD Power On/Off, (1, 0, 1)
+--[1016] = "%1d",   -- HSD Display Mode, (1, 0, 1)
+[1017] = "%1d",   -- HSD ECM Override, (1, 0, 1)
+[1041] = "%1d",   -- HSD Test, (1, 0, 1)
+--   HUD(40)
+[1009] = "%1d",   -- HUD Power On/Off, (-1, 0, 1)
+[1011] = "%1d",   -- HUD Landing Mode, (-1, 0, 1)
+[1012] = "%1d",   -- HUD Air-to-Ground Mode, (-1, 0, 1)
+[1013] = "%1d",   -- HUD Air-to-Air Mode, (-1, 0, 1)
+[1014] = "%1d",   -- HUD Cruise Mode, (-1, 0, 1)
+[1015] = "%1d",   -- HUD Take-Off Mode, (-1, 0, 1)
+[1020] = "%1d",   -- HUD AWL Mode, (-1, 0, 1)
+[1021] = "%1d",   -- HUD De-clutter On/Off, (-1, 0, 1)
+[1033] = "%1d",   -- HUD filter, (0, 0, 1)
+[1007] = "%1d",   -- HUD Pitch Ladder Brightness, (1, 0, 1)
+[1009] = "%1d",   -- HUD Power On/Off, (1, 0, 1)
+[1011] = "%1d",   -- HUD Landing Mode, (1, 0, 1)
+[1012] = "%1d",   -- HUD Air-to-Ground Mode, (1, 0, 1)
+[1013] = "%1d",   -- HUD Air-to-Air Mode, (1, 0, 1)
+[1014] = "%1d",   -- HUD Cruise Mode, (1, 0, 1)
+[1015] = "%1d",   -- HUD Take-Off Mode, (1, 0, 1)
+[1020] = "%1d",   -- HUD AWL Mode, (1, 0, 1)
+--[1021] = "%1d",   -- HUD De-clutter On/Off, (1, 0, 1)
+[1033] = "%1d",   -- HUD filter, (1, 0, 1)
+[1034] = "%1d",   -- HUD Trim, (1, 0, 1)
+[1037] = "%1d",   -- HUD Brightness, (1, 0, 1)
+--   HYDRAULICS(12)
+[615] = "%1d",   -- Hydraulic Emergency Flight Control Switch Cover, (-1, 0, 1)
+[629] = "%1d",   -- Hydraulic Transfer Pump Switch, (-1, 0, 1)
+[630] = "%1d",   -- Hydraulic Transfer Pump Switch Cover, (-1, 0, 1)
+[631] = "%1d",   -- Hydraulic Isolation Switch, (-1, 0, 1)
+[928] = "%1d",   -- Hydraulic Emergency Flight Control Switch, (-1, -1, 1)
+[632] = "%1d",   -- Hydraulic Hand Pump, (0, 0, 1)
+[615] = "%1d",   -- Hydraulic Emergency Flight Control Switch Cover, (1, 0, 1)
+[629] = "%1d",   -- Hydraulic Transfer Pump Switch, (1, 0, 1)
+[630] = "%1d",   -- Hydraulic Transfer Pump Switch Cover, (1, 0, 1)
+[631] = "%1d",   -- Hydraulic Isolation Switch, (1, 0, 1)
+[632] = "%1d",   -- Hydraulic Hand Pump, (1, 0, 1)
+[928] = "%1d",   -- Hydraulic Emergency Flight Control Switch, (1, -1, 1)
+--   ICS(2)
+[150] = "%1d",   -- KY-28 ZEROIZE Cover, (-1, 0, 1)
+[380] = "%1d",   -- V/UHF 2 ANT Switch, (-1, 0, 1)
+[381] = "%1d",   -- XMTR SEL Switch, (-1, -1, 1)
+[382] = "%1d",   -- KY MODE Switch, (-1, -1, 1)
+[402] = "%1d",   -- ICS Function Selector, (-1, -1, 1)
+[2044] = "%1d",   -- ICS Function Selector, (-1, -1, 1)
+[400] = "%1d",   -- ICS Volume, (0, 0, 1)
+[2039] = "%1d",   -- Sidewinder Volume, (0, 0, 1)
+[2040] = "%1d",   -- ALR-67 Volume, (0, 0, 1)
+[2048] = "%1d",   -- ICS Volume, (0, 0, 1)
+[150] = "%1d",   -- KY-28 ZEROIZE Cover, (1, 0, 1)
+[361] = "%1d",   -- KY-28 ZEROIZE, (1, 0, 1)
+[380] = "%1d",   -- V/UHF 2 ANT Switch, (1, 0, 1)
+[381] = "%1d",   -- XMTR SEL Switch, (1, -1, 1)
+[382] = "%1d",   -- KY MODE Switch, (1, -1, 1)
+[402] = "%1d",   -- ICS Function Selector, (1, -1, 1)
+[2044] = "%1d",   -- ICS Function Selector, (1, -1, 1)
+[2138] = "%1d",   -- AN/ALR-67 Volume, (1, 0, 1)
+[115] = "%.1f",   -- KY-28 Radio Selector, (0.5, 0, 1)
+[116] = "%.1f",   -- KY-28 Power Mode, (0.5, 0, 1)
+[401] = "%.1f",   -- ICS Amplifier Selector, (0.5, 0, 1)
+[2045] = "%.1f",   -- ICS Amplifier Selector, (0.5, 0, 1)
+[115] = "%.1f",   -- KY-28 Radio Selector, (-0.5, 0, 1)
+[116] = "%.1f",   -- KY-28 Power Mode, (-0.5, 0, 1)
+[401] = "%.1f",   -- ICS Amplifier Selector, (-0.5, 0, 1)
+[2045] = "%.1f",   -- ICS Amplifier Selector, (-0.5, 0, 1)
+--   IFF(64)
+[161] = "%1d",   -- IFF audio/light (no function), (-1, -1, 1)
+[162] = "%1d",   -- IFF M1 (no function), (-1, -1, 1)
+[163] = "%1d",   -- IFF M2 (no function), (-1, -1, 1)
+[164] = "%1d",   -- IFF M3/A (no function), (-1, -1, 1)
+[165] = "%1d",   -- IFF MC (no function), (-1, -1, 1)
+[166] = "%1d",   -- IFF RAD (no function), (-1, -1, 1)
+[167] = "%1d",   -- IFF Ident (no function), (-1, -1, 1)
+[181] = "%1d",   -- IFF M4 (no function), (-1, 0, 1)
+[161] = "%1d",   -- IFF audio/light (no function), (1, -1, 1)
+[162] = "%1d",   -- IFF M1 (no function), (1, -1, 1)
+[163] = "%1d",   -- IFF M2 (no function), (1, -1, 1)
+[164] = "%1d",   -- IFF M3/A (no function), (1, -1, 1)
+[165] = "%1d",   -- IFF MC (no function), (1, -1, 1)
+[166] = "%1d",   -- IFF RAD (no function), (1, -1, 1)
+[167] = "%1d",   -- IFF Ident (no function), (1, -1, 1)
+[181] = "%1d",   -- IFF M4 (no function), (1, 0, 1)
+[185] = "%1d",   -- IFF test (no function), (1, 0, 1)
+[186] = "%1d",   -- IFF reply (no function), (1, 0, 1)
+[198] = "%.4f",   -- IFF M3 code -x-- (no function), (0.11111, 0, 0.77777)
+[199] = "%.4f",   -- IFF M3 code x--- (no function), (0.11111, 0, 0.77777)
+[200] = "%.4f",   -- IFF M1 code -x (no function), (0.11111, 0, 0.33333)
+[201] = "%.4f",   -- IFF M1 code x- (no function), (0.11111, 0, 0.77777)
+[2261] = "%.4f",   -- IFF M3 code --x- (no function), (0.11111, 0, 0.77777)
+[2262] = "%.4f",   -- IFF M3 code ---x (no function), (0.11111, 0, 0.77777)
+[198] = "%.4f",   -- IFF M3 code -x-- (no function), (-0.11111, 0, 0.77777)
+[199] = "%.4f",   -- IFF M3 code x--- (no function), (-0.11111, 0, 0.77777)
+[200] = "%.4f",   -- IFF M1 code -x (no function), (-0.11111, 0, 0.33333)
+[201] = "%.4f",   -- IFF M1 code x- (no function), (-0.11111, 0, 0.77777)
+[2261] = "%.4f",   -- IFF M3 code --x- (no function), (-0.11111, 0, 0.77777)
+[2262] = "%.4f",   -- IFF M3 code ---x (no function), (-0.11111, 0, 0.77777)
+[184] = "%.2f",   -- IFF master (no function), (0.25, 0, 1)
+[184] = "%.2f",   -- IFF master (no function), (-0.25, 0, 1)
+[183] = "%.4f",   -- IFF code (no function), (0.33333333333333, 0, 1)
+[183] = "%.4f",   -- IFF code (no function), (-0.33333333333333, 0, 1)
+--   ILS(48)
+[910] = "%1d",   -- AN/ARA-63 Power Switch, (-1, 0, 1)
+[910] = "%1d",   -- AN/ARA-63 Power Switch, (1, 0, 1)
+[911] = "%1d",   -- AN/ARA-63 BIT Button, (1, 0, 1)
+[912] = "%.4f",   -- AN/ARA-63 Channel Knob, (0.052631578947368, 0, 1)
+[912] = "%.4f",   -- AN/ARA-63 Channel Knob, (-0.052631578947368, 0, 1)
+--   INS(50)
+[50] = "%.4f",   -- Navigation Mode, (0.1666667, 0, 1.0000002)
+[50] = "%.4f",   -- Navigation Mode, (-0.1666667, 0, 1.0000002)
+--   LANTIRN(38)
+[668] = "%1d",   -- LANTIRN Laser Arm Switch, (-1, 0, 1)
+[668] = "%1d",   -- LANTIRN Laser Arm Switch, (1, 0, 1)
+[669] = "%1d",   -- LANTIRN Operate Mode (Unstow), (1, 0, 1)
+[671] = "%1d",   -- LANTIRN IBIT, (1, 0, 1)
+[667] = "%.1f",   -- LANTIRN Power, (0.5, 0, 1)
+[667] = "%.1f",   -- LANTIRN Power, (-0.5, 0, 1)
+--   MACHANDAIRSPEED(27)
+[2127] = "%1d",   -- Airspeed Indicator Bug Knob, (1, 0, 1)
+[310] = "%.1f",   -- Airspeed Indicator Bug Knob, (0.5, 0, 1)
+--   NAV_INTERFACE(46)
+[1002] = "%1d",   -- Navigation Steer Commands: TACAN, (-1, 0, 1)
+[1003] = "%1d",   -- Navigation Steer Commands: Destination, (-1, 0, 1)
+[1004] = "%1d",   -- Navigation Steer Commands: AWL PCD, (-1, 0, 1)
+[1005] = "%1d",   -- Navigation Steer Commands: Vector, (-1, 0, 1)
+[1006] = "%1d",   -- Navigation Steer Commands: Manual, (-1, 0, 1)
+[1002] = "%1d",   -- Navigation Steer Commands: TACAN, (1, 0, 1)
+[1003] = "%1d",   -- Navigation Steer Commands: Destination, (1, 0, 1)
+[1004] = "%1d",   -- Navigation Steer Commands: AWL PCD, (1, 0, 1)
+[1005] = "%1d",   -- Navigation Steer Commands: Vector, (1, 0, 1)
+[1006] = "%1d",   -- Navigation Steer Commands: Manual, (1, 0, 1)
+[51] = "%.4f",   -- Destination Mode, (0.142857, 0, 0.999999)
+[51] = "%.4f",   -- Destination Mode, (-0.142857, 0, 0.999999)
+--   RADAR(39)
+[38] = "%1d",   -- Automatic Gain Control (no function), (-2, -1, 1)
+[3900] = "%1d",   -- Parametric amplifier (no function), (-2, -1, 1)
+[34] = "%.1f",   -- Aspect, (-1, -1, 1)
+[35] = "%.1f",   -- Closing Velocity scale, (-1, -1, 1)
+[36] = "%.1f",   -- Target size (no function), (-1, -1, 1)
+[37] = "%.1f",   -- Main Lobe Clutter filter, (-1, -1, 1)
+[83] = "%1d",   -- Stabilize, (-1, 0, 1)
+[84] = "%1d",   -- VSL switch, (-1, -1, 0)
+[95] = "%1d",   -- Liquid cooling, (-1, -1, 1)
+[2012] = "%1d",   -- WCS switch, (-1, -1, 1)
+[81] = "%1d",   -- Radar elevation center, (0, -1, 1)
+[82] = "%1d",   -- Radar azimuth center, (0, -1, 1)
+[-1] = "%1d",   -- DDD filter, (1, 0, 1)
+[10] = "%1d",   -- RADAR pulse search, (1, 0, 1)
+[11] = "%1d",   -- RADAR track while scan manual, (1, 0, 1)
+[12] = "%1d",   -- RADAR track while scan auto, (1, 0, 1)
+[13] = "%1d",   -- RADAR range while scan, (1, 0, 1)
+[14] = "%1d",   -- RADAR pulse doppler search, (1, 0, 1)
+[15] = "%1d",   -- RADAR pulse single target track, (1, 0, 1)
+[17] = "%1d",   -- DDD Interrogate Friend or Foe, (1, 0, 1)
+[18] = "%1d",   -- DDD Infrared (no function), (1, 0, 1)
+[19] = "%1d",   -- DDD RADAR, (1, 0, 1)
+[34] = "%.1f",   -- Aspect, (1, -1, 1)
+[35] = "%.1f",   -- Closing Velocity scale, (1, -1, 1)
+[36] = "%.1f",   -- Target size (no function), (1, -1, 1)
+[37] = "%.1f",   -- Main Lobe Clutter filter, (1, -1, 1)
+[40] = "%1d",   -- RADAR 5 NM, (1, 0, 1)
+[41] = "%1d",   -- RADAR 10 NM, (1, 0, 1)
+[42] = "%1d",   -- RADAR 20 NM, (1, 0, 1)
+[43] = "%1d",   -- RADAR 50 NM, (1, 0, 1)
+[44] = "%1d",   -- RADAR 100 NM, (1, 0, 1)
+[45] = "%1d",   -- RADAR 200 NM, (1, 0, 1)
+[83] = "%1d",   -- Stabilize, (1, 0, 1)
+[84] = "%1d",   -- VSL switch, (1, 1, 0)
+[95] = "%1d",   -- Liquid cooling, (1, -1, 1)
+[1812] = "%1d",   -- CCM SPL (no function), (1, 0, 1)
+[1813] = "%1d",   -- CCM ALT DIFF (no function), (1, 0, 1)
+[1814] = "%1d",   -- CCM VGS (no function), (1, 0, 1)
+[2012] = "%1d",   -- WCS switch, (1, -1, 1)
+[2013] = "%1d",   -- Power reset, (1, 0, 1)
+[2014] = "%1d",   -- Light test, (1, 0, 1)
+[9916] = "%1d",   -- RADAR pulse doppler single target track, (1, 0, 1)
+[38] = "%1d",   -- Automatic Gain Control (no function), (2, -1, 1)
+[3900] = "%1d",   -- Parametric amplifier (no function), (2, -1, 1)
+[79] = "%.5f",   -- Radar elevation scan, (0.33333, 0, 0.99999)
+[80] = "%.5f",   -- Radar azimuth scan, (0.33333, 0, 0.99999)
+[79] = "%.5f",   -- Radar elevation scan, (-0.33333, 0, 0.99999)
+[80] = "%.5f",   -- Radar azimuth scan, (-0.33333, 0, 0.99999)
+[20] = "%.1f",   -- IR gain (no function), (0.5, 0, 1)
+[21] = "%.1f",   -- IR volume (no function), (0.5, 0, 1)
+[22] = "%.1f",   -- IR threshold (no function), (0.5, 0, 1)
+[23] = "%.1f",   -- Brightness, (0.5, 0, 1)
+[24] = "%.1f",   -- Pulse video, (0.5, 0, 1)
+[25] = "%.1f",   -- Erase, (0.5, 0, 1)
+[26] = "%.1f",   -- Pulse gain, (0.5, 0, 1)
+[27] = "%.1f",   -- ACM threshold (no function), (0.5, 0, 1)
+[28] = "%.1f",   -- JAM/JET (no function), (0.5, 0, 1)
+[29] = "%.1f",   -- PD threshold clutter, (0.5, 0, 1)
+[30] = "%.1f",   -- PD threshold clear (no function), (0.5, 0, 1)
+--   RADARALTIMETER(29)
+[16020] = "%1d",   -- Radar Altimeter Control Knob, (1, 0, 1)
+[308] = "%.1f",   -- Radar Altimeter Control Knob, (0.5, 0, 1)
+--   RWR(54)
+[2137] = "%1d",   -- AN/ALR-67 Mode, (-1, -1, 0)
+[2139] = "%1d",   -- AN/ALR-67 Power, (-1, 0, 1)
+[2140] = "%1d",   -- AN/ALR-67 Test, (-1, -1, 0)
+[376] = "%1d",   -- AN/ALR-67 Display Brightness, (1, 0, 1)
+[2137] = "%1d",   -- AN/ALR-67 Mode, (1, 1, 0)
+[2139] = "%1d",   -- AN/ALR-67 Power, (1, 0, 1)
+[2140] = "%1d",   -- AN/ALR-67 Test, (1, 1, 0)
+[16011] = "%1d",   -- AN/ALR-67 Display Brightness, (1, 0, 1)
+[2136] = "%.2f",   -- AN/ALR-67 Display Type, (0.25, 0, 1)
+[2136] = "%.2f",   -- AN/ALR-67 Display Type, (-0.25, 0, 1)
+--   STDBYAI(30)
+[6155] = "%1d",   -- Standby ADI Knob, (1, 0, 1)
+--[] = "%1d",   -- Standby ADI Knob, (1, 0, 1)
+[6156] = "%.1f",   -- Standby ADI Knob, (0.5, 0, 1)
+[19101] = "%.1f",   -- Standby ADI Knob, (0.5, 0, 1)
+--   TACAN(47)
+[2042] = "%1d",   -- TACAN Mode Normal/Inverse, (-2, -1, 1)
+[2043] = "%1d",   -- TACAN Channel X/Y, (-2, -1, 1)
+[372] = "%1d",   -- TACAN Channel X/Y, (-1, 0, 1)
+[373] = "%1d",   -- TACAN Mode Normal/Inverse, (-1, 0, 1)
+[375] = "%1d",   -- TACAN Volume, (0, 0, 1)
+[2036] = "%1d",   -- TACAN Volume, (0, 0, 1)
+[135] = "%1d",   -- TACAN CMD Button, (1, 0, 1)
+[292] = "%1d",   -- TACAN CMD Button, (1, 0, 1)
+[371] = "%1d",   -- TACAN BIT, (1, 0, 1)
+[372] = "%1d",   -- TACAN Channel X/Y, (1, 0, 1)
+[373] = "%1d",   -- TACAN Mode Normal/Inverse, (1, 0, 1)
+[2115] = "%1d",   -- TACAN BIT, (1, 0, 1)
+[2042] = "%1d",   -- TACAN Mode Normal/Inverse, (2, -1, 1)
+[2043] = "%1d",   -- TACAN Channel X/Y, (2, -1, 1)
+[8888] = "%.4f",   -- TACAN Channel Wheel (Tens), (0.083333333333333, 0, 1)
+[8891] = "%.4f",   -- TACAN Channel Wheel (Tens), (0.083333333333333, 0, 1)
+--[8888] = "%.4f",   -- TACAN Channel Wheel (Tens), (-0.083333333333333, 0, 1)
+--[8891] = "%.4f",   -- TACAN Channel Wheel (Tens), (-0.083333333333333, 0, 1)
+[8889] = "%.4f",   -- TACAN Channel Lever (Ones), (0.11111111111111, 0, 1)
+[8890] = "%.4f",   -- TACAN Channel Lever (Ones), (0.11111111111111, 0, 1)
+--[8889] = "%.4f",   -- TACAN Channel Lever (Ones), (-0.11111111111111, 0, 1)
+--[8890] = "%.4f",   -- TACAN Channel Lever (Ones), (-0.11111111111111, 0, 1)
+[374] = "%.2f",   -- TACAN Mode, (0.25, 0, 1)
+[2041] = "%.2f",   -- TACAN Mode, (0.25, 0, 1)
+[374] = "%.2f",   -- TACAN Mode, (-0.25, 0, 1)
+[2041] = "%.2f",   -- TACAN Mode, (-0.25, 0, 1)
+--   TCS(37)
+[88] = "%1d",   -- TCS FOV, (-2, -1, 1)
+[87] = "%1d",   -- TCS Acquisition, (-1, -1, 1)
+[89] = "%1d",   -- TCS Slave, (-1, -1, 1)
+[90] = "%1d",   -- Record power (no function), (-1, -1, 1)
+[2011] = "%1d",   -- TV/IR switch, (-1, -1, 1)
+[87] = "%1d",   -- TCS Acquisition, (1, -1, 1)
+[89] = "%1d",   -- TCS Slave, (1, -1, 1)
+[90] = "%1d",   -- Record power (no function), (1, -1, 1)
+[2011] = "%1d",   -- TV/IR switch, (1, -1, 1)
+[16016] = "%1d",   -- Record reset (no function), (1, 0, 1)
+[88] = "%1d",   -- TCS FOV, (2, -1, 1)
+[91] = "%.2f",   -- Record mode (no function), (0.25, 0, 1)
+[91] = "%.2f",   -- Record mode (no function), (-0.25, 0, 1)
+--   TID(43)
+[48] = "%1d",   -- TID Brightness, (1, 0, 1)
+[49] = "%1d",   -- TID Contrast, (1, 0, 1)
+[52] = "%1d",   -- collision steering, (1, 0, 1)
+[53] = "%1d",   -- TID track hold, (1, 0, 1)
+[226] = "%1d",   -- TID Non attack, (1, 0, 1)
+[670] = "%1d",   -- Video Output Toggle (TCS/LANTIRN), (1, 0, 1)
+[1115] = "%1d",   -- TID Alt num, (1, 0, 1)
+[1116] = "%1d",   -- TID Sym Elem, (1, 0, 1)
+[1117] = "%1d",   -- TID Data link, (1, 0, 1)
+[1118] = "%1d",   -- TID Jam strobe, (1, 0, 1)
+[2004] = "%1d",   -- TID Reject Image Device disable (no function), (1, 0, 1)
+[2113] = "%1d",   -- TID Launch zone, (1, 0, 1)
+[2114] = "%1d",   -- TID Velocity vector, (1, 0, 1)
+[9964] = "%1d",   -- Next Launch, (1, 0, 1)
+[2005] = "%.5f",   -- TID Mode, (0.33333, 0, 0.99999)
+[2005] = "%.5f",   -- TID Mode, (-0.33333, 0, 0.99999)
+[2006] = "%.1f",   -- TID Range, (0.5, -1, 1)
+[2006] = "%.1f",   -- TID Range, (-0.5, -1, 1)
+--   VDI(42)
+[1010] = "%1d",   -- VDI Power On/Off, (-1, 0, 1)
+[1018] = "%1d",   -- VDI Landing Mode, (-1, 0, 1)
+[1019] = "%1d",   -- VDI Display Mode, (-1, 0, 1)
+--[-1] = "%1d",   -- VDI filter, (1, 0, 1)
+[1010] = "%1d",   -- VDI Power On/Off, (1, 0, 1)
+[1018] = "%1d",   -- VDI Landing Mode, (1, 0, 1)
+--[1019] = "%1d",   -- VDI Display Mode, (1, 0, 1)
+[1035] = "%1d",   -- VSDI Screen Trim, (1, 0, 1)
+[1036] = "%1d",   -- VSDI Screen Brightness, (1, 0, 1)
+[1038] = "%1d",   -- VDI Screen Contrast, (1, 0, 1)
+--   WARNINGLIGHTS(34)
+[9199] = "%1d",   -- Master Caution Reset, (1, 0, 1)
+--   WEAPONS(55)
+[60] = "%1d",   -- Bomb single/pairs, (-1, 0, 1)
+[61] = "%1d",   -- Bomb step/ripple, (-1, 0, 1)
+[62] = "%1d",   -- A/G gun mode, (-1, 0, 1)
+[63] = "%1d",   -- Mech fuse, (-1, -1, 1)
+[64] = "%1d",   -- Jettison station 6, (-1, 0, 1)
+[65] = "%1d",   -- Jettison station 3, (-1, 0, 1)
+[66] = "%1d",   -- Jettison racks/weapons, (-1, 0, 1)
+[67] = "%1d",   -- Jettison right tank, (-1, 0, 1)
+[68] = "%1d",   -- Jettison station 1, (-1, -1, 1)
+[69] = "%1d",   -- Jettison station 4, (-1, 0, 1)
+[70] = "%1d",   -- Jettison station 5, (-1, 0, 1)
+[71] = "%1d",   -- Jettison station 8, (-1, -1, 1)
+[73] = "%1d",   -- Jettison left tank, (-1, 0, 1)
+[75] = "%1d",   -- Missile option, (-1, -1, 1)
+[78] = "%1d",   -- Selective jettison, (-1, -1, 0)
+[1047] = "%1d",   -- Master Arm Switch, (-1, -1, 1)
+[1046] = "%1d",   -- Master Arm Cover, (0, 0, 1)
+[1049] = "%1d",   -- ACM Cover, (0, 0, 1)
+[1069] = "%1d",   -- Jettison aux guard, (0, 0, 1)
+[60] = "%1d",   -- Bomb single/pairs, (1, 0, 1)
+[61] = "%1d",   -- Bomb step/ripple, (1, 0, 1)
+[62] = "%1d",   -- A/G gun mode, (1, 0, 1)
+[63] = "%1d",   -- Mech fuse, (1, -1, 1)
+[64] = "%1d",   -- Jettison station 6, (1, 0, 1)
+[65] = "%1d",   -- Jettison station 3, (1, 0, 1)
+[66] = "%1d",   -- Jettison racks/weapons, (1, 0, 1)
+[67] = "%1d",   -- Jettison right tank, (1, 0, 1)
+[68] = "%1d",   -- Jettison station 1, (1, -1, 1)
+[69] = "%1d",   -- Jettison station 4, (1, 0, 1)
+[70] = "%1d",   -- Jettison station 5, (1, 0, 1)
+[71] = "%1d",   -- Jettison station 8, (1, -1, 1)
+[73] = "%1d",   -- Jettison left tank, (1, 0, 1)
+[74] = "%1d",   -- A/A Launch, (1, 0, 1)
+[75] = "%1d",   -- Missile option, (1, -1, 1)
+[78] = "%1d",   -- Selective jettison, (1, 1, 0)
+[239] = "%1d",   -- Emergency stores jettison, (1, 0, 1)
+[1022] = "%1d",   -- Gun Ammunition Counter Adjustment, (1, 0, 1)
+[1046] = "%1d",   -- Master Arm Cover, (1, 0, 1)
+[1047] = "%1d",   -- Master Arm Switch, (1, -1, 1)
+[1048] = "%1d",   -- ACM Jettison, (1, 0, 1)
+[1049] = "%1d",   -- ACM Cover, (1, 0, 1)
+[1069] = "%1d",   -- Jettison aux guard, (1, 0, 1)
+[16000] = "%1d",   -- Gun rate, (1, 0, 1)
+[16001] = "%1d",   -- Sidewinder cool, (1, 0, 1)
+[16002] = "%1d",   -- Missile prepare, (1, 0, 1)
+[16003] = "%1d",   -- Missile mode, (1, 0, 1)
+--[] = "%1d",   -- Gun Elevation Lead Adjustment, (1, 0, 1)
+--[59] = "%.4f",   -- Weapon type wheel, (0.023255813953488, 0, 1)
+[59] = "%.4f",   -- Weapon type wheel, (-0.023255813953488, 0, 1)
+[9960] = "%.4f",   -- Weapon Interval x10ms, (0.11111111111111, 0, 1)
+[9961] = "%.4f",   -- Weapon Interval x100ms, (0.11111111111111, 0, 1)
+[9962] = "%.4f",   -- Weapon Quantity 10s, (0.11111111111111, , )
+[9963] = "%.4f",   -- Weapon Quantity 1s, (0.11111111111111, 0, 1)
+[9960] = "%.4f",   -- Weapon Interval x10ms, (-0.11111111111111, 0, 1)
+[9961] = "%.4f",   -- Weapon Interval x100ms, (-0.11111111111111, 0, 1)
+[9962] = "%.4f",   -- Weapon Quantity 10s, (-0.11111111111111, 0, 0.3333)
+[9963] = "%.4f",   -- Weapon Quantity 1s, (-0.11111111111111, 0, 1)
+[72] = "%.1f",   -- Missile speed gate, (0.2, 0, 1)
+[72] = "%.1f",   -- Missile speed gate, (-0.2, 0, 1)
+[58] = "%.2f",   -- Elec fuse, (0.25, 0, 1)
+[2022] = "%.2f",   -- Attack mode, (0.25, 0, 1)
+[58] = "%.2f",   -- Elec fuse, (-0.25, 0, 1)
+[2022] = "%.2f",   -- Attack mode, (-0.25, 0, 1)
+--   WINGSWEEP(16)
+[15096] = "%1d",   -- Emergency Wing Sweep Handle (Click to pop out), (-1, 0, 1)
+[317] = "%1d",   -- Emergency Wing Sweep Handle Cover, (0, 0, 1)
+[317] = "%1d",   -- Emergency Wing Sweep Handle Cover, (1, 0, 1)
+[384] = "%1d",   -- Emergency Wing Sweep Handle (Click to pop out), (1, 0, 1)
 }
-
 
 -----------------------------
 -- HIGH IMPORTANCE EXPORTS --
@@ -1002,120 +2096,18 @@ ExportScript.ConfigArguments =
 function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	-- every frame export to Ikarus
 
-	-- A3 - Pilot Cockpit Left Knee Panel
-	ExportScript.hydPressGauge(mainPanelDevice)			-- Hydraulic Pressure Indicator Gauges and Flags
-	ExportScript.engNozzle(mainPanelDevice)				-- Engine Nozzle position gauge
-	ExportScript.engOilPressure(mainPanelDevice)		-- Engine Oil Pressure gauges
-	ExportScript.EIG(mainPanelDevice)					-- Electronic Instrument Group
-	-- end A3
-
-	-- A6a - ACM Panel
-	ExportScript.stationStatusFlags(mainPanelDevice)	-- Air Combat Maneuver Panel
-	ExportScript.ACMButtons(mainPanelDevice)			-- 4 different ACM Buttons
-	ExportScript.masterArmSwitch(mainPanelDevice)		-- Master Arm Switch
-	ExportScript.ACMTriple(mainPanelDevice)				-- ACM Triple Indicator
-	ExportScript.ACMSlip(mainPanelDevice) 				-- Slip/Ball Gauge
-	-- end A6a
-
 	-- A9 - Pilot Cockpit Right Knee Panel
 	ExportScript.displayFuel(mainPanelDevice)			-- Set of 5 different fuel gauges and a nice multi-gauge (ID's 52117 / 56000 / 56004 / 56010 / 56020 / 56024) Cus. Func.
-	ExportScript.displayAccel(mainPanelDevice)			-- Accellerometer Gauge Custom Function
-	ExportScript.clockAndTimer(mainPanelDevice)			-- Clock and Timer in digital format on same gauge Custom Function
+	ExportScript.displayAccel(mainPanelDevice)			-- Display Accellerometer Gauge Custom Function
+	ExportScript.clockAndTimer(mainPanelDevice)			-- Display Clock and Timer in digital format on same gauge Custom Function
+	ExportScript.stationStatusFlags(mainPanelDevice)	-- Air Combat Maneuver Panel
 	-- end A9
-
-	-- A10 - Pilot Right Vertical Console
-	ExportScript.gunCounter(mainPanelDevice)			-- 	Gun Ammunition Counter / Rounds left
-	-- end A10
-
-	-----------------------------------
-	-----Get F14 Radio Frequencies----- Bailey
-	-----------------------------------
+	ExportScript.flareAndChaffCounters(mainPanelDevice)
 	
-	-----UHF-----
-
-	--[[
-	1. Get the state of the switch to determine if presets or freqs are being used
-	2. Get the channel or freq
-	3. Using the above logic, present the Channel or Freq
-	4. Preceede channels with "CH ".
-	5. Dont preceede freqs with anything.
-	]]
+	local x = {0, 0.057, 0.1, 0.141, 0.212, 0.328, 0.427, 0.518, 0.588, 0.646, 0.731, 0.801, 0.867, 0.915, 1.000}
+	local y = {0, 80, 100, 120, 150, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000} -- 1000 KIAS is fake just to fill the range
+	ExportScript.Tools.SendData(2504, string.format("%d", ExportScript.Linearize(mainPanelDevice:get_argument_value(2129), x, y)))
 	
-	--[[
-	[2033]  =  "%.4f",   -- Mode selector knob (GUARD|MANUAL|PRESET)
-	0.0000 = preset
-	0.5000 = MANUAL
-	1.0000 = GUARD
-	]]
-	
-	local UHF_ARC159_infoBase = ExportScript.Tools.split(list_indication(8), "%c")--this contains the formated table of the base radio
-	local UHF_ARC159_readoutBase = UHF_ARC159_infoBase[10] -- so far it has always been 10 in both channel and freq modes
-	local UHF_ARC159_FreqMode = string.format("%0.1f", mainPanelDevice:get_argument_value(2033))
-	
-	if UHF_ARC159_FreqMode == "1.0" or UHF_ARC159_FreqMode == "0.5" then
-		ExportScript.Tools.SendData(60000, string.format("ARC-159\n" .. UHF_ARC159_readoutBase:sub(1,3) .. "." .. UHF_ARC159_readoutBase:sub(4,6)))
-		ExportScript.Tools.SendData(60001, string.format(UHF_ARC159_readoutBase:sub(1,3) .. "." .. UHF_ARC159_readoutBase:sub(4,6)))
-	elseif UHF_ARC159_FreqMode == "0.0" then
-		ExportScript.Tools.SendData(60000, string.format("ARC-159\n" .. "CH " .. UHF_ARC159_readoutBase:sub(4,6)))
-		ExportScript.Tools.SendData(60001, string.format("CH " .. UHF_ARC159_readoutBase:sub(4,6)))
-	end
-
-
-	local UHF_ARC159_infoPilot = ExportScript.Tools.split(list_indication(9), "%c")--this contains the formated table of the Pilot radio
-	local UHF_ARC159_readoutPilot = UHF_ARC159_infoPilot[16] -- so far it has always been 10 in both channel and freq modes
-	local UHF_ARC159_FreqMode = string.format("%0.1f", mainPanelDevice:get_argument_value(2033))
-	
-	if UHF_ARC159_FreqMode == "1.0" or UHF_ARC159_FreqMode == "0.5" then
-		ExportScript.Tools.SendData(60002, string.format("ARC-159\n" .. UHF_ARC159_readoutPilot:sub(1,3) .. "." .. UHF_ARC159_readoutPilot:sub(4,6)))
-		ExportScript.Tools.SendData(60003, string.format(UHF_ARC159_readoutPilot:sub(1,3) .. "." .. UHF_ARC159_readoutPilot:sub(4,6)))
-	elseif UHF_ARC159_FreqMode == "0.0" then
-		ExportScript.Tools.SendData(60002, string.format("ARC-159\n" .. "CH " .. UHF_ARC159_readoutPilot:sub(4,6)))
-		ExportScript.Tools.SendData(60003, string.format("CH " .. UHF_ARC159_readoutPilot:sub(4,6)))
-	end
-	
-	
-	local UHF_ARC159_infoRio = ExportScript.Tools.split(list_indication(9), "%c")--this contains the formated table of the Rio radio
-	local UHF_ARC159_readoutRio = UHF_ARC159_infoRio[16] -- so far it has always been 10 in both channel and freq modes
-	local UHF_ARC159_FreqMode = string.format("%0.1f", mainPanelDevice:get_argument_value(2033))
-	
-	if UHF_ARC159_FreqMode == "1.0" or UHF_ARC159_FreqMode == "0.5" then
-		ExportScript.Tools.SendData(60004, string.format("ARC-159\n" .. UHF_ARC159_readoutRio:sub(1,3) .. "." .. UHF_ARC159_readoutRio:sub(4,6)))
-		ExportScript.Tools.SendData(60005, string.format(UHF_ARC159_readoutRio:sub(1,3) .. "." .. UHF_ARC159_readoutRio:sub(4,6)))
-	elseif UHF_ARC159_FreqMode == "0.0" then
-		ExportScript.Tools.SendData(60004, string.format("ARC-159\n" .. "CH " .. UHF_ARC159_readoutRio:sub(4,6)))
-		ExportScript.Tools.SendData(60005, string.format("CH " .. UHF_ARC159_readoutRio:sub(4,6)))
-	end
-	
-	-----V/UHF ARC182-----
-	
-	--[[
-	[353]  =  "%0.1f",   -- VHF/UHF ARC-182 Freq Mode (UHF GUARD|V/UHF|V/UHF GUARD|PRESET|V/UHF|LOAD?)
-	0.0 = UHF GUARD
-	0.2 = V/UHF
-	0.4 = V/UHF GUARD
-	0.6 = PRESET
-	0.8 = V/UHF
-	1.0 = LOAD?
-	]]
-	
-	local VHF_ARC182_infoBase = ExportScript.Tools.split(list_indication(12), "%c")--this contains the formated table of the base radio
-	local VHF_ARC182_readoutBase = VHF_ARC182_infoBase[10] -- so far it has always been 10 in both channel and freq modes
-	local VHF_ARC182_FreqMode = string.format("%0.1f", mainPanelDevice:get_argument_value(353))
-	
-	if VHF_ARC182_FreqMode == "0.0" or VHF_ARC182_FreqMode == "0.2" then
-		ExportScript.Tools.SendData(60006, string.format("ARC-182\n" .. VHF_ARC182_readoutBase:sub(1,3) .. "." .. VHF_ARC182_readoutBase:sub(4,6)))
-		ExportScript.Tools.SendData(60007, string.format(VHF_ARC182_readoutBase:sub(1,3) .. "." .. VHF_ARC182_readoutBase:sub(4,6)))
-	elseif VHF_ARC182_FreqMode == "0.4" or VHF_ARC182_FreqMode == "0.8" then
-		ExportScript.Tools.SendData(60006, string.format("ARC-182\n" .. VHF_ARC182_readoutBase:sub(1,3) .. "." .. VHF_ARC182_readoutBase:sub(4,6)))
-		ExportScript.Tools.SendData(60007, string.format(VHF_ARC182_readoutBase:sub(1,3) .. "." .. VHF_ARC182_readoutBase:sub(4,6)))
-	elseif VHF_ARC182_FreqMode == "1.0" then
-		ExportScript.Tools.SendData(60006, string.format("ARC-182\n" .. VHF_ARC182_readoutBase:sub(1,3) .. "." .. VHF_ARC182_readoutBase:sub(4,6)))
-		ExportScript.Tools.SendData(60007, string.format(VHF_ARC182_readoutBase:sub(1,3) .. "." .. VHF_ARC182_readoutBase:sub(4,6)))
-	elseif VHF_ARC182_FreqMode == "0.6" then
-		ExportScript.Tools.SendData(60006, string.format("ARC-182\n" .. "CH " .. VHF_ARC182_readoutBase:sub(4,6)))
-		ExportScript.Tools.SendData(60007, string.format("CH " .. VHF_ARC182_readoutBase:sub(4,6)))
-	end
-
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -1134,246 +2126,107 @@ end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	-- export in low tick interval to DAC
-end --[[
-
-
-
-
-
-
-
-___________________________________________________________________________________________________________________________________________________
-▀▀▀█  Custom functions  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-   █  ExportScript.onff(switch) - Receives a binary and returns string OFF|ON 
-   █  ExportScript.dualTapeString(leftTape, rightTape) - Receives two values (percent of tape) and returns a string tape display (e.g. RPM)    	 
-   █  ExportScript.rotaryCounter(fp) - receives a fp like 0.1 and returns a string 1 (third charachter), handles negatives and 0 gracefully
-   █  ExportScript.drawStationStatusFlags(flagValue) - Draws Station Flags for Weapons on ACM A6a]]
-
-function ExportScript.dualTapeString(title, leftTape, rightTape) -- Creates a dual vertical bar tape for custom gauge
-	-- Receives title as string
-	-- Receives a value from 0.00 to 1.00 that represents a percentage from 0% to 100% of the tape, 0.25 is 1/4 up the tape etc..
-	-- Returns a string that shows 2 tapes in a "somewhat" graphical format using extended ascii characters.
-	local a = 5
-	local b = 0
-	leftTape = tonumber(string.format("%.1f", (leftTape * 10) / 2 ))
-	rightTape =  tonumber(string.format("%.1f", (rightTape * 10) / 2 ))
-	local buildDisplay = title .. "\n"
-	repeat
-		b = a - 0.5
-		if leftTape >= a then buildDisplay = buildDisplay .. "█          " elseif leftTape >= b then buildDisplay = buildDisplay .. "▄          " else buildDisplay = buildDisplay .. "_          "	end
-		if rightTape >= a then buildDisplay = buildDisplay .. "█" elseif rightTape >= (a - 0.5) then buildDisplay = buildDisplay .. "▄" else buildDisplay = buildDisplay .. "_" end
-		buildDisplay = buildDisplay .. "\n"
-		a = a - 1
-	until( a < 1 )
-	return buildDisplay
 end
 
+--______________________________________________________________________________________________________________________________________
+--######################################################################################################################################
+--#    [ Custom functions ]                                                                                                            #  
+--######################################################################################################################################
 
-function ExportScript.onff(switch)  -- Takes a binary 1(on) or 0(off) and returns string "ON" or "OFF"
-	if switch == 1 then	returnString = "ON" elseif switch == 0 then	returnString = "OFF" end
-	return returnString
-end  
-
-
-function ExportScript.rotaryCounter(fp) -- Takes a value as floating point like 0.1324 and returns 1 as a string or 0.4 as 4 as a string (3'rd character including decimal)
-	local returnString
-	if fp == 1 or fp <= 0 then returnString = "0" else returnString = string.sub(string.format("%.1f", fp), 3, 3) end
-	return returnString
-end	
-
-
-function ExportScript.drawStationStatusFlags(flagValue) -- Takes a 0/1/0.45 and draws nothing/white/checker flag and returns
-	local returnString
-	if flagValue > 0.5 then returnString = "█████\n▀▀▀▀▀\n\n." elseif flagValue > 0.4 then returnString = "▀▄▀▄▀\n▀   ▀   ▀\n\n." else returnString = "" end
-	return returnString
-end
---[[
-
-
-
-
-___________________________________________________________________________________________________________________________________________________
-▀▀▀█  Custom Gauges functions  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀]]
-
-function ExportScript.ACMSlip(mainPanelDevice) -- Slip/Ball Gauge
-	local turn
-	local turnL
-	local turnR
-	local turnIndicator = mainPanelDevice:get_argument_value(6501)
-	local turnLString = ""
-	local turnRString = ""
-	local ball
-	local ballL
-	local ballR
-	local ballIndicator = mainPanelDevice:get_argument_value(6500)
-	local ballLString = ""
-	local ballRString = ""
-	local stringOutput = ""
-	if turnIndicator < 0 then -- negative 12 on left and right
-		if turnIndicator < -0.9 then turn = 9 else turn = tonumber(string.sub(turnIndicator, 4, 4)) end
-		turnL = 12 - turn
-		turnR = 12 + turn
-		repeat
-			turnLString = turnLString .. " "
-			turnL = turnL - 1
-		until( turnL == 1)
-		repeat
-			turnRString = turnRString .. " "
-			turnR = turnR - 1
-		until( turnR == 1)
-		stringOutput = stringOutput .. turnLString
-		stringOutput = stringOutput .. "█"
-		stringOutput = stringOutput .. turnRString
-	elseif turnIndicator > 0 then -- positive
-		if turnIndicator > 0.9 then turn = 9 else turn = tonumber(string.sub(turnIndicator, 3, 3)) end
-		turnL = 12 + turn
-		turnR = 12 - turn
-		repeat
-			turnLString = turnLString .. " "
-			turnL = turnL - 1
-		until( turnL == 1)
-		repeat
-			turnRString = turnRString .. " "
-			turnR = turnR - 1
-		until( turnR == 1)
-		stringOutput = stringOutput .. turnLString
-		stringOutput = stringOutput .. "█"
-		stringOutput = stringOutput .. turnRString
+function ExportScript.flareAndChaffCounters(mainPanelDevice) -- It seems like the roller rolls and jitters way too much for calculations
+	--[392]  =  "%.1f",   --  CMDS_Chaff_Counter_Roller_10 
+	--[393]  =  "%.1f",   --  CMDS_Chaff_Counter_Roller_1 
+	--[394]  =  "%.1f",   --  CMDS_Flare_Counter_Roller_10 
+	--[395]  =  "%.1f",   --  CMDS_Flare_Counter_Roller_1 
+	
+	--local chaffCount = math.floor((mainPanelDevice:get_argument_value(392) * 10) + 0.5) .. math.floor((mainPanelDevice:get_argument_value(393) * 10) + 0.5)
+	
+	--[[ Method 1
+	local chaffCountFirstDigit = round(mainPanelDevice:get_argument_value(392) * 10)
+	
+	if chaffCountFirstDigit < 0.5 then
+		chaffCountFirstDigit = 0
+	elseif chaffCountFirstDigit >= 0.5 and chaffCountFirstDigit < 1.5 then
+		chaffCountFirstDigit = 1
+	elseif chaffCountFirstDigit >= 1.5 and chaffCountFirstDigit < 2.5 then
+		chaffCountFirstDigit = 2
+	elseif chaffCountFirstDigit >= 2.5 and chaffCountFirstDigit < 3.5 then
+		chaffCountFirstDigit = 3
+	elseif chaffCountFirstDigit >= 3.5 and chaffCountFirstDigit < 4.5 then
+		chaffCountFirstDigit = 4
+	elseif chaffCountFirstDigit >= 4.5 and chaffCountFirstDigit < 5.5 then
+		chaffCountFirstDigit = 5
+	elseif chaffCountFirstDigit >= 5.5 and chaffCountFirstDigit < 6.5 then
+		chaffCountFirstDigit = 6
+	elseif chaffCountFirstDigit >= 6.5 and chaffCountFirstDigit < 7.5 then
+		chaffCountFirstDigit = 7
+	elseif chaffCountFirstDigit >= 7.5 and chaffCountFirstDigit < 8.5 then
+		chaffCountFirstDigit = 8
+	elseif chaffCountFirstDigit >= 8.5 and chaffCountFirstDigit < 9.5 then
+		chaffCountFirstDigit = 9
 	else
-		turn = 0
-		stringOutput = "            █            "
+		chaffCountFirstDigit = 0
 	end
-
-	stringOutput = stringOutput .. "\n       ■   █   ■       \n"
-
-	if ballIndicator < 0 then -- negative 12 on left and right
-		if ballIndicator < -0.9 then ball = 9 else ball = tonumber(string.sub(ballIndicator, 4, 4)) end
-		ballL = 12 - ball
-		ballR = 12 + ball
-		repeat
-			ballLString = ballLString .. " "
-			ballL = ballL - 1
-		until( ballL == 1)
-		repeat
-			ballRString = ballRString .. " "
-			ballR = ballR - 1
-		until( ballR == 1)
-		stringOutput = stringOutput .. ballLString
-		stringOutput = stringOutput .. "O"
-		stringOutput = stringOutput .. ballRString
-	elseif ballIndicator > 0 then -- positive
-		if ballIndicator > 0.9 then ball = 9 else ball = tonumber(string.sub(ballIndicator, 3, 3)) end
-		ballL = 12 + ball
-		ballR = 12 - ball
-		repeat
-			ballLString = ballLString .. " "
-			ballL = ballL - 1
-		until( ballL == 1)
-		repeat
-			ballRString = ballRString .. " "
-			ballR = ballR - 1
-		until( ballR == 1)
-		stringOutput = stringOutput .. ballLString
-		stringOutput = stringOutput .. "O"
-		stringOutput = stringOutput .. ballRString
+	
+	local chaffCountSecondDigit = round(mainPanelDevice:get_argument_value(393),1)
+	if chaffCountSecondDigit < 0.070 then
+		chaffCountSecondDigit = 0
+	elseif chaffCountSecondDigit >= 0.070 and chaffCountSecondDigit < 0.147 then
+		chaffCountSecondDigit = 1
+	elseif chaffCountSecondDigit >= 0.147 and chaffCountSecondDigit < 0.256 then
+		chaffCountSecondDigit = 2
+	elseif chaffCountSecondDigit >= 0.256 and chaffCountSecondDigit < 0.349 then
+		chaffCountSecondDigit = 3
+	elseif chaffCountSecondDigit >= 0.349 and chaffCountSecondDigit < 0.442 then
+		chaffCountSecondDigit = 4
+	elseif chaffCountSecondDigit >= 0.442 and chaffCountSecondDigit < 0.535 then
+		chaffCountSecondDigit = 5
+	elseif chaffCountSecondDigit >= 0.535 and chaffCountSecondDigit < 0.628 then
+		chaffCountSecondDigit = 6
+	elseif chaffCountSecondDigit >= 0.628 and chaffCountSecondDigit < 0.736 then
+		chaffCountSecondDigit = 7
+	elseif chaffCountSecondDigit >= 0.736 and chaffCountSecondDigit < 0.829 then
+		chaffCountSecondDigit = 8
+	elseif chaffCountSecondDigit >= 0.829 and chaffCountSecondDigit < 0.938 then
+		chaffCountSecondDigit = 9
 	else
-		ball = 0
-		stringOutput = "            O            "
+		chaffCountSecondDigit = 0
 	end
-	ExportScript.Tools.SendData(56501, stringOutput)
-end
-
-
-function ExportScript.ACMTriple(mainPanelDevice) -- Triple indicator lights for ACM (Seam/Collision/Hot Trig)
-	local stringOutput = ""
-	if mainPanelDevice:get_argument_value(9203) == 1 then stringOutput = stringOutput .. "\n\n" else stringOutput = stringOutput .. "██████████\n\n" end
-	if mainPanelDevice:get_argument_value(9202) == 1 then stringOutput = stringOutput .. "\n\n\n" else stringOutput = stringOutput .. "▄▄▄▄▄▄▄▄▄▄\n▀▀▀▀▀▀▀▀▀▀\n\n" end
-	if mainPanelDevice:get_argument_value(9201) == 1 then stringOutput = stringOutput .. "." else stringOutput = stringOutput .. "██████████" end
-	ExportScript.Tools.SendData(59201, stringOutput)
-end
-
-
-function ExportScript.masterArmSwitch(mainPanelDevice) -- Output Master Arm Position
-	if mainPanelDevice:get_argument_value(1047) == -1 then stringOutput = "         ███\n           |\n           |\n\n  ." 
-	elseif mainPanelDevice:get_argument_value(1047) == 0 then stringOutput = "           |\n         ███\n           |\n\n  ."
-	else stringOutput = "           |\n           |\n         ███\n\n  ."
+	]]--
+	
+	
+	--[[ Method 2
+	local chaffCountFirstDigitTenths = round(mainPanelDevice:get_argument_value(392) * 10,1)
+	local chaffCountFirstDigit = math.floor(chaffCountFirstDigitTenths)
+	
+	local differenceFirst = chaffCountFirstDigitTenths - chaffCountFirstDigit -- this number should be somewhere between 0.0 and 0.9
+	if differenceFirst > 0.5  then --round up
+		chaffCountFirstDigit = math.ceil(chaffCountFirstDigitTenths)
+	else
+		chaffCountFirstDigit = math.floor(chaffCountFirstDigitTenths)
 	end
-	ExportScript.Tools.SendData(51047, stringOutput)
+	
+	local chaffCountSecondDigitTenths = round(mainPanelDevice:get_argument_value(393) * 10,1)
+	local chaffCountSecondDigit = math.floor(chaffCountSecondDigitTenths)
+	
+	local differenceSecond = chaffCountSecondDigitTenths - chaffCountSecondDigit -- this number should be somewhere between 0.0 and 0.9
+	if differenceSecond > 0.5  then --round up
+		chaffCountSecondDigit = math.ceil(chaffCountSecondDigitTenths)
+	else
+		chaffCountSecondDigit = math.floor(chaffCountSecondDigitTenths)
+	end
+	--]]
+	
+	--[[
+	--ExportScript.Tools.SendData(5, chaffCount)
+	ExportScript.Tools.SendData(6, chaffCountFirstDigit)
+	ExportScript.Tools.SendData(7, chaffCountSecondDigit)
+	ExportScript.Tools.SendData(8, mainPanelDevice:get_argument_value(392))
+	ExportScript.Tools.SendData(9, mainPanelDevice:get_argument_value(393))
+	ExportScript.Tools.SendData(4, differenceFirst)
+	ExportScript.Tools.SendData(5, differenceSecond)
+	]]--
 end
-
-
-function ExportScript.ACMButtons(mainPanelDevice) -- Monitors two lights on diff. id's and outputs 1 or 0 to one id for (gun rate/SW cool/MSL prep/Mode stp)
-	if mainPanelDevice:get_argument_value(9204) == 1 then ExportScript.Tools.SendData(59204, 1) else ExportScript.Tools.SendData(59204, 0) end -- gun rate light
-	if mainPanelDevice:get_argument_value(9206) == 1 then ExportScript.Tools.SendData(59206, 1) else ExportScript.Tools.SendData(59206, 0) end -- sw cool light
-	if mainPanelDevice:get_argument_value(9208) == 1 then ExportScript.Tools.SendData(59208, 1) else ExportScript.Tools.SendData(59208, 0) end -- msl prep light
-	if mainPanelDevice:get_argument_value(9210) == 1 then ExportScript.Tools.SendData(59210, 1) else ExportScript.Tools.SendData(59210, 0) end -- msl mode stp light
-end
-
-
-function ExportScript.stationStatusFlags(mainPanelDevice) -- Display Station status flags 1 to 8 on ACM panel
-	local b
-	local a = 9221
-	repeat
-		b = "5" .. a
-		ExportScript.Tools.SendData(b, ExportScript.drawStationStatusFlags(mainPanelDevice:get_argument_value(a)))
-		a = a + 1
-	until( a > 9228)
-end
-
-
-function ExportScript.gunCounter(mainPanelDevice) -- Gun Counter
-	local gunCounter = ExportScript.rotaryCounter(mainPanelDevice:get_argument_value(4060)) .. ExportScript.rotaryCounter(mainPanelDevice:get_argument_value(4061)) .. ExportScript.rotaryCounter(mainPanelDevice:get_argument_value(4062))
-	ExportScript.Tools.SendData(54060, "ROUNDS\n" .. gunCounter)
-end
-
-
-function ExportScript.EIG(mainPanelDevice) -- Electronic Instrument Group EIG
-	local EIGrpm = ExportScript.dualTapeString("RPM % x10", mainPanelDevice:get_argument_value(1057), mainPanelDevice:get_argument_value(1058))
-	local EIGegt = ExportScript.dualTapeString("TIT C x100", mainPanelDevice:get_argument_value(1059), mainPanelDevice:get_argument_value(1060))
-	local EIGff = ExportScript.dualTapeString("FF PPH x1000", mainPanelDevice:get_argument_value(1061), mainPanelDevice:get_argument_value(1062))
-	ExportScript.Tools.SendData(51057, EIGrpm)	-- Engine RPM
-	ExportScript.Tools.SendData(51059, EIGegt)	-- Engine TIT (Exhaust Gas Temp)
-	ExportScript.Tools.SendData(51061, EIGff)	-- Engine Fuel Flow
-end
-
-
-function ExportScript.engOilPressure(mainPanelDevice)
-	local rOilPress = mainPanelDevice:get_argument_value(1065) * 90 -- Right Engine Oil Pressure
-	local lOilPress = mainPanelDevice:get_argument_value(1066) * 90 -- Left Engine Oil Pressure
-	ExportScript.Tools.SendData(51065, "L " .. string.format("%d", lOilPress) .. " psi\nEng. Oil\n" .. "R " .. string.format("%d", rOilPress) .. " psi")
-end
-
-
-function ExportScript.engNozzle(mainPanelDevice) -- Engine Nozzle position gauge (tape) ------------------------------------------------
-	local lNoz = tonumber(string.format("%.1f", mainPanelDevice:get_argument_value(1068) * 5))
-	local rNoz = tonumber(string.format("%.1f", mainPanelDevice:get_argument_value(1067) * 5))
-	local a = 5
-	local b = 0
-	local buildDisplay = "Exh. Nozz.\n"
-	repeat
-		b = a - 0.5
-		buildDisplay = buildDisplay .. (a - 1)
-		if lNoz >= a then buildDisplay = buildDisplay .. "    █    " elseif lNoz >= b then buildDisplay = buildDisplay .. "    ▄    " else	buildDisplay = buildDisplay .. "    _    "	end
-		if rNoz >= a then buildDisplay = buildDisplay .. "█" elseif rNoz >= (a - 0.5) then buildDisplay = buildDisplay .. "▄" else buildDisplay = buildDisplay .. "_" end
-		buildDisplay = buildDisplay .. "\n"
-		a = a - 1
-	until( a < 1 )
-	ExportScript.Tools.SendData(51068, buildDisplay)
-end
-
-
-function ExportScript.hydPressGauge(mainPanelDevice) -- Hydraulic pressure indicator A3 ------------------------------------------------
-	local hydComb = string.format("%d", (mainPanelDevice:get_argument_value(1063) * 4000))
-	local hydFlt = string.format("%d", (mainPanelDevice:get_argument_value(1064) * 4000))
-	local spoilFlag = ExportScript.onff(mainPanelDevice:get_argument_value(1023))
-	local hiFlag = ExportScript.onff(mainPanelDevice:get_argument_value(1024))
-	local lowFlag = ExportScript.onff(mainPanelDevice:get_argument_value(1025))
-	local hydPressGauge = "HYD PRESS\n" .. "C. " .. hydComb .. " psi\nF. " .. hydFlt .. " psi\n\n" .. spoilFlag .. "|" .. hiFlag .. "|" .. lowFlag
-	ExportScript.Tools.SendData(51063, hydPressGauge)
-	local hydPressFlags = "HYD PR. psi\nComb | Flight\n" .. hydComb .. " | " .. hydFlt .. "\n Spo /  HI  / LW\n" .. spoilFlag .. " | " .. hiFlag .. " | " .. lowFlag
-	ExportScript.Tools.SendData(51023, hydPressFlags)
-end
-
 
 function ExportScript.clockAndTimer(mainPanelDevice) -- Clock and timer on panel A9 ----------------------------------------------------
 	local minutes = string.format("%d", mainPanelDevice:get_argument_value(1097) * 60)
@@ -1395,7 +2248,6 @@ function ExportScript.displayAccel(mainPanelDevice) -- Accelerometer gauge forma
 	accelGauge = "Accel.G\n+" .. string.format("%.1f", needlePos) .. " G\n-|  " .. string.format("%.1f", needle) .. " G  |-\n" ..  string.format("%.1f", needleNeg) .. " G"
 	ExportScript.Tools.SendData(50110, accelGauge)
 end
-
 function ExportScript.displayAccelCheckValue(accelValue) -- Called from ExportScript.displayAccel() ------------------------------------
 	if accelValue >= 0 then
 		return accelValue * 10
@@ -1404,6 +2256,39 @@ function ExportScript.displayAccelCheckValue(accelValue) -- Called from ExportSc
 	end
 end
 
+function ExportScript.dualTapeString(title, leftTape, rightTape) -- Creates a dual vertical bar tape for custom gauge
+	-- Receives title as string
+	-- Receives a value from 0.00 to 1.00 that represents a percentage from 0% to 100% of the tape, 0.25 is 1/4 up the tape etc..
+	-- Returns a string that shows 2 tapes in a "somewhat" graphical format using extended ascii characters.
+	local a = 5
+	local b = 0
+	leftTape = tonumber(string.format("%.1f", (leftTape * 10) / 2 ))
+	rightTape =  tonumber(string.format("%.1f", (rightTape * 10) / 2 ))
+	local buildDisplay = title .. "\n"
+	repeat
+		b = a - 0.5
+		if leftTape >= a then buildDisplay = buildDisplay .. "█          " elseif leftTape >= b then buildDisplay = buildDisplay .. "▄          " else buildDisplay = buildDisplay .. "_          "	end
+		if rightTape >= a then buildDisplay = buildDisplay .. "█" elseif rightTape >= (a - 0.5) then buildDisplay = buildDisplay .. "▄" else buildDisplay = buildDisplay .. "_" end
+		buildDisplay = buildDisplay .. "\n"
+		a = a - 1
+	until( a < 1 )
+	return buildDisplay
+end
+function ExportScript.drawStationStatusFlags(flagValue) -- Takes a 0/1/0.45 and draws nothing/white/checker flag and returns
+	local returnString
+	if flagValue > 0.5 then returnString = "█████\n▀▀▀▀▀\n\n." elseif flagValue > 0.4 then returnString = "▀▄▀▄▀\n▀   ▀   ▀\n\n." else returnString = "" end
+	return returnString
+end
+
+function ExportScript.stationStatusFlags(mainPanelDevice) -- Display Station status flags 1 to 8 on ACM panel
+	local b
+	local a = 9221
+	repeat
+		b = "5" .. a
+		ExportScript.Tools.SendData(b, ExportScript.drawStationStatusFlags(mainPanelDevice:get_argument_value(a)))
+		a = a + 1
+	until( a == 9229)
+end
 
 function ExportScript.displayFuel(mainPanelDevice) -- Fuel Gauges and output on A9 and B7 ----------------------------------------------
 --[[FUEL Exports Formatted
@@ -1445,4 +2330,29 @@ function ExportScript.displayFuel(mainPanelDevice) -- Fuel Gauges and output on 
 	ExportScript.Tools.SendData(56010, "FUEL\n" .. totalFuel .. "\nQTY")			-- Return Total Fuel Qty Formatted like F-14 Gauge
 	ExportScript.Tools.SendData(56020, "BINGO\n" .. bingoFuel)						-- Return Total Bingo Fuel Qty Formatted like F-14 Gauge
 	ExportScript.Tools.SendData(56024, "BINGO " .. bingoFuel .. "\nTOTAL " .. totalFuel .. "\n" .. aftAndL .. "  |  " .. fwdAndR .. "\n   L    |    R   \n" .. leftFuel .. "  |  " .. rightFuel)  -- Nice Multi Gauge
+end
+
+-----------------------
+-- General Functions --
+-----------------------
+
+function ExportScript.Linearize(current_value, raw_tab, final_tab)
+  -- (c) scoobie
+  if current_value <= raw_tab[1] then
+    return final_tab[1] 
+  end
+  for index, value in pairs(raw_tab) do
+    if current_value <= value then
+      local ft = final_tab[index]
+      local rt = raw_tab[index]
+      return (current_value - rt) * (ft - final_tab[index - 1]) / (rt - raw_tab[index - 1]) + ft
+    end
+  end
+  -- we shouldn't be here, so something went wrong - return arbitrary max. final value, maybe the user will notice the problem:
+  return final_tab[#final_tab]
+end
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
 end
