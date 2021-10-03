@@ -448,6 +448,18 @@ end
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 end
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+
+ExportScript.RadioTile(mainPanelDevice)
+
 end
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
+end
+
+function ExportScript.RadioTile(mainPanelDevice) --https://streamable.com/nnjgpt
+
+			local radio1 = (GetDevice(25):get_frequency())/1000000 --left radio freq unrounded
+			local radio2 = (GetDevice(26):get_frequency())/1000000 --right radio freq unrounded
+			
+			ExportScript.Tools.SendData(3001, radio1)
+			ExportScript.Tools.SendData(3002, radio2)
 end
