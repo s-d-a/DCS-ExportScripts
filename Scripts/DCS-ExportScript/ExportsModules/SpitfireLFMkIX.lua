@@ -15,7 +15,7 @@
 2008 - isDial_oxygenSupplyPilotRedZone
 2009 - isPilotOxygenEmergency (either oxygen goes emergency)
 2010 - Altimeter Altitude
-2011 - Altimiter Pressure setting
+2011 - Altimeter Pressure setting
 2012 - Efficient Climb Airspeed
 2013 - Gun Wingspan
 2014 - Gun Range
@@ -34,7 +34,7 @@
 3005 - Best Takeoff Tile
 3006 - Best Combat Tile
 3007 - Best Nominal Tile
-3008 - Best Crusing Tile
+3008 - Best Cruising Tile
 3009 - Best Climb Tile
 3010 - Gun Sight Solution Tile
 3011 - Trim Tile
@@ -337,8 +337,8 @@ function ExportScript.trimReadouts(mainPanelDevice) --TODO Not working
 	--[146] = "%.1f",	-- Rudder Trim Wheel (Axis) {-1.0, 1.0} in 0.1 Steps
 	
 	local trimElevatorRaw = mainPanelDevice:get_argument_value(145)	
-	local trimElevatorDirection
-	local trimElevatorDirectionShorthand
+	local trimElevatorDirection = " "
+	local trimElevatorDirectionShorthand = " "
 	trimElevatorAmt = round(trimElevatorRaw * 100,0)
 	
 	
@@ -357,8 +357,8 @@ function ExportScript.trimReadouts(mainPanelDevice) --TODO Not working
 	
 	
 	local trimRudderRaw = mainPanelDevice:get_argument_value(146)
-	local trimRudderDirection
-	local trimRudderDirectionShortHand
+	local trimRudderDirection = " "
+	local trimRudderDirectionShortHand = " "
 	trimRudderAmt = round(trimRudderRaw * 100,0)
 	
 	
@@ -375,7 +375,6 @@ function ExportScript.trimReadouts(mainPanelDevice) --TODO Not working
 	trimRudderAmt = math.abs(trimRudderAmt)
 	ExportScript.Tools.SendData(2019, "RDR TRM\n" .. trimRudderAmt .. "% " .. trimRudderDirection)
 	
-	--for some reason this does not pop up unless you use trim? TODO investigate
 	ExportScript.Tools.SendData(3011, "TRIM" .. "\n" ..
 										"ELVTR " .. trimElevatorAmt .. "% " .. trimElevatorDirectionShorthand .. "\n" .. 
 										"RDR  " .. trimRudderAmt .. "% " .. trimRudderDirectionShortHand)

@@ -329,9 +329,9 @@ ExportScript.ConfigArguments =
 	[191] = "%.1f", --CUT-OUT_STBD,TUMB,191,-1,0,1,Cockpit.Mosquito.stbd_engine_cutout_handle
 	
 	--Switchboard
-	[1] = "%.1f", --3001,REPEATER_COMPASS_SW1,TUMB,1,-1,0,1,Cockpit.Mosquito.r_i_compass_switch
-	[2] = "%.1f", --3002,REPEATER_COMPASS_SW2,TUMB,2,1,0,1,Cockpit.Mosquito.r_i_compass_switch
-	[3] = "%.1f", --3004,BA_SW,TUMB,3,-1,0,1,Cockpit.Mosquito.beam_approach_switch
+	[1] = "%.1f", --REPEATER_COMPASS_SW1,TUMB,1,-1,0,1,Cockpit.Mosquito.r_i_compass_switch
+	[2] = "%.1f", --REPEATER_COMPASS_SW2,TUMB,2,1,0,1,Cockpit.Mosquito.r_i_compass_switch
+	[3] = "%.1f", --BA_SW,TUMB,3,-1,0,1,Cockpit.Mosquito.beam_approach_switch
 	[112] = "%.1f", --RAD_FLAP_LH,TUMB,112,-1,0,1,Cockpit.Mosquito.lh_rad_flap_switch
 	[113] = "%.1f", --RAD_FLAP_RH,TUMB,113,1,0,1,Cockpit.Mosquito.rh_rad_flap_switch
 	[114] = "%.1f", --AIR_FILTER,TUMB,114,-1,0,1,Cockpit.Mosquito.tropical_air_filter_switch
@@ -342,96 +342,96 @@ ExportScript.ConfigArguments =
 	[161] = "%.1f", --CAMERA_GUN_SW,TUMB,161,1,0,1,Cockpit.Mosquito.camera_gun_switch
 	[162] = "%.1f", --NAV_LIGHTS_SW,TUMB,162,1,0,1,Cockpit.Generic.nav_lights_switch
 	[163] = "%.1f", --UV_LIGHT_SW,TUMB,163,-1,0,1,Cockpit.Generic.uv_lighting_switch
-	[164] = "%.1f", --3084,PITOT_HEAD_SW,TUMB,164,1,0,1,Cockpit.Generic.pitot_heat_switch
-	[165] = "%.1f", --3086,LR_FUEL_PUMP_SW,TUMB,165,-1,0,1,Cockpit.Mosquito.lr_fuel_pump_switch
-	[168] = "%.1f", --3088,IFF_SW,TUMB,168,1,0,1,Cockpit.Mosquito.iff_radio_switch
-	[17] = "%.1f", --3092,REAR_ILLUM,LEV,17,0,0,1,Cockpit.Mosquito.loop_antenna_flood_light_dimmer
-	[303] = "%.1f", --3095,CHART_ILLUM,LEV,303,0,0,1,Cockpit.Mosquito.chart_flood_light_dimmer
-	[302] = "%.1f", --3101,DOME_ILLUM,LEV,302,0,0,1,Cockpit.Mosquito.roof_dome_light_dimmer
-	[188] = "%.1f", --3104,IFF966_CHAN,TUMB,188,-0.2,0,1,Cockpit.Generic.BC966IFF.channel_selector
-	[363] = "%.1f", --3107,IFF966_DETONATE_COVER,TUMB,363,1,0,1,Cockpit.Generic.BC966IFF.detonator_switch_cover
-	[189] = "%.1f", --3109,IFF966_DETONATE,TUMB,189,-1,0,1,Cockpit.Generic.BC966IFF.detonator_switch
-	[190] = "%.1f", --3111,IFF966_OPER,TUMB,190,1,0,1,Cockpit.Generic.BC966IFF.power_switch
-	[307] = "%.1f", --3113,T_T_F_SW,TUMB,307,-1,0,1,Cockpit.Mosquito.transmitter_type_f_switch
+	[164] = "%.1f", --PITOT_HEAD_SW,TUMB,164,1,0,1,Cockpit.Generic.pitot_heat_switch
+	[165] = "%.1f", --LR_FUEL_PUMP_SW,TUMB,165,-1,0,1,Cockpit.Mosquito.lr_fuel_pump_switch
+	[168] = "%.1f", --IFF_SW,TUMB,168,1,0,1,Cockpit.Mosquito.iff_radio_switch
+	[17] = "%.1f", --REAR_ILLUM,LEV,17,0,0,1,Cockpit.Mosquito.loop_antenna_flood_light_dimmer
+	[303] = "%.1f", --CHART_ILLUM,LEV,303,0,0,1,Cockpit.Mosquito.chart_flood_light_dimmer
+	[302] = "%.1f", --DOME_ILLUM,LEV,302,0,0,1,Cockpit.Mosquito.roof_dome_light_dimmer
+	[188] = "%.1f", --IFF966_CHAN,TUMB,188,-0.2,0,1,Cockpit.Generic.BC966IFF.channel_selector
+	[363] = "%.1f", --IFF966_DETONATE_COVER,TUMB,363,1,0,1,Cockpit.Generic.BC966IFF.detonator_switch_cover
+	[189] = "%.1f", --IFF966_DETONATE,TUMB,189,-1,0,1,Cockpit.Generic.BC966IFF.detonator_switch
+	[190] = "%.1f", --IFF966_OPER,TUMB,190,1,0,1,Cockpit.Generic.BC966IFF.power_switch
+	[307] = "%.1f", --T_T_F_SW,TUMB,307,-1,0,1,Cockpit.Mosquito.transmitter_type_f_switch
 	[26] = "%.1f", --SUPERCHARJER_SWITCH,TUMB,26,-1,0,1,Cockpit.Mosquito.supercharger_gear_change_switch
 	[294] = "%.1f", --UV_EXCITER,BTN,294,1,0,1,Cockpit.Generic.uv_exciter_button
-	[176] = "%.1f", --3033,WIPER_RT,LEV,176,0,0,1,Cockpit.Generic.windscreen_wiper_rheostat
-	[169] = "%.1f", --3036,ARI_DETONATE_COVER,TUMB,169,-1,0,1,Cockpit.Mosquito.radio_detonator_switch_cover
-	[170] = "%.1f", --3038,ARI_DETONATE_1,BTN,170,1,0,1,Cockpit.Mosquito.radio_detonator_switch_l
-	[171] = "%.1f", --3039,ARI_DETONATE_2,BTN,171,1,0,1,Cockpit.Mosquito.radio_detonator_switch_r
-	[172] = "%.1f", --3040,PORT_EXTG_BTN_COVER,TUMB,172,1,0,1,Cockpit.Mosquito.port_extignuisher_switch_cover
-	[173] = "%.1f", --3042,PORT_EXTG_BTN,BTN,173,1,0,1,Cockpit.Mosquito.port_extignuisher_switch
-	[174] = "%.1f", --3043,STBD_EXTG_BTN_COVER,TUMB,174,1,0,1,Cockpit.Mosquito.stbd_extignuisher_switch_cover
-	[175] = "%.1f", --3045,STBD_EXTG_BTN,BTN,175,1,0,1,Cockpit.Mosquito.stbd_extignuisher_switch
-	[178] = "%.1f", --3046,RESIN_LIGHT_SW,TUMB,178,1,0,1,Cockpit.Mosquito.resin_lamps_switch
-	[167] = "%.1f", --3048,NAV_HEAD_LAMP_SW,TUMB,167,-0.5,0,1,Cockpit.Mosquito.id_lamp_head_mode_switch
-	[166] = "%.1f", --3051,REFLECTOR_SIGHT_SW,TUMB,166,1,0,1,Cockpit.Mosquito.reflector_sight_switch
-	[14] = "%.1f", --3053,RIGHT_SIDE_ILLUM,LEV,14,0,0,1,Cockpit.Mosquito.rh_flood_light_dimmer
-	[15] = "%.1f", --3056,BOX_B_ILLUM,LEV,15,0,0,1,Cockpit.Mosquito.box_b_flood_light_dimmer
-	[16] = "%.1f", --3059,BOMB_PANEL_ILLUM,LEV,16,0,0,1,Cockpit.Mosquito.bomb_aimers_panel_flood_light_dimmer
-	[112] = "%.1f", --3062,RAD_FLAP_LH,TUMB,112,-1,0,1,Cockpit.Mosquito.lh_rad_flap_switch
-	[113] = "%.1f", --3064,RAD_FLAP_RH,TUMB,113,1,0,1,Cockpit.Mosquito.rh_rad_flap_switch
-	[114] = "%.1f", --3066,AIR_FILTER,TUMB,114,-1,0,1,Cockpit.Mosquito.tropical_air_filter_switch
-	[157] = "%.1f", --3068,MORSE_KEY,BTN,157,1,0,1,Cockpit.SpitfireLFMkIX.morse_key
-	[158] = "%.1f", --3069,DOWNWARD_LEVER,TUMB,158,-0.5,0,1,Cockpit.SpitfireLFMkIX.id_lamp_down_mode
-	[159] = "%.1f", --3072,UPWARD_LEVER,TUMB,159,0.5,0,1,Cockpit.SpitfireLFMkIX.id_lamp_up_mode
-	[160] = "%.1f", --3075,DOWN_IDENT_LIGHTS_SW,TUMB,160,-0.5,0,1,Cockpit.Mosquito.id_lamp_down_colour_switch
-	[161] = "%.1f", --3078,CAMERA_GUN_SW,TUMB,161,1,0,1,Cockpit.Mosquito.camera_gun_switch
-	[162] = "%.1f", --3080,NAV_LIGHTS_SW,TUMB,162,-1,0,1,Cockpit.Generic.nav_lights_switch
-	[163] = "%.1f", --3082,UV_LIGHT_SW,TUMB,163,1,0,1,Cockpit.Generic.uv_lighting_switch
-	[164] = "%.1f", --3084,PITOT_HEAD_SW,TUMB,164,-1,0,1,Cockpit.Generic.pitot_heat_switch
-	[165] = "%.1f", --3086,LR_FUEL_PUMP_SW,TUMB,165,1,0,1,Cockpit.Mosquito.lr_fuel_pump_switch
-	[168] = "%.1f", --3088,IFF_SW,TUMB,168,-1,0,1,Cockpit.Mosquito.iff_radio_switch
-	[17] = "%.1f", --3092,REAR_ILLUM,LEV,17,0,0,1,Cockpit.Mosquito.loop_antenna_flood_light_dimmer
-	[303] = "%.1f", --3095,CHART_ILLUM,LEV,303,0,0,1,Cockpit.Mosquito.chart_flood_light_dimmer
-	[302] = "%.1f", --3101,DOME_ILLUM,LEV,302,0,0,1,Cockpit.Mosquito.roof_dome_light_dimmer
-	[188] = "%.1f", --3104,IFF966_CHAN,TUMB,188,-0.2,0,1,Cockpit.Generic.BC966IFF.channel_selector
-	[363] = "%.1f", --3107,IFF966_DETONATE_COVER,TUMB,363,1,0,1,Cockpit.Generic.BC966IFF.detonator_switch_cover
-	[189] = "%.1f", --3109,IFF966_DETONATE,TUMB,189,-1,0,1,Cockpit.Generic.BC966IFF.detonator_switch
-	[190] = "%.1f", --3111,IFF966_OPER,TUMB,190,1,0,1,Cockpit.Generic.BC966IFF.power_switch
-	[307] = "%.1f", --3113,T_T_F_SW,TUMB,307,-1,0,1,Cockpit.Mosquito.transmitter_type_f_switch
+	[176] = "%.1f", --WIPER_RT,LEV,176,0,0,1,Cockpit.Generic.windscreen_wiper_rheostat
+	[169] = "%.1f", --ARI_DETONATE_COVER,TUMB,169,-1,0,1,Cockpit.Mosquito.radio_detonator_switch_cover
+	[170] = "%.1f", --ARI_DETONATE_1,BTN,170,1,0,1,Cockpit.Mosquito.radio_detonator_switch_l
+	[171] = "%.1f", --ARI_DETONATE_2,BTN,171,1,0,1,Cockpit.Mosquito.radio_detonator_switch_r
+	[172] = "%.1f", --PORT_EXTG_BTN_COVER,TUMB,172,1,0,1,Cockpit.Mosquito.port_extignuisher_switch_cover
+	[173] = "%.1f", --PORT_EXTG_BTN,BTN,173,1,0,1,Cockpit.Mosquito.port_extignuisher_switch
+	[174] = "%.1f", --STBD_EXTG_BTN_COVER,TUMB,174,1,0,1,Cockpit.Mosquito.stbd_extignuisher_switch_cover
+	[175] = "%.1f", --STBD_EXTG_BTN,BTN,175,1,0,1,Cockpit.Mosquito.stbd_extignuisher_switch
+	[178] = "%.1f", --RESIN_LIGHT_SW,TUMB,178,1,0,1,Cockpit.Mosquito.resin_lamps_switch
+	[167] = "%.1f", --NAV_HEAD_LAMP_SW,TUMB,167,-0.5,0,1,Cockpit.Mosquito.id_lamp_head_mode_switch
+	[166] = "%.1f", --REFLECTOR_SIGHT_SW,TUMB,166,1,0,1,Cockpit.Mosquito.reflector_sight_switch
+	[14] = "%.1f", --RIGHT_SIDE_ILLUM,LEV,14,0,0,1,Cockpit.Mosquito.rh_flood_light_dimmer
+	[15] = "%.1f", --BOX_B_ILLUM,LEV,15,0,0,1,Cockpit.Mosquito.box_b_flood_light_dimmer
+	[16] = "%.1f", --BOMB_PANEL_ILLUM,LEV,16,0,0,1,Cockpit.Mosquito.bomb_aimers_panel_flood_light_dimmer
+	[112] = "%.1f", --RAD_FLAP_LH,TUMB,112,-1,0,1,Cockpit.Mosquito.lh_rad_flap_switch
+	[113] = "%.1f", --RAD_FLAP_RH,TUMB,113,1,0,1,Cockpit.Mosquito.rh_rad_flap_switch
+	[114] = "%.1f", --AIR_FILTER,TUMB,114,-1,0,1,Cockpit.Mosquito.tropical_air_filter_switch
+	[157] = "%.1f", --MORSE_KEY,BTN,157,1,0,1,Cockpit.SpitfireLFMkIX.morse_key
+	[158] = "%.1f", --DOWNWARD_LEVER,TUMB,158,-0.5,0,1,Cockpit.SpitfireLFMkIX.id_lamp_down_mode
+	[159] = "%.1f", --UPWARD_LEVER,TUMB,159,0.5,0,1,Cockpit.SpitfireLFMkIX.id_lamp_up_mode
+	[160] = "%.1f", --DOWN_IDENT_LIGHTS_SW,TUMB,160,-0.5,0,1,Cockpit.Mosquito.id_lamp_down_colour_switch
+	[161] = "%.1f", --CAMERA_GUN_SW,TUMB,161,1,0,1,Cockpit.Mosquito.camera_gun_switch
+	[162] = "%.1f", --NAV_LIGHTS_SW,TUMB,162,-1,0,1,Cockpit.Generic.nav_lights_switch
+	[163] = "%.1f", --UV_LIGHT_SW,TUMB,163,1,0,1,Cockpit.Generic.uv_lighting_switch
+	[164] = "%.1f", --PITOT_HEAD_SW,TUMB,164,-1,0,1,Cockpit.Generic.pitot_heat_switch
+	[165] = "%.1f", --LR_FUEL_PUMP_SW,TUMB,165,1,0,1,Cockpit.Mosquito.lr_fuel_pump_switch
+	[168] = "%.1f", --IFF_SW,TUMB,168,-1,0,1,Cockpit.Mosquito.iff_radio_switch
+	[17] = "%.1f", --REAR_ILLUM,LEV,17,0,0,1,Cockpit.Mosquito.loop_antenna_flood_light_dimmer
+	[303] = "%.1f", --CHART_ILLUM,LEV,303,0,0,1,Cockpit.Mosquito.chart_flood_light_dimmer
+	[302] = "%.1f", --DOME_ILLUM,LEV,302,0,0,1,Cockpit.Mosquito.roof_dome_light_dimmer
+	[188] = "%.1f", --IFF966_CHAN,TUMB,188,-0.2,0,1,Cockpit.Generic.BC966IFF.channel_selector
+	[363] = "%.1f", --IFF966_DETONATE_COVER,TUMB,363,1,0,1,Cockpit.Generic.BC966IFF.detonator_switch_cover
+	[189] = "%.1f", --IFF966_DETONATE,TUMB,189,-1,0,1,Cockpit.Generic.BC966IFF.detonator_switch
+	[190] = "%.1f", --IFF966_OPER,TUMB,190,1,0,1,Cockpit.Generic.BC966IFF.power_switch
+	[307] = "%.1f", --T_T_F_SW,TUMB,307,-1,0,1,Cockpit.Mosquito.transmitter_type_f_switch
 
 	--Three-Way Selector
-	[327] = "%.1f", --3001,BOMB_DOORS,BTN,327,-1,-1,0,Cockpit.Mosquito.bomb_doors_lever
-	[328] = "%.1f", --3002,CHASSIS,BTN,328,1,0,1,Cockpit.Mosquito.chassis_lever
-	[329] = "%.1f", --3003,FLAPS,BTN,329,-1,-1,0,Cockpit.Mosquito.flaps_lever
-	[117] = "%.1f", --3004,CHASSIS_GATE,TUMB,117,1,0,1,Cockpit.Mosquito.chassis_gate
-	[353] = "%.1f", --3006,FLAPS_GATE,TUMB,353,-1,0,1,Cockpit.Mosquito.flaps_gate
+	[327] = "%.1f", --BOMB_DOORS,BTN,327,-1,-1,0,Cockpit.Mosquito.bomb_doors_lever
+	[328] = "%.1f", --CHASSIS,BTN,328,1,0,1,Cockpit.Mosquito.chassis_lever
+	[329] = "%.1f", --FLAPS,BTN,329,-1,-1,0,Cockpit.Mosquito.flaps_lever
+	[117] = "%.1f", --CHASSIS_GATE,TUMB,117,1,0,1,Cockpit.Mosquito.chassis_gate
+	[353] = "%.1f", --FLAPS_GATE,TUMB,353,-1,0,1,Cockpit.Mosquito.flaps_gate
 
 
 	--VHF Radio
-	[32] = "%.1f", --3001,RCTRL_OFF,BTN,32,1,0,1,Cockpit.SpitfireLFMkIX.radio_0
-	[33] = "%.1f", --3002,RCTRL_A,BTN,33,1,0,1,Cockpit.SpitfireLFMkIX.radio_a
-	[34] = "%.1f", --3003,RCTRL_B,BTN,34,1,0,1,Cockpit.SpitfireLFMkIX.radio_b
-	[35] = "%.1f", --3004,RCTRL_C,BTN,35,1,0,1,Cockpit.SpitfireLFMkIX.radio_c
-	[36] = "%.1f", --3005,RCTRL_D,BTN,36,1,0,1,Cockpit.SpitfireLFMkIX.radio_d
-	[42] = "%.1f", --3006,RCTRL_DIM,TUMB,42,1,0,1,Cockpit.SpitfireLFMkIX.radio_dimmer
-	[44] = "%.1f", --3007,RCTRL_T,TUMB,44,1,0,1,Cockpit.SpitfireLFMkIX.radio_mode
-	[364] = "%.1f", --3015,RCTRL_VOL,LEV,364,0,0,1,Cockpit.SpitfireLFMkIX.radio_volume
-	[43] = "%.1f", --3017,RCTRL_TLOCK,TUMB,43,-1,0,1,Cockpit.SpitfireLFMkIX.radio_lock
-	[4] = "%.1f", --3099,PTT_ES,BTN,4,1,0,1,SCR-522 PTT Button
+	[32] = "%.1f", --RCTRL_OFF,BTN,32,1,0,1,Cockpit.SpitfireLFMkIX.radio_0
+	[33] = "%.1f", --RCTRL_A,BTN,33,1,0,1,Cockpit.SpitfireLFMkIX.radio_a
+	[34] = "%.1f", --RCTRL_B,BTN,34,1,0,1,Cockpit.SpitfireLFMkIX.radio_b
+	[35] = "%.1f", --RCTRL_C,BTN,35,1,0,1,Cockpit.SpitfireLFMkIX.radio_c
+	[36] = "%.1f", --RCTRL_D,BTN,36,1,0,1,Cockpit.SpitfireLFMkIX.radio_d
+	[42] = "%.1f", --RCTRL_DIM,TUMB,42,1,0,1,Cockpit.SpitfireLFMkIX.radio_dimmer
+	[44] = "%.1f", --RCTRL_T,TUMB,44,1,0,1,Cockpit.SpitfireLFMkIX.radio_mode
+	[364] = "%.1f", --RCTRL_VOL,LEV,364,0,0,1,Cockpit.SpitfireLFMkIX.radio_volume
+	[43] = "%.1f", --RCTRL_TLOCK,TUMB,43,-1,0,1,Cockpit.SpitfireLFMkIX.radio_lock
+	[4] = "%.1f", --PTT_ES,BTN,4,1,0,1,SCR-522 PTT Button
 
 	--Weapons
-	[120] = "%.1f", --3001,GUN_MASTER_COVER,TUMB,120,-1,0,1,Cockpit.Mosquito.gun_firing_master_switch_cover
-	[121] = "%.1f", --3003,GUN_MASTER,TUMB,121,1,0,1,Cockpit.Mosquito.gun_firing_master_switch
-	[245] = "%.1f", --3005,MACHINEGUN_FIRING,BTN,245,1,0,1,Cockpit.Bf109K4.trigger_a
-	[246] = "%.1f", --3006,GUN_FIRING,BTN,246,1,0,1,Cockpit.Bf109K4.trigger_b2
-	[244] = "%.1f", --3007,CAMERA_GUN,BTN,244,1,0,1,Cockpit.Bf109K4.trigger_b2
-	[8] = "%.1f", --3008,WING_TANK_JETTSON_COVER,TUMB,8,1,0,1,Cockpit.Mosquito.wing_tank_jettison_button_cover
-	[9] = "%.1f", --3010,WING_TANK_JETTSON,BTN,9,1,0,1,Cockpit.Mosquito.wing_tank_jettison_button
-	[323] = "%.1f", --3043,HARNESS_LEVER,TUMB,323,1,0,1,Cockpit.Generic.harness_release_lever
-	[107] = "%.1f", --3045,GUNSIGHT_RANGE,LEV,107,0,0,1,Cockpit.SpitfireLFMkIX.gun_sight_range
-	[108] = "%.1f", --3048,GUNSIGHT_BASE,LEV,108,0,0,1,Cockpit.SpitfireLFMkIX.gun_sight_span
-	[144] = "%.1f", --3056,JETTISON_CONTAINERS_COVER,TUMB,144,-1,0,1,Cockpit.Mosquito.containers_jettison_button_cover
-	[145] = "%.1f", --3058,JETTISON_CONTAINERS,BTN,145,1,0,1,Cockpit.Mosquito.containers_jettison_button
-	[311] = "%.1f", --3059,BOMB_PANEL_LOCK,TUMB,311,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_protective_cover
-	[143] = "%.1f", --3061,CINE_CAMERA,TUMB,143,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_trigger_changeover_switch
-	[148] = "%.1f", --3063,WING_BOMBS_OR_TANKS_1,TUMB,148,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_1_switch
-	[149] = "%.1f", --3065,WING_BOMBS_OR_TANKS_2,TUMB,149,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_2_switch
-	[150] = "%.1f", --3067,FUSELAGE_BOMBS_3,TUMB,150,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_3_switch
-	[151] = "%.1f", --3069,FUSELAGE_BOMBS_4,TUMB,151,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_4_switch
-	[152] = "%.1f", --3071,ALL_BOMBS_NOSE,TUMB,152,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_nose_fusing_switch
-	[153] = "%.1f" --3073,ALL_BOMBS_TAIL,TUMB,153,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_tail_fusing_switch
+	[120] = "%.1f", --GUN_MASTER_COVER,TUMB,120,-1,0,1,Cockpit.Mosquito.gun_firing_master_switch_cover
+	[121] = "%.1f", --GUN_MASTER,TUMB,121,1,0,1,Cockpit.Mosquito.gun_firing_master_switch
+	[245] = "%.1f", --MACHINEGUN_FIRING,BTN,245,1,0,1,Cockpit.Bf109K4.trigger_a
+	[246] = "%.1f", --GUN_FIRING,BTN,246,1,0,1,Cockpit.Bf109K4.trigger_b2
+	[244] = "%.1f", --CAMERA_GUN,BTN,244,1,0,1,Cockpit.Bf109K4.trigger_b2
+	[8] = "%.1f", --WING_TANK_JETTSON_COVER,TUMB,8,1,0,1,Cockpit.Mosquito.wing_tank_jettison_button_cover
+	[9] = "%.1f", --WING_TANK_JETTSON,BTN,9,1,0,1,Cockpit.Mosquito.wing_tank_jettison_button
+	[323] = "%.1f", --HARNESS_LEVER,TUMB,323,1,0,1,Cockpit.Generic.harness_release_lever
+	[107] = "%.1f", --GUNSIGHT_RANGE,LEV,107,0,0,1,Cockpit.SpitfireLFMkIX.gun_sight_range
+	[108] = "%.1f", --GUNSIGHT_BASE,LEV,108,0,0,1,Cockpit.SpitfireLFMkIX.gun_sight_span
+	[144] = "%.1f", --JETTISON_CONTAINERS_COVER,TUMB,144,-1,0,1,Cockpit.Mosquito.containers_jettison_button_cover
+	[145] = "%.1f", --JETTISON_CONTAINERS,BTN,145,1,0,1,Cockpit.Mosquito.containers_jettison_button
+	[311] = "%.1f", --BOMB_PANEL_LOCK,TUMB,311,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_protective_cover
+	[143] = "%.1f", --CINE_CAMERA,TUMB,143,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_trigger_changeover_switch
+	[148] = "%.1f", --WING_BOMBS_OR_TANKS_1,TUMB,148,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_1_switch
+	[149] = "%.1f", --WING_BOMBS_OR_TANKS_2,TUMB,149,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_2_switch
+	[150] = "%.1f", --FUSELAGE_BOMBS_3,TUMB,150,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_3_switch
+	[151] = "%.1f", --FUSELAGE_BOMBS_4,TUMB,151,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_station_4_switch
+	[152] = "%.1f", --ALL_BOMBS_NOSE,TUMB,152,-1,0,1,Cockpit.Mosquito.bomb_aimers_panel_nose_fusing_switch
+	[153] = "%.1f" --ALL_BOMBS_TAIL,TUMB,153,1,0,1,Cockpit.Mosquito.bomb_aimers_panel_tail_fusing_switch
 }
 
 -----------------------------
@@ -454,25 +454,17 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	
 	ExportScript.engineInstruments(mainPanelDevice)
+	ExportScript.navigation1Tile(mainPanelDevice)
 	ExportScript.gunnerTile(mainPanelDevice)
-	ExportScript.fuelTanksTiles(mainPanelDevice)
-	ExportScript.VhfRadioTile(mainPanelDevice)
-	ExportScript.CrazyRadioTile(mainPanelDevice)
-	ExportScript.PilotRadioTile(mainPanelDevice)
+	ExportScript.trimReadouts(mainPanelDevice)
+	--ExportScript.gearFlapsBombBayTile(mainPanelDevice) --TODO In Progress
+	ExportScript.airspeedAltitudeVerticalSpeedTile(mainPanelDevice)
+	
 	
 	--[[
-	----------------------------------------------
-	---------Display: Airspeed--------------------
-	----------------------------------------------
-	local dial_airspeed = math.floor(mainPanelDevice:get_argument_value(64) * 1000) --thanks ED
-	ExportScript.Tools.SendData(3000, dial_airspeed)
 	
-	----------------------------------------------
-	---------Display: Heading Repeater--------------------
-	----------------------------------------------
 	
-	local dial_directionIndicator = math.floor(mainPanelDevice:get_argument_value(73) * 360)
-	ExportScript.Tools.SendData(3001, dial_directionIndicator)
+	
 	
 	----------------------------------------------
 	---------Display: Side Slip--------------------
@@ -494,99 +486,11 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	---------Display: Vertical Speed Indicator--------------------
 	----------------------------------------------
 	
-	local dial_verticalSpeedIndicator = math.floor(mainPanelDevice:get_argument_value(67) * 4000)
-	ExportScript.Tools.SendData(3019, dial_verticalSpeedIndicator)
-	
-	
-	----------------------------------------------
-	---------Display: Compass Heading--------------------
-	----------------------------------------------
-	
-	local dial_compass = math.floor(mainPanelDevice:get_argument_value(31) * 360)
-	if dial_compass == 0 then
-		dial_compass = 360
-		dial_compass = string.format("0" .. dial_compass)
-	end
-	
-	if #dial_compass == 1 then
-		dial_compass = string.format("00" .. dial_compass)
-	elseif #dial_compass == 2 then
-		dial_compass = string.format("0" .. dial_compass)
-	end
-	
-	ExportScript.Tools.SendData(3008, dial_compass)
-	
-	
-	local dial_compassNeedle1 = math.floor(mainPanelDevice:get_argument_value(47) * 360)
-	
-	if dial_compassNeedle1 == 0 then
-		dial_compassNeedle1 = 360
-		dial_compassNeedle1 = string.format("0" .. dial_compassNeedle1)
-	end
-	
-	if #dial_compassNeedle1 == 1 then
-		dial_compassNeedle1 = string.format("00" .. dial_compassNeedle1)
-	elseif #dial_compassNeedle1 == 2 then
-		dial_compassNeedle1 = string.format("0" .. dial_compassNeedle1)
-	end
-	
-	ExportScript.Tools.SendData(3012, dial_compassNeedle1)
-	
-	
-	local dial_compassNeedle2 = math.floor(mainPanelDevice:get_argument_value(48) * 360)
-	
-	if dial_compassNeedle2 == 0 then
-		dial_compassNeedle2 = 360
-		dial_compassNeedle2 = string.format("0" .. dial_compassNeedle2)
-	end
-	
-	if #dial_compassNeedle2 == 1 then
-		dial_compassNeedle2 = string.format("00" .. dial_compassNeedle2)
-	elseif #dial_compassNeedle2 == 2 then
-		dial_compassNeedle2 = string.format("0" .. dial_compassNeedle2)
-	end
-	
-	ExportScript.Tools.SendData(3013, dial_compassNeedle2)
-	
-	
-	----------------------------------------------
-	---------Display: Gear Up and Down------------
-	----------------------------------------------
-	
-	local light_gearRedUpLeft = math.floor(mainPanelDevice:get_argument_value(77)) --red up left
-	local light_gearGreenDownLeft = math.floor(mainPanelDevice:get_argument_value(78)) --green down left
-	local light_gearRedUpRight = math.floor(mainPanelDevice:get_argument_value(79)) --red up right
-	local light_gearGreenDownRight = math.floor(mainPanelDevice:get_argument_value(80)) --green down right
-	
-	local gearIsUp
-	local gearIsDown
-	
-	if light_gearRedUpLeft == 1 && light_gearRedUpRight == 1 then
-		gearIsUp = 1
-	else
-		gearIsUp = 0
-	end
-		
-	if light_gearGreenDownLeft == 1 && light_gearGreenDownRight == 1 then
-		gearIsDown = 1
-	else
-		gearIsDown = 0
-	end
-	
-	ExportScript.Tools.SendData(3009, gearIsUp)
-	ExportScript.Tools.SendData(3010, gearIsDown)
 	
 	
 	
-	----------------------------------------------
-	---------Display: Flaps--------------------
-	----------------------------------------------
 	
-	local dial_flapIndicator = math.floor(mainPanelDevice:get_argument_value(81) * 100)
-	
-	if dial_flapIndicator > 70 then
-	dial_flapIndicator = 70
-	ExportScript.Tools.SendData(3011, dial_flapIndicator)
+
 	
 	----------------------------------------------
 	---------Display: Oxygen supply available--------------------
@@ -656,178 +560,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		isDial_oxygenSupplyCopilotRedZone = 0
 	end
 	
-	----------------------------------------------
-	---------Display: Fuel Inner Tank--------------------
-	----------------------------------------------
 	
-	--local dial_fuelInnerLeft = math.floor(mainPanelDevice:get_argument_value(92) * X)
-	--ExportScript.Tools.SendData(3017, dial_fuelInnerLeft)
-	--noted in calculator
-	
-	local dial_fuelInnerTankLeftRaw = math.floor(mainPanelDevice:get_argument_value(92))
-	
-	local dial_fuelInnerTankLeft = math.floor(
-										+ (1084.9 * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw)
-										- (2252.4 * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw)
-										+ (1590.9 * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw)
-										- (377.05 * dial_fuelInnerTankLeftRaw * dial_fuelInnerTankLeftRaw)
-										+ (128.21 * dial_fuelInnerTankLeftRaw)
-										- 0.1146)
-										
-	--consider making flags for these that can be set by the user
-	if dial_fuelInnerTankLeft < 0 then
-		dial_fuelInnerTankLeft = 0
-	end
-	
-	if dial_fuelInnerTankLeft < 146 then
-		dial_fuelInnerTankLeft = 146
-	end
-	
-	ExportScript.Tools.SendData(3025, dial_fuelInnerTankLeft)
-	
-	
-	
-	local dial_fuelInnerTankRightRaw = math.floor(mainPanelDevice:get_argument_value(93))
-	
-	local dial_fuelInnerTankRight = math.floor(
-										(1084.9 * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw)
-										- (2252.4 * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw)
-										+ (1590.9 * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw)
-										- (377.05 * dial_fuelInnerTankRightRaw * dial_fuelInnerTankRightRaw)
-										+ (128.21 * dial_fuelInnerTankRightRaw)
-										- 0.1146)
-										
-	--consider making flags for these that can be set by the user
-	if dial_fuelInnerTankRight < 0 then
-		dial_fuelInnerTankRight = 0
-	end
-	
-	if dial_fuelInnerTankRight < 146 then
-		dial_fuelInnerTankRight = 146
-	end
-	
-	ExportScript.Tools.SendData(3026, dial_fuelInnerTankRight)
-	
-	
-	
-	----------------------------------------------
-	---------Display: Fuel Center tanks--------------------
-	----------------------------------------------
-	
-	--note that the formulas are different for both of these
-
-	
-	local dial_centerTankNo10Raw = math.floor(mainPanelDevice:get_argument_value(94))
-	
-	local dial_centerTankNo10 = math.floor(
-										(-88.166 * dial_centerTankNo10Raw * dial_centerTankNo10Raw * dial_centerTankNo10Raw * dial_centerTankNo10Raw)
-										+ (203.91 * dial_centerTankNo10Raw * dial_centerTankNo10Raw * dial_centerTankNo10Raw)
-										- (150.81 * dial_centerTankNo10Raw * dial_centerTankNo10Raw)
-										+ (94.58 * dial_centerTankNo10Raw)
-										+ 0.0185)
-										
-	--consider making flags for these that can be set by the user
-	if dial_centerTankNo10 < 0 then
-		dial_centerTankNo10 = 0
-	end
-	
-	if dial_centerTankNo10 < 53 then
-		dial_centerTankNo10 = 53
-	end
-	
-	ExportScript.Tools.SendData(3027, dial_centerTankNo10)
-	
-
-
-	local dial_centerTankNo12Raw = math.floor(mainPanelDevice:get_argument_value(95))
-	
-	local dial_centerTankNo12 = math.floor(
-										  (533.91 * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw)
-										- (1189.9 * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw)
-										+ (941.77 * dial_centerTankNo12Raw * dial_centerTankNo12Raw * dial_centerTankNo12Raw)
-										- (290.11 * dial_centerTankNo12Raw * dial_centerTankNo12Raw)
-										+ (81.317 * dial_centerTankNo12Raw)
-										- 0.0347)
-										
-	--consider making flags for these that can be set by the user
-	if dial_centerTankNo12 < 0 then
-		dial_centerTankNo12 = 0
-	end
-	
-	if dial_centerTankNo12 < 63 then
-		dial_centerTankNo12 = 63
-	end
-	
-	ExportScript.Tools.SendData(3028, dial_centerTankNo12)
-	
-	
-	
-	
-	----------------------------------------------
-	---------Display: Fuel outer tanks--------------------
-	----------------------------------------------
-	
-
-	--[96] and [97]
-	
-	local dial_outerTankLeftRaw = math.floor(mainPanelDevice:get_argument_value(96))
-	local dial_outerTankLeft
-	if dial_outerTankLeftRaw < 0.7699 then
-	dial_outerTankLeft = math.floor(
-										  (64.393 * dial_o uterTankLeftRaw * dial_outerTankLeftRaw * dial_outerTankLeftRaw)
-										- (90.401 * dial_outerTankLeftRaw * dial_outerTankLeftRaw)
-										+ (83.39 * dial_outerTankLeftRaw)
-										+ 0.0365)
-	else
-	dial_outerTankLeft = math.floor(
-										  (135.71 * dial_outerTankLeftRaw)
-										- 64.485)
-	end
-	
-	--consider making flags for these that can be set by the user
-	if dial_outerTankLeft < 0 then
-		dial_outerTankLeft = 0
-	end
-	
-	if dial_outerTankLeft < 59 then
-		dial_outerTankLeft = 59
-	end
-	
-	ExportScript.Tools.SendData(3029, dial_outerTankLeft)
-	
-	
-	local dial_outerTankRightRaw = math.floor(mainPanelDevice:get_argument_value(97))
-	local dial_outerTankRight
-	if dial_outerTankRightRaw < 0.7699 then
-	dial_outerTankRight = math.floor(
-										  (64.393 * dial_o uterTankRightRaw * dial_outerTankRightRaw * dial_outerTankRightRaw)
-										- (90.401 * dial_outerTankRightRaw * dial_outerTankRightRaw)
-										+ (83.39 * dial_outerTankRightRaw)
-										+ 0.0365)
-	else
-	dial_outerTankRight = math.floor(
-										  (135.71 * dial_outerTankRightRaw)
-										- 64.485)
-	end
-	
-	--consider making flags for these that can be set by the user
-	if dial_outerTankRight < 0 then
-		dial_outerTankRight = 0
-	end
-	
-	if dial_outerTankRight < 59 then
-		dial_outerTankRight = 59
-	end
-	
-	ExportScript.Tools.SendData(3030, dial_outerTankRight)
-	
-	
-	----------------------------------------------
-	---------Display: air temperature--------------------
-	----------------------------------------------
-	
-	local dial_airTemp = math.floor((mainPanelDevice:get_argument_value(314) * 100)
-	ExportScript.Tools.SendData(3018, dial_airTemp)
 	
 ]]--
 end
@@ -863,6 +596,17 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
+	
+	
+	
+	ExportScript.fuelTanksTiles(mainPanelDevice)
+	ExportScript.VhfRadioTile(mainPanelDevice)
+	ExportScript.CrazyRadioTile(mainPanelDevice)
+	ExportScript.PilotRadioTile(mainPanelDevice)
+	ExportScript.airTemp(mainPanelDevice)
+	
+	
+		
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -1037,6 +781,7 @@ function ExportScript.gunnerTile(mainPanelDevice)
 
 end
 
+
 function ExportScript.fuelTanksTiles(mainPanelDevice)
 
 ----------------
@@ -1125,7 +870,6 @@ end
 
 function ExportScript.VhfRadioTile(mainPanelDevice) --https://streamable.com/nnjgpt
 --TODO find a way to always show three digits
---TODO assign actual number to these exports
 
 		--ExportScript.Tools.SendData(3051, GetDevice(27):get_frequency()) -- receiver raw
 		local switchPosition_R1155 = mainPanelDevice:get_argument_value(231)
@@ -1166,7 +910,8 @@ function ExportScript.VhfRadioTile(mainPanelDevice) --https://streamable.com/nnj
 											.. "T1154 \n" .. T1154_freq )
 end
 
-function ExportScript.PilotRadioTile(mainPanelDevice) --TODO: When the radio is off, print OFF
+
+function ExportScript.PilotRadioTile(mainPanelDevice)
 -- VHF_Radio
 	local lVHF_Radio = GetDevice(24)
 	local VhfRadioFreq
@@ -1202,7 +947,6 @@ function ExportScript.PilotRadioTile(mainPanelDevice) --TODO: When the radio is 
 	ExportScript.Tools.SendData(4009, string.format("Radio " .. lVHF_Radio_PRESET .. "\n"  .. VhfRadioFreq))
 	
 end
-
 
 
 function ExportScript.CrazyRadioTile(mainPanelDevice)
@@ -1276,7 +1020,6 @@ function ExportScript.CrazyRadioTile(mainPanelDevice)
 										"P " .. array_listOfPresets[13] .. "\n" ..
 										"Q " .. array_listOfPresets[14] .. "\n")	
 
-	--TODO condider taking out 0s after the decimal
 	ExportScript.Tools.SendData(4014, "Yellow Radio\n" ..
 										"S " .. array_listOfPresets[15] .. "\n" ..
 										"T " .. array_listOfPresets[16] .. "\n" ..
@@ -1290,32 +1033,254 @@ function ExportScript.CrazyRadioTile(mainPanelDevice)
 end
 
 
+function ExportScript.airTemp(mainPanelDevice)
+-- range is -70 to +30 C  =  100 degree spread
+
+	local airTemp_x = {0.0,0.103,0.889,1.0}
+	local airTemp_y = {30.0,20.0,-60.0,-70.0}
+	local airTemp =  ExportScript.Linearize(mainPanelDevice:get_argument_value(314), airTemp_x, airTemp_y)
+	airTemp = round(airTemp, 0)
+	ExportScript.Tools.SendData(3027, airTemp)
+	ExportScript.Tools.SendData(4017, "Air Temp\n" .. airTemp .. " C") --TODO see if you can put the degree sign via lua
+end
+
+
+function ExportScript.navigation1Tile(mainPanelDevice)
+	
+
+	local dial_compass = math.floor(mainPanelDevice:get_argument_value(31) * 360)--TODO. I dont think this is the right instrument
+	
+	if dial_compass == 360 then
+		dial_compass = 000
+	end
+	
+	dial_compass = string.format("%.1d" , dial_compass)
+	
+	if #dial_compass == 2 then
+		dial_compass = "0" .. dial_compass
+	elseif #dial_compass == 1 then
+		dial_compass = "00" .. dial_compass
+	end
+	
+	ExportScript.Tools.SendData(3028, dial_compass)
+	
+	local dial_compassNeedle_1 = math.floor(mainPanelDevice:get_argument_value(47) * 360)
+	
+	if dial_compassNeedle_1 == 360 then
+		dial_compassNeedle_1 = 000
+	end
+	
+	dial_compassNeedle_1 = string.format("%.1d" , dial_compassNeedle_1)
+	
+	if #dial_compassNeedle_1 == 2 then
+		dial_compassNeedle_1 = "0" .. dial_compassNeedle_1
+	elseif #dial_compassNeedle_1 == 1 then
+		dial_compassNeedle_1 = "00" .. dial_compassNeedle_1
+	end
+	
+	ExportScript.Tools.SendData(3029, dial_compassNeedle_1)
+	
+	local dial_compassNeedle_2 = math.floor(mainPanelDevice:get_argument_value(48) * 360)
+	
+	if dial_compassNeedle_2 == 360 then
+		dial_compassNeedle_2 = 000
+	end
+	
+	dial_compassNeedle_2 = string.format("%.1d" , dial_compassNeedle_2)
+	
+	if #dial_compassNeedle_2 == 2 then
+		dial_compassNeedle_2 = "0" .. dial_compassNeedle_2
+	elseif #dial_compassNeedle_2 == 1 then
+		dial_compassNeedle_2 = "00" .. dial_compassNeedle_2
+	end
+	
+	ExportScript.Tools.SendData(3030, dial_compassNeedle_2)
+	
+	ExportScript.Tools.SendData(4018, "HDG " .. dial_compass
+										.. "\nPNT 1 " .. dial_compassNeedle_1
+										.. "\nPNT 2 " .. dial_compassNeedle_2)									
+end
+
+
+function ExportScript.airspeedAltitudeVerticalSpeedTile(mainPanelDevice)
+	local dial_altimeter_tenThousands = math.floor(mainPanelDevice:get_argument_value(70) * 100000)
+	local altitude = dial_altimeter_tenThousands
+	altitude = round(altitude,-1)
+	if altitude > 60000 then
+		altitude = altitude - 100000
+	end
+	
+	altitude = format_int(altitude)
+	
+	local dial_altimeterPressure = round((mainPanelDevice:get_argument_value(71) * 250) + 800,0)
+	
+	if string.find(dial_altimeterPressure, ".") then
+		--the dot was there, dont do anything
+	else --the dot is not there, so add it
+		dial_altimeterPressure = string.format(dial_altimeterPressure .. ".0")
+	end
+	
+
+	ExportScript.Tools.SendData(3031, "Altimeter" .. "\n" .. altitude .. "ft")
+	ExportScript.Tools.SendData(3032, "Pressure" .. "\n" ..dial_altimeterPressure .. " mbar")
+	ExportScript.Tools.SendData(4019, "Altitude\n" .. altitude .. " ft" .. "\n" .. dial_altimeterPressure .. " mbar")--mbar == hpa. really!
+
+	local dial_airspeed = math.floor(mainPanelDevice:get_argument_value(64) * 1000) --thanks ED
+	ExportScript.Tools.SendData(3033, "Airspeed\n" .. dial_airspeed .. " mph")
+	
+	
+	local verticalSpeed_x = {-1.0, -0.7, -0.443, -0.2, 0.0, 0.2, 0.443, 0.7, 1.0}
+	local verticalSpeed_y = {-4000.0, -3000.0, -2000.0, -1000.0, 0.0, 1000.0, 2000.0, 3000.0, 4000.0}
+	local verticalSpeed =  ExportScript.Linearize(mainPanelDevice:get_argument_value(67), verticalSpeed_x, verticalSpeed_y)
+	verticalSpeed = round(verticalSpeed, 0)
+	verticalSpeed = format_int(verticalSpeed)
+	
+	ExportScript.Tools.SendData(3034, "VS\n" .. verticalSpeed .. " fpm")
+	
+	
+	ExportScript.Tools.SendData(4020, "Instruments"
+										.. "\n" .. dial_airspeed .. " mph"
+										.. "\n" .. altitude .. " ft"
+										.. "\n" .. verticalSpeed .. " fpm")
+
+end
+
+
+function ExportScript.trimReadouts(mainPanelDevice)
+	
+	local trimElevatorRaw = mainPanelDevice:get_argument_value(6)
+	local trimElevatorDirection = "DOWN"
+	local trimElevatorDirectionShorthand = "D"
+	trimElevatorAmt = round(trimElevatorRaw * 100,0)
+	
+	
+	if trimElevatorAmt > 1 then  --trim is positive, which is nose down
+		trimElevatorDirection = "DOWN"
+		trimElevatorDirectionShorthand = "D"
+	elseif trimElevatorAmt < -1 then --trim is negative, which is nose up
+		trimElevatorDirection = "UP"
+		trimElevatorDirectionShorthand = "U"
+	else --trim is basically neutral
+		trimElevatorDirection = " "
+	end
+	
+	trimElevatorAmt = math.abs(trimElevatorAmt)
+	ExportScript.Tools.SendData(3035, "ELV TRM\n" .. trimElevatorAmt .. "% " .. trimElevatorDirection)
+	
+	
+	local trimRudderRaw = mainPanelDevice:get_argument_value(110)
+	local trimRudderDirection = "STBD"
+	local trimRudderDirectionShortHand = "S"
+	trimRudderAmt = round(trimRudderRaw * 100,0)
+	
+	
+	if trimRudderAmt > 1 then  --trim is positive, which is stbd
+		trimRudderDirection = "STBD"
+		trimRudderDirectionShortHand = "S"
+	elseif trimRudderAmt < -1 then --trim is negative, which is port
+		trimRudderDirection = "PORT"
+		trimRudderDirectionShortHand = "P"
+	else --trim is basically neutral
+		trimRudderDirection = " "
+	end
+	
+	trimRudderAmt = math.abs(trimRudderAmt)
+	ExportScript.Tools.SendData(3036, "RUD TRM\n" .. trimRudderAmt .. "% " .. trimRudderDirection)
+	
+	
+	local trimAileronRaw = mainPanelDevice:get_argument_value(122)
+	local trimAileronDirection = " "
+	local trimAileronDirectionShortHand = " "
+	trimAileronAmt = round(trimAileronRaw * 100,0)
+	
+	
+	if trimAileronAmt > 1 then  --trim is positive
+		trimAileronDirection = "Right"
+		trimAileronDirectionShortHand = "R"
+	elseif trimAileronAmt < -1 then --trim is negative
+		trimAileronDirection = "Left"
+		trimAileronDirectionShortHand = "L"
+	else --trim is basically neutral
+		trimAileronDirection = " "
+	end
+	
+	trimAileronAmt = math.abs(trimAileronAmt)
+	ExportScript.Tools.SendData(3037, "AIL TRM\n" .. trimAileronAmt .. "% " .. trimAileronDirection)
+	
+	ExportScript.Tools.SendData(4021, "TRIM"
+										.. "\n" .. "ELV " .. trimElevatorAmt .. "% " .. trimElevatorDirectionShorthand  
+										.. "\n" .. "RUD  " .. trimRudderAmt .. "% " .. trimRudderDirectionShortHand
+										.. "\n" .. "AIL  " .. trimAileronAmt .. "% " .. trimAileronDirectionShortHand)
+	
+end
+
+
+function ExportScript.gearFlapsBombBayTile(mainPanelDevice)
+
+	----------------------------------------------
+	---------Display: Gear Up and Down------------
+	----------------------------------------------
+	
+	local light_gearRedUpLeft = mainPanelDevice:get_argument_value(77) --red up left
+	local light_gearGreenDownLeft = mainPanelDevice:get_argument_value(78) --green down left
+	local light_gearRedUpRight = mainPanelDevice:get_argument_value(79) --red up right
+	local light_gearGreenDownRight = mainPanelDevice:get_argument_value(80) --green down right
+	
+	local isGearUp
+	local isGearDown
+	
+	local gearStatusMessage
+	local flapsStatusMessage
+	local bombBayStatusMessage
+	
+	-- actual lit value is about 0.7728 (for green) and 0.9195 (for red)
+	if (light_gearRedUpLeft >= 0.5) and (light_gearRedUpRight >= 0.5) then
+		isGearUp = 1
+		gearStatusMessage = "Gear - UP"
+	else
+		isGearUp = 0
+		gearStatusMessage = "Gear - TRSNT"
+	end
+		
+	if light_gearGreenDownLeft >= 0.5 and light_gearGreenDownRight >= 0.5 then
+		isGearDown = 1
+		gearStatusMessage = "Gear - DWN"
+	else
+		isGearDown = 0
+		gearStatusMessage = "Gear - TRSNT"
+	end
+	
+	ExportScript.Tools.SendData(3038, isGearUp)
+	ExportScript.Tools.SendData(3039, isGearDown)
+	
+	
+	
+	
+	--ExportScript.Tools.SendData(30XX, "AIL TRM\n" .. trimAileronAmt .. "% " .. trimAileronDirection)
+	----------------------------------------------
+	---------Display: Flaps--------------------
+	----------------------------------------------
+	
+	local dial_flapIndicator = math.floor(mainPanelDevice:get_argument_value(81) * 100)
+	
+	if dial_flapIndicator >= 70 then
+		dial_flapIndicator = 70
+	end
+	ExportScript.Tools.SendData(3040, dial_flapIndicator)	
+	
+	ExportScript.Tools.SendData(4022, "External"
+										.. "\n" .. gearStatusMessage  
+										.. "\n" .. "Flaps  " .. dial_flapIndicator
+										.. "\n" .. "BBay  " .. "OPN-CLSED")
+	
+end
+
+
+
 
 --[[ Tiles
 
 --this is the basic format. you will still need fine tune everything
-function ExportScript.engLeftRpmTile(mainPanelDevice) --boost is [54], rpm is []
-	
-	local guage_rpm = math.floor(mainPanelDevice:get_argument_value(37) * 10000)
-	
-	local dial_boostLeftRaw = math.floor(mainPanelDevice:get_argument_value(39) * 1)
-	
-	local dial_boostLeft = math.floor(dial_boostLeftRaw * 24)
-	
-	ExportScript.Tools.SendData(3000, string.format("Eng L" .. "\n" 
-													.. "RPM  ".. guage_rpm .. "\n"
-													.. "Boost  ".. dial_boostLeft .. "\n"))
-end
-
-function ExportScript.engLeftOilTile(mainPanelDevice)
-end
-
-function ExportScript.engRightRpmTile(mainPanelDevice)
-end
-
-function ExportScript.engRightOilTile(mainPanelDevice)
-end
-
 
 function ExportScript.oxygenTile(mainPanelDevice)
 	local dial_oxygenFlowRatePilot = math.floor(mainPanelDevice:get_argument_value(82) * 100)
@@ -1371,70 +1336,6 @@ function ExportScript.oxygenTile(mainPanelDevice)
 	ExportScript.Tools.SendData(3033, isPilotOxygenEmergency)
 	
 end
-
-function ExportScript.BrakesTile(mainPanelDevice)
-end
-
-function ExportScript.trimTile(mainPanelDevice)
-end
-
-function ExportScript.fuelTanksTiles(mainPanelDevice)
-end
-
-function ExportScript.fuelCenterTile(mainPanelDevice)
-end
-
-function ExportScript.fuelOuterTile(mainPanelDevice)
-end
-
-function ExportScript.airTempTile(mainPanelDevice)
-end
-
-function ExportScript.gearUpTile(mainPanelDevice)
-end
-
-function ExportScript.gearDownTile(mainPanelDevice)
-end
-
-function ExportScript.altBaroVsiTile(mainPanelDevice)
-end
-
-function ExportScript.navigation1Tile(mainPanelDevice)
-end
-
-function ExportScript.navigation2Tile(mainPanelDevice)
-end
-
-function ExportScript.radio1Tile(mainPanelDevice)
---look at the spitfire for clues
-end
-
-function ExportScript.radio2Tile(mainPanelDevice)
-
-end
-
-function ExportScript.gunnerSightTile(mainPanelDevice)
---wingspan is in ft in the aircraft
-end
-
-	]]--
-
-
-
-
---[[
-Scratch pad for linear interpolation
-
-if incomingNumber < 0 then
-	incomingNumber = 0
-elseif incomingNumber < 0.1366 then --incoming number is 
-	x1 = 0 = argument number 1
-	y1 = 0 = guage number 1
-	x2 = incomingNumber
-	x3 = 0.13366 = argument number 2
-	y3 = 10 = guage number 2
-	solution = (((incomingNumber - x1) * (y3 - y1) ) /  (x3 - x1))   + y1
-
 ]]--
 
 --[[
@@ -1444,15 +1345,9 @@ elseif incomingNumber < 0.1366 then --incoming number is
 
 [
 -Aircraft Startup Page
--Basic readout and instrument readouts such as airspeed
--Readout for the currently selected copilot frequency
 -Airspeed tile with color changes for limits 
 -Tile for optimal settings based on aircraft weight and altitude
 -A way for the copilot to use the streamdeck to dial freqs
--set gunner sight via different aircraft (focus on the ones in DCS)
-	-maybe have the tile react to what the user is doing ingame,
-	-as the user scrolls the wheel, the names of the different aircraft
-	-appear on the dial
 -gear up and down indicators
 -overheat for engine instruments indicator
 	-maybe have one tile that can display multiple things
@@ -1498,14 +1393,14 @@ elseif incomingNumber < 0.1366 then --incoming number is
 | Alt: XXXX  |
 | Baro: XXXX |
 | VSI: XXXX  |
---------------
+-------------- Complete
 
 -----------------
 |  NAVIGATION1  |
 | Repeater: XXX |
 | Needle 1: XXX |
 | Needle 2: XXX |
------------------
+----------------- Complete
 
 -----------------
 |  NAVIGATION2  |
@@ -1534,12 +1429,12 @@ elseif incomingNumber < 0.1366 then --incoming number is
 | Aileron: L XX%   |
 | Elevator: R XX%  |
 | Rudder: Centered |
---------------------
+-------------------- Complete
 
 ------------
 | Air Temp |
 |   XXoC   |
-------------
+------------ Complete
 
 -------------   ------------- 
 | Engine L	|	| Engine R	|
@@ -1611,10 +1506,12 @@ function ExportScript.Linearize(current_value, raw_tab, final_tab)
   return final_tab[#final_tab]
 end
 
+
 function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
   local mult = 10^(numDecimalPlaces or 0)
   return math.floor(num * mult + 0.5) / mult
 end
+
 
 function format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
 
