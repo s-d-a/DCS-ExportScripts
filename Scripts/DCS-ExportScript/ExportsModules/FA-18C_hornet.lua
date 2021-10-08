@@ -166,13 +166,16 @@ ExportScript.ConfigEveryFrameArguments =
 	[469] = "%1d",   -- IFEI_buttons
 	-- RWR
 	[276] = "%1d",   -- Lower
-	[273] = "%1d",   -- Limit
+	--[273] = "%1d",   -- Limit
+	[273] = "%.1f",   -- Limit
 	[274] = "%1d",   -- Display
 	--[270] = "%1d",   -- SpecialEn
 	[271] = "%1d",   -- Special
-	[267] = "%1d",   -- Enable
+	--[267] = "%1d",   -- Enable
+	[267] = "%.1f",   -- Enable
 	[268] = "%1d",   -- Offset
-	[264] = "%1d",   -- Fail
+	--[264] = "%1d",   -- Fail
+	[264] = "%.1f",   -- Fail
 	[265] = "%1d",   -- Bit
 	[520] = "%.1f",   -- RwrLightsBrightness
 	-- CMDS
@@ -299,7 +302,8 @@ ExportScript.ConfigArguments =
 	[159] = "%1d",   -- Station Jettison Select Button, RIGHT IN
 	[161] = "%1d",   -- Station Jettison Select Button, RIGHT OUT
 	[235] = "%1d",   -- Selective Jettison Pushbutton
-	[236] = "%1d",   -- Selective Jettison Knob, L FUS MSL/SAFE/R FUS MSL/ RACK/LCHR /STORES {0.0,0.1,0.2,0.3,0.4}
+	--[236] = "%1d",   -- Selective Jettison Knob, L FUS MSL/SAFE/R FUS MSL/ RACK/LCHR /STORES {0.0,0.1,0.2,0.3,0.4}
+	[236] = "%.1f",   -- Selective Jettison Knob, L FUS MSL/SAFE/R FUS MSL/ RACK/LCHR /STORES {0.0,0.1,0.2,0.3,0.4}
 	[135] = "%.1f",   -- IR Cooling Switch, ORIDE/NORM/OFF {0.0,0.1,0.2}
 	-- Fire Systems
 	[46] = "%1d",   -- Fire Extinguisher Pushbutton
@@ -310,7 +314,8 @@ ExportScript.ConfigArguments =
 	[28] = "%1d",   -- Right Engine/AMAD Fire Warning/Extinguisher Light - (RMB) cover control
 	-- Multipurpose Display Group -----------
     -- Head-Up Display
-	[140] = "%1d",   -- HUD Symbology Reject Switch, NORM/REJ 1/REJ 2 {0.0,0.1,0.2}
+	--[140] = "%1d",   -- HUD Symbology Reject Switch, NORM/REJ 1/REJ 2 {0.0,0.1,0.2}
+	[140] = "%.1f",   -- HUD Symbology Reject Switch, NORM/REJ 1/REJ 2 {0.0,0.1,0.2}
 	[141] = "%.2f",   -- HUD Symbology Brightness Control Knob {0.0,1.0} in 0.1 Steps
 	[142] = "%1d",   -- HUD Symbology Brightness Selector Knob, DAY/NIGHT
 	[143] = "%.2f",   -- HUD Black Level Control Knob {0.0,1.0} in 0.1 Steps
@@ -320,7 +325,8 @@ ExportScript.ConfigArguments =
 	[147] = "%1d",   -- HUD Altitude Switch, BARO/RDR
 	[148] = "%1d",   -- HUD Attitude Selector Switch, INS/AUTO/STBY {-1.0,0.0,1.0}
 	-- Left MDI
-	[51] = "%1d",   -- Left MDI Brightness Selector Knob, OFF/NIGHT/DAY {0.0,0.1,0.2}
+	--[51] = "%1d",   -- Left MDI Brightness Selector Knob, OFF/NIGHT/DAY {0.0,0.1,0.2}
+	[51] = "%.1f",   -- Left MDI Brightness Selector Knob, OFF/NIGHT/DAY {0.0,0.1,0.2}
 	[52] = "%.2f",   -- Left MDI Brightness Control Knob {0.0,1.0} in 0.1 Steps
 	[53] = "%.2f",   -- Left MDI Contrast Control Knob {0.0,1.0} in 0.1 Steps
 	[54] = "%1d",   -- Left MDI PB 1
@@ -496,6 +502,7 @@ ExportScript.ConfigArguments =
 	-- Targeting Pod, FLIR
 	[439] = "%.1f",    -- FLIR Switch, ON/STBY/OFF {0.0,0.5,1.0}
 	[441] = "%.1f",    -- LTD/R Switch, ARM/SAFE/AFT {0.0,0.5,1.0}
+	[442] = "%1d",    -- LST/NFLR Switch, ON/OFF
 }
 
 -----------------------------
@@ -610,6 +617,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2020, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString1Display, 2)) -- ScratchPadString1Display 2 character
 		ExportScript.Tools.SendData(2021, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString2Display, 2)) -- ScratchPadString2Display 2 character
 		ExportScript.Tools.SendData(2022, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
+		ExportScript.Tools.SendData(2090, ExportScript.Tools.DisplayFormat( lUFCDisplays.UFC_ScratchPadString1Display .. lUFCDisplays.UFC_ScratchPadString2Display, 4) .. "\n" .. ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadString2Display all characters
 
 		local lTmpCueing = " "
 		-- Option Displays
@@ -636,6 +644,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2020, " ") -- ScratchPadString1Display 2 character
 		ExportScript.Tools.SendData(2021, " ") -- ScratchPadString2Display 2 character
 		ExportScript.Tools.SendData(2022, " ") -- ScratchPadNumberDisplay 7 character
+		ExportScript.Tools.SendData(2090, " ") -- ScratchPadString2Display all characters
 
 		-- Option Displays
 		ExportScript.Tools.SendData(2023, " ") -- OptionDisplay1 5 character
