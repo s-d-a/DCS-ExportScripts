@@ -827,8 +827,8 @@ function ExportScript.fuelTanksTiles(mainPanelDevice)
 	local fuelCenterTankTotal = fuelCenterTankNo10 + fuelCenterTankNo12
 	ExportScript.Tools.SendData(3018, fuelCenterTankTotal)
 	
-	ExportScript.Tools.SendData(4006, "Fuel Center\n" .. "No10 " .. fuelCenterTankNo10 .. "\n" ..
-										"No12 " .. fuelCenterTankNo12 .. "\n" ..
+	ExportScript.Tools.SendData(4006, "Fuel Center\n" .. "№10 " .. fuelCenterTankNo10 .. "\n" ..
+										"№12 " .. fuelCenterTankNo12 .. "\n" ..
 										"Total " .. fuelCenterTankTotal)
 										
 -----------------------
@@ -1034,20 +1034,18 @@ end
 
 
 function ExportScript.airTemp(mainPanelDevice)
--- range is -70 to +30 C  =  100 degree spread
 
 	local airTemp_x = {0.0,0.103,0.889,1.0}
 	local airTemp_y = {30.0,20.0,-60.0,-70.0}
 	local airTemp =  ExportScript.Linearize(mainPanelDevice:get_argument_value(314), airTemp_x, airTemp_y)
 	airTemp = round(airTemp, 0)
 	ExportScript.Tools.SendData(3027, airTemp)
-	ExportScript.Tools.SendData(4017, "Air Temp\n" .. airTemp .. " C") --TODO see if you can put the degree sign via lua
+	ExportScript.Tools.SendData(4017, "Air Temp\n" .. airTemp .. "°C\n")
 end
 
 
 function ExportScript.navigation1Tile(mainPanelDevice)
 	
-
 	local dial_compass = math.floor(mainPanelDevice:get_argument_value(31) * 360)--TODO. I dont think this is the right instrument
 	
 	if dial_compass == 360 then
