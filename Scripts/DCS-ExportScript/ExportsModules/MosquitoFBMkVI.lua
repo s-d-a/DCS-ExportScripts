@@ -1,4 +1,4 @@
--- Module Name Export
+-- MosquitoFBMkVI
 --[[
 *****DISCLAIMER*****
 I do not have the ability to test this lua file.
@@ -459,13 +459,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.trimReadouts(mainPanelDevice)
 	--ExportScript.gearFlapsBombBayTile(mainPanelDevice) --TODO In Progress
 	ExportScript.airspeedAltitudeVerticalSpeedTile(mainPanelDevice)
-	
+	ExportScript.StallSpeeds(mainPanelDevice)
 	
 	--[[
-	
-	
-	
-	
 	----------------------------------------------
 	---------Display: Side Slip--------------------
 	----------------------------------------------
@@ -481,87 +477,6 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	--values less than 0 are L, more than 0 are R. max is 100
 	local dial_turnIndicator = math.floor(mainPanelDevice:get_argument_value(76) * 100)
 	ExportScript.Tools.SendData(3003, dial_turnIndicator)
-	
-	----------------------------------------------
-	---------Display: Vertical Speed Indicator--------------------
-	----------------------------------------------
-	
-	
-	
-	
-	
-
-	
-	----------------------------------------------
-	---------Display: Oxygen supply available--------------------
-	----------------------------------------------
-	
-	
-	local dial_oxygenFlowRatePilot = math.floor(mainPanelDevice:get_argument_value(82) * 100)
-	ExportScript.Tools.SendData(3014, dial_oxygenFlowRatePilot)
-	
-	--numbers above 40 are "EMERGENCY"
-	local isDial_oxygenFlowRatePilotEmergency
-	if dial_oxygenFlowRatePilot > 40 then
-		isDial_oxygenFlowRatePilotEmergency = 1
-	else
-		isDial_oxygenFlowRatePilotEmergency = 0
-	end
-	ExportScript.Tools.SendData(3015, isDial_oxygenFlowRatePilotEmergency)
-	
-	
-	local dial_oxygenSupplyPilotRaw = math.floor(mainPanelDevice:get_argument_value(83))
-	
-	local dial_oxygenSupplyPilot = math.floor((dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * 87.118)
-										- (dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * 228.16)
-										+ (dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * 189.84)
-										+ (dial_oxygenSupplyPilotRaw * 51.237)
-										- 0.0026)
-	ExportScript.Tools.SendData(3024, dial_oxygenSupplyPilot)
-	
-	--numbers below 12.5 (1/8 on the dial) are red zone
-	local isDial_oxygenSupplyPilotRedZone
-	if dial_oxygenSupplyPilot < 12.5 then
-		isDial_oxygenSupplyPilotRedZone = 1
-	else
-		isDial_oxygenSupplyPilotRedZone = 0
-	end
-	
-	
-	
-	
-	local dial_oxygenFlowRateCopilot = math.floor(mainPanelDevice:get_argument_value(155) * 100)
-	ExportScript.Tools.SendData(3016, dial_oxygenFlowRateCopilot)
-	
-	--numbers above 40 are "EMERGENCY"
-	local isDial_oxygenFlowRateCopilotEmergency
-	if dial_oxygenFlowRateCopilot > 40 then
-		isDial_oxygenFlowRateCopilotEmergency = 1
-	else
-		isDial_oxygenFlowRateCopilotEmergency = 0
-	end
-	ExportScript.Tools.SendData(3017, isDial_oxygenFlowRateCopilotEmergency)
-	
-	
-	local dial_oxygenSupplyCopilotRaw = math.floor(mainPanelDevice:get_argument_value(156))
-	
-	local dial_oxygenSupplyCopilot = math.floor((dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * 87.118)
-										- (dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * 228.16)
-										+ (dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * 189.84)
-										+ (dial_oxygenSupplyCopilotRaw * 51.237)
-										- 0.0026)
-	ExportScript.Tools.SendData(3024, dial_oxygenSupplyCopilot)
-	
-	--numbers below 12.5 (1/8 on the dial) are red zone
-	local isDial_oxygenSupplyCopilotRedZone
-	if dial_oxygenSupplyCopilot < 12.5 then
-		isDial_oxygenSupplyCopilotRedZone = 1
-	else
-		isDial_oxygenSupplyCopilotRedZone = 0
-	end
-	
-	
-	
 ]]--
 end
 
@@ -597,16 +512,14 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 	
-	
-	
 	ExportScript.fuelTanksTiles(mainPanelDevice)
 	ExportScript.VhfRadioTile(mainPanelDevice)
 	ExportScript.CrazyRadioTile(mainPanelDevice)
 	ExportScript.PilotRadioTile(mainPanelDevice)
 	ExportScript.airTemp(mainPanelDevice)
-	
-	
-		
+	ExportScript.oxygenTile(mainPanelDevice)	
+	ExportScript.BestPowerTiles(mainPanelDevice)
+	ExportScript.MaxSpeedTiles(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -720,7 +633,6 @@ function ExportScript.engineInstruments(mainPanelDevice)
 										"Rad T " .. guage_radTempRight)
 
 end
-
 
 
 function ExportScript.gunnerTile(mainPanelDevice)
@@ -1046,7 +958,7 @@ end
 
 function ExportScript.navigation1Tile(mainPanelDevice)
 	
-	local dial_compass = math.floor(mainPanelDevice:get_argument_value(31) * 360)--TODO. I dont think this is the right instrument
+	local dial_compass = math.floor(mainPanelDevice:get_argument_value(31) * 360)--TODO. This may not be the right instrument
 	
 	if dial_compass == 360 then
 		dial_compass = 000
@@ -1274,15 +1186,9 @@ function ExportScript.gearFlapsBombBayTile(mainPanelDevice)
 end
 
 
-
-
---[[ Tiles
-
---this is the basic format. you will still need fine tune everything
-
-function ExportScript.oxygenTile(mainPanelDevice)
+function ExportScript.oxygenTile(mainPanelDevice) -- 82, 83, 155, 156
 	local dial_oxygenFlowRatePilot = math.floor(mainPanelDevice:get_argument_value(82) * 100)
-	ExportScript.Tools.SendData(3014, dial_oxygenFlowRatePilot)
+	ExportScript.Tools.SendData(3041, dial_oxygenFlowRatePilot)
 	
 	--numbers above 40 are "EMERGENCY"
 	
@@ -1292,13 +1198,12 @@ function ExportScript.oxygenTile(mainPanelDevice)
 	else
 		isDial_oxygenFlowRatePilotEmergency = 0
 	end
-	ExportScript.Tools.SendData(3015, isDial_oxygenFlowRatePilotEmergency)
+	ExportScript.Tools.SendData(3042, isDial_oxygenFlowRatePilotEmergency)
 	
 	
 	local dial_oxygenSupplyPilotRaw = mainPanelDevice:get_argument_value(83)
 	
 	local dial_oxygenSupplyPilot = (
-										
                           (87.118 * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw)
                         - (228.16 * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw)
                         + (189.84 * dial_oxygenSupplyPilotRaw * dial_oxygenSupplyPilotRaw)
@@ -1307,7 +1212,7 @@ function ExportScript.oxygenTile(mainPanelDevice)
 						
 	dial_oxygenSupplyPilot = round(dial_oxygenSupplyPilot, 0)		
 						
-	ExportScript.Tools.SendData(3024, dial_oxygenSupplyPilot)
+	ExportScript.Tools.SendData(3043, dial_oxygenSupplyPilot)
 	
 	--numbers below 12.5 (1/8 on the dial) are red zone
 	local isDial_oxygenSupplyPilotRedZone
@@ -1316,13 +1221,70 @@ function ExportScript.oxygenTile(mainPanelDevice)
 	else
 		isDial_oxygenSupplyPilotRedZone = 0
 	end
-	ExportScript.Tools.SendData(3031, isDial_oxygenSupplyPilotRedZone)
+	ExportScript.Tools.SendData(3044, isDial_oxygenSupplyPilotRedZone)
 	
-	local oxygenTile_output = string.format("Oxygen" .. "\n" 
-											.. "PLT Flow  ".. dial_oxygenFlowRatePilot .. "\n"
-											.. "PLT Supply  ".. dial_oxygenSupplyPilot .. "\n")
 	
-	ExportScript.Tools.SendData(3032, oxygenTile_output)
+	-----------------
+	local dial_oxygenFlowRateCopilot = math.floor(mainPanelDevice:get_argument_value(155) * 100)
+	ExportScript.Tools.SendData(3045, dial_oxygenFlowRateCopilot)
+	
+	--numbers above 40 are "EMERGENCY"
+	
+	local isDial_oxygenFlowRateCopilotEmergency
+	if dial_oxygenFlowRateCopilot > 40 then
+		isDial_oxygenFlowRateCopilotEmergency = 1
+	else
+		isDial_oxygenFlowRateCopilotEmergency = 0
+	end
+	ExportScript.Tools.SendData(3046, isDial_oxygenFlowRateCopilotEmergency)
+	
+	
+	local dial_oxygenSupplyCopilotRaw = mainPanelDevice:get_argument_value(156)
+	
+	local dial_oxygenSupplyCopilot = (
+                          (87.118 * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw)
+                        - (228.16 * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw)
+                        + (189.84 * dial_oxygenSupplyCopilotRaw * dial_oxygenSupplyCopilotRaw)
+                        + (51.237 * dial_oxygenSupplyCopilotRaw)
+                        - 0.0026)	
+						
+	dial_oxygenSupplyCopilot = round(dial_oxygenSupplyCopilot, 0)		
+						
+	ExportScript.Tools.SendData(3047, dial_oxygenSupplyCopilot)
+	
+	--numbers below 12.5 (1/8 on the dial) are red zone
+	local isDial_oxygenSupplyCopilotRedZone
+	if dial_oxygenSupplyCopilot < 12.5 then
+		isDial_oxygenSupplyCopilotRedZone = 1
+	else
+		isDial_oxygenSupplyCopilotRedZone = 0
+	end
+	ExportScript.Tools.SendData(3048, isDial_oxygenSupplyCopilotRedZone)
+	
+	-------------------
+	
+	
+	local oxygenTilePilot_output = string.format("Oxy PLT" .. "\n"
+											.. "Flow  " .. dial_oxygenFlowRatePilot .. "k ft\n"
+											.. "Amt.  " .. dial_oxygenSupplyPilot)
+											
+									
+	
+	ExportScript.Tools.SendData(4023, oxygenTilePilot_output)
+	
+	local oxygenTileCopilot_output = string.format("Oxy CPLT" .. "\n"
+											.. "CP Flow  ".. dial_oxygenFlowRateCopilot .. "k ft\n"
+											.. "CP Amt.  ".. dial_oxygenSupplyCopilot)
+	
+	ExportScript.Tools.SendData(4024, oxygenTileCopilot_output)
+	
+	local oxygenTileBoth_output = string.format(--"Oxy PLT" .. "\n" 
+											"P Flow  ".. dial_oxygenFlowRatePilot .. "k ft\n"
+											.. "P Amt.  ".. dial_oxygenSupplyPilot .. "\n"
+											.. "CP Flow  ".. dial_oxygenFlowRateCopilot .. "k ft\n"
+											.. "CP Amt.  ".. dial_oxygenSupplyCopilot)
+	
+	ExportScript.Tools.SendData(4025, oxygenTileBoth_output)
 	
 	local isPilotOxygenEmergency
 	if isDial_oxygenSupplyPilotRedZone == 1 or isDial_oxygenFlowRatePilotEmergency == 1 then
@@ -1331,10 +1293,236 @@ function ExportScript.oxygenTile(mainPanelDevice)
 		isPilotOxygenEmergency = 0
 	end
 	
-	ExportScript.Tools.SendData(3033, isPilotOxygenEmergency)
+	ExportScript.Tools.SendData(3049, isPilotOxygenEmergency)
+	
+	local isCopilotOxygenEmergency
+	if isDial_oxygenSupplyCopilotRedZone == 1 or isDial_oxygenFlowRateCopilotEmergency == 1 then
+		isCopilotOxygenEmergency = 1
+	else
+		isCopilotOxygenEmergency = 0
+	end
+	
+	ExportScript.Tools.SendData(3050, isCopilotOxygenEmergency)
+	
+	local isPilotOrCopilotOxygenEmergency
+	if isPilotOxygenEmergency == 1 or isCopilotOxygenEmergency == 1 then
+		isPilotOrCopilotOxygenEmergency = 1
+	else
+		isPilotOrCopilotOxygenEmergency = 0
+	end
+	
+	ExportScript.Tools.SendData(3051, isPilotOrCopilotOxygenEmergency)
 	
 end
-]]--
+
+
+function ExportScript.BestPowerTiles(mainPanelDevice)
+	
+	ExportScript.Tools.SendData(4026, "Takeoff 5" .. "\n" .. "RPM 3000\nBoost +12")
+	
+	ExportScript.Tools.SendData(4027, "Inter. 60" .. "\n" .. "RPM 2850\nBoost +9\nRad 125°C\nOil 90°C")
+	ExportScript.Tools.SendData(4028, "Max Cont." .. "\n" .. "RPM 2650\nBoost +7\nRad 105°C\nOil 90°C")
+	ExportScript.Tools.SendData(4029, "Emergency 5" .. "\n" .. "RPM 3000\nBoost +25\nRad 125°C\nOil 105°C")
+	
+	------------------------------
+	-- Max rate and range climb --
+	------------------------------
+	
+	local maxRateAirspeed
+	local maxRateGear
+	local maxRateBoost
+	
+	local maxRangeRPM = 2650
+	local maxRangeBoost = 7
+	local maxRangeGear = "Low Gear"
+	
+	maxRateAirspeed = 150
+	local dial_altimeter_tenThousands = math.floor(mainPanelDevice:get_argument_value(70) * 100000)
+	local altitude = dial_altimeter_tenThousands
+	altitude = round(altitude,-1)
+	if altitude > 60000 then
+		altitude = altitude - 100000
+	end
+	
+	if altitude > 18000 then
+		local altitudeDifference = altitude - 18000
+		altitudeDifference = altitudeDifference / 1000
+		maxRateAirspeed = maxRateAirspeed - (altitudeDifference * 2) --formula is on manual page 102
+		maxRateAirspeed = round(maxRateAirspeed,0)
+		maxRangeBoost = 9
+		maxRangeRPM = 2850
+	end
+	
+	
+	local guage_boostLeft_x = {0.0,0.052,0.142,0.289,0.425,0.547,0.662,0.776,0.887,0.983,1.0}--remove osme decimal places plz
+	local guage_boostLeft_y = {-7.0,-6.0,-4.0,0.0,4.0,8.0,12.0,16.0,20.0,24.0,25.0}
+	local guage_boostLeft =  ExportScript.Linearize(mainPanelDevice:get_argument_value(54), guage_boostLeft_x, guage_boostLeft_y)
+	guage_boostLeft = round(guage_boostLeft,1)
+	
+	maxRateBoost = 9
+	maxRateGear = "Low Gear"
+	
+	if mainPanelDevice:get_argument_value(18) >= 0.98 then --aka, if the left throttle is basically maxed out
+		if guage_boostLeft <= 7 then
+			maxRateGear = "AUTO Gear"
+		else
+			maxRateGear = "Low Gear"
+		end
+	end
+	
+	if mainPanelDevice:get_argument_value(18) >= 0.98 then --aka, if the left throttle is basically maxed out
+		if guage_boostLeft <= 4 then
+			maxRangeGear = "AUTO Gear"
+		else
+			maxRangeGear = "Low Gear"
+		end
+	end
+	
+	ExportScript.Tools.SendData(4030, "Max Rate CLB" 
+										.. "\n" .. "RPM 2850"
+										.. "\n" .. "Boost +" .. maxRateBoost
+										.. "\n" .. maxRateGear
+										.. "\n" .. maxRateAirspeed .. " kts")
+										
+	
+										
+	ExportScript.Tools.SendData(4031, "Max Range CLB" 
+										.. "\n" .. "RPM " .. maxRangeRPM
+										.. "\n" .. "Boost +" .. maxRangeBoost
+										.. "\n" .. maxRangeGear
+										.. "\n" .. maxRateAirspeed .. " kts")
+	
+	-----------------
+	-- Best Cruise --
+	-----------------
+	--page 103 of manual
+	
+	local bestCruiseGear = "AUTO Gear"
+	local bestCruiseAirspeed = 170
+	
+	if altitude < 10000 then
+		bestCruiseAirspeed = 200
+	end
+	
+	local guage_rpmLeft = math.floor(mainPanelDevice:get_argument_value(50) * 5000)
+	guage_rpmLeft = round(guage_rpmLeft,-1)
+	
+	local dial_airspeed = math.floor(mainPanelDevice:get_argument_value(64) * 1000) --thanks ED
+	
+	if guage_rpmLeft >= 2650 then
+		if dial_airspeed < bestCruiseAirspeed then
+			bestCruiseGear = "MOD Gear"
+		else
+			bestCruiseGear = "AUTO Gear"
+		end
+	end
+	
+	ExportScript.Tools.SendData(4032, "Best Cruise" 
+										.. "\n" .. "RPM Min"
+										.. "\n" .. "Boost +7"
+										.. "\n" .. bestCruiseGear
+										.. "\n" .. bestCruiseAirspeed .. " kts")
+	--------------------------
+	-- Approach Speed Tiles --
+	-------------------------- page 106
+	
+	local landingText = "Landing 17k" .. "\n" .. "FLAP DOWN\n125 mph" .. "\n" .. "FLAP UP\n140 mph" --default string
+	
+	if mainPanelDevice:get_argument_value(18) < 0.5 then --aka, if the left throttle is basically 0
+		--if mainPanelDevice:get_argument_value(19) < 0.5 then --aka, if the right throttle is basically 0
+			landingText = "Landing 17k" .. "\n" .. "Glide DOWN\n140 mph" .. "\n" .. "Glide UP\n150 mph"
+		else
+			landingText = "Landing 17k" .. "\n" .. "FLAP DOWN\n125 mph" .. "\n" .. "FLAP UP\n140 mph"
+		--end -- the dual throttle thing isnt working TODO
+	end
+	
+	ExportScript.Tools.SendData(4033, landingText)
+end
+
+
+function ExportScript.MaxSpeedTiles(mainPanelDevice)
+	local dial_altimeter_tenThousands = math.floor(mainPanelDevice:get_argument_value(70) * 100000)
+	local altitude = dial_altimeter_tenThousands
+	altitude = round(altitude,-1)
+	if altitude > 60000 then
+		altitude = altitude - 100000
+	end
+	
+	local limitA
+	local limitB
+	local limitC
+	local limitD
+	
+	if altitude < 10000 then
+		limitA = "370"
+		limitB = "330"
+		limitC = "350"
+		limitD = "305"
+	elseif altitude < 15000 then
+		limitA = "350"
+		limitB = "330"
+		limitC = "350"
+		limitD = "305"
+	elseif altitude < 20000 then
+		limitA = "320"
+		limitB = "320"
+		limitC = "320"
+		limitD = "305"
+	elseif altitude < 25000 then
+		limitA = "295"
+		limitB = "295"
+		limitC = "295"
+		limitD = "295"
+	elseif altitude < 30000 then
+		limitA = "260"
+		limitB = "260"
+		limitC = "260"
+		limitD = "260"
+	else --if altitude < 35000 then
+		limitA = "235"
+		limitB = "235"
+		limitC = "235"
+		limitD = "235"
+	end
+
+	--the manual numbers are in knots TODO convert if confirmed via ED
+	ExportScript.Tools.SendData(4034, "Slick " .. limitA .. " kts"
+										.. "\nTanks " .. limitB .. " kts"
+										.. "\nR.P. " .. limitC .. " kts"
+										.. "\nExt. " .. limitD .. " kts")
+	
+	ExportScript.Tools.SendData(4035, "BBay 305 kts"
+										.. "\nGear 155 kts"
+										.. "\nF25° 175 kts"
+										.. "\nFDWN 130 kts")
+	
+end
+
+
+function ExportScript.StallSpeeds(mainPanelDevice)
+-- stall warnings page 103 of manual
+--	The approximate stall speeds at 18,000 feet and idle power are as follows:
+--	▪ Undercarriage and flaps retracted: 105 knots
+--	▪ Undercarriage and flaps extended: 95–100 knots
+--	▪ Typical approach: 90–95 knots
+
+--just make the highest number the warning because the gear lights are currently hard to get
+	local dial_airspeed = math.floor(mainPanelDevice:get_argument_value(64) * 1000) 
+	
+	ExportScript.Tools.SendData(4036, "Stall Speeds"
+										.. "\nRet. 105 kts"
+										.. "\nExt. 100 kts"
+										.. "\nApp. 95 kts")
+			
+	local isAircraftStall = 0
+	local stallSpeed = 105*(1.151) --knots*(multiplier) = MPH
+	if dial_airspeed <= stallSpeed then
+		isAircraftStall = 1
+	end
+	
+	ExportScript.Tools.SendData(3052, isAircraftStall)
+	
+end
 
 --[[
 ------------------------------
@@ -1342,10 +1530,7 @@ end
 ------------------------------
 
 [
--Aircraft Startup Page
--Airspeed tile with color changes for limits 
--Tile for optimal settings based on aircraft weight and altitude
--A way for the copilot to use the streamdeck to dial freqs
+-Airspeed tile with color changes for limits
 -gear up and down indicators
 -overheat for engine instruments indicator
 	-maybe have one tile that can display multiple things
@@ -1357,23 +1542,19 @@ end
 -- Ideas for "Tiles" --
 -----------------------
 
--------------
-|  Radio 1  |
-| Channel A |
-------------- complete.
+------------------ 
+|     Brakes     |
+| Supply: XXX    |
+| Port: XX       |
+| Starboard: XXX |
+------------------ 
 
 ------------------
 |     Status     |
 | BOMB BAY: XXXX |
 | GEAR: XXX      |
 | FLAPS: XX      |
-------------------
-
-----------------
-|   Radio 2    |
-| Band: Yellow |
-| Freq: XXXXX  |
----------------- Complete.
+------------------ In Progress
 
 -----------------
 |    Gear UP    |
@@ -1387,6 +1568,32 @@ end
 |  Gear DOWN    |
 -----------------
 
+-----------------
+|  NAVIGATION2  |
+| Compass: XXX  |
+| Repeater: XXX |
+| Director: XXX |
+----------------- nogo
+
+------------------- 
+|     Oxygen      |
+| PLT Flow: XXX   |
+| PLT Supply: XX  |
+| CPLT Flow: XXX  |
+| CPLT Supply: XX |
+------------------- complete
+
+-------------
+|  Radio 1  |
+| Channel A |
+------------- complete
+
+----------------
+|   Radio 2    |
+| Band: Yellow |
+| Freq: XXXXX  |
+---------------- Complete
+
 --------------
 | Alt: XXXX  |
 | Baro: XXXX |
@@ -1399,28 +1606,6 @@ end
 | Needle 1: XXX |
 | Needle 2: XXX |
 ----------------- Complete
-
------------------
-|  NAVIGATION2  |
-| Compass: XXX  |
-| Repeater: XXX |
-| Director: XXX |
------------------
-
-------------------- 
-|     Oxygen      |
-| PLT Flow: XXX   |
-| PLT Supply: XX  |
-| CPLT Flow: XXX  |
-| CPLT Supply: XX |
-------------------- 
-
------------------- 
-|     Brakes     |
-| Supply: XXX    |
-| Port: XX       |
-| Starboard: XXX |
------------------- 
 
 --------------------
 |       Trim       |
