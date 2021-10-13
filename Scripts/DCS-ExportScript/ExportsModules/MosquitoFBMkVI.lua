@@ -594,9 +594,9 @@ function ExportScript.engineInstruments(mainPanelDevice)
 										"RPM " .. guage_rpmLeft .. "\n" ..
 										"Boost " .. guage_boostLeft)
 										
-	ExportScript.Tools.SendData(4001, "Oil T " .. guage_oilTempLeft .. "\n" .. 
+	ExportScript.Tools.SendData(4001, "Oil T " .. guage_oilTempLeft .. "°C\n" .. 
 										"Oil P " .. guage_oilPresLeft .. "\n" ..
-										"Rad T " .. guage_radTempLeft)
+										"Rad T " .. guage_radTempLeft .. "°C")
 										
 ------------------------------
 -- Right Engine Instruments --
@@ -606,7 +606,7 @@ function ExportScript.engineInstruments(mainPanelDevice)
 	guage_rpmRight = format_int(round(guage_rpmRight, -1))
 	ExportScript.Tools.SendData(3005, guage_rpmRight) --raw rpm value
 	
-	local guage_boostRight_x = {0.0,0.052,0.142,0.289,0.425,0.547,0.662,0.776,0.887,0.983,1.0}--remove osme decimal places plz
+	local guage_boostRight_x = {0.0,0.052,0.142,0.289,0.425,0.547,0.662,0.776,0.887,0.983,1.0}
 	local guage_boostRight_y = {-7.0,-6.0,-4.0,0.0,4.0,8.0,12.0,16.0,20.0,24.0,25.0}
 	local guage_boostRight =  ExportScript.Linearize(mainPanelDevice:get_argument_value(55), guage_boostRight_x, guage_boostRight_y)
 	guage_boostRight = round(guage_boostRight,1)
@@ -628,9 +628,9 @@ function ExportScript.engineInstruments(mainPanelDevice)
 										"RPM " .. guage_rpmRight .. "\n" ..
 										"Boost " .. guage_boostRight)
 										
-	ExportScript.Tools.SendData(4003, "Oil T " .. guage_oilTempRight .. "\n" .. 
+	ExportScript.Tools.SendData(4003, "Oil T " .. guage_oilTempRight .. "°C\n" .. 
 										"Oil P " .. guage_oilPresRight .. "\n" ..
-										"Rad T " .. guage_radTempRight)
+										"Rad T " .. guage_radTempRight .. "°C")
 
 end
 
@@ -721,7 +721,7 @@ function ExportScript.fuelTanksTiles(mainPanelDevice)
 -----------------
 -- Center Fuel --
 ----------------- 
---You can enduce false reading with negitive Gs for testing
+--You can induce false reading with negative Gs for testing
 
 	local fuelCenterTankNo10_x = {0,0.1262,0.309701,0.506199,0.682902,0.8871}
 	local fuelCenterTankNo10_y = {0.0,10.0,20.0,30.0,40.0,53.0}
@@ -772,10 +772,10 @@ function ExportScript.fuelTanksTiles(mainPanelDevice)
 	
 	local fuelAircraftTotal = fuelInnerTankTotal + fuelCenterTankTotal + fuelOuterTankTotal
 	ExportScript.Tools.SendData(3022, fuelAircraftTotal)
-	ExportScript.Tools.SendData(4008, "Fuel Tot "  .. fuelAircraftTotal ..  "\n"  ..
-										"Inner " .. fuelInnerTankTotal .. "\n" ..
+	ExportScript.Tools.SendData(4008, "Inner " .. fuelInnerTankTotal .. "\n" ..
 										"Center " .. fuelCenterTankTotal .. "\n" ..
-										"Outer " .. fuelOuterTankTotal)									
+										"Outer " .. fuelOuterTankTotal ..  "\n"  ..
+										"Fuel Tot "  .. fuelAircraftTotal)									
 
 end
 
@@ -799,7 +799,8 @@ function ExportScript.VhfRadioTile(mainPanelDevice) --https://streamable.com/nnj
 			R1155_freq = (GetDevice(27):get_frequency())/1000
 		end
 		
-		R1155_freq = round(R1155_freq,3)
+		--R1155_freq = round(R1155_freq,3)
+		R1155_freq = ExportScript.Tools.RoundFreqeuncy(R1155_freq, Format, PrefixZeros, 0.001)
 		ExportScript.Tools.SendData(3023, R1155_freq) -- receiver
 		
 		
@@ -815,7 +816,8 @@ function ExportScript.VhfRadioTile(mainPanelDevice) --https://streamable.com/nnj
 			T1154_freq = (GetDevice(26):get_frequency())/1000
 		end
 		
-		T1154_freq = round(T1154_freq,3)
+		--T1154_freq = round(T1154_freq,3)
+		T1154_freq = ExportScript.Tools.RoundFreqeuncy(T1154_freq, Format, PrefixZeros, 0.001)
 		ExportScript.Tools.SendData(3024, T1154_freq) -- transmitter
 		
 		ExportScript.Tools.SendData(4016, "R1155 \n" ..  R1155_freq .. "\n"
@@ -1032,8 +1034,8 @@ function ExportScript.airspeedAltitudeVerticalSpeedTile(mainPanelDevice)
 	
 
 	ExportScript.Tools.SendData(3031, "Altimeter" .. "\n" .. altitude .. "ft")
-	ExportScript.Tools.SendData(3032, "Pressure" .. "\n" ..dial_altimeterPressure .. " mbar")
-	ExportScript.Tools.SendData(4019, "Altitude\n" .. altitude .. " ft" .. "\n" .. dial_altimeterPressure .. " mbar")--mbar == hpa. really!
+	ExportScript.Tools.SendData(3032, "Pressure" .. "\n" ..dial_altimeterPressure .. " hPa")
+	ExportScript.Tools.SendData(4019, "Altitude\n" .. altitude .. " ft" .. "\n" .. dial_altimeterPressure .. " hPa")--mbar == hPa. really!
 
 	local dial_airspeed = math.floor(mainPanelDevice:get_argument_value(64) * 1000) --thanks ED
 	ExportScript.Tools.SendData(3033, "Airspeed\n" .. dial_airspeed .. " mph")
@@ -1318,11 +1320,11 @@ end
 
 function ExportScript.BestPowerTiles(mainPanelDevice)
 	
-	ExportScript.Tools.SendData(4026, "Takeoff 5" .. "\n" .. "RPM 3000\nBoost +12")
+	ExportScript.Tools.SendData(4026, "Takeoff 5" .. "\n" .. "RPM 3,000\nBoost +12")
 	
-	ExportScript.Tools.SendData(4027, "Inter. 60" .. "\n" .. "RPM 2850\nBoost +9\nRad 125°C\nOil 90°C")
-	ExportScript.Tools.SendData(4028, "Max Cont." .. "\n" .. "RPM 2650\nBoost +7\nRad 105°C\nOil 90°C")
-	ExportScript.Tools.SendData(4029, "Emergency 5" .. "\n" .. "RPM 3000\nBoost +25\nRad 125°C\nOil 105°C")
+	ExportScript.Tools.SendData(4027, "Inter. 60" .. "\n" .. "RPM 2,850\nBoost +9\nRad 125°C\nOil 90°C")
+	ExportScript.Tools.SendData(4028, "Max Cont." .. "\n" .. "RPM 2,650\nBoost +7\nRad 105°C\nOil 90°C")
+	ExportScript.Tools.SendData(4029, "Emergency 5" .. "\n" .. "RPM 3,000\nBoost +25\nRad 125°C\nOil 105°C")
 	
 	------------------------------
 	-- Max rate and range climb --
@@ -1336,7 +1338,7 @@ function ExportScript.BestPowerTiles(mainPanelDevice)
 	local maxRangeBoost = 7
 	local maxRangeGear = "Low Gear"
 	
-	maxRateAirspeed = 150
+	maxRateAirspeed = kts2mph(150)
 	local dial_altimeter_tenThousands = math.floor(mainPanelDevice:get_argument_value(70) * 100000)
 	local altitude = dial_altimeter_tenThousands
 	altitude = round(altitude,-1)
@@ -1379,18 +1381,18 @@ function ExportScript.BestPowerTiles(mainPanelDevice)
 	end
 	
 	ExportScript.Tools.SendData(4030, "Max Rate CLB" 
-										.. "\n" .. "RPM 2850"
+										.. "\n" .. "RPM 2,850"
 										.. "\n" .. "Boost +" .. maxRateBoost
 										.. "\n" .. maxRateGear
-										.. "\n" .. maxRateAirspeed .. " kts")
+										.. "\n" .. maxRateAirspeed .. " mph")
 										
 	
 										
 	ExportScript.Tools.SendData(4031, "Max Range CLB" 
-										.. "\n" .. "RPM " .. maxRangeRPM
+										.. "\n" .. "RPM " .. format_int(maxRangeRPM)
 										.. "\n" .. "Boost +" .. maxRangeBoost
 										.. "\n" .. maxRangeGear
-										.. "\n" .. maxRateAirspeed .. " kts")
+										.. "\n" .. maxRateAirspeed .. " mph")
 	
 	-----------------
 	-- Best Cruise --
@@ -1401,7 +1403,7 @@ function ExportScript.BestPowerTiles(mainPanelDevice)
 	local bestCruiseAirspeed = 170
 	
 	if altitude < 10000 then
-		bestCruiseAirspeed = 200
+		bestCruiseAirspeed = kts2mph(200)
 	end
 	
 	local guage_rpmLeft = math.floor(mainPanelDevice:get_argument_value(50) * 5000)
@@ -1421,7 +1423,7 @@ function ExportScript.BestPowerTiles(mainPanelDevice)
 										.. "\n" .. "RPM Min"
 										.. "\n" .. "Boost +7"
 										.. "\n" .. bestCruiseGear
-										.. "\n" .. bestCruiseAirspeed .. " kts")
+										.. "\n" .. bestCruiseAirspeed .. " mph")
 	--------------------------
 	-- Approach Speed Tiles --
 	-------------------------- page 106
@@ -1454,47 +1456,49 @@ function ExportScript.MaxSpeedTiles(mainPanelDevice)
 	local limitD
 	
 	if altitude < 10000 then
-		limitA = "370"
-		limitB = "330"
-		limitC = "350"
-		limitD = "305"
+		limitA = kts2mph(370)
+		limitB = kts2mph(330)
+		limitC = kts2mph(350)
+		limitD = kts2mph(305)
 	elseif altitude < 15000 then
-		limitA = "350"
-		limitB = "330"
-		limitC = "350"
-		limitD = "305"
+		limitA = kts2mph(350)
+		limitB = kts2mph(330)
+		limitC = kts2mph(350)
+		limitD = kts2mph(305)
 	elseif altitude < 20000 then
-		limitA = "320"
-		limitB = "320"
-		limitC = "320"
-		limitD = "305"
+		limitA = kts2mph(320)
+		limitB = kts2mph(320)
+		limitC = kts2mph(320)
+		limitD = kts2mph(305)
 	elseif altitude < 25000 then
-		limitA = "295"
-		limitB = "295"
-		limitC = "295"
-		limitD = "295"
+		limitA = kts2mph(295)
+		limitB = kts2mph(295)
+		limitC = kts2mph(295)
+		limitD = kts2mph(295)
 	elseif altitude < 30000 then
-		limitA = "260"
-		limitB = "260"
-		limitC = "260"
-		limitD = "260"
+		limitA = kts2mph(260)
+		limitB = kts2mph(260)
+		limitC = kts2mph(260)
+		limitD = kts2mph(260)
 	else --if altitude < 35000 then
-		limitA = "235"
-		limitB = "235"
-		limitC = "235"
-		limitD = "235"
+		limitA = kts2mph(235)
+		limitB = kts2mph(235)
+		limitC = kts2mph(235)
+		limitD = kts2mph(235)
 	end
 
 	--the manual numbers are in knots TODO convert if confirmed via ED
-	ExportScript.Tools.SendData(4034, "Slick " .. limitA .. " kts"
-										.. "\nTanks " .. limitB .. " kts"
-										.. "\nR.P. " .. limitC .. " kts"
-										.. "\nExt. " .. limitD .. " kts")
+	ExportScript.Tools.SendData(4034, "Slick " .. limitA .. " mph"
+										.. "\nTanks " .. limitB .. " mph"
+										.. "\nR.P. " .. limitC .. " mph"
+										.. "\nExt. " .. limitD .. " mph")
+										
+										
 	
-	ExportScript.Tools.SendData(4035, "BBay 305 kts"
-										.. "\nGear 155 kts"
-										.. "\nF25° 175 kts"
-										.. "\nFDWN 130 kts")
+	ExportScript.Tools.SendData(4035, "BBay " .. kts2mph(305) .. " mph"
+										.. "\nGear " .. kts2mph(155) .. " mph"
+										.. "\nF25° " .. kts2mph(175) .. " mph"
+										.. "\nFDWN " .. kts2mph(130) .. " mph")
 	
 end
 
@@ -1510,12 +1514,12 @@ function ExportScript.StallSpeeds(mainPanelDevice)
 	local dial_airspeed = math.floor(mainPanelDevice:get_argument_value(64) * 1000) 
 	
 	ExportScript.Tools.SendData(4036, "Stall Speeds"
-										.. "\nRet. 105 kts"
-										.. "\nExt. 100 kts"
-										.. "\nApp. 95 kts")
+										.. "\nRet. " .. kts2mph(105) .. " mph"
+										.. "\nExt. " .. kts2mph(100) .. " mph"
+										.. "\nApp. " .. kts2mph(95) .. " mph")
 			
 	local isAircraftStall = 0
-	local stallSpeed = 105*(1.151) --knots*(multiplier) = MPH
+	local stallSpeed = kts2mph(105)
 	if dial_airspeed <= stallSpeed then
 		isAircraftStall = 1
 	end
@@ -1707,3 +1711,11 @@ function format_int(number) --https://stackoverflow.com/questions/10989788/forma
   -- optional minus and fractional part back
   return minus .. int:reverse():gsub("^,", "") .. fraction
 end
+
+
+function kts2mph(kts) -- converts kts to floored mph
+	local mph = kts * 1.15078
+	mph = math.floor(mph)
+	return mph
+end
+
