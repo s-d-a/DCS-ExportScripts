@@ -135,7 +135,7 @@ ExportScript.ConfigEveryFrameArguments =
 	
 	[323] = "%.4f",		--	Left Mirror On at 1
 	
-	[338] = "%.4f",		--	Far Left Panel Light 1
+	[338] = "%.4f",		--	M24 (rear left) Radio Channel Indicator
 	[390] = "%.4f",		--	Far Left Panel Light 2
 	[391] = "%.4f",		--	Far Left Panel Light 3
 	[393] = "%.4f",		--	Far Left Panel Light 4
@@ -432,6 +432,7 @@ ExportScript.ConfigArguments =
 	[326] = "%.4f",		--	ARC-U2 switcher sensitivity B-M	ARC-U2-SENS-PTR
 	[327] = "%.4f",		--	ARC-U2 switcher COMPASS R-852â€“RADIOLINKâ€“COMPASS R-828	ARC-U2-COMPASS-CONNECT-PTR
 	
+	
 	-- ASO 2V
 	[1008] = "%0.1f",	--	Interval	ASO2V-INTERV-PTR
 	[965] = "%0.1f",	--	Serie	ASO2V-SERIES-PTR
@@ -684,6 +685,7 @@ ExportScript.ConfigArguments =
 	[26] = "%0.1f",		--	Mode Switch	RMI-KUR-2-PTR
 	[518] = "%.4f",		--	R-852 Channel Select	R852-CHANNEL-PTR
 	[517] = "%.4f",		--	R-852 Volume	R852-VOLUME-KNOB-PTR
+	[519] = "%.4f",		--	R-852 Channel Indicator
 	[375] = "%.4f",		--	R-863 ON/OFF	R863-ON-OFF-PTR
 	[506] = "%.4f",		--	R-863 FM/AM	R863-MODULATION-PTR
 	[513] = "%.4f",		--	R-863 Channel Select	R863-CHANNEL-PTR
@@ -691,6 +693,7 @@ ExportScript.ConfigArguments =
 	[511] = "%.4f",		--	R-863 Volume	R863-VOLUME-KNOB-PTR
 	[507] = "%.4f",		--	R-863 Emergency Receiver ON/OFF	R863-AP-PTR
 	[509] = "%.4f",		--	R-863 ARC-UD ON/OFF	R863-RK-PTR
+	[512] = "%.4f",		--	R-863 ARC-UD Channel Indicator
 	[378] = "%.4f",		--	Recorder MC 61 Power Switch	RECORDER-POWER-PTR
 	[1007] = "%.4f",	--	Recorder MC 61 AUTO/WORK	RECORDER-MODE-PTR
 	[381] = "%.4f",		--	Recorder MC 61 Brightness Knob	RECORDER-LTG-KNOB-PTR
@@ -893,6 +896,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 ]]
 
+	ExportScript.RadioFreqs(mainPanelDevice)
 	
 	
 	---------------------------------------------------
@@ -1436,3 +1440,73 @@ end
 --     Custom functions    --
 -----------------------------
 --TODO: Relocate functions to here
+
+function ExportScript.RadioFreqs(mainPanelDevice)
+-- free flight
+-- device 49 returns "127500088" R-863
+-- device 50 returns "2000001" Jardo-1
+-- device 51 returns "21500912" R-828
+-- device 52. returns "114116896" R-852
+	
+	local R863_channel = (mainPanelDevice:get_argument_value(512)) -- R863 left quarter panel
+	R863_channel = round(R863_channel * 20,0)
+	local R863_freq = (GetDevice(49):get_frequency())/1000000
+	--ExportScript.Tools.SendData(3000, string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	R863_freq = ExportScript.Tools.RoundFreqeuncy(R863_freq)
+	ExportScript.Tools.SendData(3031, "R-863\nCH " .. R863_channel .. "\n" .. R863_freq) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
+
+	local Jardo1_freq = (GetDevice(50):get_frequency())/1000
+	Jardo1_freq = ExportScript.Tools.RoundFreqeuncy(Jardo1_freq,"7.3",false,0.1)
+	ExportScript.Tools.SendData(3032, "Jardo 1\n" .. Jardo1_freq)
+	
+	local R828_channel = (mainPanelDevice:get_argument_value(338)) -- R828 rear left
+	R828_channel = round(R828_channel * 10,0)
+	local R828_freq = (GetDevice(51):get_frequency())/100000
+	R828_freq = ExportScript.Tools.RoundFreqeuncy(R828_freq)
+	ExportScript.Tools.SendData(3033, "R-828\nCH " .. R828_channel .. "\n" .. R828_freq)
+
+	local R852_channel = (mainPanelDevice:get_argument_value(519)) -- R863 left quarter panel
+	R852_channel = round(R852_channel * 10,0) + 1
+	local R852_freq = (GetDevice(52):get_frequency())/1000000
+	R852_freq = ExportScript.Tools.RoundFreqeuncy(R852_freq)
+	ExportScript.Tools.SendData(3034, "R-852\nCH " .. R852_channel .. "\n" .. R852_freq)
+end
+
+------------------------------
+-- General Helper Functions --
+------------------------------
+
+function ExportScript.Linearize(current_value, raw_tab, final_tab)
+  -- (c) scoobie
+  if current_value <= raw_tab[1] then
+    return final_tab[1] 
+  end
+  for index, value in pairs(raw_tab) do
+    if current_value <= value then
+      local ft = final_tab[index]
+      local rt = raw_tab[index]
+      return (current_value - rt) * (ft - final_tab[index - 1]) / (rt - raw_tab[index - 1]) + ft
+    end
+  end
+  -- we shouldn't be here, so something went wrong - return arbitrary max. final value, maybe the user will notice the problem:
+  return final_tab[#final_tab]
+end
+
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+
+function format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
+
+  local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+
+  -- reverse the int-string and append a comma to all blocks of 3 digits
+  int = int:reverse():gsub("(%d%d%d)", "%1,")
+
+  -- reverse the int-string back remove an optional comma and put the 
+  -- optional minus and fractional part back
+  return minus .. int:reverse():gsub("^,", "") .. fraction
+end
