@@ -2,8 +2,9 @@
 ---
 
 See forums post here: https://forums.eagle.ru/topic/283178-dcs-exportscripts-for-stream-deck-community-github-library/
+Read the wiki for export IDs: https://github.com/asherao/DCS-ExportScripts/wiki
 
-This is based off of DCS-ExportScripts (https://github.com/s-d-a/DCS-ExportScripts/wiki). The main purpose is to make customized exports for DCS-Interface (https://github.com/charlestytler/streamdeck-dcs-interface) for use with an Elgato Stream Deck 
+This is based off of DCS-ExportScripts (https://github.com/s-d-a/DCS-ExportScripts/wiki). The main purpose is to make customized exports for DCS-Interface (https://github.com/charlestytler/streamdeck-dcs-interface) for use with an Elgato Stream Deck. 
 
 Following module export luas have been modified. Applicable DCS-ExportScripts ID is in parentheses:
 - AJS37
@@ -15,15 +16,19 @@ Following module export luas have been modified. Applicable DCS-ExportScripts ID
 - F-16C
   - Added Flare and Chaff Count Readouts (3000 - 3006)
   - Added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument) (WIP) (44224 - 44231)
+- F-86F Sabre
+  - Added UHF channel and freq export
+  - Added ADF freq export
 - JF-17
   - Added JF-17
-- Mi-24P
+- Mi-24P (Stream Deck profile released: https://www.digitalcombatsimulator.com/en/files/3317284/)
   - Added DISS Info (3000 - 3002)
   - Added Ammo Counter Readouts (3011 - 3015)
   - Added Arc-15 Readouts (3020 - 3021)
   - Added Flare and Chaff Count Readouts (3022 - 3025)
   - Added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument) (44224 - 44231)
   - Added VRS Detection (3030)
+  - Added all radio exports (3031-3034)
 - Mosquito FB MkVI
   - Added Mosquito FB MkVI
   - Removed duplicate exports
