@@ -619,69 +619,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	------------------
 	ExportScript.mike(mainPanelDevice)	
 	
-	---------------------------------
-	-----Chaff and Flare Counts------
-	---------------------------------
 	
-	local expendableReadout = ExportScript.Tools.split(list_indication(16), "%c")--this contains the formated table of the CMDS numbers
-	
-	local CMDS_O1_Amount
-	local CMDS_O2_Amount
-	local CMDS_CH_Amount
-	local CMDS_FL_Amount
-	
-	if expendableReadout[2] == "CMDS_O1_Amount" then
-		CMDS_O1_Amount = expendableReadout[3]
-	elseif expendableReadout[5] == "CMDS_O1_Amount" then
-		CMDS_O1_Amount = expendableReadout[6]
-	elseif expendableReadout[8] == "CMDS_O1_Amount" then
-		CMDS_O1_Amount = expendableReadout[9]
-	elseif expendableReadout[11] == "CMDS_O1_Amount" then
-		CMDS_O1_Amount = expendableReadout[12]
-	else
-		CMDS_O1_Amount = "    "
-	end
-	
-	if expendableReadout[2] == "CMDS_O2_Amount" then
-		CMDS_O2_Amount = expendableReadout[3]
-	elseif expendableReadout[5] == "CMDS_O2_Amount" then
-		CMDS_O2_Amount = expendableReadout[6]
-	elseif expendableReadout[8] == "CMDS_O2_Amount" then
-		CMDS_O2_Amount = expendableReadout[9]
-	elseif expendableReadout[11] == "CMDS_O2_Amount" then
-		CMDS_O2_Amount = expendableReadout[12]
-	else
-		CMDS_O2_Amount = "    "
-	end
-	
-	if expendableReadout[2] == "CMDS_CH_Amount" then
-		CMDS_CH_Amount = expendableReadout[3]
-	elseif expendableReadout[5] == "CMDS_CH_Amount" then
-		CMDS_CH_Amount = expendableReadout[6]
-	elseif expendableReadout[8] == "CMDS_CH_Amount" then
-		CMDS_CH_Amount = expendableReadout[9]
-	elseif expendableReadout[11] == "CMDS_CH_Amount" then
-		CMDS_CH_Amount = expendableReadout[12]
-	else
-		CMDS_CH_Amount = "    "
-	end
-	
-	if expendableReadout[2] == "CMDS_FL_Amount" then
-		CMDS_FL_Amount = expendableReadout[3]
-	elseif expendableReadout[5] == "CMDS_FL_Amount" then
-		CMDS_FL_Amount = expendableReadout[6]
-	elseif expendableReadout[8] == "CMDS_FL_Amount" then
-		CMDS_FL_Amount = expendableReadout[9]
-	elseif expendableReadout[11] == "CMDS_FL_Amount" then
-		CMDS_FL_Amount = expendableReadout[12]
-	else
-		CMDS_FL_Amount = "    "
-	end
-	
-	ExportScript.Tools.SendData(3000, CMDS_O1_Amount)
-	ExportScript.Tools.SendData(3001, CMDS_O2_Amount)
-	ExportScript.Tools.SendData(3002, CMDS_CH_Amount)
-	ExportScript.Tools.SendData(3003, CMDS_FL_Amount)
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -716,117 +654,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
 	
-	--ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
-	
-	-- IFEI - Engine, Fuel and Clock informations
-	local lEngineFuelClock = ExportScript.Tools.getListIndicatorValue(5)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('EngineFuelClock: '..ExportScript.Tools.dump(lEngineFuelClock))
-	end
-
-	if lEngineFuelClock ~= nil and lEngineFuelClock.txt_RPM_R ~= nil then
-		-- Engine informations 3 character
-		ExportScript.Tools.SendData(2000, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_R, 3)) -- right RPM
-		ExportScript.Tools.SendData(2001, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_L, 3)) -- left RPM
-		ExportScript.Tools.SendData(2002, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_TEMP_R, 3)) -- right TEMP
-		ExportScript.Tools.SendData(2003, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_TEMP_L, 3)) -- left TEMP
-		ExportScript.Tools.SendData(2004, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_R, 3)) -- right Fuel flow
-		ExportScript.Tools.SendData(2005, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_L, 3)) -- left Fuel flow
-		ExportScript.Tools.SendData(2006, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_OilPress_R, 3)) -- right OilPress
-		ExportScript.Tools.SendData(2007, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_OilPress_L, 3)) -- left OilPress
-		
-		-- Fuel informations 6 character
-		ExportScript.Tools.SendData(2008, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FUEL_UP, 6)) -- up Fuel
-		ExportScript.Tools.SendData(2009, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FUEL_DOWN, 6)) -- down Fuel
-		ExportScript.Tools.SendData(2010, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_BINGO, 6)) -- BINGO 
-		
-		-- Clock 8 character
-		ExportScript.Tools.SendData(2011, ExportScript.Tools.DisplayFormat(string.format("%s¦%s¦%s", lEngineFuelClock.txt_CLOCK_H, lEngineFuelClock.txt_CLOCK_M, lEngineFuelClock.txt_CLOCK_S), 8)) -- Clock HH:MM:SS
-	else
-		-- Engine informations 3 character
-		ExportScript.Tools.SendData(2000, " ") -- right RPM
-		ExportScript.Tools.SendData(2001, " ") -- left RPM
-		ExportScript.Tools.SendData(2002, " ") -- right TEMP
-		ExportScript.Tools.SendData(2003, " ") -- left TEMP
-		ExportScript.Tools.SendData(2004, " ") -- right Fuel flow
-		ExportScript.Tools.SendData(2005, " ") -- left Fuel flow
-		ExportScript.Tools.SendData(2006, " ") -- right OilPress
-		ExportScript.Tools.SendData(2007, " ") -- left OilPress
-		
-		-- Fuel informations 6 character
-		ExportScript.Tools.SendData(2008, " ") -- up Fuel
-		ExportScript.Tools.SendData(2009, " ") -- down Fuel
-		ExportScript.Tools.SendData(2010, " ") -- BINGO 
-		
-		-- Clock 8 character
-		ExportScript.Tools.SendData(2011, " ") -- Clock HH:MM:SS
-	end
-	
-	-- UFC Displays
-	local lUFCDisplays = ExportScript.Tools.getListIndicatorValue(6)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('UFC: '..ExportScript.Tools.dump(lUFCDisplays))
-	end
-	
-	if lUFCDisplays ~= nil and lUFCDisplays.UFC_MainDummy ~= nil then
-		-- ScratchPadString Displays
-		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "_", "-") -- fix weil das ein - sein sollte
-		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "_", "-") -- fix weil das ein - sein sollte
-		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "~", "2") -- fix weil das eine 2 sein sollte
-		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "~", "2") -- fix weil das eine 2 sein sollte
-		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "`", "1") -- fix weil das eine 1 sein sollte
-		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "`", "1") -- fix weil das eine 1 sein sollte
-		ExportScript.Tools.SendData(2020, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString1Display, 2)) -- ScratchPadString1Display 2 character
-		ExportScript.Tools.SendData(2021, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString2Display, 2)) -- ScratchPadString2Display 2 character
-		ExportScript.Tools.SendData(2022, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
-
-		local lTmpCueing = " "
-		-- Option Displays
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing1 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2023, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay1)) -- OptionDisplay1 5 character
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing2 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2024, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay2)) -- OptionDisplay2 5 character
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing3 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2025, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay3)) -- OptionDisplay3 5 character
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing4 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2026, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay4)) -- OptionDisplay4 5 character
-		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing5 > 0 and "¦" or " ")
-		ExportScript.Tools.SendData(2027, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay5)) -- OptionDisplay5 5 character
-
-		-- Comm Displays
-		lUFCDisplays.UFC_Comm1Display = string.gsub(lUFCDisplays.UFC_Comm1Display, "~", "2") -- fix weil das eine 2 sein sollte
-		lUFCDisplays.UFC_Comm2Display = string.gsub(lUFCDisplays.UFC_Comm2Display, "~", "2") -- fix weil das eine 2 sein sollte
-		lUFCDisplays.UFC_Comm1Display = string.gsub(lUFCDisplays.UFC_Comm1Display, "`", "1") -- fix weil das eine 1 sein sollte
-		lUFCDisplays.UFC_Comm2Display = string.gsub(lUFCDisplays.UFC_Comm2Display, "`", "1") -- fix weil das eine 1 sein sollte
-		ExportScript.Tools.SendData(2028, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_Comm1Display, 2)) -- Comm1Display 2 character
-		ExportScript.Tools.SendData(2029, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_Comm2Display, 2)) -- Comm2Display 2 character
-	else
-		-- ScratchPadString Displays
-		ExportScript.Tools.SendData(2020, " ") -- ScratchPadString1Display 2 character
-		ExportScript.Tools.SendData(2021, " ") -- ScratchPadString2Display 2 character
-		ExportScript.Tools.SendData(2022, " ") -- ScratchPadNumberDisplay 7 character
-
-		-- Option Displays
-		ExportScript.Tools.SendData(2023, " ") -- OptionDisplay1 5 character
-		ExportScript.Tools.SendData(2024, " ") -- OptionDisplay2 5 character
-		ExportScript.Tools.SendData(2025, " ") -- OptionDisplay3 5 character
-		ExportScript.Tools.SendData(2026, " ") -- OptionDisplay4 5 character
-		ExportScript.Tools.SendData(2027, " ") -- OptionDisplay5 5 character
-
-		-- Comm Displays
-		ExportScript.Tools.SendData(2028, " ") -- Comm1Display 2 character
-		ExportScript.Tools.SendData(2029, " ") -- Comm2Display 2 character
-	end
-	
-	local lUHF1Radio = GetDevice(38)
-	ExportScript.Tools.SendData(2030, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF1Radio:get_frequency()/1000000))), 7)
-	
-	local lUHF2Radio = GetDevice(39)
-	ExportScript.Tools.SendData(2031, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF2Radio:get_frequency()/1000000), "7.3", false, 0.005)), 7)
-	
-	
-
-	
+	ExportScript.FuelInfo(mainPanelDevice)	
+	ExportScript.CountermeasureReadouts(mainPanelDevice)	
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -842,56 +671,7 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
 	]]
 
-	-- IFEI - Engine, Fuel and Clock informations
-	local lEngineFuelClock = ExportScript.Tools.getListIndicatorValue(5)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('EngineFuelClock: '..ExportScript.Tools.dump(lEngineFuelClock))
-	end
-
-	if lEngineFuelClock ~= nil and lEngineFuelClock.txt_RPM_R ~= nil then
-		-- Engine informations 3 character
-		ExportScript.Tools.SendDataDAC(2000, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_R, 3, "r", true)) -- right RPM
-		ExportScript.Tools.SendDataDAC(2001, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_L, 3, "r", true)) -- left RPM
-		ExportScript.Tools.SendDataDAC(2002, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_TEMP_R, 3, "r", true)) -- right TEMP
-		ExportScript.Tools.SendDataDAC(2003, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_TEMP_L, 3, "r", true)) -- left TEMP
-		ExportScript.Tools.SendDataDAC(2004, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_R, 3, "r", true)) -- right Fuel flow
-		ExportScript.Tools.SendDataDAC(2005, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_L, 3, "r", true)) -- left Fuel flow
-		ExportScript.Tools.SendDataDAC(2006, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_OilPress_R, 3, "r", true)) -- right OilPress
-		ExportScript.Tools.SendDataDAC(2007, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_OilPress_L, 3, "r", true)) -- left OilPress
-
 	
-		-- Fuel informations 6 character
-		ExportScript.Tools.SendDataDAC(2008, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FUEL_UP:match("%d+"), 6, "r", true)) -- up Fuel
-		ExportScript.Tools.SendDataDAC(2009, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FUEL_DOWN:match("%d+"), 6, "r", true)) -- down Fuel
-		ExportScript.Tools.SendDataDAC(2010, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_BINGO:match("%d+"), 6, "r", true)) -- BINGO 
-		
-		-- Clock 8 character
-		ExportScript.Tools.SendDataDAC(2011, ExportScript.Tools.DisplayFormat(string.format("%s.%s.$s", lEngineFuelClock.txt_CLOCK_H, lEngineFuelClock.txt_CLOCK_M, lEngineFuelClock.txt_CLOCK_S)), 8, "r", true) -- Clock HH:MM:SS
-	else
-		-- Engine informations 3 character
-		ExportScript.Tools.SendDataDAC(2000, "-") -- right RPM
-		ExportScript.Tools.SendDataDAC(2001, "-") -- left RPM
-		ExportScript.Tools.SendDataDAC(2002, "-") -- right TEMP
-		ExportScript.Tools.SendDataDAC(2003, "-") -- left TEMP
-		ExportScript.Tools.SendDataDAC(2004, "-") -- right Fuel flow
-		ExportScript.Tools.SendDataDAC(2005, "-") -- left Fuel flow
-		ExportScript.Tools.SendDataDAC(2006, "-") -- right OilPress
-		ExportScript.Tools.SendDataDAC(2007, "-") -- left OilPress
-		
-		-- Fuel informations 5 character
-		ExportScript.Tools.SendDataDAC(2008, "-") -- up Fuel
-		ExportScript.Tools.SendDataDAC(2009, "-") -- down Fuel
-		ExportScript.Tools.SendDataDAC(2010, "-") -- BINGO 
-		
-		-- Clock 8 character
-		ExportScript.Tools.SendDataDAC(2011, "-") -- Clock HH:MM:SS
-	end
-	
-	local lUHF1Radio = GetDevice(39)
-	ExportScript.Tools.SendDataDAC(2030, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF1Radio:get_frequency()/1000000))), 7)
-	
-	local lUHF2Radio = GetDevice(40)
-	ExportScript.Tools.SendDataDAC(2031, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF2Radio:get_frequency()/1000000), "7.3", false, 0.005)), 7)
 
 	--=====================================================================================
 	--[[
@@ -1202,11 +982,146 @@ function ExportScript.KollsmanWindowReadout(mainPanelDevice)
 	--	[59]  = "%.2f",   -- Barometric Setting Kollsman Window 4
 	-- the above are 0 = 0 , 0.50 = 5, 1 = 0
 	-- they are tumblers
+end
+
+function ExportScript.FuelInfo(mainPanelDevice)	
+	local FuelTotalizer_10k = mainPanelDevice:get_argument_value(730) * 100000
+	local FuelTotalizer_1k = math.floor(mainPanelDevice:get_argument_value(731) * 10) * 1000 -- this method counters the odd rounding seen with roller counters
+	local FuelTotalizer_100 = mainPanelDevice:get_argument_value(732) * 1000
+	
+	local totalFuel = FuelTotalizer_10k + FuelTotalizer_1k + FuelTotalizer_100
+	totalFuel = round(totalFuel, 0)
+	totalFuel = format_int(totalFuel)
+	ExportScript.Tools.SendData(3006, "Fuel LBS\n" .. totalFuel)
 	
 	
+	local FuelFlowCounter_10k = mainPanelDevice:get_argument_value(88) * 100000
+	local FuelFlowCounter_1k = math.floor(mainPanelDevice:get_argument_value(89) * 10) * 1000 -- this method counters the odd rounding seen with roller counters
+	local FuelFlowCounter_100 = mainPanelDevice:get_argument_value(90) * 1000
 	
+	local totalFuelFlowCounter = FuelFlowCounter_10k + FuelFlowCounter_1k + FuelFlowCounter_100
+	totalFuelFlowCounter = round(totalFuelFlowCounter, -1)
+	totalFuelFlowCounter = format_int(totalFuelFlowCounter)
 	
+	ExportScript.Tools.SendData(3007, "Fuel Flow\n" .. totalFuelFlowCounter)
+end
+
+function ExportScript.CountermeasureReadouts(mainPanelDevice)
 	
+	local expendableReadout = ExportScript.Tools.split(list_indication(16), "%c")--this contains the formated table of the CMDS numbers
 	
+	local CMDS_O1_Amount
+	local CMDS_O2_Amount
+	local CMDS_CH_Amount
+	local CMDS_FL_Amount
 	
+	if expendableReadout[2] == "CMDS_O1_Amount" then
+		CMDS_O1_Amount = expendableReadout[3]
+	elseif expendableReadout[5] == "CMDS_O1_Amount" then
+		CMDS_O1_Amount = expendableReadout[6]
+	elseif expendableReadout[8] == "CMDS_O1_Amount" then
+		CMDS_O1_Amount = expendableReadout[9]
+	elseif expendableReadout[11] == "CMDS_O1_Amount" then
+		CMDS_O1_Amount = expendableReadout[12]
+	else
+		CMDS_O1_Amount = "--"
+	end
+	
+	if expendableReadout[2] == "CMDS_O2_Amount" then
+		CMDS_O2_Amount = expendableReadout[3]
+	elseif expendableReadout[5] == "CMDS_O2_Amount" then
+		CMDS_O2_Amount = expendableReadout[6]
+	elseif expendableReadout[8] == "CMDS_O2_Amount" then
+		CMDS_O2_Amount = expendableReadout[9]
+	elseif expendableReadout[11] == "CMDS_O2_Amount" then
+		CMDS_O2_Amount = expendableReadout[12]
+	else
+		CMDS_O2_Amount = "--"
+	end
+	
+	if expendableReadout[2] == "CMDS_CH_Amount" then
+		CMDS_CH_Amount = expendableReadout[3]
+	elseif expendableReadout[5] == "CMDS_CH_Amount" then
+		CMDS_CH_Amount = expendableReadout[6]
+	elseif expendableReadout[8] == "CMDS_CH_Amount" then
+		CMDS_CH_Amount = expendableReadout[9]
+	elseif expendableReadout[11] == "CMDS_CH_Amount" then
+		CMDS_CH_Amount = expendableReadout[12]
+	else
+		CMDS_CH_Amount = "--"
+	end
+	
+	if expendableReadout[2] == "CMDS_FL_Amount" then
+		CMDS_FL_Amount = expendableReadout[3]
+	elseif expendableReadout[5] == "CMDS_FL_Amount" then
+		CMDS_FL_Amount = expendableReadout[6]
+	elseif expendableReadout[8] == "CMDS_FL_Amount" then
+		CMDS_FL_Amount = expendableReadout[9]
+	elseif expendableReadout[11] == "CMDS_FL_Amount" then
+		CMDS_FL_Amount = expendableReadout[12]
+	else
+		CMDS_FL_Amount = "--"
+	end
+	
+	CMDS_O1_Amount = trim(CMDS_O1_Amount)
+	CMDS_O2_Amount = trim(CMDS_O2_Amount)
+	CMDS_CH_Amount = trim(CMDS_CH_Amount)
+	CMDS_FL_Amount = trim(CMDS_FL_Amount)
+	
+	ExportScript.Tools.SendData(3000, "OTHER1\n" .. CMDS_O1_Amount)
+	ExportScript.Tools.SendData(3001, "OTHER2\n" .. CMDS_O2_Amount)
+	ExportScript.Tools.SendData(3002, "CHAFF\n" .. CMDS_CH_Amount)
+	ExportScript.Tools.SendData(3003, "FLARE\n" .. CMDS_FL_Amount)
+	
+	ExportScript.Tools.SendData(3004, "CH " .. CMDS_CH_Amount
+										.. "\nFL " .. CMDS_FL_Amount)
+	
+	ExportScript.Tools.SendData(3005, "O1 " .. CMDS_O1_Amount
+										.. "\nO2 " .. CMDS_O2_Amount
+										.. "\nCH " .. CMDS_CH_Amount
+										.. "\nFL " .. CMDS_FL_Amount)
+end
+
+------------------------------
+-- General Helper Functions --
+------------------------------
+
+function ExportScript.Linearize(current_value, raw_tab, final_tab)
+  -- (c) scoobie
+  if current_value <= raw_tab[1] then
+    return final_tab[1] 
+  end
+  for index, value in pairs(raw_tab) do
+    if current_value <= value then
+      local ft = final_tab[index]
+      local rt = raw_tab[index]
+      return (current_value - rt) * (ft - final_tab[index - 1]) / (rt - raw_tab[index - 1]) + ft
+    end
+  end
+  -- we shouldn't be here, so something went wrong - return arbitrary max. final value, maybe the user will notice the problem:
+  return final_tab[#final_tab]
+end
+
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+
+function format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
+
+  local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+
+  -- reverse the int-string and append a comma to all blocks of 3 digits
+  int = int:reverse():gsub("(%d%d%d)", "%1,")
+
+  -- reverse the int-string back remove an optional comma and put the 
+  -- optional minus and fractional part back
+  return minus .. int:reverse():gsub("^,", "") .. fraction
+end
+
+function trim(s) --http://lua-users.org/wiki/CommonFunctions
+  -- from PiL2 20.4
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
