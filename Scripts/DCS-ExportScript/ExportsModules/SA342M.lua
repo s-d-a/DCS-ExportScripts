@@ -429,7 +429,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	end
 	ExportScript.Tools.SendData(102, string.format("%.4f", ADF_Aiguille_large))
 	
-	ExportScript.ADF(mainPanelDevice)
+	ExportScript.Radios(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -464,68 +464,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
-	-- UHF Radio 
-	---------------------------------------------------
-	local lUHFRadio = GetDevice(31)
-	if lUHFRadio:is_on() then
-		--ExportScript.Tools.SendData(2000, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
-		--ExportScript.Tools.WriteToLog('UHF_Freq: '..ExportScript.Tools.dump(list_indication(5)))
-
-		local lUHFRadioFreq = ExportScript.Tools.getListIndicatorValue(5)
-
-		if lUHFRadioFreq ~= nil and lUHFRadioFreq.UHF_Freq ~= nil then
-			ExportScript.Tools.SendData(2000, string.format("%s", lUHFRadioFreq.UHF_Freq))
-		end
-	else
-		ExportScript.Tools.SendData(2000, " ")
-	end
-
-	-- AM Radio 
-	---------------------------------------------------
-	local lAMRadio = GetDevice(5)
-	if lAMRadio:is_on() then
-		--ExportScript.Tools.SendData(2001, string.format("%.3f", lAMRadio:get_frequency()/1000000))
-		ExportScript.Tools.SendData(2001, ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000))
-	end
-
-	-- FM Radio PR4G
-	---------------------------------------------------
-	local lFMRadio = GetDevice(28)
-	if lFMRadio:is_on() then
-		--ExportScript.Tools.SendData(2002, string.format("%.3f", lFMRadio:get_frequency()/1000000))
-		--ExportScript.Tools.WriteToLog('FM_Freq: '..ExportScript.Tools.dump(list_indication(4)))
-
-		local lFMRadioFreq = ExportScript.Tools.getListIndicatorValue(4)
-
-		if lFMRadioFreq ~= nil and lFMRadioFreq.FM_Freq ~= nil then
-			ExportScript.Tools.SendData(2002, string.format("%s", lFMRadioFreq.FM_Freq))
-		end
-	else
-		ExportScript.Tools.SendData(2002, " ")
-	end
-
-	-- [273] = "%.3f",	-- FM RADIO - Chanel Selector {0.0,0.143,0.286,0.429,0.572,0.715,0.858,1.0} -- laut clickabledata.lua
-	-- [273] = "%.1f",	-- FM RADIO - Chanel Selector {0.0,0.2,0.3,0.5,0.6,0.8,0.9,1.1} -- gerundet
-	local lFM_RADIO_PRESET = {[0.0]="1",[0.2]="2",[0.3]="3",[0.5]="4",[0.6]="5",[0.8]="6",[0.9]="0",[1.1]="R"}
-	ExportScript.Tools.SendData(2003, lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
 	
-	-- Weapon Panel
-	---------------------------------------------------
-	if mainPanelDevice:get_argument_value(354) >= 0.0 then -- Weapon panel is On
-		local lWeaponPanelDisplays = ExportScript.Tools.getListIndicatorValue(8)
-
-		if lWeaponPanelDisplays ~= nil then
-			if lWeaponPanelDisplays.LEFT_screen ~= nil then
-				ExportScript.Tools.SendData(2004, string.format("%s", lWeaponPanelDisplays.LEFT_screen))
-			end
-			if lWeaponPanelDisplays.RIGHT_screen ~= nil then
-				ExportScript.Tools.SendData(2005, string.format("%s", lWeaponPanelDisplays.RIGHT_screen))
-			end
-		end
-	else
-		ExportScript.Tools.SendData(2004, "-")
-		ExportScript.Tools.SendData(2005, "-")
-	end
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -562,7 +501,9 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	local lAMRadio = GetDevice(5)
 	if lAMRadio:is_on() then
 		--ExportScript.Tools.SendDataDAC("2001", string.format("%.3f", lAMRadio:get_frequency()/1000000))
-		ExportScript.Tools.SendDataDAC("2001", ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000))
+		ExportScript.Tools.SendDataDAC("2001", "VHF AM\n" .. ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000))
+	else
+		ExportScript.Tools.SendDataDAC("2001", "VHF AM\n---.---")
 	end
 
 	-- FM Radio PR4G
@@ -745,8 +686,88 @@ end
 -----------------------------
 
 
-function ExportScript.ADF(mainPanelDevice)
+function ExportScript.Radios(mainPanelDevice)
 
+	-- UHF Radio 
+	---------------------------------------------------
+	local lUHFRadio = GetDevice(31)
+	local UHF_readout
+	if lUHFRadio:is_on() then
+		--ExportScript.Tools.SendData(2000, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
+		--ExportScript.Tools.WriteToLog('UHF_Freq: '..ExportScript.Tools.dump(list_indication(5)))
+
+		local lUHFRadioFreq = ExportScript.Tools.getListIndicatorValue(5)
+
+		if lUHFRadioFreq ~= nil and lUHFRadioFreq.UHF_Freq ~= nil then
+			UHF_readout = string.format("%s", lUHFRadioFreq.UHF_Freq)
+		end
+	else
+		UHF_readout = string.format("%s", "---.---")
+	end
+	ExportScript.Tools.SendData(2002, "UHF\n" .. UHF_readout)
+
+	-- AM Radio 
+	---------------------------------------------------
+	local lAMRadio = GetDevice(5)
+	local VHFAM_readout
+	if lAMRadio:is_on() then
+		--ExportScript.Tools.SendData(2001, string.format("%.3f", lAMRadio:get_frequency()/1000000))
+		VHFAM_readout = ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000)
+	else
+		VHFAM_readout = string.format("%s", "---.---")
+	end
+	ExportScript.Tools.SendData(2003, "VHF AM\n" .. VHFAM_readout)
+
+	-- FM Radio PR4G
+	---------------------------------------------------
+	
+	local lFM_RADIO_PRESET = {[0.0]="1",[0.2]="2",[0.3]="3",[0.5]="4",[0.6]="5",[0.8]="6",[0.9]="0",[1.1]="R"}
+	ExportScript.Tools.SendData(2004, "CH " .. lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
+	
+	local lFMRadio = GetDevice(28)
+	local VHFFM_readout
+	if lFMRadio:is_on() then
+		--ExportScript.Tools.SendData(2002, string.format("%.3f", lFMRadio:get_frequency()/1000000))
+		--ExportScript.Tools.WriteToLog('FM_Freq: '..ExportScript.Tools.dump(list_indication(4)))
+
+		local lFMRadioFreq = ExportScript.Tools.getListIndicatorValue(4)
+
+		if lFMRadioFreq ~= nil and lFMRadioFreq.FM_Freq ~= nil then
+			VHFFM_readout = string.format("%s", lFMRadioFreq.FM_Freq)
+			ExportScript.Tools.SendData(2005, "VHF FM\n" ..  string.format("%s", lFMRadioFreq.FM_Freq) .. "\n" ..
+																	"CH " .. lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
+		end
+	else
+		VHFFM_readout = string.format("%s", "---.---")
+		ExportScript.Tools.SendData(2005, "VHF FM\n--.---\nCH " .. lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
+	end
+	ExportScript.Tools.SendData(2006, "VHF FM\n" .. VHFFM_readout)
+	-- [273] = "%.3f",	-- FM RADIO - Chanel Selector {0.0,0.143,0.286,0.429,0.572,0.715,0.858,1.0} -- laut clickabledata.lua
+	-- [273] = "%.1f",	-- FM RADIO - Chanel Selector {0.0,0.2,0.3,0.5,0.6,0.8,0.9,1.1} -- gerundet
+	
+	
+	--ExportScript.Tools.SendData(2012, "CH " .. lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
+	-- Weapon Panel
+	---------------------------------------------------
+	if mainPanelDevice:get_argument_value(354) >= 0.0 then -- Weapon panel is On
+		local lWeaponPanelDisplays = ExportScript.Tools.getListIndicatorValue(8)
+
+		if lWeaponPanelDisplays ~= nil then
+			if lWeaponPanelDisplays.LEFT_screen ~= nil then
+				ExportScript.Tools.SendData(2000, string.format("%s", lWeaponPanelDisplays.LEFT_screen))
+			end
+			if lWeaponPanelDisplays.RIGHT_screen ~= nil then
+				ExportScript.Tools.SendData(2001, string.format("%s", lWeaponPanelDisplays.RIGHT_screen))
+			end
+		end
+	else
+		ExportScript.Tools.SendData(2000, "-")
+		ExportScript.Tools.SendData(2001, "-")
+	end
+
+	---------
+	-- ADF --
+	---------
 	local ADF_nav1_centaine = mainPanelDevice:get_argument_value(158)
 	local ADF_nav1_dizaine = mainPanelDevice:get_argument_value(159)
 	local ADF_nav1_unite = mainPanelDevice:get_argument_value(160)
@@ -954,7 +975,7 @@ function ExportScript.ADF(mainPanelDevice)
 	if ADF_RADIO_Select > 0.01 then
 		isADF1Selected = 0
 	end
-	ExportScript.Tools.SendData(2006, isADF1Selected)
+	ExportScript.Tools.SendData(2007, isADF1Selected)
 	
 	local ADF_display
 	if isADF1Selected == 1 then
@@ -963,16 +984,32 @@ function ExportScript.ADF(mainPanelDevice)
 		ADF_freqDisplay = (ADF_nav2_centaine .. ADF_nav2_dizaine .. ADF_nav2_unite .. "." .. ADF_nav2_dec)
 	end
 	
-	ExportScript.Tools.SendData(2007, "ADF\n\n" .. ADF_freqDisplay)
-	ExportScript.Tools.SendData(2008, "ADF\n" .. ADF_freqDisplay)
+	local ADF_shortandSelect
+	if isADF1Selected == 1 then
+		ADF_shortandSelect = "A1"
+	else
+		ADF_shortandSelect = "A2"
+	end
 	
-	ExportScript.Tools.SendData(2009, "ADF\n" .. ADF_nav1_centaine .. ADF_nav1_dizaine .. ADF_nav1_unite .. "." .. ADF_nav1_dec .. "\n" .. ADF_nav2_centaine .. ADF_nav2_dizaine .. ADF_nav2_unite .. "." .. ADF_nav2_dec)
+	ExportScript.Tools.SendData(2008, "ADF\n\n" .. ADF_freqDisplay)
+	ExportScript.Tools.SendData(2009, "ADF\n" .. ADF_freqDisplay)
+	
+	ExportScript.Tools.SendData(2010, "ADF\n" .. ADF_nav1_centaine .. ADF_nav1_dizaine .. ADF_nav1_unite .. "." .. ADF_nav1_dec .. "\n" .. ADF_nav2_centaine .. ADF_nav2_dizaine .. ADF_nav2_unite .. "." .. ADF_nav2_dec)
 
 	--helpers for the knob readouts
-	ExportScript.Tools.SendData(2010, ADF_nav1_unite .. "." .. ADF_nav1_dec)
-	ExportScript.Tools.SendData(2011, ADF_nav2_unite .. "." .. ADF_nav2_dec)
+	ExportScript.Tools.SendData(2011, ADF_nav1_unite .. "." .. ADF_nav1_dec)
+	ExportScript.Tools.SendData(2012, ADF_nav2_unite .. "." .. ADF_nav2_dec)
 	
 	
+	---------------------
+	-- All Radios Tile --
+	---------------------
+
+	ExportScript.Tools.SendData(2013, "U " .. UHF_readout
+										.. "\n" .. "VA " .. VHFAM_readout
+										.. "\n" .. "VF " .. VHFFM_readout
+										.. "\n" .. ADF_shortandSelect .. " " .. ADF_freqDisplay)
+										
 end
 
 
