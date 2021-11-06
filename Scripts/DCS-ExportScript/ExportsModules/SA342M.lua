@@ -428,6 +428,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		end
 	end
 	ExportScript.Tools.SendData(102, string.format("%.4f", ADF_Aiguille_large))
+	
+	ExportScript.ADF(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -741,3 +743,296 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+
+function ExportScript.ADF(mainPanelDevice)
+
+	local ADF_nav1_centaine = mainPanelDevice:get_argument_value(158)
+	local ADF_nav1_dizaine = mainPanelDevice:get_argument_value(159)
+	local ADF_nav1_unite = mainPanelDevice:get_argument_value(160)
+	local ADF_nav1_dec = mainPanelDevice:get_argument_value(161)
+	
+	if ADF_nav1_centaine < 0.05 then
+		ADF_nav1_centaine = 0
+	elseif ADF_nav1_centaine < 0.15 then
+		ADF_nav1_centaine = 1
+	elseif ADF_nav1_centaine < 0.25 then
+		ADF_nav1_centaine = 2
+	elseif ADF_nav1_centaine < 0.35 then
+		ADF_nav1_centaine = 3
+	elseif ADF_nav1_centaine < 0.45 then
+		ADF_nav1_centaine = 4
+	elseif ADF_nav1_centaine < 0.55 then
+		ADF_nav1_centaine = 5
+	elseif ADF_nav1_centaine < 0.65 then
+		ADF_nav1_centaine = 6
+	elseif ADF_nav1_centaine < 0.75 then
+		ADF_nav1_centaine = 7
+	elseif ADF_nav1_centaine < 0.85 then
+		ADF_nav1_centaine = 8
+	elseif ADF_nav1_centaine < 0.95 then
+		ADF_nav1_centaine = 9
+	else
+		ADF_nav1_centaine = 0
+	end
+	
+	if ADF_nav1_dizaine < 0.05 then
+		ADF_nav1_dizaine = 0
+	elseif ADF_nav1_dizaine < 0.15 then
+		ADF_nav1_dizaine = 1
+	elseif ADF_nav1_dizaine < 0.25 then
+		ADF_nav1_dizaine = 2
+	elseif ADF_nav1_dizaine < 0.35 then
+		ADF_nav1_dizaine = 3
+	elseif ADF_nav1_dizaine < 0.45 then
+		ADF_nav1_dizaine = 4
+	elseif ADF_nav1_dizaine < 0.55 then
+		ADF_nav1_dizaine = 5
+	elseif ADF_nav1_dizaine < 0.65 then
+		ADF_nav1_dizaine = 6
+	elseif ADF_nav1_dizaine < 0.75 then
+		ADF_nav1_dizaine = 7
+	elseif ADF_nav1_dizaine < 0.85 then
+		ADF_nav1_dizaine = 8
+	elseif ADF_nav1_dizaine < 0.95 then
+		ADF_nav1_dizaine = 9
+	else
+		ADF_nav1_dizaine = 0
+	end
+	
+	if ADF_nav1_unite < 0.05 then
+		ADF_nav1_unite = 0
+	elseif ADF_nav1_unite < 0.15 then
+		ADF_nav1_unite = 1
+	elseif ADF_nav1_unite < 0.25 then
+		ADF_nav1_unite = 2
+	elseif ADF_nav1_unite < 0.35 then
+		ADF_nav1_unite = 3
+	elseif ADF_nav1_unite < 0.45 then
+		ADF_nav1_unite = 4
+	elseif ADF_nav1_unite < 0.55 then
+		ADF_nav1_unite = 5
+	elseif ADF_nav1_unite < 0.65 then
+		ADF_nav1_unite = 6
+	elseif ADF_nav1_unite < 0.75 then
+		ADF_nav1_unite = 7
+	elseif ADF_nav1_unite < 0.85 then
+		ADF_nav1_unite = 8
+	elseif ADF_nav1_unite < 0.95 then
+		ADF_nav1_unite = 9
+	else
+		ADF_nav1_unite = 0
+	end
+	
+	if ADF_nav1_dec < 0.05 then
+		ADF_nav1_dec = 0
+	elseif ADF_nav1_dec < 0.15 then
+		ADF_nav1_dec = 1
+	elseif ADF_nav1_dec < 0.25 then
+		ADF_nav1_dec = 2
+	elseif ADF_nav1_dec < 0.35 then
+		ADF_nav1_dec = 3
+	elseif ADF_nav1_dec < 0.45 then
+		ADF_nav1_dec = 4
+	elseif ADF_nav1_dec < 0.55 then
+		ADF_nav1_dec = 5
+	elseif ADF_nav1_dec < 0.65 then
+		ADF_nav1_dec = 6
+	elseif ADF_nav1_dec < 0.75 then
+		ADF_nav1_dec = 7
+	elseif ADF_nav1_dec < 0.85 then
+		ADF_nav1_dec = 8
+	elseif ADF_nav1_dec < 0.95 then
+		ADF_nav1_dec = 9
+	else
+		ADF_nav1_dec = 0
+	end
+	
+	local ADF_nav2_centaine = mainPanelDevice:get_argument_value(162)
+	local ADF_nav2_dizaine = mainPanelDevice:get_argument_value(163)
+	local ADF_nav2_unite = mainPanelDevice:get_argument_value(164)
+	local ADF_nav2_dec = mainPanelDevice:get_argument_value(165)
+	
+	if ADF_nav2_centaine < 0.05 then
+		ADF_nav2_centaine = 0
+	elseif ADF_nav2_centaine < 0.15 then
+		ADF_nav2_centaine = 1
+	elseif ADF_nav2_centaine < 0.25 then
+		ADF_nav2_centaine = 2
+	elseif ADF_nav2_centaine < 0.35 then
+		ADF_nav2_centaine = 3
+	elseif ADF_nav2_centaine < 0.45 then
+		ADF_nav2_centaine = 4
+	elseif ADF_nav2_centaine < 0.55 then
+		ADF_nav2_centaine = 5
+	elseif ADF_nav2_centaine < 0.65 then
+		ADF_nav2_centaine = 6
+	elseif ADF_nav2_centaine < 0.75 then
+		ADF_nav2_centaine = 7
+	elseif ADF_nav2_centaine < 0.85 then
+		ADF_nav2_centaine = 8
+	elseif ADF_nav2_centaine < 0.95 then
+		ADF_nav2_centaine = 9
+	else
+		ADF_nav2_centaine = 0
+	end
+	
+	if ADF_nav2_dizaine < 0.05 then
+		ADF_nav2_dizaine = 0
+	elseif ADF_nav2_dizaine < 0.15 then
+		ADF_nav2_dizaine = 1
+	elseif ADF_nav2_dizaine < 0.25 then
+		ADF_nav2_dizaine = 2
+	elseif ADF_nav2_dizaine < 0.35 then
+		ADF_nav2_dizaine = 3
+	elseif ADF_nav2_dizaine < 0.45 then
+		ADF_nav2_dizaine = 4
+	elseif ADF_nav2_dizaine < 0.55 then
+		ADF_nav2_dizaine = 5
+	elseif ADF_nav2_dizaine < 0.65 then
+		ADF_nav2_dizaine = 6
+	elseif ADF_nav2_dizaine < 0.75 then
+		ADF_nav2_dizaine = 7
+	elseif ADF_nav2_dizaine < 0.85 then
+		ADF_nav2_dizaine = 8
+	elseif ADF_nav2_dizaine < 0.95 then
+		ADF_nav2_dizaine = 9
+	else
+		ADF_nav2_dizaine = 0
+	end
+	
+	if ADF_nav2_unite < 0.05 then
+		ADF_nav2_unite = 0
+	elseif ADF_nav2_unite < 0.15 then
+		ADF_nav2_unite = 1
+	elseif ADF_nav2_unite < 0.25 then
+		ADF_nav2_unite = 2
+	elseif ADF_nav2_unite < 0.35 then
+		ADF_nav2_unite = 3
+	elseif ADF_nav2_unite < 0.45 then
+		ADF_nav2_unite = 4
+	elseif ADF_nav2_unite < 0.55 then
+		ADF_nav2_unite = 5
+	elseif ADF_nav2_unite < 0.65 then
+		ADF_nav2_unite = 6
+	elseif ADF_nav2_unite < 0.75 then
+		ADF_nav2_unite = 7
+	elseif ADF_nav2_unite < 0.85 then
+		ADF_nav2_unite = 8
+	elseif ADF_nav2_unite < 0.95 then
+		ADF_nav2_unite = 9
+	else
+		ADF_nav2_unite = 0
+	end
+	
+	if ADF_nav2_dec < 0.05 then
+		ADF_nav2_dec = 0
+	elseif ADF_nav2_dec < 0.15 then
+		ADF_nav2_dec = 1
+	elseif ADF_nav2_dec < 0.25 then
+		ADF_nav2_dec = 2
+	elseif ADF_nav2_dec < 0.35 then
+		ADF_nav2_dec = 3
+	elseif ADF_nav2_dec < 0.45 then
+		ADF_nav2_dec = 4
+	elseif ADF_nav2_dec < 0.55 then
+		ADF_nav2_dec = 5
+	elseif ADF_nav2_dec < 0.65 then
+		ADF_nav2_dec = 6
+	elseif ADF_nav2_dec < 0.75 then
+		ADF_nav2_dec = 7
+	elseif ADF_nav2_dec < 0.85 then
+		ADF_nav2_dec = 8
+	elseif ADF_nav2_dec < 0.95 then
+		ADF_nav2_dec = 9
+	else
+		ADF_nav2_dec = 0
+	end
+	
+	local ADF_RADIO_Select = mainPanelDevice:get_argument_value(166)
+	local isADF1Selected = 1
+	if ADF_RADIO_Select > 0.01 then
+		isADF1Selected = 0
+	end
+	ExportScript.Tools.SendData(2006, isADF1Selected)
+	
+	local ADF_display
+	if isADF1Selected == 1 then
+		ADF_freqDisplay = (ADF_nav1_centaine .. ADF_nav1_dizaine .. ADF_nav1_unite .. "." .. ADF_nav1_dec)
+	else
+		ADF_freqDisplay = (ADF_nav2_centaine .. ADF_nav2_dizaine .. ADF_nav2_unite .. "." .. ADF_nav2_dec)
+	end
+	
+	ExportScript.Tools.SendData(2007, "ADF\n\n" .. ADF_freqDisplay)
+	ExportScript.Tools.SendData(2008, "ADF\n" .. ADF_freqDisplay)
+	
+	ExportScript.Tools.SendData(2009, "ADF\n" .. ADF_nav1_centaine .. ADF_nav1_dizaine .. ADF_nav1_unite .. "." .. ADF_nav1_dec .. "\n" .. ADF_nav2_centaine .. ADF_nav2_dizaine .. ADF_nav2_unite .. "." .. ADF_nav2_dec)
+
+	--helpers for the knob readouts
+	ExportScript.Tools.SendData(2010, ADF_nav1_unite .. "." .. ADF_nav1_dec)
+	ExportScript.Tools.SendData(2011, ADF_nav2_unite .. "." .. ADF_nav2_dec)
+	
+	
+end
+
+
+------------------------------
+-- General Helper Functions --
+------------------------------
+
+function ExportScript.Linearize(current_value, raw_tab, final_tab)
+  -- (c) scoobie
+  if current_value <= raw_tab[1] then
+    return final_tab[1] 
+  end
+  for index, value in pairs(raw_tab) do
+    if current_value <= value then
+      local ft = final_tab[index]
+      local rt = raw_tab[index]
+      return (current_value - rt) * (ft - final_tab[index - 1]) / (rt - raw_tab[index - 1]) + ft
+    end
+  end
+  -- we shouldn't be here, so something went wrong - return arbitrary max. final value, maybe the user will notice the problem:
+  return final_tab[#final_tab]
+end
+
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+
+function format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
+
+  local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+
+  -- reverse the int-string and append a comma to all blocks of 3 digits
+  int = int:reverse():gsub("(%d%d%d)", "%1,")
+
+  -- reverse the int-string back remove an optional comma and put the 
+  -- optional minus and fractional part back
+  return minus .. int:reverse():gsub("^,", "") .. fraction
+end
+
+function trim(s) --http://lua-users.org/wiki/CommonFunctions
+  -- from PiL2 20.4
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+
+
+
+
+-- Notes
+
+--[[
+local a = ExportScript.Tools.split(list_indication(3), "%c")
+return a
+contains the nav screen output
+
+add ADF radio output
+
+add radar altimeter with warning
+
+]]--
