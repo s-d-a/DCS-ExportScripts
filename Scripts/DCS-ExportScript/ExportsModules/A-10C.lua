@@ -832,6 +832,18 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- Preset is buggy
 	local lVHF_FM_RADIO_PRESET = {[0.0]="1",[0.01]="2",[0.02]="3",[0.03]="4",[0.04]="5",[0.05]="6",[0.06]="7",[0.07]="8",[0.08]="9",[0.09]="10",[0.10]="11",[0.11]="12",[0.12]="13",[0.13]="14",[0.14]="15",[0.15]="16",[0.16]="17",[0.17]="18",[0.18]="19",[0.19]="20",[0.20]="1"}
 	ExportScript.Tools.SendData(2005, lVHF_FM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(151), 2, "ceil")])
+	
+	-- Calculate Total Fuel
+	--------------------------------------------------------
+	local lFuelQuantityCounterTenthOfThous = mainPanelDevice:get_argument_value(90) * 10000 			-- {0.0, 10.0} {0.0, 1.0}
+	local lFuelQuantityCounterThousands = mainPanelDevice:get_argument_value(91) * 1000 				-- {0.0, 10.0} {0.0, 1.0}
+	local lFuelQuantityCounterHundreds = mainPanelDevice:get_argument_value(92) * 100					-- {0.0, 10.0} {0.0, 1.0}
+	-- orginal
+	local lFuelQuantityCounter = ((lFuelQuantityCounterTenthOfThous + lFuelQuantityCounterThousands + lFuelQuantityCounterHundreds) / 10) 		
+	ExportScript.Tools.SendData("2007", string.format("%0.0f", lFuelQuantityCounter).."00")
+	-- exact
+	--local lFuelQuantityCounter = ((lFuelQuantityCounterTenthOfThous + lFuelQuantityCounterThousands + lFuelQuantityCounterHundreds)) 		
+	--ExportScript.Tools.SendData("2007", string.format("%1d", lFuelQuantityCounter).."0")
 
 	-- TACAN Channel
 	-------------------------------------------------
