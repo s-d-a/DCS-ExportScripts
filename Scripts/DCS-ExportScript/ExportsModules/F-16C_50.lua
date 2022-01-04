@@ -79,6 +79,41 @@ ExportScript.ConfigEveryFrameArguments =
 	[157]=  "%.1f",   --   ( CautionLights.MARKER_BEACON)
 		-- Eng Control Panel
 	[446]=  "%.1f",   --   ( CautionLights.JFS_RUN)
+	------ECM Lamps
+	[102]=  "%.1f",   --  ECM Light
+	
+	[461]=  "%.1f",   --  BTN 1S
+	[462]=  "%.1f",   --  BTN 1A
+	[463]=  "%.1f",   --  BTN 1F
+	[464]=  "%.1f",   --  BTN 1T
+	[466]=  "%.1f",   --  Btn_2_S
+	[467]=  "%.1f",   --  Btn_2_A
+	[468]=  "%.1f",   --  Btn_2_F
+	[469]=  "%.1f",   --  Btn_2_T
+	[471]=  "%.1f",   --  Btn_3_S
+	[472]=  "%.1f",   --  Btn_3_A
+	[473]=  "%.1f",   --  Btn_3_F
+	[474]=  "%.1f",   --  Btn_3_T
+	[476]=  "%.1f",   --  Btn_4_S
+	[477]=  "%.1f",   --  Btn_4_A
+	[478]=  "%.1f",   --  Btn_4_F
+	[479]=  "%.1f",   --  Btn_4_T
+	[481]=  "%.1f",   --  Btn_5_S
+	[482]=  "%.1f",   --  Btn_5_A    
+	[483]=  "%.1f",   --  Btn_5_F
+	[484]=  "%.1f",   --  Btn_5_T
+	[486]=  "%.1f",   --  Btn_6_S
+	[487]=  "%.1f",   --  Btn_6_A
+	[488]=  "%.1f",   --  Btn_6_F
+	[489]=  "%.1f",   --  Btn_6_T
+	[491]=  "%.1f",   --  Btn_FRM_S
+	[492]=  "%.1f",   --  Btn_FRM_A
+	[493]=  "%.1f",   --  Btn_FRM_F
+	[494]=  "%.1f",   --  Btn_FRM_T
+	[496]=  "%.1f",   --  Btn_SPL_S
+	[497]=  "%.1f",   --  Btn_SPL_A
+	[498]=  "%.1f",   --  Btn_SPL_F
+	[499]=  "%.1f",   --  Btn_SPL_T
 		-- EPU Control Panel
 	[524]=  "%.1f",   --   ( CautionLights.HYDRAZN)
 	[523]=  "%.1f",   --   ( CautionLights.AIR)
@@ -613,12 +648,11 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
 	
-		--Bailey stuff
 	------------------
 	-----F16 mike-----
 	------------------
+	--mike might be breaking all things called after it in this function. Darn.
 	ExportScript.mike(mainPanelDevice)	
-	
 	
 end
 
@@ -654,6 +688,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
 	
+	ExportScript.EcmPanel(mainPanelDevice)
 	ExportScript.FuelInfo(mainPanelDevice)	
 	ExportScript.CountermeasureReadouts(mainPanelDevice)	
 end
@@ -1004,6 +1039,282 @@ function ExportScript.FuelInfo(mainPanelDevice)
 	totalFuelFlowCounter = format_int(totalFuelFlowCounter)
 	
 	ExportScript.Tools.SendData(3007, "Fuel Flow\n" .. totalFuelFlowCounter)
+end
+
+function ExportScript.EcmPanel(mainPanelDevice)
+	--this is logic for the ECM panel and the associated lights
+	--this is designed to be paired with the proper pre-formated image
+	--https://en.wikipedia.org/wiki/Block_Elements
+	-- 5 of these █ will cover the whole row at Times New Roman 15pt
+	-- options for blanking out
+		-- left showing |       ████|
+		-- right showing|████       |
+		-- both showing ||
+		-- both hidden|█████|
+	
+	--1 logic
+	local topPattern_1
+	-- if S and A are both off
+	if mainPanelDevice:get_argument_value(461) < 0.5 and mainPanelDevice:get_argument_value(462) < 0.5 then
+		topPattern_1 = "█████"
+	--if S is on and A is off
+	elseif mainPanelDevice:get_argument_value(461) > 0.5 and mainPanelDevice:get_argument_value(462) < 0.5 then
+		topPattern_1 = "       ████"
+	--if S is off and A is off
+	elseif mainPanelDevice:get_argument_value(461) > 0.5 and mainPanelDevice:get_argument_value(462) > 0.5 then
+		topPattern_1 = ""
+	--if S is off and A is on
+	elseif mainPanelDevice:get_argument_value(461) < 0.5 and mainPanelDevice:get_argument_value(462) > 0.5 then
+		topPattern_1 = "████       "
+	end
+	
+	local bottomPattern_1
+	-- if F and T are both off
+	if mainPanelDevice:get_argument_value(463) < 0.5 and mainPanelDevice:get_argument_value(464) < 0.5 then
+		bottomPattern_1 = "█████"
+	--if F is on and T is off
+	elseif mainPanelDevice:get_argument_value(463) > 0.5 and mainPanelDevice:get_argument_value(464) < 0.5 then
+		bottomPattern_1 = "       ████"
+	--if F is off and T is off
+	elseif mainPanelDevice:get_argument_value(463) > 0.5 and mainPanelDevice:get_argument_value(464) > 0.5 then
+		bottomPattern_1 = ""
+	--if F is off and T is on
+	elseif mainPanelDevice:get_argument_value(463) < 0.5 and mainPanelDevice:get_argument_value(464) > 0.5 then
+		bottomPattern_1 = "████       "
+	end
+	
+	ExportScript.Tools.SendData(3008, topPattern_1 .. "\n\n" .. bottomPattern_1)
+	
+	--2 logic
+    local topPattern_2
+    -- if S and A are both off
+    if mainPanelDevice:get_argument_value(466) < 0.5 and mainPanelDevice:get_argument_value(467) < 0.5 then
+        topPattern_2 = "█████"
+    --if S is on and A is off
+    elseif mainPanelDevice:get_argument_value(466) > 0.5 and mainPanelDevice:get_argument_value(467) < 0.5 then
+        topPattern_2 = "       ████"
+    --if S is off and A is off
+    elseif mainPanelDevice:get_argument_value(466) > 0.5 and mainPanelDevice:get_argument_value(467) > 0.5 then
+        topPattern_2 = ""
+    --if S is off and A is on
+    elseif mainPanelDevice:get_argument_value(466) < 0.5 and mainPanelDevice:get_argument_value(467) > 0.5 then
+        topPattern_2 = "████       "
+    end
+    
+    local bottomPattern_2
+    -- if F and T are both off
+    if mainPanelDevice:get_argument_value(468) < 0.5 and mainPanelDevice:get_argument_value(469) < 0.5 then
+        bottomPattern_2 = "█████"
+    --if F is on and T is off
+    elseif mainPanelDevice:get_argument_value(468) > 0.5 and mainPanelDevice:get_argument_value(469) < 0.5 then
+        bottomPattern_2 = "       ████"
+    --if F is off and T is off
+    elseif mainPanelDevice:get_argument_value(468) > 0.5 and mainPanelDevice:get_argument_value(469) > 0.5 then
+        bottomPattern_2 = ""
+    --if F is off and T is on
+    elseif mainPanelDevice:get_argument_value(468) < 0.5 and mainPanelDevice:get_argument_value(469) > 0.5 then
+        bottomPattern_2 = "████       "
+    end
+    
+    ExportScript.Tools.SendData(3009, topPattern_2 .. "\n\n" .. bottomPattern_2)
+    
+    --3 logic
+    local topPattern_3
+    -- if S and A are both off
+    if mainPanelDevice:get_argument_value(471) < 0.5 and mainPanelDevice:get_argument_value(472) < 0.5 then
+        topPattern_3 = "█████"
+    --if S is on and A is off
+    elseif mainPanelDevice:get_argument_value(471) > 0.5 and mainPanelDevice:get_argument_value(472) < 0.5 then
+        topPattern_3 = "       ████"
+    --if S is off and A is off
+    elseif mainPanelDevice:get_argument_value(471) > 0.5 and mainPanelDevice:get_argument_value(472) > 0.5 then
+        topPattern_3 = ""
+    --if S is off and A is on
+    elseif mainPanelDevice:get_argument_value(471) < 0.5 and mainPanelDevice:get_argument_value(472) > 0.5 then
+        topPattern_3 = "████       "
+    end
+    
+    local bottomPattern_3
+    -- if F and T are both off
+    if mainPanelDevice:get_argument_value(473) < 0.5 and mainPanelDevice:get_argument_value(474) < 0.5 then
+        bottomPattern_3 = "█████"
+    --if F is on and T is off
+    elseif mainPanelDevice:get_argument_value(473) > 0.5 and mainPanelDevice:get_argument_value(474) < 0.5 then
+        bottomPattern_3 = "       ████"
+    --if F is off and T is off
+    elseif mainPanelDevice:get_argument_value(473) > 0.5 and mainPanelDevice:get_argument_value(474) > 0.5 then
+        bottomPattern_3 = ""
+    --if F is off and T is on
+    elseif mainPanelDevice:get_argument_value(473) < 0.5 and mainPanelDevice:get_argument_value(474) > 0.5 then
+        bottomPattern_3 = "████       "
+    end
+    
+    ExportScript.Tools.SendData(3010, topPattern_3 .. "\n\n" .. bottomPattern_3)
+    
+    --4 logic
+    local topPattern_4
+    -- if S and A are both off
+    if mainPanelDevice:get_argument_value(476) < 0.5 and mainPanelDevice:get_argument_value(477) < 0.5 then
+        topPattern_4 = "█████"
+    --if S is on and A is off
+    elseif mainPanelDevice:get_argument_value(476) > 0.5 and mainPanelDevice:get_argument_value(477) < 0.5 then
+        topPattern_4 = "       ████"
+    --if S is off and A is off
+    elseif mainPanelDevice:get_argument_value(476) > 0.5 and mainPanelDevice:get_argument_value(477) > 0.5 then
+        topPattern_4 = ""
+    --if S is off and A is on
+    elseif mainPanelDevice:get_argument_value(476) < 0.5 and mainPanelDevice:get_argument_value(477) > 0.5 then
+        topPattern_4 = "████       "
+    end
+    
+    local bottomPattern_4
+    -- if F and T are both off
+    if mainPanelDevice:get_argument_value(478) < 0.5 and mainPanelDevice:get_argument_value(479) < 0.5 then
+        bottomPattern_4 = "█████"
+    --if F is on and T is off
+    elseif mainPanelDevice:get_argument_value(478) > 0.5 and mainPanelDevice:get_argument_value(479) < 0.5 then
+        bottomPattern_4 = "       ████"
+    --if F is off and T is off
+    elseif mainPanelDevice:get_argument_value(478) > 0.5 and mainPanelDevice:get_argument_value(479) > 0.5 then
+        bottomPattern_4 = ""
+    --if F is off and T is on
+    elseif mainPanelDevice:get_argument_value(478) < 0.5 and mainPanelDevice:get_argument_value(479) > 0.5 then
+        bottomPattern_4 = "████       "
+    end
+    
+    ExportScript.Tools.SendData(3011, topPattern_4 .. "\n\n" .. bottomPattern_4)
+    
+    --5 logic
+    local topPattern_5
+    -- if S and A are both off
+    if mainPanelDevice:get_argument_value(481) < 0.5 and mainPanelDevice:get_argument_value(482) < 0.5 then
+        topPattern_5 = "█████"
+    --if S is on and A is off
+    elseif mainPanelDevice:get_argument_value(481) > 0.5 and mainPanelDevice:get_argument_value(482) < 0.5 then
+        topPattern_5 = "       ████"
+    --if S is off and A is off
+    elseif mainPanelDevice:get_argument_value(481) > 0.5 and mainPanelDevice:get_argument_value(482) > 0.5 then
+        topPattern_5 = ""
+    --if S is off and A is on
+    elseif mainPanelDevice:get_argument_value(481) < 0.5 and mainPanelDevice:get_argument_value(482) > 0.5 then
+        topPattern_5 = "████       "
+    end
+    
+    local bottomPattern_5
+    -- if F and T are both off
+    if mainPanelDevice:get_argument_value(483) < 0.5 and mainPanelDevice:get_argument_value(484) < 0.5 then
+        bottomPattern_5 = "█████"
+    --if F is on and T is off
+    elseif mainPanelDevice:get_argument_value(483) > 0.5 and mainPanelDevice:get_argument_value(484) < 0.5 then
+        bottomPattern_5 = "       ████"
+    --if F is off and T is off
+    elseif mainPanelDevice:get_argument_value(483) > 0.5 and mainPanelDevice:get_argument_value(484) > 0.5 then
+        bottomPattern_5 = ""
+    --if F is off and T is on
+    elseif mainPanelDevice:get_argument_value(483) < 0.5 and mainPanelDevice:get_argument_value(484) > 0.5 then
+        bottomPattern_5 = "████       "
+    end
+    
+    ExportScript.Tools.SendData(3012, topPattern_5 .. "\n\n" .. bottomPattern_5)
+    
+    --6 logic
+    local topPattern_6
+    -- if S and A are both off
+    if mainPanelDevice:get_argument_value(486) < 0.5 and mainPanelDevice:get_argument_value(487) < 0.5 then
+        topPattern_6 = "█████"
+    --if S is on and A is off
+    elseif mainPanelDevice:get_argument_value(486) > 0.5 and mainPanelDevice:get_argument_value(487) < 0.5 then
+        topPattern_6 = "       ████"
+    --if S is off and A is off
+    elseif mainPanelDevice:get_argument_value(486) > 0.5 and mainPanelDevice:get_argument_value(487) > 0.5 then
+        topPattern_6 = ""
+    --if S is off and A is on
+    elseif mainPanelDevice:get_argument_value(486) < 0.5 and mainPanelDevice:get_argument_value(487) > 0.5 then
+        topPattern_6 = "████       "
+    end
+    
+    local bottomPattern_6
+    -- if F and T are both off
+    if mainPanelDevice:get_argument_value(488) < 0.5 and mainPanelDevice:get_argument_value(489) < 0.5 then
+        bottomPattern_6 = "█████"
+    --if F is on and T is off
+    elseif mainPanelDevice:get_argument_value(488) > 0.5 and mainPanelDevice:get_argument_value(489) < 0.5 then
+        bottomPattern_6 = "       ████"
+    --if F is off and T is off
+    elseif mainPanelDevice:get_argument_value(488) > 0.5 and mainPanelDevice:get_argument_value(489) > 0.5 then
+        bottomPattern_6 = ""
+    --if F is off and T is on
+    elseif mainPanelDevice:get_argument_value(488) < 0.5 and mainPanelDevice:get_argument_value(489) > 0.5 then
+        bottomPattern_6 = "████       "
+    end
+    
+    ExportScript.Tools.SendData(3013, topPattern_6 .. "\n\n" .. bottomPattern_6)
+    
+	--FRM logic
+	local topPattern_FRM
+	-- if S and A are both off
+	if mainPanelDevice:get_argument_value(491) < 0.5 and mainPanelDevice:get_argument_value(492) < 0.5 then
+		topPattern_FRM = "█████"
+	--if S is on and A is off
+	elseif mainPanelDevice:get_argument_value(491) > 0.5 and mainPanelDevice:get_argument_value(492) < 0.5 then
+		topPattern_FRM = "       ████"
+	--if S is off and A is off
+	elseif mainPanelDevice:get_argument_value(491) > 0.5 and mainPanelDevice:get_argument_value(492) > 0.5 then
+		topPattern_FRM = ""
+	--if S is off and A is on
+	elseif mainPanelDevice:get_argument_value(491) < 0.5 and mainPanelDevice:get_argument_value(492) > 0.5 then
+		topPattern_FRM = "████       "
+	end
+	
+	local bottomPattern_FRM
+	-- if F and T are both off
+	if mainPanelDevice:get_argument_value(493) < 0.5 and mainPanelDevice:get_argument_value(494) < 0.5 then
+		bottomPattern_FRM = "█████"
+	--if F is on and T is off
+	elseif mainPanelDevice:get_argument_value(493) > 0.5 and mainPanelDevice:get_argument_value(494) < 0.5 then
+		bottomPattern_FRM = "       ████"
+	--if F is off and T is off
+	elseif mainPanelDevice:get_argument_value(493) > 0.5 and mainPanelDevice:get_argument_value(494) > 0.5 then
+		bottomPattern_FRM = ""
+	--if F is off and T is on
+	elseif mainPanelDevice:get_argument_value(493) < 0.5 and mainPanelDevice:get_argument_value(494) > 0.5 then
+		bottomPattern_FRM = "████       "
+	end
+	
+	ExportScript.Tools.SendData(3014, topPattern_FRM .. "\n\n" .. bottomPattern_FRM)
+	
+    --SPL logic
+    local topPattern_SPL
+    -- if S and A are both off
+    if mainPanelDevice:get_argument_value(496) < 0.5 and mainPanelDevice:get_argument_value(497) < 0.5 then
+        topPattern_SPL = "█████"
+    --if S is on and A is off
+    elseif mainPanelDevice:get_argument_value(496) > 0.5 and mainPanelDevice:get_argument_value(497) < 0.5 then
+        topPattern_SPL = "       ████"
+    --if S is off and A is off
+    elseif mainPanelDevice:get_argument_value(496) > 0.5 and mainPanelDevice:get_argument_value(497) > 0.5 then
+        topPattern_SPL = ""
+    --if S is off and A is on
+    elseif mainPanelDevice:get_argument_value(496) < 0.5 and mainPanelDevice:get_argument_value(497) > 0.5 then
+        topPattern_SPL = "████       "
+    end
+    
+    local bottomPattern_SPL
+    -- if F and T are both off
+    if mainPanelDevice:get_argument_value(498) < 0.5 and mainPanelDevice:get_argument_value(499) < 0.5 then
+        bottomPattern_SPL = "█████"
+    --if F is on and T is off
+    elseif mainPanelDevice:get_argument_value(498) > 0.5 and mainPanelDevice:get_argument_value(499) < 0.5 then
+        bottomPattern_SPL = "       ████"
+    --if F is off and T is off
+    elseif mainPanelDevice:get_argument_value(498) > 0.5 and mainPanelDevice:get_argument_value(499) > 0.5 then
+        bottomPattern_SPL = ""
+    --if F is off and T is on
+    elseif mainPanelDevice:get_argument_value(498) < 0.5 and mainPanelDevice:get_argument_value(499) > 0.5 then
+        bottomPattern_SPL = "████       "
+    end
+    
+    ExportScript.Tools.SendData(3015, topPattern_SPL .. "\n\n" .. bottomPattern_SPL)
 end
 
 function ExportScript.CountermeasureReadouts(mainPanelDevice)
