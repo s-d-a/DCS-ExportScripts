@@ -37,7 +37,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[42] = "%.4f",   -- Engine 1 Power Control Linkage
 	[43] = "%.4f",   -- Engine 2 Power Control Linkage
 	
-	-- AN/ARC-164 
+	-- AN/ARC-164 UHF Radio
 	[50] = "%.4f",   -- AN/ARC-164 Mode
 	[52] = "%.4f",   -- AN/ARC-164 Manual/Preset/Guard
 	[53] = "%.4f",   -- AN/ARC-164 100s
@@ -253,6 +253,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[296] = "%.4f",   -- Tail Servo Select NORMAL/BACKUP (Inop.)
 	
 	
+	-- Caution and Warning Lights
 	[304] = "%.4f",   -- CAP Lamp Test
 	[305] = "%.4f",   -- 
 	[306] = "%.4f",   -- 
@@ -356,9 +357,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[396] = "%.4f",   -- GREEN BAR 
 	
 	-- COMM Panel
-	[400] = "%.4f",   -- Radio Select
-	[401] = "%.4f",   -- Volume
-	[402] = "%.4f",   -- Hot Mike Switch
+	[400] = "%.4f",   -- Pilot/CPilot ICP XMIT Transmit Radio Selector
+	[401] = "%.4f",   -- Pilot ICP Receive Volume
+	[402] = "%.4f",   -- Pilot ICP Hot Mike Switch (Inop.)
 	[403] = "%.4f",   -- Comm 1 ON/OFF Switch
 	[404] = "%.4f",   -- Comm 2 ON/OFF Switch 
 	[405] = "%.4f",   -- Comm 3 ON/OFF Switch
@@ -367,7 +368,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[408] = "%.4f",   -- Comm AUX ON/OFF Switch
 	[409] = "%.4f",   -- Comm NAV ON/OFF Switch
 	
-	-- AN/ARC-186
+	-- AN/ARC-186 VHF Radio
 	[410] = "%.4f",   -- AN/ARC-186 Volume
 	[411] = "%.4f",   -- AN/ARC-186 Tone
 	[412] = "%.4f",   -- AN/ARC-186 10MHz Selector
@@ -468,7 +469,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[560] = "%.4f",   -- Chaff Dispenser Mode Selector
 	[561] = "%.4f",   -- 
 	
-	-- AN/ARC-201 (FM1)
+	-- AN/ARC-201 (FM1) PLT
 	[600] = "%.4f",   -- AN/ARC-201 (FM1) Preset Selector
 	[601] = "%.4f",   -- AN/ARC-201 (FM1) Function Selector
 	[602] = "%.4f",   -- AN/ARC-201 (FM1) Power Selector
@@ -490,7 +491,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[618] = "%.4f",   -- AN/ARC-201 (FM1) Btn ERF/OFST
 	[619] = "%.4f",   -- AN/ARC-201 (FM1) Btn TIME
 	
-	-- AN/ARN-149
+	-- AN/ARN-149 ADF
 	[620] = "%.4f",   -- AN/ARN-149 PRESET Selector
 	[621] = "%.4f",   -- AN/ARN-149 TONE/OFF/TEST
 	[622] = "%.4f",   -- AN/ARN-149 Volume
@@ -517,7 +518,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[658] = "%.4f",   -- AN/ARN-147 Display .01s
 	[659] = "%.4f",   -- AN/ARN-147 Display .001s
 	
-	-- AN/ARC-201 (FM1)
+	-- AN/ARC-201 (FM1) CPLT
 	[700] = "%.4f",   -- AN/ARC-201 (FM1) Preset Selector
 	[701] = "%.4f",   -- AN/ARC-201 (FM1) Function Selector
 	[702] = "%.4f",   -- AN/ARC-201 (FM1) Power Selector
@@ -576,8 +577,9 @@ end
 
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
-	ExportScript.EmptyFunction(mainPanelDevice)
+	ExportScript.Radios(mainPanelDevice)
 	--ExportScript.RadioTile(mainPanelDevice)
+	
 
 end
 
@@ -588,12 +590,174 @@ end
 --  Custom Functions -- 
 -- -- -- -- -- -- -- -- -- -- -- 
 
-function ExportScript.EmptyFunction(mainPanelDevice)
+function ExportScript.Radios(mainPanelDevice)
 
+	-- ADF Radio
+	local ADF_digit1 = round(mainPanelDevice:get_argument_value(625)*2,0)
+	local ADF_digit2 = round(mainPanelDevice:get_argument_value(626)*10,0)
+	local ADF_digit3 = round(mainPanelDevice:get_argument_value(627)*10,0)
+	local ADF_digit4 = round(mainPanelDevice:get_argument_value(628)*10,0)
+	local ADF_digit5 = round(mainPanelDevice:get_argument_value(629)*10,0)
+	
+	local ADF_freq = string.format("%4.1f", ADF_digit1 .. ADF_digit2 .. ADF_digit3 
+								.. ADF_digit4 .. "." .. ADF_digit5)
+							
+	ADF_freq = trim(ADF_freq)	
+	
+	if #ADF_freq == 3 then --1.0 to 0001.0
+		ADF_freq = "000" .. ADF_freq
+	elseif #ADF_freq == 4 then --10.0 to 0010.0
+		ADF_freq = "00" .. ADF_freq
+	elseif #ADF_freq == 5 then --100.0 to 0100.0
+		ADF_freq = "0" .. ADF_freq
+	end							
+	
+	ExportScript.Tools.SendData(4000, "ADF\n" .. ADF_freq .. "\nKHz")
+	
+	-- UHF Radio
+	local UHF_digit1 = round(mainPanelDevice:get_argument_value(53) * 10,0) + 2
+	local UHF_digit2 = round(mainPanelDevice:get_argument_value(54) * 10,0)
+	local UHF_digit3 = round(mainPanelDevice:get_argument_value(55) * 10,0)
+	local UHF_digit4 = round(mainPanelDevice:get_argument_value(56) * 10,0)
+	local UHF_digit5 = round(mainPanelDevice:get_argument_value(57) * 250,0)
+	
+	local UHF_freq = string.format("%3.3f", UHF_digit1 .. UHF_digit2 .. UHF_digit3 
+									.. "." .. UHF_digit4 .. UHF_digit5)
+									
+	ExportScript.Tools.SendData(4001, "UHF\n" .. UHF_freq .. "\nMHz")
+	
+	-- FM Radio PLT
+	-- Not possible via arguements
+	
+	-- FM Radio CPLT
+	-- Not possible via arguements
+	
+	-- VOR/ILS Nav Radio
+	
+	local NAV_digit1 = round(mainPanelDevice:get_argument_value(654) * 10,0)
+	local NAV_digit2 = round(mainPanelDevice:get_argument_value(655) * 10,0)
+	local NAV_digit3 = round(mainPanelDevice:get_argument_value(656) * 10,0)
+	local NAV_digit4 = round(mainPanelDevice:get_argument_value(657) * 10,0)
+	local NAV_digit5 = round(mainPanelDevice:get_argument_value(658) * 10,0)
+	local NAV_digit6 = round(mainPanelDevice:get_argument_value(659) * 10,0)
+	
+	local NAV_freq = string.format("%3.3f", NAV_digit1 .. NAV_digit2 .. NAV_digit3 
+									.. "." .. NAV_digit4 .. NAV_digit5 ..NAV_digit6)
+	
+	ExportScript.Tools.SendData(4002, "NAV\n" .. NAV_freq .. "\nMHz")
+	
+--https://emojipedia.org/black-circle/
+	--🟢 green circle. trust me
+	--⚪ white circle
+	--⚫ black circle
+	--🔵 blue circle
+	--🔘 radio button circle
+	--🔴 red circle
+	--🟡 yellow circle
+	--❌ red X
+	
+	--ExportScript.Tools.SendData(5000, "🟢⚪⚫")
+	--ExportScript.Tools.SendData(5001, "🔵🔘🔴")
+	
+	--if a radio is off then red
+	--if radio on then yellow
+	--if radio on and selected then green
+	--if radio off and selected then red X
+	
+	local radio1_FmPlt_status
+	local radio2_uhf_status
+	local radio3_vhf_status
+	local radio4_FmCPlt_status
+	local radio5_hf_status --not implemented
+	local radio0_ics_Status
+
+	--=========================new logi====================================
+	--logic for ics
+	radio0_ics_Status = "🔘"--radio circle
+	
+	if round(mainPanelDevice:get_argument_value(400)*10,0) == 0 then
+		radio0_ics_Status = "🟢"--green circle
+	end
+	
+	--logic for radio 1 FM
+	radio1_FmPlt_status = "🔴"--red
+
+	if round(mainPanelDevice:get_argument_value(400)*10,0) == 2 and round(mainPanelDevice:get_argument_value(601)*100,0) == 2 then --if selected and on
+		radio1_FmPlt_status = "🟢"--green circle
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) == 2 and round(mainPanelDevice:get_argument_value(601)*100,0) ~= 2 then --selected and off
+		radio1_FmPlt_status = "❌"--green circle
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) ~= 2 and round(mainPanelDevice:get_argument_value(601)*100,0) == 2 then --not selected and on
+		radio1_FmPlt_status = "🟡"--yellow
+	end
+
+	--logic for radio 2 uhf
+	radio2_uhf_status = "🔴"--red
+	
+	if round(mainPanelDevice:get_argument_value(400)*10,0) == 4 and round(mainPanelDevice:get_argument_value(50)*100,0) == 1 then --if selected and on
+		radio2_uhf_status = "🟢"--green circle
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) == 4 and round(mainPanelDevice:get_argument_value(50)*100,0) ~= 1 then --selected and off
+		radio2_uhf_status = "❌"--red X
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) ~= 4 and round(mainPanelDevice:get_argument_value(50)*100,0) == 1 then --not selected and on
+		radio2_uhf_status = "🟡"--yellow
+--[[ 
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) ~= 4 and round(mainPanelDevice:get_argument_value(50)*100,0) ~= 1 --not selected and off
+		radio2_uhf_status = "🔴"--red
+]]	--this last one causes an error, but because i set the condition to red at the start, it actually handles the condition. yay!
+	end
+	
+	--logic for radio 3 vhf
+	radio3_vhf_status = "🔴"--red
+	
+	if round(mainPanelDevice:get_argument_value(400)*10,0) == 6 and mainPanelDevice:get_argument_value(419) == 0.5 then --if selected and on
+		radio3_vhf_status = "🟢"--green circle
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) == 6 and mainPanelDevice:get_argument_value(419) ~= 0.5 then --selected and off
+		radio3_vhf_status = "❌"--red X
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) ~= 6 and mainPanelDevice:get_argument_value(419) == 0.5 then --not selected and on
+		radio3_vhf_status = "🟡"--yellow
+	end
+	
+	--logic for radio 4 FmCPlt
+	radio4_FmCPlt_status = "🔴"--red
+	
+	if round(mainPanelDevice:get_argument_value(400)*10,0) == 8 and round(mainPanelDevice:get_argument_value(701)*100,0) == 2 then --if selected and on
+		radio4_FmCPlt_status = "🟢"--green circle
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) == 8 and round(mainPanelDevice:get_argument_value(701)*100,0) ~= 2 then --selected and off
+		radio4_FmCPlt_status = "❌"--red X
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) ~= 8 and round(mainPanelDevice:get_argument_value(701)*100,0) == 2 then --not selected and on
+		radio4_FmCPlt_status = "🟡"--yellow
+	end
+	
+	--logic for radio 5 radio5_hf_status
+	radio5_hf_status = "🔴"--red
+	
+	--whenever this is implemented, change the "get_argument_value(xxx) == 5" part to whatever the number is
+--[[	
+	if round(mainPanelDevice:get_argument_value(400)*10,0) == 10 and mainPanelDevice:get_argument_value(419) == 0.5 then --if selected and on
+		radio5_hf_status = "🟢"--green circle
+
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) == 10 and mainPanelDevice:get_argument_value(419) ~= 0.5 then --selected and off
+		radio5_hf_status = "❌"--red X
+
+	elseif round(mainPanelDevice:get_argument_value(400)*10,0) ~= 10 and mainPanelDevice:get_argument_value(419) == 0.5 then --not selected and on
+		radio5_hf_status = "🟡"--yellow
+	end
+]]	
+	if round(mainPanelDevice:get_argument_value(400)*10,0) == 10 then --selected and off
+		radio5_hf_status = "❌"--red X
+	end
+	
+	ExportScript.Tools.SendData(4003, radio0_ics_Status .. 			"ICS    \n" 
+										.. radio1_FmPlt_status .. 	"FM P  \n"
+										.. radio2_uhf_status .. 	"UHF    ")
+									
+	ExportScript.Tools.SendData(4004, radio3_vhf_status .. 			"VHF    \n"
+										.. radio4_FmCPlt_status .. 	"FM CP\n"
+										.. radio5_hf_status .. 		"HF      ")
+	
 end
 
 
-function ExportScript.RadioTile(mainPanelDevice)
+function ExportScript.RadioTile(mainPanelDevice)--this isnt for this module
 
 	local radio1 = (GetDevice(25):get_frequency())/1000000 -- left radio freq unrounded
 	local radio2 = (GetDevice(26):get_frequency())/1000000 -- right radio freq unrounded
@@ -601,6 +765,8 @@ function ExportScript.RadioTile(mainPanelDevice)
 	ExportScript.Tools.SendData(2001, radio1) -- results in "108.000568" for channel 1
 	ExportScript.Tools.SendData(2002, radio2) -- results in "108.500744" for channel 2
 end
+
+
 
 ------------------------------
 -- General Helper Functions --
