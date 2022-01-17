@@ -1,11 +1,29 @@
 -- UH-60L Export Module
 -- Feel free to use, modify and repost in any way you desire.
+--[[ To see the cockpit in model viewer
+Load model "uh-60l_cockpit.edm" from dcs/mods/aircraft/UH-60L/Shapes"
+Click Tools > Mount textures > Mount Zip and select "dcs/mods/aircraft/UH-60L/Textures/h60Textures.zip
+Click open
+Load model "uh-60l_cockpit.edm" from dcs/mods/aircraft/UH-60L/Shapes"
+Done
+]]
 
 ExportScript.FoundDCSModule = true
 ExportScript.Version.UH60L = "1.2.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
+--[[
+	every frames arguments
+	based of "mainpanel_init.lua"
+	Example (http://www.lua.org/manual/5.1/manual.html#pdf-string.format)
+	[DeviceID] = "Format"
+	  [4] = "%.4f",  <- floating-point number with 4 digits after point
+	 [19] = "%0.1f", <- floating-point number with 1 digit after point
+	[129] = "%1d",   <- decimal number
+	  [5] = "%.f",   <- floating point number rounded to a decimal number
+]]
+	
 	[1] = "%.4f",    -- OAT Guages
 	
 	[17] = "%.4f",   -- Battery Switch ON/OFF
@@ -164,7 +182,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[203] = "%.4f",   -- Instrument Panel Brightness Light Center
 	[204] = "%.4f",   -- Instrument Panel Brightness Overhead
 	[205] = "%.4f",   -- Instrument Panel Brightness Pedestal
-	[206] = "%.4f",   -- Instrument Autopilot Modes Brightness
+	[206] = "%.4f",   -- Instrument Autopilot AP Modes Brightness
 	[207] = "%.4f",   -- HSI and Radar Altimeter Instrument Lights PLT
 	[208] = "%.4f",   -- HSI and Radar Altimeter Instrument Lights CPLT
 	
@@ -176,7 +194,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[212] = "%.4f",   -- AP HDG Light PLT
 	[213] = "%.4f",   -- AP NAV Light PLT
 	[214] = "%.4f",   -- AP ALT Light PLT
-	[215] = "%.4f",   -- MODE SEL DLPR GLS Light PLT
+	[215] = "%.4f",   -- MODE SEL DPLR GLS Light PLT
 	[216] = "%.4f",   -- MODE SEL VOR Light PLT
 	[217] = "%.4f",   -- MODE SEL ILS Light PLT
 	[218] = "%.4f",   -- MODE SEL BACK CRS Light PLT
@@ -254,7 +272,7 @@ ExportScript.ConfigEveryFrameArguments =
 	
 	
 	-- Caution and Warning Lights
-	[304] = "%.4f",   -- CAP Lamp Test
+	[304] = "%.4f",   -- CAP Lamp Test Switch
 	[305] = "%.4f",   -- 
 	[306] = "%.4f",   -- 
 	[309] = "%.4f",   -- Annunciator Brightness
@@ -546,12 +564,12 @@ ExportScript.ConfigEveryFrameArguments =
 	[932] = "%.4f",   -- 
 	
 	-- Vertical Situation Indicator (VSI)
-	[980] = "%.4f",   -- Vertical Situation Indicator (VSI) Indication Light Pilot 1
+	[980] = "%.4f",   -- Vertical Situation Indicator (VSI) GA Indication Light Pilot
 	[981] = "%.4f",   -- Vertical Situation Indicator (VSI) Decision Height (DH) Light Pilot
-	[982] = "%.4f",   -- Vertical Situation Indicator (VSI) Indication Light Pilot 3
-	[983] = "%.4f",   -- Vertical Situation Indicator (VSI) Indication Light CPilot 1
+	[982] = "%.4f",   -- Vertical Situation Indicator (VSI) MB Indication Light Pilot 3
+	[983] = "%.4f",   -- Vertical Situation Indicator (VSI) GA Indication Light CPilot 1
 	[984] = "%.4f",   -- Vertical Situation Indicator (VSI) Decision Height (DH) Light CPilot
-	[985] = "%.4f",   -- Vertical Situation Indicator (VSI) Indication Light CPilot 3
+	[985] = "%.4f",   -- Vertical Situation Indicator (VSI) MB Indication Light CPilot 3
 	
 	[1100] = "%.4f",   -- 
 	[1106] = "%.4f",   -- 
@@ -561,8 +579,8 @@ ExportScript.ConfigEveryFrameArguments =
 	[1204] = "%.4f",   -- 
 	[1205] = "%.4f",   -- 
 	[1206] = "%.4f",   -- 
-	[3406] = "%.4f",   -- 
-	[3407] = "%.4f",   -- 
+	[3406] = "%.4f",   -- Stab Position Needle
+	[3407] = "%.4f",   -- Stab Position Flag
 
 }
 ExportScript.ConfigArguments = 
@@ -578,9 +596,13 @@ end
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
 	ExportScript.Radios(mainPanelDevice)
+	ExportScript.FlightInstruments(mainPanelDevice)
+	ExportScript.NavInstruments(mainPanelDevice)
+	ExportScript.NavModes(mainPanelDevice)
+	ExportScript.VrsCalculator(mainPanelDevice)
+	--ExportScript.HiLowCalculator(mainPanelDevice)
 	--ExportScript.RadioTile(mainPanelDevice)
 	
-
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -591,7 +613,7 @@ end
 -- -- -- -- -- -- -- -- -- -- -- 
 
 function ExportScript.Radios(mainPanelDevice)
-
+-- TODO: Clean up radio presentation
 	-- ADF Radio
 	local ADF_digit1 = round(mainPanelDevice:get_argument_value(625)*2,0)
 	local ADF_digit2 = round(mainPanelDevice:get_argument_value(626)*10,0)
@@ -767,6 +789,500 @@ function ExportScript.RadioTile(mainPanelDevice)--this isnt for this module
 end
 
 
+function ExportScript.FlightInstruments(mainPanelDevice)
+
+-- This will contain airspeed, altitude, and vertical speed
+--[[
+
+	[100] = "%.4f",   -- Airspeed Indicator
+	[103] = "%.4f",   -- Vertical Speed Indicator (VSI)
+	[132] = "%.4f",   -- HSI Compass Rotation PLT
+]]
+	-- TODO: this will need to be adjusted later because the arg is not linear
+	local airspeedIndicator = round(mainPanelDevice:get_argument_value(100)*250,0)
+	
+	-- TODO: this will need to be adjusted later because the arg is not linear
+	local verticalSpeedIndicator = round(mainPanelDevice:get_argument_value(103)*4000,0)
+	verticalSpeedIndicator = format_int(verticalSpeedIndicator) --puts a comma in it
+	
+
+	
+	local compassDegrees_PLT = round(mainPanelDevice:get_argument_value(132)*360,0)
+	local compassDegrees_CPLT = round(mainPanelDevice:get_argument_value(152)*360,0)
+	
+	-- logic for keeping the compass readouts as three digits
+	local compassDegrees_PLT_string = addZeros3(compassDegrees_PLT)
+	
+	local compassDegrees_CPLT_string = addZeros3(compassDegrees_CPLT)
+	
+-- TODO: Make sure that copilot altimeter is done independantly. (and VSI?) (and airspeed?)
+	
+	--[[
+	
+		[60] = "%.4f",   -- Altimeter 100s PLT
+	[61] = "%.4f",   -- Altimeter 1000s PLT
+	[62] = "%.4f",   -- Altimeter 10000s PLT
+	[63] = "%.4f",   -- 
+	[64] = "%.4f",   -- Kollsman Window Digit 1 PLT
+	[65] = "%.4f",   -- Kollsman Window Digit 2 PLT
+	[66] = "%.4f",   -- Kollsman Window Digit 3 PLT
+	[67] = "%.4f",   -- Kollsman Window Digit 4 PLT
+	[68] = "%.4f",   -- Altimeter Flag PLT
+	
+	[70] = "%.4f",   -- Altimeter 100s CPLT
+	[71] = "%.4f",   -- Altimeter 1000s CPLT
+	[72] = "%.4f",   -- Altimeter 10000s CPLT
+	
+		-- Radar Altimeter PLT
+	[170] = "%.4f",   -- Radar Altimeter Low Set Knob PLT
+	[171] = "%.4f",   -- Radar Altimeter High Set Knob PLT
+	[173] = "%.4f",   -- Radar Altimeter Indicator Needle PLT
+	[174] = "%.4f",   -- Radar Altimeter 1000s Indicator PLT
+	[175] = "%.4f",   -- Radar Altimeter 100s Indicator PLT
+	[176] = "%.4f",   -- Radar Altimeter 10s Indicator PLT
+	[177] = "%.4f",   -- Radar Altimeter 1s Indicator PLT
+	[178] = "%.4f",   -- Radar Altimeter Low Bug PLT
+	[179] = "%.4f",   -- Radar Altimeter High Bug PLT
+	[180] = "%.4f",   -- Radar Altimeter Low Flag PLT
+	[181] = "%.4f",   -- Radar Altimeter High Flag PLT
+	[182] = "%.4f",   -- Radar Altimeter Off Flag PLT
+	
+	-- Radar Altimeter CPLT
+	[183] = "%.4f",   -- Radar Altimeter Low Set Knob CPLT
+	[184] = "%.4f",   -- Radar Altimeter High Set Knob CPLT
+	[186] = "%.4f",   -- Radar Altimeter Indicator Needle CPLT
+	[187] = "%.4f",   -- Radar Altimeter 1000s Indicator CPLT
+	[188] = "%.4f",   -- Radar Altimeter 100s Indicator CPLT
+	[189] = "%.4f",   -- Radar Altimeter 10s Indicator CPLT
+	[190] = "%.4f",   -- Radar Altimeter 1s Indicator CPLT
+	[191] = "%.4f",   -- Radar Altimeter Low Bug CPLT
+	[192] = "%.4f",   -- Radar Altimeter High Bug CPLT
+	[193] = "%.4f",   -- Radar Altimeter Low Flag CPLT
+	[194] = "%.4f",   -- Radar Altimeter High Flag CPLT
+	[195] = "%.4f",   -- Radar Altimeter Off Flag CPLT
+	]]
+	
+	local radarAltimeterDisplay
+	local radarAltimeterDisplay_1000s = round(mainPanelDevice:get_argument_value(174)*10,0)
+	local radarAltimeterDisplay_100s = round(mainPanelDevice:get_argument_value(175)*10,0)
+	local radarAltimeterDisplay_10s = round(mainPanelDevice:get_argument_value(176)*10,0)
+	local radarAltimeterDisplay_1s = round(mainPanelDevice:get_argument_value(177)*10,0)
+	
+	-- logic for the top end of the arg
+	if radarAltimeterDisplay_1000s == 10 then
+		radarAltimeterDisplay_1000s = 0
+	end
+	if radarAltimeterDisplay_100s == 10 then
+		radarAltimeterDisplay_100s = 0
+	end
+	if radarAltimeterDisplay_10s == 10 then
+		radarAltimeterDisplay_10s = 0
+	end
+	if radarAltimeterDisplay_1s == 10 then
+		radarAltimeterDisplay_1s = 0
+	end
+
+	--there is a slight bug with the animation with the math.floor code
+	-- the 9 does not actually reach 0.9, so the code things it is still 8k ft for 1000s
+	-- TODO: create a solution for altitudes between 9,000ft and about 9,800 ft
+	local baroAltimeterDisplay
+	local baroAltimeterDisplay_100s = round(mainPanelDevice:get_argument_value(60)*1000,0)
+	local baroAltimeterDisplay_1000s = math.floor(mainPanelDevice:get_argument_value(61)*10) * 1000
+	local baroAltimeterDisplay_10000s = math.floor(mainPanelDevice:get_argument_value(62)*10) * 10000
+	
+	baroAltimeterDisplay = baroAltimeterDisplay_100s 
+							+ baroAltimeterDisplay_1000s 
+							+ baroAltimeterDisplay_10000s
+	-- put it all together
+
+	radarAltimeterDisplay = string.format("%.1d" , radarAltimeterDisplay_1000s .. radarAltimeterDisplay_100s
+														.. radarAltimeterDisplay_10s .. radarAltimeterDisplay_1s)
+				
+	local radarAltimeterDisplay_withComma = format_int(radarAltimeterDisplay) --put a comma
+	
+	local altitudeToDisplay = radarAltimeterDisplay_withComma
+	if radarAltimeterDisplay ==	"1500" then -- this is the max limit of the radalt, so use baro
+		altitudeToDisplay = format_int(baroAltimeterDisplay)
+	end
+	 
+	-- Pilot Tile
+	ExportScript.Tools.SendData(4005, "HDG " .. compassDegrees_PLT_string
+										.. "\nKTS " .. airspeedIndicator
+										.. "\nALT " .. altitudeToDisplay
+										.. "\nVSI " .. verticalSpeedIndicator)
+										
+	-- Copilot Tile									
+	ExportScript.Tools.SendData(4006, "HDG " .. compassDegrees_CPLT_string
+										.. "\nKTS " .. airspeedIndicator
+										.. "\nALT " .. altitudeToDisplay
+										.. "\nVSI " .. verticalSpeedIndicator)
+
+end
+
+function ExportScript.NavInstruments(mainPanelDevice)
+
+-- Pilot Side
+	local compassDegrees_PLT = round(mainPanelDevice:get_argument_value(132)*360,0)
+	local compassDegrees_PLT_string = addZeros3(compassDegrees_PLT)
+	
+	--bug readings
+	--all bugs are to the compass itself
+	local hsiHeadingBug_PLT = round(mainPanelDevice:get_argument_value(133)*360,0)
+	hsiHeadingBug_PLT = addZeros3(hsiHeadingBug_PLT)
+	--ExportScript.Tools.SendData(5002, hsiHeadingBug_PLT)
+
+	local hsiBearingNeedle_1_PLT = round(mainPanelDevice:get_argument_value(134)*360,0)
+	hsiBearingNeedle_1_PLT = addZeros3(hsiBearingNeedle_1_PLT)
+	--ExportScript.Tools.SendData(5003, hsiBearingNeedle_1_PLT)
+	
+	local hsiBearingNeedle_2_PLT = round(mainPanelDevice:get_argument_value(135)*360,0)
+	hsiBearingNeedle_2_PLT = addZeros3(hsiBearingNeedle_2_PLT)
+	--ExportScript.Tools.SendData(5004, hsiBearingNeedle_2_PLT)
+	
+	local courseWindow_PLT_100s = round((mainPanelDevice:get_argument_value(143)*10),0)
+	local courseWindow_PLT_10s = round((mainPanelDevice:get_argument_value(144)*10),0)
+	local courseWindow_PLT_1s = round((mainPanelDevice:get_argument_value(145)*10),0)
+	local courseWindow_PLT = string.format("%.1d" , courseWindow_PLT_100s .. courseWindow_PLT_10s .. courseWindow_PLT_1s)
+	courseWindow_PLT = addZeros3(courseWindow_PLT)
+	
+	
+	local distanceWindow_100s = round((mainPanelDevice:get_argument_value(139)*10),0)
+	local distanceWindow_10s = round((mainPanelDevice:get_argument_value(140)*10),0)
+	local distanceWindow_1s = round((mainPanelDevice:get_argument_value(141)*10),0)
+	local distanceWindow_01s = round((mainPanelDevice:get_argument_value(142)*10),0)
+	
+	local distanceWindow
+	if mainPanelDevice:get_argument_value(148) > 0.5 then --this is the dme flag, distanceWindow = "XXXX.X"
+		distanceWindow = string.format("%s" , distanceWindow_100s .. "̶" .. distanceWindow_10s .. "̶"
+													.. distanceWindow_1s .. "̶.̶" .. distanceWindow_01s .. "̶")
+	else
+		distanceWindow = string.format("%s" , distanceWindow_100s .. distanceWindow_10s
+													.. distanceWindow_1s .. "." .. distanceWindow_01s)												
+	end
+	
+	ExportScript.Tools.SendData(4007, distanceWindow)
+	
+	
+-- Copilot Side
+	local compassDegrees_CPLT = round(mainPanelDevice:get_argument_value(152)*360,0)
+	local compassDegrees_CPLT_string = addZeros3(compassDegrees_CPLT)
+
+	local hsiHeadingBug_CPLT = round(mainPanelDevice:get_argument_value(153)*360,0)
+	hsiHeadingBug_CPLT = addZeros3(hsiHeadingBug_CPLT)
+	--ExportScript.Tools.SendData(5002, hsiHeadingBug_CPLT)
+
+	local hsiBearingNeedle_1_CPLT = round(mainPanelDevice:get_argument_value(154)*360,0)
+	hsiBearingNeedle_1_CPLT = addZeros3(hsiBearingNeedle_1_CPLT)
+	--ExportScript.Tools.SendData(5003, hsiBearingNeedle_1_CPLT)
+	
+	local hsiBearingNeedle_2_CPLT = round(mainPanelDevice:get_argument_value(155)*360,0)
+	hsiBearingNeedle_2_CPLT = addZeros3(hsiBearingNeedle_2_CPLT)
+	--ExportScript.Tools.SendData(5004, hsiBearingNeedle_2_CPLT)
+	
+	local courseWindow_CPLT_100s = round((mainPanelDevice:get_argument_value(163)*10),0)
+	local courseWindow_CPLT_10s = round((mainPanelDevice:get_argument_value(164)*10),0)
+	local courseWindow_CPLT_1s = round((mainPanelDevice:get_argument_value(165)*10),0)
+	local courseWindow_CPLT = string.format("%.1d" , courseWindow_CPLT_100s .. courseWindow_CPLT_10s .. courseWindow_CPLT_1s)
+	courseWindow_CPLT = addZeros3(courseWindow_CPLT)
+	
+	-- Pilot Tile Nav
+	ExportScript.Tools.SendData(4010, "HDG " .. compassDegrees_PLT_string
+										.. "\nBUG " .. hsiHeadingBug_PLT
+										.. "\nN1 " .. hsiBearingNeedle_1_PLT
+										.. "\nN2 " .. hsiBearingNeedle_2_PLT)
+										
+	-- Copilot Tile Nav
+	ExportScript.Tools.SendData(4011, "HDG " .. compassDegrees_CPLT_string
+										.. "\nBUG " .. hsiHeadingBug_CPLT
+										.. "\nN1 " .. hsiBearingNeedle_1_CPLT
+										.. "\nN2 " .. hsiBearingNeedle_2_CPLT)	
+
+	-- Pilot Tile GPS Nav
+	ExportScript.Tools.SendData(4010, "HDG " .. compassDegrees_PLT_string
+										.. "\nBUG " .. hsiHeadingBug_PLT
+										.. "\nCRS " .. courseWindow_PLT
+										.. "\nN1 " .. hsiBearingNeedle_1_PLT)
+										
+	-- Copilot Tile GPS Nav
+	ExportScript.Tools.SendData(4011, "HDG " .. compassDegrees_CPLT_string
+										.. "\nBUG " .. hsiHeadingBug_CPLT
+										.. "\nCRS " .. courseWindow_CPLT
+										.. "\nN1 " .. hsiBearingNeedle_1_CPLT)	
+										
+										
+	-- Pilot Tile VOR/NDB NAV
+	ExportScript.Tools.SendData(4010, "HDG " .. compassDegrees_PLT_string
+										.. "\nBUG " .. hsiHeadingBug_PLT
+										.. "\nCRS " .. courseWindow_PLT
+										.. "\nN2 " .. hsiBearingNeedle_2_PLT)
+										
+	-- Copilot Tile VOR/NDB NAV
+	ExportScript.Tools.SendData(4011, "HDG " .. compassDegrees_CPLT_string
+										.. "\nBUG " .. hsiHeadingBug_CPLT
+										.. "\nCRS " .. courseWindow_CPLT
+										.. "\nN2 " .. hsiBearingNeedle_2_CPLT)	
+
+										
+	
+end
+
+function ExportScript.NavModes(mainPanelDevice)
+	--this function will serve to blank out any modes that are not "on"
+
+	
+	local blockingText_hdg = ""
+	local blockingText_nav = ""
+	local blockingText_alt = ""
+	
+	local blockingText_dplrGps = ""
+	local blockingText_vorIls = ""
+	local blockingText_backCrs = ""
+	local blockingText_FmHome = ""
+	
+	local blockingText = "██████████" .. "\n██████████" .."\n██████████" .."\n██████████"
+	
+	
+	local isHdgOn
+	if mainPanelDevice:get_argument_value(206) < 0.5 then
+		isHdgOn = 0
+		blockingText_hdg = blockingText
+	else 
+		isHdgOn = 1
+	end
+	
+	local isNavOn
+	if mainPanelDevice:get_argument_value(206) < 0.5 then
+		isNavOn = 0
+		blockingText_nav = blockingText
+	else 
+		isNavOn = 1
+	end
+	
+	local isAltOn
+	if mainPanelDevice:get_argument_value(206) < 0.5 then
+		isAltOn = 0
+		blockingText_alt = blockingText
+	else 
+		isAltOn = 1
+	end
+	
+	
+	local isDplrGpsOn
+	if mainPanelDevice:get_argument_value(215) < 0.5 or mainPanelDevice:get_argument_value(206) < 0.5 then
+		isDplrGpsOn = 0
+		blockingText_dplrGps = blockingText
+	else 
+		isDplrGpsOn = 1
+	end
+	
+	local isVorIlsOn
+	if mainPanelDevice:get_argument_value(216) > 0.5 or mainPanelDevice:get_argument_value(206) > 0.5 
+														and mainPanelDevice:get_argument_value(217) > 0.5 then
+		isVorIlsOn = 1
+	else
+		isVorIlsOn = 0
+		blockingText_vorIls = blockingText
+	end
+	
+	local isBackCrsOn
+	if mainPanelDevice:get_argument_value(218) < 0.5 or mainPanelDevice:get_argument_value(206) < 0.5 then
+		isBackCrsOn = 0
+		blockingText_backCrs = blockingText
+	else 
+		isBackCrsOn = 1
+	end
+	
+	local isFmHomeOn -- Devs said this isnt implemented in the sim yet
+	if mainPanelDevice:get_argument_value(219) < 0.5 or mainPanelDevice:get_argument_value(206) < 0.5 then
+		isFmHomeOn = 0
+		blockingText_FmHome = blockingText
+	else 
+		isFmHomeOn = 1
+	end
+	
+	local blockingText_turnRate = ""
+	local blockingText_crsHdg = ""
+	local blockingText_vertGyro = ""
+	local blockingText_brg2 = ""
+	
+	local isTurnRateOn
+	if mainPanelDevice:get_argument_value(206) < 0.5 then
+		isTurnRateOn = 0
+		blockingText_turnRate = blockingText
+	else 
+		isTurnRateOn = 1
+	end
+	
+	local isCrsHdgOn
+	if mainPanelDevice:get_argument_value(206) < 0.5 then
+		isCrsHdgOn = 0
+		blockingText_crsHdg = blockingText
+	else 
+		isCrsHdgOn = 1
+	end
+	
+	local isVertGyroOn
+	if mainPanelDevice:get_argument_value(206) < 0.5 then
+		isVertGyroOn = 0
+		blockingText_vertGyro = blockingText
+	else 
+		isVertGyroOn = 1
+	end
+	
+	local isBrg2On
+	if mainPanelDevice:get_argument_value(206) < 0.5 then
+		isBrg2On = 0
+		blockingText_brg2 = blockingText
+	else 
+		isBrg2On = 1
+	end
+	
+	
+	ExportScript.Tools.SendData(4026, isTurnRateOn)
+	ExportScript.Tools.SendData(4027, blockingText_turnRate)
+	
+	ExportScript.Tools.SendData(4028, isCrsHdgOn)
+	ExportScript.Tools.SendData(4029, blockingText_crsHdg)
+	
+	ExportScript.Tools.SendData(4030, isVertGyroOn)
+	ExportScript.Tools.SendData(4031, blockingText_vertGyro)
+	
+	ExportScript.Tools.SendData(4032, isBrg2On)
+	ExportScript.Tools.SendData(4033, blockingText_brg2)
+	
+	
+	
+	ExportScript.Tools.SendData(4020, isHdgOn)
+	ExportScript.Tools.SendData(4021, blockingText_hdg)
+	
+	ExportScript.Tools.SendData(4022, isNavOn)
+	ExportScript.Tools.SendData(4023, blockingText_nav)
+	
+	ExportScript.Tools.SendData(4024, isAltOn)
+	ExportScript.Tools.SendData(4025, blockingText_alt)
+	
+	
+	
+	ExportScript.Tools.SendData(4012, isDplrGpsOn)
+	ExportScript.Tools.SendData(4013, blockingText_dplrGps)
+	
+	ExportScript.Tools.SendData(4014, isVorIlsOn)
+	ExportScript.Tools.SendData(4015, blockingText_vorIls)
+	
+	ExportScript.Tools.SendData(4016, isBackCrsOn)
+	ExportScript.Tools.SendData(4017, blockingText_backCrs)
+	
+	ExportScript.Tools.SendData(4018, isFmHomeOn)
+	ExportScript.Tools.SendData(4019, blockingText_FmHome)
+	
+end
+
+function ExportScript.VrsCalculator(mainPanelDevice)
+--this is a VRS calculator
+--Conditions for vrs are Out of ground effect (30meters high), less than 30 kts, and more than 500fpm decent
+--this translates to 90 radalt, 30kts, 500 fpm
+--we can add a buffer so that its 50ft, 50kts, 300fpm
+
+	local limit_altitude = 100
+	local limit_airspeed = 0.155 -- arg [100]
+		-- 0.155 is about 50
+		-- 0.390 is about 100
+		-- 0.081 is about 30
+	local limit_fpm = -0.130 --[103] = "%.4f",   -- Vertical Speed Indicator (VSI)
+		-- 2000 is about -0.500
+		-- 1000 is about -0.242
+		-- 500 is about -0.130
+		-- 300 is about -0.082
+		
+	local isAltitudeTriggered = 0
+	local isAirspeedTriggered = 0
+	local isVsiTriggered = 0
+	local isInVrs = 0
+
+	local radarAltimeterDisplay
+	local radarAltimeterDisplay_1000s = round(mainPanelDevice:get_argument_value(174)*10,0)
+	local radarAltimeterDisplay_100s = round(mainPanelDevice:get_argument_value(175)*10,0)
+	local radarAltimeterDisplay_10s = round(mainPanelDevice:get_argument_value(176)*10,0)
+	local radarAltimeterDisplay_1s = round(mainPanelDevice:get_argument_value(177)*10,0)
+	
+	-- logic for the top end of the arg
+	if radarAltimeterDisplay_1000s == 10 then
+		radarAltimeterDisplay_1000s = 0
+	end
+	if radarAltimeterDisplay_100s == 10 then
+		radarAltimeterDisplay_100s = 0
+	end
+	if radarAltimeterDisplay_10s == 10 then
+		radarAltimeterDisplay_10s = 0
+	end
+	if radarAltimeterDisplay_1s == 10 then
+		radarAltimeterDisplay_1s = 0
+	end
+
+	
+	
+	radarAltimeterDisplay = string.format("%.1d" , radarAltimeterDisplay_1000s .. radarAltimeterDisplay_100s
+														.. radarAltimeterDisplay_10s .. radarAltimeterDisplay_1s)
+
+	ExportScript.Tools.SendData(4038,radarAltimeterDisplay)
+	
+	
+	if tonumber(radarAltimeterDisplay) < limit_altitude then 
+		isAltitudeTriggered = 1
+	end
+	
+	
+	if mainPanelDevice:get_argument_value(100) < limit_airspeed then
+		isAirspeedTriggered = 1
+	end
+	
+	-- TODO: this will need to be adjusted later because the arg is not linear
+	if mainPanelDevice:get_argument_value(103) < limit_fpm then -- sign is flipped becase its a neg number
+		isVsiTriggered = 1
+	end
+	
+	
+	if isAltitudeTriggered == 1 and isAirspeedTriggered == 1 and isVsiTriggered == 1 then
+		isInVrs = 1
+	end
+	
+	ExportScript.Tools.SendData(4037, isInVrs)
+	
+end
+
+function ExportScript.HiLowCalculator(mainPanelDevice)
+--TODO: maybe
+
+--[[
+	-- Radar Altimeter PLT █
+	[173] = "%.4f",   -- Radar Altimeter Indicator Needle PLT
+	[178] = "%.4f",   -- Radar Altimeter Low Bug PLT
+	[179] = "%.4f",   -- Radar Altimeter High Bug PLT
+	[180] = "%.4f",   -- Radar Altimeter Low Flag PLT
+	[181] = "%.4f",   -- Radar Altimeter High Flag PLT
+	[182] = "%.4f",   -- Radar Altimeter Off Flag PLT
+]]
+
+	local isFlagHi = 0
+	if mainPanelDevice:get_argument_value(181) > 0.5 then
+		isFlagHi = 1
+	end
+	
+	local isFlagLo = 0
+	if mainPanelDevice:get_argument_value(180) > 0.5 then
+		isFlagLo = 1
+	end
+end
+
+
+--[[
+Ideas for more functions:
+- rad alt readout with danger colors
+- stab deg vs kias limit readout/meter
+- set qfe readout
+- uhf preset channel select readout 1-20
+- engine limits and indications. idk how to do this
+]]
 
 ------------------------------
 -- General Helper Functions --
@@ -810,4 +1326,14 @@ end
 function trim(s) --http://lua-users.org/wiki/CommonFunctions
   -- from PiL2 20.4
   return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+function addZeros3(number)
+	number = string.format("%.1d" , number)
+	if #number == 2 then
+		number = "0" .. number
+	elseif #number == 1 then
+		number = "00" .. number
+	end
+	return number
 end
