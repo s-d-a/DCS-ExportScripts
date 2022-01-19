@@ -1280,7 +1280,7 @@ function ExportScript.PlayWithFire2(mainPanelDevice)
 				then is_TRQ_emer = 1 
 	end
 	ExportScript.Tools.SendData(4300, is_E1_TRQ_emer)
-	ExportScript.Tools.SendData(4301, is_E1_TRQ_emer)
+	ExportScript.Tools.SendData(4301, is_E2_TRQ_emer)
 	ExportScript.Tools.SendData(4302, is_TRQ_emer)		
 	-------------------
 	-- Engine TRQ END--
@@ -1382,9 +1382,9 @@ function ExportScript.PlayWithFire2(mainPanelDevice)
 				then is_NG_emer = 1 
 	end
 	
-	ExportScript.Tools.SendData(4307, is_E1_TRQ_emer)
-	ExportScript.Tools.SendData(4308, is_E1_TRQ_emer)
-	ExportScript.Tools.SendData(4309, is_TRQ_emer)	
+	ExportScript.Tools.SendData(4307, is_NG1_emer)
+	ExportScript.Tools.SendData(4308, is_NG2_emer)
+	ExportScript.Tools.SendData(4309, is_NG_emer)	
 	-------------------
 	-- Engine Ng END --
 	-------------------
