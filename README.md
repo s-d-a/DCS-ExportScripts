@@ -13,6 +13,7 @@ Following module export luas have been modified. Applicable DCS-ExportScripts ID
 - F-16C
   - Added Flare and Chaff Count Readouts (3000 - 3006)
   - Added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument) (WIP) (44224 - 44231)
+  - Added Jammer pannel Tiles and example profile. See wiki. https://github.com/asherao/DCS-ExportScripts/wiki/F-16C
 - F-86F Sabre
   - Added UHF channel and freq export
   - Added ADF freq export
