@@ -188,7 +188,7 @@ ExportScript.ConfigEveryFrameArguments =
 	
 	
 	[210] = "%.4f",   -- Dashboard Brightness
-	[211] = "%.4f",   -- 
+	[211] = "%.4f",   -- Magnetic Compass Lights
 	
 	-- Autopilot Panel PLT
 	[212] = "%.4f",   -- AP HDG Light PLT
@@ -278,101 +278,101 @@ ExportScript.ConfigEveryFrameArguments =
 	[309] = "%.4f",   -- Annunciator Brightness
 	[310] = "%.4f",   -- #1 ENG OUT Light
 	[311] = "%.4f",   -- #2 ENG OUT Light
-	[312] = "%.4f",   -- Fire
-	[313] = "%.4f",   -- MASTER CAUTION PRESS TO RESET
-	[314] = "%.4f",   -- Low ROTOR RPM
-	[315] = "%.4f",   -- #1 FUEL LOW
-	[316] = "%.4f",   -- #1 GEN
-	[317] = "%.4f",   -- #2 GEN
-	[318] = "%.4f",   -- #2 FUEL LOW
-	[319] = "%.4f",   -- #1 FUEL PRESS
-	[320] = "%.4f",   -- #1 GEN BRG
-	[321] = "%.4f",   -- #2 GEN BRG
-	[322] = "%.4f",   -- #2 FUEL PRESS
+	[312] = "%.4f",   -- Fire Light
+	[313] = "%.4f",   -- MASTER CAUTION PRESS TO RESET Light
+	[314] = "%.4f",   -- Low ROTOR RPM Light
+	[315] = "%.4f",   -- #1 FUEL LOW Light
+	[316] = "%.4f",   -- #1 GEN Light
+	[317] = "%.4f",   -- #2 GEN Light
+	[318] = "%.4f",   -- #2 FUEL LOW Light
+	[319] = "%.4f",   -- #1 FUEL PRESS Light
+	[320] = "%.4f",   -- #1 GEN BRG Light
+	[321] = "%.4f",   -- #2 GEN BRG Light
+	[322] = "%.4f",   -- #2 FUEL PRESS Light
 	
-	[323] = "%.4f",   -- #1 ENGINE OIL PRESS
-	[324] = "%.4f",   -- #1 CONV
-	[325] = "%.4f",   -- #2 CONV
-	[326] = "%.4f",   -- #2 ENGINE OIL PRESS
-	[327] = "%.4f",   -- #1 ENGINE OIL TEMP
-	[328] = "%.4f",   -- AC ESS BUS OFF
-	[329] = "%.4f",   -- DC ESS BUS OFF
-	[330] = "%.4f",   -- #2 ENGINE OIL TEMP
+	[323] = "%.4f",   -- #1 ENGINE OIL PRESS Light
+	[324] = "%.4f",   -- #1 CONV Light
+	[325] = "%.4f",   -- #2 CONV Light
+	[326] = "%.4f",   -- #2 ENGINE OIL PRESS Light
+	[327] = "%.4f",   -- #1 ENGINE OIL TEMP Light
+	[328] = "%.4f",   -- AC ESS BUS OFF Light
+	[329] = "%.4f",   -- DC ESS BUS OFF Light
+	[330] = "%.4f",   -- #2 ENGINE OIL TEMP Light
 	
-	[331] = "%.4f",   -- CHIP #1 ENGINE
-	[332] = "%.4f",   -- BATT LOW CHARGE
-	[333] = "%.4f",   -- BATTERY FAULT
-	[334] = "%.4f",   -- CHIP #2 ENGINE
-	[335] = "%.4f",   -- #1 FUEL FLTR BYPASS
-	[336] = "%.4f",   -- GUST LOCK
-	[337] = "%.4f",   -- PITCH BIAS FAIL
-	[338] = "%.4f",   -- #2 FUEL FLTR BYPASS
+	[331] = "%.4f",   -- CHIP #1 ENGINE Light
+	[332] = "%.4f",   -- BATT LOW CHARGE Light
+	[333] = "%.4f",   -- BATTERY FAULT Light
+	[334] = "%.4f",   -- CHIP #2 ENGINE Light
+	[335] = "%.4f",   -- #1 FUEL FLTR BYPASS Light
+	[336] = "%.4f",   -- GUST LOCK Light
+	[337] = "%.4f",   -- PITCH BIAS FAIL Light
+	[338] = "%.4f",   -- #2 FUEL FLTR BYPASS Light
 	
-	[339] = "%.4f",   -- #1 ENGINE STARTER
-	[340] = "%.4f",   -- #1 OIL FLTR BYPASS
-	[341] = "%.4f",   -- #2 OIL FLTR BYPASS
-	[342] = "%.4f",   -- #2 ENGINE STARTER
-	[343] = "%.4f",   -- #1 PRI SERVER PRESS
-	[344] = "%.4f",   -- #1 HYD PUMP
-	[345] = "%.4f",   -- #2 HYD PUMP
-	[346] = "%.4f",   -- #2 PRI SERVO PRESS
+	[339] = "%.4f",   -- #1 ENGINE STARTER Light
+	[340] = "%.4f",   -- #1 OIL FLTR BYPASS Light
+	[341] = "%.4f",   -- #2 OIL FLTR BYPASS Light
+	[342] = "%.4f",   -- #2 ENGINE STARTER Light
+	[343] = "%.4f",   -- #1 PRI SERVER PRESS Light
+	[344] = "%.4f",   -- #1 HYD PUMP Light
+	[345] = "%.4f",   -- #2 HYD PUMP Light
+	[346] = "%.4f",   -- #2 PRI SERVO PRESS Light
 	
-	[347] = "%.4f",   -- TAIL ROTOR QUADRANT
-	[348] = "%.4f",   -- IRCM INOP
-	[349] = "%.4f",   -- AUX FUEL
-	[350] = "%.4f",   -- #1 TAIL TRT XERVO
-	[351] = "%.4f",   -- MAIN XMSN OIL TEMP
-	[352] = "%.4f",   -- INT XMSN OIL TEMP
-	[353] = "%.4f",   -- TAIL XMSN OIL TEMP
-	[354] = "%.4f",   -- APU OIL TEMP HI
+	[347] = "%.4f",   -- TAIL ROTOR QUADRANT Light
+	[348] = "%.4f",   -- IRCM INOP Light
+	[349] = "%.4f",   -- AUX FUEL Light
+	[350] = "%.4f",   -- #1 TAIL TRT XERVO Light
+	[351] = "%.4f",   -- MAIN XMSN OIL TEMP Light
+	[352] = "%.4f",   -- INT XMSN OIL TEMP Light
+	[353] = "%.4f",   -- TAIL XMSN OIL TEMP Light
+	[354] = "%.4f",   -- APU OIL TEMP HI Light
 	
-	[355] = "%.4f",   -- BOOST SERVO OFF
-	[356] = "%.4f",   -- STABILATOR
-	[357] = "%.4f",   -- SAS OFF
-	[358] = "%.4f",   -- TRIM FAIL
-	[359] = "%.4f",   -- LFT PITOT HEAT
-	[360] = "%.4f",   -- FLT PATH STAB
-	[361] = "%.4f",   -- IFF
-	[362] = "%.4f",   -- RT PITOT HEAT
+	[355] = "%.4f",   -- BOOST SERVO OFF Light
+	[356] = "%.4f",   -- STABILATOR Light
+	[357] = "%.4f",   -- SAS OFF Light
+	[358] = "%.4f",   -- TRIM FAIL Light
+	[359] = "%.4f",   -- LFT PITOT HEAT Light
+	[360] = "%.4f",   -- FLT PATH STAB Light
+	[361] = "%.4f",   -- IFF Light
+	[362] = "%.4f",   -- RT PITOT HEAT Light
 	
-	[363] = "%.4f",   -- CHIP INPUT MDL - LH
-	[364] = "%.4f",   -- CHIP INT XMSN
-	[365] = "%.4f",   -- CHIP TAIL XMSN
-	[366] = "%.4f",   -- CHIP INPUT MDL - RH
-	[367] = "%.4f",   -- CHIP ACCESS MDL - LH
-	[368] = "%.4f",   -- CHIP MAIN MDL SUMP
-	[369] = "%.4f",   -- APU FAIL
-	[370] = "%.4f",   -- CHIP ACCESS MDL - RH
+	[363] = "%.4f",   -- CHIP INPUT MDL - LH Light
+	[364] = "%.4f",   -- CHIP INT XMSN Light
+	[365] = "%.4f",   -- CHIP TAIL XMSN Light
+	[366] = "%.4f",   -- CHIP INPUT MDL - RH Light
+	[367] = "%.4f",   -- CHIP ACCESS MDL - LH Light
+	[368] = "%.4f",   -- CHIP MAIN MDL SUMP Light
+	[369] = "%.4f",   -- APU FAIL Light
+	[370] = "%.4f",   -- CHIP ACCESS MDL - RH Light
 	
-	[371] = "%.4f",   -- MR DE-IACE FAIL
-	[372] = "%.4f",   -- MR DE-ICE FAULT
-	[373] = "%.4f",   -- TR DE-ICE FAIL
-	[374] = "%.4f",   -- ICE DETECTED
-	[375] = "%.4f",   -- MAIN XMSN OIL PRESS
-	[376] = "%.4f",   -- #1 RSVR LOW
-	[377] = "%.4f",   -- #2 RSVR LOW
-	[378] = "%.4f",   -- BACK-UP RSVR LOW
+	[371] = "%.4f",   -- MR DE-IACE FAIL Light
+	[372] = "%.4f",   -- MR DE-ICE FAULT Light
+	[373] = "%.4f",   -- TR DE-ICE FAIL Light
+	[374] = "%.4f",   -- ICE DETECTED Light
+	[375] = "%.4f",   -- MAIN XMSN OIL PRESS Light
+	[376] = "%.4f",   -- #1 RSVR LOW Light
+	[377] = "%.4f",   -- #2 RSVR LOW Light
+	[378] = "%.4f",   -- BACK-UP RSVR LOW Light
 	
-	[379] = "%.4f",   -- #1 ENG ANTI-ICE ON
-	[380] = "%.4f",   -- #1 ENG INLET ANTI-ICE ON
-	[381] = "%.4f",   -- #2 ENG INLET ANTI-ICE ON
-	[382] = "%.4f",   -- #2 ENG ANTI-ICE ON
-	[383] = "%.4f",   -- APU ON
-	[384] = "%.4f",   -- APU GEN ON
-	[385] = "%.4f",   -- PRIME BOOST PUMP ON
-	[386] = "%.4f",   -- BACK-UP PUMP ON
+	[379] = "%.4f",   -- #1 ENG ANTI-ICE ON Light
+	[380] = "%.4f",   -- #1 ENG INLET ANTI-ICE ON Light
+	[381] = "%.4f",   -- #2 ENG INLET ANTI-ICE ON Light
+	[382] = "%.4f",   -- #2 ENG ANTI-ICE ON Light
+	[383] = "%.4f",   -- APU ON Light
+	[384] = "%.4f",   -- APU GEN ON Light
+	[385] = "%.4f",   -- PRIME BOOST PUMP ON Light
+	[386] = "%.4f",   -- BACK-UP PUMP ON Light
 	
-	[387] = "%.4f",   -- APU ACCUM LOW
-	[388] = "%.4f",   -- SEATCH LT ON
-	[389] = "%.4f",   -- LDG LT ON
-	[390] = "%.4f",   -- #2 TAIL RTR SERVER ON
+	[387] = "%.4f",   -- APU ACCUM LOW Light
+	[388] = "%.4f",   -- SEATCH LT ON Light
+	[389] = "%.4f",   -- LDG LT ON Light
+	[390] = "%.4f",   -- #2 TAIL RTR SERVER ON Light
 	
-	[391] = "%.4f",   -- CARGO HOOK OPEN
-	[392] = "%.4f",   -- HOOK ARMED
-	[393] = "%.4f",   -- GPS POS ALERT
-	[394] = "%.4f",   -- PARKING BRAKE ON
-	[395] = "%.4f",   -- EXT POWER CONNECTED
-	[396] = "%.4f",   -- GREEN BAR 
+	[391] = "%.4f",   -- CARGO HOOK OPEN Light
+	[392] = "%.4f",   -- HOOK ARMED Light
+	[393] = "%.4f",   -- GPS POS ALERT Light
+	[394] = "%.4f",   -- PARKING BRAKE ON Light
+	[395] = "%.4f",   -- EXT POWER CONNECTED Light
+	[396] = "%.4f",   -- GREEN BAR Light
 	
 	-- COMM Panel
 	[400] = "%0.1f",  -- Pilot/CPilot ICP XMIT Transmit Radio Selector
@@ -582,7 +582,6 @@ ExportScript.ConfigEveryFrameArguments =
 	[1206] = "%.4f",   -- 
 	[3406] = "%.4f",   -- Stab Position Needle
 	[3407] = "%.4f",   -- Stab Position Flag
-
 }
 
 --you should put switches in here.
@@ -610,6 +609,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.UhfSuperFromListIndication(mainPanelDevice)
 	--ExportScript.HiLowCalculator(mainPanelDevice)--Not implemented
 end
+
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 end
