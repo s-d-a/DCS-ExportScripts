@@ -13,7 +13,7 @@ ExportScript.ConfigEveryFrameArguments =
 	  [4] = "%.4f",  <- floating-point number with 4 digits after point
 	 [19] = "%0.1f", <- floating-point number with 1 digit after point
 	[129] = "%1d",   <- decimal number
-	  [5] = "%.f",   <- floating point number rounded to a decimal number
+	  [5] = "%.f",   <- floating point number Rounded to a decimal number
 ]]
 	--there may be precisely 1 duplicate arg
 	[16] = "%0.4f", --mirrors_draw
@@ -46,7 +46,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[151] = "%0.4f", --PressureRatio
 	[105] = "%0.4f", --ManualFuelControl_Warn
 	
-	[23] = "%0.4f", --FlapsIndicator
+	[23] = "%0.2f", --FlapsIndicator
 	[10] = "%0.4f", --TailhookLever
 	[20] = "%0.4f", --GearNose
 	[21] = "%0.4f", --GearLeft
@@ -87,7 +87,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[381] = "%0.4f", --BDHI_ILS_GS
 	[382] = "%0.4f", --BDHI_ILS_LOC
 	
-	[820] = "%0.4f", --Altimeter
+	[820] = "%0.4f", --Altimeter Needle
 	[821] = "%0.4f", --Altimeter10K
 	[822] = "%0.4f", --Altimeter1K
 	[823] = "%0.4f", --Altimeter100s
@@ -140,38 +140,38 @@ ExportScript.ConfigEveryFrameArguments =
 	
 	[406] = "%0.4f", --APG53A_LeftRange
 	[407] = "%0.4f", --APG53A_BottomRange
-	[167] = "%0.4f", --AFCS_HDG_100s
-	[168] = "%0.4f", --AFCS_HDG_10s
-	[169] = "%0.4f", --AFCS_HDG_1s
+	[167] = "%0.1f", --AFCS_HDG_100s
+	[168] = "%0.1f", --AFCS_HDG_10s
+	[169] = "%0.1f", --AFCS_HDG_1s
 	[115] = "%0.4f", --APG53A_Glow
 	[171] = "%0.4f", --Doppler_MemoryLight
 	[172] = "%0.4f", --Doppler_Drift
-	[173] = "%0.4f", --Doppler_Speed_Xnn
-	[174] = "%0.4f", --Doppler_Speed_nXn
-	[175] = "%0.4f", --Doppler_Speed_nnX
+	[173] = "%0.1f", --Doppler_Speed_Xnn
+	[174] = "%0.1f", --Doppler_Speed_nXn
+	[175] = "%0.1f", --Doppler_Speed_nnX
 	
-	[178] = "%0.4f", --Nav_CurPos_Lat_Xnnnn
-	[179] = "%0.4f", --Nav_CurPos_Lat_nXnnn
-	[180] = "%0.4f", --Nav_CurPos_Lat_nnXnn
-	[181] = "%0.4f", --Nav_CurPos_Lat_nnnXn
-	[182] = "%0.4f", --Nav_CurPos_Lat_nnnnX
-	[184] = "%0.4f", --Nav_CurPos_Lon_Xnnnnn
-	[185] = "%0.4f", --Nav_CurPos_Lon_nXnnnn
-	[186] = "%0.4f", --Nav_CurPos_Lon_nnXnnn
-	[187] = "%0.4f", --Nav_CurPos_Lon_nnnXnn
-	[188] = "%0.4f", --Nav_CurPos_Lon_nnnnXn
-	[189] = "%0.4f", --Nav_CurPos_Lon_nnnnnX
-	[191] = "%0.4f", --Nav_Dest_Lat_Xnnnn
-	[192] = "%0.4f", --Nav_Dest_Lat_nXnnn
-	[193] = "%0.4f", --Nav_Dest_Lat_nnXnn
-	[194] = "%0.4f", --Nav_Dest_Lat_nnnXn
-	[195] = "%0.4f", --Nav_Dest_Lat_nnnnX
-	[197] = "%0.4f", --Nav_Dest_Lon_Xnnnnn
-	[198] = "%0.4f", --Nav_Dest_Lon_nXnnnn
-	[199] = "%0.4f", --Nav_Dest_Lon_nnXnnn
-	[200] = "%0.4f", --Nav_Dest_Lon_nnnXnn
-	[201] = "%0.4f", --Nav_Dest_Lon_nnnnXn
-	[202] = "%0.4f", --Nav_Dest_Lon_nnnnnX
+	[178] = "%0.1f", --Nav_CurPos_Lat_Xnnnn
+	[179] = "%0.1f", --Nav_CurPos_Lat_nXnnn
+	[180] = "%0.1f", --Nav_CurPos_Lat_nnXnn
+	[181] = "%0.1f", --Nav_CurPos_Lat_nnnXn
+	[182] = "%0.1f", --Nav_CurPos_Lat_nnnnX
+	[184] = "%0.1f", --Nav_CurPos_Lon_Xnnnnn
+	[185] = "%0.1f", --Nav_CurPos_Lon_nXnnnn
+	[186] = "%0.1f", --Nav_CurPos_Lon_nnXnnn
+	[187] = "%0.1f", --Nav_CurPos_Lon_nnnXnn
+	[188] = "%0.1f", --Nav_CurPos_Lon_nnnnXn
+	[189] = "%0.1f", --Nav_CurPos_Lon_nnnnnX
+	[191] = "%0.1f", --Nav_Dest_Lat_Xnnnn
+	[192] = "%0.1f", --Nav_Dest_Lat_nXnnn
+	[193] = "%0.1f", --Nav_Dest_Lat_nnXnn
+	[194] = "%0.1f", --Nav_Dest_Lat_nnnXn
+	[195] = "%0.1f", --Nav_Dest_Lat_nnnnX
+	[197] = "%0.1f", --Nav_Dest_Lon_Xnnnnn
+	[198] = "%0.1f", --Nav_Dest_Lon_nXnnnn
+	[199] = "%0.1f", --Nav_Dest_Lon_nnXnnn
+	[200] = "%0.1f", --Nav_Dest_Lon_nnnXnn
+	[201] = "%0.1f", --Nav_Dest_Lon_nnnnXn
+	[202] = "%0.1f", --Nav_Dest_Lon_nnnnnX
 	
 	[210] = "%0.4f", --Nav_WindSpeed_Xxx
 	[211] = "%0.4f", --Nav_WindSpeed_xXx
@@ -185,10 +185,10 @@ ExportScript.ConfigEveryFrameArguments =
 	[207] = "%0.4f", --Nav_Magvar_xxxXx
 	[208] = "%0.4f", --Nav_Magvar_xxxxX
 	
-	[362] = "%0.4f", --ARC51_Freq_XXxxx
-	[363] = "%0.4f", --ARC51_Freq_xxXxx
-	[364] = "%0.4f", --ARC51_Freq_xxxXX
-	[371] = "%0.4f", --ARC51_Freq_Preset
+	[362] = "%0.2f", --ARC51_Freq_XXxxx
+	[363] = "%0.2f", --ARC51_Freq_xxXxx
+	[364] = "%0.2f", --ARC51_Freq_xxxXX
+	[371] = "%0.2f", --ARC51_Freq_Preset
 	
 	[111] = "%0.4f", --FloodWhite
 	[114] = "%0.4f", --FloodRed
@@ -259,8 +259,8 @@ ExportScript.ConfigArguments =
 	[164] = "%0.4f",	--AFCS Heading Select Pull-to-Set Knob	{0,0,1}
 	[165] = "%0.4f",	--AFCS Stability Augmentation Switch (Yaw Damper)	{1,0,1}
 	[166] = "%0.4f",	--AFCS Aileron Trim Switch (unimplemented)	{1,0,1}
-	[170] = "%0.4f",	--AN/APN-153 Doppler Navigation Radar Mode Switch	{0.1,0,0.4}
-	[176] = "%0.4f",	--AN/ASN-41 Function Selector Switch	{0.1,0,0.4}
+	[170] = "%0.1f",	--AN/APN-153 Doppler Navigation Radar Mode Switch	{0.1,0,0.4}
+	[176] = "%0.1f",	--AN/ASN-41 Function Selector Switch	{0.1,0,0.4}
 	[177] = "%0.4f",	--Present Latitude Push-to-Set Knob	{1,0,1}
 	[183] = "%0.4f",	--Present Longitude Push-to-Set Knob	{1,0,1}
 	[190] = "%0.4f",	--Destination Latitude Push-to-Set Knob	{1,0,1}
@@ -300,13 +300,12 @@ ExportScript.ConfigArguments =
 	[259] = "%0.4f",	--AFCS 1-N-2 Switch	{1,-1,1}
 	[361] = "%0.4f",	--Radio Preset Channel Selector	{0.05,0,0.95}
 	[365] = "%0.4f",	--Radio Volume	{0.5,0,1}
-	[366] = "%0.4f",	--Radio Frequency Mode	{-1,-1,1}
-	[366] = "%0.4f",	--Radio Frequency Mode	{1,-1,1}
+	[366] = "%0.f",	--Radio Frequency Mode	{1,-1,1}
 	[367] = "%0.4f",	--Radio Frequency 10 MHz	{0.05,0,0.85}
 	[368] = "%0.4f",	--Radio Frequency 1 MHz	{0.1,0,0.9}
 	[369] = "%0.4f",	--Radio Frequency 50 kHz	{0.05,0,0.95}
 	[370] = "%0.4f",	--Radio Squelch Disable	{1,0,1}
-	[372] = "%0.4f",	--AN/ARC-51A UHF Radio Mode Switch	{0.1,0,0.3}
+	[372] = "%0.1f",	--AN/ARC-51A UHF Radio Mode Switch	{0.1,0,0.3}
 	[390] = "%0.4f",	--Gunpod Switch	{1,-1,1}
 	[391] = "%0.4f",	--Gunpod Station LH Switch	{1,0,1}
 	[392] = "%0.4f",	--Gunpod Station CTR Switch	{1,0,1}
@@ -365,7 +364,7 @@ ExportScript.ConfigArguments =
 	[885] = "%0.4f",	--IAS Index	{1,0,1}
 	[891] = "%0.4f",	--Gunsight Day-Night Switch	{1,0,1}
 	[895] = "%0.4f",	--Gunsight Light Control	{0,0,1}
-	[900] = "%0.4f",	--AN/ARN-52 TACAN Mode Switch	{0.1,0,0.3}
+	[900] = "%0.1f",	--AN/ARN-52 TACAN Mode Switch	{0.1,0,0.3}
 	[901] = "%0.4f",	--TACAN Channel 10s	{0.05,0,0.6}
 	[902] = "%0.4f",	--TACAN Channel 1s	{0.1,0,0.9}
 	[903] = "%0.4f",	--TACAN Volume	{0,-1,1}
@@ -429,6 +428,12 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	
 	ExportScript.CockpitParametersFunction(mainPanelDevice)
 	ExportScript.UHF_radioPresets(mainPanelDevice)
+	ExportScript.TomTom(mainPanelDevice)
+	ExportScript.UHF_radio(mainPanelDevice)
+	ExportScript.Tacan_radio(mainPanelDevice)
+	ExportScript.AFCSpanel(mainPanelDevice)
+	ExportScript.FlightControls(mainPanelDevice)
+	ExportScript.FlightInstruments(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -448,6 +453,8 @@ end
 ----------------------
 -- Custom Functions --
 ----------------------
+
+
 
 function ExportScript.CockpitParametersFunction(mainPanelDevice)
 
@@ -556,6 +563,159 @@ NAV_DEST_LON_Xnnnnn:0.000000\
 
 end
 
+function ExportScript.TomTom(mainPanelDevice)
+--this function will display the values seen on the Navigation computer
+	
+	local Nav_CurPos_Lat_Xnnnn = Round(math.floor(mainPanelDevice:get_argument_value(178)*10),0)
+	local Nav_CurPos_Lat_nXnnn = Round(math.floor(mainPanelDevice:get_argument_value(179)*10),0)
+	local Nav_CurPos_Lat_nnXnn = Round(math.floor(mainPanelDevice:get_argument_value(180)*10),0)
+	local Nav_CurPos_Lat_nnnXn = Round(math.floor(mainPanelDevice:get_argument_value(181)*10),0)
+	local Nav_CurPos_Lat_nnnnX = Round(math.floor(mainPanelDevice:get_argument_value(182)*10),0)
+	
+	if Nav_CurPos_Lat_nnnnX < 5 then
+		Nav_CurPos_Lat_nnnnX = "N"
+	else
+		Nav_CurPos_Lat_nnnnX = "S"
+	end
+	
+		local Nav_CurPos_Lat = Nav_CurPos_Lat_Xnnnn .. Nav_CurPos_Lat_nXnnn 
+							.. Nav_CurPos_Lat_nnXnn .. Nav_CurPos_Lat_nnnXn .. Nav_CurPos_Lat_nnnnX
+			
+	ExportScript.Tools.SendData(2010, "PRESENT\n" .. Nav_CurPos_Lat) 
+	
+	
+	local Nav_CurPos_Lon_Xnnnnn = Round(math.floor(mainPanelDevice:get_argument_value(184)*10),0)
+	local Nav_CurPos_Lon_nXnnnn = Round(math.floor(mainPanelDevice:get_argument_value(185)*10),0)
+	local Nav_CurPos_Lon_nnXnnn = Round(math.floor(mainPanelDevice:get_argument_value(186)*10),0)
+	local Nav_CurPos_Lon_nnnXnn = Round(math.floor(mainPanelDevice:get_argument_value(187)*10),0)
+	local Nav_CurPos_Lon_nnnnXn = Round(math.floor(mainPanelDevice:get_argument_value(188)*10),0)
+	local Nav_CurPos_Lon_nnnnnX = Round(math.floor(mainPanelDevice:get_argument_value(189)*10),0)
+	
+	
+	if Nav_CurPos_Lon_nnnnnX < 5 then
+		Nav_CurPos_Lon_nnnnnX = "W"
+	else
+		Nav_CurPos_Lon_nnnnnX = "E"
+	end
+	
+		local Nav_CurPos_Lon = Nav_CurPos_Lon_Xnnnnn .. Nav_CurPos_Lon_nXnnnn .. Nav_CurPos_Lon_nnXnnn
+							.. Nav_CurPos_Lon_nnnXnn .. Nav_CurPos_Lon_nnnnXn .. Nav_CurPos_Lon_nnnnnX
+			
+	ExportScript.Tools.SendData(2011, "POSIT\n" .. Nav_CurPos_Lon)
+	
+	
+	local Nav_Dest_Lat_Xnnnn = Round(math.floor(mainPanelDevice:get_argument_value(191)*10),0)
+	local Nav_Dest_Lat_nXnnn = Round(math.floor(mainPanelDevice:get_argument_value(192)*10),0)
+	local Nav_Dest_Lat_nnXnn = Round(math.floor(mainPanelDevice:get_argument_value(193)*10),0)
+	local Nav_Dest_Lat_nnnXn = Round(math.floor(mainPanelDevice:get_argument_value(194)*10),0)
+	local Nav_Dest_Lat_nnnnX = Round(math.floor(mainPanelDevice:get_argument_value(195)*10),0)
+	
+	if Nav_Dest_Lat_nnnnX < 5 then
+		Nav_Dest_Lat_nnnnX = "N"
+	else
+		Nav_Dest_Lat_nnnnX = "S"
+	end
+	
+		local Nav_Dest_Lat = Nav_Dest_Lat_Xnnnn .. Nav_Dest_Lat_nXnnn 
+							.. Nav_Dest_Lat_nnXnn .. Nav_Dest_Lat_nnnXn .. Nav_Dest_Lat_nnnnX
+			
+	ExportScript.Tools.SendData(2012, "DESTI\n" .. Nav_Dest_Lat) 
+	
+	local Nav_Dest_Lon_Xnnnnn = Round(math.floor(mainPanelDevice:get_argument_value(197)*10),0)
+	local Nav_Dest_Lon_nXnnnn = Round(math.floor(mainPanelDevice:get_argument_value(198)*10),0)
+	local Nav_Dest_Lon_nnXnnn = Round(math.floor(mainPanelDevice:get_argument_value(199)*10),0)
+	local Nav_Dest_Lon_nnnXnn = Round(math.floor(mainPanelDevice:get_argument_value(200)*10),0)
+	local Nav_Dest_Lon_nnnnXn = Round(math.floor(mainPanelDevice:get_argument_value(201)*10),0)
+	local Nav_Dest_Lon_nnnnnX = Round(math.floor(mainPanelDevice:get_argument_value(202)*10),0)
+	
+	if Nav_Dest_Lon_nnnnnX < 5 
+	  then Nav_Dest_Lon_nnnnnX = "W"
+	else 
+	  Nav_Dest_Lon_nnnnnX = "E"
+	end
+	
+		local Nav_Dest_Lon = Nav_Dest_Lon_Xnnnnn .. Nav_Dest_Lon_nXnnnn .. Nav_Dest_Lon_nnXnnn
+							.. Nav_Dest_Lon_nnnXnn .. Nav_Dest_Lon_nnnnXn .. Nav_Dest_Lon_nnnnnX
+			
+	ExportScript.Tools.SendData(2013, "NATION\n" .. Nav_Dest_Lon)
+	
+	ExportScript.Tools.SendData(2014, "P POSTN\n" .. Nav_CurPos_Lat .. "\n" ..Nav_CurPos_Lon)
+	ExportScript.Tools.SendData(2015, "DEST\n" .. Nav_Dest_Lat .. "\n" ..Nav_Dest_Lon)
+	
+	
+	
+	
+	------------------------------
+	-- AN/APN-153 Radar Doppler --
+	------------------------------
+	
+	local Doppler_Speed_Xnn = Round(math.floor(mainPanelDevice:get_argument_value(173)*10),0)
+	local Doppler_Speed_nXn = Round(math.floor(mainPanelDevice:get_argument_value(174)*10),0)
+	local Doppler_Speed_nnX = Round(math.floor(mainPanelDevice:get_argument_value(175)*10),0)
+	
+	local Doppler_Speed = Doppler_Speed_Xnn .. Doppler_Speed_nXn .. Doppler_Speed_nnX
+	
+	ExportScript.Tools.SendData(2016, "DOP Spd\n" .. Doppler_Speed .. "kts")
+
+
+	local Doppler_Drift = Round(math.floor(mainPanelDevice:get_argument_value(172)*40),0)
+	local Doppler_direction = ""
+	
+	if Doppler_Drift > 1 then --it is positive
+		Doppler_Drift = Doppler_Drift
+		Doppler_direction = "R"
+	elseif Doppler_Drift < -1 then --it is engative
+		Doppler_Drift = abs(Doppler_Drift)
+		Doppler_direction = "L"
+	else --it is close enough to be center aka 0
+		Doppler_Drift = "0"
+		Doppler_direction = ""
+	end
+	
+	ExportScript.Tools.SendData(2017, "DOP Drift\n" .. Doppler_Drift .. " " .. Doppler_direction)
+	
+	ExportScript.Tools.SendData(2018, "DOPPLER\n" .. Doppler_Drift .. " " .. Doppler_direction .. "\n" .. Doppler_Speed .. "kts")
+
+end
+
+function ExportScript.UHF_radio(mainPanelDevice)
+--This contains most of the actual UHF code
+
+--[[
+  [362] = "%0.4f", --ARC51_Freq_XXxxx
+  [363] = "%0.4f", --ARC51_Freq_xxXxx
+  [364] = "%0.4f", --ARC51_Freq_xxxXX
+  [371] = "%0.4f", --ARC51_Freq_Preset
+ ]]
+ 
+  local ARC51_Freq_XXxxx = Round(math.floor(mainPanelDevice:get_argument_value(362)*20), 0) + 22
+  local ARC51_Freq_xxXxx = Round((mainPanelDevice:get_argument_value(363)*10),0)
+  local ARC51_Freq_xxxXX = Round(mainPanelDevice:get_argument_value(364)*100,0)
+
+  -- Some edge cases because we are dealing with numbers instead of strings
+  if ARC51_Freq_xxxXX == 5 then
+    ARC51_Freq_xxxXX = "05"
+  end
+  if ARC51_Freq_xxxXX == 0 then
+    ARC51_Freq_xxxXX = "00"
+  end
+  local ARC51_Freq_Preset = Round(math.floor(mainPanelDevice:get_argument_value(365)*10),0)
+  
+  
+  ARC51_Freq = ARC51_Freq_XXxxx .. ARC51_Freq_xxXxx .. "." .. ARC51_Freq_xxxXX
+  
+  ExportScript.Tools.SendData(2019, "UHF MHz\n" .. ARC51_Freq)
+  ExportScript.Tools.SendData(2020, "UHF \n" .. "CH " .. ARC51_Freq_Preset)
+  
+  if mainPanelDevice:get_argument_value(366) > 0.5 then
+    ExportScript.Tools.SendData(2021, "UHF \n" .. "CH " .. ARC51_Freq_Preset)
+  elseif mainPanelDevice:get_argument_value(366) < -0.5 then
+	ExportScript.Tools.SendData(2021, "UHF\n" .. "GUARD")
+  else 
+	ExportScript.Tools.SendData(2021, "UHF MHz\n" .. ARC51_Freq)
+  end
+  
+end
 
 function ExportScript.UHF_radioPresets(mainPanelDevice)
 
@@ -674,6 +834,7 @@ local a4_list_indication_4 = ExportScript.Tools.split(list_indication(4), "%c")
 
 end
 --[[ notes
+
 n = 1
 return list_indication(n)
 
@@ -783,15 +944,100 @@ txt_chn[20]\
 
 ]]
 
+function ExportScript.Tacan_radio(mainPanelDevice)
+	local TACAN_Channel_10s = Round(mainPanelDevice:get_argument_value(901)*20,0)
+	local TACAN_Channel_1s = Round(mainPanelDevice:get_argument_value(902)*10,0)
+	ExportScript.Tools.SendData(2022, "TACAN\n" .. TACAN_Channel_10s .. TACAN_Channel_1s)
+end
+
+
+function ExportScript.AFCSpanel(mainPanelDevice)
+	--[[required stuff
+[167] = "%0.1f", --AFCS_HDG_100s
+[168] = "%0.1f", --AFCS_HDG_10s
+[169] = "%0.1f", --AFCS_HDG_1s
+]]
+	local AFCS_HDG_100s = Round(mainPanelDevice:get_argument_value(167)*10,0)
+	local AFCS_HDG_10s = Round(mainPanelDevice:get_argument_value(168)*10,0)
+	local AFCS_HDG_1s = Round(mainPanelDevice:get_argument_value(169)*10,0)
+	ExportScript.Tools.SendData(2023, "AFCS\n" .. AFCS_HDG_100s .. AFCS_HDG_10s ..AFCS_HDG_1s .. "°")
+
+end
+
+function ExportScript.FlightControls(mainPanelDevice)
+	local flap_indicator = mainPanelDevice:get_argument_value(23)
+
+	if flap_indicator < 0.27 then
+		flap_indicator = "UP"
+	elseif flap_indicator < 0.67 then
+		flap_indicator = "HALF"
+	else
+		flap_indicator = "DOWN"
+	end
+	ExportScript.Tools.SendData(2024, "FLAPS\n" .. flap_indicator)
+end
+
+function ExportScript.FlightInstruments(mainPanelDevice)
+	-- AOA
+	local AngleOfAttack = Round(mainPanelDevice:get_argument_value(840)*30,0)
+	ExportScript.Tools.SendData(2025, "AOA\n" .. AngleOfAttack)
+
+	-- Vertical Velocity
+	-- TODO: This is a not a linear function. You will have to find the formula. Using a placeholder
+	local verticalVelocity = Round(mainPanelDevice:get_argument_value(800)*30,0)
+	local multiplier_verticalVelocity = 6000
+	ExportScript.Tools.SendData(2026, "VV\n" .. verticalVelocity*multiplier_verticalVelocity)
+
+	--[[ altimeter stuff. where is the radar altimeter indication on the aircraft?
+	[600] = "%0.4f", --RadarAltimeter
+	[820] = "%0.4f", --Altimeter Needle
+	[821] = "%0.4f", --Altimeter10K
+	[822] = "%0.4f", --Altimeter1K
+	[823] = "%0.4f", --Altimeter100s
+	[602] = "%0.4f",	--AN/APN-141 Radar Altimeter	{0.5,0,1}
+	[603] = "%0.4f",	--AN/APN-141 Radar Altimeter	{1,-1,0}
+	]]
+
+
+	local AltimeterNeedle = Round(mainPanelDevice:get_argument_value(820)*1000,0)
+	local Altimeter10K = math.floor(mainPanelDevice:get_argument_value(821)*10)
+	local Altimeter1K = math.floor(mainPanelDevice:get_argument_value(822)*10)
+	local Altimeter100s = Round(mainPanelDevice:get_argument_value(823)*100,0)
+
+	AltimeterNeedle = AddZeros3(AltimeterNeedle)
+
+	ExportScript.Tools.SendData(2027, AltimeterNeedle)
+	ExportScript.Tools.SendData(2028, Altimeter10K)
+	ExportScript.Tools.SendData(2029, Altimeter1K)
+	ExportScript.Tools.SendData(2030, Altimeter100s)
+
+	local totalAltimeter = Altimeter10K .. Altimeter1K .. AltimeterNeedle
+
+	--TODO: format the altitude readout so that it looks normal w/ commas and no leading 0s
+	ExportScript.Tools.SendData(2031, totalAltimeter)
+	--TODO: Have the radar altimeter active, but the baro kicks in when the radalt kicks out
+	--TODO: airspeed
+	--TODO: liquid oxygen
+	--TODO: fuel flow
+	--TODO:  fuel quantity
+	--TODO: percent rpm
+	--TODO: exh temp
+	--TODO: P.R guage and number
+	--TODO: oil psi
+	--TODO: Clock
+	--TODO: G meter
+	--TODO: Countermeasure stuff
+	--TODO: full weapons panel
+	--TODO: warning lights
+	--TODO: buttons and switches
+
+end
+
+--TODO: make a LAWS indication that popts up on the kts display]]
+
 ------------------------------
 -- General Helper Functions --
 ------------------------------
-
-
-function percentSignFromFuel(s)
-    return s:gsub("%\%", "")
-end
-
 
 function ExportScript.Linearize(current_value, raw_tab, final_tab)
   -- (c) scoobie
@@ -810,13 +1056,13 @@ function ExportScript.Linearize(current_value, raw_tab, final_tab)
 end
 
 
-function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+function Round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
   local mult = 10^(numDecimalPlaces or 0)
   return math.floor(num * mult + 0.5) / mult
 end
 
 
-function format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
+function Format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
 
   local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
 
@@ -829,13 +1075,13 @@ function format_int(number) --https://stackoverflow.com/questions/10989788/forma
 end
 
 
-function trim(s) --http://lua-users.org/wiki/CommonFunctions
+function Trim(s) --http://lua-users.org/wiki/CommonFunctions
   -- from PiL2 20.4
   return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
 
 
-function addZeros3(number)
+function AddZeros3(number)
 	number = string.format("%.1d" , number)
 	if #number == 2 then
 		number = "0" .. number
@@ -847,7 +1093,7 @@ end
 
 
 -- inspired by https://github.com/ciribob/DCS-SimpleRadioStandalone/blob/a3021661a084e8dca285ffad7cf640b3c1dbccb2/Scripts/DCS-SRS/Scripts/DCS-SRS-Export.lua#L4195
-function getCockpitParam()
+function GetCockpitParam()
 	local ListIindicator = list_cockpit_params() --list_indication(IndicatorID)
 	local TmpReturn = {}
 	--if ListIindicator == "" then
@@ -867,7 +1113,7 @@ end
 
 -- split reference
 function ExportScript.Tools.split(stringvalue, delimiter)
-    result = {};
+    local result = {};
     for match in (stringvalue..delimiter):gmatch("(.-)"..delimiter) do
         table.insert(result, match);
     end
