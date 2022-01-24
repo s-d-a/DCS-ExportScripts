@@ -392,6 +392,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 ]]
+	ExportScript.TomTom(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -434,6 +435,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.AFCSpanel(mainPanelDevice)
 	ExportScript.FlightControls(mainPanelDevice)
 	ExportScript.FlightInstruments(mainPanelDevice)
+	ExportScript.radar_mode_and_tilt(mainPanelDevice)
+	ExportScript.drop_interval(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -623,7 +626,7 @@ function ExportScript.TomTom(mainPanelDevice)
 	
 	local Nav_Dest_Lon_Xnnnnn = Round(math.floor(mainPanelDevice:get_argument_value(197)*10),0)
 	local Nav_Dest_Lon_nXnnnn = Round(math.floor(mainPanelDevice:get_argument_value(198)*10),0)
-	local Nav_Dest_Lon_nnXnnn = Round(math.floor(mainPanelDevice:get_argument_value(199)*10),0)
+	local Nav_Dest_Lon_nnXnnn = string.format("%.0f", mainPanelDevice:get_argument_value(199) * 10)--Round(math.floor(mainPanelDevice:get_argument_value(199)*10),0)
 	local Nav_Dest_Lon_nnnXnn = Round(math.floor(mainPanelDevice:get_argument_value(200)*10),0)
 	local Nav_Dest_Lon_nnnnXn = Round(math.floor(mainPanelDevice:get_argument_value(201)*10),0)
 	local Nav_Dest_Lon_nnnnnX = Round(math.floor(mainPanelDevice:get_argument_value(202)*10),0)
@@ -699,8 +702,9 @@ function ExportScript.UHF_radio(mainPanelDevice)
   if ARC51_Freq_xxxXX == 0 then
     ARC51_Freq_xxxXX = "00"
   end
-  local ARC51_Freq_Preset = Round(math.floor(mainPanelDevice:get_argument_value(365)*10),0)
   
+  local ARC51_Freq_Preset = Round(math.floor((mainPanelDevice:get_argument_value(371) *100) / 4.75),0) +1
+	
   
   ARC51_Freq = ARC51_Freq_XXxxx .. ARC51_Freq_xxXxx .. "." .. ARC51_Freq_xxxXX
   
@@ -834,11 +838,8 @@ local a4_list_indication_4 = ExportScript.Tools.split(list_indication(4), "%c")
 
 end
 --[[ notes
-
 n = 1
 return list_indication(n)
-
-
 list_indication(1)
 -----------------------------------------\
 debug_screen\
@@ -878,8 +879,6 @@ VV:  0\
 {78E1D8C3-F18B-4e47-A6B0-072FE74F9CE2}\
 RPM:0.0%\
 }\
-
-
 list_indication(4)
 -----------------------------------------\
 txt_chn[1]\
@@ -941,7 +940,6 @@ txt_chn[19]\
 -----------------------------------------\
 txt_chn[20]\
 252.00\
-
 ]]
 
 function ExportScript.Tacan_radio(mainPanelDevice)
@@ -1034,6 +1032,50 @@ function ExportScript.FlightInstruments(mainPanelDevice)
 end
 
 --TODO: make a LAWS indication that popts up on the kts display]]
+
+function ExportScript.radar_mode_and_tilt(mainPanelDevice)
+	--[120] = "%0.4f",	--AN/APG-53A Radar Mode Switch	{0.1,0,0.4}
+	--[122] = "%0.4f",	--Radar Antenna Tilt Switch	{0.4,0,1}
+		local radar_mode
+		if mainPanelDevice:get_argument_value(120) > 0 and mainPanelDevice:get_argument_value(120) < 0.2 then --0.1
+			radar_mode = "STBY"
+			elseif mainPanelDevice:get_argument_value(120) > 0.1 and mainPanelDevice:get_argument_value(120) < 0.3 then --0.2
+			radar_mode = "SRCH"
+			elseif mainPanelDevice:get_argument_value(120) > 0.2 and mainPanelDevice:get_argument_value(120) < 0.4 then --0.3
+			radar_mode = "TC"
+			elseif mainPanelDevice:get_argument_value(120) > 0.3 then
+			radar_mode = "A/G"
+			else radar_mode = "OFF"
+		end
+		local radar_tilt = ExportScript.Tools.round(mainPanelDevice:get_argument_value(122), 1) * 5
+		if radar_tilt == 1 then
+		radar_tilt = "+5"
+		elseif radar_tilt == 2 then
+		radar_tilt = "0"
+		elseif	radar_tilt == 3 then
+		radar_tilt = "-5"
+		elseif radar_tilt == 4 then
+		radar_tilt = "-10"
+		elseif radar_tilt == 5 then
+		radar_tilt = "-15"
+		else radar_tilt = "+10"
+		end
+		
+		local radar_mode_and_tilt = "MODE" .. "\n" .. radar_mode .. "\n" .. "TILT" .. 
+		"\n" .. radar_tilt
+
+	ExportScript.Tools.SendData(1250, radar_mode_and_tilt)
+		
+end
+
+function ExportScript.drop_interval(mainPanelDevice)
+	--[742] = "%0.2f",	--AWRS Drop Interval Knob	{0,0,0.9}
+	
+	local drop_interval = "DRP INTVL" .. "\n" .. ((ExportScript.Tools.round(mainPanelDevice:get_argument_value(742), 2) * 10) / 0.05) + 20
+
+	ExportScript.Tools.SendData(1251, drop_interval)
+
+end
 
 ------------------------------
 -- General Helper Functions --
