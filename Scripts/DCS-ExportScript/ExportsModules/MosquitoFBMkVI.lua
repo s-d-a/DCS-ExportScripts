@@ -106,9 +106,9 @@ ExportScript.ConfigEveryFrameArguments =
 	[102] = "%.4f", -- Clock start/stop twist {0.0, 1.0}
 	[103] = "%.4f", -- Voltimeter {0.0, 1.0}
 	
-	[104] = "%.4f", -- unknown ???
-	[105] = "%.4f", -- unknown ???
-	[106] = "%.4f", -- unknown ???
+	[104] = "%.4f", -- T1154M1Gauge
+	[105] = "%.4f", -- T1154M2Gauge
+	[106] = "%.4f", -- T1154M3Gauge
 	
 	[110] = "%.4f", -- Rudder trim hand knob needle {-1.0, 1.0} 
 	[115] = "%.4f", -- Bomb Doors Lever {-1.0, 1.0}
