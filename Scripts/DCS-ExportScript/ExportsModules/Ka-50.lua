@@ -319,6 +319,98 @@ ExportScript.ConfigEveryFrameArguments =
 	-- Ambient Temperature
 	---------------------------------------------------
 	[587] = "%0.4f"			-- Ambient Temperature {-60, 50} = {-0.946, 0.788}
+
+	[104] = "%0.4f", -- collective_position
+	
+	[126] = "%0.4f", -- HSI_courseKnob
+	
+	[129] = "%0.4f", -- HSI_headingKnob
+	
+	[15] = "%0.4f", -- PRC_button_CLEAN
+	[150] = "%0.4f", -- PRC_button_ESCAPE
+	
+	[16] = "%0.4f", -- PRC_button_WINGMAN_ALL
+	[161] = "%0.4f", -- PRC_button_ERASE
+	
+	[17] = "%0.4f", -- PRC_button_WINGMAN_1
+	
+	[18] = "%0.4f", -- PRC_button_WINGMAN_2
+	
+	[19] = "%0.4f", -- PRC_button_WINGMAN_3
+	
+	[20] = "%0.4f", -- PRC_button_WINGMAN_4
+	
+	[21] = "%0.4f", -- PRC_button_TARGET_1
+	
+	[22] = "%0.4f", -- PRC_button_TARGET_2
+	
+	[23] = "%0.4f", -- PRC_button_TARGET_3
+	
+	[424] = "%0.4f", -- R800Revolve1
+	[425] = "%0.4f", -- R800Revolve2
+	[426] = "%0.4f", -- R800Revolve3
+	[427] = "%0.4f", -- R800Revolve4
+	
+	[437] = "%0.4f", -- PRC_button_AUTO_TURN
+	[438] = "%0.4f", -- PRC_button_AIRBORNE_TARGET
+	[439] = "%0.4f", -- PRC_button_FORWARD_HEMISPHERE
+	[44] = "%0.4f", -- lamp_MasterWarning
+	[440] = "%0.4f", -- PRC_button_GROUND_MOVING_TARGET
+	[441] = "%0.4f", -- PRC_button_CLEAR
+	
+	[46] = "%0.4f", -- lamp_RotorRPM
+	
+	[50] = "%0.4f", -- PRC_button_RESET
+	
+	[509] = "%0.4f", -- filter
+	
+	[529] = "%0.4f", -- HSI_course_counter_hundreds_tenth
+	
+	[530] = "%0.4f", -- HSI_course_counter_units
+	
+	[533] = "%0.4f", -- left_door
+	[534] = "%0.4f", -- day_night_texture_switcher
+	
+	[545] = "%0.4f", -- mirrors_draw
+	[546] = "%0.4f", -- windscreen_wiper
+	
+	[551] = "%0.4f", -- Panels_buttons_light
+	
+	[557] = "%0.4f", -- right_engine_throttle
+	[558] = "%0.4f", -- coll_ReadjustFreeTurbRPM_sw
+	
+	[560] = "%0.4f", -- coll_ROUTE_DESCENT_sw
+	[561] = "%0.4f", -- lamp_ABRIS_button1
+	[562] = "%0.4f", -- lamp_ABRIS_button2
+	[563] = "%0.4f", -- lamp_ABRIS_button3
+	[564] = "%0.4f", -- lamp_ABRIS_button4
+	[565] = "%0.4f", -- lamp_ABRIS_button5
+	
+	[571] = "%0.4f", -- wheel_brakes
+	
+	[578] = "%0.4f", -- left_engine_throttle
+	[579] = "%0.4f", -- throttle_cover
+	[580] = "%0.4f", -- collective_stopper
+	[581] = "%0.4f", -- R828_channel_selector
+	
+	[599] = "%0.4f", -- AGR_81_LongitudinalDeviationBar
+	
+	[613] = "%0.4f", -- AGR_81_LateralDeviationBar
+	[614] = "%0.4f", -- missile_trigger
+	[615] = "%0.4f", -- gun_trigger
+	
+	[71] = "%0.4f", -- stick_roll
+	
+	[74] = "%0.4f", -- stick_pitch
+	[75] = "%0.4f", -- CLOCK_flight_time_meter_status
+	
+	[798] = "%0.4f", -- ADI_illumination
+	[799] = "%0.4f", -- illumination_panels2
+	
+	[800] = "%0.4f", -- Control_Panel_illumination
+	[801] = "%0.4f", -- ADI_illumination2
+	[802] = "%0.4f", -- AHR_illumination
+	[803] = "%0.4f", -- illumination_panels
 }
 
 ExportScript.ConfigArguments = 
