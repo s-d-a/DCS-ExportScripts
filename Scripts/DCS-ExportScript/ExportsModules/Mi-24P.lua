@@ -326,6 +326,122 @@ ExportScript.ConfigEveryFrameArguments =
 	[734] = "%0.1f",	--  Counter 5 Red Light
 	[735] = "%.4f",		--	Counter Adjustment 5  ROUNDS-KNOB-5
 	
+	[1028] = "%0.4f", --Aiming_reference_marker
+	[16] = "%0.4f", --G_Meter_Min
+	[22] = "%0.4f", --hydraulicUtilityPressure
+	
+	[23] = "%0.4f", --hydraulicMainPressure
+	[233] = "%0.4f", --APYawPushed
+	[238] = "%0.4f", --APRudderDrive
+	[239] = "%0.4f", -- APRollPushed
+	[24] = "%0.4f", -- hydraulicAuxiliaryPressure
+	[241] = "%0.4f", -- APRollDelta
+	[244] = "%0.4f", -- APRollDrive
+	[245] = "%0.4f", -- APPitchPushed
+	[247] = "%0.4f", -- APPitchDelta
+	[251] = "%0.4f", -- APPitchDrive
+	[256] = "%0.4f", -- APCollectiveDrive
+	
+	[263] = "%0.4f", -- APCourseOne
+	[264] = "%0.4f", -- APCourseTen
+	[265] = "%0.4f", -- APCourseHundr
+	[266] = "%0.4f", -- Pedals
+	
+	[271] = "%0.4f", -- SPUU_Delta
+	[292] = "%0.4f", -- APUTemperature
+	
+	[305] = "%0.4f", -- APUPressure
+	[333] = "%0.4f", -- IFF_KD_LAMP
+	[335] = "%0.4f", -- IFF_KP_LAMP
+	
+	[342] = "%0.4f", -- Eucalypt_lamp
+	
+	[379] = "%0.4f", -- MC61_Recorder_Lamp
+	[422] = "%0.4f", -- Jadro_SearchLamp
+	[424] = "%0.4f", -- Jadro_CtlLamp
+	[425] = "%0.4f", -- Jadro_BreakdownLamp
+	
+	[440] = "%0.4f", -- GrebenNorthTenths
+	[441] = "%0.4f", -- GrebenNorthOne
+	[442] = "%0.4f", -- GrebenNorthTen
+	[443] = "%0.4f", -- GrebenNorthClosed
+	[444] = "%0.4f", -- GrebenSouthTenths
+	[445] = "%0.4f", -- GrebenSouthOne
+	[446] = "%0.4f", -- GrebenSouthTen
+	[447] = "%0.4f", -- GrebenSouthClosed
+	
+	[555] = "%0.4f", -- ASP17_UP_DOWN
+	[558] = "%0.4f", -- ASP17_BASE
+	[56] = "%0.4f", -- CLOCK_P_flight_time_meter_status
+	
+	[565] = "%0.4f", -- ASP17_LEFT_RIGHT
+	
+	
+	[646] = "%0.4f", -- KM_2_magnetic_decl
+	[648] = "%0.4f", -- KM_2_magnetic_decl_100_plus
+	[649] = "%0.4f", -- KM_2_magnetic_decl_10_plus
+	[650] = "%0.4f", -- KM_2_magnetic_decl_1_plus
+	[651] = "%0.4f", -- KM_2_magnetic_decl_01_plus
+	[652] = "%0.4f", -- KM_2_magnetic_decl_01_minus
+	[653] = "%0.4f", -- KM_2_magnetic_decl_1_minus
+	[654] = "%0.4f", -- KM_2_magnetic_decl_10_minus
+	[655] = "%0.4f", -- KM_2_magnetic_decl_100_minus
+	
+	[67] = "%0.4f", -- ELEC_Amp_DCGen
+	
+	[68] = "%0.4f", -- ELEC_Volt_DC
+	[689] = "%0.4f", -- CLOCK_O_light_minutes
+	[690] = "%0.4f", -- CLOCK_O_currtime_seconds
+	[691] = "%0.4f", -- CLOCK_O_flight_hours
+	[692] = "%0.4f", -- CLOCK_O_flight_time_meter_status
+	[695] = "%0.4f", -- CLOCK_O_currtime_hours
+	[697] = "%0.4f", -- CLOCK_O_seconds_meter_time_seconds
+	[698] = "%0.4f", -- CLOCK_O_seconds_meter_time_minutes
+	[702] = "%0.4f", -- failure_gyro_2_lamp
+	[746] = "%0.4f", -- Correction
+	[76] = "%0.4f", -- ELEC_Amp_RightBatt
+	[77] = "%0.4f", -- ELEC_Amp_LeftBatt
+	[78] = "%0.4f", -- ELEC_Amp_RightGen
+	[786] = "%0.4f", -- PKP72M_O_Altitude
+	
+	[792] = "%0.4f", -- diss15_W_hundreds
+	[793] = "%0.4f", -- diss15_W_tens
+	[794] = "%0.4f", -- diss15_W_ones
+	[795] = "%0.4f", -- diss15_W_shutter
+	[831] = "%0.4f", -- diss15_hover_lamp_off
+	[832] = "%0.4f", -- VD_10K_10_Ind_PILOT
+	[833] = "%0.4f", -- VD_10K_100_Ind_PILOT
+	[834] = "%0.4f", -- VD_10K_RESS_OPERATOR
+	[835] = "%0.4f", -- VD_10K_Shutter_OPERATOR
+	[836] = "%0.4f", -- VD_10K_10_Ind_OPERATOR
+	[837] = "%0.4f", -- VD_10K_100_Ind_OPERATOR
+	[838] = "%0.4f", -- LeftEngineRPM_Operator
+	[839] = "%0.4f", -- RightEngineRPM_Operator
+	
+	[840] = "%0.4f", -- rmi2_O_bearing2
+	[841] = "%0.4f", -- rmi2_O_heading
+	[842] = "%0.4f", -- rmi2_O_bearing1
+	[845] = "%0.4f", -- RotorRPM_Operator
+	[849] = "%0.4f", -- canopy operator
+	[850] = "%0.4f", -- CyclicPitchOp
+	[851] = "%0.4f", -- CyclicRollOp
+	[852] = "%0.4f", -- StickStowingOp
+	[860] = "%0.4f", -- CorrectionOp
+	[866] = "%0.4f", -- pilot_fan_vib1
+	[867] = "%0.4f", -- pilot_fan_vib2
+	[874] = "%0.4f", -- Sight9K113_Azimuth
+	[876] = "%0.4f", -- Sight9K113_Elevation
+	[90] = "%0.4f", -- ELEC_Volt_AC
+	[916] = "%0.4f", -- VD_10K_Shutter_PILOT
+	[936] = "%0.4f", -- PKP72M_P_AltFlag
+	[937] = "%0.4f", -- PKP72M_P_blankerK
+	[938] = "%0.4f", -- PKP72M_P_blankerT
+	[952] = "%0.4f", -- PedalsStowingOp
+	[964] = "%0.4f", -- PedalsOp
+	[972] = "%0.4f", -- Wiper_Pilot
+	[980] = "%0.4f", -- RAM_Temp
+	[986] = "%0.4f", -- map_display_lon
+	[987] = "%0.4f", -- map_display_lat
 	
 }
 ExportScript.ConfigArguments = 
