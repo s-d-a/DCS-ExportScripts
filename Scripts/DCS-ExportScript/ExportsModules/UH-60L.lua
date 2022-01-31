@@ -68,7 +68,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[60] = "%.4f",   -- Altimeter 100s PLT
 	[61] = "%.4f",   -- Altimeter 1000s PLT
 	[62] = "%.4f",   -- Altimeter 10000s PLT
-	[63] = "%.4f",   -- 
+	[63] = "%.4f",   -- ???
 	[64] = "%.4f",   -- Kollsman Window Digit 1 PLT
 	[65] = "%.4f",   -- Kollsman Window Digit 2 PLT
 	[66] = "%.4f",   -- Kollsman Window Digit 3 PLT
@@ -86,7 +86,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[78] = "%.4f",   -- Altimeter Flag CPLT
 	
 	[81] = "%.4f",   -- Parking Brake ON/OFF
-	[82] = "%.4f",   -- 
+	[82] = "%.4f",   -- ???
 	
 	-- AHRU
 	[95] = "%.4f",   -- AHRU Light 2
@@ -225,7 +225,7 @@ ExportScript.ConfigEveryFrameArguments =
 	
 	-- AUTO FLIGHT CONTROL
 	[241] = "%.4f",   -- BOOST Light
-	[242] = "%.4f",   -- 
+	[242] = "%.4f",   -- SAS 1 Light
 	[243] = "%.4f",   -- SAS 2 Light
 	[244] = "%.4f",   -- TRIM Light
 	[245] = "%.4f",   -- FPS Light
@@ -522,7 +522,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[629] = "%.4f",   -- AN/ARN-149 .1s KHz Selector
 	
 	
-	[631] = "%.4f",   -- 
+	[631] = "%.4f",   -- ???
 	
 	-- AN/ARN-147
 	[650] = "%0.1f",  -- AN/ARN-147 MHz Selector
@@ -574,12 +574,12 @@ ExportScript.ConfigEveryFrameArguments =
 	-- AN/AVS-7 HUD Heads Up Display
 	[1100] = "%.4f",   -- AN/AVS-7 Power Switch OFF/ON/ADJUDST
 	[1106] = "%.4f",   -- Pilot Dim Bright
-	[1201] = "%.4f",   -- 
-	[1202] = "%.4f",   -- 
-	[1203] = "%.4f",   -- 
-	[1204] = "%.4f",   -- 
-	[1205] = "%.4f",   -- 
-	[1206] = "%.4f",   -- 
+	[1201] = "%.4f",   -- ???
+	[1202] = "%.4f",   -- ???
+	[1203] = "%.4f",   -- ???
+	[1204] = "%.4f",   -- ???
+	[1205] = "%.4f",   -- ???
+	[1206] = "%.4f",   -- ???
 	[3406] = "%.4f",   -- Stab Position Needle
 	[3407] = "%.4f",   -- Stab Position Flag
 }
@@ -1249,6 +1249,18 @@ function ExportScript.PlayWithFire2(mainPanelDevice)
 	-- Container for all of the cockpit parameters --
 	local cockpitParamContainer = getCockpitParam()
 
+	-- temp
+	ExportScript.Tools.SendData(9997, string.format (".2f",cockpitParamContainer.SND_ALWS_COCKPIT_RATTLE))
+	
+	ExportScript.Tools.SendData(9998, string.format (".2f",cockpitParamContainer.SND_ALWS_COCKPIT_RATTLE/100))
+	ExportScript.Tools.SendData(9999,string.format(
+              "%.2f~%.2f~%.2f",
+			  cockpitParamContainer.SND_ALWS_COCKPIT_RATTLE/100,
+			  cockpitParamContainer.SND_ALWS_COCKPIT_RATTLE/100,
+			  cockpitParamContainer.SND_ALWS_COCKPIT_RATTLE/100
+            ))
+	
+	
 	----------------
 	-- Engine TRQ --
 	----------------
