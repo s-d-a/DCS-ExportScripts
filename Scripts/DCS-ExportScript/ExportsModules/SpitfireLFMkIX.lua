@@ -135,7 +135,7 @@ ExportScript.ConfigArguments =
 	[81] = "%.1f",	-- Gun Sight Dimmer (Axis) {0.0, 1.0} in 0.1 Steps
 	-- Port Wall
 	[145] = "%.2f",	-- Elevator Trim Wheel (Axis) {-1.0, 1.0} in 0.01 Steps
-	[146] = "%.1f",	-- Rudder Trim Wheel (Axis) {-1.0, 1.0} in 0.1 Steps
+	[154] = "%.1f",	-- Rudder Trim Wheel (Axis) {-1.0, 1.0} in 0.1 Steps
 	-- Radio Remote Channel Switcher
 	[115] = "%1d",	-- Off Button
 	[116] = "%1d",	-- A Button
@@ -212,8 +212,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 	
-	
+	ExportScript.trimReadouts(mainPanelDevice) -- for some reason this does not work at the bottom of this list
 	ExportScript.gearLamp(mainPanelDevice) -- for some reason this does not work at the bottom of this list
+	------ Working line?
 	ExportScript.engLeftRpmTile(mainPanelDevice)
 	ExportScript.oxygenTile(mainPanelDevice)
 	ExportScript.VhfRadioTile(mainPanelDevice)
@@ -223,7 +224,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.bestClimb(mainPanelDevice)
 	ExportScript.gunnerTile(mainPanelDevice)
 	ExportScript.radioButtonSelection(mainPanelDevice)
-	ExportScript.trimReadouts(mainPanelDevice)
+	
 	
 end
 
@@ -332,9 +333,9 @@ end
 --     Custom functions    --
 -----------------------------
 
-function ExportScript.trimReadouts(mainPanelDevice) --TODO Not working
+function ExportScript.trimReadouts(mainPanelDevice)
 	--[145] = "%.2f",	-- Elevator Trim Wheel (Axis) {-1.0, 1.0} in 0.01 Steps
-	--[146] = "%.1f",	-- Rudder Trim Wheel (Axis) {-1.0, 1.0} in 0.1 Steps
+	--[154] = "%.1f",	-- Rudder Trim Wheel (Axis) {-1.0, 1.0} in 0.1 Steps
 	
 	local trimElevatorRaw = mainPanelDevice:get_argument_value(145)	
 	local trimElevatorDirection = " "
@@ -356,10 +357,10 @@ function ExportScript.trimReadouts(mainPanelDevice) --TODO Not working
 	ExportScript.Tools.SendData(2018, "ELVTR TRM\n" .. trimElevatorAmt .. "% " .. trimElevatorDirection)
 	
 	
-	local trimRudderRaw = mainPanelDevice:get_argument_value(146)
+	local trimRudderRaw = mainPanelDevice:get_argument_value(154)
 	local trimRudderDirection = " "
 	local trimRudderDirectionShortHand = " "
-	trimRudderAmt = round(trimRudderRaw * 100,0)
+	local trimRudderAmt = round(trimRudderRaw * 100,0)
 	
 	
 	if trimRudderAmt > 1 then  --trim is positive, which is stbd
