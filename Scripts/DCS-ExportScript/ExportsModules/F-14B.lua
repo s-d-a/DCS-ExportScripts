@@ -2103,6 +2103,7 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.stationStatusFlags(mainPanelDevice)	-- Air Combat Maneuver Panel
 	-- end A9
 	ExportScript.flareAndChaffCounters(mainPanelDevice)
+	ExportScript.displayAltitude(mainPanelDevice)		--Display Altitude in Feet
 	
 	local x = {0, 0.057, 0.1, 0.141, 0.212, 0.328, 0.427, 0.518, 0.588, 0.646, 0.731, 0.801, 0.867, 0.915, 1.000}
 	local y = {0, 80, 100, 120, 150, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000} -- 1000 KIAS is fake just to fill the range
@@ -2330,6 +2331,14 @@ function ExportScript.displayFuel(mainPanelDevice) -- Fuel Gauges and output on 
 	ExportScript.Tools.SendData(56010, "FUEL\n" .. totalFuel .. "\nQTY")			-- Return Total Fuel Qty Formatted like F-14 Gauge
 	ExportScript.Tools.SendData(56020, "BINGO\n" .. bingoFuel)						-- Return Total Bingo Fuel Qty Formatted like F-14 Gauge
 	ExportScript.Tools.SendData(56024, "BINGO " .. bingoFuel .. "\nTOTAL " .. totalFuel .. "\n" .. aftAndL .. "  |  " .. fwdAndR .. "\n   L    |    R   \n" .. leftFuel .. "  |  " .. rightFuel)  -- Nice Multi Gauge
+end
+
+function ExportScript.displayAltitude(mainPanelDevice) -- Altitude A4 ----------------------------------------------
+
+	local AltPlt = string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(112)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(262)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(300)), 3, 3) .. "00"
+
+	--ExportScript.Tools.SendData(52262, "Altitude\n(MSL)\n" .. AltPlt .. "\nFT")	-- Return Altitude Formatted like F-14 Servopneumatic Altitude
+	ExportScript.Tools.SendData(52262, AltPlt .. "\nFT")	-- Return Altitude Formatted like F-14 Servopneumatic Altitude
 end
 
 -----------------------
