@@ -260,12 +260,12 @@ ExportScript.ConfigEveryFrameArguments =
 	[276] = "%.4f",   -- Cockpit White Lights
 	
 	
-	[280] = "%.4f",   -- Pilot's Choronometer RESET/SET Button
-	[281] = "%.4f",   -- Pilot's Choronometer MODE Button
-	[282] = "%.4f",   -- Pilot's Choronometer START/STOP/ADVANCE Button
-	[283] = "%.4f",   -- Copilot's Choronometer RESET/SET Button
-	[284] = "%.4f",   -- Copilot's Choronometer MODE Button
-	[285] = "%.4f",   -- Copilot's Choronometer START/STOP/ADVANCE Button
+	[280] = "%.4f",   -- Pilot's Chronometer RESET/SET Button
+	[281] = "%.4f",   -- Pilot's Chronometer MODE Button
+	[282] = "%.4f",   -- Pilot's Chronometer START/STOP/ADVANCE Button
+	[283] = "%.4f",   -- Copilot's Chronometer RESET/SET Button
+	[284] = "%.4f",   -- Copilot's Chronometer MODE Button
+	[285] = "%.4f",   -- Copilot's Chronometer START/STOP/ADVANCE Button
 	
 	[294] = "%.4f",   -- Tail Wheel ON Light
 	[296] = "%.4f",   -- Tail Servo Select NORMAL/BACKUP (Inop.)
@@ -536,27 +536,27 @@ ExportScript.ConfigEveryFrameArguments =
 	[658] = "%.4f",   -- AN/ARN-147 Display .01s
 	[659] = "%.4f",   -- AN/ARN-147 Display .001s
 	
-	-- AN/ARC-201 (FM1) CPLT
-	[700] = "%0.2f",  -- AN/ARC-201 (FM1) Preset Selector
-	[701] = "%0.2f",  -- AN/ARC-201 (FM1) Function Selector
-	[702] = "%0.2f",  -- AN/ARC-201 (FM1) Power Selector
-	[703] = "%0.2f",  -- AN/ARC-201 (FM1) Mode Selector
-	[704] = "%.4f",   -- AN/ARC-201 (FM1) Volume
-	[705] = "%.4f",   -- AN/ARC-201 (FM1) Btn 1
-	[706] = "%.4f",   -- AN/ARC-201 (FM1) Btn 2
-	[707] = "%.4f",   -- AN/ARC-201 (FM1) Btn 3
-	[708] = "%.4f",   -- AN/ARC-201 (FM1) Btn 4
-	[709] = "%.4f",   -- AN/ARC-201 (FM1) Btn 5
-	[710] = "%.4f",   -- AN/ARC-201 (FM1) Btn 6
-	[711] = "%.4f",   -- AN/ARC-201 (FM1) Btn 7
-	[712] = "%.4f",   -- AN/ARC-201 (FM1) Btn 8
-	[713] = "%.4f",   -- AN/ARC-201 (FM1) Btn 9
-	[714] = "%.4f",   -- AN/ARC-201 (FM1) Btn 0
-	[715] = "%.4f",   -- AN/ARC-201 (FM1) Btn CLR
-	[716] = "%.4f",   -- AN/ARC-201 (FM1) Btn ENT
-	[717] = "%.4f",   -- AN/ARC-201 (FM1) Btn FREQ
-	[718] = "%.4f",   -- AN/ARC-201 (FM1) Btn ERF/OFST
-	[719] = "%.4f",   -- AN/ARC-201 (FM1) Btn TIME
+	-- AN/ARC-201 (FM2) CPLT
+	[700] = "%0.2f",  -- AN/ARC-201 (FM2) Preset Selector
+	[701] = "%0.2f",  -- AN/ARC-201 (FM2) Function Selector
+	[702] = "%0.2f",  -- AN/ARC-201 (FM2) Power Selector
+	[703] = "%0.2f",  -- AN/ARC-201 (FM2) Mode Selector
+	[704] = "%.4f",   -- AN/ARC-201 (FM2) Volume
+	[705] = "%.4f",   -- AN/ARC-201 (FM2) Btn 1
+	[706] = "%.4f",   -- AN/ARC-201 (FM2) Btn 2
+	[707] = "%.4f",   -- AN/ARC-201 (FM2) Btn 3
+	[708] = "%.4f",   -- AN/ARC-201 (FM2) Btn 4
+	[709] = "%.4f",   -- AN/ARC-201 (FM2) Btn 5
+	[710] = "%.4f",   -- AN/ARC-201 (FM2) Btn 6
+	[711] = "%.4f",   -- AN/ARC-201 (FM2) Btn 7
+	[712] = "%.4f",   -- AN/ARC-201 (FM2) Btn 8
+	[713] = "%.4f",   -- AN/ARC-201 (FM2) Btn 9
+	[714] = "%.4f",   -- AN/ARC-201 (FM2) Btn 0
+	[715] = "%.4f",   -- AN/ARC-201 (FM2) Btn CLR
+	[716] = "%.4f",   -- AN/ARC-201 (FM2) Btn ENT
+	[717] = "%.4f",   -- AN/ARC-201 (FM2) Btn FREQ
+	[718] = "%.4f",   -- AN/ARC-201 (FM2) Btn ERF/OFST
+	[719] = "%.4f",   -- AN/ARC-201 (FM2) Btn TIME
 	
 	
 	[930] = "%.4f",   -- CIS Heading Mode ON/OFF
