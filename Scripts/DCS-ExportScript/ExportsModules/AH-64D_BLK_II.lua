@@ -17,17 +17,16 @@ ExportScript.ConfigEveryFrameArguments =
 	]]
 
 	-- PILOT FLIGHT CONTROLS
-	[398] = "%0.4f", -- LeftThrottlePLT,	(-1, 1)
-	[399] = "%0.4f", -- RightThrottlePLT,	(-1, 1)
-	[470] = "%0.4f", -- StickPitchPLT,	(-1, 1)
-	[471] = "%0.4f", -- StickRollPLT,	(-1, 1)
-	[474] = "%0.4f", -- CollectivePLT,	(-1, 1)
-	[476] = "%0.4f", -- RudderPLT,	(-1, 1)
-	[480] = "%0.4f", -- LeftWheelBrakePLT,	(0, 1)
-	[481] = "%0.4f", -- RightWheelBrakePLT,	(0, 1)
+	[398] = "%0.4f", -- Left Throttle PLT Power Lever,	(-1, 1)
+	[399] = "%0.4f", -- Right Throttle PLT Power Lever,	(-1, 1)
+	[470] = "%0.4f", -- Stick Pitch PLT,	(-1, 1)
+	[471] = "%0.4f", -- StickRoll PLT,	(-1, 1)
+	[474] = "%0.4f", -- Collective PLT,	(-1, 1)
+	[476] = "%0.4f", -- Rudder PLT,	(-1, 1)
+	[480] = "%0.4f", -- Left Wheel Brake PLT,	(0, 1)
+	[481] = "%0.4f", -- Right Wheel Brake PLT,	(0, 1)
 
 	-- CPG FLIGHT CONTROLS
-
 	[472] = "%0.4f", -- StickPitchCPG,	(-1, 1)
 	[473] = "%0.4f", -- StickRollCPG,	(-1, 1)
 	[475] = "%0.4f", -- CollectiveCPG,	(-1, 1)
@@ -76,6 +75,7 @@ ExportScript.ConfigEveryFrameArguments =
 
 	-- Misc
 	[635] = "%0.4f", -- Copilot mirror, (0, 1), 1 is on
+	
 }
 
 ExportScript.ConfigArguments =
@@ -406,7 +406,7 @@ ExportScript.ConfigArguments =
 	[302] = "%.4f", 	-- Fire Detection Circuit Test Switch  1(LMB)/2(RMB), (-1, -1, 0)
 	[303] = "%.4f", 	-- Reserve Fire Extinguisher Discharge Pushbutton - Press to discharge reserve fire bottle , (1, 0, 1)
 	
-	-- CPT LIGHTS SYSTEM
+	-- PILOT LIGHTS SYSTEM
 	[304] = "%.4f", 	-- Master Warning Button , (1, 0, 1)
 	[305] = "%.4f", 	-- Master Caution Button , (1, 0, 1)
 
@@ -418,7 +418,7 @@ ExportScript.ConfigArguments =
 	[308] = "%.4f", 	-- TAIL WHEEL Pushbutton  LOCK/UNLOCK, (1, 0, 1)
 
 	-- ELEC INTERFACE
-	[309] = "%.4f", 	-- NVS MODE Switch  FIXED/NORM/OFF, (-1, -1, 1)
+	[309] = "%1d", 	-- NVS MODE Switch  FIXED/NORM/OFF, (-1, -1, 1)
 
 	-- EMERGENCY_PANEL
 	[310] = "%.4f", 	-- Guard Button  ON/OFF, (1, 0, 1)
@@ -427,10 +427,10 @@ ExportScript.ConfigArguments =
 
 	-- HYDRO_INTERFACE
 	[313] = "%.4f", 	-- EMERG HYD Pushbutton  ON/OFF, (1, 0, 1)
-	[314] = "%.4f", 	-- Rotor Brake Switch  OFF/BRK/LOCK, (-1, -1, 1)
+	[314] = "%0.1f", 	-- Rotor Brake Switch  OFF/BRK/LOCK, (-1, -1, 1)
 	
 	-- ELEC INTERFACE
-	[315] = "%.4f", 	-- Master Ignition Switch  OFF/BATT/EXT PWR, (-0.5, 0, 1)
+	[315] = "%0.1f", 	-- Master Ignition Switch  OFF/BATT/EXT PWR, (-0.5, 0, 1)
 
 	-- PILOT KEYBOARD UNIT
 	[316] = "%.4f", 	-- KU Scratchpad Brightness Knob , (0, 0, 1)
@@ -557,6 +557,7 @@ ExportScript.ConfigArguments =
 
 	-- ENGINE INTERFACE
 	[400] = "%.4f", 	-- APU Pushbutton - Press to start/stop APU , (1, 0, 1)
+	[406] = "%.4f", 	-- APU Pushbutton Light, (1, 0, 1)
 	[401] = "%.4f", 	-- APU Pushbutton Cover  OPEN/CLOSE, (-1, 0, 1)
 
 	-- BARO ALTIMETER
@@ -655,6 +656,58 @@ ExportScript.ConfigArguments =
 	[826] = "%.4f", 	-- CPG M4 Safety , (-1, -1, 1)
 	[827] = "%.4f", 	-- PLT M4 Trigger , (1, 0, 1)
 	[828] = "%.4f", 	-- PLT M4 Safety , (-1, -1, 1)
+	
+	-- Warning Lights and Button Lights
+	[424] = "%0.1f", -- MasterWarningPLT   		
+	[425] = "%0.1f", -- MasterCautionPLT   
+	[416] = "%0.1f", -- FireEng1PLT   
+	[418] = "%0.1f", -- FireApuPLT		
+	[420] = "%0.1f", -- FireEng2PLT		   
+	[417] = "%0.1f", -- RdyEng1PLT           
+	[419] = "%0.1f", -- RdyApuPLT            
+	[421] = "%0.1f", -- RdyEng2PLT           
+	[422] = "%0.1f", -- DischPriPLT          
+	[423] = "%0.1f", -- DischResPLT          
+	[403] = "%0.1f", -- EmergencyGuardPLT    
+	[404] = "%0.1f", -- EmergencyXpndrPLT    
+	[405] = "%0.1f", -- EmergencyEmergHydPLT  
+	[402] = "%0.1f", -- TailWheelUnlockPLT  
+	[411] = "%0.1f", -- ArmLTipPLT           
+	[407] = "%0.1f", -- ArmLOutbdPLT         
+	[408] = "%0.1f", -- ArmLInbdPLT          
+	[409] = "%0.1f", -- ArmRInbdPLT          
+	[410] = "%0.1f", -- ArmROutbdPLT         
+	[412] = "%0.1f", -- ArmRTipPLT           
+	[413] = "%0.1f", -- ArmamentASArmPLT     
+	[414] = "%0.1f", -- ArmamentASSafePLT    
+	[415] = "%0.1f", -- ArmamentGndOrideOnPLT
+	[406] = "%0.1f", -- APUPLT               
+	[806] = "%0.1f", -- MasterWarningCPG   
+	[808] = "%0.1f", -- MasterCautionCPG   
+	[441] = "%0.1f", -- FireEng1CPG    
+	[443] = "%0.1f", -- FireApuCPG    
+	[445] = "%0.1f", -- FireEng2CPG    
+	[442] = "%0.1f", -- RdyEng1CPG           
+	[444] = "%0.1f", -- RdyApuCPG            
+	[446] = "%0.1f", -- RdyEng2CPG           
+	[447] = "%0.1f", -- DischPriCPG          
+	[448] = "%0.1f", -- DischResCPG          
+	[427] = "%0.1f", -- EmergencyGuardCPG    
+	[428] = "%0.1f", -- EmergencyXpndrCPG    
+	[429] = "%0.1f", -- EmergencyEmergHydCPG  
+	[426] = "%0.1f", -- TailWheelUnlockCPG  
+	[434] = "%0.1f", -- ArmLTipCPG           
+	[430] = "%0.1f", -- ArmLOutbdCPG         
+	[431] = "%0.1f", -- ArmLInbdCPG          
+	[432] = "%0.1f", -- ArmRInbdCPG          
+	[433] = "%0.1f", -- ArmROutbdCPG         
+	[435] = "%0.1f", -- ArmRTipCPG           
+	[438] = "%0.1f", -- ArmamentASArmCPG     
+	[439] = "%0.1f", -- ArmamentASSafeCPG    
+	[440] = "%0.1f", -- ArmamentGndOrideOnCPG
+	[436] = "%0.1f", -- ProcessorSelectSp1CPG
+	[437] = "%0.1f", -- ProcessorSelectSp2CPG
+	
 }
 
 -----------------------------
