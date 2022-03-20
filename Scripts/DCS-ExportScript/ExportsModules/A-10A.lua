@@ -783,6 +783,8 @@ function ExportScript.AF.MechanicalDevicesIndicator(FunctionTyp)
 		
 		ExportScript.Tools.SendData(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0) ) -- speedbreakes on > 0.1 (0 - 1)
 
+		ExportScript.Tools.SendData(510, (lMechInfo.speedbrakes.value  > 0.1 and 1 or 0) ) -- speedbreakes on > 0.1 (0 - 1)
+
 		local lFlapsValue	= lMechInfo.flaps.value
 		lFlapsValue = lFlapsValue / 1.6
 		lFlapsValue = (lFlapsValue > 1.0 and 1.0 or lFlapsValue)	-- the result is limited to 1.0

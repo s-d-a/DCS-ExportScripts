@@ -680,6 +680,39 @@ ExportScript.ConfigArguments =
 	[636] = "%.1f",	--ECS Air Exchange Switch
 	[637] = "%.1f",	--ECS Temperature Select Knob {-1.0,1.0} in 0.1 steps
 	[638] = "%.1f",	--ECS Defog Switch
+	
+-- Radio Panel VHF
+	[950] = "%.1f", -- VHF MODE(0.1, 0, 0.6)
+	[951] = "%.2f", -- VHF CH Sel(0.05, 0, 0.95)
+	[952] = "%1d", -- VHF MEM/CLR(1, 0, 1)
+	[953] = "%1d", -- VHF VLD/XFR(1, 0, 1)
+	[954] = "%1d", -- VHF 1/READ(1, 0, 1)
+	[955] = "%1d", -- VHF 2/SQL(1, 0, 1)
+	[956] = "%1d", -- VHF 3/GR(1, 0, 1)
+	[957] = "%1d", -- VHF 4(1, 0, 1)
+	[958] = "%1d", -- VHF 5/20/LOW(1, 0, 1)
+	[959] = "%1d", -- VHF 6/TONE(1, 0, 1)
+	[960] = "%1d", -- VHF 7(1, 0, 1)
+	[961] = "%1d", -- VHF 8/TOD(1, 0, 1)
+	[962] = "%1d", -- VHF 9/ZERO(1, 0, 1)
+	[963] = "%1d", -- VHF 0(1, 0, 1)
+	[964] = "%1d", -- VHF CONF(1, 0, 1)
+	
+-- Radio U/VHF Lights
+	[965] = "%.1f", -- CLR/VLD Display
+	[966] = "%.4f", -- ?
+	[967] = "%.4f", -- ?
+	[968] = "%.4f", -- ?
+	[969] = "%.1f", -- CONF Display
+	[970] = "%.4f", -- ?
+	[971] = "%.4f", -- ?
+	[972] = "%.1f", -- LED SQL Display
+	[973] = "%.4f", -- ?
+	[974] = "%.4f", -- LED GR Display
+	[975] = "%.4f", -- ?
+	[976] = "%.4f", -- ?
+	[977] = "%.4f", -- ?
+	[978] = "%.4f", -- ?
 }
 
 -----------------------------
@@ -699,6 +732,22 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
+	
+	--FUEL
+	ExportScript.Tools.SendData("Fuel", "Start")
+	digits = {}
+	digits[1] = string.format("%1.0f",mainPanelDevice:get_argument_value(349) * 10)
+	digits[2] = string.format("%1.0f",mainPanelDevice:get_argument_value(350) * 10)
+	digits[3] = string.format("%1.0f",mainPanelDevice:get_argument_value(351) * 10)
+	ExportScript.Tools.SendData(2053, digits[1] .. digits[2] .. digits[3] .. "0")
+
+	digits = {}
+	digits[1] = string.format("%1.0f",mainPanelDevice:get_argument_value(352) * 10)
+	digits[2] = string.format("%1.0f",mainPanelDevice:get_argument_value(353) * 10)
+	digits[3] = string.format("%1.0f",mainPanelDevice:get_argument_value(354) * 10)
+	ExportScript.Tools.SendData(2054, digits[1] .. digits[2] .. digits[3] .. "0")
+	
+	
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)

@@ -1,70 +1,51 @@
-# Deutsch
+# Community DCS-ExportScripts Library
 ---
-Dies ist ein universell einsetzbares Export Script für DCS.
-Es wird der gleichzeitige Export von Daten an Virtual Cockpit Software und I/O Hardware ermöglicht.
 
-Zur Zeit werden folgende Export-Formate unterstützt.
-- DAC (DCS Arcaze Connector) von [H-J-P](https://github.com/H-J-P/DAC/) um die Arcaze USB Controller anzusprechen (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
-- Ikarus von [H-J-P](https://github.com/H-J-P/Ikarus), unsere Virtual Cockpit Software
+See forums post here: https://forums.eagle.ru/topic/283178-dcs-exportscripts-for-stream-deck-community-github-library/
+Read the wiki for export IDs: https://github.com/asherao/DCS-ExportScripts/wiki
 
-Der Export von Daten wird für folgende Module unterstützt:
-- A-10C
+This is based off of DCS-ExportScripts (https://github.com/s-d-a/DCS-ExportScripts/wiki). The main purpose is to make customized exports for DCS-Interface (https://github.com/charlestytler/streamdeck-dcs-interface) for use with an Elgato Stream Deck. 
+
+Following module export luas have been modified. Applicable DCS-ExportScripts ID is in parentheses:
+- UH-60L Mod
+  - Added a lot of stuff. See Wiki for details: https://github.com/asherao/DCS-ExportScripts/wiki/MH-60L
+  - Added Streamdeck Profile: https://github.com/asherao/DCS-ExportScripts/blob/master/docu/StreamDeck%20Examples/MH-60L%20Mod%20by%20Bailey%20Release.streamDeckProfile
+- F-16C
+  - Added Flare and Chaff Count Readouts (3000 - 3006)
+  - Added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument) (WIP) (44224 - 44231)
+  - Added Jammer pannel Tiles and example profile. See wiki. https://github.com/asherao/DCS-ExportScripts/wiki/F-16C
+- F-86F Sabre
+  - Added UHF channel and freq export
+  - Added ADF freq export
+- JF-17
+  - Added JF-17
+- Mi-24P (Stream Deck profile released: https://www.digitalcombatsimulator.com/en/files/3317284/)
+  - Added DISS Info (3000 - 3002)
+  - Added Ammo Counter Readouts (3011 - 3015)
+  - Added Arc-15 Readouts (3020 - 3021)
+  - Added Flare and Chaff Count Readouts (3022 - 3025)
+  - Added SENPAI (Streamdeck Elevation Navigation Pressure Altimeter Instrument) (44224 - 44231)
+  - Added VRS Detection (3030)
+  - Added all radio exports (3031-3034)
+- Mosquito FB MkVI
+  - Added Mosquito FB MkVI
+  - Removed duplicate exports
+  - Read Wiki for Export IDs (https://github.com/asherao/DCS-ExportScripts/wiki/MosquitoFBMkVI)
+- Spitfire LF MkIX
+  - Read Wiki for Export IDs (https://github.com/asherao/DCS-ExportScripts/wiki/Spitfire-LF-MkIX)
 - AJS37
-- AV-8B N/A
-- Bf-109K-4
+  - corrected afterburner export
 - F/A-18C Hornet
-- F-5E-3
-- F-86F
-- FW-190D9
-- Ka-50
-- L-39C/ZA
-- Mi-8MT
-- MiG-15bis
-- MiG-21Bis
-- Mirage 2000
-- P-51D 25/30-NA
-- SA342L/M/Mistral
-- SpitfireLFMkIX/CW
-- Su-25T
-- TF-51D
-- UH-1H
-- alle Flaming Cliffs Flugzeuge + J-11A
+  - removed a duplicate export
+- F-14B
+  - Added radio freq text output (60000 - 60007)
 
-Kompatibel zur DCS World 2.5.4 und BETA Version
+More info about SENPAI (https://forums.eagle.ru/topic/273399-stream-deck-altimeter-setting-in-inhg-and-hpa/?tab=comments#comment-4724094)
 
-# English
----
-This is an universally insertable export script for DCS. It allows for the simultaneous export of data at virtual cockpit software and I/O hardware.
-
-At present the following export formats are supported:
-- DAC (DCS Arcaze Connector) by [H-J-P](https://github.com/H-J-P/DAC/) to address the Arcaze USB Controller (http://wiki.simple-solutions.de/en/products/Arcaze/Arcaze-USB)
-- Ikarus by [H-J-P](https://github.com/H-J-P/Ikarus), our virtual cockpit software
-
-Following moduls are supported:
-- A-10C
-- AJS37
-- AV-8B N/A
-- Bf-109K-4
-- F/A-18C Hornet
-- F-5E-3
-- F-86F
-- FW-190D9
-- Ka-50
-- L-39C/ZA
-- Mi-8MT
-- MiG-15bis
-- MiG-21Bis
-- Mirage 2000
-- P-51D 25/30-NA
-- SA342L/M/Mistral
-- SpitfireLFMkIX/CW
-- Su-25T
-- TF-51D
-- UH-1H
-- all Flaming Cliffs aircrafts + J-11A
-
-Compatible with DCS World 2.5.4 and BETA version
+Compatible with DCS World 2.7.6.13133
 
 # Wiki
 ---
-[DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deutsch and English)
+- https://github.com/asherao/DCS-ExportScripts/wiki
+- [DCS-ExportScript Wiki and Docu](https://github.com/s-d-a/DCS-ExportScripts/wiki) (in Deutsch and English)
+

@@ -445,9 +445,47 @@ ExportScript.ConfigArguments =
 }
 function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 end
+
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
 end
+
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+
+ExportScript.arrowExample(mainPanelDevice)
+ExportScript.RadioTile(mainPanelDevice)
+
 end
+
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 end
+
+----------------------
+-- Custom Functions --
+----------------------
+
+function ExportScript.arrowExample(mainPanelDevice)
+	
+	local stickShowHide = mainPanelDevice:get_argument_value(970)-- Stick Hidden argument
+	local stickStatus
+	
+	if stickShowHide >= 0.5 then
+		stickStatus = "↑Up" -- stick is visible
+	else
+		stickStatus = "↓Down"
+	end
+	
+	ExportScript.Tools.SendData(2000, stickStatus)
+end
+
+
+function ExportScript.RadioTile(mainPanelDevice)
+
+	local radio1 = (GetDevice(25):get_frequency())/1000000 --left radio freq unrounded
+	local radio2 = (GetDevice(26):get_frequency())/1000000 --right radio freq unrounded
+			
+	ExportScript.Tools.SendData(2001, radio1) --results in "108.000568" for channel 1
+	ExportScript.Tools.SendData(2002, radio2) --results in "108.500744" for channel 2
+end
+-----------------------
+-- General Functions --
+-----------------------

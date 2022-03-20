@@ -724,11 +724,14 @@ ExportScript.ConfigArguments =
 	[785] = "%1d",     -- Canopy jettison lever
 	[786] = "%1d",     -- Canopy Jettison Lever Unlock Button
 	-- Antenna Select Panel	
-	[706] = "%1d",     -- IFF - antenna switch
+	[706] = "%0.2f",   -- IFF - antenna switch
 	[707] = "%1d",     -- UHF - antenna switch
 	[708] = "%1d",     -- EGI HQ TOD
 	-- RWR
 	[16] = "%.4f",     -- RWR Adjust Display Brightness {0.15, 0.85} in 0.1 steps	
+	
+	-- HMCS
+	[550] = "%1d",     -- HMCS Switch (1,0,-1)
 }
 
 -----------------------------

@@ -326,6 +326,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
+	
+	ExportScript.Radios(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -362,6 +364,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
 	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {654,813,811,812}) 
 	-- Compass Light Switch, Instrument Panel Primary Light Rheostat, Instrument Panel Auxiliary Light Rheostat, Console and Panel Light Rheostat
+	
+	
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -403,3 +407,35 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+function ExportScript.Radios(mainPanelDevice)
+
+	local UHF_Freq = (GetDevice(26):get_frequency())/1000000
+	--ExportScript.Tools.SendData(3000, string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	UHF_Freq = ExportScript.Tools.RoundFreqeuncy(UHF_Freq)
+	
+	local list_indication4 = ExportScript.Tools.split(list_indication(4), "%c")
+	local UHF_Channel
+	local ADF_Freq
+	if list_indication4 ~= nil then
+		UHF_Channel = list_indication4[123]
+		ADF_Freq = list_indication4[108] -- using this way, the string looks like it is always 4 long
+		ADF_Freq = ExportScript.Tools.trim(ADF_Freq)
+	else
+		UHF_Channel = "N/A"
+		ADF_Freq = "N/A"
+	end
+	
+	ExportScript.Tools.SendData(3000, UHF_Freq) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
+	ExportScript.Tools.SendData(3001, "CH " .. UHF_Channel) -- results in something like "1" or "G"
+	ExportScript.Tools.SendData(3002, "CH " .. UHF_Channel .. "\n" .. UHF_Freq)
+	ExportScript.Tools.SendData(3003, "ADF\n" .. ADF_Freq)
+end
+
+-----------------------------
+--     Helper functions    --
+-----------------------------
+
+------------------
+--     Notes    --
+------------------

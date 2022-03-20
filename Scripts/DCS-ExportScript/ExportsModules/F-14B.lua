@@ -127,7 +127,7 @@ ExportScript.ConfigEveryFrameArguments =
 [55]  =  "%.1f",   --      PEDALS_Brake_Left 
 
 [58]  =  "%.1f",   --      WEAP_Elec_Fuse 
-[59]  =  "%.1f",   --      WEAP_Type_Wheel 
+[59]  =  "%.4f",   --      WEAP_Type_Wheel 
 
 [60]  =  "%.1f",   --      WEAP_Bomb_SinglePairs 
 [61]  =  "%.1f",   --      WEAP_Bomb_StepRipple 
@@ -585,13 +585,13 @@ ExportScript.ConfigEveryFrameArguments =
 [1014]  =  "%.1f",   --      DISP_mode_cruise 
 [1015]  =  "%.1f",   --      DISP_mode_takeoff 
 
-[1016]  =  "%.1f",   --      HSD_Display_Mode_Cycle 
+--[1016]  =  "%.1f",   --      HSD_Display_Mode_Cycle 
 [1017]  =  "%.1f",   --      HSD_ECM_Override 
 
 [1018]  =  "%.1f",   --      DISP_VDI_landing_mode 
-[1019]  =  "%.1f",   --      DISP_VDI_display_mode 
+--[1019]  =  "%.1f",   --      DISP_VDI_display_mode 
 [1020]  =  "%.1f",   --      DISP_HUD_AWL_mode 
-[1021]  =  "%.1f",   --      DISP_HUD_declutter 
+--[1021]  =  "%.1f",   --      DISP_HUD_declutter 
 
 [1022]  =  "%.1f",   --      WEAP_Gun_Ammo_adjust 
 
@@ -802,14 +802,14 @@ ExportScript.ConfigEveryFrameArguments =
 [2104]  =  "%.1f",   --      ENGINE_Throttle_Mode 
 [2105]  =  "%.1f",   --      ENGINE_Air_Start 
 
-[2106]  =  "%.1f",   --      AFCS_Stability_Pitch 
-[2107]  =  "%.1f",   --      AFCS_Stability_Roll 
-[2108]  =  "%.1f",   --      AFCS_Stability_Yaw 
+--[2106]  =  "%.1f",   --      AFCS_Stability_Pitch 
+--[2107]  =  "%.1f",   --      AFCS_Stability_Roll 
+--[2108]  =  "%.1f",   --      AFCS_Stability_Yaw 
 
-[2109]  =  "%.1f",   --      AP_Vector 
-[2110]  =  "%.1f",   --      AP_Altitude 
-[2111]  =  "%.1f",   --      AP_Heading 
-[2112]  =  "%.1f",   --      AP_Engage 
+--[2109]  =  "%.1f",   --      AP_Vector 
+--[2110]  =  "%.1f",   --      AP_Altitude 
+--[2111]  =  "%.1f",   --      AP_Heading 
+--[2112]  =  "%.1f",   --      AP_Engage 
 [2113]  =  "%.1f",   --      TID_LAUNCH_ZONE 
 [2114]  =  "%.1f",   --      TID_VEL_VECTOR 
 
@@ -1103,10 +1103,12 @@ ExportScript.ConfigEveryFrameArguments =
 [1092]  =  "%.1f",   --      RUDDER_Indicator_Left 
 [1093]  =  "%.1f",   --      RUDDER_Indicator_Right 
 
+--[[
 [8888]  =  "%.1f",   --      TACAN_Dial_Outer_Pilot 
 [8889]  =  "%.1f",   --      TACAN_Dial_Inner_Pilot 
 [8890]  =  "%.1f",   --      TACAN_Dial_Inner_RIO 
 [8891]  =  "%.1f",   --      TACAN_Dial_Outer_RIO 
+]]
 [8892]  =  "%.1f",   --      TACAN_LIGHT_NOGO_RIO 
 [8893]  =  "%.1f",   --      TACAN_LIGHT_GO_RIO 
 
@@ -1124,14 +1126,14 @@ ExportScript.ConfigEveryFrameArguments =
 [9209]  =  "%.1f",   --      WEAP_MSL_Prep_off 
 [9210]  =  "%.1f",   --      WEAP_MSL_Mode_norm 
 [9211]  =  "%.1f",   --      WEAP_MSL_Mode_boresight 
-[9221]  =  "%.1f",   --      WEAP_store_1a 
-[9222]  =  "%.1f",   --      WEAP_store_1b 
-[9223]  =  "%.1f",   --      WEAP_store_3 
-[9224]  =  "%.1f",   --      WEAP_store_4 
-[9225]  =  "%.1f",   --      WEAP_store_5 
-[9226]  =  "%.1f",   --      WEAP_store_6 
-[9227]  =  "%.1f",   --      WEAP_store_8b 
-[9228]  =  "%.1f",   --      WEAP_store_8a 
+[9221]  =  "%.2f",   --      WEAP_store_1a 
+[9222]  =  "%.2f",   --      WEAP_store_1b 
+[9223]  =  "%.2f",   --      WEAP_store_3 
+[9224]  =  "%.2f",   --      WEAP_store_4 
+[9225]  =  "%.2f",   --      WEAP_store_5 
+[9226]  =  "%.2f",   --      WEAP_store_6 
+[9227]  =  "%.2f",   --      WEAP_store_8b 
+[9228]  =  "%.2f",   --      WEAP_store_8a 
 [16000]  =  "%.1f",   --      WEAP_GunRateButton 
 [16001]  =  "%.1f",   --      WEAP_SWCoolButton 
 [16002]  =  "%.1f",   --      WEAP_MSLPrepButton 
@@ -1307,7 +1309,7 @@ ExportScript.ConfigEveryFrameArguments =
 [1012]  =  "%.1f",   --      CONTROL_RightInnerSpoiler 
 [1013]  =  "%.1f",   --      CONTROL_RightOuterSpoiler 
 [1020]  =  "%.1f",   --      CONTROL_RightRudder 
-[1021]  =  "%.1f",   --      CONTROL_RightOuterSlats 
+--[1021]  =  "%.1f",   --      CONTROL_RightOuterSlats 
 
 [6000]  =  "%.1f",   --  PILOT_Left_Right 
 [6001]  =  "%.1f",   --      PILOT_Up_Down 
@@ -1366,20 +1368,20 @@ ExportScript.ConfigArguments =
 --   ACCELEROMETER(24)
 [228] = "%1d",   -- Accelerometer Reset, (1, 0, 1)
 --   AFCS(21)
-[2112] = "%1d",   -- Autopilot - Engage, (-2, -1, 1)
+[2112] = "%1d",   -- Autopilot - Engage, (-2, -1, 1) Shold be -2 and 2 -Bailey
 [2106] = "%1d",   -- AFCS Stability Augmentation - Pitch, (-1, 0, 1)
 [2107] = "%1d",   -- AFCS Stability Augmentation - Roll, (-1, 0, 1)
 [2108] = "%1d",   -- AFCS Stability Augmentation - Yaw, (-1, 0, 1)
 [2109] = "%1d",   -- Autopilot - Vector / Automatic Carrier Landing, (-1, -1, 1)
 [2110] = "%1d",   -- Autopilot - Altitude Hold, (-1, 0, 1)
 [2111] = "%1d",   -- Autopilot - Heading / Ground Track, (-1, -1, 1)
-[2106] = "%1d",   -- AFCS Stability Augmentation - Pitch, (1, 0, 1)
-[2107] = "%1d",   -- AFCS Stability Augmentation - Roll, (1, 0, 1)
-[2108] = "%1d",   -- AFCS Stability Augmentation - Yaw, (1, 0, 1)
-[2109] = "%1d",   -- Autopilot - Vector / Automatic Carrier Landing, (1, -1, 1)
-[2110] = "%1d",   -- Autopilot - Altitude Hold, (1, 0, 1)
-[2111] = "%1d",   -- Autopilot - Heading / Ground Track, (1, -1, 1)
-[2112] = "%1d",   -- Autopilot - Engage, (2, -1, 1)
+--[2106] = "%1d",   -- AFCS Stability Augmentation - Pitch, (1, 0, 1)
+--[2107] = "%1d",   -- AFCS Stability Augmentation - Roll, (1, 0, 1)
+--[2108] = "%1d",   -- AFCS Stability Augmentation - Yaw, (1, 0, 1)
+--[2109] = "%1d",   -- Autopilot - Vector / Automatic Carrier Landing, (1, -1, 1)
+--[2110] = "%1d",   -- Autopilot - Altitude Hold, (1, 0, 1)
+--[2111] = "%1d",   -- Autopilot - Heading / Ground Track, (1, -1, 1)
+--[2112] = "%1d",   -- Autopilot - Engage, (2, -1, 1)
 --   AHRS(51)
 [905] = "%1d",   -- Compass Mode, (-1, -1, 1)
 [906] = "%1d",   -- Compass N-S Hemisphere, (-1, 0, 1)
@@ -1730,7 +1732,7 @@ ExportScript.ConfigArguments =
 [1040] = "%1d",   -- HSD Selected Course, (0, 0, 1)
 [1043] = "%1d",   -- HSD Brightness, (0, 0, 1)
 [1008] = "%1d",   -- HSD/ECMD Power On/Off, (1, 0, 1)
-[1016] = "%1d",   -- HSD Display Mode, (1, 0, 1)
+--[1016] = "%1d",   -- HSD Display Mode, (1, 0, 1)
 [1017] = "%1d",   -- HSD ECM Override, (1, 0, 1)
 [1041] = "%1d",   -- HSD Test, (1, 0, 1)
 --   HUD(40)
@@ -1751,7 +1753,7 @@ ExportScript.ConfigArguments =
 [1014] = "%1d",   -- HUD Cruise Mode, (1, 0, 1)
 [1015] = "%1d",   -- HUD Take-Off Mode, (1, 0, 1)
 [1020] = "%1d",   -- HUD AWL Mode, (1, 0, 1)
-[1021] = "%1d",   -- HUD De-clutter On/Off, (1, 0, 1)
+--[1021] = "%1d",   -- HUD De-clutter On/Off, (1, 0, 1)
 [1033] = "%1d",   -- HUD filter, (1, 0, 1)
 [1034] = "%1d",   -- HUD Trim, (1, 0, 1)
 [1037] = "%1d",   -- HUD Brightness, (1, 0, 1)
@@ -1865,10 +1867,10 @@ ExportScript.ConfigArguments =
 --   RADAR(39)
 [38] = "%1d",   -- Automatic Gain Control (no function), (-2, -1, 1)
 [3900] = "%1d",   -- Parametric amplifier (no function), (-2, -1, 1)
-[34] = "%1d",   -- Aspect, (-1, -1, 1)
-[35] = "%1d",   -- Closing Velocity scale, (-1, -1, 1)
-[36] = "%1d",   -- Target size (no function), (-1, -1, 1)
-[37] = "%1d",   -- Main Lobe Clutter filter, (-1, -1, 1)
+[34] = "%.1f",   -- Aspect, (-1, -1, 1)
+[35] = "%.1f",   -- Closing Velocity scale, (-1, -1, 1)
+[36] = "%.1f",   -- Target size (no function), (-1, -1, 1)
+[37] = "%.1f",   -- Main Lobe Clutter filter, (-1, -1, 1)
 [83] = "%1d",   -- Stabilize, (-1, 0, 1)
 [84] = "%1d",   -- VSL switch, (-1, -1, 0)
 [95] = "%1d",   -- Liquid cooling, (-1, -1, 1)
@@ -1885,10 +1887,10 @@ ExportScript.ConfigArguments =
 [17] = "%1d",   -- DDD Interrogate Friend or Foe, (1, 0, 1)
 [18] = "%1d",   -- DDD Infrared (no function), (1, 0, 1)
 [19] = "%1d",   -- DDD RADAR, (1, 0, 1)
-[34] = "%1d",   -- Aspect, (1, -1, 1)
-[35] = "%1d",   -- Closing Velocity scale, (1, -1, 1)
-[36] = "%1d",   -- Target size (no function), (1, -1, 1)
-[37] = "%1d",   -- Main Lobe Clutter filter, (1, -1, 1)
+[34] = "%.1f",   -- Aspect, (1, -1, 1)
+[35] = "%.1f",   -- Closing Velocity scale, (1, -1, 1)
+[36] = "%.1f",   -- Target size (no function), (1, -1, 1)
+[37] = "%.1f",   -- Main Lobe Clutter filter, (1, -1, 1)
 [40] = "%1d",   -- RADAR 5 NM, (1, 0, 1)
 [41] = "%1d",   -- RADAR 10 NM, (1, 0, 1)
 [42] = "%1d",   -- RADAR 20 NM, (1, 0, 1)
@@ -1958,12 +1960,12 @@ ExportScript.ConfigArguments =
 [2043] = "%1d",   -- TACAN Channel X/Y, (2, -1, 1)
 [8888] = "%.4f",   -- TACAN Channel Wheel (Tens), (0.083333333333333, 0, 1)
 [8891] = "%.4f",   -- TACAN Channel Wheel (Tens), (0.083333333333333, 0, 1)
-[8888] = "%.4f",   -- TACAN Channel Wheel (Tens), (-0.083333333333333, 0, 1)
-[8891] = "%.4f",   -- TACAN Channel Wheel (Tens), (-0.083333333333333, 0, 1)
+--[8888] = "%.4f",   -- TACAN Channel Wheel (Tens), (-0.083333333333333, 0, 1)
+--[8891] = "%.4f",   -- TACAN Channel Wheel (Tens), (-0.083333333333333, 0, 1)
 [8889] = "%.4f",   -- TACAN Channel Lever (Ones), (0.11111111111111, 0, 1)
 [8890] = "%.4f",   -- TACAN Channel Lever (Ones), (0.11111111111111, 0, 1)
-[8889] = "%.4f",   -- TACAN Channel Lever (Ones), (-0.11111111111111, 0, 1)
-[8890] = "%.4f",   -- TACAN Channel Lever (Ones), (-0.11111111111111, 0, 1)
+--[8889] = "%.4f",   -- TACAN Channel Lever (Ones), (-0.11111111111111, 0, 1)
+--[8890] = "%.4f",   -- TACAN Channel Lever (Ones), (-0.11111111111111, 0, 1)
 [374] = "%.2f",   -- TACAN Mode, (0.25, 0, 1)
 [2041] = "%.2f",   -- TACAN Mode, (0.25, 0, 1)
 [374] = "%.2f",   -- TACAN Mode, (-0.25, 0, 1)
@@ -2008,7 +2010,7 @@ ExportScript.ConfigArguments =
 --[-1] = "%1d",   -- VDI filter, (1, 0, 1)
 [1010] = "%1d",   -- VDI Power On/Off, (1, 0, 1)
 [1018] = "%1d",   -- VDI Landing Mode, (1, 0, 1)
-[1019] = "%1d",   -- VDI Display Mode, (1, 0, 1)
+--[1019] = "%1d",   -- VDI Display Mode, (1, 0, 1)
 [1035] = "%1d",   -- VSDI Screen Trim, (1, 0, 1)
 [1036] = "%1d",   -- VSDI Screen Brightness, (1, 0, 1)
 [1038] = "%1d",   -- VDI Screen Contrast, (1, 0, 1)
@@ -2092,30 +2094,25 @@ ExportScript.ConfigArguments =
 
 -- Pointed to by ProcessIkarusDCSHighImportance
 function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
+	-- every frame export to Ikarus
 
-	--Test fuel 10k output
-	local ourVariableTotalFuelRIO10k = mainPanelDevice:get_argument_value(2117)
-	local ourVariableTotalFuel10k = mainPanelDevice:get_argument_value(6010)
-	local ourVariableBingoFuel10k = mainPanelDevice:get_argument_value(6020)
-
-	ExportScript.Tools.SendData(2600, ourVariableTotalFuelRIO10k)
-	ExportScript.Tools.SendData(2601, ourVariableTotalFuel10k)
-	ExportScript.Tools.SendData(2602, ourVariableBingoFuel10k)
-
+	-- A9 - Pilot Cockpit Right Knee Panel
+	ExportScript.displayFuel(mainPanelDevice)			-- Set of 5 different fuel gauges and a nice multi-gauge (ID's 52117 / 56000 / 56004 / 56010 / 56020 / 56024) Cus. Func.
+	ExportScript.displayAccel(mainPanelDevice)			-- Display Accellerometer Gauge Custom Function
+	ExportScript.clockAndTimer(mainPanelDevice)			-- Display Clock and Timer in digital format on same gauge Custom Function
+	ExportScript.stationStatusFlags(mainPanelDevice)	-- Air Combat Maneuver Panel
+	-- end A9
+	ExportScript.flareAndChaffCounters(mainPanelDevice)
+	ExportScript.displayAltitude(mainPanelDevice)		--Display Altitude in Feet
+	
+	local x = {0, 0.057, 0.1, 0.141, 0.212, 0.328, 0.427, 0.518, 0.588, 0.646, 0.731, 0.801, 0.867, 0.915, 1.000}
+	local y = {0, 80, 100, 120, 150, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000} -- 1000 KIAS is fake just to fill the range
+	ExportScript.Tools.SendData(2504, string.format("%d", ExportScript.Linearize(mainPanelDevice:get_argument_value(2129), x, y)))
+	
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
-	--[[
-	every frame export to DAC
-	Example from A-10C
-	Get Radio Frequencies
-	get data from device
-	local UHF_RADIO = GetDevice(54)
-	ExportScript.Tools.SendDataDAC("ExportID", "Format")
-	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
-	]]
+	-- every frame export to DAC
 end
 
 -----------------------------------------------------
@@ -2125,123 +2122,246 @@ end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
-	--[[
-	export in low tick interval to Ikarus
-	Example from A-10C
-	Get Radio Frequencies
-	get data from device
-	local lUHFRadio = GetDevice(54)
-	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
-	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
-	]]
-
-	local lFR22Radio = GetDevice(31)
-	--ExportScript.Tools.SendData(2500, string.format("%7.3f", lFR22Radio:get_frequency()/1000000)) -- full frequency
-	ExportScript.Tools.SendData(2500, ExportScript.Tools.RoundFreqeuncy(lFR22Radio:get_frequency()/1000000)) -- full frequency
-	local lMHz = string.format("%0.0f", lFR22Radio:get_frequency()/1000000)
-	local lKHz = string.sub(string.format("%0.3f", string.format("%.3f", lFR22Radio:get_frequency()/1000000) - lMHz), 3)
-	ExportScript.Tools.SendData(2501, lMHz) -- slice frequency MHz
-	ExportScript.Tools.SendData(2502, lKHz) -- slice frequency KHz
-
-	-- 1,2,3 Lamps
-	--[405] = "%.1f",	-- Afterburner zone indicator 0.0=off, >= 0.3=1, >= 0.6=2, >= 0.9=3
-	local lAfterburnerZoneIndicator = mainPanelDevice:get_argument_value(405)
-
-	if lAfterburnerZoneIndicator >= 0.9 then
-		ExportScript.Tools.SendData(2510, 1) -- Afterburner 1
-		ExportScript.Tools.SendData(2511, 1) -- Afterburner 2
-		ExportScript.Tools.SendData(2512, 1) -- Afterburner 3
-	elseif lAfterburnerZoneIndicator >= 0.6 then
-		ExportScript.Tools.SendData(2510, 1)
-		ExportScript.Tools.SendData(2511, 2)
-		ExportScript.Tools.SendData(2512, 0)
-	elseif lAfterburnerZoneIndicator >= 0.3 then
-		ExportScript.Tools.SendData(2510, 1)
-		ExportScript.Tools.SendData(2511, 0)
-		ExportScript.Tools.SendData(2512, 0)
-	else
-		ExportScript.Tools.SendData(2510, 0)
-		ExportScript.Tools.SendData(2511, 0)
-		ExportScript.Tools.SendData(2512, 0)
-	end
-
-	-- Cockpit Light
-	ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, {392, 393, 394})
-	-- Panel Lights, Flood Lights, Instrument Lights
-
-
-	--Fuel systems keys for 
-
-
+	-- export in low tick interval to Ikarus
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
-	--[[
-	export in low tick interval to DAC
-	Example from A-10C
-	Get Radio Frequencies
-	get data from device
-	local UHF_RADIO = GetDevice(54)
-	ExportScript.Tools.SendDataDAC("ExportID", "Format")
-	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
-	]]
-
-	local lFR22Radio = GetDevice(31)
-	--ExportScript.Tools.SendData(2500, string.format("%7.3f", lFR22Radio:get_frequency()/1000000)) -- full frequency
-	ExportScript.Tools.SendData(2500, ExportScript.Tools.RoundFreqeuncy(lFR22Radio:get_frequency()/1000000)) -- full frequency
-	local lMHz = string.format("%0.0f", lFR22Radio:get_frequency()/1000000)
-	local lKHz = string.sub(string.format("%0.3f", string.format("%.3f", lFR22Radio:get_frequency()/1000000) - lMHz), 3)
-	ExportScript.Tools.SendData(2501, lMHz) -- slice frequency MHz
-	ExportScript.Tools.SendData(2502, lKHz) -- slice frequency KHz
-
-	-- 1,2,3 Lamps
-	--[405] = "%.1f",	-- Afterburner zone indicator 0.0=off, >= 0.3=1, >= 0.6=2, >= 0.9=3
-	local lAfterburnerZoneIndicator = mainPanelDevice:get_argument_value(405)
-
-	if lAfterburnerZoneIndicator >= 0.9 then
-		ExportScript.Tools.SendDataDAC(2510, 1) -- Afterburner 1
-		ExportScript.Tools.SendDataDAC(2511, 1) -- Afterburner 2
-		ExportScript.Tools.SendDataDAC(2512, 1) -- Afterburner 3
-	elseif lAfterburnerZoneIndicator >= 0.6 then
-		ExportScript.Tools.SendDataDAC(2510, 1)
-		ExportScript.Tools.SendDataDAC(2511, 2)
-		ExportScript.Tools.SendDataDAC(2512, 0)
-	elseif lAfterburnerZoneIndicator >= 0.3 then
-		ExportScript.Tools.SendDataDAC(2510, 1)
-		ExportScript.Tools.SendDataDAC(2511, 0)
-		ExportScript.Tools.SendDataDAC(2512, 0)
-	else
-		ExportScript.Tools.SendDataDAC(2510, 0)
-		ExportScript.Tools.SendDataDAC(2511, 0)
-		ExportScript.Tools.SendDataDAC(2512, 0)
-	end
-
-	--=====================================================================================
-	--[[
-	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
-	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
-	
-	-- list_indication get tehe value of cockpit displays
-	local ltmp1 = 0
-	for ltmp2 = 0, 20, 1 do
-		ltmp1 = list_indication(ltmp2)
-		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
-	end
-	]]
---[[
-	-- getmetatable get function name from devices
-	local ltmp1 = 0
-	for ltmp2 = 1, 70, 1 do
-		ltmp1 = GetDevice(ltmp2)
-		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
-		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
-	end
-]]
+	-- export in low tick interval to DAC
 end
 
------------------------------
---     Custom functions    --
------------------------------
+--______________________________________________________________________________________________________________________________________
+--######################################################################################################################################
+--#    [ Custom functions ]                                                                                                            #  
+--######################################################################################################################################
+
+function ExportScript.flareAndChaffCounters(mainPanelDevice) -- It seems like the roller rolls and jitters way too much for calculations
+	--[392]  =  "%.1f",   --  CMDS_Chaff_Counter_Roller_10 
+	--[393]  =  "%.1f",   --  CMDS_Chaff_Counter_Roller_1 
+	--[394]  =  "%.1f",   --  CMDS_Flare_Counter_Roller_10 
+	--[395]  =  "%.1f",   --  CMDS_Flare_Counter_Roller_1 
+	
+	--local chaffCount = math.floor((mainPanelDevice:get_argument_value(392) * 10) + 0.5) .. math.floor((mainPanelDevice:get_argument_value(393) * 10) + 0.5)
+	
+	--[[ Method 1
+	local chaffCountFirstDigit = round(mainPanelDevice:get_argument_value(392) * 10)
+	
+	if chaffCountFirstDigit < 0.5 then
+		chaffCountFirstDigit = 0
+	elseif chaffCountFirstDigit >= 0.5 and chaffCountFirstDigit < 1.5 then
+		chaffCountFirstDigit = 1
+	elseif chaffCountFirstDigit >= 1.5 and chaffCountFirstDigit < 2.5 then
+		chaffCountFirstDigit = 2
+	elseif chaffCountFirstDigit >= 2.5 and chaffCountFirstDigit < 3.5 then
+		chaffCountFirstDigit = 3
+	elseif chaffCountFirstDigit >= 3.5 and chaffCountFirstDigit < 4.5 then
+		chaffCountFirstDigit = 4
+	elseif chaffCountFirstDigit >= 4.5 and chaffCountFirstDigit < 5.5 then
+		chaffCountFirstDigit = 5
+	elseif chaffCountFirstDigit >= 5.5 and chaffCountFirstDigit < 6.5 then
+		chaffCountFirstDigit = 6
+	elseif chaffCountFirstDigit >= 6.5 and chaffCountFirstDigit < 7.5 then
+		chaffCountFirstDigit = 7
+	elseif chaffCountFirstDigit >= 7.5 and chaffCountFirstDigit < 8.5 then
+		chaffCountFirstDigit = 8
+	elseif chaffCountFirstDigit >= 8.5 and chaffCountFirstDigit < 9.5 then
+		chaffCountFirstDigit = 9
+	else
+		chaffCountFirstDigit = 0
+	end
+	
+	local chaffCountSecondDigit = round(mainPanelDevice:get_argument_value(393),1)
+	if chaffCountSecondDigit < 0.070 then
+		chaffCountSecondDigit = 0
+	elseif chaffCountSecondDigit >= 0.070 and chaffCountSecondDigit < 0.147 then
+		chaffCountSecondDigit = 1
+	elseif chaffCountSecondDigit >= 0.147 and chaffCountSecondDigit < 0.256 then
+		chaffCountSecondDigit = 2
+	elseif chaffCountSecondDigit >= 0.256 and chaffCountSecondDigit < 0.349 then
+		chaffCountSecondDigit = 3
+	elseif chaffCountSecondDigit >= 0.349 and chaffCountSecondDigit < 0.442 then
+		chaffCountSecondDigit = 4
+	elseif chaffCountSecondDigit >= 0.442 and chaffCountSecondDigit < 0.535 then
+		chaffCountSecondDigit = 5
+	elseif chaffCountSecondDigit >= 0.535 and chaffCountSecondDigit < 0.628 then
+		chaffCountSecondDigit = 6
+	elseif chaffCountSecondDigit >= 0.628 and chaffCountSecondDigit < 0.736 then
+		chaffCountSecondDigit = 7
+	elseif chaffCountSecondDigit >= 0.736 and chaffCountSecondDigit < 0.829 then
+		chaffCountSecondDigit = 8
+	elseif chaffCountSecondDigit >= 0.829 and chaffCountSecondDigit < 0.938 then
+		chaffCountSecondDigit = 9
+	else
+		chaffCountSecondDigit = 0
+	end
+	]]--
+	
+	
+	--[[ Method 2
+	local chaffCountFirstDigitTenths = round(mainPanelDevice:get_argument_value(392) * 10,1)
+	local chaffCountFirstDigit = math.floor(chaffCountFirstDigitTenths)
+	
+	local differenceFirst = chaffCountFirstDigitTenths - chaffCountFirstDigit -- this number should be somewhere between 0.0 and 0.9
+	if differenceFirst > 0.5  then --round up
+		chaffCountFirstDigit = math.ceil(chaffCountFirstDigitTenths)
+	else
+		chaffCountFirstDigit = math.floor(chaffCountFirstDigitTenths)
+	end
+	
+	local chaffCountSecondDigitTenths = round(mainPanelDevice:get_argument_value(393) * 10,1)
+	local chaffCountSecondDigit = math.floor(chaffCountSecondDigitTenths)
+	
+	local differenceSecond = chaffCountSecondDigitTenths - chaffCountSecondDigit -- this number should be somewhere between 0.0 and 0.9
+	if differenceSecond > 0.5  then --round up
+		chaffCountSecondDigit = math.ceil(chaffCountSecondDigitTenths)
+	else
+		chaffCountSecondDigit = math.floor(chaffCountSecondDigitTenths)
+	end
+	--]]
+	
+	--[[
+	--ExportScript.Tools.SendData(5, chaffCount)
+	ExportScript.Tools.SendData(6, chaffCountFirstDigit)
+	ExportScript.Tools.SendData(7, chaffCountSecondDigit)
+	ExportScript.Tools.SendData(8, mainPanelDevice:get_argument_value(392))
+	ExportScript.Tools.SendData(9, mainPanelDevice:get_argument_value(393))
+	ExportScript.Tools.SendData(4, differenceFirst)
+	ExportScript.Tools.SendData(5, differenceSecond)
+	]]--
+end
+
+function ExportScript.clockAndTimer(mainPanelDevice) -- Clock and timer on panel A9 ----------------------------------------------------
+	local minutes = string.format("%d", mainPanelDevice:get_argument_value(1097) * 60)
+	if string.len(minutes) < 2 then
+		minutes = "0" .. minutes
+	end
+	local timerMinutes = string.format("%d", mainPanelDevice:get_argument_value(2000) * 60)
+	local timerSeconds = string.format("%d", mainPanelDevice:get_argument_value(1098) * 60)
+	local clockNTimer = "Clock\n" .. string.format("%d", mainPanelDevice:get_argument_value(1096) * 12) .. string.char(32) .. minutes .. "\nTimer\n" .. timerMinutes .. "m " .. timerSeconds .. "s"
+	ExportScript.Tools.SendData(51096, clockNTimer)
+end
+
+
+function ExportScript.displayAccel(mainPanelDevice) -- Accelerometer gauge formatted ---------------------------------------------------
+	-- Accelerometer Gauge A9
+	local needle = ExportScript.displayAccelCheckValue(mainPanelDevice:get_argument_value(110))
+	local needlePos = ExportScript.displayAccelCheckValue(mainPanelDevice:get_argument_value(15076))
+	local needleNeg = ExportScript.displayAccelCheckValue(mainPanelDevice:get_argument_value(15077))
+	accelGauge = "Accel.G\n+" .. string.format("%.1f", needlePos) .. " G\n-|  " .. string.format("%.1f", needle) .. " G  |-\n" ..  string.format("%.1f", needleNeg) .. " G"
+	ExportScript.Tools.SendData(50110, accelGauge)
+end
+function ExportScript.displayAccelCheckValue(accelValue) -- Called from ExportScript.displayAccel() ------------------------------------
+	if accelValue >= 0 then
+		return accelValue * 10
+	elseif accelValue < 0 then
+		return accelValue * 5
+	end
+end
+
+function ExportScript.dualTapeString(title, leftTape, rightTape) -- Creates a dual vertical bar tape for custom gauge
+	-- Receives title as string
+	-- Receives a value from 0.00 to 1.00 that represents a percentage from 0% to 100% of the tape, 0.25 is 1/4 up the tape etc..
+	-- Returns a string that shows 2 tapes in a "somewhat" graphical format using extended ascii characters.
+	local a = 5
+	local b = 0
+	leftTape = tonumber(string.format("%.1f", (leftTape * 10) / 2 ))
+	rightTape =  tonumber(string.format("%.1f", (rightTape * 10) / 2 ))
+	local buildDisplay = title .. "\n"
+	repeat
+		b = a - 0.5
+		if leftTape >= a then buildDisplay = buildDisplay .. "█          " elseif leftTape >= b then buildDisplay = buildDisplay .. "▄          " else buildDisplay = buildDisplay .. "_          "	end
+		if rightTape >= a then buildDisplay = buildDisplay .. "█" elseif rightTape >= (a - 0.5) then buildDisplay = buildDisplay .. "▄" else buildDisplay = buildDisplay .. "_" end
+		buildDisplay = buildDisplay .. "\n"
+		a = a - 1
+	until( a < 1 )
+	return buildDisplay
+end
+function ExportScript.drawStationStatusFlags(flagValue) -- Takes a 0/1/0.45 and draws nothing/white/checker flag and returns
+	local returnString
+	if flagValue > 0.5 then returnString = "█████\n▀▀▀▀▀\n\n." elseif flagValue > 0.4 then returnString = "▀▄▀▄▀\n▀   ▀   ▀\n\n." else returnString = "" end
+	return returnString
+end
+
+function ExportScript.stationStatusFlags(mainPanelDevice) -- Display Station status flags 1 to 8 on ACM panel
+	local b
+	local a = 9221
+	repeat
+		b = "5" .. a
+		ExportScript.Tools.SendData(b, ExportScript.drawStationStatusFlags(mainPanelDevice:get_argument_value(a)))
+		a = a + 1
+	until( a == 9229)
+end
+
+function ExportScript.displayFuel(mainPanelDevice) -- Fuel Gauges and output on A9 and B7 ----------------------------------------------
+--[[FUEL Exports Formatted
+	
+	NOTE: In case you are wondering to the weird methodology used below to derive fuel totals, I'll try to explain.
+	A combination of how the f-14 module is using this fuel data (e.g. 0.9 might mean 900 lbs, 0.0 would mean 000 lbs and 1.0 would mean 000 lbs
+	also which effects the total if you use math to add them all together, so we can't use a simple method)
+	Essentially DCS gives you the fuel dial position rather than the actual fuel available. Although this sounds like the same value, it is not.
+	And also playing into this is the non-existance of certain math functions in lua language like concatenation or rounding. You need to convert
+	to string and back which is slow
+
+	Because of this (not fully explained) it will create strange output for the total fuel when it rolls between whole values e.g. 15000 to 14900.
+	So instead we convert them to strings right away and extract the portion of the string (3'rd charachter) that is always correct
+	(e.g. 1.0 is always 0 and 0.0 is also 0 and 0.4 is 4 etc...)
+
+	we then take the 10k, 1k, 100's etc.. 3'rd charachter and combine them like 15000
+	There is still a strange behaviour at first site that is exhibited, that is not so strange once explained:
+	When rolling over from 15000 to 14900, it will show 15000, then 15900 for a second or two, and then 14900. The reason is that the hundreds dial
+		on the f-14 rolls quicker than the thousands dial therefore getting updated first instead of at the same time.
+	the above strange behaviour cannot be corrected unless there is a variable that stores the total fuel value instead of the fuel cockpit dial
+	value which are two different things. (In my experience most dcs mods only give you access to the latter)
+	Therefore, we first concatenate the number to 0.X by converting it to a string and formatting it as such, and then extract the 3'rd character
+	(I get it, nasty work around, If you have a better solution I'd love to hear it.)
+	
+]]
+	local aftAndL = string.format("%d", mainPanelDevice:get_argument_value(1054) * 7000)
+	local fwdAndR = string.format("%d", mainPanelDevice:get_argument_value(1055) * 7000)
+	local RIOFuel = string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(2117)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(2118)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(2119)), 3, 3) .. "00"
+	local leftFuel = string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6000)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6001)), 3, 3) .. "00"
+	local rightFuel = string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6004)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6005)), 3, 3) .. "00"
+	local totalFuel = string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6010)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6011)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6012)), 3, 3) .. "00"
+	local bingoFuel = string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6020)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6021)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(6022)), 3, 3) .. "00"
+
+	ExportScript.Tools.SendData(51054, "AFT & L\n" .. aftAndL .. "\nLBS")
+	ExportScript.Tools.SendData(51055, "FWD & R\n" .. fwdAndR .. "\nLBS")
+	ExportScript.Tools.SendData(52117, "TOTAL\nFUEL QTY\n" .. RIOFuel .. "\nLBS")	-- Return Total RIO Fuel Qty Formatted like F-14 Gauge
+	ExportScript.Tools.SendData(56000, "L\n" .. leftFuel)							-- Return Total Left Fuel Qty Formatted like F-14 Gauge
+	ExportScript.Tools.SendData(56004, "R\n" .. rightFuel)							-- Return Total Right Fuel Qty Formatted like F-14 Gauge
+	ExportScript.Tools.SendData(56010, "FUEL\n" .. totalFuel .. "\nQTY")			-- Return Total Fuel Qty Formatted like F-14 Gauge
+	ExportScript.Tools.SendData(56020, "BINGO\n" .. bingoFuel)						-- Return Total Bingo Fuel Qty Formatted like F-14 Gauge
+	ExportScript.Tools.SendData(56024, "BINGO " .. bingoFuel .. "\nTOTAL " .. totalFuel .. "\n" .. aftAndL .. "  |  " .. fwdAndR .. "\n   L    |    R   \n" .. leftFuel .. "  |  " .. rightFuel)  -- Nice Multi Gauge
+end
+
+function ExportScript.displayAltitude(mainPanelDevice) -- Altitude A4 ----------------------------------------------
+
+	local AltPlt = string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(112)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(262)), 3, 3) .. string.sub(string.format("%.1f", mainPanelDevice:get_argument_value(300)), 3, 3) .. "00"
+
+	--ExportScript.Tools.SendData(52262, "Altitude\n(MSL)\n" .. AltPlt .. "\nFT")	-- Return Altitude Formatted like F-14 Servopneumatic Altitude
+	ExportScript.Tools.SendData(52262, AltPlt .. "\nFT")	-- Return Altitude Formatted like F-14 Servopneumatic Altitude
+end
+
+-----------------------
+-- General Functions --
+-----------------------
+
+function ExportScript.Linearize(current_value, raw_tab, final_tab)
+  -- (c) scoobie
+  if current_value <= raw_tab[1] then
+    return final_tab[1] 
+  end
+  for index, value in pairs(raw_tab) do
+    if current_value <= value then
+      local ft = final_tab[index]
+      local rt = raw_tab[index]
+      return (current_value - rt) * (ft - final_tab[index - 1]) / (rt - raw_tab[index - 1]) + ft
+    end
+  end
+  -- we shouldn't be here, so something went wrong - return arbitrary max. final value, maybe the user will notice the problem:
+  return final_tab[#final_tab]
+end
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
