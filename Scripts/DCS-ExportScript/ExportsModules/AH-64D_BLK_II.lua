@@ -557,7 +557,6 @@ ExportScript.ConfigArguments =
 
 	-- ENGINE INTERFACE
 	[400] = "%.4f", 	-- APU Pushbutton - Press to start/stop APU , (1, 0, 1)
-	[406] = "%.4f", 	-- APU Pushbutton Light, (1, 0, 1)
 	[401] = "%.4f", 	-- APU Pushbutton Cover  OPEN/CLOSE, (-1, 0, 1)
 
 	-- BARO ALTIMETER
