@@ -759,6 +759,8 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
+	
+	ExportScript.CountermeasureReadouts(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -800,3 +802,36 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+function ExportScript.CountermeasureReadouts(mainPanelDevice)
+	-------------------------------------
+	--- Apache Flare and Chaff Counts ---
+	-------------------------------------
+	
+	local CmwsInfo_24 = ExportScript.Tools.split(list_indication(24), "%c")--this contains the formated table of the kneeboard
+	
+	-- New way of detecting the counts, borrowed from Wizard and the F16
+	local txt_FLARES_Count
+	 
+	for k,v in pairs(CmwsInfo_24) do
+		if v == "#85#" then
+			txt_FLARES_Count = CmwsInfo_24[k+1]
+		end
+	end
+	
+	local txt_CHAFFS_Count
+	 
+	for k,v in pairs(CmwsInfo_24) do
+		if v == "#86#" then
+			txt_CHAFFS_Count = CmwsInfo_24[k+1]
+		end
+	end
+	
+	ExportScript.Tools.SendData(3000, string.format(txt_FLARES_Count))
+	ExportScript.Tools.SendData(3001, string.format(txt_CHAFFS_Count))
+	ExportScript.Tools.SendData(3002, string.format("F " .. txt_FLARES_Count))
+	ExportScript.Tools.SendData(3003, string.format("C " .. txt_CHAFFS_Count))
+	ExportScript.Tools.SendData(3004, string.format("F " .. txt_FLARES_Count .. "\nC " .. txt_CHAFFS_Count))
+	ExportScript.Tools.SendData(3005, string.format("FLARE\n" .. txt_FLARES_Count))
+	ExportScript.Tools.SendData(3006, string.format("CHAFF\n" .. txt_CHAFFS_Count))
+end
