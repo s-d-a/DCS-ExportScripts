@@ -1,8 +1,6 @@
 -- F-16C Block 50
-
--- Upgrade project
--- Com freq or channel readouts
--- DCS mike
+-- https://github.com/asherao/DCS-ExportScripts
+-- DCS mike is experemental
 
 ExportScript.FoundDCSModule = true
 ExportScript.Version.F16C_Viper = "1.2.1"
@@ -82,38 +80,54 @@ ExportScript.ConfigEveryFrameArguments =
 	------ECM Lamps
 	[102]=  "%.1f",   --  ECM Light
 	
+	[460]=  "%.1f",   --  BTN 1
 	[461]=  "%.1f",   --  BTN 1S
 	[462]=  "%.1f",   --  BTN 1A
 	[463]=  "%.1f",   --  BTN 1F
 	[464]=  "%.1f",   --  BTN 1T
+	
+	[465]=  "%.1f",   --  BTN 2
 	[466]=  "%.1f",   --  Btn_2_S
 	[467]=  "%.1f",   --  Btn_2_A
 	[468]=  "%.1f",   --  Btn_2_F
 	[469]=  "%.1f",   --  Btn_2_T
+	
+	[470]=  "%.1f",   --  Btn_3
 	[471]=  "%.1f",   --  Btn_3_S
 	[472]=  "%.1f",   --  Btn_3_A
 	[473]=  "%.1f",   --  Btn_3_F
 	[474]=  "%.1f",   --  Btn_3_T
+	
+	[475]=  "%.1f",   --  Btn_4
 	[476]=  "%.1f",   --  Btn_4_S
 	[477]=  "%.1f",   --  Btn_4_A
 	[478]=  "%.1f",   --  Btn_4_F
 	[479]=  "%.1f",   --  Btn_4_T
+	
+	[480]=  "%.1f",   --  Btn_5
 	[481]=  "%.1f",   --  Btn_5_S
 	[482]=  "%.1f",   --  Btn_5_A    
 	[483]=  "%.1f",   --  Btn_5_F
 	[484]=  "%.1f",   --  Btn_5_T
+	
+	[485]=  "%.1f",   --  Btn_6
 	[486]=  "%.1f",   --  Btn_6_S
 	[487]=  "%.1f",   --  Btn_6_A
 	[488]=  "%.1f",   --  Btn_6_F
 	[489]=  "%.1f",   --  Btn_6_T
+	
+	[490]=  "%.1f",   --  Btn_FRM
 	[491]=  "%.1f",   --  Btn_FRM_S
 	[492]=  "%.1f",   --  Btn_FRM_A
 	[493]=  "%.1f",   --  Btn_FRM_F
 	[494]=  "%.1f",   --  Btn_FRM_T
+	
+	[495]=  "%.1f",   --  Btn_SPL
 	[496]=  "%.1f",   --  Btn_SPL_S
 	[497]=  "%.1f",   --  Btn_SPL_A
 	[498]=  "%.1f",   --  Btn_SPL_F
 	[499]=  "%.1f",   --  Btn_SPL_T
+	
 		-- EPU Control Panel
 	[524]=  "%.1f",   --   ( CautionLights.HYDRAZN)
 	[523]=  "%.1f",   --   ( CautionLights.AIR)
@@ -691,6 +705,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.EcmPanel(mainPanelDevice)
 	ExportScript.FuelInfo(mainPanelDevice)	
 	ExportScript.CountermeasureReadouts(mainPanelDevice)	
+  ExportScript.UhfRadioPresets(mainPanelDevice)	
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -1009,8 +1024,9 @@ function ExportScript.mike(mainPanelDevice) -- F16 mike project
 end
 
 function ExportScript.KollsmanWindowReadout(mainPanelDevice)
+  -- Function WIP
 	-- ExportScript.Tools.SendData(44250, "Hello again") -- Test
-		-- Necessary info
+	-- Necessary info
 	--	[56]  = "%.2f",   -- Barometric Setting Kollsman Window 1
 	--	[57]  = "%.2f",   -- Barometric Setting Kollsman Window 2
 	--	[58]  = "%.2f",   -- Barometric Setting Kollsman Window 3
@@ -1319,61 +1335,38 @@ end
 
 function ExportScript.CountermeasureReadouts(mainPanelDevice)
 	
-	local expendableReadout = ExportScript.Tools.split(list_indication(16), "%c")--this contains the formated table of the CMDS numbers
-	
-	local CMDS_O1_Amount
+	local expendableReadout = ExportScript.Tools.getListIndicatorValue(16)
+
+  local CMDS_O1_Amount
 	local CMDS_O2_Amount
 	local CMDS_CH_Amount
 	local CMDS_FL_Amount
-	
-	if expendableReadout[2] == "CMDS_O1_Amount" then
-		CMDS_O1_Amount = expendableReadout[3]
-	elseif expendableReadout[5] == "CMDS_O1_Amount" then
-		CMDS_O1_Amount = expendableReadout[6]
-	elseif expendableReadout[8] == "CMDS_O1_Amount" then
-		CMDS_O1_Amount = expendableReadout[9]
-	elseif expendableReadout[11] == "CMDS_O1_Amount" then
-		CMDS_O1_Amount = expendableReadout[12]
-	else
-		CMDS_O1_Amount = "--"
-	end
-	
-	if expendableReadout[2] == "CMDS_O2_Amount" then
-		CMDS_O2_Amount = expendableReadout[3]
-	elseif expendableReadout[5] == "CMDS_O2_Amount" then
-		CMDS_O2_Amount = expendableReadout[6]
-	elseif expendableReadout[8] == "CMDS_O2_Amount" then
-		CMDS_O2_Amount = expendableReadout[9]
-	elseif expendableReadout[11] == "CMDS_O2_Amount" then
-		CMDS_O2_Amount = expendableReadout[12]
-	else
-		CMDS_O2_Amount = "--"
-	end
-	
-	if expendableReadout[2] == "CMDS_CH_Amount" then
-		CMDS_CH_Amount = expendableReadout[3]
-	elseif expendableReadout[5] == "CMDS_CH_Amount" then
-		CMDS_CH_Amount = expendableReadout[6]
-	elseif expendableReadout[8] == "CMDS_CH_Amount" then
-		CMDS_CH_Amount = expendableReadout[9]
-	elseif expendableReadout[11] == "CMDS_CH_Amount" then
-		CMDS_CH_Amount = expendableReadout[12]
-	else
-		CMDS_CH_Amount = "--"
-	end
-	
-	if expendableReadout[2] == "CMDS_FL_Amount" then
-		CMDS_FL_Amount = expendableReadout[3]
-	elseif expendableReadout[5] == "CMDS_FL_Amount" then
-		CMDS_FL_Amount = expendableReadout[6]
-	elseif expendableReadout[8] == "CMDS_FL_Amount" then
-		CMDS_FL_Amount = expendableReadout[9]
-	elseif expendableReadout[11] == "CMDS_FL_Amount" then
-		CMDS_FL_Amount = expendableReadout[12]
-	else
-		CMDS_FL_Amount = "--"
-	end
-	
+  
+  if expendableReadout.CMDS_O1_Amount == nil then
+    CMDS_O1_Amount = "--"
+  else
+    CMDS_O1_Amount =  expendableReadout.CMDS_O1_Amount
+  end
+  
+  if expendableReadout.CMDS_O2_Amount == nil then
+    CMDS_O2_Amount = "--"
+  else
+    CMDS_O2_Amount =  expendableReadout.CMDS_O2_Amount
+  end
+  
+  if expendableReadout.CMDS_CH_Amount == nil then
+    CMDS_CH_Amount = "--"
+  else
+    CMDS_CH_Amount =  expendableReadout.CMDS_CH_Amount
+  end
+  
+  if expendableReadout.CMDS_FL_Amount == nil then
+    CMDS_FL_Amount = "--"
+  else
+    CMDS_FL_Amount =  expendableReadout.CMDS_FL_Amount
+  end
+  
+  
 	CMDS_O1_Amount = trim(CMDS_O1_Amount)
 	CMDS_O2_Amount = trim(CMDS_O2_Amount)
 	CMDS_CH_Amount = trim(CMDS_CH_Amount)
@@ -1392,6 +1385,75 @@ function ExportScript.CountermeasureReadouts(mainPanelDevice)
 										.. "\nCH " .. CMDS_CH_Amount
 										.. "\nFL " .. CMDS_FL_Amount)
 end
+  
+  
+
+function ExportScript.UhfRadioPresets(mainPanelDevice)	
+  
+  local UhfPresetReadout = ExportScript.Tools.getListIndicatorValue(12) -- uhf radio presets
+  
+  local UhfCh12 = UhfPresetReadout.txtCh12
+  local UhfCh13 = UhfPresetReadout.txtCh13
+  local UhfCh14 = UhfPresetReadout.txtCh14
+  local UhfCh15 = UhfPresetReadout.txtCh15
+  local UhfCh16 = UhfPresetReadout.txtCh16
+  local UhfCh17 = UhfPresetReadout.txtCh17
+  local UhfCh21 = UhfPresetReadout.txtCh21
+  local UhfCh22 = UhfPresetReadout.txtCh22
+  local UhfCh23 = UhfPresetReadout.txtCh23
+  local UhfCh24 = UhfPresetReadout.txtCh24
+  local UhfCh25 = UhfPresetReadout.txtCh25
+  local UhfCh26 = UhfPresetReadout.txtCh26
+  local UhfCh27 = UhfPresetReadout.txtCh27
+  local UhfCh28 = UhfPresetReadout.txtCh28
+  local UhfCh29 = UhfPresetReadout.txtCh29
+  local UhfCh30 = UhfPresetReadout.txtCh30
+  local UhfCh31 = UhfPresetReadout.txtCh31
+  local UhfCh32 = UhfPresetReadout.txtCh32
+  local UhfCh33 = UhfPresetReadout.txtCh33
+  local UhfCh34 = UhfPresetReadout.txtCh34
+  local UhfCh35 = UhfPresetReadout.txtCh35
+  local UhfCh36 = UhfPresetReadout.txtCh36
+  local UhfCh37 = UhfPresetReadout.txtCh37
+  
+
+  ExportScript.Tools.SendData(3016, "UHF 1-4"
+                              .. "\n" .. UhfCh12
+                              .. "\n" .. UhfCh13
+                              .. "\n" .. UhfCh14
+                              .. "\n" .. UhfCh15
+                            )
+                            
+   ExportScript.Tools.SendData(3017, "UHF 5-8" 
+                              .. "\n" .. UhfCh16
+                              .. "\n" .. UhfCh17
+                              .. "\n" .. UhfCh21
+                              .. "\n" .. UhfCh22
+                            )                         
+                            
+                          
+  ExportScript.Tools.SendData(3018, "UHF 9-12"
+                              .. "\n" .. UhfCh23
+                              .. "\n" .. UhfCh24
+                              .. "\n" .. UhfCh25
+                              .. "\n" .. UhfCh26
+                            )                          
+                    
+  ExportScript.Tools.SendData(3019, "UHF 13-16" 
+                              .. "\n" .. UhfCh27
+                              .. "\n" .. UhfCh31
+                              .. "\n" .. UhfCh32
+                              .. "\n" .. UhfCh33
+                            )       
+                            
+  ExportScript.Tools.SendData(3020, "UHF 16-20" 
+                              .. "\n" .. UhfCh34
+                              .. "\n" .. UhfCh35
+                              .. "\n" .. UhfCh36
+                              .. "\n" .. UhfCh37
+                            )        
+end
+
 
 ------------------------------
 -- General Helper Functions --
