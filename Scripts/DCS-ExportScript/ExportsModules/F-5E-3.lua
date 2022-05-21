@@ -532,9 +532,9 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
   ExportScript.LoAircraftInfo(mainPanelDevice) -- Provides a lot of aircraft properties
   ExportScript.AirportInfo(mainPanelDevice) -- Provides info on the two closest airports
   ExportScript.WindsAloft(mainPanelDevice) -- Gets winds at the aircraft
-  ExportScript.GroundRadar(mainPanelDevice) -- Reports 2 closest friendlies and 2 enemies
-  ExportScript.AirRadar(mainPanelDevice) -- Reports 2 closest friendlies and 2 enemies
-  ExportScript.IglaHunter(mainPanelDevice) -- Locates closest Igla
+  ExportScript.GroundRadar(mainPanelDevice) -- Reports 2 closest friendlies and 2 enemies (Use in Single Player)
+  ExportScript.AirRadar(mainPanelDevice) -- Reports 2 closest friendlies and 2 enemies (Use in Single Player)
+  ExportScript.IglaHunter(mainPanelDevice) -- Locates closest Igla (Use in Single Player)
     end
   end
 
