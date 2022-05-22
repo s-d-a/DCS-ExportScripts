@@ -631,7 +631,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
   
   ExportScript.UhfRadioPresets(mainPanelDevice) -- AN/ARC-164 UHF Preset List
   ExportScript.CrewStatusRepeater(mainPanelDevice) -- Crew Status Window
-  ExportScript.RadioFreqs(mainPanelDevice)
+  ExportScript.RadioFreqs(mainPanelDevice) -- Radio Stack
   
   if LoIsObjectExportAllowed() then -- returns true if world objects data is available
     if LoIsOwnshipExportAllowed() then -- returns true if ownship data is available
@@ -931,7 +931,7 @@ end
 ----------------------
 function ExportScript.CrewStatusRepeater(mainPanelDevice) -- Crew Status Window
   
-  local crewStatusInfo = parse_indication(6) -- contains table of the status of the crew
+  local crewStatusInfo = ExportScript.Tools.getListIndicatorValue(6) -- contains table of the status of the crew
   
   if crewStatusInfo.txt_mem0 ~= null then -- if there is a pilot entry
      ExportScript.Tools.SendData(3000,'Pilot\n' .. crewStatusInfo.txt_status0
