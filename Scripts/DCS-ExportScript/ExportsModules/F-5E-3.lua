@@ -139,7 +139,7 @@ ExportScript.ConfigEveryFrameArguments =
 	-- Oxygen Flow Pressure Indicator
 	[604] = "%.4f",	-- FlowPressure {0.0, 0.5, 1.0} {0.0, 100.0, 500.0}
 	-- Oxygen Flow Indicator
-	[600] = "%.4f",	-- FlowBlinker
+	[600] = "%.2f",--"%1d",	-- FlowBlinker
 	-- RADIO ------------------------------------------------------
 	-- UHF Radio AN/ARC-164
 	[326] = "%.2f",	-- UHFRadioChannel
@@ -520,8 +520,8 @@ end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
-	
-  ExportScript.UhfRadio(mainPanelDevice) -- AN/ARC-164 UHF 
+	ExportScript.FlowBlinker(mainPanelDevice)
+	ExportScript.UhfRadio(mainPanelDevice) -- AN/ARC-164 UHF
   ExportScript.UhfRadioPresets(mainPanelDevice) -- AN/ARC-164 UHF Preset List
   ExportScript.TacanRadio(mainPanelDevice) -- TACAN Channel
   ExportScript.FuelQuantityIndicator(mainPanelDevice) -- Fuel Quantity Indicator (Dual)
@@ -861,6 +861,74 @@ function ExportScript.AirportInfo(mainPanelDevice)
                                 .. '\n' .. prefixZerosFixedLength(airportInfo[2][7],2) -- runway 1
                                 .. '-' .. prefixZerosFixedLength(airportInfo[2][8],2) -- runway 2
                                 .. ' (' .. prefixZerosFixedLength(airportInfo[2][9],2) .. ')') -- prefered runway based on wind in parens
+
+ -- TODO: Does not work because of "DCS."
+  -- get the freqs of the airports
+  local frequencyList = {}
+  local finalList = 
+  {
+    ["Rio Gallegos"] = {
+        [1] = 38.5,
+        [2] = 119.1,
+        [3] = 250.1,
+        [4] = 3.8,
+    },
+    ["Punta Arenas"] = {
+        [1] = 38.7,
+        [2] = 118.7,
+        [3] = 250.3,
+        [4] = 3.9,
+    },
+    ["Ushuaia"] = {
+        [1] = 38.6,
+        [2] = 118.1,
+        [3] = 250.2,
+        [4] = 3.85,
+    },
+    ["Rio Grande"] = {
+        [1] = 38.55,
+        [2] = 118.3,
+        [3] = 250.15,
+        [4] = 3.825,
+    },
+    ["Mount Pleasant"] = {
+        [1] = 38.45,
+        [2] = 133.35,
+        [3] = 250.05,
+        [4] = 3.775,
+    },
+    ["Port Stanley"] = {
+        [1] = 38.4,
+        [2] = 118.1,
+        [3] = 250,
+        [4] = 3.75,
+    },
+    ["Ushuaia Helo Port"] = {
+        [1] = 38.65,
+        [2] = 118.5,
+        [3] = 250.25,
+        [4] = 3.875,
+    },
+}
+  --local airdromeInfo = Terrain.GetTerrainConfig("Airdromes")
+ --[[ for _k, _val in pairs(airdromeInfo) do -- do this for the number of keys in airdromeInfo
+      if _val.radio then -- if radio exists
+          for k, radioId in pairs(_val.radio) do --for each radio
+              local frequencys = DCS.getATCradiosData(radioId)
+              if frequencys then -- if a freqs exists
+                  frequencyList = {} -- clear the list first
+                  for kk, vv in pairs(frequencys) do -- for each freq
+                      table.insert(frequencyList, vv / 1000000) -- put in table
+                  end
+                  finalList[_val.display_name] = frequencyList
+              end
+          end
+      end
+  end
+  ]]
+  local firstFreq = finalList[airportInfo[2][1]][1]
+  ExportScript.Tools.SendData(9999, firstFreq)
+  
 end
 
 function ExportScript.WindsAloft(mainPanelDevice)
@@ -884,6 +952,7 @@ function ExportScript.WindsAloft(mainPanelDevice)
                                     .. round(metersPerSecond2knots(windStrengthAloft,0)) .. 'kts'
                               ) -- winds at the aircraft
 end
+
 function ExportScript.GroundRadar(mainPanelDevice) -- may return some odd things
   
   local tableOfUnits = LoGetWorldObjects('units')
@@ -1259,6 +1328,25 @@ function ExportScript.UhfRadioKnobs(mainPanelDevice) --AN/ARC-164 UHF
 	ExportScript.Tools.SendData(331, lTmp331_2)
 end
 
+function ExportScript.FlowBlinker(mainPanelDevice)
+	-- provides the logic for an animated indicator
+	-- Use a Momentary Button with Lamp
+	-- Image State change: ID is greater that (>) the below value - 0
+
+	-- The first image is a still image (frame 0) of the rest position
+	-- The second image is an animation gif
+	-- The logic below will allow the longest reasonable time for the gif to play
+	-- The time for your gif will be based on the time the ingame animation goes from 0 to 1 and back to 0
+	-- If the gif is too long the still will appear before the end of the gif, possibly making an unwanted result
+	local blink = mainPanelDevice:get_argument_value(600) -- FlowBlinker
+	if blink > 0.0010 then
+		blink = 1
+	else
+		blink = 0
+	end
+	ExportScript.Tools.SendData(9000, blink)
+
+end
 ----------------------
 -- Helper Functions --
 ----------------------
