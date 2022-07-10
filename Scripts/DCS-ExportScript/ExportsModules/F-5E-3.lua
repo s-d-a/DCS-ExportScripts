@@ -1338,6 +1338,7 @@ function ExportScript.FlowBlinker(mainPanelDevice)
 	-- The logic below will allow the longest reasonable time for the gif to play
 	-- The time for your gif will be based on the time the ingame animation goes from 0 to 1 and back to 0
 	-- If the gif is too long the still will appear before the end of the gif, possibly making an unwanted result
+	-- You may want to set your gif to no repeat when making it
 	local blink = mainPanelDevice:get_argument_value(600) -- FlowBlinker
 	if blink > 0.0010 then
 		blink = 1
