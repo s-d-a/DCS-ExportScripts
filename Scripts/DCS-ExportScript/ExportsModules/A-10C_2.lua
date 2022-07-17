@@ -805,6 +805,11 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
+
+	-- Export ScratchPad
+	local lScratchPad = ExportScript.Tools.getListIndicatorValue(5)
+        ExportScript.Tools.SendData(2040, ExportScript.Tools.coerce_nil_to_string(lScratchPad.Scratch_PAD))
+
 	-- AN/ARC-164 UHF and UHF Preset Channel
 	---------------------------------------------------
 	local lUHF_RADIO = GetDevice(54)
