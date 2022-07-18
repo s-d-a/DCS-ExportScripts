@@ -833,6 +833,16 @@ function ExportScript.Tools.split(stringvalue, delimiter)
     return result;
 end
 
+-- This function turns a 'nil' value into an empty string.
+-- Courtesy of https://github.com/pet333r/pw-dev_script
+function ExportScript.Tools.coerce_nil_to_string(value)
+	if value == nil then
+		return ""
+	else
+		return value
+	end
+end
+
 -- the function checks whether the cockpit light should be activated in ikarus on the basis of the parameters
 -- functional parameters, a single ID, or a table with IDs
 function ExportScript.Tools.IkarusCockpitLights(mainPanelDevice, ExportIDs)
