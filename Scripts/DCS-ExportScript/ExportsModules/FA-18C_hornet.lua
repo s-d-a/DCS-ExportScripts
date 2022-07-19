@@ -184,6 +184,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[149] = "%.4f",	-- heading
 	[150] = "%.4f",	-- pitch
 	[151] = "%.4f",	-- bank
+	
 }
 ExportScript.ConfigArguments = 
 {
@@ -512,29 +513,9 @@ ExportScript.ConfigArguments =
 
 -- Pointed to by ProcessIkarusDCSHighImportance
 function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
-	--[[
-	every frame export to Ikarus
-	Example from A-10C
-	Get Radio Frequencies
-	get data from device
-	local lUHFRadio = GetDevice(54)
-	ExportScript.Tools.SendData("ExportID", "Format")
-	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
-	]]
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
-	--[[
-	every frame export to DAC
-	Example from A-10C
-	Get Radio Frequencies
-	get data from device
-	local UHF_RADIO = GetDevice(54)
-	ExportScript.Tools.SendDataDAC("ExportID", "Format")
-	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
-	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000), 2) -- export to Hardware '2' Config
-	]]
 end
 
 -----------------------------------------------------
@@ -553,10 +534,16 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
-	
+	 
+	--this "calls" the function. the actual function is located at the bottom of the file
+	ExportScript.TripleFireFeature(mainPanelDevice)
+	-- Kneeboard Info. Contains Name of carrier, callsign, ATC freq, tacan, ils, and link4
+	ExportScript.KneeboardInfo(mainPanelDevice) -- recommend ~8pt font in DCS-Interface
+
 	--ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
 	
 	-- IFEI - Engine, Fuel and Clock informations
+	
 	local lEngineFuelClock = ExportScript.Tools.getListIndicatorValue(5)
 	if ExportScript.Config.Debug then
 		ExportScript.Tools.WriteToLog('EngineFuelClock: '..ExportScript.Tools.dump(lEngineFuelClock))
@@ -728,28 +715,98 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	local lUHF2Radio = GetDevice(40)
 	ExportScript.Tools.SendDataDAC(2031, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF2Radio:get_frequency()/1000000), "7.3", false, 0.005)), 7)
 
-	--=====================================================================================
-	--[[
-	ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
-	ExportScript.Tools.WriteToLog('CMSP: '..ExportScript.Tools.dump(list_indication(7)))
-	
-	local ltmp1 = 0
-	for ltmp2 = 0, 13, 1 do
-		ltmp1 = list_indication(ltmp2)
-		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
-		--ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
-	end
-	]]
---[[
-	local ltmp1 = 0
-	for ltmp2 = 1, 73, 1 do
-		ltmp1 = GetDevice(ltmp2)
-		ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
-		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
-	end
-]]
 end
 
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+function ExportScript.KneeboardInfo(mainPanelDevice)
+	local kneeboardGet = ExportScript.Tools.getListIndicatorValue(13) -- list_indication(13)
+
+	if kneeboardGet.Carrier_callsign1 == nil then
+		ExportScript.Tools.SendData(3002, 'CV\nDATA')
+	else
+		ExportScript.Tools.SendData(3002, kneeboardGet.Carrier_callsign1
+				.. '\n' .. kneeboardGet.ATC_Frequency1
+				.. '\n' .. 'TCN' .. kneeboardGet.TACAN_Channel1
+				.. '\n' .. 'ILS ' .. kneeboardGet.ILS_Channel1
+				.. '\n' .. 'L4 ' .. kneeboardGet.Link4_Frequency1)
+	end
+end
+
+
+function ExportScript.TripleFireFeature(mainPanelDevice)
+	--This function will get the status of the three fire lights. 
+	--When a light is lit, its text will be exported
+	
+	--we will make the variable 'light_leftEngFireValue'
+	--it will contain the value of the light animation for the left engine fire light
+	local light_leftEngFireValue = mainPanelDevice:get_argument_value(10)
+
+	--'light_rightEngFireValue' will contain the value of the light animation for the right engine fire light
+	local light_rightEngFireValue = mainPanelDevice:get_argument_value(26)
+	
+	--'light_apuFireValue' will contain the value of the light animation for the apu fire light
+	local light_apuFireValue = mainPanelDevice:get_argument_value(29)
+	
+	--now that we have all of the values, we have to create some logic to see if any of them are on
+	
+	--a variable that begins with "is" can be considered a boolean,
+	--which means we will make it true or false, represented by 1 or 0, respectively
+	
+	local isLeftEngFireLit
+	local isRightEngFireLit
+	local isApuFireLit
+	
+	--using the modelViewer, you can see that the light comes on for values above 0.51-ish
+	--we will take that value and determine the true/false of its related boolean (bool)
+	if light_leftEngFireValue > 0.51 then
+		isLeftEngFireLit = 1
+	else
+		isLeftEngFireLit = 0
+	end
+	
+	--we will do the same for the right engine and apu
+	if light_leftEngFireValue > 0.51 then
+		isRightEngFireLit = 1
+	else
+		isRightEngFireLit = 0
+	end
+	
+	if light_apuFireValue > 0.51 then
+		isApuFireLit = 1
+	else
+		isApuFireLit = 0
+	end
+	
+	--now that we have the status of all of the lights, we will use them in another logic
+	local isFireHappening
+	--if any of these values are true, there is a fire
+	if (isLeftEngFireLit == 1) or (isRightEngFireLit == 1) or (isApuFireLit == 1) then
+		isFireHappening = 1
+	else
+		isFireHappening = 0
+	end
+	
+	--now we export the results in a unique export ID
+	ExportScript.Tools.SendData(3000, isFireHappening)
+	
+	--But, remember how we also wanted the text too?
+	--We will do that like this
+	--if a light is lit, then we populate the variable with a string
+	--we will call that variable 'whatIsOnFire'
+	local whatIsOnFire
+	if isLeftEngFireLit == 1 then
+		whatIsOnFire = "L ENG"
+	elseif isRightEngFireLit == 1 then
+		whatIsOnFire = "R ENG"
+	elseif isApuFireLit == 1 then
+		whatIsOnFire = "APU"
+	else
+		whatIsOnFire = ""  --it will be blank if nothing is on fire
+	end
+	
+	--use 3001 as a 'Title Text Change' in the streamdeck
+	ExportScript.Tools.SendData(3001, whatIsOnFire)
+end
