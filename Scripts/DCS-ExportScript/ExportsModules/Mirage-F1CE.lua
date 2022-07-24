@@ -762,8 +762,8 @@ end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
-	--ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
-	--ExportScript.ListIndicationLogDump(mainPanelDevice)
+	--ExportScript.DeviceMetaTableLogDump(mainPanelDevice) -- comment this to prevent log flooding
+	--ExportScript.ListIndicationLogDump(mainPanelDevice) -- comment this to prevent log flooding
 	ExportScript.VorIlsTacanOmnibearing(mainPanelDevice)
 	ExportScript.CockpitInstruments(mainPanelDevice)
 	ExportScript.qfeCalculator(mainPanelDevice)
@@ -788,6 +788,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.TrimReadout(mainPanelDevice)
 	ExportScript.RadarCalculators(mainPanelDevice)
 	ExportScript.ClimbSchedulesReadout(mainPanelDevice)
+	ExportScript.FuelCalculator(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -796,6 +797,87 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+function ExportScript.FuelCalculator(mainPanelDevice)
+	-- a rough estimate of instantaneous remaining fuel time
+	-- 10 second sample period
+	-- get how many L were used
+	-- from then do more math to get amount of fuel remaining in hrs
+	local measurementTime = 10 -- seconds
+
+	local clockHour = ExportScript.Tools.round(mainPanelDevice:get_argument_value(64), 4) -- 0.25
+	clockHour = clockHour * 12 -- 3
+	clockHour = clockHour * 60 -- 180
+	clockHour = clockHour * 60 -- 10,800
+	clockHour = formatTime(clockHour)
+
+	local clockTimer = ExportScript.Tools.round(mainPanelDevice:get_argument_value(65), 4)
+	-- up to 15 minutes
+	-- .333 is about 5 minutes
+	clockTimer = clockTimer * 15 -- 4.995
+	clockTimer = clockTimer * 60 -- 299.7
+	clockTimer = formatTime2(clockTimer)
+
+	-- Manual gravity drop selection Mrad to input the amount of fuel used
+	local mrad_Xxx = ExportScript.Tools.round(mainPanelDevice:get_argument_value(766) * 10, 0)
+	local mrad_xXx = ExportScript.Tools.round(mainPanelDevice:get_argument_value(767) * 10, 0)
+	local mrad_xxX = ExportScript.Tools.round(mainPanelDevice:get_argument_value(768) * 10, 0)
+
+	if mrad_Xxx > 9 then mrad_Xxx = 0 end
+	if mrad_xXx > 9 then mrad_xXx = 0 end
+	if mrad_xxX > 9 then mrad_xxX = 0 end
+
+	local fuelUsed = tonumber(mrad_Xxx .. mrad_xXx .. mrad_xxX)
+	if fuelUsed == 0 then
+		fuelUsed = 0.1 -- place holder to not divide by 0
+	end
+
+	local fuelPerHour = 60 * 60 / measurementTime * fuelUsed
+
+	-- we can use the roller for the fuel amount TODO: make the fuel function to get more accurate results
+	-- Fuel quantity indicator
+	local fuelQty_Xxxx = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1146) * 10, 0)
+	local fuelQty_xXxx = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1147) * 10, 0)
+	local fuelQty_xxXx = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1148) * 10, 0)
+	local fuelQty_xxxX = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1149) * 10, 0)
+
+	if fuelQty_Xxxx > 9 then fuelQty_Xxxx = 0 end
+	if fuelQty_xXxx > 9 then fuelQty_xXxx = 0 end
+	if fuelQty_xxXx > 9 then fuelQty_xxXx = 0 end
+	if fuelQty_xxxX > 9 then fuelQty_xxxX = 0 end
+
+	local fuelQtyTotal = fuelQty_Xxxx .. fuelQty_xXxx .. fuelQty_xxXx .. fuelQty_xxxX
+
+	local fuelHrs = fuelQtyTotal/fuelPerHour
+	local fuelMin = fuelHrs * 60
+	local fuelSec = fuelMin * 60
+	local fuelTimeReadout = formatTime3(fuelSec)
+
+	local fuelString = ''
+
+	if fuelUsed == 0.1 then -- place holder to not divide by 0
+		--[[
+		fuelString = 'Fuel Calc'
+				.. '\nSet Mrad'
+				.. '\nwith fuel'
+				.. '\nuse over'
+				.. '\n10 sec'
+		]]
+		fuelString = 'Fuel Calc'
+				.. '\nSet Mrad w/'
+				.. '\n10s fuel'
+				.. '\nT - ' .. clockTimer
+				.. '\nFuel ' .. fuelQtyTotal
+	else
+		fuelString = 'Fuel Calc'
+				.. '\nT - ' .. clockTimer
+				.. '\nRate - ' .. fuelUsed
+				.. '\nFuel ' .. fuelQtyTotal
+				.. '\n'.. fuelTimeReadout
+	end
+
+	ExportScript.Tools.SendData(8075, fuelString)
+end
 
 function ExportScript.ClimbSchedulesReadout(mainPanelDevice)
 	local climbText1 = 'SUB CLMB\nCLEAN MIL\n470/0.92'
@@ -2080,7 +2162,7 @@ end
 
 function ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
 	local ltmp1 = 0
-	for ltmp2 = 1, 22, 1 do
+	for ltmp2 = 1, 30, 1 do
 		ltmp1 = GetDevice(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2 .. ': ' .. ExportScript.Tools.dump(ltmp1))
 		ExportScript.Tools.WriteToLog(ltmp2 ..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
@@ -2089,7 +2171,7 @@ end
 
 function ExportScript.ListIndicationLogDump(mainPanelDevice)
 	local ltmp1 = 0
-	for ltmp2 = 0, 20, 1 do
+	for ltmp2 = 0, 30, 1 do
 		ltmp1 = list_indication(ltmp2)
 		ExportScript.Tools.WriteToLog(ltmp2 ..': '..ExportScript.Tools.dump(ltmp1))
 	end
@@ -2141,6 +2223,16 @@ function formatTime2(time) -- time in seconds
 	return --string.format("%02d", hours) -- no hrs because there isn't a hrs hand
 			string.format("%02d", minutes)
 			.. "m" .. string.format("%02d", seconds)
+end
+
+function formatTime3(time) -- time in seconds
+	local seconds = math.floor(time) % 60
+	local minutes = math.floor(time / 60) % 60
+	local hours = math.floor(time / (60 * 60)) % 24
+
+	return string.format("%02d", hours) -- '¦' could be used
+			.. "h" .. string.format("%02d", minutes)
+			.. "m" .. string.format("%02d", seconds) -- no seconds because there isn't a seconds hand
 end
 
 --[[Note about Feet per millibar (hectopascal):
