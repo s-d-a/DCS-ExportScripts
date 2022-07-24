@@ -721,6 +721,7 @@ ExportScript.ConfigArguments =
 
 -- Pointed to by ProcessIkarusDCSHighImportance
 function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
+	ExportScript.ScratchPad(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -733,7 +734,9 @@ end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
-	
+	--ExportScript.DeviceMetaTableLogDump(mainPanelDevice) -- comment this to prevent log flooding
+	--ExportScript.ListIndicationLogDump(mainPanelDevice) -- comment this to prevent log flooding
+
 	ExportScript.CountermeasureReadouts(mainPanelDevice)
   --ExportScript.MfdReadouts(mainPanelDevice) --Testing in progress
 	--ExportScript.TSD(mainPanelDevice) -- Disabled: see note in Function
@@ -780,6 +783,79 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+--------------------------
+--- Apache KU Readouts ---
+--------------------------
+
+function ExportScript.ScratchPad(mainPanelDevice)
+
+	-- pilot ku
+	local lScratchPadGet_pilot = ExportScript.Tools.getListIndicatorValue(15)
+	local lScratchPad_pilot = ExportScript.Tools.coerce_nil_to_string(lScratchPadGet_pilot.Standby_text) -- .. lScratchPad.Scratch_PAD_Mode
+	-- https://www.tutorialspoint.com/string-gsub-function-in-lua-programming
+	lScratchPad_pilot = string.gsub(lScratchPad_pilot,':','-') -- - prevents errors from the colon in Lat/Long display
+
+	if lScratchPad_pilot == '' then lScratchPad_pilot = '[KU]  [PLT]' end -- abbreviation for scratch due to 7 charPerLine later
+
+	local lScratchPadStacked_pilot = lScratchPad_pilot .. '' -- add a space at the end
+
+	lScratchPadStacked_pilot = splitLines(lScratchPadStacked_pilot, 6) -- splits into newlines
+
+	-- Logic for the blinking cursor
+	if string.sub(lScratchPadStacked_pilot, -1) == '#' then -- normal case
+		lScratchPadStacked_pilot = string.sub(lScratchPadStacked_pilot, 1, -2)
+		lScratchPadStacked_pilot = lScratchPadStacked_pilot .. '█'
+	elseif string.sub(lScratchPadStacked_pilot, -2) == '#\n' then -- case for near end lines.
+		lScratchPadStacked_pilot = string.sub(lScratchPadStacked_pilot, 1, -3)
+		lScratchPadStacked_pilot = lScratchPadStacked_pilot .. '█'
+	elseif string.sub(lScratchPadStacked_pilot, -1) == '\n' then -- just new line (? is this used)
+		lScratchPadStacked_pilot = string.sub(lScratchPadStacked_pilot, 1, -2)
+		lScratchPadStacked_pilot = lScratchPadStacked_pilot .. '\n '
+	--elseif string.sub(lScratchPadStacked, -1) ~= '#' then -- for back edits
+		-- don't add a space
+		-- catches when there are mid edits but makes the text shift if the selected edit is the rightmost text
+	else
+		lScratchPadStacked_pilot = lScratchPadStacked_pilot .. ' '
+	end
+	-- catches when there are mid edits but makes the text shift if the selected edit is the rightmost text
+	lScratchPadStacked_pilot = string.gsub(lScratchPadStacked_pilot,'#','█')
+
+	ExportScript.Tools.SendData(3007, lScratchPadStacked_pilot)
+
+	-- copilot ku
+	local lScratchPadGet_Copilot = ExportScript.Tools.getListIndicatorValue(14)
+	local lScratchPad_Copilot = ExportScript.Tools.coerce_nil_to_string(lScratchPadGet_Copilot.Standby_text) -- .. lScratchPad.Scratch_PAD_Mode
+	-- https://www.tutorialspoint.com/string-gsub-function-in-lua-programming
+	lScratchPad_Copilot = string.gsub(lScratchPad_Copilot,':','-') -- - prevents errors from the colon in Lat/Long display
+
+	if lScratchPad_Copilot == '' then lScratchPad_Copilot = '[KU]  [CPLT]' end -- abbreviation for scratch due to 7 charPerLine later
+
+	local lScratchPadStacked_Copilot = lScratchPad_Copilot .. '' -- add a space at the end
+
+	lScratchPadStacked_Copilot = splitLines(lScratchPadStacked_Copilot, 6) -- splits into newlines
+
+	-- Logic for the blinking cursor
+	if string.sub(lScratchPadStacked_Copilot, -1) == '#' then -- normal case
+		lScratchPadStacked_Copilot = string.sub(lScratchPadStacked_Copilot, 1, -2)
+		lScratchPadStacked_Copilot = lScratchPadStacked_Copilot .. '█'
+	elseif string.sub(lScratchPadStacked_Copilot, -2) == '#\n' then -- case for near end lines.
+		lScratchPadStacked_Copilot = string.sub(lScratchPadStacked_Copilot, 1, -3)
+		lScratchPadStacked_Copilot = lScratchPadStacked_Copilot .. '█'
+	elseif string.sub(lScratchPadStacked_Copilot, -1) == '\n' then -- just new line (? is this used)
+		lScratchPadStacked_Copilot = string.sub(lScratchPadStacked_Copilot, 1, -2)
+		lScratchPadStacked_Copilot = lScratchPadStacked_Copilot .. '\n '
+		--elseif string.sub(lScratchPadStacked, -1) ~= '#' then -- for back edits
+		-- don't add a space
+		-- catches when there are mid edits but makes the text shift if the selected edit is the rightmost text
+	else
+		lScratchPadStacked_Copilot = lScratchPadStacked_Copilot .. ' '
+	end
+	-- catches when there are mid edits but makes the text shift if the selected edit is the rightmost text
+	lScratchPadStacked_Copilot = string.gsub(lScratchPadStacked_Copilot,'#','█')
+
+	ExportScript.Tools.SendData(3008, lScratchPadStacked_Copilot)
+end
 
 -------------------------------------
 --- Apache Flare and Chaff Counts ---
@@ -1423,9 +1499,49 @@ function ExportScript.IglaHunter(mainPanelDevice) -- Locates the nearest Igla
   ExportScript.Tools.SendData(8666, string_8666) 
   
 end
+
+function ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
+	local ltmp1 = 0
+	for ltmp2 = 1, 30, 1 do
+		ltmp1 = GetDevice(ltmp2)
+		ExportScript.Tools.WriteToLog(ltmp2 .. ': ' .. ExportScript.Tools.dump(ltmp1))
+		ExportScript.Tools.WriteToLog(ltmp2 ..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
+	end
+end
+
+function ExportScript.ListIndicationLogDump(mainPanelDevice)
+	local ltmp1 = 0
+	for ltmp2 = 0, 70, 1 do
+		ltmp1 = list_indication(ltmp2)
+		ExportScript.Tools.WriteToLog(ltmp2 ..': '..ExportScript.Tools.dump(ltmp1))
+	end
+end
+
 ----------------------
 -- Helper Functions --
 ----------------------
+
+-- formats the string by putting newlines in the appropriate places
+function splitLines(stringIn, charPerLine)
+	local rows = DIV(#stringIn,charPerLine)
+	for i = 1, rows, 1 do -- the i's represent the displacement and multipliers needed for the self iterations
+		stringIn = string.insert(stringIn, '\n', (charPerLine * i) + (i-1))
+	end
+	return stringIn
+end
+
+-- workaround for floor division. typically //
+-- http://lua-users.org/wiki/SimpleRound
+function DIV(a,b)
+	return (a - a % b) / b
+end
+
+-- used to insert newlines at the right areas
+-- https://stackoverflow.com/questions/59561776/how-do-i-insert-a-string-into-another-string-in-lua
+function string.insert(str1, str2, pos)
+	return str1:sub(1,pos)..str2..str1:sub(pos+1)
+end
+
 function ExportScript.Linearize(current_value, raw_tab, final_tab)
   -- (c) scoobie
   if current_value <= raw_tab[1] then
@@ -1648,3 +1764,4 @@ function NilOrEmpty(value)
     return value
   end
 end
+
