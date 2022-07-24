@@ -762,6 +762,8 @@ end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+	--ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
+	--ExportScript.ListIndicationLogDump(mainPanelDevice)
 	ExportScript.VorIlsTacanOmnibearing(mainPanelDevice)
 	ExportScript.CockpitInstruments(mainPanelDevice)
 	ExportScript.qfeCalculator(mainPanelDevice)
@@ -785,6 +787,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.MaxAirspeed(mainPanelDevice)
 	ExportScript.TrimReadout(mainPanelDevice)
 	ExportScript.RadarCalculators(mainPanelDevice)
+	ExportScript.ClimbSchedulesReadout(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -793,6 +796,19 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+function ExportScript.ClimbSchedulesReadout(mainPanelDevice)
+	local climbText1 = 'SUB CLMB\nCLEAN MIL\n470/0.92'
+	local climbText2 = 'SUB CLMB\nCLEAN MAX\n500/0.95'
+	local climbText3 = 'SUB CLMB\nTANK MIL\n422/0.84'
+	local climbText4 = 'SUB CLMB\nTANK MAX\n475/0.92'
+	local climbText5 = 'SUPER\nSUB to 30K\n610 to 36K\nM1.8 to ALT'
+	ExportScript.Tools.SendData(8070, climbText1)
+	ExportScript.Tools.SendData(8071, climbText2)
+	ExportScript.Tools.SendData(8072, climbText3)
+	ExportScript.Tools.SendData(8073, climbText4)
+	ExportScript.Tools.SendData(8074, climbText5)
+end
 
 function ExportScript.RadarCalculators(mainPanelDevice)
 	local scanDistance = ExportScript.Tools.round(mainPanelDevice:get_argument_value(258) * 100, 0)
@@ -2026,6 +2042,10 @@ end
 
 function ExportScript.Radios(mainPanelDevice)
 
+	-- UHF radio logic (rear radio)
+	local UHF_RADIO = GetDevice(7)
+	local uhfFreq = ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))
+
 	local uhfChannel = ExportScript.Tools.round(mainPanelDevice:get_argument_value(348) * 20, 0)
 	-- because the knob is offset, we have to do some maths
 	uhfChannel = uhfChannel + 6
@@ -2033,48 +2053,46 @@ function ExportScript.Radios(mainPanelDevice)
 		uhfChannel = uhfChannel - 20
 	end
 
-	ExportScript.Tools.SendData(8011, 'UHF' .. '\nCH ' .. uhfChannel)
+	ExportScript.Tools.SendData(8011, 'UHF\n' .. 'CH ' .. uhfChannel .. '\n' .. uhfFreq)
 
-	local uvhfChannel = ExportScript.Tools.round(mainPanelDevice:get_argument_value(283) * 20, 0)
+	-- VUHF radio logic (front radio)
+	local VUHF_RADIO = GetDevice(6)
+	local vuhfFreq = ExportScript.Tools.RoundFreqeuncy((VUHF_RADIO:get_frequency()/1000000))
+
+	local vuhfChannel = ExportScript.Tools.round(mainPanelDevice:get_argument_value(283) * 20, 0)
 	-- because the knob is offset, we have to do some maths
-	uvhfChannel = uvhfChannel + 6
-	if uvhfChannel > 20 then -- 20 is the max channel number
-		uvhfChannel = uvhfChannel - 20
+	vuhfChannel = vuhfChannel + 6
+	if vuhfChannel > 20 then -- 20 is the max channel number
+		vuhfChannel = vuhfChannel - 20
 	end
 
-	local vuhf_hundreds = ExportScript.Tools.round(mainPanelDevice:get_argument_value(274) * 10, 0)
-	local vuhf_tens = ExportScript.Tools.round(mainPanelDevice:get_argument_value(275) * 10, 0)
-	local vuhf_units = ExportScript.Tools.round(mainPanelDevice:get_argument_value(276) * 10, 0)
-	local vuhf_tenths = ExportScript.Tools.round(mainPanelDevice:get_argument_value(277) * 10, 0)
-	local vuhf_thousandths = ExportScript.Tools.round(mainPanelDevice:get_argument_value(278) * 75.70, 0) --tried .75
-
-	if vuhf_thousandths > 60 then vuhf_thousandths = 75 end -- lazy way to fix rounding error
-
-	-- rounding corrections
-	if vuhf_hundreds > 9 then vuhf_hundreds = 0 end
-	if vuhf_tens > 9 then vuhf_tens = 0 end
-	if vuhf_units > 9 then vuhf_units = 0 end
-	if vuhf_tenths > 9 then vuhf_tenths = 0 end
-	--if vuhf_thousandths > 9 then vuhf_thousandths = 0 end
-
-	local vuhfFreq = vuhf_hundreds .. vuhf_tens .. vuhf_units .. '.' .. vuhf_tenths .. vuhf_thousandths
-
-	ExportScript.Tools.SendData(8050, 'V/UHF\n' .. vuhfFreq)
-
-	ExportScript.Tools.SendData(8012, 'V/UHF' .. '\nCH ' .. uvhfChannel)
-
-	local uvhfResult = '' -- change what is displayed via the freq mode switch
+	-- M will replace the channel number if the radio is in manual mode
 	if ExportScript.Tools.round(mainPanelDevice:get_argument_value(282), 1) == 0.0 then -- Manual mode
-		uvhfResult = vuhfFreq
+		vuhfChannel = 'M'
 	end
-	if ExportScript.Tools.round(mainPanelDevice:get_argument_value(282), 1) == 0.5 then -- Preset mode
-		uvhfResult = uvhfChannel
+
+	ExportScript.Tools.SendData(8012, 'V/UHF\n' .. 'CH ' .. vuhfChannel .. '\n' .. vuhfFreq)
+
+	-- Combined readouts
+	ExportScript.Tools.SendData(8013, 'V/UHF (' .. vuhfChannel ..  ')\n' .. vuhfFreq
+			.. '\nUHF (' .. uhfChannel ..  ')\n' .. uhfFreq)
+end
+
+function ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
+	local ltmp1 = 0
+	for ltmp2 = 1, 22, 1 do
+		ltmp1 = GetDevice(ltmp2)
+		ExportScript.Tools.WriteToLog(ltmp2 .. ': ' .. ExportScript.Tools.dump(ltmp1))
+		ExportScript.Tools.WriteToLog(ltmp2 ..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
-	if ExportScript.Tools.round(mainPanelDevice:get_argument_value(282), 1) == 1.0 then -- Guard mode
-		uvhfResult = 'G 243'
+end
+
+function ExportScript.ListIndicationLogDump(mainPanelDevice)
+	local ltmp1 = 0
+	for ltmp2 = 0, 20, 1 do
+		ltmp1 = list_indication(ltmp2)
+		ExportScript.Tools.WriteToLog(ltmp2 ..': '..ExportScript.Tools.dump(ltmp1))
 	end
-	ExportScript.Tools.SendData(8013, 'V/U ' .. uvhfResult
-			.. '\n' .. 'UHF ' .. uhfChannel)
 end
 
 ----------------------
