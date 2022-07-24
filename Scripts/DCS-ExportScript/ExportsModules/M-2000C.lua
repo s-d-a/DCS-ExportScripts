@@ -738,6 +738,10 @@ end
 
 -- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
 function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+	--ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
+	--ExportScript.ListIndicationLogDump(mainPanelDevice)
+	ExportScript.Radios(mainPanelDevice)
+	ExportScript.PCApanel(mainPanelDevice)
 	--[[
 	export in low tick interval to Ikarus
 	Example from A-10C
@@ -748,7 +752,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
-	
+
 	-- ECM Mode Switch
 	-- [194] = "%.1f",	--ECM Box Mode Switch
 	local lECM_On = (mainPanelDevice:get_argument_value(194) > 0.0 and true or false)
@@ -804,148 +808,10 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2003, " ")
 	end
 
-	-- PCA_UR (Weappon Panel top line)
-	local lPCAUR = list_indication(6)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('lPCAUR : '..ExportScript.Tools.dump(lPCAUR))
-	end
-
-	local to1, to2, from1, from2 = nil, nil, nil, nil
-	local lPCA_UR = {"", "", "", "", ""}
-	to1, to2 = lPCAUR:find("PCA_UR")
-	if (to1 ~= nil) then
-		for lIndex = 1, 5, 1 do
-			from1, from2 = lPCAUR:find("text_PCA_UR"..lIndex.."%c")
-			if (from2 ~= nill) then
-				to1, to2 = lPCAUR:find("%c", from2+2)
-				if (to1 ~= nil) then
-					lPCA_UR[lIndex] = lPCAUR:sub(from2+1, to1-1)
-				end
-			end
-		end -- for
-	end
-
-	-- string with max 3 charachters
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("2010: "..string.format("%s", lPCA_UR[1]))
-		ExportScript.Tools.WriteToLog("2011: "..string.format("%s", lPCA_UR[2]))
-		ExportScript.Tools.WriteToLog("2012: "..string.format("%s", lPCA_UR[3]))
-		ExportScript.Tools.WriteToLog("2013: "..string.format("%s", lPCA_UR[4]))
-		ExportScript.Tools.WriteToLog("2014: "..string.format("%s", lPCA_UR[5]))
-	end
-	ExportScript.Tools.SendData(2010, string.format("%s", lPCA_UR[1]))
-	ExportScript.Tools.SendData(2011, string.format("%s", lPCA_UR[2]))
-	ExportScript.Tools.SendData(2012, string.format("%s", lPCA_UR[3]))
-	ExportScript.Tools.SendData(2013, string.format("%s", lPCA_UR[4]))
-	ExportScript.Tools.SendData(2014, string.format("%s", lPCA_UR[5]))
-
-	-- PCA_BR (Weappon Panel bottom line)
-	local lPCABR = list_indication(7)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('lPCABR : '..ExportScript.Tools.dump(lPCABR))
-	end
-
-	local to1, to2, from1, from2 = nil, nil, nil, nil
-	local lPCA_BR = {"", "", "", "", ""}
-	to1, to2 = lPCABR:find("PCA_BR")
-	if (to1 ~= nil) then
-		for lIndex = 1, 5, 1 do
-			from1, from2 = lPCABR:find("text_PCA_BR"..lIndex.."%c")
-			if (from2 ~= nill) then
-				to1, to2 = lPCABR:find("%c", from2+2)
-				if (to1 ~= nil) then
-					lPCA_BR[lIndex] = lPCABR:sub(from2+1, to1-1)
-				end
-			end
-		end-- for
-	end
-
-	-- string with max 3 charachters
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("2015: "..string.format("%s", lPCA_BR[1]))
-		ExportScript.Tools.WriteToLog("2016: "..string.format("%s", lPCA_BR[2]))
-		ExportScript.Tools.WriteToLog("2017: "..string.format("%s", lPCA_BR[3]))
-		ExportScript.Tools.WriteToLog("2018: "..string.format("%s", lPCA_BR[4]))
-		ExportScript.Tools.WriteToLog("2019: "..string.format("%s", lPCA_BR[5]))
-	end
-	ExportScript.Tools.SendData(2015, string.format("%s", lPCA_BR[1]))
-	ExportScript.Tools.SendData(2016, string.format("%s", lPCA_BR[2]))
-	ExportScript.Tools.SendData(2017, string.format("%s", lPCA_BR[3]))
-	ExportScript.Tools.SendData(2018, string.format("%s", lPCA_BR[4]))
-	ExportScript.Tools.SendData(2019, string.format("%s", lPCA_BR[5]))
-
-	-- COM
-	local lCOM = list_indication(9)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('lCOM : '..ExportScript.Tools.dump(lCOM))
-	end
-
-	local to1, to2, from1, from2, lCOM1, lCOM2 = nil, nil, nil, nil, "", ""
-	to1, to2 = lCOM:find("COM")
-	if (to1 ~= nil) then
-		from1, from2 = lCOM:find("text_COM_UHF1%c")
-		if (from2 ~= nil) then
-			to1, to2 = lCOM:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lCOM1 = lCOM:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lCOM:find("text_COM_UHF2%c", to2)
-		if (from2 ~= nil) then
-			to1, to2 = lCOM:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lCOM2 = lCOM:sub(from2+1, to1-1)
-			end
-		end
-	end
-
-	-- string with max 7 charachters
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("2020: "..string.format("%s", lCOM1))
-		ExportScript.Tools.WriteToLog("2021: "..string.format("%s", lCOM2))
-	end
-	ExportScript.Tools.SendData(2020, string.format("%s", lCOM1))
-	ExportScript.Tools.SendData(2021, string.format("%s", lCOM2))
-	
-	-- PPA Bomb Display
-	local lPPA = list_indication(8)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('lPPA : '..ExportScript.Tools.dump(lPPA))
-	end
-
-	local to1, to2, from1, from2, lPPA1, lPPA2 = nil, nil, nil, nil, "", ""
-	to1, to2 = lPPA:find("PPA")
-	if (to1 ~= nil) then
-		from1, from2 = lPPA:find("text_PPA_QTY%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPPA:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPPA1 = lPPA:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPPA:find("text_PPA_INT%c", to2)
-		if (from2 ~= nil) then
-			to1, to2 = lPPA:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPPA2 = lPPA:sub(from2+1, to1-1)
-			end
-		end
-	end
-
-	-- string with max 2 charachters
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("2022: "..string.format("%s", lPPA1))
-		ExportScript.Tools.WriteToLog("2023: "..string.format("%s", lPPA2))
-	end
-	ExportScript.Tools.SendData(2022, string.format("%s", lPPA1))
-	ExportScript.Tools.SendData(2023, string.format("%s", lPPA2))
-
 	-- PCN_UR Navigation Displays
 	if ExportScript.Config.Debug then
-		local lPCNUR = list_indication(10)
-		ExportScript.Tools.WriteToLog('lPCNUR : '..ExportScript.Tools.dump(lPCNUR))
+	local lPCNUR = list_indication(10)
+	ExportScript.Tools.WriteToLog('lPCNUR : '..ExportScript.Tools.dump(lPCNUR))
 	end
 
 	--    SubLeftTop    SubRightTop   SubLeftBottom SubRightBottom MainLeft     MainRight
@@ -953,95 +819,95 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	local lPCNUR = ExportScript.Tools.getListIndicatorValue(10)
 	-- das untere durch solche aufrufe ersetzen
 	if lPCNUR.text_PCN_R_INT ~= nil then
-		lPCN_main_R = lPCNUR.text_PCN_R_INT
+	lPCN_main_R = lPCNUR.text_PCN_R_INT
 	end
 	if lPCNUR.text_PCN_L_INT ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_L_INT
+	lPCN_main_L = lPCNUR.text_PCN_L_INT
 	end
 	if lPCNUR.text_PCN_L_TR ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_L_TR
+	lPCN_main_L = lPCNUR.text_PCN_L_TR
 	end
 	if lPCNUR.text_PCN_NORD ~= nil then
-		lPCN_sub_L_T = lPCNUR.text_PCN_NORD
+	lPCN_sub_L_T = lPCNUR.text_PCN_NORD
 	end
 	if lPCNUR.text_PCN_EST ~= nil then
-		lPCN_sub_R_T = lPCNUR.text_PCN_EST
+	lPCN_sub_R_T = lPCNUR.text_PCN_EST
 	end
 	if lPCNUR.text_PCN_SUD ~= nil then
-		lPCN_sub_L_B = lPCNUR.text_PCN_SUD
+	lPCN_sub_L_B = lPCNUR.text_PCN_SUD
 	end
 	if lPCNUR.text_PCN_OUEST ~= nil then
-		lPCN_sub_R_B = lPCNUR.text_PCN_OUEST
+	lPCN_sub_R_B = lPCNUR.text_PCN_OUEST
 	end
 	if lPCNUR.text_PCN_L_MRQ_LAT ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_L_MRQ_LAT
+	lPCN_main_L = lPCNUR.text_PCN_L_MRQ_LAT
 	end
 	if lPCNUR.text_PCN_R_MRQ_LON ~= nil then
-		lPCN_main_R = lPCNUR.text_PCN_R_MRQ_LON
+	lPCN_main_R = lPCNUR.text_PCN_R_MRQ_LON
 	end
 	if lPCNUR.text_PCN_PLUS_R ~= nil then
-		lPCN_sub_R_T = lPCN_sub_R_T..lPCNUR.text_PCN_PLUS_R
+	lPCN_sub_R_T = lPCN_sub_R_T..lPCNUR.text_PCN_PLUS_R
 	end
 	if lPCNUR.text_PCN_PLUS_L ~= nil then
-		lPCN_sub_L_T = lPCN_sub_L_T..lPCNUR.text_PCN_PLUS_L
+	lPCN_sub_L_T = lPCN_sub_L_T..lPCNUR.text_PCN_PLUS_L
 	end
 	if lPCNUR.text_PCN_MOINS_L ~= nil then
-		lPCN_sub_L_B = lPCN_sub_L_B..lPCNUR.text_PCN_MOINS_L
+	lPCN_sub_L_B = lPCN_sub_L_B..lPCNUR.text_PCN_MOINS_L
 	end
 	if lPCNUR.text_PCN_MOINS_R ~= nil then
-		lPCN_sub_R_B = lPCN_sub_R_B..lPCNUR.text_PCN_MOINS_R
+	lPCN_sub_R_B = lPCN_sub_R_B..lPCNUR.text_PCN_MOINS_R
 	end
 	if lPCNUR.text_PCN_L_DR ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_L_DR
+	lPCN_main_L = lPCNUR.text_PCN_L_DR
 	end
 	if lPCNUR.text_PCN_R_DEG ~= nil then
-		lPCN_main_R = lPCNUR.text_PCN_R_DEG
+	lPCN_main_R = lPCNUR.text_PCN_R_DEG
 	end
 	if lPCNUR.text_PCN_L_DEG ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_L_DEG
+	lPCN_main_L = lPCNUR.text_PCN_L_DEG
 	end
 	if lPCNUR.text_PCN_RDE ~= nil then
-		lPCN_main_R = lPCNUR.text_PCN_RDE
+	lPCN_main_R = lPCNUR.text_PCN_RDE
 	end
 	if lPCNUR.text_PCN_LDE ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_LDE
+	lPCN_main_L = lPCNUR.text_PCN_LDE
 	end
 	if lPCNUR.text_PCN_L_LG ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_L_LG
+	lPCN_main_L = lPCNUR.text_PCN_L_LG
 	end
 	if lPCNUR.text_PCN_R_LG ~= nil then
-		lPCN_main_R = lPCNUR.text_PCN_R_LG
+	lPCN_main_R = lPCNUR.text_PCN_R_LG
 	end
 	if lPCNUR.text_PCN_R_TD ~= nil then
-		lPCN_main_R = lPCNUR.text_PCN_R_TD
+	lPCN_main_R = lPCNUR.text_PCN_R_TD
 	end
 	if lPCNUR.text_PCN_L_TD ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_L_TD
+	lPCN_main_L = lPCNUR.text_PCN_L_TD
 	end
 	if lPCNUR.text_PCN_R_ASTS ~= nil then
-		lPCN_main_R = lPCNUR.text_PCN_R_ASTS
+	lPCN_main_R = lPCNUR.text_PCN_R_ASTS
 	end
 	if lPCNUR.text_PCN_L_ACLASS ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_L_ACLASS
+	lPCN_main_L = lPCNUR.text_PCN_L_ACLASS
 	end
 	if lPCNUR.text_PCN_L_ACTMR ~= nil then
-		lPCN_main_L = lPCN_main_L.."   "..lPCNUR.text_PCN_L_ACTMR
+	lPCN_main_L = lPCN_main_L.."   "..lPCNUR.text_PCN_L_ACTMR
 	end
 	if lPCNUR.text_PCN_MSG ~= nil then
-		lPCN_main_L = lPCNUR.text_PCN_MSG
+	lPCN_main_L = lPCNUR.text_PCN_MSG
 	end
 
 	if ExportScript.Config.Debug then
-		 -- string with max 1 charachters
-		ExportScript.Tools.WriteToLog("2024: "..string.format("%s", lPCN_sub_L_T))
-		ExportScript.Tools.WriteToLog("2025: "..string.format("%s", lPCN_sub_R_T))
-		ExportScript.Tools.WriteToLog("2026: "..string.format("%s", lPCN_sub_L_B))
-		ExportScript.Tools.WriteToLog("2027: "..string.format("%s", lPCN_sub_R_B))
-		 -- string with max 9 charachters
-		ExportScript.Tools.WriteToLog("2028: "..string.format("%s", lPCN_main_L))
-		ExportScript.Tools.WriteToLog("2029: "..string.format("%s", lPCN_main_R))
+	-- string with max 1 charachters
+	ExportScript.Tools.WriteToLog("2024: "..string.format("%s", lPCN_sub_L_T))
+	ExportScript.Tools.WriteToLog("2025: "..string.format("%s", lPCN_sub_R_T))
+	ExportScript.Tools.WriteToLog("2026: "..string.format("%s", lPCN_sub_L_B))
+	ExportScript.Tools.WriteToLog("2027: "..string.format("%s", lPCN_sub_R_B))
+	-- string with max 9 charachters
+	ExportScript.Tools.WriteToLog("2028: "..string.format("%s", lPCN_main_L))
+	ExportScript.Tools.WriteToLog("2029: "..string.format("%s", lPCN_main_R))
 	end
-	
+
 	lPCN_main_L = lPCN_main_L:gsub(":", "¦")
 	lPCN_main_R = lPCN_main_R:gsub(":", "¦")
 	lPCN_main_L = lPCN_main_L:sub(0, 10)
@@ -1061,44 +927,44 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	-- PCN_BR (Naviagation, wahrscheinlich die Wegpunktanzeige)
 	local lPCNBR = list_indication(11)
 	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('lPCNBR : '..ExportScript.Tools.dump(lPCNBR))
+	ExportScript.Tools.WriteToLog('lPCNBR : '..ExportScript.Tools.dump(lPCNBR))
 	end
 
 	local to1, to2, from1, from2, lPCN_BR1, lPCN_BR2 = nil, nil, nil, nil, "", ""
 	to1, to2 = lPCNBR:find("PCN_BR")
 	if (to1 ~= nil) then
-		from1, from2 = lPCNBR:find("text_PCN_BR1%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPCNBR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_BR1 = lPCNBR:sub(from2+1, to1-1)
-			end
-		end
+	from1, from2 = lPCNBR:find("text_PCN_BR1%c")
+	if (from2 ~= nil) then
+	to1, to2 = lPCNBR:find("%c", from2+2)
+	if (to1 ~= nil) then
+	lPCN_BR1 = lPCNBR:sub(from2+1, to1-1)
+	end
+	end
 
-		from1, from2 = lPCNBR:find("text_PCN_BR2%c", to2)
-		if (from2 ~= nil) then
-			to1, to2 = lPCNBR:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPCN_BR2 = lPCNBR:sub(from2+1, to1-1)
-			end
-		end
+	from1, from2 = lPCNBR:find("text_PCN_BR2%c", to2)
+	if (from2 ~= nil) then
+	to1, to2 = lPCNBR:find("%c", from2+2)
+	if (to1 ~= nil) then
+	lPCN_BR2 = lPCNBR:sub(from2+1, to1-1)
+	end
+	end
 	end
 
 	-- string with max 2 charachters
 	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("2030: "..string.format("%s", lPCN_BR1))
-		ExportScript.Tools.WriteToLog("2031: "..string.format("%s", lPCN_BR2))
+	ExportScript.Tools.WriteToLog("2030: "..string.format("%s", lPCN_BR1))
+	ExportScript.Tools.WriteToLog("2031: "..string.format("%s", lPCN_BR2))
 	end
 	ExportScript.Tools.SendData(2030, string.format("%s", lPCN_BR1))
 	ExportScript.Tools.SendData(2031, string.format("%s", lPCN_BR2))
 
--- Radar IFF Mode
---[[
-	[601] = "%.1f",	--	1. Drum
-	[602] = "%.1f",	--	2.
-	[603] = "%.1f",	--	3.
-	[604] = "%.1f",	--	4.
-]]
+	-- Radar IFF Mode
+	--[[
+        [601] = "%.1f",	--	1. Drum
+        [602] = "%.1f",	--	2.
+        [603] = "%.1f",	--	3.
+        [604] = "%.1f",	--	4.
+    ]]
 	digits = {}
 	digits[1] = string.format("%1.0f",mainPanelDevice:get_argument_value(601) * 10)
 	digits[2] = string.format("%1.0f",mainPanelDevice:get_argument_value(602) * 10)
@@ -1106,25 +972,25 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	digits[4] = string.format("%1.0f",mainPanelDevice:get_argument_value(604) * 10)
 
 	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("2032: "..string.format("%s", digits[1]))
-		ExportScript.Tools.WriteToLog("2033: "..string.format("%s", digits[2]))
-		ExportScript.Tools.WriteToLog("2034: "..string.format("%s", digits[3]))
-		ExportScript.Tools.WriteToLog("2035: "..string.format("%s", digits[4]))
+	ExportScript.Tools.WriteToLog("2032: "..string.format("%s", digits[1]))
+	ExportScript.Tools.WriteToLog("2033: "..string.format("%s", digits[2]))
+	ExportScript.Tools.WriteToLog("2034: "..string.format("%s", digits[3]))
+	ExportScript.Tools.WriteToLog("2035: "..string.format("%s", digits[4]))
 	end
-	
+
 	ExportScript.Tools.SendData(2032, digits[1])
 	ExportScript.Tools.SendData(2033, digits[2])
 	ExportScript.Tools.SendData(2034, digits[3])
 	ExportScript.Tools.SendData(2035, digits[4])
 
--- VOR ILS 
---[[
-	[611] = "%.4f",	--	1. Drum
-	[612] = "%.4f",	--	2.
-	[613] = "%.4f",	--	3.
-	[614] = "%.4f",	--	4.
-	[615] = "%.4f",	--	5.
-]]	
+	-- VOR ILS
+	--[[
+        [611] = "%.4f",	--	1. Drum
+        [612] = "%.4f",	--	2.
+        [613] = "%.4f",	--	3.
+        [614] = "%.4f",	--	4.
+        [615] = "%.4f",	--	5.
+    ]]
 	digits = {}
 	digits[1] = string.format("%1.0f",mainPanelDevice:get_argument_value(611) * 10)
 	digits[2] = string.format("%1.0f",mainPanelDevice:get_argument_value(612) * 10)
@@ -1133,21 +999,21 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	digits[5] = string.format("%1.0f",mainPanelDevice:get_argument_value(615) * 10)
 
 	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("2036-1: "..string.format("%s", digits[1]))
-		ExportScript.Tools.WriteToLog("2036-2: "..string.format("%s", digits[2]))
-		ExportScript.Tools.WriteToLog("2036-3: "..string.format("%s", digits[3]))
-		ExportScript.Tools.WriteToLog("2036-4: "..string.format("%s", digits[4]))
-		ExportScript.Tools.WriteToLog("2036-5: "..string.format("%s", digits[5]))
+	ExportScript.Tools.WriteToLog("2036-1: "..string.format("%s", digits[1]))
+	ExportScript.Tools.WriteToLog("2036-2: "..string.format("%s", digits[2]))
+	ExportScript.Tools.WriteToLog("2036-3: "..string.format("%s", digits[3]))
+	ExportScript.Tools.WriteToLog("2036-4: "..string.format("%s", digits[4]))
+	ExportScript.Tools.WriteToLog("2036-5: "..string.format("%s", digits[5]))
 	end
-	
+
 	ExportScript.Tools.SendData(2036, digits[1]..digits[2]..digits[3].."."..digits[4]..digits[5])
 
--- TACAN
---[[
-	[620] = "%.1f",	--	X/Y
-	[621] = "%.4f",	--	Drum XX0 left (--;1-12;--)
-	[622] = "%.4f",	--	Drum 00X right	(0;1-9;0)
-]]
+	-- TACAN
+	--[[
+        [620] = "%.1f",	--	X/Y
+        [621] = "%.4f",	--	Drum XX0 left (--;1-12;--)
+        [622] = "%.4f",	--	Drum 00X right	(0;1-9;0)
+    ]]
 	local lTACAN_FREQUENCE1 = {[-0.3]=" ",[-0.2]="1",[-0.1]="2",[0.0]="3",[0.1]="4",[0.2]="5",[0.3]="6",[0.4]="7",[0.5]="8",[0.6]="9",[0.7]="10",[0.8]="11",[0.9]="12",[1.0]=" "}
 	digits = {}
 	--digits[1] = string.format("%1.0f",mainPanelDevice:get_argument_value(620) * 10)
@@ -1158,52 +1024,29 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	digits[3] = (digits[3] == "10" and "0" or digits[3])
 
 	ExportScript.Tools.SendData(2037, digits[1]..digits[2]..digits[3])
-	
--- U/VHF Com 
+
+	-- U/VHF Com
 	ExportScript.Tools.SendData(2038, ExportScript.Tools.DisplayFormat(string.format("%1.0f",mainPanelDevice:get_argument_value(440) * 10), 1))
 	ExportScript.Tools.SendData(2039, ExportScript.Tools.DisplayFormat(string.format("%1.0f",mainPanelDevice:get_argument_value(441) * 10), 1))
 	ExportScript.Tools.SendData(2040, ExportScript.Tools.DisplayFormat(string.format("%1.0f",mainPanelDevice:get_argument_value(442) * 10), 1))
 	ExportScript.Tools.SendData(2041, ExportScript.Tools.DisplayFormat(string.format("%1.0f",mainPanelDevice:get_argument_value(443) * 10), 1))
 	local lTmpNumber = tonumber(string.format("%1.0f",mainPanelDevice:get_argument_value(444) * 100))
 	if lTmpNumber == 0 then
-		lTmpNumber = "00"
+	lTmpNumber = "00"
 	end
 	ExportScript.Tools.SendData(2042, ExportScript.Tools.DisplayFormat(tostring(lTmpNumber), 2))
 
 	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('2038: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(440) * 10)))
-		ExportScript.Tools.WriteToLog('2039: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(441) * 10)))
-		ExportScript.Tools.WriteToLog('2040: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(442) * 10)))
-		ExportScript.Tools.WriteToLog('2041: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(443) * 10)))
-		ExportScript.Tools.WriteToLog('2042: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(444) * 100)))
-		ExportScript.Tools.WriteToLog('2042-2: '..ExportScript.Tools.dump(lTmpNumber))
+	ExportScript.Tools.WriteToLog('2038: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(440) * 10)))
+	ExportScript.Tools.WriteToLog('2039: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(441) * 10)))
+	ExportScript.Tools.WriteToLog('2040: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(442) * 10)))
+	ExportScript.Tools.WriteToLog('2041: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(443) * 10)))
+	ExportScript.Tools.WriteToLog('2042: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(444) * 100)))
+	ExportScript.Tools.WriteToLog('2042-2: '..ExportScript.Tools.dump(lTmpNumber))
 	end
 
--- U/VHF Com Preset
-	--[436] = "%.4f",	-- 	Preset display (1-20)
-	local lUVHF_RADIO_PRESET = {[0.00]="1",[0.10]="2",[0.15]="3",[0.20]="4",[0.25]="5",[0.30]="6",[0.35]="7",[0.40]="8",[0.45]="9",[0.50]="10",[0.55]="11",[0.60]="12",[0.65]="13",[0.70]="14",[0.75]="15",[0.80]="16",[0.85]="17",[0.90]="18",[0.95]="19",[1.00]="20"}
-	ExportScript.Tools.SendData(436, ExportScript.Tools.DisplayFormat(lUVHF_RADIO_PRESET[tonumber(string.format("%1.2f",mainPanelDevice:get_argument_value(436)))], 2))
-	
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('436-1: '..ExportScript.Tools.dump(string.format("%1.2f",mainPanelDevice:get_argument_value(436))))
-		ExportScript.Tools.WriteToLog('436-2: '..ExportScript.Tools.dump(lUVHF_RADIO_PRESET[tonumber(string.format("%1.2f",mainPanelDevice:get_argument_value(436)))]))
-	end
 
--- VHF Com Preset
-	--[190] = "%.4f",	--	Drum X0 Preset  (0-1-2)
-	--[189] = "%.4f",	--	Drum 0X Preset (0-9-0)
-	local lVHF_RADIO_PRESET = {[0.0]="0",[0.1]="1",[0.2]="2",[0.3]="3",[0.4]="4",[0.5]="5",[0.6]="6",[0.7]="7",[0.8]="8",[0.9]="9",[1.0]="0"}
-	local lTmpNumber = mainPanelDevice:get_argument_value(190)
-	if lTmpNumber > 0.2 then
-		lTmpNumber = 0.2
-	end
-	ExportScript.Tools.SendData(189, ExportScript.Tools.DisplayFormat(lVHF_RADIO_PRESET[tonumber(string.format("%1.1f",lTmpNumber))]..lVHF_RADIO_PRESET[tonumber(string.format("%1.1f",mainPanelDevice:get_argument_value(189)))], 2))
-	
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('189: '..ExportScript.Tools.dump(lVHF_RADIO_PRESET[tonumber(string.format("%1.1f",lTmpNumber))]..lVHF_RADIO_PRESET[tonumber(string.format("%1.1f",mainPanelDevice:get_argument_value(189)))]))
-	end
-
--- Display Settings
+	-- Display Settings
 	--[224] = "%.4f",	--Drum X000
 	--[225] = "%.4f",	--Drum 0X00
 	--[226] = "%.4f",	--Drum 00X0
@@ -1221,16 +1064,16 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(225, string.format("%1.0f",digits[2]))
 	ExportScript.Tools.SendData(226, string.format("%1.0f",digits[3]))
 	ExportScript.Tools.SendData(227, string.format("%1.0f",digits[4]))
-	
+
 	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('224: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(224) * 10)))
-		ExportScript.Tools.WriteToLog('225: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(225) * 10)))
-		ExportScript.Tools.WriteToLog('226: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(226) * 10)))
-		ExportScript.Tools.WriteToLog('227: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(227) * 10)))
+	ExportScript.Tools.WriteToLog('224: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(224) * 10)))
+	ExportScript.Tools.WriteToLog('225: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(225) * 10)))
+	ExportScript.Tools.WriteToLog('226: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(226) * 10)))
+	ExportScript.Tools.WriteToLog('227: '..ExportScript.Tools.dump(string.format("%1.0f",mainPanelDevice:get_argument_value(227) * 10)))
 	end
-	
+
 	ExportScript.Tools.FlushData()
-end
+	end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	--[[
@@ -1281,68 +1124,6 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.WriteToLog('COM : '..ExportScript.Tools.dump(lCOM))
 	end
 
-	local to1, to2, from1, from2, lCOM1, lCOM2 = nil, nil, nil, nil, "-", "-"
-	to1, to2 = lCOM:find("COM")
-	if (to1 ~= nil) then
-		from1, from2 = lCOM:find("text_COM_UHF1%c")
-		if (from2 ~= nil) then
-			to1, to2 = lCOM:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lCOM1 = lCOM:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lCOM:find("text_COM_UHF2%c", to2)
-		if (from2 ~= nil) then
-			to1, to2 = lCOM:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lCOM2 = lCOM:sub(from2+1, to1-1)
-			end
-		end
-	end
-
-	-- string with max 7 charachters
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("lCOM1: "..string.format("%s", lCOM1))
-		ExportScript.Tools.WriteToLog("lCOM2: "..string.format("%s", lCOM2))
-	end
-	ExportScript.Tools.SendDataDAC(2020, string.format("%s", lCOM1))
-	ExportScript.Tools.SendDataDAC(2021, string.format("%s", lCOM2))
-
-	-- PPA (vielelicht die Bomben Anzeige unten rechts)
-	local lPPA = list_indication(8)
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog('PPA : '..ExportScript.Tools.dump(lPPA))
-	end
-
-	local to1, to2, from1, from2, lPPA1, lPPA2 = nil, nil, nil, nil, "-", "-"
-	to1, to2 = lPPA:find("PPA")
-	if (to1 ~= nil) then
-		from1, from2 = lPPA:find("text_PPA_QTY%c")
-		if (from2 ~= nil) then
-			to1, to2 = lPPA:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPPA1 = lPPA:sub(from2+1, to1-1)
-			end
-		end
-
-		from1, from2 = lPPA:find("text_PPA_INT%c", to2)
-		if (from2 ~= nil) then
-			to1, to2 = lPPA:find("%c", from2+2)
-			if (to1 ~= nil) then
-				lPPA2 = lPPA:sub(from2+1, to1-1)
-			end
-		end
-	end
-
-	-- string with max 2 charachters
-	if ExportScript.Config.Debug then
-		ExportScript.Tools.WriteToLog("lPPA1: "..string.format("%s", lPPA1))
-		ExportScript.Tools.WriteToLog("lPPA2: "..string.format("%s", lPPA2))
-	end
-	ExportScript.Tools.SendDataDAC(2022, string.format("%s", lPPA1))
-	ExportScript.Tools.SendDataDAC(2023, string.format("%s", lPPA2))
-
 	-- send data
 	ExportScript.Tools.FlushDataDAC(#ExportScript.Config.DAC)
 
@@ -1368,7 +1149,89 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 ]]
 end
 
-
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+
+function ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
+	local ltmp1 = 0
+	for ltmp2 = 1, 30, 1 do
+		ltmp1 = GetDevice(ltmp2)
+		ExportScript.Tools.WriteToLog(ltmp2 .. ': ' .. ExportScript.Tools.dump(ltmp1))
+		ExportScript.Tools.WriteToLog(ltmp2 ..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
+	end
+end
+
+function ExportScript.ListIndicationLogDump(mainPanelDevice)
+	local ltmp1 = 0
+	for ltmp2 = 0, 30, 1 do
+		ltmp1 = list_indication(ltmp2)
+		ExportScript.Tools.WriteToLog(ltmp2 ..': '..ExportScript.Tools.dump(ltmp1))
+	end
+end
+
+function ExportScript.Radios(mainPanelDevice)
+	-- top radio
+	local top_RADIO = GetDevice(20)
+	local topFreq = ExportScript.Tools.RoundFreqeuncy((top_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendData(2020, string.format("%7.3f",topFreq))
+
+	-- U/VHF Com Preset (top radio)
+	--[436] = "%.4f",	-- 	Preset display (1-20)
+	local lUVHF_RADIO_PRESET = {[0.00]="1",[0.10]="2",[0.15]="3",[0.20]="4",[0.25]="5",[0.30]="6",[0.35]="7",[0.40]="8",[0.45]="9",[0.50]="10",[0.55]="11",[0.60]="12",[0.65]="13",[0.70]="14",[0.75]="15",[0.80]="16",[0.85]="17",[0.90]="18",[0.95]="19",[1.00]="20"}
+	ExportScript.Tools.SendData(2021, ExportScript.Tools.DisplayFormat(lUVHF_RADIO_PRESET[tonumber(string.format("%1.2f",mainPanelDevice:get_argument_value(436)))], 2))
+
+
+	-- bottom radio
+	local bot_RADIO = GetDevice(19)
+	local botFreq = ExportScript.Tools.RoundFreqeuncy((bot_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendData(2022, string.format("%7.3f",botFreq))
+
+	-- Best way to get digital radio preset channel is unknown. Use export 2023
+end
+
+function ExportScript.PCApanel(mainPanelDevice)
+	-- Weapon Panel top line
+	local lPCAUR = ExportScript.Tools.getListIndicatorValue(4)
+	local pca1 = ''
+	local pca2 = ''
+	local pca3 = ''
+	local pca4 = ''
+	local pca5 = ''
+
+	if lPCAUR ~= nil then
+		if lPCAUR.PCA_LCD_1_0 ~= nil then pca1 = lPCAUR.PCA_LCD_1_0 end
+		if lPCAUR.PCA_LCD_1_1 ~= nil then pca2 = lPCAUR.PCA_LCD_1_1 end
+		if lPCAUR.PCA_LCD_1_2 ~= nil then pca3 = lPCAUR.PCA_LCD_1_2 end
+		if lPCAUR.PCA_LCD_1_3 ~= nil then pca4 = lPCAUR.PCA_LCD_1_3 end
+		if lPCAUR.PCA_LCD_1_4 ~= nil then pca5 = lPCAUR.PCA_LCD_1_4 end
+	end
+	ExportScript.Tools.SendData(2010, pca1)
+	ExportScript.Tools.SendData(2011, pca2)
+	ExportScript.Tools.SendData(2012, pca3)
+	ExportScript.Tools.SendData(2013, pca4)
+	ExportScript.Tools.SendData(2014, pca5)
+
+	-- Weapon Panel bottom line
+	local lPCABR = ExportScript.Tools.getListIndicatorValue(5)
+	local stores1 = ''
+	local stores2 = ''
+	local stores3 = ''
+	local stores4 = ''
+	local stores5 = ''
+
+	if lPCABR ~= nil then
+		if lPCABR.PCA_LCD_2_0 ~= nil then stores1 = lPCABR.PCA_LCD_2_0 end
+		if lPCABR.PCA_LCD_2_1 ~= nil then stores2 = lPCABR.PCA_LCD_2_1 end
+		if lPCABR.PCA_LCD_2_2 ~= nil then stores3 = lPCABR.PCA_LCD_2_2 end
+		if lPCABR.PCA_LCD_2_3 ~= nil then stores4 = lPCABR.PCA_LCD_2_3 end
+		if lPCABR.PCA_LCD_2_4 ~= nil then stores5 = lPCABR.PCA_LCD_2_4 end
+	end
+
+	ExportScript.Tools.SendData(2015, stores1)
+	ExportScript.Tools.SendData(2016, stores2)
+	ExportScript.Tools.SendData(2017, stores3)
+	ExportScript.Tools.SendData(2018, stores4)
+	ExportScript.Tools.SendData(2019, stores5)
+end
