@@ -823,7 +823,7 @@ function ExportScript.BaroPressureConverter(mainPanelDevice)
 
 	ExportScript.Tools.SendData(8079, 'Pressure'
 			.. '\n' .. altBaroPressMb .. " mbar"
-			.. '\n' .. altBaroPressMmhg .. ' mmhg'
+			.. '\n' .. round(altBaroPressMmhg,0) .. ' mmhg'
 			.. '\n' .. altBaroPressInhg .. ' inhg')
 end
 
