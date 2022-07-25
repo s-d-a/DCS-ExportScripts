@@ -790,6 +790,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.ClimbSchedulesReadout(mainPanelDevice)
 	ExportScript.FuelCalculator(mainPanelDevice)
 	ExportScript.IffPanel(mainPanelDevice)
+	ExportScript.BaroPressureConverter(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -798,6 +799,33 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+function ExportScript.BaroPressureConverter(mainPanelDevice)
+	-- Altimeter Pressure window
+	local altBaroPress_Xxxx = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1049) * 10, 0)
+	local altBaroPress_xXxx = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1050) * 10, 0)
+	local altBaroPress_xxXx = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1051) * 10, 0)
+	local altBaroPress_xxxX = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1052) * 10, 0)
+
+	if altBaroPress_Xxxx > 9 then altBaroPress_Xxxx = 0 end
+	if altBaroPress_xXxx > 9 then altBaroPress_xXxx = 0 end
+	if altBaroPress_xxXx > 9 then altBaroPress_xxXx = 0 end
+	if altBaroPress_xxxX > 9 then altBaroPress_xxxX = 0 end
+
+	--result is millibar
+	local altBaroPressMb = altBaroPress_Xxxx .. altBaroPress_xXxx .. altBaroPress_xxXx .. altBaroPress_xxxX
+
+	-- convert to mmhg
+	local altBaroPressMmhg = string.format("%.2f", altBaroPressMb / 1.333)
+
+	-- Convert to inhg
+	local altBaroPressInhg = string.format("%.2f", altBaroPressMb / 33.864)
+
+	ExportScript.Tools.SendData(8079, 'Pressure'
+			.. '\n' .. altBaroPressMb .. " mbar"
+			.. '\n' .. altBaroPressMmhg .. ' mmhg'
+			.. '\n' .. altBaroPressInhg .. ' inhg')
+end
 
 function ExportScript.IffPanel(mainPanelDevice)
 
@@ -2117,14 +2145,17 @@ function ExportScript.qfeCalculator(mainPanelDevice)
 	ExportScript.Tools.SendData(8008, 'QFE Calc\n'
 			.. 'Tgt ' .. altBaroPressReadout .. '\n'
 			.. 'Alt ' .. altBaroStandbyPressReadout .. '\n'
-			.. 'Tgt ' .. altitudeDiff .. 'ft'
+			.. 'Tgt ' .. round(altitudeDiff,0) .. 'ft'
 	)
 
 	-- Calculation for mrad based
 	-- Mrad as hundreds of feet, eg, if 008 is shown it will be 800 ft
+	-- The Known value is the altitude of the target
+	-- The result is the altimeter setting for the target
 
 	local pressureDiffMrad = (mradReadout * 100) / 27.3 -- * 100 for hundreds of feet, up to 21,800
-	local diffHigher = altBaroStandbyPressReadout + pressureDiffMrad
+	--local diffHigher = altBaroStandbyPressReadout + pressureDiffMrad
+	local diffHigher = altBaroStandbyPressReadout - pressureDiffMrad
 	--local diffLower = altBaroStandbyPressReadout - pressureDiffMrad
 
 	ExportScript.Tools.SendData(8009, 'QFE Calc\n'
