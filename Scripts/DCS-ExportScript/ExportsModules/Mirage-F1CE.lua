@@ -451,19 +451,19 @@ ExportScript.ConfigArguments =
 
 	-- Unused <727-731>
 
-	[732] = "%0.1f", -- Mode 1 coding tens selector
-	[733] = "%0.1f", -- Mode 1 coding units selector
-	[734] = "%0.1f", -- Mode 3A coding thousands selector
-	[735] = "%0.1f", -- Mode 3A coding hundreds selector
-	[736] = "%0.1f", -- Mode 3A coding tens selector
-	[737] = "%0.1f", -- Mode 3A coding units selector
+	[732] = "%0.3f", -- Mode 1 coding tens selector
+	[733] = "%0.3f", -- Mode 1 coding units selector
+	[734] = "%0.3f", -- Mode 3A coding thousands selector
+	[735] = "%0.3f", -- Mode 3A coding hundreds selector
+	[736] = "%0.3f", -- Mode 3A coding tens selector
+	[737] = "%0.3f", -- Mode 3A coding units selector
 	[738] = "%0.1f", -- IFF test button
-	[739] = "%0.1f", -- Function selector switch
+	[739] = "%0.2f", -- Function selector switch
 	[740] = "%0.1f", -- IFF Monitoring light press
 	[741] = "%.4f", -- IFF Monitoring light rotate
 	[742] = "%0.1f", -- IFF Monitoring light brightness
-	[743] = "%0.1f", -- Mode 4 selector switch
-	[744] = "%0.1f", -- Position identification selector
+	[743] = "%0.2f", -- Mode 4 selector switch
+	[744] = "%0.2f", -- Position identification selector
 	[745] = "%0.1f", -- IFF mode 4 switch
 	[746] = "%0.1f", -- IFF fault light
 	[747] = "%.4f", -- IFF Fault light rotate
@@ -789,6 +789,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.RadarCalculators(mainPanelDevice)
 	ExportScript.ClimbSchedulesReadout(mainPanelDevice)
 	ExportScript.FuelCalculator(mainPanelDevice)
+	ExportScript.IffPanel(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -797,6 +798,35 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+function ExportScript.IffPanel(mainPanelDevice)
+
+	local mode1_10s = {[0.000]="0",[0.125]="1",[0.250]="2",[0.375]="3",[0.500]="4",[0.625]="5",[0.750]="6",[0.875]="7",[1.000]="0"}
+	mode1_10s = mode1_10s[ExportScript.Tools.round(mainPanelDevice:get_argument_value(732), 3)]
+
+	local mode1_1s = {[0.000]="0",[0.125]="1",[0.250]="2",[0.375]="3",[0.500]="4",[0.625]="5",[0.750]="6",[0.875]="7",[1.000]="0"}
+	mode1_1s = mode1_1s[ExportScript.Tools.round(mainPanelDevice:get_argument_value(733), 3)]
+
+	local mode1 = mode1_10s .. mode1_1s
+	ExportScript.Tools.SendData(8076, 'IFF M1\n' .. mode1_10s .. mode1_1s)
+
+	local mode3A1000s = {[0.000]="0",[0.125]="1",[0.250]="2",[0.375]="3",[0.500]="4",[0.625]="5",[0.750]="6",[0.875]="7",[1.000]="0"}
+	mode3A1000s = mode3A1000s[ExportScript.Tools.round(mainPanelDevice:get_argument_value(734), 3)]
+
+	local mode3A100s = {[0.000]="0",[0.125]="1",[0.250]="2",[0.375]="3",[0.500]="4",[0.625]="5",[0.750]="6",[0.875]="7",[1.000]="0"}
+	mode3A100s = mode3A100s[ExportScript.Tools.round(mainPanelDevice:get_argument_value(735), 3)]
+
+	local mode3A10s = {[0.000]="0",[0.125]="1",[0.250]="2",[0.375]="3",[0.500]="4",[0.625]="5",[0.750]="6",[0.875]="7",[1.000]="0"}
+	mode3A10s = mode3A10s[ExportScript.Tools.round(mainPanelDevice:get_argument_value(736), 3)]
+
+	local mode3A1s = {[0.000]="0",[0.125]="1",[0.250]="2",[0.375]="3",[0.500]="4",[0.625]="5",[0.750]="6",[0.875]="7",[1.000]="0"}
+	mode3A1s = mode3A1s[ExportScript.Tools.round(mainPanelDevice:get_argument_value(737), 3)]
+
+	local mode3A = mode3A1000s .. mode3A100s .. mode3A10s .. mode3A1s
+	ExportScript.Tools.SendData(8077,  'IFF M3A\n' .. mode3A)
+
+	ExportScript.Tools.SendData(8078, 'IFF\nM1 ' .. mode1 .. '\nM3A ' .. mode3A)
+end
 
 function ExportScript.FuelCalculator(mainPanelDevice)
 	-- a rough estimate of instantaneous remaining fuel time
@@ -2152,12 +2182,17 @@ function ExportScript.Radios(mainPanelDevice)
 	if ExportScript.Tools.round(mainPanelDevice:get_argument_value(282), 1) == 0.0 then -- Manual mode
 		vuhfChannel = 'M'
 	end
+	if ExportScript.Tools.round(mainPanelDevice:get_argument_value(282), 1) == 1.0 then -- Manual mode
+		vuhfChannel = 'G'
+	end
 
 	ExportScript.Tools.SendData(8012, 'V/UHF\n' .. 'CH ' .. vuhfChannel .. '\n' .. vuhfFreq)
 
 	-- Combined readouts
 	ExportScript.Tools.SendData(8013, 'V/UHF (' .. vuhfChannel ..  ')\n' .. vuhfFreq
 			.. '\nUHF (' .. uhfChannel ..  ')\n' .. uhfFreq)
+
+
 end
 
 function ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
