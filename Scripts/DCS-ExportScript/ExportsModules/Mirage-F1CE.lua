@@ -2027,14 +2027,44 @@ function ExportScript.CockpitInstruments(mainPanelDevice)
 	engineTemp = format_int(engineTemp)
 	ExportScript.Tools.SendData(8004, 'Engine\n' .. engineRPM .. ' RPM' .. '\n' .. engineTemp .. ' °C')
 
-	-- TODO: Fuel
-	-- Note: This will require an equation due to to change in arg ratio. arg below 0.8 is accurate
-	local fuelG = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1142) * 1000, 0)
-	fuelG = format_int(fuelG)
-	local fuelD = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1143) * 1000, 0)
-	fuelD = format_int(fuelD)
+	local fuelG_needle = mainPanelDevice:get_argument_value(1142)
+	if fuelG_needle < 0.8 then
+		fuelG_needle = ExportScript.Tools.round(fuelG_needle * 1000, 0)
+	elseif fuelG_needle < 0.9 then
+		fuelG_needle = ExportScript.Tools.round(fuelG_needle * 2000 - 800, 0)
+	elseif fuelG_needle < 0.968 then
+		fuelG_needle = ExportScript.Tools.round(fuelG_needle * 13158 - 10737, 0)
+	else
+		fuelG_needle = ExportScript.Tools.round(fuelG_needle * 6250 - 4050, 0)
+	end
 
-	--ExportScript.Tools.SendData(8005, 'Fuel (L)\n' .. fuelG .. '\n' .. fuelD .. '')
+	local fuelD_needle = mainPanelDevice:get_argument_value(1143)
+	if fuelD_needle < 0.8 then
+		fuelD_needle = ExportScript.Tools.round(fuelD_needle * 1000, 0)
+	elseif fuelD_needle < 0.9 then
+		fuelD_needle = ExportScript.Tools.round(fuelD_needle * 2000 - 800, 0)
+	elseif fuelD_needle < 0.968 then
+		fuelD_needle = ExportScript.Tools.round(fuelD_needle * 13158 - 10737, 0)
+	else
+		fuelD_needle = ExportScript.Tools.round(fuelD_needle * 6250 - 4050, 0)
+	end
+
+	local fuelTot_needle = fuelG_needle + fuelD_needle
+
+	local fuelTot_needle_format
+	if fuelTot_needle > 3812 then --3812
+		fuelTot_needle_format = format_int(fuelTot_needle) .. '+'
+	else
+		fuelTot_needle_format = format_int(fuelTot_needle)
+	end
+
+	local fuelG_needle_format = format_int(fuelG_needle)
+	local fuelD_needle_format = format_int(fuelD_needle)
+
+	ExportScript.Tools.SendData(8005, 'Fuel (L)\nTot ' .. fuelTot_needle_format
+			.. '\nG ' .. fuelG_needle_format
+			.. '\nD ' .. fuelD_needle_format
+	)
 
 	-- Fuel quantity indicator
 	local fuelQty_Xxxx = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1146) * 10, 0)
@@ -2049,8 +2079,8 @@ function ExportScript.CockpitInstruments(mainPanelDevice)
 
 	local fuelQtyTotal = fuelQty_Xxxx .. fuelQty_xXxx .. fuelQty_xxXx .. fuelQty_xxxX
 	ExportScript.Tools.SendData(8006, 'Fuel (L)\nTot ' .. format_int(fuelQtyTotal)
-								.. '\nG ' .. format_int(fuelG)
-								.. '\nD ' .. format_int(fuelD)
+	.. '\nG ' .. format_int(fuelG_needle)
+	.. '\nD ' .. format_int(fuelD_needle)
 	)
 
 	-- Altimeter Pressure window
@@ -2083,20 +2113,22 @@ function ExportScript.CockpitInstruments(mainPanelDevice)
 	local altBaroReadout = altBaro_Xxxxx .. altBaro_xXxxx .. altBaro_xxXxx .. altBaro_xxxXX
 	altBaroReadout = round(altBaroReadout,-2)
 
+
 	-- Vertical speed needle
 	local vsiReadout = ExportScript.Tools.round(mainPanelDevice:get_argument_value(1025) * 10000, 0)
 	if vsiReadout < 5999 and vsiReadout > -5999 then
-		vsiReadout = format_int(round(vsiReadout,-2)) .. ' fpm'
+	vsiReadout = format_int(round(vsiReadout,-2)) .. ' fpm'
 	else
-		vsiReadout = format_int(round(vsiReadout,-2))  .. '+ fpm'
+	vsiReadout = format_int(round(vsiReadout,-2))  .. '+ fpm'
 	end
 
 	ExportScript.Tools.SendData(8007, 'FLT INST\n'
-							.. format_int(altBaroReadout) .. ' ft\n'
-							.. altBaroPressReadout .. ' mb\n'
-							.. vsiReadout
+	.. format_int(altBaroReadout) .. ' ft\n'
+	.. altBaroPressReadout .. ' mb\n'
+	.. vsiReadout
 	)
 end
+
 
 function ExportScript.qfeCalculator(mainPanelDevice)
 	-- Altimeter Pressure window
