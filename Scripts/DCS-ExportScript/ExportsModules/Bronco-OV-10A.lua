@@ -131,7 +131,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
-    ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
+    ExportScript.HudMil(mainPanelDevice)
 
 
     ---------------
@@ -173,7 +173,7 @@ end
 --     Custom functions    --
 -----------------------------
 
-function ExportScript.DeviceMetaTableLogDump(mainPanelDevice)
+function ExportScript.HudMil(mainPanelDevice)
     local hudMil = mainPanelDevice:get_argument_value(435) -- -1 to 1, so normalize
     hudMil = hudMil + 1 -- 0 to 2, so,  0 = 1 and 1 = 12.5 and 2 = 26
     hudMil = (hudMil * 12.5) + 1 -- via excel
