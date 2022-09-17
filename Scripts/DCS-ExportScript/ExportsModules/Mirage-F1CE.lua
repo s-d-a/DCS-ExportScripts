@@ -1569,8 +1569,8 @@ function ExportScript.HsiReadouts(mainPanelDevice)
 	)
 
 	ExportScript.Tools.SendData(8024, vectSelect .. 'VECT.'
-			.. '\n' .. distSelect .. 'BRG ' .. hsiBearingReadout
-			.. '\n' .. brngSelect .. 'DST ' .. hsiDistVectReadout
+			.. '\n' .. brngSelect .. 'BRG ' .. hsiBearingReadout
+			.. '\n' .. distSelect .. 'DST ' .. hsiDistVectReadout
 	)
 end
 
@@ -2223,7 +2223,7 @@ function ExportScript.Radios(mainPanelDevice)
 
 	local uhfChannel = ExportScript.Tools.round(mainPanelDevice:get_argument_value(348) * 20, 0)
 	-- because the knob is offset, we have to do some maths
-	uhfChannel = uhfChannel + 6
+	uhfChannel = uhfChannel + 1
 	if uhfChannel > 20 then -- 20 is the max channel number
 		uhfChannel = uhfChannel - 20
 	end
@@ -2236,7 +2236,7 @@ function ExportScript.Radios(mainPanelDevice)
 
 	local vuhfChannel = ExportScript.Tools.round(mainPanelDevice:get_argument_value(283) * 20, 0)
 	-- because the knob is offset, we have to do some maths
-	vuhfChannel = vuhfChannel + 6
+	vuhfChannel = vuhfChannel + 1
 	if vuhfChannel > 20 then -- 20 is the max channel number
 		vuhfChannel = vuhfChannel - 20
 	end
