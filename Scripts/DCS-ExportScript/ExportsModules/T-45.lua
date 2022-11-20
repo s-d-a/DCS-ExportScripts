@@ -161,7 +161,7 @@ ExportScript.ConfigArguments =
 [231] = "%.2f", --VOR/ILS Power Knob
 [182] = "%.2f", --Emergency Jettison Button
 [114] = "%.2f", --Master Arm
-
+}
 -----------------------------
 -- HIGH IMPORTANCE EXPORTS --
 -- done every export event --
@@ -218,7 +218,7 @@ end
          ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
      end
 ]]
-end
+
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
   --[[
