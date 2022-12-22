@@ -3,7 +3,7 @@
 -- initial version by s-d-a with additions and update by Blue Storm + Bearcat
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.M2000C = "2.1.4"
+ExportScript.Version.M2000C = "2.1.5"
 
 
 -----------------------------
@@ -225,10 +225,10 @@ ExportScript.ConfigEveryFrameArguments =
 	[381] = "%.4f",	--	00X0
 	[382] = "%.4f",	--	000X
 
-	[388] = "%.1f",	--	Rote Kontrollampe MODE-4 Panel
-	[394] = "%.1f",	--	gelbe „FAULT“ Anzeige
+	[388] = "%.1f",	--	Voyant de contrôle rouge Panneau MODE-4
+	[394] = "%.1f",	--	voyant jaune "PANNE"
 
--- Pressuge
+-- Pressure
 	[397] = "%.4f",	--Needle left
 	[398] = "%.4f",	--Needle right
 
@@ -241,17 +241,17 @@ ExportScript.ConfigEveryFrameArguments =
 	[403] = "%.4f",	--seconds
 
 -- GEARPANEL
-	[405] = "%.1f",	-- 	Gearhandle Innenleuchte, rot
+	[405] = "%.1f",	-- 	Eclairage Manette de commande train rouge
 	[410] = "%.1f",	-- 	„A“ Warnlamp
 	[411] = "%.1f",	-- 	„F“ Warnlamp
-	[412] = "%.1f",	--  „DIRA“ Warnlamp, blau
+	[412] = "%.1f",	--  „DIRAV“ Warnlamp, bleu
 	[413] = "%.1f",	-- 	„FREIN“
 	[414] = "%.1f",	-- 	„Cross“
 	[415] = "%.1f",	-- 	„SPAD“
 	[416] = "%.1f",	-- 	voyant rouge „BIP“
-	[417] = "%.1f",	-- 	Left Gear ?, grüne Warnlampen
-	[418] = "%.1f",	-- 	Nose Gear ?
-	[419] = "%.1f",	-- 	Right Gear ?
+	[417] = "%.1f",	-- 	Left Gear, lampe verte
+	[418] = "%.1f",	-- 	Nose Gear
+	[419] = "%.1f",	-- 	Right Gear
 
 -- CS indicator
 	[424] = "%.4f",	-- 		1. waagerechte Balkenanzeige
@@ -384,6 +384,12 @@ ExportScript.ConfigEveryFrameArguments =
 
 	[632] = "%.1f",	--	Bouton avec voyant "C"
 	[634] = "%.1f",	--	Bouton avec voyant "F"
+
+-- Miscelaneous Right Panel
+	[657] = "%.1f",    -- Hydraulic Emergency Pump Switch
+	[658] = "%.1f",    -- Audio Warning Switch
+	[659] = "%.1f",    -- Pitot Heat Cover
+	[660] = "%.1f",    -- Pitot Heat Switch
 
 -- Panel lights
 	[720] = "%.4f",	--	Flash MIP, rouge
@@ -1333,6 +1339,26 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
     ExportScript.Tools.WriteToLog('2352 '..ExportScript.Tools.dump(lDETOT))
   end
 
+  -- IFF Digits
+  local IFF_1 = "0"
+  local IFF_2 = "0"
+  local IFF_3 = "0"
+  local IFF_4 = "0"
+  IFF_1 = string.format("%d", mainPanelDevice:get_argument_value(601) * 10)
+  IFF_2 = string.format("%d", mainPanelDevice:get_argument_value(602) * 10)
+  IFF_3 = string.format("%d", mainPanelDevice:get_argument_value(603) * 10)
+  IFF_4 = string.format("%d", mainPanelDevice:get_argument_value(604) * 10)
+  ExportScript.Tools.SendData(2601, IFF_1)
+  ExportScript.Tools.SendData(2602, IFF_2)
+  ExportScript.Tools.SendData(2603, IFF_3)
+  ExportScript.Tools.SendData(2604, IFF_4)
+  if ExportScript.Config.Debug then
+    ExportScript.Tools.WriteToLog('2601 '..ExportScript.Tools.dump(IFF_1))
+    ExportScript.Tools.WriteToLog('2602 '..ExportScript.Tools.dump(IFF_2))
+    ExportScript.Tools.WriteToLog('2603 '..ExportScript.Tools.dump(IFF_3))
+    ExportScript.Tools.WriteToLog('2604 '..ExportScript.Tools.dump(IFF_4))
+  end
+
   -- end cycle
   ExportScript.Tools.FlushData()
 end
@@ -1430,26 +1456,6 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	end
 	ExportScript.Tools.SendDataDAC(2022, string.format("%s", lPPA1))
 	ExportScript.Tools.SendDataDAC(2023, string.format("%s", lPPA2))
-
-  -- IFF Digits
-  local IFF_1 = "0"
-  local IFF_2 = "0"
-  local IFF_3 = "0"
-  local IFF_4 = "0"
-  IFF_1 = string.format("%d", mainPanelDevice:get_argument_value(601) * 10)
-  IFF_2 = string.format("%d", mainPanelDevice:get_argument_value(602) * 10)
-  IFF_3 = string.format("%d", mainPanelDevice:get_argument_value(603) * 10)
-  IFF_4 = string.format("%d", mainPanelDevice:get_argument_value(604) * 10)
-  ExportScript.Tools.SendDataDAC(2601, IFF_1)
-  ExportScript.Tools.SendDataDAC(2602, IFF_2)
-  ExportScript.Tools.SendDataDAC(2603, IFF_3)
-  ExportScript.Tools.SendDataDAC(2604, IFF_4)
-  if ExportScript.Config.Debug then
-    ExportScript.Tools.WriteToLog('2601 '..ExportScript.Tools.dump(IFF_1))
-    ExportScript.Tools.WriteToLog('2602 '..ExportScript.Tools.dump(IFF_2))
-    ExportScript.Tools.WriteToLog('2603 '..ExportScript.Tools.dump(IFF_3))
-    ExportScript.Tools.WriteToLog('2604 '..ExportScript.Tools.dump(IFF_4))
-  end
 
 	-- send data
 	ExportScript.Tools.FlushDataDAC(#ExportScript.Config.DAC)
