@@ -22,8 +22,7 @@ ExportScript.ConfigArguments =
 	arguments for export in low tick interval
 	based on "clickabledata.lua"
 	]]
-    -- Example
-    [0] = "%.4f",
+    [0] = "%.4f", -- Example
 }
 
 -----------------------------
