@@ -1,7 +1,7 @@
 -- F/A-18C Export
 
 ExportScript.FoundDCSModule = true
-ExportScript.Version.FA18C_hornet = "1.2.1"
+ExportScript.Version.FA18C_hornet = "1.3.1"
 
 ExportScript.ConfigEveryFrameArguments = 
 {
@@ -34,7 +34,7 @@ ExportScript.ConfigEveryFrameArguments =
 	[242] = "%.4f",   -- HydIndBrake {0.0, 1000.0, 2000.0, 3000.0, 4000.0, 5000.0}{0.0, 0.036, 0.338, 0.636, 0.924, 1.0}
 	-- Gear Interface
 	[228] = "%.4f",   -- EmergGearDownHandle
-	[240] = "%.4f",   -- EmergParkBrakeHandle
+	-- [240] = "%.4f",   -- EmergParkBrakeHandle delete
 	-- Instruments --------------------------
     -- Standby Pressure Altimeter AAU-52/A
 	[218] = "%.4f",   -- Altimeter_100_footPtr {0.0, 1000.0} {0.0, 1.0}
@@ -166,13 +166,16 @@ ExportScript.ConfigEveryFrameArguments =
 	[469] = "%1d",   -- IFEI_buttons
 	-- RWR
 	[276] = "%1d",   -- Lower
-	[273] = "%1d",   -- Limit
+	--[273] = "%1d",   -- Limit
+	[273] = "%.1f",   -- Limit
 	[274] = "%1d",   -- Display
 	--[270] = "%1d",   -- SpecialEn
 	[271] = "%1d",   -- Special
-	[267] = "%1d",   -- Enable
+	--[267] = "%1d",   -- Enable
+	[267] = "%.1f",   -- Enable
 	[268] = "%1d",   -- Offset
-	[264] = "%1d",   -- Fail
+	--[264] = "%1d",   -- Fail
+	[264] = "%.1f",   -- Fail
 	[265] = "%1d",   -- Bit
 	[520] = "%.1f",   -- RwrLightsBrightness
 	-- CMDS
@@ -299,7 +302,8 @@ ExportScript.ConfigArguments =
 	[159] = "%1d",   -- Station Jettison Select Button, RIGHT IN
 	[161] = "%1d",   -- Station Jettison Select Button, RIGHT OUT
 	[235] = "%1d",   -- Selective Jettison Pushbutton
-	[236] = "%1d",   -- Selective Jettison Knob, L FUS MSL/SAFE/R FUS MSL/ RACK/LCHR /STORES {0.0,0.1,0.2,0.3,0.4}
+	--[236] = "%1d",   -- Selective Jettison Knob, L FUS MSL/SAFE/R FUS MSL/ RACK/LCHR /STORES {0.0,0.1,0.2,0.3,0.4}
+	[236] = "%.1f",   -- Selective Jettison Knob, L FUS MSL/SAFE/R FUS MSL/ RACK/LCHR /STORES {0.0,0.1,0.2,0.3,0.4}
 	[135] = "%.1f",   -- IR Cooling Switch, ORIDE/NORM/OFF {0.0,0.1,0.2}
 	-- Fire Systems
 	[46] = "%1d",   -- Fire Extinguisher Pushbutton
@@ -310,7 +314,8 @@ ExportScript.ConfigArguments =
 	[28] = "%1d",   -- Right Engine/AMAD Fire Warning/Extinguisher Light - (RMB) cover control
 	-- Multipurpose Display Group -----------
     -- Head-Up Display
-	[140] = "%1d",   -- HUD Symbology Reject Switch, NORM/REJ 1/REJ 2 {0.0,0.1,0.2}
+	--[140] = "%1d",   -- HUD Symbology Reject Switch, NORM/REJ 1/REJ 2 {0.0,0.1,0.2}
+	[140] = "%.1f",   -- HUD Symbology Reject Switch, NORM/REJ 1/REJ 2 {0.0,0.1,0.2}
 	[141] = "%.2f",   -- HUD Symbology Brightness Control Knob {0.0,1.0} in 0.1 Steps
 	[142] = "%1d",   -- HUD Symbology Brightness Selector Knob, DAY/NIGHT
 	[143] = "%.2f",   -- HUD Black Level Control Knob {0.0,1.0} in 0.1 Steps
@@ -320,7 +325,8 @@ ExportScript.ConfigArguments =
 	[147] = "%1d",   -- HUD Altitude Switch, BARO/RDR
 	[148] = "%1d",   -- HUD Attitude Selector Switch, INS/AUTO/STBY {-1.0,0.0,1.0}
 	-- Left MDI
-	[51] = "%1d",   -- Left MDI Brightness Selector Knob, OFF/NIGHT/DAY {0.0,0.1,0.2}
+	--[51] = "%1d",   -- Left MDI Brightness Selector Knob, OFF/NIGHT/DAY {0.0,0.1,0.2}
+	[51] = "%.1f",   -- Left MDI Brightness Selector Knob, OFF/NIGHT/DAY {0.0,0.1,0.2}
 	[52] = "%.2f",   -- Left MDI Brightness Control Knob {0.0,1.0} in 0.1 Steps
 	[53] = "%.2f",   -- Left MDI Contrast Control Knob {0.0,1.0} in 0.1 Steps
 	[54] = "%1d",   -- Left MDI PB 1
@@ -496,6 +502,7 @@ ExportScript.ConfigArguments =
 	-- Targeting Pod, FLIR
 	[439] = "%.1f",    -- FLIR Switch, ON/STBY/OFF {0.0,0.5,1.0}
 	[441] = "%.1f",    -- LTD/R Switch, ARM/SAFE/AFT {0.0,0.5,1.0}
+	[442] = "%1d",    -- LST/NFLR Switch, ON/OFF
 }
 
 -----------------------------
@@ -514,6 +521,93 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	ExportScript.Tools.SendData("ExportID", "Format")
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) <- special function for get frequency data
 	]]
+
+	-- UFC Displays
+	local lUFCDisplays = ExportScript.Tools.getListIndicatorValue(6)
+	if ExportScript.Config.Debug then
+		ExportScript.Tools.WriteToLog('UFC: '..ExportScript.Tools.dump(lUFCDisplays))
+	end
+	
+	if lUFCDisplays ~= nil and lUFCDisplays.UFC_MainDummy ~= nil then
+		-- ScratchPadString Displays
+		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "_", "-") -- fix weil das ein - sein sollte
+		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "_", "-") -- fix weil das ein - sein sollte
+		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "~", "2") -- fix weil das eine 2 sein sollte
+		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "~", "2") -- fix weil das eine 2 sein sollte
+		lUFCDisplays.UFC_ScratchPadString1Display = string.gsub(lUFCDisplays.UFC_ScratchPadString1Display, "`", "1") -- fix weil das eine 1 sein sollte
+		lUFCDisplays.UFC_ScratchPadString2Display = string.gsub(lUFCDisplays.UFC_ScratchPadString2Display, "`", "1") -- fix weil das eine 1 sein sollte
+		ExportScript.Tools.SendData(2020, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString1Display, 2)) -- ScratchPadString1Display 2 character
+		ExportScript.Tools.SendData(2021, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString2Display, 2)) -- ScratchPadString2Display 2 character
+		ExportScript.Tools.SendData(2022, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
+		-- ExportScript.Tools.SendData(2090, ExportScript.Tools.DisplayFormat( lUFCDisplays.UFC_ScratchPadString1Display .. lUFCDisplays.UFC_ScratchPadString2Display, 4)) -- ScratchPadString2Display 2 character
+		-- ExportScript.Tools.SendData(2091, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
+		ExportScript.Tools.SendData(2090, ExportScript.Tools.DisplayFormat( lUFCDisplays.UFC_ScratchPadString1Display .. lUFCDisplays.UFC_ScratchPadString2Display, 4) .. "\n" .. ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadString2Display all characters
+
+		local lTmpCueing = " "
+		-- Option Displays
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing1 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2023, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay1)) -- OptionDisplay1 5 character
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing2 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2024, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay2)) -- OptionDisplay2 5 character
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing3 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2025, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay3)) -- OptionDisplay3 5 character
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing4 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2026, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay4)) -- OptionDisplay4 5 character
+		lTmpCueing = (#lUFCDisplays.UFC_OptionCueing5 > 0 and "¦" or " ")
+		ExportScript.Tools.SendData(2027, ExportScript.Tools.DisplayFormat(lTmpCueing..lUFCDisplays.UFC_OptionDisplay5)) -- OptionDisplay5 5 character
+
+		-- Comm Displays
+		lUFCDisplays.UFC_Comm1Display = string.gsub(lUFCDisplays.UFC_Comm1Display, "~", "2") -- fix weil das eine 2 sein sollte
+		lUFCDisplays.UFC_Comm2Display = string.gsub(lUFCDisplays.UFC_Comm2Display, "~", "2") -- fix weil das eine 2 sein sollte
+		lUFCDisplays.UFC_Comm1Display = string.gsub(lUFCDisplays.UFC_Comm1Display, "`", "1") -- fix weil das eine 1 sein sollte
+		lUFCDisplays.UFC_Comm2Display = string.gsub(lUFCDisplays.UFC_Comm2Display, "`", "1") -- fix weil das eine 1 sein sollte
+		ExportScript.Tools.SendData(2028, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_Comm1Display, 2)) -- Comm1Display 2 character
+		ExportScript.Tools.SendData(2029, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_Comm2Display, 2)) -- Comm2Display 2 character
+	else
+		-- ScratchPadString Displays
+		ExportScript.Tools.SendData(2020, " ") -- ScratchPadString1Display 2 character
+		ExportScript.Tools.SendData(2021, " ") -- ScratchPadString2Display 2 character
+		ExportScript.Tools.SendData(2022, " ") -- ScratchPadNumberDisplay 7 character
+		ExportScript.Tools.SendData(2090, " ") -- ScratchPadString2Display all characters		
+
+		-- Option Displays
+		ExportScript.Tools.SendData(2023, " ") -- OptionDisplay1 5 character
+		ExportScript.Tools.SendData(2024, " ") -- OptionDisplay2 5 character
+		ExportScript.Tools.SendData(2025, " ") -- OptionDisplay3 5 character
+		ExportScript.Tools.SendData(2026, " ") -- OptionDisplay4 5 character
+		ExportScript.Tools.SendData(2027, " ") -- OptionDisplay5 5 character
+
+		-- Comm Displays
+		ExportScript.Tools.SendData(2028, " ") -- Comm1Display 2 character
+		ExportScript.Tools.SendData(2029, " ") -- Comm2Display 2 character
+	end
+	
+	local lUHF1Radio = GetDevice(38)
+	ExportScript.Tools.SendData(2030, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF1Radio:get_frequency()/1000000))), 7)
+	
+	local lUHF2Radio = GetDevice(39)
+	ExportScript.Tools.SendData(2031, ExportScript.Tools.DisplayFormat(ExportScript.Tools.RoundFreqeuncy((lUHF2Radio:get_frequency()/1000000), "7.3", false, 0.005)), 7)
+
+	local lEngineFuelClock = ExportScript.Tools.getListIndicatorValue(5)
+	if lEngineFuelClock ~= nil and lEngineFuelClock.txt_RPM_R ~= nil then
+		-- Engine informations 3 character
+		ExportScript.Tools.SendData(2000, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_R, 3)) -- right RPM
+		ExportScript.Tools.SendData(2001, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_L, 3)) -- left RPM
+		ExportScript.Tools.SendData(2004, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_R, 3)) -- right Fuel flow
+		ExportScript.Tools.SendData(2005, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_L, 3)) -- left Fuel flow
+
+		ExportScript.Tools.SendData(2010, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_BINGO, 6)) -- BINGO 
+	else
+		-- Engine informations 3 character
+		ExportScript.Tools.SendData(2000, " ") -- right RPM
+		ExportScript.Tools.SendData(2001, " ") -- left RPM
+		ExportScript.Tools.SendData(2004, " ") -- right Fuel flow
+		ExportScript.Tools.SendData(2005, " ") -- left Fuel flow
+		
+		-- Fuel informations 6 character
+		ExportScript.Tools.SendData(2010, " ") -- BINGO 
+	end
+
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -557,37 +651,27 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 
 	if lEngineFuelClock ~= nil and lEngineFuelClock.txt_RPM_R ~= nil then
 		-- Engine informations 3 character
-		ExportScript.Tools.SendData(2000, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_R, 3)) -- right RPM
-		ExportScript.Tools.SendData(2001, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_RPM_L, 3)) -- left RPM
 		ExportScript.Tools.SendData(2002, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_TEMP_R, 3)) -- right TEMP
 		ExportScript.Tools.SendData(2003, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_TEMP_L, 3)) -- left TEMP
-		ExportScript.Tools.SendData(2004, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_R, 3)) -- right Fuel flow
-		ExportScript.Tools.SendData(2005, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FF_L, 3)) -- left Fuel flow
 		ExportScript.Tools.SendData(2006, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_OilPress_R, 3)) -- right OilPress
 		ExportScript.Tools.SendData(2007, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_OilPress_L, 3)) -- left OilPress
 		
 		-- Fuel informations 6 character
 		ExportScript.Tools.SendData(2008, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FUEL_UP, 6)) -- up Fuel
 		ExportScript.Tools.SendData(2009, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_FUEL_DOWN, 6)) -- down Fuel
-		ExportScript.Tools.SendData(2010, ExportScript.Tools.DisplayFormat(lEngineFuelClock.txt_BINGO, 6)) -- BINGO 
 		
 		-- Clock 8 character
 		ExportScript.Tools.SendData(2011, ExportScript.Tools.DisplayFormat(string.format("%s¦%s¦%s", lEngineFuelClock.txt_CLOCK_H, lEngineFuelClock.txt_CLOCK_M, lEngineFuelClock.txt_CLOCK_S), 8)) -- Clock HH:MM:SS
 	else
 		-- Engine informations 3 character
-		ExportScript.Tools.SendData(2000, " ") -- right RPM
-		ExportScript.Tools.SendData(2001, " ") -- left RPM
 		ExportScript.Tools.SendData(2002, " ") -- right TEMP
 		ExportScript.Tools.SendData(2003, " ") -- left TEMP
-		ExportScript.Tools.SendData(2004, " ") -- right Fuel flow
-		ExportScript.Tools.SendData(2005, " ") -- left Fuel flow
 		ExportScript.Tools.SendData(2006, " ") -- right OilPress
 		ExportScript.Tools.SendData(2007, " ") -- left OilPress
 		
 		-- Fuel informations 6 character
 		ExportScript.Tools.SendData(2008, " ") -- up Fuel
 		ExportScript.Tools.SendData(2009, " ") -- down Fuel
-		ExportScript.Tools.SendData(2010, " ") -- BINGO 
 		
 		-- Clock 8 character
 		ExportScript.Tools.SendData(2011, " ") -- Clock HH:MM:SS
@@ -610,6 +694,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2020, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString1Display, 2)) -- ScratchPadString1Display 2 character
 		ExportScript.Tools.SendData(2021, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadString2Display, 2)) -- ScratchPadString2Display 2 character
 		ExportScript.Tools.SendData(2022, ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadNumberDisplay 7 character
+		ExportScript.Tools.SendData(2090, ExportScript.Tools.DisplayFormat( lUFCDisplays.UFC_ScratchPadString1Display .. lUFCDisplays.UFC_ScratchPadString2Display, 4) .. "\n" .. ExportScript.Tools.DisplayFormat(lUFCDisplays.UFC_ScratchPadNumberDisplay, 7)) -- ScratchPadString2Display all characters
 
 		local lTmpCueing = " "
 		-- Option Displays
@@ -636,6 +721,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.SendData(2020, " ") -- ScratchPadString1Display 2 character
 		ExportScript.Tools.SendData(2021, " ") -- ScratchPadString2Display 2 character
 		ExportScript.Tools.SendData(2022, " ") -- ScratchPadNumberDisplay 7 character
+		ExportScript.Tools.SendData(2090, " ") -- ScratchPadString2Display all characters
 
 		-- Option Displays
 		ExportScript.Tools.SendData(2023, " ") -- OptionDisplay1 5 character
