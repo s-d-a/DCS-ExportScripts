@@ -859,7 +859,7 @@ ExportScript.ConfigArguments =	-- arguments for export in low tick interval base
 -- HIGH IMPORTANCE EXPORTS --
 -----------------------------
 function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)	-- Pointed to by ProcessIkarusDCSHighImportance
-	end
+end
 ----------------------------
 -- LOW IMPORTANCE EXPORTS --
 ----------------------------
@@ -948,14 +948,15 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)	-- Po
 
 
 
-	end	
+end	
 --------------------------------------------------------------------------------------------------------------
 -----------------------
 -- GENERAL FUNCTIONS --
 -----------------------
 function ExportScript.CockpitParamsLogDump(mainPanelDevice) -- Get list of cockpit params
    ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
-	end
+end
+
 function ExportScript.MetaTableLogDump(mainPanelDevice) -- getmetatable get function name from devices
     local ltmp1 = 0
     for ltmp2 = 1, 70, 1 do
@@ -963,14 +964,16 @@ function ExportScript.MetaTableLogDump(mainPanelDevice) -- getmetatable get func
         ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
         ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
     end
-	end
+end
+
 function ExportScript.ListIndicationLogDump(mainPanelDevice) -- list_indication get the value of cockpit displays
     local ltmp1 = 0
     for ltmp2 = 0, 20, 1 do
         ltmp1 = list_indication(ltmp2)
         ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
     end
-	end
+end
+
 function Linearize(current_value, raw_tab, final_tab)	-- Converts Guage value to readable format 
 	if current_value <= 0 then
 		return 0
@@ -984,32 +987,38 @@ function Linearize(current_value, raw_tab, final_tab)	-- Converts Guage value to
 	end
 	-- we shouldn't be here, so something went wrong - return arbitrary max. final value, maybe the user will notice the problem:
 	return final_tab[#final_tab]
-	end
+end
+
 function RoundTo(num, numDecimalPlaces)	--http://lua-users.org/wiki/SimpleRound
   local mult = 10^(numDecimalPlaces or 0)
   return math.floor(num * mult + 0.5) / mult
-	end
+end
+
 function Round(num)	-- Rounds UP/Down to Nearest Whole Number
 	return num % 1 >= 0.5 and math.ceil(num) or math.floor(num)
-	end
+end
+
 function RoundDP(num)	-- Rounds UP/Down to Nearest Whole Number
 	value = Round(num*10)
 	return value/10
-	end
+end
+
 function ZeroNine(num)	-- Used with Round to roll a round up from 10 to 0.
 	if num >= 9.9 then
 		return 0
 	else
 		return num
 	end
-	end
+end
+
 function OneToZero(num)	-- Used to roll a round up from 1.0 to 0.0
 	if num >= 1.0 then
 		return 0.0
 	else
 		return num
 	end
-	end
+end
+
 function nilToEmpty(value)	-- Converts a nil string to an empty string ""
 	if value == nil then
 		value = ''
@@ -1017,7 +1026,7 @@ function nilToEmpty(value)	-- Converts a nil string to an empty string ""
 	else
 		return value
 	end
-	end
+end
 ----------------------
 -- CUSTOM FUNCTIONS --
 ----------------------
@@ -1051,7 +1060,8 @@ function FORMAT_UFC(Input)	-- Re-Formats Data For Clear UFC Display v1
 	else
 		return Input	-- or just retun the <5 char string
 	end
-	end
+end
+
 function FORMAT_UFCRAD(Input)	-- Re-Formats Data For Clear UFC RADIO Display v1
 	-- OFF
 	if string.sub(Input,(string.len(Input)-2),(string.len(Input))) == "OFF" then return string.sub(Input,2,string.len(Input)):gsub(" ","\n")
@@ -1061,7 +1071,8 @@ function FORMAT_UFCRAD(Input)	-- Re-Formats Data For Clear UFC RADIO Display v1
 	elseif string.sub(Input,(string.len(Input)),(string.len(Input))) == " " then Input = " "..string.sub(Input,1,(string.len(Input)-1))end
 	-- Spit Freq from Channel and return strings
 	if string.len(Input) < 5 then return Input else return string.sub(Input,1,(string.len(Input)-3)).."\n."..string.sub(Input,(string.len(Input)-2),(string.len(Input))) end
-	end
+end
+
 function FORMAT_SCRATCH(Input)
 	Input = Input:gsub(":",".")
 	Len = string.len(Input)
@@ -1074,7 +1085,8 @@ function FORMAT_SCRATCH(Input)
 	else
 		return string.sub(Input,1,4).."\n"..string.sub(Input,5,8).."\n"..string.sub(Input, 9,Len)
 	end
-	end
+end
+
 function PILOT_UFC(UFC_PILOT)	-- PILOT UFC export for Norsk-L
 	if UFC_PILOT == nil then
 		ExportScript.Tools.SendData(82001,"NO\nDATA")
@@ -1103,7 +1115,8 @@ function PILOT_UFC(UFC_PILOT)	-- PILOT UFC export for Norsk-L
 		ExportScript.Tools.SendData(82025,FORMAT_UFCRAD(nilToEmpty(UFC_PILOT.UFC_SC_08)))	-- Radio Freq
 		ExportScript.Tools.SendData(82026,FORMAT_UFCRAD(nilToEmpty(UFC_PILOT.UFC_SC_07)))	-- Radio Channel
 	end
-	end
+end
+
 function PILOT_UFCa(UFC_PILOT)	-- PILOT UFC export for Norsk-L
 	if UFC_PILOT == nil then
 		ExportScript.Tools.SendData(82001,"NO\nDATA")
@@ -1132,7 +1145,8 @@ function PILOT_UFCa(UFC_PILOT)	-- PILOT UFC export for Norsk-L
 		ExportScript.Tools.SendData(82015,nilToEmpty(UFC_PILOT.UFC_CC_03:gsub(":",".")))	
 		ExportScript.Tools.SendData(82016,FORMAT_SCRATCH(nilToEmpty(UFC_PILOT.UFC_CC_04)))	-- SCRATCHPAD
 	end
-	end
+end
+
 function WSO_UFC(UFC_WSO)	-- WSO UFC export for Norsk-L
 	if UFC_WSO == nil then
 		ExportScript.Tools.SendData(82000,"NO\nDATA\nWSO")
@@ -1159,7 +1173,8 @@ function WSO_UFC(UFC_WSO)	-- WSO UFC export for Norsk-L
 		ExportScript.Tools.SendData(82055,FORMAT_UFCRAD(nilToEmpty(UFC_WSO.UFC_SC_08)))	-- Radio Freq
 		ExportScript.Tools.SendData(82056,FORMAT_UFCRAD(nilToEmpty(UFC_WSO.UFC_SC_07)))	-- Radio Channel
 	end
-	end
+end
+
 function FUEL_display(Data,Option) -- Combines/Converts FUEL guage to single string or pulls the seperate values
 	-- Option 0 gives all data, use the seperale element names to pull single values (OFF,Dial,TOTAL,Left,RIGHT)
 	-- Example ExportScript.Tools.SendData(88383,ExportScript.FUEL(mainPanelDevice,"TOTAL")) sends back just the TOTALizer
@@ -1205,7 +1220,8 @@ function FUEL_display(Data,Option) -- Combines/Converts FUEL guage to single str
 		else	-- Just return the requested field
 			return	_G[Option]
 		end
-	end
+end
+
 function EMD_display(Data,Option) -- Combines/Converts EMD to single string or pulls the seperate values
 	-- Option 0 gives all data, use the seperale element names to pull single values (RPM_L,RPM_R,TMP_L,TMP_R,FF_L,FF_R,NOZ_L,NOZ_R,OIL_L,OIL_R)
 	-- Example ExportScript.Tools.SendData(81101,ExportScript.EMD(mainPanelDevice,"RPM_L")) sends back just the Left RPM value
@@ -1250,7 +1266,8 @@ function EMD_display(Data,Option) -- Combines/Converts EMD to single string or p
 	else
 		return	_G[Option]
 	end
-	end
+end
+
 function HUD_display(Data,Option) -- Extracts dat aelemnts from the HUD to provide as single exports or combined exports
 	-- Check for data flowing into function	
 	if Data == nil then return "NO\nDATA"
@@ -1315,7 +1332,8 @@ function HUD_display(Data,Option) -- Extracts dat aelemnts from the HUD to provi
 		return	_G[Option]
 	end
 	end
-	end
+end
+
 function RADIO_display(Option,Radio)
 	--	Set Raw Data Into variables
 	r1_chan = nilToEmpty(ExportScript.Tools.getListIndicatorValue(8).UFC_SC_06)
@@ -1355,13 +1373,15 @@ function RADIO_display(Option,Radio)
 		BOTH = CHAN
 	end
 	return	_G[Option]
-	end	
+end	
+
 --[[function RadioFreqs(mainPanelDevice) -- TODO: can string this up to display both the channel and freq on the tile
 	local radio1_freq = (GetDevice(7):get_frequency())/1000000 -- returns 243.000427
 	local radio2_freq = (GetDevice(8):get_frequency())/1000000 -- returns 121.500759
 	ExportScript.Tools.SendData(5020, ExportScript.Tools.RoundFreqeuncy(radio1_freq))
 	ExportScript.Tools.SendData(5021, ExportScript.Tools.RoundFreqeuncy(radio2_freq))
-	end]]
+end]]
+
 function GearTile(mainPanelDevice)	-- From Bailey's LUA: A grphical indication of Gear Status
 	-- ⚪ white
 	-- ⚫ black
@@ -1408,7 +1428,8 @@ function GearTile(mainPanelDevice)	-- From Bailey's LUA: A grphical indication o
 	else
 		return 'GEAR\n' .. noseCircle .. '\n' .. leftCircle .. rightCircle .. '\n' .. handleCircle
 	end
-	end
+end
+
 function  FlapTile(mainPanelDevice) -- From Bailey's LUA: A grphical indication of Flaps Status
 	-- init as black because it represents the lights as off
 	local flapOrange = '⚫'
@@ -1427,14 +1448,15 @@ function  FlapTile(mainPanelDevice) -- From Bailey's LUA: A grphical indication 
 	else
 		return 'FLAP\n' .. flapOrange .. '\n' .. flapGreen
 	end
-	end
+end
 ----------------
 -- NOT IN USE --
 ----------------
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
-	end
+end
+
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
-	end
+end
 -- ⚪ white
 -- ⚫ black
 -- 🟡 yellow
