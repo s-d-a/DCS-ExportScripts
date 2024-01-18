@@ -1101,9 +1101,9 @@ function PILOT_UFC(UFC_PILOT)	-- PILOT UFC export for Norsk-L
 		ExportScript.Tools.SendData(82006,FORMAT_UFCRAD(nilToEmpty(UFC_PILOT.UFC_SC_06)))	-- Radio Channel
 
 	-- CENTRE DESCENDING FROM THE TOP
-		ExportScript.Tools.SendData(82011,nilToEmpty(UFC_PILOT.UFC_CC_01:gsub(":",".")))	
-		ExportScript.Tools.SendData(82012,nilToEmpty(UFC_PILOT.UFC_CC_02:gsub(":",".")))	
-		ExportScript.Tools.SendData(82013,nilToEmpty(UFC_PILOT.UFC_CC_03:gsub(":",".")))	
+		ExportScript.Tools.SendData(82011,nilToEmpty(UFC_PILOT.UFC_CC_01):gsub(":","."))
+		ExportScript.Tools.SendData(82012,nilToEmpty(UFC_PILOT.UFC_CC_02):gsub(":","."))
+		ExportScript.Tools.SendData(82013,nilToEmpty(UFC_PILOT.UFC_CC_03):gsub(":","."))
 		ExportScript.Tools.SendData(82014,FORMAT_SCRATCH(nilToEmpty(UFC_PILOT.UFC_CC_04)))	-- SCRATCHPAD
 		
 	-- RIGHT SIDE SIDE DESCENDING FROM THE TOP
@@ -1140,9 +1140,9 @@ function PILOT_UFCa(UFC_PILOT)	-- PILOT UFC export for Norsk-L
 		ExportScript.Tools.SendData(82007,FORMAT_UFCRAD(nilToEmpty(UFC_PILOT.UFC_SC_07)))	-- Radio Channel
 
 	--CENTRE DESCENDING FROM THE TOP
-		ExportScript.Tools.SendData(82013,nilToEmpty(UFC_PILOT.UFC_CC_01:gsub(":",".")))	
-		ExportScript.Tools.SendData(82014,nilToEmpty(UFC_PILOT.UFC_CC_02:gsub(":",".")))	
-		ExportScript.Tools.SendData(82015,nilToEmpty(UFC_PILOT.UFC_CC_03:gsub(":",".")))	
+		ExportScript.Tools.SendData(82013,nilToEmpty(UFC_PILOT.UFC_CC_01):gsub(":","."))
+		ExportScript.Tools.SendData(82014,nilToEmpty(UFC_PILOT.UFC_CC_02):gsub(":","."))
+		ExportScript.Tools.SendData(82015,nilToEmpty(UFC_PILOT.UFC_CC_03):gsub(":","."))
 		ExportScript.Tools.SendData(82016,FORMAT_SCRATCH(nilToEmpty(UFC_PILOT.UFC_CC_04)))	-- SCRATCHPAD
 	end
 end
@@ -1160,9 +1160,9 @@ function WSO_UFC(UFC_WSO)	-- WSO UFC export for Norsk-L
 		ExportScript.Tools.SendData(82035,FORMAT_UFCRAD(nilToEmpty(UFC_WSO.UFC_SC_05)))	-- Radio Freq
 		ExportScript.Tools.SendData(82036,FORMAT_UFCRAD(nilToEmpty(UFC_WSO.UFC_SC_06)))	-- Radio Channel	
 	--CENTRE DESCENDING FROM THE TOP
-		ExportScript.Tools.SendData(82041,nilToEmpty(UFC_WSO.UFC_CC_01:gsub(":",".")))	
-		ExportScript.Tools.SendData(82042,nilToEmpty(UFC_WSO.UFC_CC_02:gsub(":",".")))	
-		ExportScript.Tools.SendData(82043,nilToEmpty(UFC_WSO.UFC_CC_03:gsub(":",".")))	
+		ExportScript.Tools.SendData(82041,nilToEmpty(UFC_WSO.UFC_CC_01):gsub(":","."))
+		ExportScript.Tools.SendData(82042,nilToEmpty(UFC_WSO.UFC_CC_02):gsub(":","."))
+		ExportScript.Tools.SendData(82043,nilToEmpty(UFC_WSO.UFC_CC_03):gsub(":","."))
 		ExportScript.Tools.SendData(82044,FORMAT_SCRATCH(nilToEmpty(UFC_WSO.UFC_CC_04)))	-- SCRATCHPAD
 	-- RIGHT SIDE SIDE DESCENDING FROM THE TOP
 		ExportScript.Tools.SendData(82051,FORMAT_UFC(nilToEmpty(UFC_WSO.UFC_SC_12)))	
