@@ -50,6 +50,10 @@ ExportScript.ConfigEveryFrameArguments =
 	[187] = "%.1f",	--LED green, ADI
 	[188] = "%.1f",	--LED green, ADI
 
+-- VTB switches
+-- TODO: add the rest of them
+	[216] = "%.1f",
+
 -- RWR Lamps
 	[229] = "%.1f",	--V
 	[230] = "%.1f",	--BR
@@ -701,6 +705,12 @@ ExportScript.ConfigArguments =
 	[637] = "%.1f",	--ECS Temperature Select Knob {-1.0,1.0} in 0.1 steps
 	[638] = "%.1f",	--ECS Defog Switch
 
+-- Green radio (V/UHF)
+	[965] = "%.1f", -- CLR/VLD Display
+	[969] = "%.1f", -- CONF Display
+	[972] = "%.1f", -- LED SQL Display
+	[975] = "%.4f", -- LED GR Display
+	[979] = "%.4f", -- 5-20 key
 }
 
 -----------------------------
@@ -753,6 +763,16 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
+
+	-- Master Caution/Warning. Uses unicode characters to mask relevant part of the icon if it's off.
+	local caution_on = mainPanelDevice:get_argument_value(199) == 1.0
+	local warning_on = mainPanelDevice:get_argument_value(200) == 1.0
+	ExportScript.Tools.SendData(2100, text_for_split_indicator_light(caution_on, warning_on))
+
+	-- Autopilot master lamp. Uses unicode characters to mask relevant part of the icon if it's off.
+	local AP_yellow = mainPanelDevice:get_argument_value(283) == 1.0
+	local AP_green = mainPanelDevice:get_argument_value(284) == 1.0
+	ExportScript.Tools.SendData(2101, text_for_split_indicator_light(AP_yellow, AP_green))
 
 	-- ECM Mode Switch
 	-- [194] = "%.1f",	--ECM Box Mode Switch
@@ -1145,7 +1165,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	local lRetVal = ""
 	if lTmpNumber == 0 then
 		lRetVal = "00"
-	else 
+	else
 		lRetVal = ExportScript.Tools.DisplayFormat(tostring(lTmpNumber), 2)
 	end
 	ExportScript.Tools.SendData(2042, lRetVal)
@@ -1482,6 +1502,25 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 ]]
+end
+
+-- Uses unicode characters to mask part of a streamdeck icon with text.
+-- Make sure that streamdeck text is in Courier New, 9pts, centered.
+function text_for_split_indicator_light(first_light, second_light)
+	local stringOutput = ""
+
+	if first_light == true then
+		stringOutput = stringOutput .. "\n \n"
+	else
+		stringOutput = stringOutput .. "██████████\n▀▀▀▀▀▀▀▀▀▀\n"
+	end
+	if second_light == true then
+		stringOutput = stringOutput .. " \n \n\n"
+	else
+		stringOutput = stringOutput .. "▄▄▄▄▄▄▄▄▄▄\n██████████\n"
+	end
+
+	return stringOutput
 end
 
 -- end script
