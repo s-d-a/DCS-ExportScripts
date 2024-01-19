@@ -1,5 +1,5 @@
 -- F-15E Export 30 June 2023
--- IF YOU ARE USING NORSK-L's STREAMDECK PROFILE THEN YOU MUST SET THE FOLLOWING LINE to "TRUE"
+-- IF YOU ARE USING NORSK-L's STREAMDECK PROFILE THEN YOU MUST SET THE FOLLOWING LINE to true
 Norsk_UFC = false -- true or false
 
 -- version 0.7a
@@ -870,11 +870,11 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)	-- Po
 		ExportScript.Tools.SendData(757575,"⚪⚫\n🟡🔴\n🟢❌")
 	-- ADVANCED UFC IMPLEMENTATION v1
 		if Norsk_UFC then
-			PILOT_UFCa(ExportScript.Tools.getListIndicatorValue(8))
+			PILOT_UFCa(ExportScript.Tools.getListIndicatorValue(9))
 		else
-			PILOT_UFC(ExportScript.Tools.getListIndicatorValue(8))
+			PILOT_UFC(ExportScript.Tools.getListIndicatorValue(9))
 		end
-		WSO_UFC(ExportScript.Tools.getListIndicatorValue(20))
+		WSO_UFC(ExportScript.Tools.getListIndicatorValue(18))
 	-- COMBINED FUEL DISPLAY
 		ExportScript.Tools.SendData(83830,FUEL_display(mainPanelDevice,0))	-- NOTE EXPORT ID HAS CHANGED
 	-- INDIVIDUAL FUEL DATA
