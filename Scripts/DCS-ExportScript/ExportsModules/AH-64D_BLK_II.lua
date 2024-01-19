@@ -8,6 +8,16 @@ local Terrain = require('terrain') -- map info
 ExportScript.FoundDCSModule = true
 ExportScript.Version.AH64D_BLK_II = "1.2.1"
 
+ExportScript.exportAdditionalInfo = false
+--[[ 
+If set to true, will add additional info on the low tick export:
+ - AirportInfo: Provides info on the two closest airports
+ - WindsAloft: Gets winds at the aircraft
+ - GroundRadar: Reports 2 closest friendlies and 2 enemies (Use in Single Player)
+ - AirRadar: Reports 2 closest friendlies and 2 enemies (Use in Single Player)
+ - IglaHunter: Locates closest Igla (Use in Single Player)
+]]
+
 ExportScript.ConfigEveryFrameArguments =
 {
 	--[[
@@ -743,15 +753,16 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	
   if LoIsObjectExportAllowed() then -- returns true if world objects data is available
     if LoIsOwnshipExportAllowed() then -- returns true if ownship data is available
-  ExportScript.LoAircraftInfo(mainPanelDevice) -- Provides a lot of aircraft properties
-  ExportScript.AirportInfo(mainPanelDevice) -- Provides info on the two closest airports
-  ExportScript.WindsAloft(mainPanelDevice) -- Gets winds at the aircraft
-  ExportScript.GroundRadar(mainPanelDevice) -- Reports 2 closest friendlies and 2 enemies (Use in Single Player)
-  ExportScript.AirRadar(mainPanelDevice) -- Reports 2 closest friendlies and 2 enemies (Use in Single Player)
-  ExportScript.IglaHunter(mainPanelDevice) -- Locates closest Igla (Use in Single Player)
+  		ExportScript.LoAircraftInfo(mainPanelDevice) -- Provides a lot of aircraft properties
+			if ExportScript.exportAdditionalInfo then
+  			ExportScript.AirportInfo(mainPanelDevice) -- Provides info on the two closest airports
+  			ExportScript.WindsAloft(mainPanelDevice) -- Gets winds at the aircraft
+  			ExportScript.GroundRadar(mainPanelDevice) -- Reports 2 closest friendlies and 2 enemies (Use in Single Player)
+  			ExportScript.AirRadar(mainPanelDevice) -- Reports 2 closest friendlies and 2 enemies (Use in Single Player)
+  			ExportScript.IglaHunter(mainPanelDevice) -- Locates closest Igla (Use in Single Player)
+			end
     end
-  end  
-  
+  end
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
