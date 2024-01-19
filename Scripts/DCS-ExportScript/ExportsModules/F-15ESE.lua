@@ -1,6 +1,6 @@
 -- F-15E Export 30 June 2023
 -- IF YOU ARE USING NORSK-L's STREAMDECK PROFILE THEN YOU MUST SET THE FOLLOWING LINE to "TRUE"
-Norsk_UFC = "FALSE" -- "TRUE" or "FALSE"
+Norsk_UFC = false -- true or false
 
 -- version 0.7a
 -- quick fix for the UFC crashes on GC align or when selecting the PP-EGI option - the F15 sends a really dodgy character that is being sent by the sim which is ok unless its in a modified string with escape characters...
@@ -869,7 +869,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)	-- Po
 	-- TEST DISPLAY
 		ExportScript.Tools.SendData(757575,"⚪⚫\n🟡🔴\n🟢❌")
 	-- ADVANCED UFC IMPLEMENTATION v1
-		if Norsk_UFC == "TRUE" then
+		if Norsk_UFC then
 			PILOT_UFCa(ExportScript.Tools.getListIndicatorValue(8))
 		else
 			PILOT_UFC(ExportScript.Tools.getListIndicatorValue(8))
