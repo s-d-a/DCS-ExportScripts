@@ -31,8 +31,8 @@ Norsk_UFC = false -- true or false
 -- Create option to turn field labels on/off maybe?
 
 --------------------------------------------------------------------------------------------------------------
--- version 0.6a typo corrected! 
--- version 0.6 
+-- version 0.6a typo corrected!
+-- version 0.6
 -- Fixed Left/Right Fuel Counters reading an extra 1000 lbs when < 100 lbs from next thousand - needed new function RoundDP()
 -- Setup Export IDs for each data elements of the Fuel Display - THIS MEANS THE COMBINED DISPLAY HAS CHANGED DCSID from 8383 to 83830
 -- Setup Export IDs for each of the data elements of the Engine Management Display
@@ -333,7 +333,7 @@ ExportScript.ConfigEveryFrameArguments = 	-- arguments for export every frame (u
 	-------------------------------------------------------------------
 		--  Canopy Gauges
 			[38]	= "%.2f",	-- Canopy Position
-	}	
+	}
 ExportScript.ConfigArguments =	-- arguments for export in low tick interval based on "clickabledata.lua"
 	{
 	-------------------------------------------------------------------
@@ -874,7 +874,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)	-- Po
 		else
 			PILOT_UFC(ExportScript.Tools.getListIndicatorValue(9))
 		end
-		WSO_UFC(ExportScript.Tools.getListIndicatorValue(21))
+		WSO_UFC(ExportScript.Tools.getListIndicatorValue(18))
 	-- COMBINED FUEL DISPLAY
 		ExportScript.Tools.SendData(83830,FUEL_display(mainPanelDevice,0))	-- NOTE EXPORT ID HAS CHANGED
 	-- INDIVIDUAL FUEL DATA
@@ -934,7 +934,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)	-- Po
 		ExportScript.Tools.SendData(6009,HUD_display(ExportScript.Tools.getListIndicatorValue(1),"VVI"))
 
 		ExportScript.Tools.SendData(6010,HUD_display(ExportScript.Tools.getListIndicatorValue(1),"NAV"))	-- Combined Nav Block
-		ExportScript.Tools.SendData(6011,HUD_display(ExportScript.Tools.getListIndicatorValue(1),"UPLEFT"))	
+		ExportScript.Tools.SendData(6011,HUD_display(ExportScript.Tools.getListIndicatorValue(1),"UPLEFT"))
 		ExportScript.Tools.SendData(6012,HUD_display(ExportScript.Tools.getListIndicatorValue(1),"LOLEFT"))
 		ExportScript.Tools.SendData(6013,HUD_display(ExportScript.Tools.getListIndicatorValue(1),"UPRIGHT"))
 		ExportScript.Tools.SendData(6014,HUD_display(ExportScript.Tools.getListIndicatorValue(1),"LORIGHT"))
@@ -948,7 +948,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)	-- Po
 
 
 
-end	
+end
 --------------------------------------------------------------------------------------------------------------
 -----------------------
 -- GENERAL FUNCTIONS --
@@ -974,7 +974,7 @@ function ExportScript.ListIndicationLogDump(mainPanelDevice) -- list_indication 
     end
 end
 
-function Linearize(current_value, raw_tab, final_tab)	-- Converts Guage value to readable format 
+function Linearize(current_value, raw_tab, final_tab)	-- Converts Guage value to readable format
 	if current_value <= 0 then
 		return 0
 	end
@@ -1105,11 +1105,11 @@ function PILOT_UFC(UFC_PILOT)	-- PILOT UFC export for Norsk-L
 		ExportScript.Tools.SendData(82012,nilToEmpty(UFC_PILOT.UFC_CC_02):gsub(":","."))
 		ExportScript.Tools.SendData(82013,nilToEmpty(UFC_PILOT.UFC_CC_03):gsub(":","."))
 		ExportScript.Tools.SendData(82014,FORMAT_SCRATCH(nilToEmpty(UFC_PILOT.UFC_CC_04)))	-- SCRATCHPAD
-		
+
 	-- RIGHT SIDE SIDE DESCENDING FROM THE TOP
-		ExportScript.Tools.SendData(82021,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_12)))	
-		ExportScript.Tools.SendData(82022,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_11)))	
-		ExportScript.Tools.SendData(82023,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_10)))	
+		ExportScript.Tools.SendData(82021,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_12)))
+		ExportScript.Tools.SendData(82022,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_11)))
+		ExportScript.Tools.SendData(82023,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_10)))
 		ExportScript.Tools.SendData(82024,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_09)))
 		-- RADIO
 		ExportScript.Tools.SendData(82025,FORMAT_UFCRAD(nilToEmpty(UFC_PILOT.UFC_SC_08)))	-- Radio Freq
@@ -1131,9 +1131,9 @@ function PILOT_UFCa(UFC_PILOT)	-- PILOT UFC export for Norsk-L
 		ExportScript.Tools.SendData(82006,FORMAT_UFCRAD(nilToEmpty(UFC_PILOT.UFC_SC_06)))	-- Radio Channel
 
 	-- RIGHT SIDE SIDE DESCENDING FROM THE TOP
-		ExportScript.Tools.SendData(82012,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_12)))	
-		ExportScript.Tools.SendData(82011,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_11)))	
-		ExportScript.Tools.SendData(82010,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_10)))	
+		ExportScript.Tools.SendData(82012,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_12)))
+		ExportScript.Tools.SendData(82011,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_11)))
+		ExportScript.Tools.SendData(82010,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_10)))
 		ExportScript.Tools.SendData(82009,FORMAT_UFC(nilToEmpty(UFC_PILOT.UFC_SC_09)))
 		-- RADIO
 		ExportScript.Tools.SendData(82008,FORMAT_UFCRAD(nilToEmpty(UFC_PILOT.UFC_SC_08)))	-- Radio Freq
@@ -1158,16 +1158,16 @@ function WSO_UFC(UFC_WSO)	-- WSO UFC export for Norsk-L
 		ExportScript.Tools.SendData(82034,FORMAT_UFC(nilToEmpty(UFC_WSO.UFC_SC_04)))
 		-- RADIO
 		ExportScript.Tools.SendData(82035,FORMAT_UFCRAD(nilToEmpty(UFC_WSO.UFC_SC_05)))	-- Radio Freq
-		ExportScript.Tools.SendData(82036,FORMAT_UFCRAD(nilToEmpty(UFC_WSO.UFC_SC_06)))	-- Radio Channel	
+		ExportScript.Tools.SendData(82036,FORMAT_UFCRAD(nilToEmpty(UFC_WSO.UFC_SC_06)))	-- Radio Channel
 	--CENTRE DESCENDING FROM THE TOP
 		ExportScript.Tools.SendData(82041,nilToEmpty(UFC_WSO.UFC_CC_01):gsub(":","."))
 		ExportScript.Tools.SendData(82042,nilToEmpty(UFC_WSO.UFC_CC_02):gsub(":","."))
 		ExportScript.Tools.SendData(82043,nilToEmpty(UFC_WSO.UFC_CC_03):gsub(":","."))
 		ExportScript.Tools.SendData(82044,FORMAT_SCRATCH(nilToEmpty(UFC_WSO.UFC_CC_04)))	-- SCRATCHPAD
 	-- RIGHT SIDE SIDE DESCENDING FROM THE TOP
-		ExportScript.Tools.SendData(82051,FORMAT_UFC(nilToEmpty(UFC_WSO.UFC_SC_12)))	
-		ExportScript.Tools.SendData(82052,FORMAT_UFC(nilToEmpty(UFC_WSO.UFC_SC_11)))	
-		ExportScript.Tools.SendData(82053,FORMAT_UFC(nilToEmpty(UFC_WSO.UFC_SC_10)))	
+		ExportScript.Tools.SendData(82051,FORMAT_UFC(nilToEmpty(UFC_WSO.UFC_SC_12)))
+		ExportScript.Tools.SendData(82052,FORMAT_UFC(nilToEmpty(UFC_WSO.UFC_SC_11)))
+		ExportScript.Tools.SendData(82053,FORMAT_UFC(nilToEmpty(UFC_WSO.UFC_SC_10)))
 		ExportScript.Tools.SendData(82054,FORMAT_UFC(nilToEmpty(UFC_WSO.UFC_SC_09)))
 		-- RADIO
 		ExportScript.Tools.SendData(82055,FORMAT_UFCRAD(nilToEmpty(UFC_WSO.UFC_SC_08)))	-- Radio Freq
@@ -1179,7 +1179,7 @@ function FUEL_display(Data,Option) -- Combines/Converts FUEL guage to single str
 	-- Option 0 gives all data, use the seperale element names to pull single values (OFF,Dial,TOTAL,Left,RIGHT)
 	-- Example ExportScript.Tools.SendData(88383,ExportScript.FUEL(mainPanelDevice,"TOTAL")) sends back just the TOTALizer
 	-- Convert the raw data and set as variables
-		OFF = string.format("%1d",Data:get_argument_value(382))	
+		OFF = string.format("%1d",Data:get_argument_value(382))
 		INTL	=	string.format("%1d",Data:get_argument_value(383)*20000)
 		BINGO	=	string.format("%1d",(Data:get_argument_value(384)/0.0714285)*1000)
 		TOTAL	=	(string.format("%.1f",OneToZero(RoundDP(Data:get_argument_value(368))))*100000)+
@@ -1206,7 +1206,7 @@ function FUEL_display(Data,Option) -- Combines/Converts FUEL guage to single str
 			until string.len(RIGHT) == 4
 		end
 	-- Publish the Data
-		if Option == 0 then	-- Send all Data to single string	
+		if Option == 0 then	-- Send all Data to single string
 			if OFF == "0" then return "OFF"
 			else
 				return	INTL.."\n"..
@@ -1269,7 +1269,7 @@ function EMD_display(Data,Option) -- Combines/Converts EMD to single string or p
 end
 
 function HUD_display(Data,Option) -- Extracts dat aelemnts from the HUD to provide as single exports or combined exports
-	-- Check for data flowing into function	
+	-- Check for data flowing into function
 	if Data == nil then return "NO\nDATA"
 	else
 	-- Set No Data State for Variables
@@ -1348,7 +1348,7 @@ function RADIO_display(Option,Radio)
 	BOTH = ""
 	-- Return correct data based on Channel or Manual selected in UFC
 	if Radio == 1 then
-		if string.sub(r1_chan,1,1) == "*" then 
+		if string.sub(r1_chan,1,1) == "*" then
 			CHAN = r1_chan:gsub("*","")
 			FREQ = string.sub(r1_freq,1,3).."\n."..string.sub(r1_freq,4,6)
 			BOTH = CHAN.."\n"..FREQ
@@ -1358,7 +1358,7 @@ function RADIO_display(Option,Radio)
 			BOTH = CHAN.."\n"..FREQ
 		end
 	elseif Radio == 2 then
-		if string.sub(r2_chan,string.len(r2_chan),string.len(r2_chan)) == "*" then 
+		if string.sub(r2_chan,string.len(r2_chan),string.len(r2_chan)) == "*" then
 			CHAN = r2_chan:gsub("*","")
 			FREQ = string.sub(r2_freq,1,3).."\n."..string.sub(r2_freq,4,6)
 			BOTH = CHAN.."\n"..FREQ
@@ -1373,7 +1373,7 @@ function RADIO_display(Option,Radio)
 		BOTH = CHAN
 	end
 	return	_G[Option]
-end	
+end
 
 --[[function RadioFreqs(mainPanelDevice) -- TODO: can string this up to display both the channel and freq on the tile
 	local radio1_freq = (GetDevice(7):get_frequency())/1000000 -- returns 243.000427
@@ -1468,5 +1468,3 @@ end
 -- '✅'
 
 -- Created by Trigati...but based on the excellent work of others!
-
-
