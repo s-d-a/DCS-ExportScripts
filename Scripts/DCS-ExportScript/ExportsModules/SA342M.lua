@@ -428,6 +428,8 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 		end
 	end
 	ExportScript.Tools.SendData(102, string.format("%.4f", ADF_Aiguille_large))
+	
+	ExportScript.Radios(mainPanelDevice)
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -462,68 +464,7 @@ function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
 	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
 	]]
 
-	-- UHF Radio 
-	---------------------------------------------------
-	local lUHFRadio = GetDevice(31)
-	if lUHFRadio:is_on() then
-		--ExportScript.Tools.SendData(2000, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
-		--ExportScript.Tools.WriteToLog('UHF_Freq: '..ExportScript.Tools.dump(list_indication(5)))
-
-		local lUHFRadioFreq = ExportScript.Tools.getListIndicatorValue(5)
-
-		if lUHFRadioFreq ~= nil and lUHFRadioFreq.UHF_Freq ~= nil then
-			ExportScript.Tools.SendData(2000, string.format("%s", lUHFRadioFreq.UHF_Freq))
-		end
-	else
-		ExportScript.Tools.SendData(2000, " ")
-	end
-
-	-- AM Radio 
-	---------------------------------------------------
-	local lAMRadio = GetDevice(5)
-	if lAMRadio:is_on() then
-		--ExportScript.Tools.SendData(2001, string.format("%.3f", lAMRadio:get_frequency()/1000000))
-		ExportScript.Tools.SendData(2001, ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000))
-	end
-
-	-- FM Radio PR4G
-	---------------------------------------------------
-	local lFMRadio = GetDevice(28)
-	if lFMRadio:is_on() then
-		--ExportScript.Tools.SendData(2002, string.format("%.3f", lFMRadio:get_frequency()/1000000))
-		--ExportScript.Tools.WriteToLog('FM_Freq: '..ExportScript.Tools.dump(list_indication(4)))
-
-		local lFMRadioFreq = ExportScript.Tools.getListIndicatorValue(4)
-
-		if lFMRadioFreq ~= nil and lFMRadioFreq.FM_Freq ~= nil then
-			ExportScript.Tools.SendData(2002, string.format("%s", lFMRadioFreq.FM_Freq))
-		end
-	else
-		ExportScript.Tools.SendData(2002, " ")
-	end
-
-	-- [273] = "%.3f",	-- FM RADIO - Chanel Selector {0.0,0.143,0.286,0.429,0.572,0.715,0.858,1.0} -- laut clickabledata.lua
-	-- [273] = "%.1f",	-- FM RADIO - Chanel Selector {0.0,0.2,0.3,0.5,0.6,0.8,0.9,1.1} -- gerundet
-	local lFM_RADIO_PRESET = {[0.0]="1",[0.2]="2",[0.3]="3",[0.5]="4",[0.6]="5",[0.8]="6",[0.9]="0",[1.1]="R"}
-	ExportScript.Tools.SendData(2003, lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
 	
-	-- Weapon Panel
-	---------------------------------------------------
-	if mainPanelDevice:get_argument_value(354) >= 0.0 then -- Weapon panel is On
-		local lWeaponPanelDisplays = ExportScript.Tools.getListIndicatorValue(8)
-
-		if lWeaponPanelDisplays ~= nil then
-			if lWeaponPanelDisplays.LEFT_screen ~= nil then
-				ExportScript.Tools.SendData(2004, string.format("%s", lWeaponPanelDisplays.LEFT_screen))
-			end
-			if lWeaponPanelDisplays.RIGHT_screen ~= nil then
-				ExportScript.Tools.SendData(2005, string.format("%s", lWeaponPanelDisplays.RIGHT_screen))
-			end
-		end
-	else
-		ExportScript.Tools.SendData(2004, "-")
-		ExportScript.Tools.SendData(2005, "-")
-	end
 end
 
 function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
@@ -560,7 +501,9 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 	local lAMRadio = GetDevice(5)
 	if lAMRadio:is_on() then
 		--ExportScript.Tools.SendDataDAC("2001", string.format("%.3f", lAMRadio:get_frequency()/1000000))
-		ExportScript.Tools.SendDataDAC("2001", ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000))
+		ExportScript.Tools.SendDataDAC("2001", "VHF AM\n" .. ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000))
+	else
+		ExportScript.Tools.SendDataDAC("2001", "VHF AM\n---.---")
 	end
 
 	-- FM Radio PR4G
@@ -741,3 +684,392 @@ end
 -----------------------------
 --     Custom functions    --
 -----------------------------
+
+
+function ExportScript.Radios(mainPanelDevice)
+
+	-- UHF Radio 
+	---------------------------------------------------
+	local lUHFRadio = GetDevice(31)
+	local UHF_readout
+	if lUHFRadio:is_on() then
+		--ExportScript.Tools.SendData(2000, string.format("%.3f", lUHFRadio:get_frequency()/1000000))
+		--ExportScript.Tools.WriteToLog('UHF_Freq: '..ExportScript.Tools.dump(list_indication(5)))
+
+		local lUHFRadioFreq = ExportScript.Tools.getListIndicatorValue(5)
+
+		if lUHFRadioFreq ~= nil and lUHFRadioFreq.UHF_Freq ~= nil then
+			UHF_readout = string.format("%s", lUHFRadioFreq.UHF_Freq)
+		end
+	else
+		UHF_readout = string.format("%s", "---.---")
+	end
+	ExportScript.Tools.SendData(2002, "UHF\n" .. UHF_readout)
+
+	-- AM Radio 
+	---------------------------------------------------
+	local lAMRadio = GetDevice(5)
+	local VHFAM_readout
+	if lAMRadio:is_on() then
+		--ExportScript.Tools.SendData(2001, string.format("%.3f", lAMRadio:get_frequency()/1000000))
+		VHFAM_readout = ExportScript.Tools.RoundFreqeuncy(lAMRadio:get_frequency()/1000000)
+	else
+		VHFAM_readout = string.format("%s", "---.---")
+	end
+	ExportScript.Tools.SendData(2003, "VHF AM\n" .. VHFAM_readout)
+
+	-- FM Radio PR4G
+	---------------------------------------------------
+	
+	local lFM_RADIO_PRESET = {[0.0]="1",[0.2]="2",[0.3]="3",[0.5]="4",[0.6]="5",[0.8]="6",[0.9]="0",[1.1]="R"}
+	ExportScript.Tools.SendData(2004, "CH " .. lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
+	
+	local lFMRadio = GetDevice(28)
+	local VHFFM_readout
+	if lFMRadio:is_on() then
+		--ExportScript.Tools.SendData(2002, string.format("%.3f", lFMRadio:get_frequency()/1000000))
+		--ExportScript.Tools.WriteToLog('FM_Freq: '..ExportScript.Tools.dump(list_indication(4)))
+
+		local lFMRadioFreq = ExportScript.Tools.getListIndicatorValue(4)
+
+		if lFMRadioFreq ~= nil and lFMRadioFreq.FM_Freq ~= nil then
+			VHFFM_readout = string.format("%s", lFMRadioFreq.FM_Freq)
+			ExportScript.Tools.SendData(2005, "VHF FM\n" ..  string.format("%s", lFMRadioFreq.FM_Freq) .. "\n" ..
+																	"CH " .. lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
+		end
+	else
+		VHFFM_readout = string.format("%s", "---.---")
+		ExportScript.Tools.SendData(2005, "VHF FM\n--.---\nCH " .. lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
+	end
+	ExportScript.Tools.SendData(2006, "VHF FM\n" .. VHFFM_readout)
+	-- [273] = "%.3f",	-- FM RADIO - Chanel Selector {0.0,0.143,0.286,0.429,0.572,0.715,0.858,1.0} -- laut clickabledata.lua
+	-- [273] = "%.1f",	-- FM RADIO - Chanel Selector {0.0,0.2,0.3,0.5,0.6,0.8,0.9,1.1} -- gerundet
+	
+	
+	--ExportScript.Tools.SendData(2012, "CH " .. lFM_RADIO_PRESET[ExportScript.Tools.round(mainPanelDevice:get_argument_value(273), 1, "ceil")])
+	-- Weapon Panel
+	---------------------------------------------------
+	if mainPanelDevice:get_argument_value(354) >= 0.0 then -- Weapon panel is On
+		local lWeaponPanelDisplays = ExportScript.Tools.getListIndicatorValue(8)
+
+		if lWeaponPanelDisplays ~= nil then
+			if lWeaponPanelDisplays.LEFT_screen ~= nil then
+				ExportScript.Tools.SendData(2000, string.format("%s", lWeaponPanelDisplays.LEFT_screen))
+			end
+			if lWeaponPanelDisplays.RIGHT_screen ~= nil then
+				ExportScript.Tools.SendData(2001, string.format("%s", lWeaponPanelDisplays.RIGHT_screen))
+			end
+		end
+	else
+		ExportScript.Tools.SendData(2000, "-")
+		ExportScript.Tools.SendData(2001, "-")
+	end
+
+	---------
+	-- ADF --
+	---------
+	local ADF_nav1_centaine = mainPanelDevice:get_argument_value(158)
+	local ADF_nav1_dizaine = mainPanelDevice:get_argument_value(159)
+	local ADF_nav1_unite = mainPanelDevice:get_argument_value(160)
+	local ADF_nav1_dec = mainPanelDevice:get_argument_value(161)
+	
+	if ADF_nav1_centaine < 0.05 then
+		ADF_nav1_centaine = 0
+	elseif ADF_nav1_centaine < 0.15 then
+		ADF_nav1_centaine = 1
+	elseif ADF_nav1_centaine < 0.25 then
+		ADF_nav1_centaine = 2
+	elseif ADF_nav1_centaine < 0.35 then
+		ADF_nav1_centaine = 3
+	elseif ADF_nav1_centaine < 0.45 then
+		ADF_nav1_centaine = 4
+	elseif ADF_nav1_centaine < 0.55 then
+		ADF_nav1_centaine = 5
+	elseif ADF_nav1_centaine < 0.65 then
+		ADF_nav1_centaine = 6
+	elseif ADF_nav1_centaine < 0.75 then
+		ADF_nav1_centaine = 7
+	elseif ADF_nav1_centaine < 0.85 then
+		ADF_nav1_centaine = 8
+	elseif ADF_nav1_centaine < 0.95 then
+		ADF_nav1_centaine = 9
+	else
+		ADF_nav1_centaine = 0
+	end
+	
+	if ADF_nav1_dizaine < 0.05 then
+		ADF_nav1_dizaine = 0
+	elseif ADF_nav1_dizaine < 0.15 then
+		ADF_nav1_dizaine = 1
+	elseif ADF_nav1_dizaine < 0.25 then
+		ADF_nav1_dizaine = 2
+	elseif ADF_nav1_dizaine < 0.35 then
+		ADF_nav1_dizaine = 3
+	elseif ADF_nav1_dizaine < 0.45 then
+		ADF_nav1_dizaine = 4
+	elseif ADF_nav1_dizaine < 0.55 then
+		ADF_nav1_dizaine = 5
+	elseif ADF_nav1_dizaine < 0.65 then
+		ADF_nav1_dizaine = 6
+	elseif ADF_nav1_dizaine < 0.75 then
+		ADF_nav1_dizaine = 7
+	elseif ADF_nav1_dizaine < 0.85 then
+		ADF_nav1_dizaine = 8
+	elseif ADF_nav1_dizaine < 0.95 then
+		ADF_nav1_dizaine = 9
+	else
+		ADF_nav1_dizaine = 0
+	end
+	
+	if ADF_nav1_unite < 0.05 then
+		ADF_nav1_unite = 0
+	elseif ADF_nav1_unite < 0.15 then
+		ADF_nav1_unite = 1
+	elseif ADF_nav1_unite < 0.25 then
+		ADF_nav1_unite = 2
+	elseif ADF_nav1_unite < 0.35 then
+		ADF_nav1_unite = 3
+	elseif ADF_nav1_unite < 0.45 then
+		ADF_nav1_unite = 4
+	elseif ADF_nav1_unite < 0.55 then
+		ADF_nav1_unite = 5
+	elseif ADF_nav1_unite < 0.65 then
+		ADF_nav1_unite = 6
+	elseif ADF_nav1_unite < 0.75 then
+		ADF_nav1_unite = 7
+	elseif ADF_nav1_unite < 0.85 then
+		ADF_nav1_unite = 8
+	elseif ADF_nav1_unite < 0.95 then
+		ADF_nav1_unite = 9
+	else
+		ADF_nav1_unite = 0
+	end
+	
+	if ADF_nav1_dec < 0.05 then
+		ADF_nav1_dec = 0
+	elseif ADF_nav1_dec < 0.15 then
+		ADF_nav1_dec = 1
+	elseif ADF_nav1_dec < 0.25 then
+		ADF_nav1_dec = 2
+	elseif ADF_nav1_dec < 0.35 then
+		ADF_nav1_dec = 3
+	elseif ADF_nav1_dec < 0.45 then
+		ADF_nav1_dec = 4
+	elseif ADF_nav1_dec < 0.55 then
+		ADF_nav1_dec = 5
+	elseif ADF_nav1_dec < 0.65 then
+		ADF_nav1_dec = 6
+	elseif ADF_nav1_dec < 0.75 then
+		ADF_nav1_dec = 7
+	elseif ADF_nav1_dec < 0.85 then
+		ADF_nav1_dec = 8
+	elseif ADF_nav1_dec < 0.95 then
+		ADF_nav1_dec = 9
+	else
+		ADF_nav1_dec = 0
+	end
+	
+	local ADF_nav2_centaine = mainPanelDevice:get_argument_value(162)
+	local ADF_nav2_dizaine = mainPanelDevice:get_argument_value(163)
+	local ADF_nav2_unite = mainPanelDevice:get_argument_value(164)
+	local ADF_nav2_dec = mainPanelDevice:get_argument_value(165)
+	
+	if ADF_nav2_centaine < 0.05 then
+		ADF_nav2_centaine = 0
+	elseif ADF_nav2_centaine < 0.15 then
+		ADF_nav2_centaine = 1
+	elseif ADF_nav2_centaine < 0.25 then
+		ADF_nav2_centaine = 2
+	elseif ADF_nav2_centaine < 0.35 then
+		ADF_nav2_centaine = 3
+	elseif ADF_nav2_centaine < 0.45 then
+		ADF_nav2_centaine = 4
+	elseif ADF_nav2_centaine < 0.55 then
+		ADF_nav2_centaine = 5
+	elseif ADF_nav2_centaine < 0.65 then
+		ADF_nav2_centaine = 6
+	elseif ADF_nav2_centaine < 0.75 then
+		ADF_nav2_centaine = 7
+	elseif ADF_nav2_centaine < 0.85 then
+		ADF_nav2_centaine = 8
+	elseif ADF_nav2_centaine < 0.95 then
+		ADF_nav2_centaine = 9
+	else
+		ADF_nav2_centaine = 0
+	end
+	
+	if ADF_nav2_dizaine < 0.05 then
+		ADF_nav2_dizaine = 0
+	elseif ADF_nav2_dizaine < 0.15 then
+		ADF_nav2_dizaine = 1
+	elseif ADF_nav2_dizaine < 0.25 then
+		ADF_nav2_dizaine = 2
+	elseif ADF_nav2_dizaine < 0.35 then
+		ADF_nav2_dizaine = 3
+	elseif ADF_nav2_dizaine < 0.45 then
+		ADF_nav2_dizaine = 4
+	elseif ADF_nav2_dizaine < 0.55 then
+		ADF_nav2_dizaine = 5
+	elseif ADF_nav2_dizaine < 0.65 then
+		ADF_nav2_dizaine = 6
+	elseif ADF_nav2_dizaine < 0.75 then
+		ADF_nav2_dizaine = 7
+	elseif ADF_nav2_dizaine < 0.85 then
+		ADF_nav2_dizaine = 8
+	elseif ADF_nav2_dizaine < 0.95 then
+		ADF_nav2_dizaine = 9
+	else
+		ADF_nav2_dizaine = 0
+	end
+	
+	if ADF_nav2_unite < 0.05 then
+		ADF_nav2_unite = 0
+	elseif ADF_nav2_unite < 0.15 then
+		ADF_nav2_unite = 1
+	elseif ADF_nav2_unite < 0.25 then
+		ADF_nav2_unite = 2
+	elseif ADF_nav2_unite < 0.35 then
+		ADF_nav2_unite = 3
+	elseif ADF_nav2_unite < 0.45 then
+		ADF_nav2_unite = 4
+	elseif ADF_nav2_unite < 0.55 then
+		ADF_nav2_unite = 5
+	elseif ADF_nav2_unite < 0.65 then
+		ADF_nav2_unite = 6
+	elseif ADF_nav2_unite < 0.75 then
+		ADF_nav2_unite = 7
+	elseif ADF_nav2_unite < 0.85 then
+		ADF_nav2_unite = 8
+	elseif ADF_nav2_unite < 0.95 then
+		ADF_nav2_unite = 9
+	else
+		ADF_nav2_unite = 0
+	end
+	
+	if ADF_nav2_dec < 0.05 then
+		ADF_nav2_dec = 0
+	elseif ADF_nav2_dec < 0.15 then
+		ADF_nav2_dec = 1
+	elseif ADF_nav2_dec < 0.25 then
+		ADF_nav2_dec = 2
+	elseif ADF_nav2_dec < 0.35 then
+		ADF_nav2_dec = 3
+	elseif ADF_nav2_dec < 0.45 then
+		ADF_nav2_dec = 4
+	elseif ADF_nav2_dec < 0.55 then
+		ADF_nav2_dec = 5
+	elseif ADF_nav2_dec < 0.65 then
+		ADF_nav2_dec = 6
+	elseif ADF_nav2_dec < 0.75 then
+		ADF_nav2_dec = 7
+	elseif ADF_nav2_dec < 0.85 then
+		ADF_nav2_dec = 8
+	elseif ADF_nav2_dec < 0.95 then
+		ADF_nav2_dec = 9
+	else
+		ADF_nav2_dec = 0
+	end
+	
+	local ADF_RADIO_Select = mainPanelDevice:get_argument_value(166)
+	local isADF1Selected = 1
+	if ADF_RADIO_Select > 0.01 then
+		isADF1Selected = 0
+	end
+	ExportScript.Tools.SendData(2007, isADF1Selected)
+	
+	local ADF_display
+	if isADF1Selected == 1 then
+		ADF_freqDisplay = (ADF_nav1_centaine .. ADF_nav1_dizaine .. ADF_nav1_unite .. "." .. ADF_nav1_dec)
+	else
+		ADF_freqDisplay = (ADF_nav2_centaine .. ADF_nav2_dizaine .. ADF_nav2_unite .. "." .. ADF_nav2_dec)
+	end
+	
+	local ADF_shortandSelect
+	if isADF1Selected == 1 then
+		ADF_shortandSelect = "A1"
+	else
+		ADF_shortandSelect = "A2"
+	end
+	
+	ExportScript.Tools.SendData(2008, "ADF\n\n" .. ADF_freqDisplay)
+	ExportScript.Tools.SendData(2009, "ADF\n" .. ADF_freqDisplay)
+	
+	ExportScript.Tools.SendData(2010, "ADF\n" .. ADF_nav1_centaine .. ADF_nav1_dizaine .. ADF_nav1_unite .. "." .. ADF_nav1_dec .. "\n" .. ADF_nav2_centaine .. ADF_nav2_dizaine .. ADF_nav2_unite .. "." .. ADF_nav2_dec)
+
+	--helpers for the knob readouts
+	ExportScript.Tools.SendData(2011, ADF_nav1_unite .. "." .. ADF_nav1_dec)
+	ExportScript.Tools.SendData(2012, ADF_nav2_unite .. "." .. ADF_nav2_dec)
+	
+	
+	---------------------
+	-- All Radios Tile --
+	---------------------
+
+	ExportScript.Tools.SendData(2013, "U " .. UHF_readout
+										.. "\n" .. "VA " .. VHFAM_readout
+										.. "\n" .. "VF " .. VHFFM_readout
+										.. "\n" .. ADF_shortandSelect .. " " .. ADF_freqDisplay)
+										
+end
+
+
+------------------------------
+-- General Helper Functions --
+------------------------------
+
+function ExportScript.Linearize(current_value, raw_tab, final_tab)
+  -- (c) scoobie
+  if current_value <= raw_tab[1] then
+    return final_tab[1] 
+  end
+  for index, value in pairs(raw_tab) do
+    if current_value <= value then
+      local ft = final_tab[index]
+      local rt = raw_tab[index]
+      return (current_value - rt) * (ft - final_tab[index - 1]) / (rt - raw_tab[index - 1]) + ft
+    end
+  end
+  -- we shouldn't be here, so something went wrong - return arbitrary max. final value, maybe the user will notice the problem:
+  return final_tab[#final_tab]
+end
+
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+
+function format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
+
+  local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+
+  -- reverse the int-string and append a comma to all blocks of 3 digits
+  int = int:reverse():gsub("(%d%d%d)", "%1,")
+
+  -- reverse the int-string back remove an optional comma and put the 
+  -- optional minus and fractional part back
+  return minus .. int:reverse():gsub("^,", "") .. fraction
+end
+
+function trim(s) --http://lua-users.org/wiki/CommonFunctions
+  -- from PiL2 20.4
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+
+
+
+
+-- Notes
+
+--[[
+local a = ExportScript.Tools.split(list_indication(3), "%c")
+return a
+contains the nav screen output
+
+add ADF radio output
+
+add radar altimeter with warning
+
+]]--
