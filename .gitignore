@@ -41,3 +41,6 @@ luac.out
 
 # swap file
 *.*~
+
+# Working Files
+# *.psd

@@ -1,0 +1,779 @@
+-- DCS MB-339APAN Export
+
+ExportScript.FoundDCSModule = true
+ExportScript.Version.MB339APAN = "1.2.1"
+
+ExportScript.ConfigEveryFrameArguments = 
+{
+	--[[
+	every frames arguments
+	based of "mainpanel_init.lua"
+	Example (http://www.lua.org/manual/5.1/manual.html#pdf-string.format)
+	[DeviceID] = "Format"
+	  [4] = "%.4f",  <- floating-point number with 4 digits after point
+	 [19] = "%0.1f", <- floating-point number with 1 digit after point
+	[129] = "%1d",   <- decimal number
+	  [5] = "%.f",   <- floating point number rounded to a decimal number
+	]]
+}
+ExportScript.ConfigArguments = 
+{
+	--[[
+	arguments for export in low tick interval
+	based on "clickabledata.lua"
+	]]
+	
+	-- Un-clickables
+	[39] = "%0.4f", -- PilotHeadHorizMov
+	[99] = "%0.4f", -- PilotHeadVertMov
+	[400] = "%0.4f", -- mirrors_draw_0
+	[550] = "%0.4f", -- PilotCfg
+	[594] = "%0.4f", -- mirrors_draw_1
+	[1000] = "%0.4f", -- PilotDraw
+	[1001] = "%0.4f", -- FrontSeat
+	[1002] = "%0.4f", -- InstructorBody
+	[1039] = "%0.4f", -- InstructorHeadHorizMov
+	[1099] = "%0.4f", -- InstructorHeadVertMov
+	
+	-- Clickables
+	[0] = "%.02f", -- 
+	[1] = "%.02f", -- Flaps Indicator
+	[2] = "%.02f", -- Speed Brake Indicator
+	[3] = "%.02f", -- Nose Up/Down Indicator
+	[4] = "%.02f", -- Gear Handle
+	
+	[6] = "%.02f", -- Acceleration G Indicator
+	[7] = "%.02f", -- 
+	[8] = "%.02f", -- Airspeed Indicator
+	[9] = "%.02f", -- ADI Pitch
+	[10] = "%.02f", -- ADI Roll
+	[11] = "%.02f", -- ILS Vertical Guidance Indicator
+	[12] = "%.02f", -- 
+	[13] = "%.02f", -- 
+	[14] = "%.02f", -- 
+	[15] = "%.02f", -- ADI Knob
+	[16] = "%.02f", -- Engine RPM Needle
+	[17] = "%.02f", -- Rudder Pedal Left/Right
+	
+	[19] = "%.02f", -- 
+	[20] = "%.02f", -- Gear Green Light
+	[21] = "%.02f", -- ADI NAV Flag
+	[22] = "%.02f", -- ADI ILS Flag
+	[23] = "%.02f", -- ADI Top Flag
+	[24] = "%.02f", -- 
+	[25] = "%.02f", -- 
+	[26] = "%.02f", -- 
+	[27] = "%.02f", -- 
+	[28] = "%.02f", -- 
+	[29] = "%.02f", -- 
+	
+	
+	
+	[30] = "%0.2f", -- KPP-1273K Attitude Director Indicator (ADI) Cage Button {1,0,1}
+	[31] = "%.02f", -- Landing Gear Right Light 
+	[32] = "%.02f", -- Landing Gear Left Light
+	[33] = "%.02f", -- RPM Indicator 10s
+	[34] = "%.02f", -- 
+	[35] = "%.02f", -- 
+	[36] = "%.02f", -- 
+	[37] = "%.02f", -- 
+	[38] = "%.02f", -- 
+	[39] = "%0.2f", -- KPP-1273K Attitude Director Indicator (ADI) Pitch Trim Knob {0,-1,1}
+	[40] = "%.02f", -- 
+	[41] = "%.02f", -- 
+	[42] = "%.02f", -- Landing Gear Handle Red Light
+	[43] = "%.02f", -- 
+	[44] = "%.02f", -- Clock Button
+	[45] = "%.02f", -- Clock Twist
+	[46] = "%.02f", -- Clock Min Needle
+	[47] = "%.02f", -- Clock Hrs Needle
+	[48] = "%0.2f", -- HSI Course set knob {0,0,1} or Clock Sec Needle
+	[49] = "%0.2f", -- Clock Set Needle
+	[50] = "%0.2f", -- Altimeter Hunds Needle
+	[51] = "%0.2f", -- Clock Twist
+	[52] = "%0.2f", -- Altimeter Thou Window
+	[53] = "%0.2f", -- Altimeter Ten Thou Window
+	[54] = "%0.2f", -- 
+	[55] = "%0.2f", -- 
+	[56] = "%0.2f", -- 
+	[57] = "%0.2f", -- Baro pressure QFE knob {1,0,1}
+	[58] = "%0.2f", -- 
+	[59] = "%0.2f", --
+	[60] = "%0.2f", -- RV-5M Radio Altimeter Test Button/Decision Height Knob {1,0,1} or Stick Fwd/Aft
+	[61] = "%0.2f", -- RV-5M Radio Altimeter Test Button/Decision Height Knob {0.1,0,1} or Stick Left/Right
+	[62] = "%0.2f", -- 
+	[63] = "%0.2f", -- 
+	[64] = "%0.2f", -- Weapon Selector Window 6
+	[65] = "%0.2f", -- Weapon Selector Window 5
+	[66] = "%0.2f", -- Weapon Selector Window 3
+	[67] = "%0.2f", -- Weapon Selector Window 4
+	[68] = "%0.2f", -- Weapon Selector Window 2
+	[69] = "%0.2f", -- Weapon Selector Window 1
+	[70] = "%0.2f", -- Select Jettison
+	
+	-- TODO: Continue Here
+	
+	[89] = "%0.2f", -- Reset Limits {1,0,1}
+	
+	[99] = "%0.2f", -- Pilot Head up/down
+	
+	[101] = "%0.2f", -- ASP-3NMU Gunsight Mode GYRO/FIXED {1,0,1}
+	[102] = "%0.2f", -- ASP-3NMU Gunsight Brightness Knob {0,0,1}
+	[103] = "%0.2f", -- ASP-3NMU Gunsight Target Wingspan Adjustment Dial (meters) {0,0,1}
+	[104] = "%0.2f", -- ASP-3NMU Gunsight Color Filter ON/OFF {1,0,1}
+	[105] = "%0.2f", -- ASP-3NMU Gunsight Fixed Reticle Mask Lever {1,0,1}
+	[106] = "%0.2f", -- ASP-3NMU Gunsight Mirror Depression {0,0,1}
+	[107] = "%0.2f", -- ASP-3NMU Gunsight Target Distance {0,0,1}
+	
+	[118] = "%0.2f", -- Landing Gear Control Lever {1,-1,1}
+	[119] = "%0.2f", -- RKL-41 ADF Outer-Inner Beacon (Far-Near NDB) Switch {1,0,1}
+	
+	[120] = "%0.2f", -- Diffuser and Flight Suit Temperature Rheostat {0.5,0,1}
+	[121] = "%0.2f", -- Diffuser and Flight Suit Air Conditioning Control Switch HEAT/AUTO/COOL {0.05,0,0.25}
+	
+	[124] = "%0.2f", -- MC Synchronization Button - Push to synchronize (level flight only) {1,0,1}
+	
+	[133] = "%0.2f", -- Intercom Button {1,0,1}
+	[134] = "%0.2f", -- Radio Button {1,0,1}
+	[135] = "%0.2f", -- Air Brake Switch {1,0,1}
+	[136] = "%0.2f", -- Air Brake Switch {1,0,1}
+	
+	[141] = "%0.2f", -- Battery Switch ON/OFF {1,0,1}
+	[142] = "%0.2f", -- Main Generator Switch ON/OFF {1,0,1}
+	[143] = "%0.2f", -- Emergency Generator Switch ON/OFF {1,0,1}
+	[144] = "%0.2f", -- CB Engine Switch ON/OFF {1,0,1}
+	[145] = "%0.2f", -- CB AGD-GMK Switch ON/OFF {1,0,1}
+	[146] = "%0.2f", -- CB Inverter 1 (AC 115V) Switch ON/OFF {1,0,1}
+	[147] = "%0.2f", -- CB Inverter 2 (AC 115V) Switch ON/OFF {1,0,1}
+	[148] = "%0.2f", -- CB RDO (ICS and Radio) Switch ON/OFF {1,0,1}
+	[149] = "%0.2f", -- CB MRP-RV (Marker Beacon Receiver and Radio Altimeter) Switch ON/OFF {1,0,1}
+	[150] = "%0.2f", -- CB RSBN (ISKRA) Switch ON/OFF {1,0,1}
+	[151] = "%0.2f", -- CB IFF (SRO) Emergency Connection Switch ON/OFF {1,0,1}
+	[152] = "%0.2f", -- CB RSBN (ISKRA) Emergency Connection Switch ON/OFF {1,0,1}
+	[153] = "%0.2f", -- CB Wing Tanks Switch ON/OFF {1,0,1}
+	[154] = "%0.2f", -- CB RIO-3 De-Icing Signal Switch ON/OFF {1,0,1}
+	[155] = "%0.2f", -- CB SDU Switch ON/OFF {1,0,1}
+	[157] = "%0.2f", -- RKL-41 ADF Volume Knob {1,,}
+	[158] = "%0.2f", -- RKL-41 ADF Control Switch TAKE CONTROL/HAND OVER CONTROL {1,0,1}
+	[159] = "%0.2f", -- RKL-41 ADF Mode Switch TLF(A3)/TLG(A1 - A2) {1,0,1}
+	[160] = "%0.2f", -- RKL-41 ADF Function Selector Switch OFF/COMP(AUTO)/COMP(MAN)/ANT/LOOP {0.1,0,0.4}
+	[161] = "%0.2f", -- RKL-41 ADF Brightness Knob {1,,}
+	[162] = "%0.2f", -- RKL-41 ADF Loop Switch LEFT/OFF/RIGHT {1,0,1}
+	[163] = "%0.2f", -- RKL-41 ADF Far NDB 100kHz rotary {0.0588,0,0.938}
+	[164] = "%0.2f", -- RKL-41 ADF Far NDB 10kHz rotary {0.1,0,0.9}
+	[165] = "%0.2f", -- RKL-41 ADF Far NDB Frequency Tune {0,0,1}
+	[166] = "%0.2f", -- RKL-41 ADF Near NDB 100kHz rotary {0.0588,0,0.938}
+	[167] = "%0.2f", -- RKL-41 ADF Near NDB 10kHz rotary {0.1,0,0.9}
+	[168] = "%0.2f", -- RKL-41 ADF Near NDB Frequency Tune {0,0,1}
+	[169] = "%0.2f", -- Emergency Engine Instruments Power Switch ON/OFF {1,0,1}
+	
+	[172] = "%0.2f", -- Cabin Air Conditioning Control Switch OFF/HEAT/COOL/AUTOMATIC {0.05,0,0.25}
+	[173] = "%0.2f", -- Cabin Air Temperature Controller Rheostat {0.5,0,1}
+	[174] = "%0.2f", -- De-Icing Mode Switch MANUAL/AUTOMATIC/OFF {0.1,0,0.2}
+	[175] = "%0.2f", -- Navigation Lights Intensity Control Switch DIM(30%)/BRT(60%)/MAX(100%) {0.5,0,1}
+	[176] = "%0.2f", -- Navigation Lights Mode Control Switch FLICKER/OFF/FIXED {0.5,0,1}
+	[177] = "%0.2f", -- SDU Switch ON/OFF {1,0,1}
+	[178] = "%0.2f", -- RSBN Mode Switch LANDING/NAVIGATION/GLIDE PATH {0.1,0,0.2}
+	[179] = "%0.2f", -- RSBN Identification Button {1,0,1}
+	[180] = "%0.2f", -- RSBN Test Button - Push to test {1,0,1}
+	[181] = "%0.2f", -- RSBN Control Box Lighting Intensity Knob {0,0,1}
+	[183] = "%0.2f", -- RIO-3 De-Icing Sensor Heating Circuit Check Button - Push to test {1,0,1}
+	[184] = "%0.2f", -- RSBN Volume Knob {0,0,0.8}
+	
+	[187] = "%0.2f", -- Initial Azimuth {1,0,1}
+	[188] = "%0.2f", -- Initial Range {1,0,1}
+	
+	[191] = "%0.2f", -- RSBN Navigation Channel Selector Knob {0.025,0,0.975}
+	[192] = "%0.2f", -- RSBN Landing Channel Selector Knob {0.025,0,0.975}
+	[193] = "%0.2f", -- Set 0 Azimuth {1,0,1}
+	[194] = "%0.2f", -- Emergency Landing Gear Extension Lever FORWARD(OFF)/BACKWARD(ON) {1,0,1}
+	[195] = "%0.2f", -- Emergency Flaps Extension Lever FORWARD(OFF)/BACKWARD(ON) {1,0,1}
+	[196] = "%0.2f", -- RAT (Emergency Generator) Emergency Lever FORWARD(OFF)/BACKWARD(ON) {1,0,1}
+	[197] = "%0.2f", -- Main and Emergency Hydraulic Systems Interconnection Lever FORWARD(OFF)/BACKWARD(ON) {1,0,1}
+	
+	[201] = "%0.2f", -- RSBN Field Elevation Knob {0,0,1}
+	[202] = "%0.2f", -- Warning-Light Intensity Knob {1,0,1}
+	[203] = "%0.2f", -- Warning-Light Check Button - Push to check {1,0,1}
+	[204] = "%0.2f", -- GMK-1AE GMC Hemisphere Selection Switch N(orth)/S(outh) {2,-1,1}
+	[205] = "%0.2f", -- GMK-1AE GMC Test Switch 0(degrees)/OFF/300(degrees) - Use to check heading indication accuracy {1,0,1}
+	
+	[207] = "%0.2f", -- GMK-1AE GMC Mode Switch MC(Magnetic Compass Mode)/GC(Directional Gyro Mode) {2,-1,1}
+	[208] = "%0.2f", -- GMK-1AE GMC Course Selector Switch CCW/OFF/CW {1,0,1}
+	[209] = "%0.2f", -- GMK-1AE GMC Latitude Selector Knob {0,0,0.728}
+	
+	[211] = "%0.2f", -- CB Air Conditioning ON/OFF {1,0,1}
+	[212] = "%0.2f", -- CB Anti-Ice ON/OFF {1,0,1}
+	[213] = "%0.2f", -- CB Pitot Left ON/OFF {1,0,1}
+	[214] = "%0.2f", -- CB Pitot Right ON/OFF {1,0,1}
+	[215] = "%0.2f", -- CB PT-500C ON/OFF {1,0,1}
+	[216] = "%0.2f", -- CB ARC ON/OFF {1,0,1}
+	[217] = "%0.2f", -- CB SRO ON/OFF {1,0,1}
+	[218] = "%0.2f", -- CB Seat-Helmet ON/OFF {1,0,1}
+	[219] = "%0.2f", -- CB Gears ON/OFF {1,0,1}
+	[220] = "%0.2f", -- CB Control ON/OFF {1,0,1}
+	[221] = "%0.2f", -- CB Signaling ON/OFF {1,0,1}
+	[222] = "%0.2f", -- CB Nav. Lights ON/OFF {1,0,1}
+	[223] = "%0.2f", -- CB Spotlight Left ON/OFF {1,0,1}
+	[224] = "%0.2f", -- CB Spotlight Right ON/OFF {1,0,1}
+	[225] = "%0.2f", -- CB Red Lights ON/OFF {1,0,1}
+	[226] = "%0.2f", -- CB White Lights ON/OFF {1,0,1}
+	[227] = "%0.2f", -- CB Start Panel ON/OFF {1,0,1}
+	[228] = "%0.2f", -- CB Booster Pump ON/OFF {1,0,1}
+	[229] = "%0.2f", -- CB Ignition 1 ON/OFF {1,0,1}
+	[230] = "%0.2f", -- CB Ignition 2 ON/OFF {1,0,1}
+	[231] = "%0.2f", -- CB Engine Instruments ON/OFF {1,0,1}
+	[232] = "%0.2f", -- CB Fire ON/OFF {1,0,1}
+	[233] = "%0.2f", -- CB Emergency Jettison ON/OFF {1,0,1}
+	[234] = "%0.2f", -- CB SARPP ON/OFF {1,0,1}
+	
+	[242] = "%0.2f", -- RT-12 JPT Regulator Test Switch I/OFF/II {1,-1,1}
+	[243] = "%0.2f", -- RT-12 JPT Regulator Power Switch ON/OFF {1,0,1}
+	[244] = "%0.2f", -- Forward Canopy Emergency Jettison Handle {1,0,1}
+	
+	[249] = "%0.2f", -- Emergency Instrument Light Switch ON/OFF {1,0,1}
+	
+	[254] = "%0.2f", -- CB Armament System Power Switch ON/OFF {1,0,1}
+	[255] = "%0.2f", -- CB UB-16 Rocket Firing Control Circuit Power Switch ON/OFF {1,0,1}
+	[256] = "%0.2f", -- CB ASP-FKP (Gunsight and Gun Camera) Power Switch ON/OFF {1,0,1}
+	[257] = "%0.2f", -- CB Missile Seeker Heating Circuit Power Switch ON/OFF {1,0,1}
+	[258] = "%0.2f", -- CB Missile Seeker Glowing Circuit Power Switch ON/OFF {1,0,1}
+	[259] = "%0.2f", -- Missile Seeker Tone Volume Knob {1,0,1}
+	[260] = "%0.2f", -- Missile/Bomb Release Selector Switch PORT(Left)/STARB-BOTH(Right for Missiles/Both) {1,0,1}
+	[267] = "%0.2f", -- Arm/Safe Bombs Emergency Jettison Switch Cover OPEN/CLOSE {1,0,1}
+	[268] = "%0.2f", -- Arm/Safe Bombs Emergency Jettison Switch LIVE/BLANK {1,0,1}
+	[269] = "%0.2f", -- Emergency Jettison Switch Cover OPEN/CLOSE {1,0,1}
+	[270] = "%0.2f", -- Emergency Jettison Switch ON/OFF {1,0,1}
+	[271] = "%0.2f", -- Rockets Firing Mode Selector Switch AUT./2RS/4RS {0.1,0.1,0.3}
+	[272] = "%0.2f", -- Fire Warning Signal Test Switch I/OFF/II {1,0,1}
+	[273] = "%0.2f", -- EKSR-46 Signal Flare Dispenser Power Switch ON/OFF {1,0,1}
+	[274] = "%0.2f", -- EKSR-46 Yellow Signal Flare Launch Button {1,0,1}
+	[275] = "%0.2f", -- EKSR-46 Green Signal Flare Launch Button {1,0,1}
+	[276] = "%0.2f", -- EKSR-46 Red Signal Flare Launch Button {1,0,1}
+	[277] = "%0.2f", -- EKSR-46 White Signal Flare Launch Button {1,0,1}
+	[281] = "%0.2f", -- Flaps Flight Position (0 degrees) Button {1,0,1}
+	[282] = "%0.2f", -- Flaps Takeoff Position (25 degrees) Button {1,0,1}
+	[283] = "%0.2f", -- Flaps Landing Position (44 degrees) Button {1,0,1}
+	[284] = "%0.2f", -- R-832M Preset Channel Selector Knob {0.05,0,0.95}
+	[285] = "%0.2f", -- Forward Canopy Lock Handle {1,0,1}
+	[286] = "%0.2f", -- Squelch Switch ON/OFF {1,0,1}
+	[287] = "%0.2f", -- Radio Control Switch - Flip switch to take control {1,0,1}
+	[288] = "%0.2f", -- Intercom Volume Knob {0.5,0,0.8}
+	[289] = "%0.2f", -- Radio Volume Knob {0.5,0,0.8}
+	[290] = "%0.2f", -- Reserve Intercom Switch ON/OFF {1,0,1}
+	[291] = "%0.2f", -- ADF Audio Switch ADF/OFF {1,0,1}
+	[292] = "%0.2f", -- Standby (Left) Pitot Tube Heating Off Button - Push to turn heating off {1,0,1}
+	[293] = "%0.2f", -- Main (Right) Pitot Tube Heating Off Button - Push to turn heating off {1,0,1}
+	[294] = "%0.2f", -- Standby (Left) Pitot Tube Heating Button - Push to turn heating on {1,0,1}
+	[295] = "%0.2f", -- Main (Right) Pitot Tube Heating Button - Push to turn heating on {1,0,1}
+	[296] = "%0.2f", -- Fuel Shut-Off Lever {1,0,1}
+	[297] = "%0.2f", -- RSBN Listen Callsign Button - Push to listen {1,0,1}
+	[298] = "%0.2f", -- SARPP Flight Recorder ON/OFF {1,0,1}
+	[300] = "%0.2f", -- or Battery Switch
+	[301] = "%0.2f", -- Generator 1 Switch
+	[302] = "%0.2f", -- Generator 2 Switch
+	[303] = "%0.2f", -- Ac Pwr Emerg Switch
+	[304] = "%0.2f", -- Diluter Demand Switch 100% / MIX {1,0,1}
+	[306] = "%0.2f", -- Oxygen Supply Valve (CLOSE - CW OPEN - CCW) {0,0,1}
+	[307] = "%0.2f", -- Helmet Ventilation Switch ON/OFF {1,0,1}
+	[308] = "%0.2f", -- Helmet Heating Mode Switch AUTO/OFF/ON {0.5,0,1}
+	[309] = "%0.2f", -- Helmet Visor Quick Heating Button - Push to heat {1,0,1}
+	[310] = "%0.2f", -- Helmet Heating Temperature Rheostat {0.5,0,1}
+	[311] = "%0.2f", -- Taxi and Landing Lights (Searchlights) Control Switch TAXI/OFF/LANDING {1,-1,1}
+	[312] = "%0.2f", -- Stop Turbo Switch Cover Open/Close {1,0,1}
+	[313] = "%0.2f", -- Stop Turbo Switch ON/OFF {1,0,1}
+	[314] = "%0.2f", -- Turbo Button Cover Open/Close {1,0,1}
+	[315] = "%0.2f", -- Turbo Button {1,0,1}
+	[317] = "%0.2f", -- Stop Engine Switch Cover Open/Close {1,0,1}
+	[318] = "%0.2f", -- Stop Engine Switch {1,0,1}
+	[319] = "%0.2f", -- Emergency Fuel Switch Cover Open/Close {1,0,1}
+	[320] = "%0.2f", -- Emergency Fuel Switch {1,0,1}
+	[321] = "%0.2f", -- Engine Start Mode Switch Cover Open/Close {1,0,1}
+	[322] = "%0.2f", -- Engine Start Mode Switch START/FALSE START/COLD CRANKING {0.1,0,0.2}
+	[323] = "%0.2f", -- RT-12 JPT Regulator Manual Disable Switch Cover OPEN/CLOSE {1,0,1}
+	[324] = "%0.2f", -- RT-12 JPT Regulator Manual Disable Switch RT-12 DISABLED/RT-12 ENABLED {1,0,1}
+	[325] = "%0.2f", -- Engine Button Cover Open/Close {1,0,1}
+	[326] = "%0.2f", -- Engine Button {1,0,1}
+	[327] = "%0.2f", -- Fire Extinguish Button Cover OPEN/CLOSE {1,0,1}
+	[328] = "%0.2f", -- Fire Extinguish Button - Push to extinguish {1,0,1}
+	[329] = "%0.2f", -- IV-300 Engine Vibration Test Button - Push to test {1,0,1}
+	[330] = "%0.2f", -- Instrument Lighting Switch Red/OFF/White {1,-1,1}
+	[331] = "%0.2f", -- Instrument Lights Intensity Knob {0.5,0.1,0.9}
+	
+	[333] = "%0.2f", -- Pitot Tube Selector Lever STBY(Left)/MAIN(Right) {1,0,1}
+	[334] = "%0.2f", -- Parking Brake Lever Flag - Push to remove parking brake {0,0,1}
+	[335] = "%0.2f", -- Mech clock left lever {1,0,1}
+	[336] = "%0.2f", -- Mech clock left lever {0.04,0,1}
+	[337] = "%0.2f", -- Mech clock right lever {1,0,1}
+	[338] = "%0.2f", -- Mech clock right lever {0,0,0.3}
+	[367] = "%0.2f", -- KPP-1273K Attitude Director Indicator (ADI) Cage Button {1,0,1}
+	[376] = "%0.2f", -- KPP-1273K Attitude Director Indicator (ADI) Pitch Trim Knob {0,-1,1}
+	[385] = "%0.2f", -- HSI Course set knob {0,0,1}
+	[394] = "%0.2f", -- Baro pressure QFE knob {1,0,1}
+	[398] = "%0.2f", -- RV-5M Radio Altimeter Test Button/Decision Height Knob {1,0,1}
+	[399] = "%0.2f", -- RV-5M Radio Altimeter Test Button/Decision Height Knob {0.1,0,1}
+	[412] = "%0.2f", -- Mech clock left lever {1,0,1}
+	[413] = "%0.2f", -- Mech clock left lever {0.04,0,1}
+	[414] = "%0.2f", -- Mech clock right lever {1,0,1}
+	[415] = "%0.2f", -- Mech clock right lever {0,0,0.3}
+	[419] = "%0.2f", -- Variometer adjustment knob {1,0,1}
+	[437] = "%0.2f", -- Landing Gear Control Lever {0.5,-0.5,1}
+	[440] = "%0.2f", -- RKL-41 ADF Outer-Inner Beacon (Far-Near NDB) Switch {1,0,1}
+	[444] = "%0.2f", -- MC Synchronization Button - Push to synchronize (level flight only) {1,0,1}
+	[456] = "%0.2f", -- Full Pressure Failure Lever ON/STBY/FAILURE {0.5,0,1}
+	[457] = "%0.2f", -- Static Pressure Failure Lever ON/STBY/FAILURE {0.5,0,1}
+	[458] = "%0.2f", -- GMK Failure {1,0,1}
+	[459] = "%0.2f", -- ARK Failure {1,0,1}
+	[460] = "%0.2f", -- AGD Pitch Failure {1,0,1}
+	[461] = "%0.2f", -- AGD Bank Failure {1,0,1}
+	[465] = "%0.2f", -- Flaps Flight Position (0 degrees) Button {1,0,1}
+	[466] = "%0.2f", -- Flaps Takeoff Position (25 degrees) Button {1,0,1}
+	[467] = "%0.2f", -- Flaps Landing Position (44 degrees) Button {1,0,1}
+	[468] = "%0.2f", -- R-832M Preset Channel Selector Knob {0.05,0,0.95}
+	[469] = "%0.2f", -- Squelch Switch ON/OFF {1,0,1}
+	[470] = "%0.2f", -- Radio Control Switch - Flip switch to take control {1,0,1}
+	[471] = "%0.2f", -- Intercom Volume Knob {0.5,0,0.8}
+	[472] = "%0.2f", -- Radio Volume Knob {0.5,0,0.8}
+	[473] = "%0.2f", -- Reserve Intercom Switch ON/OFF {1,0,1}
+	[474] = "%0.2f", -- ADF Audio Switch ADF/OFF {1,0,1}
+	[475] = "%0.2f", -- Fuel Shut-Off Lever {1,0,1}
+	[479] = "%0.2f", -- Emergency Oxygen Switch ON/OFF {1,0,1}
+	[480] = "%0.2f", -- Diluter Demand Switch 100% / MIX {1,0,1}
+	[482] = "%0.2f", -- Oxygen Supply Valve (CLOSE - CW OPEN - CCW) {0,0,1}
+	[484] = "%0.2f", -- Oxygen Interconnaction Valve (CLOSE - CW OPEN - CCW) {0,0,1}
+	[485] = "%0.2f", -- Rearward Canopy Lock Handle {1,0,1}
+	[486] = "%0.2f", -- Taxi and Landing Lights (Searchlights) Control Switch TAXI/OFF/LANDING {1,-1,1}
+	[487] = "%0.2f", -- Turbo Button Cover Open/Close {1,0,1}
+	[488] = "%0.2f", -- Turbo Button {1,0,1}
+	[489] = "%0.2f", -- Stop Engine Switch Cover Open/Close {1,0,1}
+	[490] = "%0.2f", -- Stop Engine Switch {1,0,1}
+	[491] = "%0.2f", -- Emergency Fuel Switch Cover Open/Close {1,0,1}
+	[492] = "%0.2f", -- Emergency Fuel Switch {1,0,1}
+	[493] = "%0.2f", -- Engine Button Cover Open/Close {1,0,1}
+	[494] = "%0.2f", -- Engine Button {1,0,1}
+	[495] = "%0.2f", -- Fire Extinguish Button Cover OPEN/CLOSE {1,0,1}
+	[496] = "%0.2f", -- Fire Extinguish Button - Push to extinguish {1,0,1}
+	[497] = "%0.2f", -- Instrument Lighting Switch Red/OFF/White {1,-1,1}
+	[498] = "%0.2f", -- Instrument Lights Intensity Knob {0.5,0.1,0.9}
+	[499] = "%0.2f", -- EGT Indicator Switch FRONT/REAR {1,0,1}
+	[502] = "%0.2f", -- Net Switch ON/OFF {1,0,1}
+	[503] = "%0.2f", -- CB Seat ON/OFF {1,0,1}
+	[504] = "%0.2f", -- CB Signal ON/OFF {1,0,1}
+	[505] = "%0.2f", -- CB Weapon Switch ON/OFF {1,0,1}
+	[506] = "%0.2f", -- Emergency Jettison Switch Cover OPEN/CLOSE {1,0,1}
+	[507] = "%0.2f", -- Emergency Jettison Switch ON/OFF {1,0,1}
+	[508] = "%0.2f", -- Arm/Safe Bombs Emergency Jettison Switch Cover OPEN/CLOSE {1,0,1}
+	[509] = "%0.2f", -- Arm/Safe Bombs Emergency Jettison Switch LIVE/BOMBS/BLANK {1,-1,1}
+	[510] = "%0.2f", -- Conditioning Shutoff Switch Cover OPEN/CLOSE {1,0,1}
+	[511] = "%0.2f", -- Conditioning Shutoff Switch OPEN/FRONT PILOT CONTROL/CLOSE {1,-1,1}
+	[512] = "%0.2f", -- CB Ground Intercom ON/OFF {1,0,1}
+	[514] = "%0.2f", -- RKL-41 ADF Volume Knob {1,,}
+	[515] = "%0.2f", -- RKL-41 ADF Control Switch TAKE CONTROL/HAND OVER CONTROL {1,0,1}
+	[516] = "%0.2f", -- RKL-41 ADF Mode Switch TLF(A3)/TLG(A1 - A2) {1,0,1}
+	[517] = "%0.2f", -- RKL-41 ADF Function Selector Switch OFF/COMP(AUTO)/COMP(MAN)/ANT/LOOP {0.1,0,0.4}
+	[518] = "%0.2f", -- RKL-41 ADF Brightness Knob {1,,}
+	[519] = "%0.2f", -- RKL-41 ADF Loop Switch LEFT/OFF/RIGHT {1,0,1}
+	[520] = "%0.2f", -- RKL-41 ADF Far NDB 100kHz rotary {0.0588,0,0.938}
+	[521] = "%0.2f", -- RKL-41 ADF Far NDB 10kHz rotary {0.1,0,0.9}
+	[522] = "%0.2f", -- RKL-41 ADF Far NDB Frequency Tune {0,0,1}
+	[523] = "%0.2f", -- RKL-41 ADF Near NDB 100kHz rotary {0.0588,0,0.938}
+	[524] = "%0.2f", -- RKL-41 ADF Near NDB 10kHz rotary {0.1,0,0.9}
+	[525] = "%0.2f", -- RKL-41 ADF Near NDB Frequency Tune {0,0,1}
+	[526] = "%0.2f", -- Course Accordance {1,0,1}
+	[527] = "%0.2f", -- RSBN Emergency Landing Switch ON/OFF {1,0,1}
+	[532] = "%0.2f", -- Magnetic Declination set knob {0,0,1}
+	[533] = "%0.2f", -- Emergency Landing Gear Extension Lever FORWARD(OFF)/BACKWARD(ON) {1,0,1}
+	[534] = "%0.2f", -- Emergency Flaps Extension Lever FORWARD(OFF)/BACKWARD(ON) {1,0,1}
+	[535] = "%0.2f", -- RAT (Emergency Generator) Emergency Lever FORWARD(OFF)/BACKWARD(ON) {1,0,1}
+	[536] = "%0.2f", -- Main and Emergency Hydraulic Systems Interconnection Lever FORWARD(OFF)/BACKWARD(ON) {1,0,1}
+	[537] = "%0.2f", -- Warning-Light Intensity Knob {1,0,1}
+	[538] = "%0.2f", -- Warning-Light Check Button - Push to check {1,0,1}
+	[539] = "%0.2f", -- Rearward Canopy Emergency Jettison Handle {1,0,1}
+	[546] = "%0.2f", -- Intercom Button {1,0,1}
+	[547] = "%0.2f", -- Radio Button {1,0,1}
+	[548] = "%0.2f", -- Air Brake Switch {1,0,1}
+	[549] = "%0.2f", -- Throttle Limiter {1,0,1}
+	[569] = "%0.2f", -- Variometer adjustment knob {1,0,1}
+	[627] = "%0.2f", -- Panel Visor Extend {1,0,1}
+	[998] = "%0.2f", -- Canopy Handle {1,0,1}
+	[999] = "%0.2f", -- Canopy Handle {1,0,1}
+	[1000] = "%0.2f", -- Instrument Flight Practice Hood Control Handle EXTEND/RETRACT {1,0,1}
+
+}
+
+-- Notes
+-- 335ish is Flight Director panel
+-- 476 master arm
+-- 488 weapon station 1 to 6 button press
+
+
+-----------------------------
+-- HIGH IMPORTANCE EXPORTS --
+-- done every export event --
+-----------------------------
+
+-- Pointed to by ProcessIkarusDCSHighImportance
+function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to Ikarus
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local lUHFRadio = GetDevice(54)
+	ExportScript.Tools.SendData("ExportID", "Format")
+	ExportScript.Tools.SendData(2000, string.format("%7.3f", lUHFRadio:get_frequency()/1000000)) -- <- special function for get frequency data
+	ExportScript.Tools.SendData(2000, ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
+	]]
+end
+
+function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
+	--[[
+	every frame export to DAC
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local UHF_RADIO = GetDevice(54)
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
+	]]
+end
+
+-----------------------------------------------------
+-- LOW IMPORTANCE EXPORTS                          --
+-- done every gExportLowTickInterval export events --
+-----------------------------------------------------
+
+-- Pointed to by ExportScript.ProcessIkarusDCSConfigLowImportance
+function ExportScript.ProcessIkarusDCSConfigLowImportance(mainPanelDevice)
+    ---------------
+    -- Log Dumps --
+    ---------------
+    --ExportScript.CockpitParamsLogDump(mainPanelDevice)
+    --ExportScript.MetaTableLogDump(mainPanelDevice)
+    --ExportScript.ListIndicationLogDump(mainPanelDevice)
+	
+	ExportScript.RadiosVox(mainPanelDevice)
+	ExportScript.RadiosNav(mainPanelDevice)
+	ExportScript.GpsUnit(mainPanelDevice)
+	ExportScript.NavUnit(mainPanelDevice)
+	ExportScript.WeaponPanel(mainPanelDevice)
+end
+
+function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
+	--[[
+	export in low tick interval to DAC
+	Example from A-10C
+	Get Radio Frequencies
+	get data from device
+	local UHF_RADIO = GetDevice(54)
+	ExportScript.Tools.SendDataDAC("ExportID", "Format")
+	ExportScript.Tools.SendDataDAC("ExportID", "Format", HardwareConfigID)
+	ExportScript.Tools.SendDataDAC("2000", string.format("%7.3f", UHF_RADIO:get_frequency()/1000000))
+	ExportScript.Tools.SendDataDAC("2000", ExportScript.Tools.RoundFreqeuncy((UHF_RADIO:get_frequency()/1000000))) -- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
+	]]
+end
+
+-----------------------------
+--     Custom functions    --
+-----------------------------
+
+function ExportScript.CockpitParamsLogDump(mainPanelDevice) -- Get list of cockpit params
+   ExportScript.Tools.WriteToLog('list_cockpit_params(): '..ExportScript.Tools.dump(list_cockpit_params()))
+end
+
+function ExportScript.MetaTableLogDump(mainPanelDevice) -- getmetatable get function name from devices
+    local ltmp1 = 0
+    for ltmp2 = 1, 70, 1 do
+        ltmp1 = GetDevice(ltmp2)
+        ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+        ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
+    end
+end
+
+function ExportScript.ListIndicationLogDump(mainPanelDevice) -- list_indication get the value of cockpit displays
+    local ltmp1 = 0
+    for ltmp2 = 0, 20, 1 do
+        ltmp1 = list_indication(ltmp2)
+        ExportScript.Tools.WriteToLog(ltmp2..': '..ExportScript.Tools.dump(ltmp1))
+    end
+end
+
+function ExportScript.RadiosVox(mainPanelDevice)
+
+	-- TODO: Explore "set_is_receiving"
+	-- TODO: Explore "is_on_guard"
+	
+	local RadioUhfPlt = GetDevice(6)
+	ExportScript.Tools.SendData(3000, ExportScript.Tools.RoundFreqeuncy((RadioUhfPlt:get_frequency()/1000000)))
+	-- ExportScript.Tools.RoundFreqeuncy(frequency (MHz|KHz), format ("7.3"), PrefixZeros (false), LeastValue (0.025))
+	
+	local RadioVhfPlt = GetDevice(7)
+	ExportScript.Tools.SendData(3001, ExportScript.Tools.RoundFreqeuncy((RadioVhfPlt:get_frequency()/1000000)))
+	
+	local RadioUhfCplt = GetDevice(9)
+	ExportScript.Tools.SendData(3002, ExportScript.Tools.RoundFreqeuncy((RadioUhfCplt:get_frequency()/1000000)))
+	
+	local RadioVhfCplt = GetDevice(10)
+	ExportScript.Tools.SendData(3003, ExportScript.Tools.RoundFreqeuncy((RadioVhfCplt:get_frequency()/1000000)))
+	
+	local FwdRfrDisplay1 = list_cockpit_params():match("FwdRfrDisplay1:([^\n]+)")
+	FwdRfrDisplay1 = FwdRfrDisplay1:gsub('"','')
+	FwdRfrDisplay1 = FwdRfrDisplay1:gsub("%s+", "")
+	ExportScript.Tools.SendData(3004, FwdRfrDisplay1)
+	
+	local FwdRfrDisplay2 = list_cockpit_params():match("FwdRfrDisplay2:([^\n]+)")
+	FwdRfrDisplay2 = FwdRfrDisplay2:gsub('"','')
+	FwdRfrDisplay2 = FwdRfrDisplay2:gsub("%s+", "")
+	ExportScript.Tools.SendData(3005, FwdRfrDisplay2)
+	
+	local AftRfrDisplay1 = list_cockpit_params():match("AftRfrDisplay1:([^\n]+)")
+	AftRfrDisplay1 = AftRfrDisplay1:gsub('"','')
+	AftRfrDisplay1 = AftRfrDisplay1:gsub("%s+", "")
+	ExportScript.Tools.SendData(3006, AftRfrDisplay1)
+	
+	local AftRfrDisplay2 = list_cockpit_params():match("AftRfrDisplay2:([^\n]+)")
+	AftRfrDisplay2 = AftRfrDisplay2:gsub('"','')
+	AftRfrDisplay2 = AftRfrDisplay2:gsub("%s+", "")
+	ExportScript.Tools.SendData(3007, AftRfrDisplay2)
+	
+end
+
+
+
+function ExportScript.RadiosNav(mainPanelDevice)
+
+	-- TACAN
+	
+	-- VOR ILS
+	
+	-- IFF
+	
+	local mode1 = GetDevice(16)
+	ExportScript.Tools.SendData(4004, mode1:get_mode1_code())
+	
+	local mode3 = GetDevice(16)
+	ExportScript.Tools.SendData(4005, mode3:get_mode3_code())
+
+end
+
+function ExportScript.GpsUnit(mainPanelDevice)
+
+	local FwdRduDisplay1 = list_cockpit_params():match("FwdRduDisplay1:([^\n]+)")
+	FwdRduDisplay1 = FwdRduDisplay1:gsub('"','')
+	local FwdRduDisplay2 = list_cockpit_params():match("FwdRduDisplay2:([^\n]+)")
+	FwdRduDisplay2 = FwdRduDisplay2:gsub('"','')
+	FwdRduDisplay2 = FwdRduDisplay2:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	ExportScript.Tools.SendData(3008, FwdRduDisplay1 .. "\n" .. FwdRduDisplay2)
+	
+	
+	local AftRduDisplay1 = list_cockpit_params():match("AftRduDisplay1:([^\n]+)")
+	AftRduDisplay1 = AftRduDisplay1:gsub('"','')
+	local AftRduDisplay2 = list_cockpit_params():match("AftRduDisplay2:([^\n]+)")
+	AftRduDisplay2 = AftRduDisplay2:gsub('"','')
+	AftRduDisplay2 = AftRduDisplay2:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	ExportScript.Tools.SendData(3009, AftRduDisplay1 .. "\n" .. AftRduDisplay2)
+end
+
+function ExportScript.NavUnit(mainPanelDevice)
+
+	-- TODO: if ) then downArrow?
+	
+	local FwdCduDisplay1 = list_cockpit_params():match("FwdCduDisplay1:([^\n]+)")
+	FwdCduDisplay1 = FwdCduDisplay1:gsub('"','')
+	FwdCduDisplay1 = FwdCduDisplay1:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	local FwdCduDisplay2 = list_cockpit_params():match("FwdCduDisplay2:([^\n]+)")
+	FwdCduDisplay2 = FwdCduDisplay2:gsub('"','')
+	FwdCduDisplay2 = FwdCduDisplay2:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	local FwdCduDisplay3 = list_cockpit_params():match("FwdCduDisplay3:([^\n]+)")
+	FwdCduDisplay3 = FwdCduDisplay3:gsub('"','')
+	FwdCduDisplay3 = FwdCduDisplay3:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	local FwdCduDisplay4 = list_cockpit_params():match("FwdCduDisplay4:([^\n]+)")
+	FwdCduDisplay4 = FwdCduDisplay4:gsub('"','')
+	FwdCduDisplay4 = FwdCduDisplay4:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	
+	ExportScript.Tools.SendData(3010, FwdCduDisplay1 .. "\n" .. FwdCduDisplay2 .. "\n" .. FwdCduDisplay3 .. "\n" .. FwdCduDisplay4)
+	
+	local AftCduDisplay1 = list_cockpit_params():match("AftCduDisplay1:([^\n]+)")
+	AftCduDisplay1 = AftCduDisplay1:gsub('"','')
+	AftCduDisplay1 = AftCduDisplay1:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	local AftCduDisplay2 = list_cockpit_params():match("AftCduDisplay2:([^\n]+)")
+	AftCduDisplay2 = AftCduDisplay2:gsub('"','')
+	AftCduDisplay2 = AftCduDisplay2:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	local AftCduDisplay3 = list_cockpit_params():match("AftCduDisplay3:([^\n]+)")
+	AftCduDisplay3 = AftCduDisplay3:gsub('"','')
+	AftCduDisplay3 = AftCduDisplay3:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	local AftCduDisplay4 = list_cockpit_params():match("AftCduDisplay4:([^\n]+)")
+	AftCduDisplay4 = AftCduDisplay4:gsub('"','')
+	AftCduDisplay4 = AftCduDisplay4:gsub(':','¦') -- because for DCS-Interface ":" is a break
+	
+	ExportScript.Tools.SendData(3011, AftCduDisplay1 .. "\n" .. AftCduDisplay2 .. "\n" .. AftCduDisplay3 .. "\n" .. AftCduDisplay4)
+	
+end
+
+function ExportScript.WeaponPanel(mainPanelDevice)
+
+-- TODO: Add emoji dot arm indicator
+
+	--[64] = "%0.2f", -- Weapon Selector Window 6
+	--[65] = "%0.2f", -- Weapon Selector Window 5
+	--[66] = "%0.2f", -- Weapon Selector Window 3
+	--[67] = "%0.2f", -- Weapon Selector Window 4
+	--[68] = "%0.2f", -- Weapon Selector Window 2
+	--[69] = "%0.2f", -- Weapon Selector Window 1
+	
+	-- 0.00 = RKT
+	-- 0.10 = BOMB
+	-- 0.20 = GUN
+	-- 0.30 = DISP
+	-- 0.40 = EMPTY
+	-- 0.50 = TANK
+	
+	--local KollsmanWindowReadout_value1 = string.format("%.f",mainPanelDevice:get_argument_value(56) * 10)
+	local weaponSelect1 = round(mainPanelDevice:get_argument_value(69),2)
+	local weaponSelect1_text = "NULL"
+	
+	if weaponSelect1 <= 0.00 then
+		weaponSelect1_text = "RKT"
+	elseif weaponSelect1 <= 0.10 then
+		weaponSelect1_text = "BOMB"
+	elseif weaponSelect1 <= 0.20 then
+		weaponSelect1_text = "GUN"
+	elseif weaponSelect1 <= 0.30 then
+		weaponSelect1_text = "DISP"
+	elseif weaponSelect1 <= 0.40 then
+		weaponSelect1_text = "EMPTY"
+	elseif weaponSelect1 <= 0.50 then
+		weaponSelect1_text = "TANK"
+	else
+		-- do nothing
+	end
+	
+	ExportScript.Tools.SendData(3012, weaponSelect1_text)
+	
+	
+	
+	local weaponSelect2 = round(mainPanelDevice:get_argument_value(68),2)
+	local weaponSelect2_text = "NULL"
+	
+	if weaponSelect2 <= 0.00 then
+		weaponSelect2_text = "RKT"
+	elseif weaponSelect2 <= 0.10 then
+		weaponSelect2_text = "BOMB"
+	elseif weaponSelect2 <= 0.20 then
+		weaponSelect2_text = "GUN"
+	elseif weaponSelect2 <= 0.30 then
+		weaponSelect2_text = "DISP"
+	elseif weaponSelect2 <= 0.40 then
+		weaponSelect2_text = "EMPTY"
+	elseif weaponSelect2 <= 0.50 then
+		weaponSelect2_text = "TANK"
+	else
+		-- do nothing
+	end
+	
+	ExportScript.Tools.SendData(3013, weaponSelect2_text)
+	
+	
+	local weaponSelect3 = round(mainPanelDevice:get_argument_value(67),2)
+	local weaponSelect3_text = "NULL"
+	
+	if weaponSelect3 <= 0.00 then
+		weaponSelect3_text = "RKT"
+	elseif weaponSelect3 <= 0.10 then
+		weaponSelect3_text = "BOMB"
+	elseif weaponSelect3 <= 0.20 then
+		weaponSelect3_text = "GUN"
+	elseif weaponSelect3 <= 0.30 then
+		weaponSelect3_text = "DISP"
+	elseif weaponSelect3 <= 0.40 then
+		weaponSelect3_text = "EMPTY"
+	elseif weaponSelect3 <= 0.50 then
+		weaponSelect3_text = "TANK"
+	else
+		-- do nothing
+	end
+	
+	ExportScript.Tools.SendData(3014, weaponSelect3_text)
+	
+	
+	local weaponSelect4 = round(mainPanelDevice:get_argument_value(66),2)
+	local weaponSelect4_text = "NULL"
+	
+	if weaponSelect4 <= 0.00 then
+		weaponSelect4_text = "RKT"
+	elseif weaponSelect4 <= 0.10 then
+		weaponSelect4_text = "BOMB"
+	elseif weaponSelect4 <= 0.20 then
+		weaponSelect4_text = "GUN"
+	elseif weaponSelect4 <= 0.30 then
+		weaponSelect4_text = "DISP"
+	elseif weaponSelect4 <= 0.40 then
+		weaponSelect4_text = "EMPTY"
+	elseif weaponSelect4 <= 0.50 then
+		weaponSelect4_text = "TANK"
+	else
+		-- do nothing
+	end
+	
+	ExportScript.Tools.SendData(3015, weaponSelect4_text)
+	
+	
+	local weaponSelect5 = round(mainPanelDevice:get_argument_value(65),2)
+	local weaponSelect5_text = "NULL"
+	
+	if weaponSelect5 <= 0.00 then
+		weaponSelect5_text = "RKT"
+	elseif weaponSelect5 <= 0.10 then
+		weaponSelect5_text = "BOMB"
+	elseif weaponSelect5 <= 0.20 then
+		weaponSelect5_text = "GUN"
+	elseif weaponSelect5 <= 0.30 then
+		weaponSelect5_text = "DISP"
+	elseif weaponSelect5 <= 0.40 then
+		weaponSelect5_text = "EMPTY"
+	elseif weaponSelect5 <= 0.50 then
+		weaponSelect5_text = "TANK"
+	else
+		-- do nothing
+	end
+	
+	ExportScript.Tools.SendData(3016, weaponSelect5_text)
+	
+	
+	local weaponSelect6 = round(mainPanelDevice:get_argument_value(64),2)
+	local weaponSelect6_text = "NULL"
+	
+	if weaponSelect6 <= 0.00 then
+		weaponSelect6_text = "RKT"
+	elseif weaponSelect6 <= 0.10 then
+		weaponSelect6_text = "BOMB"
+	elseif weaponSelect6 <= 0.20 then
+		weaponSelect6_text = "GUN"
+	elseif weaponSelect6 <= 0.30 then
+		weaponSelect6_text = "DISP"
+	elseif weaponSelect6 <= 0.40 then
+		weaponSelect6_text = "EMPTY"
+	elseif weaponSelect6 <= 0.50 then
+		weaponSelect6_text = "TANK"
+	else
+		-- do nothing
+	end
+	
+	ExportScript.Tools.SendData(3017, weaponSelect6_text)
+	
+	-- TODO: Consider Making two tiles with three indicators each
+	-- TODO: Consider making the background urn green when armed
+	-- TODO: Consider a three/four color system with Master arm and the weapon select light
+	-- TODO: Consider adding S1 above the weaponSelect_text
+	
+end
+
+------------------------------
+-- General Helper Functions --
+------------------------------
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end

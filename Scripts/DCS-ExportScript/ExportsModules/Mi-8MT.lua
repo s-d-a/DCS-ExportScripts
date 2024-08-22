@@ -1008,6 +1008,9 @@ function ExportScript.ProcessIkarusDCSConfigHighImportance(mainPanelDevice)
 	
 	--[21] = "%.4f",		-- VD_10K_L_PRESS {0.0, 1.0}
 	ExportScript.Tools.SendData(21, string.format("%.4f", ExportScript.Tools.negate(mainPanelDevice:get_argument_value(21)))) -- negate
+
+	ExportScript.CompassReadouts(mainPanelDevice)
+
 end
 
 function ExportScript.ProcessDACConfigHighImportance(mainPanelDevice)
@@ -1324,4 +1327,298 @@ function ExportScript.ProcessDACConfigLowImportance(mainPanelDevice)
 		ExportScript.Tools.WriteToLog(ltmp2..' (metatable): '..ExportScript.Tools.dump(getmetatable(ltmp1)))
 	end
 ]]
+end
+
+function ExportScript.CompassReadouts(mainPanelDevice)
+
+--[[
+
+	[25] = "%.4f",		-- UGR_4K_heading_L {0.0, 1.0}
+	[27] = "%.4f",		-- UGR_4K_commanded_course_L {0.0, 1.0}
+	[28] = "%.4f",		-- UGR_4K_bearing_needle_L {0.0, 1.0}
+	----
+	[101] = "%.4f",		-- UGR_4K_heading_R {0.0, 1.0}
+	[103] = "%.4f",		-- UGR_4K_commanded_course_R {0.0, 1.0}
+	[104] = "%.4f",		-- UGR_4K_bearing_needle_R {0.0, 1.0}
+	
+]]
+
+	--ExportScript.Tools.SendData(3000, "Hi") --test
+	local pilotCompassHeadingValue = ExportScript.Tools.round(mainPanelDevice:get_argument_value(25),8)--rounds to the 8th digit after the decimal
+	local pilotCompassCommandedCourseValue = ExportScript.Tools.round(mainPanelDevice:get_argument_value(27),8)--makes it more accurate compared to 2
+	local pilotCompassBearingNeedleValue = ExportScript.Tools.round(mainPanelDevice:get_argument_value(28),8)
+	
+--[[
+	we know for the HeadingValue, 	0.0 = 000
+									0.5 = 180
+									1.0 = 000
+	
+	For both the commanded course and the bearing needle are similar, 
+	but they are based on the orentation of the Heading value.
+	
+	This means that if we subtract their values from the Heading value,
+	the absolute value should represent the fraction of the compass that
+	is shown. Hopefully...
+	
+	Examples:
+	
+	if pilotCompassHeadingValue = 0.0, the top is indicating 000
+	pilotCompassCommandedCourseValue at 0.0 will show 000
+	pilotCompassBearingNeedleValue at 0.0 will show 000
+	
+	We realize that we only need to solve for CommandedCourse bc the
+	bearingNeedle will be the same code.
+	
+	if pilotCompassHeadingValue = 0.25, the top is indicating 090
+	if pilotCompassCommandedCourseValue at 0.0 will point to 090
+	if pilotCompassCommandedCourseValue at 0.25 will point to 180
+	
+	Now let's make up some math that works. Science!
+	
+	We know that 180 should "be" 0.50. That turns out to be the vaules combined...
+	Let's see if that works in a different example.
+	
+	if pilotCompassHeadingValue = 0.75, the top is indicating 270
+	if pilotCompassCommandedCourseValue at 0.0 will point to 270
+	if pilotCompassCommandedCourseValue at 0.50 will point to 090
+	
+	Does it work? Well, 0.75 plus 0.50 = 1.25, which reduced by 1 = 0.25, which 
+	represents a compass value of 090. Yes! The logic works!
+	All of the above was assumed and varified via ModelViewer.
+	
+	Now lets write that in code.
+	
+]]
+
+	-- Let's print out some easy, basic, raw values to monitor our base assumptions
+	-- This step is import so that we don't go in a random direction with our code.
+	-- Dont use the ':' symbol. Export Scripts does not like that.
+--[[
+	ExportScript.Tools.SendData(3000, "HDG\n" 
+										.. "Raw " .. pilotCompassHeadingValue .. "\n" 
+										.. "DEG " .. pilotCompassHeadingValue*360)
+	ExportScript.Tools.SendData(3001, "Needle 2\n" 
+										.. "Raw " .. pilotCompassCommandedCourseValue .. "\n" 
+										.. "Abs " .. pilotCompassCommandedCourseValue*360)
+	ExportScript.Tools.SendData(3002, "Needle 1\n" 
+										.. "Raw " .. pilotCompassBearingNeedleValue .. "\n" 
+										.. "Abs " .. pilotCompassBearingNeedleValue*360)
+]]
+	
+	-- Now we code the code we think is going to work using out thought process from above.
+	
+	local pilotadditiveCommandedValue = pilotCompassHeadingValue + pilotCompassCommandedCourseValue
+	local pilotCompassCommandedNeedleValue_adjusted
+	
+	-- We have to reduce the number to below 1 (or below 360 if we did it later).
+	
+	if pilotadditiveCommandedValue > 1 then
+		pilotCompassCommandedNeedleValue_adjusted = pilotadditiveCommandedValue - 1
+		-- The max the additive can be is "2". if we minus 1 from 2, we get 1, which is 360.
+		-- Not more reduction logic is necessary.
+	else 
+		pilotCompassCommandedNeedleValue_adjusted = pilotadditiveCommandedValue
+	end
+
+	-- we need to add a '0' to the front for numbers less than three digits long
+	-- or add two '0's for number less than two digits long
+	-- The following code is from the mossie.lua
+	
+	--turn the number into a string 
+	pilotCompassCommandedNeedleValue_adjusted = string.format("%.1d" , round(pilotCompassCommandedNeedleValue_adjusted*360,0))
+	
+	--if the values string length is 2 then
+	if #pilotCompassCommandedNeedleValue_adjusted == 2 then
+		pilotCompassCommandedNeedleValue_adjusted = "0" .. pilotCompassCommandedNeedleValue_adjusted
+	elseif #pilotCompassCommandedNeedleValue_adjusted == 1 then
+		pilotCompassCommandedNeedleValue_adjusted = "00" .. pilotCompassCommandedNeedleValue_adjusted
+	end
+	
+--[[
+	ExportScript.Tools.SendData(3003, "Needle 2\n" 
+										.. "Deg " .. pilotCompassCommandedNeedleValue_adjusted)
+										
+										
+	ExportScript.Tools.SendData(3004, "Additive\n" .. pilotadditiveCommandedValue .. "=\n" 
+											.. pilotCompassHeadingValue .. "+\n" 
+											.. pilotCompassCommandedCourseValue)								
+]]
+
+	-- Yay, it works! Now we need to format into solid degrees and round the result
+	-- After that we will clean the code up a bit and then replicate for the other needle.
+	
+	local pilotadditiveBearingValue = pilotCompassHeadingValue + pilotCompassBearingNeedleValue
+	local pilotCompassBearingNeedleValue_adjusted
+	
+	-- We have to reduce the number to below 1 (or below 360 if we did it later).
+	
+	if pilotadditiveBearingValue > 1 then
+		pilotCompassBearingNeedleValue_adjusted = pilotadditiveBearingValue - 1
+		-- The max the additive can be is "2". if we minus 1 from 2, we get 1, which is 360.
+		-- Not more reduction logic is necessary.
+	else 
+		pilotCompassBearingNeedleValue_adjusted = pilotadditiveBearingValue
+	end
+	
+
+	-- we need to add a '0' to the front for numbers less than three digits long
+	-- or add two '0's for number less than two digits long
+	-- The following code is from the mossie.lua
+	
+	--turn the number into a string 
+	pilotCompassBearingNeedleValue_adjusted = string.format("%.1d" , round(pilotCompassBearingNeedleValue_adjusted*360,0))
+	
+	--if the values string length is 2 then
+	if #pilotCompassBearingNeedleValue_adjusted == 2 then
+		pilotCompassBearingNeedleValue_adjusted = "0" .. pilotCompassBearingNeedleValue_adjusted
+	elseif #pilotCompassBearingNeedleValue_adjusted == 1 then
+		pilotCompassBearingNeedleValue_adjusted = "00" .. pilotCompassBearingNeedleValue_adjusted
+	end
+
+--[[
+	ExportScript.Tools.SendData(3005, "Needle 1\n" 
+										.. "Deg " .. pilotCompassBearingNeedleValue_adjusted)
+]]									
+	-- Now that we have all of that information, it's time to put in onto one tile.
+	
+	--turn the number into a string 
+	pilotCompassHeadingValue = string.format("%.1d" , round(pilotCompassHeadingValue*360,0))
+	
+	--if the values string length is 2 then
+	if #pilotCompassHeadingValue == 2 then
+		pilotCompassHeadingValue = "0" .. pilotCompassHeadingValue
+	elseif #pilotCompassHeadingValue == 1 then
+		pilotCompassHeadingValue = "00" .. pilotCompassHeadingValue
+	end
+	
+	--last minute string adjustment for this aircraft's compass
+	if pilotCompassHeadingValue == "360" then pilotCompassHeadingValue = "000" end
+	if pilotCompassCommandedNeedleValue_adjusted == "360" then pilotCompassCommandedNeedleValue_adjusted = "000" end
+	if pilotCompassBearingNeedleValue_adjusted == "360" then pilotCompassBearingNeedleValue_adjusted = "000" end
+	
+	ExportScript.Tools.SendData(3000, 		"PLT\n"
+											.. "HDG " .. pilotCompassHeadingValue
+											.. "\nN1 " .. pilotCompassCommandedNeedleValue_adjusted
+											.. "\nN2 " .. pilotCompassBearingNeedleValue_adjusted)
+											
+											
+--=====Copilot Side=====--
+
+	local copilotCompassHeadingValue = ExportScript.Tools.round(mainPanelDevice:get_argument_value(101),2)
+	local copilotCompassCommandedCourseValue = ExportScript.Tools.round(mainPanelDevice:get_argument_value(103),2)
+	local copilotCompassBearingNeedleValue = ExportScript.Tools.round(mainPanelDevice:get_argument_value(104),2)
+
+
+	local copilotadditiveCommandedValue = copilotCompassHeadingValue + copilotCompassCommandedCourseValue
+	local copilotCompassCommandedNeedleValue_adjusted
+
+	if copilotadditiveCommandedValue > 1 then
+		copilotCompassCommandedNeedleValue_adjusted = copilotadditiveCommandedValue - 1
+	else 
+		copilotCompassCommandedNeedleValue_adjusted = copilotadditiveCommandedValue
+	end
+	
+	local copilotCompassCommandedNeedleValue_adjustedInt = round(copilotCompassCommandedNeedleValue_adjusted*360,0) --used for later
+	copilotCompassCommandedNeedleValue_adjusted = string.format("%.1d" , round(copilotCompassCommandedNeedleValue_adjusted*360,0))
+	
+	--if the values string length is 2 then
+	if #copilotCompassCommandedNeedleValue_adjusted == 2 then
+		copilotCompassCommandedNeedleValue_adjusted = "0" .. copilotCompassCommandedNeedleValue_adjusted
+	elseif #copilotCompassCommandedNeedleValue_adjusted == 1 then
+		copilotCompassCommandedNeedleValue_adjusted = "00" .. copilotCompassCommandedNeedleValue_adjusted
+	end					
+	
+
+	local copilotadditiveBearingValue = copilotCompassHeadingValue + copilotCompassBearingNeedleValue
+	local copilotCompassBearingNeedleValue_adjusted
+	
+	if copilotadditiveBearingValue > 1 then
+		copilotCompassBearingNeedleValue_adjusted = copilotadditiveBearingValue - 1
+	else 
+		copilotCompassBearingNeedleValue_adjusted = copilotadditiveBearingValue
+	end
+
+	copilotCompassBearingNeedleValue_adjustedInt = round(copilotCompassBearingNeedleValue_adjusted*360,0)--used for later
+	--turn the number into a string 
+	copilotCompassBearingNeedleValue_adjusted = string.format("%.1d" , round(copilotCompassBearingNeedleValue_adjusted*360,0))
+	
+	--if the values string length is 2 then
+	if #copilotCompassBearingNeedleValue_adjusted == 2 then
+		copilotCompassBearingNeedleValue_adjusted = "0" .. copilotCompassBearingNeedleValue_adjusted
+	elseif #copilotCompassBearingNeedleValue_adjusted == 1 then
+		copilotCompassBearingNeedleValue_adjusted = "00" .. copilotCompassBearingNeedleValue_adjusted
+	end
+									
+	-- Now that we have all of that information, it's time to put in onto one tile.
+	
+	
+	--turn the number into a string 
+	copilotCompassHeadingValue = string.format("%.1d" , round(copilotCompassHeadingValue*360,0))
+	
+	--if the values string length is 2 then
+	if #copilotCompassHeadingValue == 2 then
+		copilotCompassHeadingValue = "0" .. copilotCompassHeadingValue
+	elseif #copilotCompassHeadingValue == 1 then
+		copilotCompassHeadingValue = "00" .. copilotCompassHeadingValue
+	end
+	
+	--last minute string adjustment for this aircraft's compass
+	if copilotCompassHeadingValue == "360" then copilotCompassHeadingValue = "000" end
+	if copilotCompassCommandedNeedleValue_adjusted == "360" then copilotCompassCommandedNeedleValue_adjusted = "000" end
+	if copilotCompassBearingNeedleValue_adjusted == "360" then copilotCompassBearingNeedleValue_adjusted = "000" end
+	
+	ExportScript.Tools.SendData(3001, 		"CPLT\n"
+											.. "HDG " .. copilotCompassHeadingValue
+											.. "\nN1 " .. copilotCompassCommandedNeedleValue_adjusted
+											.. "\nN2 " .. copilotCompassBearingNeedleValue_adjusted)
+											
+	
+	-- something a little extra. an "on course" or "on bearing" detector that changes colors
+	-- if the commanded course is within 5 degrees of the way you are going, then you are on course
+	-- if the ndb bearing line is within 5 degrees of the way you are going, then you are on bearing
+	-- You can code this some other day.
+end
+
+------------------------------
+-- General Helper Functions --
+------------------------------
+
+function ExportScript.Linearize(current_value, raw_tab, final_tab)
+  -- (c) scoobie
+  if current_value <= raw_tab[1] then
+    return final_tab[1] 
+  end
+  for index, value in pairs(raw_tab) do
+    if current_value <= value then
+      local ft = final_tab[index]
+      local rt = raw_tab[index]
+      return (current_value - rt) * (ft - final_tab[index - 1]) / (rt - raw_tab[index - 1]) + ft
+    end
+  end
+  -- we shouldn't be here, so something went wrong - return arbitrary max. final value, maybe the user will notice the problem:
+  return final_tab[#final_tab]
+end
+
+
+function round(num, numDecimalPlaces) --http://lua-users.org/wiki/SimpleRound
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+
+function format_int(number) --https://stackoverflow.com/questions/10989788/format-integer-in-lua
+
+  local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+
+  -- reverse the int-string and append a comma to all blocks of 3 digits
+  int = int:reverse():gsub("(%d%d%d)", "%1,")
+
+  -- reverse the int-string back remove an optional comma and put the 
+  -- optional minus and fractional part back
+  return minus .. int:reverse():gsub("^,", "") .. fraction
+end
+
+function trim(s) --http://lua-users.org/wiki/CommonFunctions
+  -- from PiL2 20.4
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
 end

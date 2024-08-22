@@ -1,0 +1,1 @@
+To get this profile, install Exo's F-5E StreamDeck profile located in "docu\StreamDeck Examples".

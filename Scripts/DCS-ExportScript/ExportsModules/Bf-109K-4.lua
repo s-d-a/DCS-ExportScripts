@@ -129,7 +129,7 @@ ExportScript.ConfigArguments =
 	-- R 101 ZSK 244 A Bomb Panel Master Switch
 	-- Operated internally via ZSK 244 A Mode Control
 	-- R 101 ZSK 244 A Mode Selector
-	[64] = "%.1f",	-- Bomb Fusing Selector (DIVE (INSTANT), DIVE (DELAYED), OFF, LEVEL (DELAYED), LEVEL (INSTANT)) {0.0, 0.25, 0.5, 0.75, 1.0}
+	[64] = "%.2f",	-- Bomb Fusing Selector (DIVE (INSTANT), DIVE (DELAYED), OFF, LEVEL (DELAYED), LEVEL (INSTANT)) {0.0, 0.25, 0.5, 0.75, 1.0}
 	-- Illumination Controls
 	-- C 102 LH UV Lamp Rheostat
 	[80] = "%.1f",	-- Left UV Lamp Brightness (axis) {0.0 - 0.5}

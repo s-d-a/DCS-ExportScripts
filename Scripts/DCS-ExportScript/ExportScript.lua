@@ -30,6 +30,8 @@ PrevExport.LuaExportStart           = LuaExportStart
 PrevExport.LuaExportStop            = LuaExportStop
 PrevExport.LuaExportBeforeNextFrame = LuaExportBeforeNextFrame
 PrevExport.LuaExportAfterNextFrame  = LuaExportAfterNextFrame
+--fix wwt
+PrevExport.LuaExportActivityNextEvent  = LuaExportActivityNextEvent
 
 dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\Config.lua]])
 ExportScript.utf8 = dofile(lfs.writedir()..[[Scripts\DCS-ExportScript\lib\utf8.lua]])
@@ -133,7 +135,11 @@ function LuaExportActivityNextEvent(t)
 	end
 
 	tNext = tNext + ExportScript.Config.ExportInterval
-
+	
+	if PrevExport.LuaExportActivityNextEvent then
+		tNext=PrevExport.LuaExportActivityNextEvent(t)
+	end
+	
 	return tNext
 end
 
